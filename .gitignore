@@ -2,9 +2,10 @@
 ###################
 *.class
 
-#Ignore all .iml file
+#Ignore all IntelliJ files
 ###################
 *.iml
+.idea/
 
 #Ignore .gradle 
 ##################
