@@ -1,0 +1,339 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+  -fx-font-family: 'Navisu';
+  src: url('fonts/Roboto-Bold.ttf');
+  src: url('fonts/wwDigital.ttf');
+  src: url('fonts/digital-mono.ttf');
+}
+.root {
+	-fx-accent: #e65020;
+        -fx-color: #cc1a1a;
+        -fx-text-base-color: -fx-color; 
+        -fx-focus-color: #501e1e;
+        -fx-focused-base: #e65020;
+        -fx-hover-base: #e65020;
+        -fx-outer-border:#420001;
+        -fx-inner-border:#081802;
+        -fx-body-color: #420001;
+        -fx-pressed-base: #420001;
+        -fx-bckgrd-color: #420001;
+        -fx-btn-gradient: linear-gradient(rgba(204,26,26,0.4), rgba(66,0,1,0.0)),
+        radial-gradient(center -10% -45%, radius 200%, rgba(200,150,150,0.3)  45%, rgba(100,100,100,0.05) 50%); 
+}
+.body {
+	-fx-font-family: Navisu, "Roboto Bk", "Roboto Cn", "Roboto Lt", "Roboto Th", "WW Digital", "Digital-7 Mono"  ;
+}	
+.text-input, .text-field{
+        -fx-background-color: -fx-bckgrd-color;
+	-fx-background-radius: 20;
+	
+}
+.text-area {
+        -fx-background-color: -fx-bckgrd-color;
+	-fx-background-radius: 20;
+	
+}
+
+.position_good{
+	-fx-background-color: #00ff00, -fx-bckgrd-color;
+	-fx-background-insets: 0, 1;
+	-fx-background-radius: 20;
+	-fx-text-fill: #98ff4b;
+	-fx-font: 10px "Roboto Cn";
+	-fx-padding: 0 0 0 0;
+	
+}
+.position_bad{
+	-fx-background-color: #ff0000, -fx-bckgrd-color;
+	-fx-background-insets: 0, 1;
+	-fx-background-radius: 20;
+	-fx-text-fill: #ff2222;
+	-fx-font: 10px "Roboto Cn";
+	-fx-padding: 0 0 0 0;
+	
+}
+.digit_reflect {
+	-fx-font: 26px "Digital-7 Mono";
+	-fx-text-fill: -fx-color;
+	-fx-padding : 15 0 0 0;
+	-fx-background-color:
+        linear-gradient(rgba(219,245,197,0.4), rgba(20,41,02,0.0)),
+        radial-gradient(center -10% -45%, radius 200%, rgba(255,255,255,0.3)  45%, rgba(200,200,200,0.05) 50%);
+    -fx-background-radius: 10, 10;
+    -fx-background-insets: 0, 1;
+ }
+ .SOG {
+	-fx-font: 26px "Digital-7 Mono";
+	-fx-text-fill: -fx-color;
+	-fx-padding : 13 10 0 0;
+	-fx-background-color:
+        linear-gradient(rgba(219,245,197,0.4), rgba(20,41,02,0.0)),
+        radial-gradient(center -10% -45%, radius 200%, rgba(255,255,255,0.3)  45%, rgba(200,200,200,0.05) 50%);
+    -fx-background-radius: 10, 10;
+    -fx-background-insets: 0, 1;
+ }
+.variation {
+	-fx-font: 24px "WW Digital";
+	-fx-text-fill: -fx-color;
+	-fx-padding : 18 0 0 0;
+	-fx-font-weight: bold;
+	-fx-background-color:
+        linear-gradient(rgba(219,245,197,0.2), rgba(20,41,02,0.0)),
+        radial-gradient(center -10% -45%, radius 200%, rgba(255,255,255,0.3)  45%, rgba(200,200,200,0.05) 50%);
+        -fx-background-radius: 10, 10;
+        -fx-background-insets: 0, 1;
+ }
+.deviation {
+	-fx-font: 12px "Roboto Bk";
+	-fx-text-fill: -fx-color;
+	-fx-font-weight: bold;
+}
+.SpeedSounder {
+	-fx-font: 30px "WW Digital";
+	-fx-padding : 26 20 0 0;
+	-fx-text-fill: -fx-color;
+	-fx-font-weight: bold;
+}
+.heading {
+	-fx-font: 30px "WW Digital";
+	-fx-padding : 18 0 0 0;
+	-fx-text-fill: -fx-color;
+	-fx-font-weight: bold;
+	-fx-background-image: url("images/background.png");
+        -fx-background-color:
+        linear-gradient(rgba(219,245,197,0.2), rgba(20,41,02,0.0)),
+        radial-gradient(center -10% -45%, radius 200%, rgba(255,255,255,0.3)  45%, rgba(200,200,200,0.05) 50%);
+        -fx-background-radius: 10, 10;
+        -fx-background-insets: 0, 1;
+}
+#panegps{
+        -fx-font: 24px "Roboto Bk";
+	-fx-text-fill: -fx-color;    
+}
+.gpsgauge {
+	-fx-font: 12px "Roboto Cn";
+	-fx-text-fill: #98ff4b;
+}	
+.gpsgaugebad {
+	-fx-font: 12px "Roboto Cn";
+	-fx-text-fill: #ff2222;
+}
+.long-lat {
+	-fx-font: 12px "Roboto Cn";
+	-fx-text-fill: -fx-color;
+}
+.button_night-day{
+        -fx-text-fill: black;
+        -fx-background-color: linear-gradient(#ffff00 0%, #000055 70%);
+	-fx-background-radius: 15;
+}
+.button_page {
+        -fx-background-color: #229944;
+        -fx-background-radius: 15;
+        -fx-text-fill: black;
+}
+.button_display {
+        -fx-background-color: #886622;
+        -fx-background-radius: 15;
+        -fx-text-fill: black;
+}
+
+
+.baudrate{
+	-fx-font: 12px "Roboto Cn";
+	-fx-text-fill: -fx-color;
+	-fx-background-color: -fx-bckgrd-color;
+        -fx-background-radius: 10, 10;
+        -fx-background-insets: 0, 1;
+}
+/*******************************************************************************
+ *                                                                             *
+ * Toggle-Button                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+.toggle-button-open {
+	-fx-font: 12px "Roboto Cn";
+	-fx-text-fill: -fx-color;
+	-fx-background-color: -fx-bckgrd-color;
+        -fx-background-radius: 10, 10;
+        -fx-background-insets: 0, 1;
+}
+.toggle-button-close {
+	-fx-font: 12px "Roboto Cn";
+	-fx-text-fill: -fx-color;
+	-fx-background-color: -fx-bckgrd-color;
+        -fx-background-radius: 10, 10;
+        -fx-background-insets: 0, 1;
+}
+/*******************************************************************************
+ *                                                                             *
+ * Button                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+.button {
+    -fx-font: 12px "Roboto Cn";
+    -fx-text-fill: -fx-color;
+    
+    -fx-background-color: -fx-btn-gradient; 
+    -fx-background-radius: 10, 10;
+    -fx-background-insets: 0, 1; 
+}
+
+.button:focused {
+    -fx-color: -fx-focused-base;
+    -fx-background-color: #ff0000;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius:  6.4, 5, 4, 3;
+}
+
+.button:hover {
+    -fx-color: -fx-hover-base;
+}
+
+.button:armed {
+    -fx-color: -fx-pressed-base;
+}
+ 
+.button:default {
+    -fx-base: -fx-accent;
+}
+
+.button:cancel {
+}
+
+.button:disabled {
+    -fx-opacity: -fx-disabled-opacity;
+}
+
+.button:show-mnemonics .mnemonic-underline {
+    -fx-stroke: -fx-text-fill;
+}
+/*******************************************************************************
+ *                                                                             *
+ * MenuButton                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+.menu-button{
+    -fx-font: 12px "Roboto Cn";
+    -fx-text-fill: #98ff4b;
+    -fx-background-color: -fx-btn-gradient;
+    -fx-background-radius: 10, 10;
+    -fx-background-insets: 0, 1;
+ 
+}
+
+/* TODO workaround for RT-19062 */
+.menu-button .label {  }
+
+.menu-button:focused {
+    -fx-text-fill: -fx-text-base-color;
+    -fx-background-color:-fx-outer-border, -fx-inner-border;
+    -fx-background-color: -fx-btn-gradient;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius: 6.4, 4, 5, 3;
+}
+
+.menu-button:hover {
+    -fx-color: -fx-hover-base;
+}
+
+/*.menu-button:armed {
+    -fx-color: -fx-pressed-base;
+}*/
+
+/* The MenuButton skin uses an inner Label part */
+.menu-button .label {
+    -fx-padding: 0.166667em 1.5em 0.25em 0.833333em; /* 2 18 3 10 */
+}
+
+.menu-button .arrow-button {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 0.5em 0.416667em 0.5em 0.0em; /* 6 5 6 0 */
+}
+
+.menu-button .arrow {
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+    -fx-padding: 0.25em; /* 3 */
+    -fx-shape: "M 0 -3.5 v 7 l 4 -3.5 z";
+}
+
+.menu-button:openvertically .arrow {
+    -fx-padding: 0.166667em 0.333333em 0.166667em 0.333333em; /* 2 4 2 4 */
+    -fx-shape: "M 0 0 h 7 l -3.5 4 z";
+}
+
+.menu-button:disabled {
+    -fx-opacity: -fx-disabled-opacity;
+}
+
+.menu-button:show-mnemonics .mnemonic-underline {
+    -fx-stroke: -fx-text-fill;
+} 
+/*******************************************************************************
+ *                                                                             *
+ * MenuItem                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+.menu-item {
+	-fx-font: 12px "Roboto Cn";
+	-fx-text-fill: #aaaa00;
+	-fx-background-color: -fx-bckgrd-color;
+   
+
+}
+/*.menu-item {
+ -fx-skin: "com.sun.javafx.scene.control.skin.MenuItemSkin";
+    -fx-background-color: -fx-bckgrd-color;
+    -fx-padding: 0.333333em 0.41777em 0.333333em 0.41777em; *//* 4 5 4 5 
+}*/
+
+/*.menu-item .left-container {
+    -fx-padding: 0.458em 0.791em 0.458em 0.458em;
+    -fx-background-color: -fx-bckgrd-color;
+}*/
+
+.menu-item .graphic-container {
+    -fx-padding: 0em 0.333em 0em 0em;
+    -fx-background-color: -fx-bckgrd-color;
+}
+/*
+.menu-item .label {
+    -fx-padding: 0em 0.5em 0em 0em;
+    -fx-text-fill: #087808;
+}
+
+.menu-item:disabled .label {
+    -fx-opacity: -fx-disabled-opacity;
+}*/
+
+.menu-item:focused {
+     /*-fx-background: -fx-accent;*/
+     -fx-background-color: -fx-bckgrd-color;
+     -fx-text-fill: -fx-color;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: -fx-accent;
+}
+.menu-item .right-container {
+    -fx-padding: 0em 0em 0em 0.5em;
+}
+
+.menu-item:show-mnemonics .mnemonic-underline {
+    -fx-stroke: -fx-text-fill;
+} 
+/*************************************
+fond des menus déroulants
+*************************************/
+.context-menu {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
+    -fx-background-color: -fx-bckgrd-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+/*    -fx-padding: 0.666667em 0.083333em 0.666667em 0.083333em;  8 1 8 1 */
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
+}

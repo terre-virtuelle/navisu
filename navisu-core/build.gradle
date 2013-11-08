@@ -1,0 +1,15 @@
+
+//apply plugin: 'application'
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'bzh.terrevirtuelle.navisu.core.CoreMain'
+}
+
+//mainClassName = 'bzh.terrevirtuelle.navisu.core.CoreMain'
+
+dependencies {
+    
+    compile fileTree(dir: 'lib', include: '*.jar')
+}
+
+test.scanForTestClasses = false

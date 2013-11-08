@@ -1,0 +1,15 @@
+
+//TODO
+//apply plugin:'application'
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'bzh.terrevirtuelle.navisu.app'
+}
+
+//mainClassName = 'bzh.terrevirtuelle.navisu.app.AppMain'
+
+dependencies {
+
+    compile project(':navisu-core')
+    compile fileTree(dir: 'lib', include: '*.jar')
+}

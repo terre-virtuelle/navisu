@@ -1,0 +1,174 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <style type="text/css">
+            #map {
+                width: 100%;
+                height: 100%;
+                border: 0px;
+                padding: 0px;
+                position: absolute;
+            }
+
+            body {
+                border: 0px;
+                margin: 0px;
+                padding: 0px;
+                height: 100%;
+                font-family: sans-serif;
+            }
+
+            #links {
+                background: #575757;
+                color: white;
+                z-index:1000;
+                width: 33%;
+                font-size: 1em;
+                text-align: left;
+                position: relative;
+                top: 0.5em;
+                left: 2.5em;
+                padding: 5px;
+                width: 33%;
+                /* for IE */
+                filter:alpha(opacity=90);
+                /* CSS3 standard */
+                opacity:0.9;
+                border-radius: 4px;
+            }
+
+            .olControlAttribution {
+                padding: 5px;
+                z-index: 1000;
+                bottom: 0.2em !important;
+                overflow: hidden;
+                background: #575757;
+                color: white;
+                width: 33%;
+                font-size: 1em !important;
+                text-align: right;
+                /* for IE */
+                filter:alpha(opacity=90);
+                /* CSS3 standard */
+                opacity:0.9;
+                border-radius: 4px;
+            }
+
+            a:link, a:visited, a:hover, a:active {
+                /*color: #00008a;*/
+                color: #9e9eff;
+            }
+        </style>
+        <script src="http://code.jquery.com/jquery-1.7.min.js" ></script>
+        <script src="http://openlayers.org/api/OpenLayers.js"></script>
+        <script type="text/javascript">
+
+            function init()
+            {
+                var args = OpenLayers.Util.getParameters();
+                var layer_name = "temp";
+                var lat = 0;
+                var lon = 0;
+                var zoom = 2;
+                var opacity = 0.5;
+
+                var map = new OpenLayers.Map("map",
+                        {
+                            units: 'm',
+                            projection: "EPSG:900913",
+                            displayProjection: new OpenLayers.Projection("EPSG:4326"),
+                            fractionalZoom: true
+                        });
+                var radar = new OpenLayers.Layer.OWMRadar("Radar (USA and Canada)",
+                        {
+                            isBaseLayer: false
+                                    , opacity: 0.6
+                        });
+                var osm = new OpenLayers.Layer.XYZ(
+                        "osm",
+                        "http://${s}.tile.openweathermap.org/map/osm/${z}/${x}/${y}.png",
+                        {
+                            numZoomLevels: 18,
+                            sphericalMercator: true
+                        }
+                );
+
+
+                var mapnik = new OpenLayers.Layer.OSM();
+
+                var opencyclemap = new OpenLayers.Layer.XYZ(
+                        "opencyclemap",
+                        "http://a.tile3.opencyclemap.org/landscape/${z}/${x}/${y}.png",
+                        {
+                            numZoomLevels: 18,
+                            sphericalMercator: true
+                        }
+                );
+                var Press_CONTOUR = new OpenLayers.Layer.XYZ(
+                        "pressure",
+                        "http://${s}.tile.openweathermap.org/map/pressure_cntr/${z}/${x}/${y}.png",
+                        {
+                            numZoomLevels: 19,
+                            isBaseLayer: false,
+                            opacity: 0.4,
+                            sphericalMercator: true
+
+                        }
+                );
+
+                var layer = new OpenLayers.Layer.XYZ(
+                        "layer " + layer_name,
+                        "http://${s}.tile.openweathermap.org/map/" + layer_name + "/${z}/${x}/${y}.png",
+                        //"http://wind.openweathermap.org/map/"+layer_name+"/${z}/${x}/${y}.png",
+                                {
+                                    //   numZoomLevels: 19, 
+                                    isBaseLayer: false,
+                                    opacity: opacity,
+                                    sphericalMercator: true
+
+                                }
+                        );
+
+                        var centre = new OpenLayers.LonLat(lon, lat).transform(new OpenLayers.Projection("EPSG:4326"),
+                                new OpenLayers.Projection("EPSG:900913"));
+                        map.addLayers([mapnik, osm, Press_CONTOUR, opencyclemap, layer ]);
+                        map.setCenter(centre, zoom);
+                        var ls = new OpenLayers.Control.LayerSwitcher({'ascending': false});
+                        map.addControl(ls);
+
+                        map.events.register("mousemove", map, function(e) {
+                            var position = map.getLonLatFromViewPortPx(e.xy).transform(new OpenLayers.Projection("EPSG:900913"),
+                                    new OpenLayers.Projection("EPSG:4326"));
+
+                            $("#mouseposition").html("Lat: " + Math.round(position.lat * 100) / 100 + " Lon: " + Math.round(position.lon * 100) / 100 +
+                                    ' zoom: ' + map.getZoom());
+                        });
+
+                    }
+
+        </script>
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-31601618-1']);
+            _gaq.push(['_setDomainName', 'openweathermap.org']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </head>
+
+    <body onload="init()">
+        <div id="map" style='width: 500; height: 500'></div>
+        <div id="links">
+            <div id="mouseposition">Lat Lng</div>
+        </div>
+    </body>
+
+
+</html>
+
