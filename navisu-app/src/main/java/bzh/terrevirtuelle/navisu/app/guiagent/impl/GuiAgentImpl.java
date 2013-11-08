@@ -15,6 +15,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.impl.I18nImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuBarServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuBarImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
@@ -52,6 +54,9 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
     @SubComponent I18nImpl i18n;
     @UsedService I18nServices i18nServices;
 
+    @SubComponent OptionsManagerImpl optionsManager;
+    @UsedService OptionsManagerServices optionsManagerServices;
+
     protected int width;
     protected int height;
     
@@ -81,6 +86,13 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
             System.exit(0);
         });
         menuServices.addMenuItem(i18nServices.tr("menubar.menu.file"), fileMenuItem);
+
+        menuServices.createMenu("Options");
+        MenuItem preferenceMenuItem = new MenuItem("Preferences");
+        preferenceMenuItem.setOnAction(e -> {
+            optionsManagerServices.show();
+        });
+        menuServices.addMenuItem("Options", preferenceMenuItem);
 
         pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
 
