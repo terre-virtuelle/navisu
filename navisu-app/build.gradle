@@ -2,7 +2,7 @@
 apply plugin:'application'
 
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'bzh.terrevirtuelle.terrevirtuelle.app'
+    ext.mainClass = 'bzh.navisu.terrevirtuelle.app.AppMain'
 }
 
 mainClassName = 'bzh.terrevirtuelle.terrevirtuelle.app.AppMain'

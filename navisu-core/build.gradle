@@ -1,11 +1,4 @@
 
-//apply plugin: 'application'
-
-if (!hasProperty('mainClass')) {
-    ext.mainClass = 'bzh.terrevirtuelle.terrevirtuelle.core.CoreMain'
-}
-
-//mainClassName = 'bzh.terrevirtuelle.terrevirtuelle.core.CoreMain'
 
 dependencies {
     
