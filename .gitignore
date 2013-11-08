@@ -1,0 +1,15 @@
+# Compiled source #
+###################
+*.class
+
+#Ignore all .iml file
+###################
+*.iml
+
+#Ignore .gradle 
+##################
+.gradle/
+
+#Ignore build directory
+##################
+*/build/
