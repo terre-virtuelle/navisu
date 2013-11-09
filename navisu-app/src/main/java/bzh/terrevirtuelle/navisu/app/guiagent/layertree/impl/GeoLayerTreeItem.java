@@ -19,6 +19,9 @@ public class GeoLayerTreeItem extends CheckBoxTreeItem<String> {
 
         this.setSelected(this.geoLayer.isVisible());
 
-        //TODO set on select event to show or hide
+        this.addEventHandler(CheckBoxTreeItem.checkBoxSelectionChangedEvent(), (e) -> {
+
+            geoLayer.setVisible(GeoLayerTreeItem.this.isSelected());
+        });
     }
 }

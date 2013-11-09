@@ -107,6 +107,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application");
             ComponentManager.componentManager.stopApplication();
+            System.exit(0);
         });
         stage.setScene(scene);
         stage.show();
