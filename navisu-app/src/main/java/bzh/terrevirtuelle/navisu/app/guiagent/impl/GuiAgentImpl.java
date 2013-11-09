@@ -92,11 +92,10 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         });
         menuServices.addMenuItem(i18nServices.tr("menubar.menu.file"), fileMenuItem);
 
-<<<<<<< HEAD
         pane.setLeft(this.layerTreeServices.getDisplayService().getDisplayable());
 
         //pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
-=======
+
         menuServices.createMenu("Options");
         MenuItem preferenceMenuItem = new MenuItem("Preferences");
         preferenceMenuItem.setOnAction(e -> {
@@ -105,7 +104,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         menuServices.addMenuItem("Options", preferenceMenuItem);
 
         pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
->>>>>>> 6bb498ef4787dfffc778d24b5ce8fa003c78601a
+
 
         stage.setTitle("NaVisu");
         stage.setScene(scene);
