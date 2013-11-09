@@ -47,6 +47,9 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
+    @SubComponent OptionsManagerImpl optionsManager;
+    @UsedService OptionsManagerServices optionsManagerServices;
+
     @SubComponent MenuBarImpl menu;
     @UsedService MenuBarServices menuServices;
 
@@ -58,9 +61,6 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     @SubComponent I18nImpl i18n;
     @UsedService I18nServices i18nServices;
-
-    @SubComponent OptionsManagerImpl optionsManager;
-    @UsedService OptionsManagerServices optionsManagerServices;
 
     protected int width;
     protected int height;

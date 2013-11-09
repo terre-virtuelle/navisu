@@ -2,6 +2,8 @@ package bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTree;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.options.LayerTreeOptionsControllerImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.core.utility.Checker;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -11,6 +13,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,6 +26,8 @@ import java.util.Map;
  * @date 08/11/2013 23:17
  */
 public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentState {
+
+    @UsedService OptionsManagerServices optionsManagerServices;
 
     protected TreeView treeView;
     protected TreeItem rootItem;
@@ -37,6 +42,8 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
 
         this.treeView.setShowRoot(false);
         this.treeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+
+        this.optionsManagerServices.getOptionsControllers().add(new LayerTreeOptionsControllerImpl());
     }
 
     @Override
@@ -56,6 +63,8 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
             geoLayerItem.setExpanded(true);
             groupItem.getChildren().add(geoLayerItem);
         });
+
+
     }
 
     @Override
