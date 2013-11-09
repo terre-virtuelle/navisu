@@ -5,6 +5,7 @@
 package bzh.terrevirtuelle.navisu.core.view.geoview.layer;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -20,6 +21,8 @@ public interface LayerManager<T> {
 
     List<GeoLayer<T>> getGroup(String key);
     List<GeoLayer<T>> getDefaultGroup();
+
+    Map<String, List<GeoLayer<T>>> getGroups();
 
     void insertGeoLayer(                  GeoLayer<T>... layers);
     void insertGeoLayer(String groupName, GeoLayer<T>... layers);

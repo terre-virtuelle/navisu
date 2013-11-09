@@ -2,14 +2,19 @@ package bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.display.jfx.JFXDisplay;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayers;
 import gov.nasa.worldwind.layers.Layer;
 import javafx.scene.Node;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
+
+import java.util.Map;
 
 /**
  * NaVisu
@@ -18,6 +23,8 @@ import org.capcaval.c3.component.ComponentState;
  * @date 02/11/2013 11:54
  */
 public class GeoViewImpl implements GeoView, GeoViewServices, ComponentState {
+
+    @UsedService LayerTreeServices layerTreeServices;
 
     protected GeoWorldWindView geoView;
     protected LayerManager<Layer> layerManager;
@@ -29,6 +36,12 @@ public class GeoViewImpl implements GeoView, GeoViewServices, ComponentState {
         this.layerManager = this.geoView.getLayerManager();
 
         this.initDefaultLayers(this.layerManager);
+
+        this.layerManager.getGroups().forEach((groupName, geoLayerList) -> {
+
+            if(geoLayerList.size() > 0)
+                layerTreeServices.createGroup(groupName, geoLayerList.toArray(new GeoLayer[geoLayerList.size()]));
+        });
     }
 
     protected void initDefaultLayers(final LayerManager<Layer> layerManager) {

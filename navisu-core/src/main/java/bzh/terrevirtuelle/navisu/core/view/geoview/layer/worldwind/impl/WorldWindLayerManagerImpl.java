@@ -66,6 +66,11 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         return this.groupMap.get(DEFAULT_GROUP);
     }
 
+    @Override
+    public Map<String, List<GeoLayer<Layer>>> getGroups() {
+        return this.groupMap;
+    }
+
     //----------------------------------------------------------------------------------------------------------------//
     // Insertion
     //

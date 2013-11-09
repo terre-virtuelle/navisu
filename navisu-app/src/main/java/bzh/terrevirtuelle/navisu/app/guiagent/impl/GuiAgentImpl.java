@@ -13,6 +13,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.impl.I18nImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerTreeImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuBarServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuBarImpl;
 import javafx.fxml.FXMLLoader;
@@ -45,6 +47,9 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     @SubComponent MenuBarImpl menu;
     @UsedService MenuBarServices menuServices;
+
+    @SubComponent LayerTreeImpl layerTree;
+    @UsedService LayerTreeServices layerTreeServices;
 
     @SubComponent GeoViewImpl geoView;
     @UsedService  GeoViewServices geoViewServices;
@@ -82,7 +87,9 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         });
         menuServices.addMenuItem(i18nServices.tr("menubar.menu.file"), fileMenuItem);
 
-        pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
+        pane.setLeft(this.layerTreeServices.getDisplayService().getDisplayable());
+
+        //pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
 
         stage.setTitle("NaVisu");
         stage.setScene(scene);
