@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.misc;
+package bzh.terrevirtuelle.navisu.instruments.instrument.misc;
 
 import java.awt.Dimension;
 import java.awt.Point;

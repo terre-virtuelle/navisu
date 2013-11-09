@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.view.radialMenu;
+package bzh.terrevirtuelle.navisu.instruments.widget.view.radialMenu;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
@@ -30,10 +30,10 @@ import javafx.util.Duration;
 import jfxtras.labs.scene.control.radialmenu.RadialContainerMenuItem;
 import jfxtras.labs.scene.control.radialmenu.RadialMenu;
 import jfxtras.labs.scene.control.radialmenu.RadialMenuItem;
-import org.navisu.instrument.controller.InstrumentsGlassPaneController;
-import org.navisu.instrument.controller.simulator.SounderSimulator;
-import org.navisu.instrument.view.sounder.Sounder;
-import org.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.InstrumentsGlassPaneController;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.simulator.SounderSimulator;
+import bzh.terrevirtuelle.navisu.instruments.instrument.view.sounder.Sounder;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
 
 public class WRadialMenu extends Widget {
     

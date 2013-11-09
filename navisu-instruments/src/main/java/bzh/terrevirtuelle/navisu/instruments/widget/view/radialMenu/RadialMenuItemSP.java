@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.view.radialMenu;
+package bzh.terrevirtuelle.navisu.instruments.widget.view.radialMenu;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;

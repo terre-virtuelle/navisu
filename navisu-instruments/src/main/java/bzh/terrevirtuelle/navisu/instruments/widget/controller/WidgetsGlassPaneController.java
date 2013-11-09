@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.controller;
+package bzh.terrevirtuelle.navisu.instruments.widget.controller;
 
-import org.navisu.widget.model.WidgetsGlassPane;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.WidgetsGlassPane;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
@@ -15,7 +15,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.util.Duration;
-import org.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
 
 /**
  *

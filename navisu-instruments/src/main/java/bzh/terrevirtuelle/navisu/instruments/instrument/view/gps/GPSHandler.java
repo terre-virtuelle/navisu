@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.gps;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.gps;
 
 import gnu.io.SerialPort;
-import org.navisu.instrument.misc.SerialComm;
+import bzh.terrevirtuelle.navisu.instruments.instrument.misc.SerialComm;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

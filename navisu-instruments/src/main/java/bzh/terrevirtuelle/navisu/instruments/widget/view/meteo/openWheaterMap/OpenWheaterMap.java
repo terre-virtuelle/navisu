@@ -2,18 +2,17 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.view.meteo.openWheaterMap;
+package bzh.terrevirtuelle.navisu.instruments.widget.view.meteo.openWheaterMap;
 
 import java.net.URL;
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import org.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
 
 /**
  *

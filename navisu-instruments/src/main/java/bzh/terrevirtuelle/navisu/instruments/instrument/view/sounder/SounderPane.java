@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.sounder;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.sounder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +22,10 @@ import jfxtras.labs.scene.control.gauge.Lcd;
 import jfxtras.labs.scene.control.gauge.LcdDesign;
 import jfxtras.labs.scene.control.gauge.StyleModel;
 import jfxtras.labs.scene.control.gauge.StyleModelBuilder;
-import org.navisu.instrument.controller.events.SounderEvent;
-import org.navisu.instrument.controller.events.SounderEventListener;
-import org.navisu.instrument.model.Display;
-import org.navisu.instrument.model.InstrumentPane;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.SounderEvent;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.SounderEventListener;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.InstrumentPane;
 
 /**
  *

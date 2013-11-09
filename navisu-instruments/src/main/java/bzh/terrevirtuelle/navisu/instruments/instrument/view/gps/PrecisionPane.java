@@ -2,25 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.gps;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.gps;
 
-import org.navisu.instrument.misc.Pair;
-import java.util.Calendar;
+import bzh.terrevirtuelle.navisu.instruments.instrument.misc.Pair;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import javafx.event.EventHandler;
+
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageViewBuilder;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.GridPaneBuilder;
 import jfxtras.labs.scene.control.gauge.Battery;
-import org.navisu.instrument.model.Display;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
 
 /**
  *

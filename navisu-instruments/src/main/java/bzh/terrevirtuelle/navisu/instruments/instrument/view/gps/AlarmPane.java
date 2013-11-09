@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.gps;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.gps;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -38,8 +38,8 @@ import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GeodeticCurve;
 import org.gavaghan.geodesy.GlobalCoordinates;
-import org.navisu.instrument.misc.IntField;
-import org.navisu.instrument.model.Display;
+import bzh.terrevirtuelle.navisu.instruments.instrument.misc.IntField;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
 
 /**
  *

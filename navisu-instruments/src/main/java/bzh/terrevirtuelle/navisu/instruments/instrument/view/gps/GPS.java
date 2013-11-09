@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.gps;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.gps;
 
-import org.navisu.instrument.misc.Pair;
-import org.navisu.instrument.model.Display;
+import bzh.terrevirtuelle.navisu.instruments.instrument.misc.Pair;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,8 +18,8 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBuilder;
-import org.navisu.instrument.controller.events.DayNightEvent;
-import org.navisu.instrument.controller.events.DayNightEventListener;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.DayNightEvent;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.DayNightEventListener;
 
 /**
  *

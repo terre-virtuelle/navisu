@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.model;
+package bzh.terrevirtuelle.navisu.instruments.instrument.model;
 
-import org.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.EventHandler;
@@ -17,12 +17,11 @@ import javafx.scene.control.MenuButtonBuilder;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import org.navisu.instrument.controller.events.QuitEventListener;
-import org.navisu.instrument.controller.events.DayNightEvent;
-import org.navisu.instrument.controller.events.DayNightEventListener;
-import org.navisu.instrument.controller.events.QuitEvent;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.QuitEventListener;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.DayNightEvent;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.DayNightEventListener;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.QuitEvent;
 
 /**
  *

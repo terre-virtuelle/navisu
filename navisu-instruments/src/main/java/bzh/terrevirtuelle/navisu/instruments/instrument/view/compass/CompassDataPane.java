@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.compass;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.compass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBuilder;
 import javafx.util.Duration;
-import org.navisu.instrument.model.Display;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
 
 /**
  *

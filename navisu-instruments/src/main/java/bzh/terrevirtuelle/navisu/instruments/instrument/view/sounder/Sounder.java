@@ -2,18 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.sounder;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.sounder;
 
 import java.util.List;
 import java.util.Map;
-import org.navisu.instrument.model.Display;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import org.navisu.instrument.controller.events.DayNightEvent;
-import org.navisu.instrument.controller.events.DayNightEventListener;
-import org.navisu.instrument.controller.events.SounderEventListener;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.DayNightEvent;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.DayNightEventListener;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.SounderEventListener;
 
 /**
  *

@@ -2,35 +2,50 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.app;
+package bzh.terrevirtuelle.navisu.instruments.app;
 
 import javax.swing.SwingUtilities;
-
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.InstrumentsGlassPaneController;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.simulator.GPSSimulator;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.simulator.SounderSimulator;
+import bzh.terrevirtuelle.navisu.instruments.instrument.view.gps.GPS;
+import bzh.terrevirtuelle.navisu.instruments.instrument.view.gps.PrintGPSHandler;
+import bzh.terrevirtuelle.navisu.instruments.instrument.view.sounder.Sounder;
+import bzh.terrevirtuelle.navisu.instruments.widget.controller.WidgetsGlassPaneController;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.widget.view.button.StopWidget;
 import javafx.application.Application;
-import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import org.navisu.instrument.controller.InstrumentsGlassPaneController;
-import org.navisu.instrument.controller.simulator.GPSSimulator;
-import org.navisu.instrument.controller.simulator.SounderSimulator;
-import org.navisu.instrument.view.gps.GPS;
-import org.navisu.instrument.view.gps.PrintGPSHandler;
-import org.navisu.instrument.view.sounder.Sounder;
-import org.navisu.widget.controller.WidgetsGlassPaneController;
-import org.navisu.widget.model.Widget;
-import org.navisu.widget.view.button.ButtonWidget;
-import org.navisu.widget.view.button.StopWidget;
 
 /**
+ *
  * @author Dom
  */
 public class Main extends Application {
 
-    public static void main(String[] args) {
-        launch(Main.class);
-    }
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        StackPane root = new StackPane();
+
+        GPS gps = new GPS(new PrintGPSHandler());
+        new GPSSimulator(gps, 48.43771f, -4.4977236f, 0.0005f).execute();
+
+        root.getChildren().add(gps);
+
+        Scene scene = new Scene(root, 500, 500);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+
+    static void tmp() {
         InstrumentsGlassPaneController intrumentsGlassPaneController = new InstrumentsGlassPaneController(1200, 1000);
         WidgetsGlassPaneController widgetsGlassPaneController = new WidgetsGlassPaneController(1200, 1000);
 
@@ -38,13 +53,13 @@ public class Main extends Application {
         intrumentsGlassPaneController.addInstrument(gps);
         intrumentsGlassPaneController.startParallelTransition(gps, 0f, 0f, 300f, 300f, 0.0f, 0.0f, 1.f, 1.f);
         new GPSSimulator(gps, 48.43771f, -4.4977236f, 0.0005f).execute();
-                        /*
-                         WRadialMenu wRadialMenu = new WRadialMenu(intrumentsGlassPaneController);
-                         widgetsGlassPaneController.add(wRadialMenu);
-                         widgetsGlassPaneController.startParallelTransition(wRadialMenu, 0f, 0f, 100f, 200f, 0.0f, 0.0f, 1.f, 1.f);
-                         intrumentsGlassPaneController.add(wRadialMenu);
-                         intrumentsGlassPaneController.startParallelTransition(wRadialMenu, 0f, 0f, 100f, 200f, 0.0f, 0.0f, 1.f, 1.f);
-                         */
+                /*
+                 WRadialMenu wRadialMenu = new WRadialMenu(intrumentsGlassPaneController);
+                 widgetsGlassPaneController.add(wRadialMenu);
+                 widgetsGlassPaneController.startParallelTransition(wRadialMenu, 0f, 0f, 100f, 200f, 0.0f, 0.0f, 1.f, 1.f);
+                 intrumentsGlassPaneController.add(wRadialMenu);
+                 intrumentsGlassPaneController.startParallelTransition(wRadialMenu, 0f, 0f, 100f, 200f, 0.0f, 0.0f, 1.f, 1.f);
+                 */
         Sounder sounder = new Sounder();
         intrumentsGlassPaneController.addInstrument(sounder);
         intrumentsGlassPaneController.startParallelTransition(sounder, 0f, 0f, 200f, 200f, 0.0f, 0.0f, 1.f, 1.f);

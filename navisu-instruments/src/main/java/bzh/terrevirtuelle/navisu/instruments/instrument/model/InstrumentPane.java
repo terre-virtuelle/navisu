@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.model;
+package bzh.terrevirtuelle.navisu.instruments.instrument.model;
 
 import java.util.HashMap;
 import java.util.Map;

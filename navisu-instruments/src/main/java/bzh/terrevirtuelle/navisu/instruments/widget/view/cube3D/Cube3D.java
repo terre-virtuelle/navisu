@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.view.cube3D;
+package bzh.terrevirtuelle.navisu.instruments.widget.view.cube3D;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.RectangleBuilder;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import org.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
 
 /**
  *

@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.misc;
+package bzh.terrevirtuelle.navisu.instruments.instrument.misc;
 
-import org.navisu.instrument.view.gps.GPSHandler;
+import bzh.terrevirtuelle.navisu.instruments.instrument.view.gps.GPSHandler;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.model;
+package bzh.terrevirtuelle.navisu.instruments.widget.model;
 
 import com.sun.awt.AWTUtilities;
 import java.awt.BorderLayout;
@@ -15,7 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+
 import javax.swing.JWindow;
 
 /**

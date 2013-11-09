@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.view.url;
+package bzh.terrevirtuelle.navisu.instruments.widget.view.url;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,7 +14,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import org.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
 
 /**
  *

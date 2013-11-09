@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.view.meteo.googleWheater;
+package bzh.terrevirtuelle.navisu.instruments.widget.view.meteo.googleWheater;
 
 import java.net.URL;
 import javafx.application.Platform;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import org.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
 
 /**
  *

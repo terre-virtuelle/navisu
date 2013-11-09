@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.sounder;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.sounder;
 
 import java.util.ArrayList;
 import javafx.beans.value.ChangeListener;
@@ -31,13 +31,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import jfxtras.labs.scene.control.gauge.LcdBuilder;
-import org.navisu.instrument.controller.events.SounderEvent;
-import org.navisu.instrument.misc.IntField;
-import org.navisu.instrument.model.Display;
-import static org.navisu.instrument.view.sounder.SounderPane.VIRTUAL_SLIDER_TOOLTIP;
-import static org.navisu.instrument.view.sounder.SounderPane.STYLE_MODEL_1;
-import static org.navisu.instrument.view.sounder.SounderPane.STYLE_MODEL_2;
-import static org.navisu.instrument.view.sounder.SounderPane.STYLE_MODEL_3;
+import bzh.terrevirtuelle.navisu.instruments.instrument.controller.events.SounderEvent;
+import bzh.terrevirtuelle.navisu.instruments.instrument.misc.IntField;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
 
 /**
  *

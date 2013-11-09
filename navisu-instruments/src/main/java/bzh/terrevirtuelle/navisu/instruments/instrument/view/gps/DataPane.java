@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.gps;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.gps;
 
 //import com.sun.prism.paint.Color;
 import java.text.DecimalFormat;
@@ -20,8 +20,8 @@ import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextBuilder;
-import org.navisu.instrument.misc.Utils;
-import org.navisu.instrument.model.Display;
+import bzh.terrevirtuelle.navisu.instruments.instrument.misc.Utils;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
 
 /**
  *

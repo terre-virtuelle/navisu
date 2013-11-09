@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.instrument.view.compass;
+package bzh.terrevirtuelle.navisu.instruments.instrument.view.compass;
 
-import org.navisu.instrument.model.Display;
-import org.navisu.instrument.model.InstrumentPane;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.Display;
+import bzh.terrevirtuelle.navisu.instruments.instrument.model.InstrumentPane;
 
 /**
  *

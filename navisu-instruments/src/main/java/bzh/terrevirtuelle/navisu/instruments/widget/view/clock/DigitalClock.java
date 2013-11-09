@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.navisu.widget.view.clock;
+package bzh.terrevirtuelle.navisu.instruments.widget.view.clock;
 
 import java.util.Calendar;
 import javafx.animation.KeyFrame;
@@ -22,7 +22,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Shear;
 import javafx.util.Duration;
-import org.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.instruments.widget.model.Widget;
 
 /**
  *
