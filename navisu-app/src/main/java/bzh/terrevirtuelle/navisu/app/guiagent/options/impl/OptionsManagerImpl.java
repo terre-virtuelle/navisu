@@ -54,6 +54,7 @@ public class OptionsManagerImpl implements OptionsManager, OptionsManagerService
     @Override
     public void componentStopped() {
         LOGGER.info("Options Component Stopped");
+        this.stage.close();
     }
 
 

@@ -104,6 +104,10 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         menuServices.addMenuItem("Options", preferenceMenuItem);
 
         stage.setTitle("NaVisu");
+        stage.setOnCloseRequest(e -> {
+            LOGGER.info("Stop Application");
+            ComponentManager.componentManager.stopApplication();
+        });
         stage.setScene(scene);
         stage.show();
     }
