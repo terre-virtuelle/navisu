@@ -103,9 +103,6 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         });
         menuServices.addMenuItem("Options", preferenceMenuItem);
 
-        pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
-
-
         stage.setTitle("NaVisu");
         stage.setScene(scene);
         stage.show();
