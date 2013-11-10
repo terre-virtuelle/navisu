@@ -61,7 +61,7 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
         this.treeView.setShowRoot(false);
         this.treeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
 
-        this.optionsManagerServices.getOptionsControllers().add(new LayerTreeOptionsControllerImpl());
+        this.optionsManagerServices.add(new LayerTreeOptionsControllerImpl());
     }
 
     @Override
@@ -73,15 +73,13 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
         CheckBoxTreeItem<String> groupItem = new CheckBoxTreeItem<>(groupName);
         this.rootItem.getChildren().add(groupItem);
 
-        Arrays.asList(layers).forEach((geoLayer) -> {
+        for(GeoLayer geoLayer : layers) {
 
             GeoLayerTreeItem geoLayerItem = new GeoLayerTreeItem(geoLayer);
 
             groupItem.setExpanded(true);
             groupItem.getChildren().add(geoLayerItem);
-        });
-
-
+        }
     }
 
     @Override
