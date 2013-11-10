@@ -114,8 +114,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
             optionsManagerServices.show();
         });
 
-        //root.setTop(this.menuServices.getDisplayService().getDisplayable());
-        this.initializeMenuBar(this.menuServices);
+        root.getChildren().add(this.initializeMenuBar(this.menuServices));
 
         //pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
 
@@ -129,7 +128,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         stage.show();
     }
 
-    protected void initializeMenuBar(final MenuBarServices menuServices) {
+    protected Node initializeMenuBar(final MenuBarServices menuServices) {
 
         menuServices.createMenu(i18nServices.tr("menubar.menu.file"));
         MenuItem fileMenuItem = new MenuItem(i18nServices.tr("menubar.menu.menuitem.exit"));
@@ -146,6 +145,8 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
             optionsManagerServices.show();
         });
         menuServices.addMenuItem("Options", preferenceMenuItem);
+
+        return menuServices.getDisplayService().getDisplayable();
     }
 
     @Override
