@@ -5,8 +5,10 @@
 package bzh.terrevirtuelle.navisu.instruments;
 
 import bzh.terrevirtuelle.navisu.instruments.controller.InstrumentsGlassPaneController;
+import bzh.terrevirtuelle.navisu.instruments.controller.simulator.CompassSimulator;
 import bzh.terrevirtuelle.navisu.instruments.controller.simulator.GPSSimulator;
 import bzh.terrevirtuelle.navisu.instruments.controller.simulator.SounderSimulator;
+import bzh.terrevirtuelle.navisu.instruments.view.compass.Compass;
 import bzh.terrevirtuelle.navisu.instruments.view.gps.GPS;
 import bzh.terrevirtuelle.navisu.instruments.view.gps.PrintGPSHandler;
 import bzh.terrevirtuelle.navisu.instruments.view.sounder.Sounder;
@@ -32,8 +34,17 @@ public class InstrumentsMain extends Application {
 
         GPS gps = new GPS(new PrintGPSHandler());
         new GPSSimulator(gps, 48.43771f, -4.4977236f, 0.0005f).execute();
-
         root.getChildren().add(gps);
+
+        /*
+        Sounder sounder = new Sounder();
+        new SounderSimulator(sounder, 5000.0f, 3.0f).execute();
+        root.getChildren().add(sounder);
+        */
+
+        Compass compass = new Compass();
+        new CompassSimulator(compass).execute();
+        root.getChildren().add(compass);
 
         Scene scene = new Scene(root, 500, 500);
         stage.setScene(scene);

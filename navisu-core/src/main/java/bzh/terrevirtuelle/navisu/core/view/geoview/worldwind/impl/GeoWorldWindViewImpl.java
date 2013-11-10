@@ -8,15 +8,19 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindLayerManagerImpl;
 import bzh.terrevirtuelle.navisu.core.utility.Checker;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.view.CustomViewInputHandler;
 import gov.nasa.worldwind.BasicModel;
+import gov.nasa.worldwind.Configuration;
 import gov.nasa.worldwind.Model;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
 import gov.nasa.worldwind.awt.WorldWindowGLJPanel;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.EarthFlat;
+import gov.nasa.worldwind.view.orbit.OrbitView;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Node;
 
@@ -40,6 +44,8 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
     protected final SwingNode swingNode;
 
     public GeoWorldWindViewImpl() {
+
+        Configuration.setValue(AVKey.VIEW_INPUT_HANDLER_CLASS_NAME, CustomViewInputHandler.class.getName());
 
         // Create the WorldWindow
         this.wwd = new WorldWindowGLJPanel();
