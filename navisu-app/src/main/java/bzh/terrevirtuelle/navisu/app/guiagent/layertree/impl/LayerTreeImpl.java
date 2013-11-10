@@ -12,12 +12,17 @@ import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.layout.BorderPane;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * NaVisu
@@ -27,7 +32,11 @@ import java.util.Map;
  */
 public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentState {
 
+    protected static final Logger LOGGER = Logger.getLogger(LayerTreeImpl.class.getName());
+
     @UsedService OptionsManagerServices optionsManagerServices;
+
+    protected BorderPane container;
 
     protected TreeView treeView;
     protected TreeItem rootItem;
@@ -37,8 +46,15 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
     @Override
     public void componentInitiated() {
 
+        this.container = new BorderPane();
+        this.container.setMaxWidth(250);
+
+        this.container.getStylesheets().add(LayerTreeImpl.class.getResource("LayerTree.css").toExternalForm());
+
         this.rootItem = new TreeItem();
         this.treeView = new TreeView(this.rootItem);
+
+        this.container.setCenter(this.treeView);
 
         this.treeView.setShowRoot(false);
         this.treeView.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
@@ -74,7 +90,7 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
 
     @Override
     public Display<Node> getDisplayService() {
-        return Display.factory.newDisplayNode(this.treeView);
+        return Display.factory.newDisplayNode(this.container);
     }
 
     @Override

@@ -65,7 +65,7 @@ public class GeoViewImpl implements GeoView, GeoViewServices, ComponentState {
         );
 
         layerManager.createGroup("On-screen layers",
-                WorldWindLayers.WorldMap.newInstance(),
+                //WorldWindLayers.WorldMap.newInstance(),
                 WorldWindLayers.ScaleBar.newInstance(),
                 WorldWindLayers.Compass.newInstance()
         );

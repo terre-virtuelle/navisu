@@ -1,0 +1,78 @@
+
+.tree-view {
+    -fx-padding: 1;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-insets: 0,1;
+}
+.tree-view:focused {
+    -fx-padding: 1;
+    -fx-background-color: null;
+    -fx-background-insets: -1.4, 0, 1;
+    -fx-background-radius: -1.4, 0, 0;
+}
+.tree-cell {
+    -fx-font: bold 10pt "Amble Cn";
+    -fx-text-fill: white;
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-cell-size: 24;
+    -fx-indent: 6;
+    -fx-padding: 3;
+}
+
+/*.tree-cell:odd {
+    -fx-background-color: null;
+}*/
+
+.tree-view *.scroll-bar:horizontal *.track {
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 3;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.tree-view *.scroll-bar:vertical *.track {
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 3;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.tree-view *.scroll-bar *.increment-button {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.tree-view *.scroll-bar *.decrement-button {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.tree-view *.scroll-bar:horizontal *.increment-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 6 0 3 0;
+    -fx-shape: null;
+}
+
+.tree-view *.scroll-bar:vertical *.increment-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0 6 0 3;
+    -fx-shape: null;
+}
+.tree-view *.scroll-bar:horizontal *.decrement-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 6 0 3 0;
+    -fx-shape: null;
+}
+.tree-view *.scroll-bar:vertical *.decrement-arrow {
+    -fx-background-color: null;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-padding: 0 6 0 3;
+    -fx-shape: null;
+}

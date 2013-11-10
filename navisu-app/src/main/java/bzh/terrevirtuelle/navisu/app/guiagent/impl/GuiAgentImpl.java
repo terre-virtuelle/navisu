@@ -21,11 +21,14 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.capcaval.c3.component.annotation.SubComponent;
@@ -77,11 +80,11 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
      
         this.stage = stage;
         
-        BorderPane pane = new BorderPane();
-        Scene scene = new Scene(pane, this.width, this.height, Color.ALICEBLUE);
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
 
-        pane.setCenter(this.geoViewServices.getDisplayService().getDisplayable());
-        pane.setTop(this.menuServices.getDisplayService().getDisplayable());
+        root.getChildren().add(this.geoViewServices.getDisplayService().getDisplayable());
+        //root.setTop(this.menuServices.getDisplayService().getDisplayable());
 
         menuServices.createMenu(i18nServices.tr("menubar.menu.file"));
         MenuItem fileMenuItem = new MenuItem(i18nServices.tr("menubar.menu.menuitem.exit"));
@@ -92,7 +95,9 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         });
         menuServices.addMenuItem(i18nServices.tr("menubar.menu.file"), fileMenuItem);
 
-        pane.setLeft(this.layerTreeServices.getDisplayService().getDisplayable());
+        Node layerTreeNode = this.layerTreeServices.getDisplayService().getDisplayable();
+        StackPane.setAlignment(layerTreeNode, Pos.TOP_LEFT);
+        root.getChildren().add(layerTreeNode);
 
         //pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
 

@@ -23,6 +23,5 @@ public class GeoLayerTreeItem extends CheckBoxTreeItem<String> {
 
             geoLayer.setVisible(GeoLayerTreeItem.this.isSelected());
         });
-        //
     }
 }
