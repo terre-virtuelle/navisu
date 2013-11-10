@@ -13,5 +13,11 @@ public interface Display<T> {
     void    setVisible(boolean visible);
     boolean isVisible();
 
+    void   setMaxWidth(double maxWidth);
+    double getMaxWidth();
+
+    void   setMaxHeight(double maxHeight);
+    double getMaxHeight();
+
     T getDisplayable();
 }

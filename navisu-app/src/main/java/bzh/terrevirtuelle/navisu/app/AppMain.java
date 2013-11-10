@@ -32,7 +32,7 @@ public class AppMain extends Application {
         LOGGER.info(result);
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
-        guiAgentServices.showGui(stage, 500, 500);
+        guiAgentServices.showGui(stage, 800, 500);
     }
 
     public static void main(String[] args) {

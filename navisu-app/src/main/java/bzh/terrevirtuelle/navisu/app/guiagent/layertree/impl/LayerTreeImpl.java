@@ -9,10 +9,12 @@ import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.BorderPane;
+import javafx.util.Callback;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -47,7 +49,7 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
     public void componentInitiated() {
 
         this.container = new BorderPane();
-        this.container.setMaxWidth(250);
+        //this.container.setMaxWidth(250);
 
         this.container.getStylesheets().add(LayerTreeImpl.class.getResource("LayerTree.css").toExternalForm());
 
@@ -65,8 +67,6 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
     @Override
     public void createGroup(String groupName, GeoLayer<?>... layers) {
 
-        Checker.notNull(this.groupMap, "GroupMap is null.");
-
         Checker.notNull(groupName, "Group name is null.");
         Checker.keyNotExistsInMap(this.groupMap, groupName, "Group named \"" + groupName + "\" already exists in layer tree.");
 
@@ -76,7 +76,8 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
         Arrays.asList(layers).forEach((geoLayer) -> {
 
             GeoLayerTreeItem geoLayerItem = new GeoLayerTreeItem(geoLayer);
-            geoLayerItem.setExpanded(true);
+
+            groupItem.setExpanded(true);
             groupItem.getChildren().add(geoLayerItem);
         });
 

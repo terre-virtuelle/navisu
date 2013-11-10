@@ -13,12 +13,16 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.impl.I18nImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.icons.IconsManager;
+import bzh.terrevirtuelle.navisu.app.guiagent.icons.IconsManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.icons.impl.IconsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerTreeImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuBarServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuBarImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
+import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.geometry.Pos;
@@ -65,6 +69,9 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
     @SubComponent I18nImpl i18n;
     @UsedService I18nServices i18nServices;
 
+    @SubComponent IconsManagerImpl iconsManager;
+    @UsedService IconsManagerServices iconsServices;
+
     protected int width;
     protected int height;
     
@@ -84,7 +91,45 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
 
         root.getChildren().add(this.geoViewServices.getDisplayService().getDisplayable());
+
+        Display<Node> layerTreeDisplay = this.layerTreeServices.getDisplayService();
+        StackPane.setAlignment(layerTreeDisplay.getDisplayable(), Pos.CENTER_LEFT);
+        layerTreeDisplay.setMaxWidth(250);
+        root.getChildren().add(layerTreeDisplay.getDisplayable());
+
+        ToolBar toolBar = new ToolBar();
+        Node toolBarNodeDisplay = toolBar.getDisplayable();
+        StackPane.setAlignment(toolBarNodeDisplay, Pos.TOP_LEFT);
+        toolBarNodeDisplay.setTranslateX(layerTreeDisplay.getMaxWidth());
+        root.getChildren().add(toolBarNodeDisplay);
+
+        toolBar.addAction(this.iconsServices.getIcon("app.exit"), (e) -> {
+
+            ComponentManager.componentManager.stopApplication();
+            System.exit(0);
+        });
+
+        toolBar.addAction(this.iconsServices.getIcon("app.options"), (e) -> {
+
+            optionsManagerServices.show();
+        });
+
         //root.setTop(this.menuServices.getDisplayService().getDisplayable());
+        this.initializeMenuBar(this.menuServices);
+
+        //pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
+
+        stage.setTitle("NaVisu");
+        stage.setOnCloseRequest(e -> {
+            LOGGER.info("Stop Application");
+            ComponentManager.componentManager.stopApplication();
+            System.exit(0);
+        });
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    protected void initializeMenuBar(final MenuBarServices menuServices) {
 
         menuServices.createMenu(i18nServices.tr("menubar.menu.file"));
         MenuItem fileMenuItem = new MenuItem(i18nServices.tr("menubar.menu.menuitem.exit"));
@@ -95,27 +140,12 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         });
         menuServices.addMenuItem(i18nServices.tr("menubar.menu.file"), fileMenuItem);
 
-        Node layerTreeNode = this.layerTreeServices.getDisplayService().getDisplayable();
-        StackPane.setAlignment(layerTreeNode, Pos.TOP_LEFT);
-        root.getChildren().add(layerTreeNode);
-
-        //pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
-
         menuServices.createMenu("Options");
         MenuItem preferenceMenuItem = new MenuItem("Preferences");
         preferenceMenuItem.setOnAction(e -> {
             optionsManagerServices.show();
         });
         menuServices.addMenuItem("Options", preferenceMenuItem);
-
-        stage.setTitle("NaVisu");
-        stage.setOnCloseRequest(e -> {
-            LOGGER.info("Stop Application");
-            ComponentManager.componentManager.stopApplication();
-            System.exit(0);
-        });
-        stage.setScene(scene);
-        stage.show();
     }
 
     @Override
