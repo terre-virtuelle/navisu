@@ -101,10 +101,11 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         root.getChildren().add(toolBar.getDisplayable());
 
         Display<Node> layerTreeDisplay = this.layerTreeServices.getDisplayService();
-        StackPane.setAlignment(layerTreeDisplay.getDisplayable(), Pos.CENTER_LEFT);
+        //StackPane.setAlignment(layerTreeDisplay.getDisplayable(), Pos.CENTER_LEFT);
         layerTreeDisplay.setMaxWidth(250);
-        layerTreeDisplay.getDisplayable().setTranslateY(toolBar.getMaxHeight());
-        root.getChildren().add(layerTreeDisplay.getDisplayable());
+        //layerTreeDisplay.getDisplayable().setTranslateY(toolBar.getMaxHeight());
+        //root.getChildren().add(layerTreeDisplay.getDisplayable());
+        borderPane.setLeft(layerTreeDisplay.getDisplayable());
 
         toolBar.addAction(this.iconsServices.getIcon("app.exit"), (e) -> {
 
