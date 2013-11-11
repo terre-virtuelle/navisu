@@ -1,10 +1,10 @@
 package bzh.terrevirtuelle.navisu.app;
 
+import bzh.terrevirtuelle.navisu.app.charts.ChartsManagerServices;
+import bzh.terrevirtuelle.navisu.app.charts.impl.ChartsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18n;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
@@ -25,14 +25,18 @@ public class AppMain extends Application {
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
-        String result = componentManager.startApplication(
-                GuiAgentImpl.class
+        LOGGER.info(
+                componentManager.startApplication(
+                        GuiAgentImpl.class,
+                        ChartsManagerImpl.class
+                )
         );
 
-        LOGGER.info(result);
+        GuiAgentServices guiServices = componentManager.getComponentService(GuiAgentServices.class);
+        guiServices.showGui(stage, 800, 500);
 
-        GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
-        guiAgentServices.showGui(stage, 800, 500);
+        ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
+        chartsServices.open(System.getProperty("user.dir") + "/data/101.KAP");
     }
 
     public static void main(String[] args) {
