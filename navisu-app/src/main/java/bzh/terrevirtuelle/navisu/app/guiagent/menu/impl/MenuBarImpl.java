@@ -52,7 +52,15 @@ public class MenuBarImpl implements MenuBar, MenuBarServices, ComponentState {
     @Override
     public void addMenuItem(String menuName, MenuItem item) {
 
-        Checker.keyExistsInMap(this.menuMap, menuName, "Menu \"" + menuName + "\" does not exists in the menuBar bar. Please, create it before.");
+        try {
+            Checker.keyExistsInMap(
+                    this.menuMap,
+                    menuName,
+                    "Menu \"" + menuName + "\" does not exists in the menuBar bar. Please, create it before.");
+        } catch (Exception e) {
+            // Create the menu
+            this.createMenu(menuName);
+        }
 
         // Get the menu
         Menu menu = this.menuMap.get(menuName);

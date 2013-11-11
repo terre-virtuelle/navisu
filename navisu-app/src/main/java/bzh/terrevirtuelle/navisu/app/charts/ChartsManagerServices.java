@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.charts;
 
+import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -10,5 +11,5 @@ import org.capcaval.c3.component.ComponentService;
  */
 public interface ChartsManagerServices extends ComponentService {
 
-    void open(String chartPath);
+    Driver getDriver();
 }

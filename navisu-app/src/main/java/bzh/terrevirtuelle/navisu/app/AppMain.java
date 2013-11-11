@@ -2,6 +2,8 @@ package bzh.terrevirtuelle.navisu.app;
 
 import bzh.terrevirtuelle.navisu.app.charts.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.app.charts.impl.ChartsManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
@@ -28,6 +30,7 @@ public class AppMain extends Application {
         LOGGER.info(
                 componentManager.startApplication(
                         GuiAgentImpl.class,
+                        DriverManagerImpl.class,
                         ChartsManagerImpl.class
                 )
         );
@@ -36,7 +39,9 @@ public class AppMain extends Application {
         guiServices.showGui(stage, 800, 500);
 
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
-        chartsServices.open(System.getProperty("user.dir") + "/data/101.KAP");
+
+        DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
+        driverServices.registerNewDriver(chartsServices.getDriver());
     }
 
     public static void main(String[] args) {
