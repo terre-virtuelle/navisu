@@ -14,6 +14,6 @@ import org.capcaval.c3.component.Component;
  * @author tibus
  * @date 02/11/2013 11:54
  */
-public interface MenuBar extends Component{
+public interface MenuManager extends Component{
     
 }

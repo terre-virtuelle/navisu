@@ -5,6 +5,9 @@ import bzh.terrevirtuelle.navisu.app.charts.impl.ChartsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nLangEnum;
+import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.i18n.impl.I18nImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
 import java.util.logging.Logger;
@@ -29,11 +32,15 @@ public class AppMain extends Application {
 
         LOGGER.info(
                 componentManager.startApplication(
+
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
                         ChartsManagerImpl.class
                 )
         );
+
+        I18nServices translationServices = componentManager.getComponentService(I18nServices.class);
+        translationServices.setLang(I18nLangEnum.FRENCH);
 
         GuiAgentServices guiServices = componentManager.getComponentService(GuiAgentServices.class);
         guiServices.showGui(stage, 800, 500);

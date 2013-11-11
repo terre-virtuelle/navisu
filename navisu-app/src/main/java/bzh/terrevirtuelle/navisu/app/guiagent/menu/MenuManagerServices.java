@@ -11,11 +11,12 @@ import org.capcaval.c3.component.ComponentService;
  * @author tibus
  * @date 02/11/2013 11:54
  */
-public interface MenuBarServices extends ComponentService {
+public interface MenuManagerServices extends ComponentService {
 
-    void createMenu(String name);
+    void createMenu(String menuKey, String menuName);
 
-    void addMenuItem(String menu, MenuItem item);
+    void addMenuItem(String menuKey, String menuName, MenuItem item);
+    void addMenuItem(DefaultMenuEnum menu, MenuItem item);
 
     Display<Node> getDisplayService();
 }

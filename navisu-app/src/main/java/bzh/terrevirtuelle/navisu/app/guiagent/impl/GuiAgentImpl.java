@@ -13,25 +13,21 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.impl.I18nImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.icons.IconsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.icons.IconsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.icons.impl.IconsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerTreeImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuBarServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuBarImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -39,9 +35,6 @@ import org.capcaval.c3.component.annotation.SubComponent;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -54,20 +47,20 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
+    @SubComponent I18nImpl i18n;
+    @UsedService I18nServices i18nServices;
+
     @SubComponent OptionsManagerImpl optionsManager;
     @UsedService OptionsManagerServices optionsManagerServices;
 
-    @SubComponent MenuBarImpl menu;
-    @UsedService MenuBarServices menuServices;
+    @SubComponent MenuManagerImpl menu;
+    @UsedService MenuManagerServices menuServices;
 
     @SubComponent LayerTreeImpl layerTree;
     @UsedService LayerTreeServices layerTreeServices;
 
     @SubComponent GeoViewImpl geoView;
     @UsedService  GeoViewServices geoViewServices;
-
-    @SubComponent I18nImpl i18n;
-    @UsedService I18nServices i18nServices;
 
     @SubComponent IconsManagerImpl iconsManager;
     @UsedService IconsManagerServices iconsServices;
@@ -79,8 +72,6 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     @Override
     public void showGui(Stage stage, int width, int height) {
-
-        i18nServices.setLang(I18nLangEnum.FRENCH);
 
         this.width = width;
         this.height = height;
@@ -132,23 +123,21 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         stage.show();
     }
 
-    protected Node initializeMenuBar(final MenuBarServices menuServices) {
+    protected Node initializeMenuBar(final MenuManagerServices menuServices) {
 
-        menuServices.createMenu(i18nServices.tr("menubar.menu.file"));
-        MenuItem fileMenuItem = new MenuItem(i18nServices.tr("menubar.menu.menuitem.exit"));
+        MenuItem fileMenuItem = new MenuItem(i18nServices.tr("menu.file.exit"));
         fileMenuItem.setOnAction(e -> {
 
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
-        menuServices.addMenuItem(i18nServices.tr("menubar.menu.file"), fileMenuItem);
+        menuServices.addMenuItem(DefaultMenuEnum.FILE, fileMenuItem);
 
-        menuServices.createMenu("Options");
-        MenuItem preferenceMenuItem = new MenuItem("Preferences");
+        MenuItem preferenceMenuItem = new MenuItem(i18nServices.tr("menu.edit.preferences"));
         preferenceMenuItem.setOnAction(e -> {
             optionsManagerServices.show();
         });
-        menuServices.addMenuItem("Options", preferenceMenuItem);
+        menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);
 
         return menuServices.getDisplayService().getDisplayable();
     }

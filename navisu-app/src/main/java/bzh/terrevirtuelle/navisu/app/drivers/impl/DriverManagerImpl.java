@@ -4,7 +4,8 @@ import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuBarServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.core.utility.Checker;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
@@ -26,7 +27,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
 
     protected final Logger LOGGER = Logger.getLogger(DriverManagerImpl.class.getName());
 
-    @UsedService MenuBarServices menuBarServices;
+    @UsedService MenuManagerServices menuBarServices;
     @UsedService I18nServices i18nServices;
 
     protected FileChooser fileChooser;
@@ -40,8 +41,8 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
         this.fileChooser.setTitle("Open Supported File(s)..."); //TODO i18n compatibility
         this.fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
-        MenuItem menuItem = new MenuItem("Open");
-        menuBarServices.addMenuItem(i18nServices.tr("menubar.menu.file"), menuItem);
+        MenuItem menuItem = new MenuItem(i18nServices.tr("menu.file.open"));
+        menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
         menuItem.setOnAction((e) -> {
 
             // Show the file chooser
