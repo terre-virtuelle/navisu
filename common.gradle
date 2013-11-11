@@ -6,9 +6,12 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 String mavenGroupId = 'bzh.terrevirtuelle.navisu'
-String mavenVersion = '1.0-SNAPSHOT'
+String mavenVersion = '0.1-SNAPSHOT'
 
+group = mavenGroupId
+version = mavenVersion
 sourceCompatibility = '1.8'
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
@@ -27,9 +30,6 @@ dependencies {
 }
 
 String mavenArtifactId = name
-
-group = mavenGroupId
-version = mavenVersion
 
 task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
     classifier = 'sources'
