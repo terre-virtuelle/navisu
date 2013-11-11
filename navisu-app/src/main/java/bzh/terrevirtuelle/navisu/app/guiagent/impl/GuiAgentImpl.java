@@ -86,9 +86,13 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         this.height = height;
      
         this.stage = stage;
-        
+
+        BorderPane borderPane = new BorderPane();
+
+        Scene scene = new Scene(borderPane, this.width, this.height, Color.ALICEBLUE);
+
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
+        borderPane.setCenter(root);
 
         root.getChildren().add(this.geoViewServices.getDisplayService().getDisplayable());
 
@@ -113,7 +117,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
             optionsManagerServices.show();
         });
 
-        root.getChildren().add(this.initializeMenuBar(this.menuServices));
+        borderPane.setTop(this.initializeMenuBar(this.menuServices));
 
         //pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
 
