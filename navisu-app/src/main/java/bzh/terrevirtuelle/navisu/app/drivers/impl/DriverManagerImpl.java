@@ -38,7 +38,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
     public void componentInitiated() {
 
         this.fileChooser = new FileChooser();
-        this.fileChooser.setTitle("Open Supported File(s)..."); //TODO i18n compatibility
+        this.fileChooser.setTitle(i18nServices.tr("popup.fileChooser.open"));
         this.fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
         MenuItem menuItem = new MenuItem(i18nServices.tr("menu.file.open"));

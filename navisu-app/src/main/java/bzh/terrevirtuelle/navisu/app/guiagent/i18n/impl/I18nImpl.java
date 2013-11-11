@@ -34,12 +34,12 @@ public class I18nImpl implements I18n, I18nServices, ComponentState {
     @Override
     public void setLang(I18nLangEnum lang) {
 
-        Checker.notNull(lang, "Lang is null.");
+        Checker.notNull(lang, "Lang must not be null.");
 
         this.lang = lang;
 
         this.bundle = ResourceBundle.getBundle("i18n.translations", lang.getLocale());
-        //TODO: send event 'langChanged'
+        //TODO Send an event 'langChanged'
     }
 
     @Override
