@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.i18n;
+package bzh.terrevirtuelle.navisu.app.guiagent.utilities;
 
 import java.util.Locale;
 

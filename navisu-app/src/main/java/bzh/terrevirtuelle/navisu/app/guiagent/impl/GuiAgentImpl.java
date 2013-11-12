@@ -10,9 +10,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nLangEnum;
-import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.i18n.impl.I18nImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.icons.IconsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.icons.impl.IconsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -37,6 +34,8 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.util.logging.Logger;
 
+import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+
 /**
  * NaVisu
  *
@@ -46,9 +45,6 @@ import java.util.logging.Logger;
 public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
-
-    @SubComponent I18nImpl i18n;
-    @UsedService I18nServices i18nServices;
 
     @SubComponent OptionsManagerImpl optionsManager;
     @UsedService OptionsManagerServices optionsManagerServices;
@@ -125,7 +121,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     protected Node initializeMenuBar(final MenuManagerServices menuServices) {
 
-        MenuItem fileMenuItem = new MenuItem(i18nServices.tr("menu.file.exit"));
+        MenuItem fileMenuItem = new MenuItem(tr("menu.file.exit"));
         fileMenuItem.setOnAction(e -> {
 
             ComponentManager.componentManager.stopApplication();
@@ -133,7 +129,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         });
         menuServices.addMenuItem(DefaultMenuEnum.FILE, fileMenuItem);
 
-        MenuItem preferenceMenuItem = new MenuItem(i18nServices.tr("menu.edit.preferences"));
+        MenuItem preferenceMenuItem = new MenuItem(tr("menu.edit.preferences"));
         preferenceMenuItem.setOnAction(e -> {
             optionsManagerServices.show();
         });

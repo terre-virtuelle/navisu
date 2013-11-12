@@ -1,21 +1,20 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.menu.impl;
 
-import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
-import bzh.terrevirtuelle.navisu.core.utility.Checker;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import javafx.scene.Node;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import org.capcaval.c3.component.ComponentState;
-import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 
 /**
  * NaVisu
@@ -24,8 +23,6 @@ import java.util.logging.Logger;
  * @date 02/11/2013 11:54
  */
 public class MenuManagerImpl implements MenuManager, MenuManagerServices, ComponentState {
-
-    @UsedService I18nServices i18nServices;
 
     protected static final Logger LOGGER = Logger.getLogger(MenuManagerImpl.class.getName());
 
@@ -43,7 +40,7 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
         for(DefaultMenuEnum defaultMenu : DefaultMenuEnum.getAll()) {
 
             String key = defaultMenu.getKey();
-            this.createMenu(key, i18nServices.tr(key));
+            this.createMenu(key, tr(key));
         }
     }
 

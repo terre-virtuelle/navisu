@@ -3,7 +3,6 @@ package bzh.terrevirtuelle.navisu.app.drivers.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.i18n.I18nServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.core.utility.Checker;
@@ -17,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+
 /**
  * NaVisu
  *
@@ -28,7 +29,6 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
     protected final Logger LOGGER = Logger.getLogger(DriverManagerImpl.class.getName());
 
     @UsedService MenuManagerServices menuBarServices;
-    @UsedService I18nServices i18nServices;
 
     protected FileChooser fileChooser;
 
@@ -38,10 +38,10 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
     public void componentInitiated() {
 
         this.fileChooser = new FileChooser();
-        this.fileChooser.setTitle(i18nServices.tr("popup.fileChooser.open"));
+        this.fileChooser.setTitle(tr("popup.fileChooser.open"));
         this.fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
-        MenuItem menuItem = new MenuItem(i18nServices.tr("menu.file.open"));
+        MenuItem menuItem = new MenuItem(tr("menu.file.open"));
         menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
         menuItem.setOnAction((e) -> {
 
