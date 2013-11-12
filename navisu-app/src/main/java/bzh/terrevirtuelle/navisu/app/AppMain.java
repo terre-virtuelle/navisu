@@ -9,6 +9,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
 import java.util.logging.Logger;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -24,6 +26,8 @@ public class AppMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        Translator.setLang(I18nLangEnum.FRENCH);
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 

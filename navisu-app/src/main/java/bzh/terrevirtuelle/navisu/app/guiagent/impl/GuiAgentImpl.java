@@ -10,8 +10,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.icons.IconsManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.icons.impl.IconsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerTreeImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
@@ -35,6 +33,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import java.util.logging.Logger;
 
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Icons.icon;
 
 /**
  * NaVisu
@@ -57,9 +56,6 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     @SubComponent GeoViewImpl geoView;
     @UsedService  GeoViewServices geoViewServices;
-
-    @SubComponent IconsManagerImpl iconsManager;
-    @UsedService IconsManagerServices iconsServices;
 
     protected int width;
     protected int height;
@@ -94,13 +90,13 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         //root.getChildren().add(layerTreeDisplay.getDisplayable());
         borderPane.setLeft(layerTreeDisplay.getDisplayable());
 
-        toolBar.addAction(this.iconsServices.getIcon("app.exit"), (e) -> {
+        toolBar.addAction(icon("app.exit"), (e) -> {
 
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
 
-        toolBar.addAction(this.iconsServices.getIcon("app.options"), (e) -> {
+        toolBar.addAction(icon("app.options"), (e) -> {
 
             optionsManagerServices.show();
         });
