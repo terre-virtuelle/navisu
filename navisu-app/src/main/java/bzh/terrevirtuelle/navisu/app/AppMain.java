@@ -51,5 +51,7 @@ public class AppMain extends Application {
 
     public static void main(String[] args) {
         Application.launch();
+
+        //test
     }
 }
