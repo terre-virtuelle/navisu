@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  */
 public class Icons {
 
-    protected static final String BUNDLE_LOCATION = "i18n.translations";
+    protected static final String BUNDLE_LOCATION = "icons.icons";
 
     protected ResourceBundle bundle;
 
