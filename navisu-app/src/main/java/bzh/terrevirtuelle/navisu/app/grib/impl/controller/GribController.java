@@ -54,9 +54,14 @@ public class GribController {
 
         //instantiate model
         this.model = new GribModel(gridDataset, pressureGrid, uGrid, vGrid);
+        this.layer = new GribLayer(this.model);
     }
 
     public GribModel getModel() {
         return this.model;
+    }
+
+    public GribLayer getLayer() {
+        return this.layer;
     }
 }

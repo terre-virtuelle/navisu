@@ -1,9 +1,12 @@
 package bzh.terrevirtuelle.navisu.app.grib.impl.model;
 
 import bzh.terrevirtuelle.navisu.app.grib.GribConstants;
+import ucar.ma2.Array;
 import ucar.nc2.Dimension;
 import ucar.nc2.dt.grid.GeoGrid;
 import ucar.nc2.dt.grid.GridDataset;
+
+import java.io.IOException;
 
 /**
  * User: jordan
@@ -78,6 +81,30 @@ public class GribModel {
         }
     }
 
+    public double[] getVelocityVectorFromLatLon(double latitude, double longitude, int time) {
+
+        Array uGridArray = null;
+        Array vGridArray = null;
+        try {
+            uGridArray = this.uGrid.readYXData(time, 0);
+            vGridArray = this.vGrid.readYXData(time, 0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int[] uIndex = this.uGrid.getCoordinateSystem().findXYindexFromLatLon(latitude, longitude, null);
+        int[] vIndex = this.vGrid.getCoordinateSystem().findXYindexFromCoord(latitude, longitude, null);
+
+        double uValue = uGridArray.getDouble(uIndex[1] * longitudeDimension + uIndex[0]);
+        double vValue = vGridArray.getDouble(vIndex[1] * longitudeDimension + vIndex[0]);
+
+        double module = Math.sqrt((uValue * uValue) + (vValue * vValue));
+        double angle = Math.atan((uValue / vValue));
+
+        return new double[]{module, angle};
+    }
+
 
     public int getTimeDimension() {
         return timeDimension;
@@ -89,6 +116,30 @@ public class GribModel {
 
     public int getLatitudeDimension() {
         return latitudeDimension;
+    }
+
+    public double getTopLeftLatitude() {
+        return topLeftLatitude;
+    }
+
+    public double getTopLeftLongitude() {
+        return topLeftLongitude;
+    }
+
+    public double getBottomRightLatitude() {
+        return bottomRightLatitude;
+    }
+
+    public double getBottomRightLongitude() {
+        return bottomRightLongitude;
+    }
+
+    public double getLongitudeGap() {
+        return longitudeGap;
+    }
+
+    public double getLatitudeGap() {
+        return latitudeGap;
     }
 
     @Override

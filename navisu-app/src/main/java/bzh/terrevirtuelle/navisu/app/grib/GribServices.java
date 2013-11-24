@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.grib;
 
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
+import bzh.terrevirtuelle.navisu.app.grib.impl.view.GribLayer;
 import org.capcaval.c3.component.ComponentService;
 
 import java.util.Map;
@@ -24,4 +25,6 @@ public interface GribServices extends ComponentService {
     double getLongitudeDimension();
 
     double getTimeDimension();
+
+    GribLayer getGribLayer();
 }

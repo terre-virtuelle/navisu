@@ -4,6 +4,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.grib.Grib;
 import bzh.terrevirtuelle.navisu.app.grib.GribServices;
 import bzh.terrevirtuelle.navisu.app.grib.impl.controller.GribController;
+import bzh.terrevirtuelle.navisu.app.grib.impl.view.GribLayer;
 import org.capcaval.c3.component.ComponentState;
 
 import java.util.logging.Logger;
@@ -95,5 +96,10 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     @Override
     public double getTimeDimension() {
         return this.gribController.getModel().getTimeDimension();
+    }
+
+    @Override
+    public GribLayer getGribLayer() {
+        return this.gribController.getLayer();
     }
 }
