@@ -4,6 +4,8 @@ import bzh.terrevirtuelle.navisu.app.charts.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.app.charts.impl.ChartsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.grib.GribServices;
+import bzh.terrevirtuelle.navisu.app.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
@@ -36,7 +38,8 @@ public class AppMain extends Application {
 
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
-                        ChartsManagerImpl.class
+                        ChartsManagerImpl.class,
+                        GribImpl.class
                 )
         );
 
@@ -45,8 +48,11 @@ public class AppMain extends Application {
 
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
 
+        GribServices gribServices = componentManager.getComponentService(GribServices.class);
+
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.registerNewDriver(chartsServices.getDriver());
+        driverServices.registerNewDriver(gribServices.getDriver());
     }
 
     public static void main(String[] args) {

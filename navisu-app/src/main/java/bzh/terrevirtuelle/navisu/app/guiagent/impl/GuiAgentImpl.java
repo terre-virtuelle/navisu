@@ -6,6 +6,8 @@
 
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
+import bzh.terrevirtuelle.navisu.app.grib.GribServices;
+import bzh.terrevirtuelle.navisu.app.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
@@ -44,6 +46,9 @@ import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Icons.icon;
 public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
+
+    @SubComponent GribImpl grib;
+    @UsedService GribServices gribServices;
 
     @SubComponent OptionsManagerImpl optionsManager;
     @UsedService OptionsManagerServices optionsManagerServices;
