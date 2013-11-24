@@ -36,8 +36,6 @@ public class GribLayer extends MarkerLayer {
 
     private void init() {
 
-        LOGGUER.info("########## INIT GRIB LAYER #############");
-
         List<Marker> markers = new ArrayList<>();
         for(double lat = this.model.getBottomRightLatitude(); lat < this.model.getTopLeftLatitude(); lat += this.model.getLatitudeGap()) {
             for(double lon = this.model.getTopLeftLongitude(); lon < this.model.getBottomRightLongitude(); lon += this.model.getLongitudeGap()) {
