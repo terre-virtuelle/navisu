@@ -28,6 +28,9 @@ public class GribModel {
     protected double bottomRightLatitude;
     protected double bottomRightLongitude;
 
+    protected double longitudeGap;
+    protected double latitudeGap;
+
 
     public GribModel(GridDataset gridDataset, GeoGrid pressureGrid, GeoGrid uGrid, GeoGrid vGrid) {
 
@@ -39,6 +42,14 @@ public class GribModel {
         this.initDimensions();
 
         this.initBoundingBox();
+
+        this.computeGridGap();
+    }
+
+    //Todo Important : Do Some Tests !!
+    private void computeGridGap() {
+        this.longitudeGap = (Math.abs(this.topLeftLongitude) + Math.abs(this.bottomRightLongitude)) / (this.longitudeDimension - 1);
+        this.latitudeGap = (Math.abs(this.topLeftLatitude) - Math.abs(this.bottomRightLatitude)) /  (this.latitudeDimension - 1);
     }
 
     private void initBoundingBox() {
@@ -86,6 +97,8 @@ public class GribModel {
                 "LatitudeDimension : " + this.latitudeDimension + " " +
                 "LongitudeDimension : " + this.longitudeDimension + " " +
                 "BoundingBox : [("+this.topLeftLatitude + ","+this.topLeftLongitude+"),("
-                                +this.bottomRightLatitude+","+this.bottomRightLongitude+")]";
+                                +this.bottomRightLatitude+","+this.bottomRightLongitude+")]" + " " +
+                "Latitude Gap : " + this.latitudeGap + " " +
+                "Longitude Gap : " + this.longitudeGap;
     }
 }
