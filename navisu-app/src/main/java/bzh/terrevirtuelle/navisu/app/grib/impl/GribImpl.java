@@ -3,6 +3,7 @@ package bzh.terrevirtuelle.navisu.app.grib.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.grib.Grib;
 import bzh.terrevirtuelle.navisu.app.grib.GribServices;
+import bzh.terrevirtuelle.navisu.app.grib.impl.controller.GribController;
 import org.capcaval.c3.component.ComponentState;
 
 import java.util.logging.Logger;
@@ -17,8 +18,11 @@ public class GribImpl implements Grib, GribServices, ComponentState {
 
     protected Driver driver;
 
+    protected GribController gribController;
+
     @Override
     public void componentInitiated() {
+
         this.driver = new Driver() {
 
             private static final String NAME = "Grib";
@@ -33,6 +37,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
             public void open(String... files) {
                 for(String file : files) {
                     LOGGER.info("Opening " + file + " ...");
+                    loadFile(files[0]); //Todo Make stuff for all files
                 }
             }
 
@@ -61,12 +66,15 @@ public class GribImpl implements Grib, GribServices, ComponentState {
 
     @Override
     public void loadFile(String path) {
+        this.gribController = new GribController(path);
 
+        LOGGER.info(String.valueOf(this.getLatitudeDimension()));
+        LOGGER.info(String.valueOf(this.getLongitudeDimension()));
+        LOGGER.info(String.valueOf(this.getTimeDimension()));
     }
 
     @Override
     public double[] getVelocityInMPSAtPoint(double latitude, double longitude) {
-
         return null;
     }
 
@@ -74,5 +82,20 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     public double getPressionAtPoint(double latitude, double longitude) {
         //TODO add Time
         return 0;
+    }
+
+    @Override
+    public double getLatitudeDimension() {
+        return this.gribController.getModel().getLatitudeDimension();
+    }
+
+    @Override
+    public double getLongitudeDimension() {
+        return this.gribController.getModel().getLongitudeDimension();
+    }
+
+    @Override
+    public double getTimeDimension() {
+        return this.gribController.getModel().getTimeDimension();
     }
 }

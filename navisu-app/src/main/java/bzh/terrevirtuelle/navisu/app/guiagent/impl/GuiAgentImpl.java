@@ -47,9 +47,6 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
-    @SubComponent GribImpl grib;
-    @UsedService GribServices gribServices;
-
     @SubComponent OptionsManagerImpl optionsManager;
     @UsedService OptionsManagerServices optionsManagerServices;
 
@@ -72,7 +69,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
         this.width = width;
         this.height = height;
-     
+
         this.stage = stage;
 
         BorderPane borderPane = new BorderPane();
