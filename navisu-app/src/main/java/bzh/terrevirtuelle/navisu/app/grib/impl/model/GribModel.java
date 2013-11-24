@@ -20,10 +20,13 @@ public class GribModel {
     protected GeoGrid vGrid;
 
     protected int timeDimension;
-
     protected int longitudeDimension;
-
     protected int latitudeDimension;
+
+    protected double topLeftLatitude;
+    protected double topLeftLongitude;
+    protected double bottomRightLatitude;
+    protected double bottomRightLongitude;
 
 
     public GribModel(GridDataset gridDataset, GeoGrid pressureGrid, GeoGrid uGrid, GeoGrid vGrid) {
@@ -34,6 +37,15 @@ public class GribModel {
         this.vGrid = vGrid;
 
         this.initDimensions();
+
+        this.initBoundingBox();
+    }
+
+    private void initBoundingBox() {
+        this.topLeftLatitude = this.gridDataset.getBoundingBox().getUpperLeftPoint().getLatitude();
+        this.topLeftLongitude = this.gridDataset.getBoundingBox().getUpperLeftPoint().getLongitude();
+        this.bottomRightLatitude = this.gridDataset.getBoundingBox().getLowerRightPoint().getLatitude();
+        this.bottomRightLongitude = this.gridDataset.getBoundingBox().getLowerRightPoint().getLongitude();
     }
 
     private void initDimensions() {
@@ -70,8 +82,10 @@ public class GribModel {
 
     @Override
     public String toString() {
-        return "TimeDimension : " + this.timeDimension +
-                "LatitudeDimension : " + this.latitudeDimension +
-                "LongitudeDimension : " + this.longitudeDimension;
+        return "TimeDimension : " + this.timeDimension + " " +
+                "LatitudeDimension : " + this.latitudeDimension + " " +
+                "LongitudeDimension : " + this.longitudeDimension + " " +
+                "BoundingBox : [("+this.topLeftLatitude + ","+this.topLeftLongitude+"),("
+                                +this.bottomRightLatitude+","+this.bottomRightLongitude+")]";
     }
 }

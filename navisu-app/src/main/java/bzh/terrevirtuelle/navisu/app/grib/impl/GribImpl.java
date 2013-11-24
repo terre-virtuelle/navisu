@@ -68,9 +68,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     public void loadFile(String path) {
         this.gribController = new GribController(path);
 
-        LOGGER.info(String.valueOf(this.getLatitudeDimension()));
-        LOGGER.info(String.valueOf(this.getLongitudeDimension()));
-        LOGGER.info(String.valueOf(this.getTimeDimension()));
+        LOGGER.info(this.gribController.getModel().toString());
     }
 
     @Override
