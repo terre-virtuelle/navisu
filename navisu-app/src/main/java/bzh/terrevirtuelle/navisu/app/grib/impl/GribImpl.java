@@ -2,15 +2,9 @@ package bzh.terrevirtuelle.navisu.app.grib.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.grib.Grib;
-import bzh.terrevirtuelle.navisu.app.grib.GribConstants;
 import bzh.terrevirtuelle.navisu.app.grib.GribServices;
 import org.capcaval.c3.component.ComponentState;
-import ucar.nc2.dt.GridDatatype;
-import ucar.nc2.dt.grid.GeoGrid;
-import ucar.nc2.dt.grid.GridDataset;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
