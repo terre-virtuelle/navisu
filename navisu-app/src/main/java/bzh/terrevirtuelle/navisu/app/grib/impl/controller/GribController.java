@@ -37,6 +37,7 @@ public class GribController {
         }
 
         //check grid dimension
+        //TODO Check if all grib have the same name of grid !
         GeoGrid pressureGrid = this.gridDataset.findGridByName(GribConstants.PRESSURE_GRID_NAME);
         if(pressureGrid == null) {
             throw new IllegalArgumentException("Invalid Grib file"); //Todo Exception
