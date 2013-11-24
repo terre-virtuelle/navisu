@@ -4,17 +4,14 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
-import bzh.terrevirtuelle.navisu.core.view.display.jfx.JFXDisplay;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayers;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import gov.nasa.worldwind.layers.Layer;
 import javafx.scene.Node;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
-
-import java.util.Map;
 
 /**
  * NaVisu

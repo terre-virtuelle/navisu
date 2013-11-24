@@ -1,20 +1,29 @@
 package bzh.terrevirtuelle.navisu.app.grib.impl.view;
 
 import bzh.terrevirtuelle.navisu.app.grib.impl.model.GribModel;
+import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.MarkerLayer;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.markers.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * User: jordan
  * Date: 24/11/2013
  */
 public class GribLayer extends MarkerLayer {
+
+    protected final static Logger LOGGUER = Logger.getLogger(GribLayer.class.getName());
 
     protected GribModel model;
 
@@ -27,14 +36,18 @@ public class GribLayer extends MarkerLayer {
 
     private void init() {
 
+        LOGGUER.info("########## INIT GRIB LAYER #############");
+
         List<Marker> markers = new ArrayList<>();
         for(double lat = this.model.getBottomRightLatitude(); lat < this.model.getTopLeftLatitude(); lat += this.model.getLatitudeGap()) {
             for(double lon = this.model.getTopLeftLongitude(); lon < this.model.getBottomRightLongitude(); lon += this.model.getLongitudeGap()) {
-                double[] vector = this.model.getVelocityVectorFromLatLon(lat, lon, 0);
-                MarkerAttributes attr = new BasicMarkerAttributes(Material.WHITE, BasicMarkerShape.HEADING_LINE, 1d, 10, 5);
+                LOGGUER.info("---------- lat = " + lat + ", lon = " + lon);
+                double[] vector = this.model.getVelocityVectorFromLatLon(lat, lon, 10);
+                LOGGUER.info("---------- x = " + vector[0] +" , y = " + vector[1]);
+                MarkerAttributes attr = new BasicMarkerAttributes(Material.YELLOW, BasicMarkerShape.HEADING_LINE, 1d, 10, 10);
                 Marker marker = new BasicMarker(Position.fromDegrees(lat, lon, 0), attr);
                 marker.setPosition(Position.fromDegrees(lat, lon, 0));
-                marker.setHeading(Angle.fromDegrees(vector[1]));
+                marker.setHeading(Angle.fromDegrees(Math.toDegrees(vector[1])));
                 markers.add(marker);
             }
         }
@@ -44,31 +57,3 @@ public class GribLayer extends MarkerLayer {
         this.setMarkers(markers);
     }
 }
-
-/*
-
-            double minLat = 20, maxLat = 60, latDelta = 2;
-            double minLon = -140, maxLon = -60, lonDelta = 2;
-
-            int i = 0;
-            ArrayList<Marker> markers = new ArrayList<Marker>();
-            for (double lat = minLat; lat <= maxLat; lat += latDelta)
-            {
-                for (double lon = minLon; lon <= maxLon; lon += lonDelta)
-                {
-                    Marker marker = new BasicMarker(Position.fromDegrees(lat, lon, 0), attrs[i % attrs.length]);
-                    marker.setPosition(Position.fromDegrees(lat, lon, 0));
-                    marker.setHeading(Angle.fromDegrees(lat * 5));
-                    markers.add(marker);
-                    i++;
-                }
-            }
-
-            final MarkerLayer layer = new MarkerLayer();
-            layer.setOverrideMarkerElevation(true);
-            layer.setKeepSeparated(false);
-            layer.setElevation(1000d);
-            layer.setMarkers(markers);
-            insertBeforePlacenames(this.getWwd(), layer);
-            this.getLayerPanel().update(this.getWwd());
- */

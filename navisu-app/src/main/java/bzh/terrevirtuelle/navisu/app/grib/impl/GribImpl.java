@@ -5,7 +5,14 @@ import bzh.terrevirtuelle.navisu.app.grib.Grib;
 import bzh.terrevirtuelle.navisu.app.grib.GribServices;
 import bzh.terrevirtuelle.navisu.app.grib.impl.controller.GribController;
 import bzh.terrevirtuelle.navisu.app.grib.impl.view.GribLayer;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
+import gov.nasa.worldwind.layers.Layer;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
 
@@ -15,11 +22,15 @@ import java.util.logging.Logger;
  */
 public class GribImpl implements Grib, GribServices, ComponentState {
 
+    @UsedService GeoViewServices geoViewServices;
+
     protected Logger LOGGER = Logger.getLogger(GribImpl.class.getName());
 
     protected Driver driver;
 
     protected GribController gribController;
+
+    protected LayerManager<Layer> layerLayerManager;
 
     @Override
     public void componentInitiated() {
@@ -70,6 +81,11 @@ public class GribImpl implements Grib, GribServices, ComponentState {
         this.gribController = new GribController(path);
 
         LOGGER.info(this.gribController.getModel().toString());
+
+        LOGGER.info("######################################## CREATE LAYER #############################################");
+        //this.layerTreeServices.addGeoLayer("Grib", GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));
+        this.layerLayerManager = (LayerManager<Layer>) ((GeoView)this.geoViewServices.getDisplayService()).getLayerManager();
+        this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));
     }
 
     @Override
