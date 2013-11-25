@@ -11,8 +11,8 @@
     <HBox layoutX="0.0" layoutY="0.0" prefHeight="158.0" prefWidth="600.0">
       <children>
         <Button fx:id="exitBtn" minHeight="-Infinity" mnemonicParsing="false" onAction="#onExit" prefHeight="158.0" prefWidth="209.0" text="Exit" />
-        <Button id="optionsBtn" mnemonicParsing="false" onAction="#onExit" prefHeight="158.0" prefWidth="202.0" text="Options" />
-        <Button id="helloBtn" mnemonicParsing="false" prefHeight="158.0" prefWidth="202.0" text="Hello World !" />
+        <Button id="" fx:id="optionsBtn" mnemonicParsing="false" onAction="#onExit" prefHeight="158.0" prefWidth="202.0" text="Options" />
+        <Button id="" fx:id="helloBtn" mnemonicParsing="false" prefHeight="158.0" prefWidth="202.0" text="Hello World !" />
       </children>
     </HBox>
   </children>

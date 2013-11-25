@@ -31,6 +31,7 @@ public class ControlsWidgetController {
 
     @FXML
     public void onExit() {
-        System.exit(0);
+        exitBtn.setText("Kikooo");
+
     }
 }

@@ -1,19 +1,19 @@
 
 .tree-view {
     -fx-padding: 1;
-    -fx-background-color: rgba(0, 0, 0, 1);
+    -fx-background-color: rgba(0, 0, 0, 0.2);
     -fx-background-insets: 0,1;
 }
 .tree-view:focused {
     -fx-padding: 1;
-    -fx-background-color: rgba(0, 0, 0, 1);
+    -fx-background-color: rgba(0, 0, 0, 0.2);
     -fx-background-insets: -1.4, 0, 1;
     -fx-background-radius: -1.4, 0, 0;
 }
 .tree-cell {
     -fx-font: bold 10pt "Amble Cn";
     -fx-text-fill: white;
-    -fx-background-color: rgba(0, 0, 0, 1);
+    -fx-background-color: rgba(0, 0, 0, 0.2);
     -fx-cell-size: 24;
     -fx-indent: 6;
     -fx-padding: 3;

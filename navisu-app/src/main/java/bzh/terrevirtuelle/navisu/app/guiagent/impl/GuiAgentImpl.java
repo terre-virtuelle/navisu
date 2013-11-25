@@ -86,11 +86,11 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         root.getChildren().add(toolBar.getDisplayable());
 
         Display<Node> layerTreeDisplay = this.layerTreeServices.getDisplayService();
-        //StackPane.setAlignment(layerTreeDisplay.getDisplayable(), Pos.CENTER_LEFT);
+        StackPane.setAlignment(layerTreeDisplay.getDisplayable(), Pos.CENTER_LEFT);
         layerTreeDisplay.setMaxWidth(250);
-        //layerTreeDisplay.getDisplayable().setTranslateY(toolBar.getMaxHeight());
-        //root.getChildren().add(layerTreeDisplay.getDisplayable());
-        borderPane.setLeft(layerTreeDisplay.getDisplayable());
+        layerTreeDisplay.getDisplayable().setTranslateY(toolBar.getMaxHeight());
+        root.getChildren().add(layerTreeDisplay.getDisplayable());
+        //borderPane.setLeft(layerTreeDisplay.getDisplayable());
 
         toolBar.addAction(icon("app.exit"), (e) -> {
 
@@ -105,7 +105,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
         borderPane.setTop(this.initializeMenuBar(this.menuServices));
 
-        //pane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
+        borderPane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
 
         stage.setTitle("NaVisu");
         stage.setOnCloseRequest(e -> {
