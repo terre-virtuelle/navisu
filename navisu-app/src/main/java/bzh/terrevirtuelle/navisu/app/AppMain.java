@@ -9,6 +9,10 @@ import bzh.terrevirtuelle.navisu.app.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
@@ -56,7 +60,53 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(gribServices.getDriver());
     }
 
-    public static void main(String[] args) {
-        Application.launch();
+    public static void main(String[] args) throws Exception {
+        //Application.launch();
+
+        String outputPath = "navisu-app/data/";
+        createDirIfNotExists(outputPath);
+        String command = "navisu-app/gdal_translate";
+
+        Proc proc = Proc.builder.create().setCmd(command)
+                .addArg("-of GTiff")
+                .addArg("-expand rgb")
+                .addArg(outputPath + "101.kap")
+                .addArg(outputPath + "101.tif")
+                .setOut(System.out)
+                .setErr(System.err)
+                .exec();
+
+        System.out.println("exit code: " + proc.getReturnCode());
+    }
+
+
+
+    public static boolean createDirIfNotExists(String dirPath) {
+
+        boolean result = true;
+        Path path = Paths.get(dirPath);
+
+        if(Files.notExists(path)) {
+            try {
+                Files.createDirectory(path);
+            } catch (IOException e) {
+                result = false;
+            }
+        }
+
+        return result;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
