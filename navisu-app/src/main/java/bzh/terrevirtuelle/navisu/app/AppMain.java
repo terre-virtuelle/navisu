@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.app.pointcloud.PointCloudServices;
+import bzh.terrevirtuelle.navisu.app.pointcloud.impl.PointCloudImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -39,7 +41,8 @@ public class AppMain extends Application {
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
                         ChartsManagerImpl.class,
-                        GribImpl.class
+                        GribImpl.class,
+                        PointCloudImpl.class
                 )
         );
 
@@ -50,10 +53,12 @@ public class AppMain extends Application {
 
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
 
+        PointCloudServices pointCloudServices = componentManager.getComponentService(PointCloudServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
+        driverServices.registerNewDriver(pointCloudServices.getDriver());
     }
 
     public static void main(String[] args) {
