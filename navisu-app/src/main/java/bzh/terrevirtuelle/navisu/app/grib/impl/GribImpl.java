@@ -49,7 +49,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
             public void open(String... files) {
                 for(String file : files) {
                     LOGGER.info("Opening " + file + " ...");
-                    loadFile(files[0]); //Todo Make stuff for all files
+                    loadFile(file); //Todo Make stuff for all files
                 }
             }
 
