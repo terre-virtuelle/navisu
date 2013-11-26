@@ -54,9 +54,7 @@ public class AppMain extends Application {
         guiServices.showGui(stage, 800, 500);
 
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
-
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
-
         PointCloudServices pointCloudServices = componentManager.getComponentService(PointCloudServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
