@@ -1,8 +1,8 @@
-package bzh.terrevirtuelle.navisu.app.pointCloud.impl;
+package bzh.terrevirtuelle.navisu.app.pointcloud.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
-import bzh.terrevirtuelle.navisu.app.pointCloud.PointCloud;
-import bzh.terrevirtuelle.navisu.app.pointCloud.PointCloudServices;
+import bzh.terrevirtuelle.navisu.app.pointcloud.PointCloud;
+import bzh.terrevirtuelle.navisu.app.pointcloud.PointCloudServices;
 import org.capcaval.c3.component.ComponentState;
 
 /**

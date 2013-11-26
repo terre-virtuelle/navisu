@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.pointCloud;
+package bzh.terrevirtuelle.navisu.app.pointcloud;
 
 /**
  * User: julien
