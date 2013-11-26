@@ -50,13 +50,13 @@ public class AppMain extends Application {
 
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
 
+
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
     }
 
     public static void main(String[] args) {
-        //Application.launch();
-
+        Application.launch();
     }
 }
