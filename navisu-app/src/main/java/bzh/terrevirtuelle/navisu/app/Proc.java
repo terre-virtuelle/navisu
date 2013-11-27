@@ -18,7 +18,7 @@ public class Proc {
 
     public static final Builder builder = new BuilderImpl();
 
-    protected static final String _ = " ";
+    protected static final String SPACE = " ";
 
     protected String cmd;
     protected List<String> args;
@@ -36,11 +36,10 @@ public class Proc {
 
         Checker.notNull(cmd, "Command is null.");
 
-        StringBuilder sb = new StringBuilder(cmd + _);
-
-        for(String arg : args) {
-            sb.append(arg + _);
-        }
+        StringBuilder sb = new StringBuilder(cmd + SPACE);
+        args.stream().forEach((arg) -> {
+            sb.append(arg).append(SPACE);
+        });
 
         final Process process = Runtime.getRuntime().exec(sb.toString());
 
