@@ -19,6 +19,11 @@ import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.app.pointcloud.PointCloudServices;
 import bzh.terrevirtuelle.navisu.app.pointcloud.impl.PointCloudImpl;
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -66,20 +71,27 @@ public class AppMain extends Application {
     public static void main(String[] args) throws Exception {
         //Application.launch();
 
-        String outputPath = "navisu-app/data/";
+        FileInputStream configFile = new FileInputStream("conf/logging.properties");
+        LogManager.getLogManager().readConfiguration(configFile);
+        
+        Logger global = Logger.getGlobal();
+        global.log(Level.INFO, "info");
+        global.log(Level.SEVERE, "info");
+        
+        /*String outputPath = "navisu-app/data/";
         createDirIfNotExists(outputPath);
         String command = "navisu-app/gdal_translate";
-
+        
         Proc proc = Proc.builder.create().setCmd(command)
-                .addArg("-of GTiff")
-                .addArg("-expand rgb")
-                .addArg(outputPath + "101.kap")
-                .addArg(outputPath + "101.tif")
-                .setOut(System.out)
-                .setErr(System.err)
-                .exec();
-
-        System.out.println("exit code: " + proc.getReturnCode());
+        .addArg("-of GTiff")
+        .addArg("-expand rgb")
+        .addArg(outputPath + "101.kap")
+        .addArg(outputPath + "101.tif")
+        .setOut(System.out)
+        .setErr(System.err)
+        .exec();
+        
+        System.out.println("exit code: " + proc.getReturnCode());*/
     }
 
 
