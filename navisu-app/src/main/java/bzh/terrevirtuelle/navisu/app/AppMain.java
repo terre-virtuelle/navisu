@@ -66,17 +66,19 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(pointCloudServices.getDriver());
+
+        chartsServices.openChart("navisu-app/data/101.KAP");
     }
 
     public static void main(String[] args) throws Exception {
-        //Application.launch();
+        Application.launch();
 
-        FileInputStream configFile = new FileInputStream("conf/logging.properties");
+        /*FileInputStream configFile = new FileInputStream("conf/logging.properties");
         LogManager.getLogManager().readConfiguration(configFile);
         
         Logger global = Logger.getGlobal();
         global.log(Level.INFO, "info");
-        global.log(Level.SEVERE, "info");
+        global.log(Level.SEVERE, "info");*/
         
         /*String outputPath = "navisu-app/data/";
         createDirIfNotExists(outputPath);
