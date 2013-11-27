@@ -6,6 +6,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayers;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import gov.nasa.worldwind.layers.Layer;
@@ -73,7 +74,10 @@ public class GeoViewImpl implements GeoView, GeoViewServices, ComponentState {
         return this.geoView;
     }
 
-
+    @Override
+    public LayerManager<Layer> getLayerManager() {
+        return this.layerManager;
+    }
 
     @Override
     public void componentStarted() {}

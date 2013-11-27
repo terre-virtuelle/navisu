@@ -61,12 +61,14 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(pointCloudServices.getDriver());
+
+        chartsServices.openChart("navisu-app/data/101.KAP");
     }
 
     public static void main(String[] args) throws Exception {
-        //Application.launch();
+        Application.launch();
 
-        String outputPath = "navisu-app/data/";
+        /*String outputPath = "navisu-app/data/";
         createDirIfNotExists(outputPath);
         String command = "navisu-app/gdal_translate";
 
@@ -79,7 +81,7 @@ public class AppMain extends Application {
                 .setErr(System.err)
                 .exec();
 
-        System.out.println("exit code: " + proc.getReturnCode());
+        System.out.println("exit code: " + proc.getReturnCode());*/
     }
 
 

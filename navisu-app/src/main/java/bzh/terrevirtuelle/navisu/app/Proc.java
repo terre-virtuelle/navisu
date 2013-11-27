@@ -3,7 +3,6 @@ package bzh.terrevirtuelle.navisu.app;
 import bzh.terrevirtuelle.navisu.core.utility.Checker;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;

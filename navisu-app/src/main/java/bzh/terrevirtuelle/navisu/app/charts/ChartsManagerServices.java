@@ -12,4 +12,6 @@ import org.capcaval.c3.component.ComponentService;
 public interface ChartsManagerServices extends ComponentService {
 
     Driver getDriver();
+
+    void openChart(String file);
 }
