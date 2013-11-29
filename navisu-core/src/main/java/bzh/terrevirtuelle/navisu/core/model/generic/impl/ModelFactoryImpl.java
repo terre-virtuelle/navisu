@@ -2,7 +2,7 @@ package bzh.terrevirtuelle.navisu.core.model.generic.impl;
 
 import bzh.terrevirtuelle.navisu.core.model.generic.Model;
 import bzh.terrevirtuelle.navisu.core.model.generic.ModelFactory;
-import bzh.terrevirtuelle.navisu.core.utility.ICloneable;
+import bzh.terrevirtuelle.navisu.core.util.ICloneable;
 
 /**
  * Created with IntelliJ IDEA.

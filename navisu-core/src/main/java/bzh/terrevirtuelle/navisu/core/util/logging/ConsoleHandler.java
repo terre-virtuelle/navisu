@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.app;
+package bzh.terrevirtuelle.navisu.core.util.logging;
 
 import java.io.OutputStream;
 import java.io.PrintStream;

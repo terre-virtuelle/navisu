@@ -2,7 +2,7 @@ package bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayerManager;
-import bzh.terrevirtuelle.navisu.core.utility.Checker;
+import bzh.terrevirtuelle.navisu.core.util.Checker;
 import gov.nasa.worldwind.Model;
 import gov.nasa.worldwind.layers.CompassLayer;
 import gov.nasa.worldwind.layers.Layer;

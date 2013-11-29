@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.core.utility;
+package bzh.terrevirtuelle.navisu.core.util;
 
 /**
  * Created with IntelliJ IDEA.

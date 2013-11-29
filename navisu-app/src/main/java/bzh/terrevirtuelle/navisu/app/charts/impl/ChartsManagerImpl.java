@@ -1,27 +1,19 @@
 package bzh.terrevirtuelle.navisu.app.charts.impl;
 
-import bzh.terrevirtuelle.navisu.app.OS;
-import bzh.terrevirtuelle.navisu.app.Proc;
+import bzh.terrevirtuelle.navisu.core.util.OS;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.app.charts.ChartsManager;
 import bzh.terrevirtuelle.navisu.app.charts.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller.ImageryInstaller;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.core.formats.kap.controller.parser.kap.KapParser;
-import bzh.terrevirtuelle.navisu.core.formats.kap.controller.parser.kap.KapParserFactory;
-import bzh.terrevirtuelle.navisu.core.formats.kap.model.KAP;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import com.jogamp.common.os.Platform;
 import gov.nasa.worldwind.layers.Layer;
-import javafx.stage.FileChooser;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,11 +28,16 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     protected final Logger LOGGER = Logger.getLogger(ChartsManagerImpl.class.getName());
 
     protected static final String EXTENSION = ".kap";
-
+    protected static final String GROUP = "BSB/KAP Charts";
+    
     @UsedService GeoViewServices geoViewServices;
 
+    @UsedService LayerTreeServices layerTreeServices;
+    
     @Override
-    public void componentInitiated() {}
+    public void componentInitiated() {
+        layerTreeServices.createGroup(GROUP);
+    }
 
     @Override
     public boolean canOpen(String file) {
@@ -63,7 +60,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     }
 
     protected void handleOpenFile(String file) {
-        LOGGER.info("Opening " + file + " ...");
+        LOGGER.log(Level.INFO, "Opening {0} ...", file);
 
         String inputFile = file;
 
@@ -93,7 +90,10 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
         installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
 
         Layer layer = installer.installSurfaceImage(inputFile);
-        geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
+        if(layer != null) {
+            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
+            layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+        }
     }
 
     @Override

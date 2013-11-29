@@ -5,7 +5,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.DriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
-import bzh.terrevirtuelle.navisu.core.utility.Checker;
+import bzh.terrevirtuelle.navisu.core.util.Checker;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import org.capcaval.c3.component.ComponentState;

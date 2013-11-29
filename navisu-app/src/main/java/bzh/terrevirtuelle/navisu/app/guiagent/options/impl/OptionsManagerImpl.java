@@ -3,7 +3,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.impl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsController;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
-import bzh.terrevirtuelle.navisu.core.utility.Checker;
+import bzh.terrevirtuelle.navisu.core.util.Checker;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;

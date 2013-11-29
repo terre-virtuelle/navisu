@@ -5,7 +5,7 @@
 package bzh.terrevirtuelle.navisu.core.model.datamodel;
 
 import bzh.terrevirtuelle.navisu.core.model.geom.location.Location;
-import bzh.terrevirtuelle.navisu.core.utility.ICloneable;
+import bzh.terrevirtuelle.navisu.core.util.ICloneable;
 
 /**
  *

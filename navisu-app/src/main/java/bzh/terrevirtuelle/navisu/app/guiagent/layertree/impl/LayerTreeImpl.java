@@ -4,7 +4,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTree;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.options.LayerTreeOptionsControllerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
-import bzh.terrevirtuelle.navisu.core.utility.Checker;
+import bzh.terrevirtuelle.navisu.core.util.Checker;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import javafx.scene.Node;

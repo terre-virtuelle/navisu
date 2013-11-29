@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.utilities;
 
-import bzh.terrevirtuelle.navisu.core.utility.Checker;
+import bzh.terrevirtuelle.navisu.core.util.Checker;
 
 import java.util.ResourceBundle;
 

@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app;
+package bzh.terrevirtuelle.navisu.core.util;
 
 /**
  * NaVisu
@@ -21,7 +21,7 @@ public class OS {
     }
 
     public static boolean isMac() {
-        return name.toLowerCase().contains("");
+        return name.toLowerCase().contains("osx");
     }
 
     public static boolean is32() {

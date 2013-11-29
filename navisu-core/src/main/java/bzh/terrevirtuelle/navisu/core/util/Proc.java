@@ -1,12 +1,12 @@
-package bzh.terrevirtuelle.navisu.app;
-
-import bzh.terrevirtuelle.navisu.core.utility.Checker;
+package bzh.terrevirtuelle.navisu.core.util;
 
 import java.io.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * NaVisu
@@ -29,7 +29,10 @@ public class Proc {
     protected int returnCode;
 
     public Proc() {
-        args = new LinkedList<>();
+        this.args = new LinkedList<>();
+        
+        this.out = System.out;
+        this.err = System.err;
     }
 
     protected void exec() throws IOException, InterruptedException {
@@ -42,39 +45,29 @@ public class Proc {
         });
 
         final Process process = Runtime.getRuntime().exec(sb.toString());
-
-        //TODO refactor code repetition
-        if(null != out) {
-            Executors.newSingleThreadExecutor().execute(() -> {
-                final BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                final PrintStream outStream = new PrintStream(out);
-                String line;
-
-                try {
-                    while((line = reader.readLine()) != null) {
-                        outStream.println(line);
-                    }
-                } catch (IOException ex) {}
-            });
-        }
-
-        if(null != err) {
-            Executors.newSingleThreadExecutor().execute(() -> {
-                final BufferedReader reader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-                final PrintStream outStream = new PrintStream(err);
-                String line;
-
-                try {
-                    while((line = reader.readLine()) != null) {
-                        outStream.println(line);
-                    }
-                } catch (IOException ex) {}
-            });
-        }
-
+        
+        redirectSreamAsync(process.getInputStream(), out);
+        redirectSreamAsync(process.getErrorStream(), err);
+        
         this.returnCode = process.waitFor();
     }
 
+    public static void redirectSreamAsync(final InputStream in, final OutputStream out) {
+        Executors.newSingleThreadExecutor().execute(() -> {
+            final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            final PrintStream outStream = new PrintStream(out);
+            String line;
+
+            try {
+                while((line = reader.readLine()) != null) {
+                    outStream.println(line);
+                }
+            } catch (IOException ex) {
+                Logger.getAnonymousLogger().log(Level.WARNING, null, ex);
+            }
+        });
+    }
+    
     public interface Builder {
 
         Builder create();

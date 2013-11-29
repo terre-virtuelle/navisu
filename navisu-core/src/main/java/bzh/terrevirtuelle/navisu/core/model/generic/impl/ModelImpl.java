@@ -4,7 +4,7 @@ import bzh.terrevirtuelle.navisu.core.model.generic.Model;
 import bzh.terrevirtuelle.navisu.core.model.generic.ModelEvents;
 import bzh.terrevirtuelle.navisu.core.model.generic.ReadDataServices;
 import bzh.terrevirtuelle.navisu.core.model.generic.WriteDataServices;
-import bzh.terrevirtuelle.navisu.core.utility.ICloneable;
+import bzh.terrevirtuelle.navisu.core.util.ICloneable;
 
 import java.util.*;
 

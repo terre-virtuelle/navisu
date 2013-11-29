@@ -7,7 +7,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.Projection;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindLayerManagerImpl;
-import bzh.terrevirtuelle.navisu.core.utility.Checker;
+import bzh.terrevirtuelle.navisu.core.util.Checker;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.view.CustomViewInputHandler;
 import gov.nasa.worldwind.BasicModel;
 import gov.nasa.worldwind.Configuration;
