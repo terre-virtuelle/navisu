@@ -15,6 +15,7 @@
  */
 package bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller;
 
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import gov.nasa.worldwind.layers.Layer;
 
 /**
@@ -30,7 +31,7 @@ public interface ImageryInstaller
      * @param imageSource
      * @return
      */
-    Layer installSurfaceImage(Object imageSource/*, ProgressBar progressBar*/);
+    Layer installSurfaceImage(Object imageSource, ProgressHandle progressHandle);
 
     /**
      *

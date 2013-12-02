@@ -15,6 +15,8 @@
  */
 package bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller.impl;
 
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
+import bzh.terrevirtuelle.navisu.core.util.Checker;
 import gov.nasa.worldwind.*;
 import gov.nasa.worldwind.avlist.*;
 import gov.nasa.worldwind.data.TiledImageProducer;
@@ -51,10 +53,14 @@ public class ImageryInstallerImpl implements ImageryInstaller
     protected final TiledImageProducer producer = new TiledImageProducer();
 
     /**
+     * TODO handle progression
+     *
      * {@inheritDoc}
      */
     @Override
-    public Layer installSurfaceImage(Object imageSource/*, final ProgressBar progressBar*/) {
+    public Layer installSurfaceImage(Object imageSource, ProgressHandle progressHandle) {
+
+        Checker.notNull(imageSource, "Image source must not be null.");
 
         final String imageSourceName = getImageSourceName(imageSource);
         Layer layer;

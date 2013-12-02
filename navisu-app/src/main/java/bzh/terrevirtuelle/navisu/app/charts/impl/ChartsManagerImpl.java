@@ -14,6 +14,9 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,24 +65,25 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     protected void handleOpenFile(String file) {
         LOGGER.log(Level.INFO, "Opening {0} ...", file);
 
-        String inputFile = file;
+        Path inputFile = Paths.get(file);
 
         if(OS.isMac()) {
 
-            String tifFile = file.concat(".tif");
-
             try {
+
+                Path tmpTif = Files.createTempFile(inputFile.getFileName().toString(), ".tif");
+
                 Proc.builder.create()
                         .setCmd("navisu-app/bin/osx/gdal_translate")
                         .addArg("-of GTiff")
                         .addArg("-expand rgb")
                         .addArg(file)
-                        .addArg(tifFile)
+                        .addArg(tmpTif.toString())
                         .setOut(System.out)
                         .setErr(System.err)
                         .exec();
 
-                inputFile = tifFile;
+                inputFile = tmpTif;
 
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, null, e);
@@ -89,7 +93,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
         ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();
         installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
 
-        Layer layer = installer.installSurfaceImage(inputFile);
+        Layer layer = installer.installSurfaceImage(inputFile, null);
         if(layer != null) {
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));

@@ -32,7 +32,7 @@ public class ConsoleHandler extends Handler {
     private void initialize(OutputStream out, OutputStream err) {
         this.out = new PrintStream(out);
         this.err = new PrintStream(err);
-        this.setFormatter(ConsoleFormatter.newInstance());
+        this.setFormatter(new ConsoleFormatter());
     }
     
     @Override

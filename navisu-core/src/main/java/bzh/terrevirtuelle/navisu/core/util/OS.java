@@ -21,7 +21,7 @@ public class OS {
     }
 
     public static boolean isMac() {
-        return name.toLowerCase().contains("osx");
+        return name.toLowerCase().contains("mac");
     }
 
     public static boolean is32() {
