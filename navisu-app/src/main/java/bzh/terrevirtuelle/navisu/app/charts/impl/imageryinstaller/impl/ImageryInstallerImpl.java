@@ -54,20 +54,19 @@ public class ImageryInstallerImpl implements ImageryInstaller
      * {@inheritDoc}
      */
     @Override
-    public Layer installSurfaceImage(Object imageSource/*, final ProgressBar progressBar*/)
-    {
+    public Layer installSurfaceImage(Object imageSource/*, final ProgressBar progressBar*/) {
+
         final String imageSourceName = getImageSourceName(imageSource);
         Layer layer;
         
-        if((layer = getInstalledSurfaceImage(imageSource)) != null) {    
+        if((layer = getInstalledSurfaceImage(imageSource)) != null) {
             LOGGER.log(Level.INFO, "Image [{0}] is already installed !", imageSourceName);
             return layer;
         }
 
         AVList params = this.computeParams(imageSource);
 
-        try
-        {
+        try  {
             // Configure the TiledImageProducer with the parameter list and the image source.
             producer.setStoreParameters(params);
             producer.offerDataSource(imageSourceToFile(imageSource), null);
@@ -80,7 +79,6 @@ public class ImageryInstallerImpl implements ImageryInstaller
                     if(evt.getPropertyName().endsWith(AVKey.PROGRESS)) {
                         
                         double progress = (Double)evt.getNewValue();
-
                     }
                 }
             });
@@ -136,8 +134,8 @@ public class ImageryInstallerImpl implements ImageryInstaller
      * {@inheritDoc}
      */
     @Override
-    public Layer getInstalledSurfaceImage(Object imageSource)
-    {
+    public Layer getInstalledSurfaceImage(Object imageSource) {
+
         String imageSourceName = getImageSourceName(imageSource);
         String imageSourceConfigurationFileName = imageSourceName + ".xml";
 
@@ -170,6 +168,7 @@ public class ImageryInstallerImpl implements ImageryInstaller
     }
 
     protected Layer instanceLayerFromDataConfigDoc(Document dataConfigDoc) {
+
         // Construct a Layer by passing the data configuration document to a LayerFactory.
         Layer layer = (Layer) BasicFactory.create(AVKey.LAYER_FACTORY, dataConfigDoc.getDocumentElement());
         // The layer impl creates layers that are initially disabled, so enable the layer.
@@ -182,8 +181,7 @@ public class ImageryInstallerImpl implements ImageryInstaller
      * {@inheritDoc}
      */
     @Override
-    public void setImageFormat(ImageFormatEnum imageFormat)
-    {
+    public void setImageFormat(ImageFormatEnum imageFormat) {
         this.imageFormat = imageFormat;
     }
 
@@ -191,8 +189,7 @@ public class ImageryInstallerImpl implements ImageryInstaller
      * {@inheritDoc}
      */
     @Override
-    public ImageFormatEnum getImageFormat()
-    {
+    public ImageFormatEnum getImageFormat() {
         return this.imageFormat;
     }
 
