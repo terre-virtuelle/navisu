@@ -58,7 +58,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(pointCloudServices.getDriver());
 
-        chartsServices.openChart("navisu-app/data/101.KAP");
+        chartsServices.openChart("data/101.KAP");
     }
 
     public static void main(String[] args) throws Exception {
