@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,6 +58,10 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
     @Override
     public void open(String... files) {
+
+        List<String> list = Arrays.asList(files);
+
+
 
         for(String file : files) {
             this.handleOpenFile(file);
