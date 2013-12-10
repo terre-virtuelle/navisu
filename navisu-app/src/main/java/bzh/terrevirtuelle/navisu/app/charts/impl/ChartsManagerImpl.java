@@ -95,6 +95,28 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
                 LOGGER.log(Level.SEVERE, null, e);
             }
         }
+        else if(OS.isWindows()) {
+            
+            try {
+
+                Path tmpTif = Files.createTempFile(inputFile.getFileName().toString(), ".tif");
+
+                Proc.builder.create()
+                        .setCmd("bin/win/gdal_translate.exe")
+                        .addArg("-of GTiff")
+                        .addArg("-expand rgb")
+                        .addArg(file)
+                        .addArg(tmpTif.toString())
+                        .setOut(System.out)
+                        .setErr(System.err)
+                        .exec();
+
+                inputFile = tmpTif;
+
+            } catch (IOException | InterruptedException e) {
+                LOGGER.log(Level.SEVERE, null, e);
+            }
+        }
 
         ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();
         installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
