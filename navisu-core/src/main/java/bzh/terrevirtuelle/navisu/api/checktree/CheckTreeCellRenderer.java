@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.api.checktree;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import bzh.terrevirtuelle.navisu.api.checktree.model.CheckTreeItemModel;
+import bzh.terrevirtuelle.navisu.api.checktree.model.TreeItemModel;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
  * @param <T>
  * @date 10/12/2013 21:08
  */
-public class CheckTreeCell<T extends CheckTreeItem> extends TreeCell<T> {
+public class CheckTreeCellRenderer<T extends TreeItemModel> extends TreeCell<T> {
 
     protected HBox container;
 
@@ -24,19 +24,28 @@ public class CheckTreeCell<T extends CheckTreeItem> extends TreeCell<T> {
 
     protected boolean firstTime = true;
 
-    protected CheckTreeItem item;
+    protected TreeItemModel item;
 
-    public CheckTreeCell() {
+    public CheckTreeCellRenderer() {
 
         this.container = new HBox();
 
         this.checkBox = new CheckBox();
-        this.checkBox.setOnAction((e) -> {
-            this.item.setSelected(this.checkBox.isSelected());
+        this.checkBox.setOnAction((event) -> {
+
+            if(Selectable.isSelectable(this.item)) {
+
+                CheckTreeItemModel selectableModel = CheckTreeItemModel.cast(this.item);
+                selectableModel.setSelected(this.checkBox.isSelected());
+
+                selectableModel.getOnSelectListeners().forEach((e) -> {
+                    e.on(selectableModel);
+                });
+            }
         });
         this.icon = new ImageView();
 
-        this.container.getChildren().addAll(this.checkBox, this.icon);
+        this.container.getChildren().addAll(this.icon);
     }
 
     @Override
@@ -54,10 +63,17 @@ public class CheckTreeCell<T extends CheckTreeItem> extends TreeCell<T> {
                     menuItem.setOnAction((e) -> action.callback().on(item));
                     this.ctxMenu.getItems().addAll(menuItem);
                 });
+
+                if(Selectable.isSelectable(this.item)) {
+                    this.container.getChildren().add(this.checkBox);
+                }
             }
 
             this.setText(item.text());
-            this.checkBox.setSelected(item.selected());
+
+            if(Selectable.isSelectable(this.item)) {
+                this.checkBox.setSelected(CheckTreeItemModel.cast(this.item).selected());
+            }
 
             setGraphic(this.container);
 

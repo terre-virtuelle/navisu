@@ -1,5 +1,7 @@
 package bzh.terrevirtuelle.navisu.api.checktree;
 
+import bzh.terrevirtuelle.navisu.api.checktree.model.CheckTreeItemModel;
+import bzh.terrevirtuelle.navisu.api.checktree.model.TreeItemModel;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
@@ -24,7 +26,7 @@ public class UsageMain extends Application {
 
         CheckTree tree = new CheckTree();
 
-        TreeItem<CheckTreeItem.CheckTreeItemImpl> rootItem = new TreeItem<>();
+        TreeItem<TreeItemModel> rootItem = new TreeItem<>();
         tree.setRoot(rootItem);
         tree.setShowRoot(false);
 
@@ -34,8 +36,9 @@ public class UsageMain extends Application {
             Action.create("Action 3", (source) -> System.out.println("Do Action 3 source@" + source))
         };
         
-        CheckTreeItem.CheckTreeItemImpl item1 = new CheckTreeItem.CheckTreeItemImpl("Item 1", true, actionList);
-        CheckTreeItem.CheckTreeItemImpl item2 = new CheckTreeItem.CheckTreeItemImpl("Item 2", false, actionList);
+        TreeItemModel item1 = TreeItemModel.create("Item 1", actionList);
+        TreeItemModel item2 = CheckTreeItemModel.create("Item 2", false, actionList);
+        CheckTreeItemModel.cast(item2).setOnSelect((e) -> System.out.println("OnSelect@" + e.selected()));
 
         rootItem.getChildren().addAll(new TreeItem<>(item1), new TreeItem<>(item2));
 
