@@ -49,8 +49,8 @@ public class CheckTreeCell<T extends CheckTreeItem> extends TreeCell<T> {
                 firstTime = false;
 
                 item.getActions().forEach((action) -> {
-                    MenuItem menuItem = new MenuItem(action.getName());
-                    menuItem.setOnAction((e) -> action.getCallback().on());
+                    MenuItem menuItem = new MenuItem(action.name());
+                    menuItem.setOnAction((e) -> action.callback().on());
                     this.ctxMenu.getItems().addAll(menuItem);
                 });
             }

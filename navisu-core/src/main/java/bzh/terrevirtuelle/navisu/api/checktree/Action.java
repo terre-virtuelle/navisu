@@ -8,9 +8,21 @@ package bzh.terrevirtuelle.navisu.api.checktree;
  */
 public interface Action {
 
-    String getName();
-    void   setName(String name);
+    String name();
+    Callback callback();
+    
+    public static Action create(final String name, final Callback cb) {
+        return new Action() {
 
-    Callback getCallback();
-    void     setCallback(Callback cb);
+            @Override
+            public String name() {
+                return name;
+            }
+
+            @Override
+            public Callback callback() {
+                return cb;
+            }
+        };
+    }
 }

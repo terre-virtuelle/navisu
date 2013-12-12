@@ -29,36 +29,16 @@ public class UsageMain extends Application {
         tree.setShowRoot(false);
 
         CheckTreeItem.CheckTreeItemImpl item = new CheckTreeItem.CheckTreeItemImpl("hello", true);
-        item.getActions().add(new Action() {
-            @Override
-            public String getName() {
-                return "Action01";
-            }
-
-            @Override
-            public void setName(String name) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public Callback getCallback() {
-                return new Callback() {
-                    @Override
-                    public void on() {
-                        System.out.println("Hello !!");
-                    }
-                };
-            }
-
-            @Override
-            public void setCallback(Callback cb) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        });
+        item.addActions(
+                Action.create("Action 1", () -> System.out.println("Do Action 1")),
+                Action.create("Action 2", () -> System.out.println("Do Action 2")),
+                Action.create("Action 3", () -> System.out.println("Do Action 3"))
+        );
 
         rootItem.getChildren().add(new TreeItem<>(item));
 
         root.setCenter(tree);
+        stage.setTitle("Usage of check tree");
         stage.show();
     }
 

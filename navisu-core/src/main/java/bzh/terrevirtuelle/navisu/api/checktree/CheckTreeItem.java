@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,6 +23,7 @@ public interface CheckTreeItem {
     void setSelected(boolean selected);
 
     List<Action> getActions();
+    void         addActions(Action... actions);
 
     public static class CheckTreeItemImpl implements CheckTreeItem {
 
@@ -71,6 +73,11 @@ public interface CheckTreeItem {
         @Override
         public List<Action> getActions() {
             return this.actions;
+        }
+
+        @Override
+        public void addActions(Action... actions) {
+            this.actions.addAll(Arrays.asList(actions));
         }
     }
 }
