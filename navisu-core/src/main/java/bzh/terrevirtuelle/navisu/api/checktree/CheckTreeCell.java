@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
  * NaVisu
  *
  * @author tibus
+ * @param <T>
  * @date 10/12/2013 21:08
  */
 public class CheckTreeCell<T extends CheckTreeItem> extends TreeCell<T> {
@@ -50,7 +51,7 @@ public class CheckTreeCell<T extends CheckTreeItem> extends TreeCell<T> {
 
                 item.getActions().forEach((action) -> {
                     MenuItem menuItem = new MenuItem(action.name());
-                    menuItem.setOnAction((e) -> action.callback().on());
+                    menuItem.setOnAction((e) -> action.callback().on(item));
                     this.ctxMenu.getItems().addAll(menuItem);
                 });
             }

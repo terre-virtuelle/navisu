@@ -28,14 +28,16 @@ public class UsageMain extends Application {
         tree.setRoot(rootItem);
         tree.setShowRoot(false);
 
-        CheckTreeItem.CheckTreeItemImpl item = new CheckTreeItem.CheckTreeItemImpl("hello", true);
-        item.addActions(
-                Action.create("Action 1", () -> System.out.println("Do Action 1")),
-                Action.create("Action 2", () -> System.out.println("Do Action 2")),
-                Action.create("Action 3", () -> System.out.println("Do Action 3"))
-        );
+        Action[] actionList = new Action[] {
+            Action.create("Action 1", (source) -> System.out.println("Do Action 1 source@" + source)),
+            Action.create("Action 2", (source) -> System.out.println("Do Action 2 source@" + source)),
+            Action.create("Action 3", (source) -> System.out.println("Do Action 3 source@" + source))
+        };
+        
+        CheckTreeItem.CheckTreeItemImpl item1 = new CheckTreeItem.CheckTreeItemImpl("Item 1", true, actionList);
+        CheckTreeItem.CheckTreeItemImpl item2 = new CheckTreeItem.CheckTreeItemImpl("Item 2", false, actionList);
 
-        rootItem.getChildren().add(new TreeItem<>(item));
+        rootItem.getChildren().addAll(new TreeItem<>(item1), new TreeItem<>(item2));
 
         root.setCenter(tree);
         stage.setTitle("Usage of check tree");

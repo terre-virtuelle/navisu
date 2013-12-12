@@ -4,12 +4,13 @@ package bzh.terrevirtuelle.navisu.api.checktree;
  * NaVisu
  *
  * @author tibus
+ * @param <T> Type of the source to be returned in the callback
  * @date 11/12/2013 23:29
  */
 @FunctionalInterface
-public interface Callback {
+public interface Callback<T> {
 
-    void on();
+    void on(T source);
 
-    default void doNothing() { /* Nothing to do */ }
+    default void doNothing(T source) { /* Nothing to do */ }
 }

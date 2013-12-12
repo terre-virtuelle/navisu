@@ -18,7 +18,6 @@ public interface CheckTreeItem {
     String text();
     void setText(String text);
 
-    BooleanProperty getSelectedProperty();
     boolean selected();
     void setSelected(boolean selected);
 
@@ -40,9 +39,10 @@ public interface CheckTreeItem {
             this.selected = new SimpleBooleanProperty(true);
         }
 
-        public CheckTreeItemImpl(String text, boolean selected) {
+        public CheckTreeItemImpl(String text, boolean selected, Action... actions) {
             this.text = text;
             this.selected = new SimpleBooleanProperty(selected);
+            this.actions.addAll(Arrays.asList(actions));
         }
 
         @Override
@@ -58,11 +58,6 @@ public interface CheckTreeItem {
         @Override
         public boolean selected() {
             return this.selected.get();
-        }
-
-        @Override
-        public BooleanProperty getSelectedProperty() {
-            return this.selected;
         }
 
         @Override
