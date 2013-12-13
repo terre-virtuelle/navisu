@@ -1,5 +1,7 @@
 package bzh.terrevirtuelle.navisu.api.checktree;
 
+import bzh.terrevirtuelle.navisu.api.common.Callback;
+
 /**
  * NaVisu
  *

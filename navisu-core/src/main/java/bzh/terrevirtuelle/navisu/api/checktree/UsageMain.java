@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.api.checktree;
 
+import bzh.terrevirtuelle.navisu.api.common.Callback;
 import bzh.terrevirtuelle.navisu.api.checktree.model.CheckTreeItemModel;
 import bzh.terrevirtuelle.navisu.api.checktree.model.TreeItemModel;
 import javafx.application.Application;
@@ -28,7 +29,7 @@ public class UsageMain extends Application {
         CheckTree<TreeItemModel> tree = new CheckTree<>();
 
         Action[] actionList = new Action[] {
-            Action.create("Action 1", (source) -> System.out.println("Do Action 1 source@" + source)),
+            Action.create("Action 1", (source) -> System.out.println("Do Ac tion 1 source@" + source)),
             Action.create("Action 2", (source) -> System.out.println("Do Action 2 source@" + source)),
             Action.create("Action 3", (source) -> System.out.println("Do Action 3 source@" + source))
         };
@@ -40,7 +41,7 @@ public class UsageMain extends Application {
         tree.root().getChildren().add(rootItem);
         
         // create children
-        Callback<CheckTreeItemModel> cb = (e) -> System.out.println("Do OnSelect[" + e.selected() + "] source@" + e);
+        Callback<CheckTreeItemModel> cb = (item) -> System.out.println("Do OnSelect[" + item.selected() + "] source@" + item);
         
         for(int i=0; i<10; i++) {
             TreeItemModel item = CheckTreeItemModel.create("Layer " + i, img, false, actionList);

@@ -1,8 +1,8 @@
 package bzh.terrevirtuelle.navisu.api.checktree.model;
 
 import bzh.terrevirtuelle.navisu.api.checktree.Action;
-import bzh.terrevirtuelle.navisu.api.checktree.Callback;
-import bzh.terrevirtuelle.navisu.api.checktree.Selectable;
+import bzh.terrevirtuelle.navisu.api.common.Callback;
+import bzh.terrevirtuelle.navisu.api.common.Selectable;
 import bzh.terrevirtuelle.navisu.api.checktree.model.impl.CheckTreeItemModelImpl;
 
 import java.util.List;

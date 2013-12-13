@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.api.checktree;
 
+import bzh.terrevirtuelle.navisu.api.common.Selectable;
 import bzh.terrevirtuelle.navisu.api.checktree.model.CheckTreeItemModel;
 import bzh.terrevirtuelle.navisu.api.checktree.model.TreeItemModel;
 import javafx.scene.control.*;
