@@ -61,8 +61,6 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
         List<String> list = Arrays.asList(files);
 
-
-
         for(String file : files) {
             this.handleOpenFile(file);
         }
@@ -72,50 +70,26 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
         LOGGER.log(Level.INFO, "Opening {0} ...", file);
 
         Path inputFile = Paths.get(file);
+        final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/gdal_translate";
 
-        if(OS.isMac()) {
+        try {
 
-            try {
+            Path tmpTif = Files.createTempFile(inputFile.getFileName().toString(), ".tif");
 
-                Path tmpTif = Files.createTempFile(inputFile.getFileName().toString(), ".tif");
+            Proc.builder.create()
+                    .setCmd(cmd)
+                    .addArg("-of GTiff")
+                    .addArg("-expand rgb")
+                    .addArg(file)
+                    .addArg(tmpTif.toString())
+                    .setOut(System.out)
+                    .setErr(System.err)
+                    .exec();
 
-                Proc.builder.create()
-                        .setCmd("navisu-app/bin/osx/gdal_translate")
-                        .addArg("-of GTiff")
-                        .addArg("-expand rgb")
-                        .addArg(file)
-                        .addArg(tmpTif.toString())
-                        .setOut(System.out)
-                        .setErr(System.err)
-                        .exec();
+            inputFile = tmpTif;
 
-                inputFile = tmpTif;
-
-            } catch (IOException | InterruptedException e) {
-                LOGGER.log(Level.SEVERE, null, e);
-            }
-        }
-        else if(OS.isWindows()) {
-            
-            try {
-
-                Path tmpTif = Files.createTempFile(inputFile.getFileName().toString(), ".tif");
-
-                Proc.builder.create()
-                        .setCmd("bin/win/gdal_translate.exe")
-                        .addArg("-of GTiff")
-                        .addArg("-expand rgb")
-                        .addArg(file)
-                        .addArg(tmpTif.toString())
-                        .setOut(System.out)
-                        .setErr(System.err)
-                        .exec();
-
-                inputFile = tmpTif;
-
-            } catch (IOException | InterruptedException e) {
-                LOGGER.log(Level.SEVERE, null, e);
-            }
+        } catch (IOException | InterruptedException e) {
+            LOGGER.log(Level.SEVERE, null, e);
         }
 
         ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();

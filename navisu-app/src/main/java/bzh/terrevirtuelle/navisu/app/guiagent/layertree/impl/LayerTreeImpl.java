@@ -51,7 +51,7 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
         this.container = new BorderPane();
         //this.container.setMaxWidth(250);
 
-        this.container.getStylesheets().add(LayerTreeImpl.class.getResource("LayerTree.css").toExternalForm());
+        this.container.getStylesheets().add(LayerTreeImpl.class.getResource("CheckTree.css").toExternalForm());
 
         this.rootItem = new TreeItem();
         this.treeView = new TreeView(this.rootItem);
@@ -68,7 +68,7 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
     public void createGroup(String groupName, GeoLayer<?>... layers) {
 
         Checker.notNull(groupName, "Group name is null.");
-        Checker.keyNotExistsInMap(this.groupMap, groupName, "Group named \"" + groupName + "\" already exists in layer tree.");
+        Checker.keyNotExistsInMap(this.groupMap, groupName, "Group named \"" + groupName + "\" already exists in layer checktree.");
 
         CheckBoxTreeItem<String> groupItem = new CheckBoxTreeItem<>(groupName);
         this.rootItem.getChildren().add(groupItem);
