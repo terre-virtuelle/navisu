@@ -43,9 +43,8 @@ public class CheckTreeCellRenderer<T extends TreeItemModel> extends TreeCell<T> 
                 });
             }
         });
+        
         this.icon = new ImageView();
-
-        this.container.getChildren().addAll(this.icon);
     }
 
     @Override
@@ -64,20 +63,27 @@ public class CheckTreeCellRenderer<T extends TreeItemModel> extends TreeCell<T> 
                     this.ctxMenu.getItems().addAll(menuItem);
                 });
 
-                if(Selectable.isSelectable(this.item)) {
+                if(Selectable.isSelectable(item)) {
                     this.container.getChildren().add(this.checkBox);
                 }
+                
+                if(item.hasIcon()) {
+                    this.icon.setImage(item.icon());
+                    this.container.getChildren().add(this.icon);
+                }
             }
-
-            this.setText(item.text());
 
             if(Selectable.isSelectable(this.item)) {
                 this.checkBox.setSelected(CheckTreeItemModel.cast(this.item).selected());
             }
 
+            setText(item.text());
             setGraphic(this.container);
-
             setContextMenu(this.ctxMenu);
+        }
+        else {
+            setText(null);
+            setGraphic(null);
         }
     }
 }

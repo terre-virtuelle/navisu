@@ -7,6 +7,7 @@ import bzh.terrevirtuelle.navisu.api.checktree.model.CheckTreeItemModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javafx.scene.image.Image;
 
 /**
  * NaVisu
@@ -24,11 +25,11 @@ public class CheckTreeItemModelImpl extends TreeItemModelImpl implements CheckTr
     }
 
     public CheckTreeItemModelImpl() {
-        this("no-text", true);
+        this("no-text", null, true);
     }
 
-    public CheckTreeItemModelImpl(String text, boolean selected, Action... actions) {
-        super(text, actions);
+    public CheckTreeItemModelImpl(String text, Image icon, boolean selected, Action... actions) {
+        super(text, icon, actions);
         this.selected = selected;
     }
 
