@@ -6,6 +6,7 @@ import bzh.terrevirtuelle.navisu.api.checktree.model.TreeItemModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javafx.scene.image.Image;
 
 /**
  * NaVisu
@@ -17,7 +18,8 @@ public class TreeItemModelImpl implements TreeItemModel {
 
     protected String text;
     protected List<Action> actions;
-
+    protected Image icon;
+    
     {
         this.actions = new ArrayList<>();
     }
@@ -26,9 +28,10 @@ public class TreeItemModelImpl implements TreeItemModel {
         this.text = "no-text";
     }
 
-    public TreeItemModelImpl(String text, Action... actions) {
+    public TreeItemModelImpl(String text, Image icon, Action... actions) {
         this.text = text;
         this.actions.addAll(Arrays.asList(actions));
+        this.icon = icon;
     }
 
     @Override
@@ -49,5 +52,20 @@ public class TreeItemModelImpl implements TreeItemModel {
     @Override
     public void addActions(Action... actions) {
         this.actions.addAll(Arrays.asList(actions));
+    }
+
+    @Override
+    public Image icon() {
+        return this.icon;
+    }
+
+    @Override
+    public void setIcon(Image image) {
+        this.icon = image;
+    }
+
+    @Override
+    public boolean hasIcon() {
+        return this.icon != null;
     }
 }

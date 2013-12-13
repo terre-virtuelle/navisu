@@ -1,11 +1,12 @@
 package bzh.terrevirtuelle.navisu.api.checktree.model;
 
 import bzh.terrevirtuelle.navisu.api.checktree.Action;
-import bzh.terrevirtuelle.navisu.api.checktree.Callback;
-import bzh.terrevirtuelle.navisu.api.checktree.Selectable;
+import bzh.terrevirtuelle.navisu.api.common.Callback;
+import bzh.terrevirtuelle.navisu.api.common.Selectable;
 import bzh.terrevirtuelle.navisu.api.checktree.model.impl.CheckTreeItemModelImpl;
 
 import java.util.List;
+import javafx.scene.image.Image;
 
 /**
  * NaVisu
@@ -20,7 +21,11 @@ public interface CheckTreeItemModel extends TreeItemModel, Selectable {
 
 
     public static CheckTreeItemModel create(String text, boolean selected, Action... actions) {
-        return new CheckTreeItemModelImpl(text, selected, actions);
+        return new CheckTreeItemModelImpl(text, null, selected, actions);
+    }
+    
+    public static CheckTreeItemModel create(String text, Image icon, boolean selected, Action... actions) {
+        return new CheckTreeItemModelImpl(text, icon, selected, actions);
     }
 
     public static CheckTreeItemModel cast(TreeItemModel orig) {

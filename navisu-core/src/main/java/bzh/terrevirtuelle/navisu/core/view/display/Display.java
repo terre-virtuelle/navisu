@@ -5,6 +5,8 @@ package bzh.terrevirtuelle.navisu.core.view.display;
  *
  * @author tibus
  * @date 07/11/2013 20:31
+ * 
+ * @param <T> Supported type by the display (Swing, JavaFX...)
  */
 public interface Display<T> {
 

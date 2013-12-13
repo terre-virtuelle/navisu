@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.api.checktree;
+package bzh.terrevirtuelle.navisu.api.common;
 
 /**
  * NaVisu
