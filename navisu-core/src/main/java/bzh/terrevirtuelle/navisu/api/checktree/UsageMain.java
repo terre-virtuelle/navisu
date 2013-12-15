@@ -29,7 +29,7 @@ public class UsageMain extends Application {
         CheckTree<TreeItemModel> tree = new CheckTree<>();
 
         Action[] actionList = new Action[] {
-            Action.create("Action 1", (source) -> System.out.println("Do Ac tion 1 source@" + source)),
+            Action.create("Action 1", (source) -> System.out.println("Do Action 1 source@" + source)),
             Action.create("Action 2", (source) -> System.out.println("Do Action 2 source@" + source)),
             Action.create("Action 3", (source) -> System.out.println("Do Action 3 source@" + source))
         };

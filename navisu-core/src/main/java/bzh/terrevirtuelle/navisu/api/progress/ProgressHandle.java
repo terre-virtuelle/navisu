@@ -1,11 +1,10 @@
 package bzh.terrevirtuelle.navisu.api.progress;
 
 /**
- * Created with IntelliJ IDEA.
- * User: tibus
- * Date: 22/10/13
- * Time: 21:18
- * To change this template use File | Settings | File Templates.
+ * NaVisu
+ *
+ * @author tibus
+ * @date 22/10/2013 21:18
  */
 public interface ProgressHandle {
 
@@ -43,13 +42,6 @@ public interface ProgressHandle {
     void	setDisplayName(String newDisplayName);
 
     /**
-     * Set a custom initial delay for the progress task to appear in the status bar.
-     *
-     * @param millis
-     */
-    void	setInitialDelay(int millis);
-
-    /**
      * start the progress indication for indeterminate task.
      */
     void	start();
@@ -82,14 +74,6 @@ public interface ProgressHandle {
      * @param workunits
      */
     void	switchToDeterminate(int workunits);
-
-    /**
-     * Currently indeterminate task can be switched to show the time estimate til completion.
-     *
-     * @param workunits
-     * @param estimate
-     */
-    void	switchToDeterminate(int workunits, long estimate);
 
     /**
      * Currently determinate task (with percentage or time estimate) can be switched to indeterminate mode.
