@@ -2,6 +2,7 @@ package bzh.terrevirtuelle.navisu.api.progress.impl.view;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.core.view.display.jfx.impl.JFXAbstractDisplay;
+import javafx.application.Platform;
 import javafx.scene.Node;
 
 /**
@@ -109,6 +110,17 @@ public class JobViewCtrl extends JFXAbstractDisplay implements ProgressHandle {
     //-----------------------------------------------------------------------------------//
 
     protected void updateView() {
+
+        if(Platform.isFxApplicationThread()) {
+            this.updateViewSafe();
+        }
+        else {
+            Platform.runLater(() -> this.updateViewSafe());
+        }
+    }
+
+    protected void updateViewSafe() {
+
 
         this.view.titleText.setText(this.title);
         this.view.descriptionText.setText(this.description);

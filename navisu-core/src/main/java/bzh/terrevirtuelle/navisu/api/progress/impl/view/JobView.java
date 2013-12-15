@@ -5,10 +5,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -24,7 +23,7 @@ import javafx.scene.text.Text;
  */
 public class JobView extends Group {
 
-    public final ProgressBar progressBar;
+    public final ProgressIndicator progressBar;
     public final Text titleText;
     public final Text descriptionText;
     public final ImageView closeIcon;

@@ -30,16 +30,45 @@ public class UsageMain extends Application {
         Scene scene = new Scene(root, Color.TRANSPARENT);
         stage.setScene(scene);
 
-        Job.manager.newJob((pHandle) -> {
+        root.setCenter(Job.manager.getDisplay().getDisplayable());
 
+        Job.manager.newJob("Charts Loading", (pHandle) -> {
+
+            try {
+                pHandle.progress("Start progressing");
+                Thread.sleep(1000);
+
+                pHandle.progress("Comment allez vous ?");
+                Thread.sleep(2000);
+
+                pHandle.progress("Ca va bien, et vous ?");
+                Thread.sleep(2000);
+
+                pHandle.progress("Bien merci");
+
+            } catch (InterruptedException e) {}
         });
 
-        JobViewCtrl jobViewCtrl = new JobViewCtrl("Charts loading", 700);
-        root.setCenter(jobViewCtrl.getDisplayable());
+        Job.manager.newJob("Grib Loading", 4, (pHandle) -> {
 
-        jobViewCtrl.progress("Un message de progression", 350);
+            try {
+                pHandle.progress("Start progressing", 1);
+                Thread.sleep(1000);
+
+                pHandle.progress("Comment allez vous ?", 2);
+                Thread.sleep(2000);
+
+                pHandle.progress("Ca va bien, et vous ?", 3);
+                Thread.sleep(2000);
+
+                pHandle.progress("Bien merci", 4);
+
+            } catch (InterruptedException e) {}
+        });
 
         stage.setTitle("Usage of progress API");
+        stage.setWidth(500);
+        stage.setHeight(500);
         stage.show();
     }
 
