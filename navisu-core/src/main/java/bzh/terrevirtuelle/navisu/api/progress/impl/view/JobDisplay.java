@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.api.progress.impl.view;
 
 import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobDisplayImpl;
+import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobFXMLDisplayImpl;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
@@ -22,7 +23,7 @@ public interface JobDisplay extends Display<Region> {
 
     ImageView closeButton();
 
-    public static final Class<JobDisplayImpl> DEFAULT_IMPL = JobDisplayImpl.class;
+    public static final Class<JobFXMLDisplayImpl> DEFAULT_IMPL = JobFXMLDisplayImpl.class;
 
     public static JobDisplay create() {
         return create(DEFAULT_IMPL);

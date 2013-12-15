@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="79.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <GridPane layoutX="14.0" layoutY="5.0" prefHeight="79.0" prefWidth="286.0">
+      <children>
+        <Text fx:id="titleText" fontSmoothingType="GRAY" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" GridPane.columnIndex="0" GridPane.rowIndex="0">
+          <font>
+            <Font name="System Bold" size="13.0" />
+          </font>
+        </Text>
+        <Text fx:id="messageText" fill="#606060" strokeType="OUTSIDE" strokeWidth="0.0" text="Description" GridPane.columnIndex="0" GridPane.rowIndex="1">
+          <font>
+            <Font name="System Italic" size="11.0" />
+          </font>
+        </Text>
+        <ProgressBar fx:id="progressBar" prefHeight="15.310546875" prefWidth="143.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <ImageView fx:id="closeIcon" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="0" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <padding>
+        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+      </padding>
+      <rowConstraints>
+        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="26.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+  </children>
+</AnchorPane>

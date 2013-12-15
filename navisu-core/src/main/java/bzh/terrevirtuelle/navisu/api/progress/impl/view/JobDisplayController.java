@@ -2,6 +2,8 @@ package bzh.terrevirtuelle.navisu.api.progress.impl.view;
 
 import bzh.terrevirtuelle.navisu.api.common.DisplayController;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
+import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobDisplayImpl;
+import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobFXMLDisplayImpl;
 import javafx.application.Platform;
 
 /**
@@ -20,12 +22,12 @@ public class JobDisplayController implements ProgressHandle, DisplayController<J
     protected Runnable exitHandle;
 
     public JobDisplayController(final String displayName) {
-        this.view = JobDisplay.create(JobDisplay.DEFAULT_IMPL);
+        this.view = JobDisplay.create(JobDisplayImpl.class);  //
         this.initialize(displayName);
     }
 
     public JobDisplayController(final String displayName, int workunit) {
-        this.view = JobDisplay.create(JobDisplay.DEFAULT_IMPL);
+        this.view = JobDisplay.create(JobFXMLDisplayImpl.class);
         this.initialize(displayName);
 
         this.isIndeterminate = false;
@@ -39,7 +41,7 @@ public class JobDisplayController implements ProgressHandle, DisplayController<J
         this.updateView();
 
         this.view.closeButton().setOnMouseClicked((e) -> {
-            if(this.exitHandle != null) {
+            if (this.exitHandle != null) {
                 this.exitHandle.run();
             }
         });
@@ -54,8 +56,8 @@ public class JobDisplayController implements ProgressHandle, DisplayController<J
 
         this.view.getDisplayable().setPrefSize(width, height);
 
-        this.view.progressBar().setMinWidth(width/2);
-        this.view.progressBar().setMaxWidth(width/2);
+        this.view.progressBar().setMinWidth(width / 2);
+        this.view.progressBar().setMaxWidth(width / 2);
     }
 
     public void setOnExit(Runnable runnable) {
