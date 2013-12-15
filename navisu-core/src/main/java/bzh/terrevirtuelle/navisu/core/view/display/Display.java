@@ -15,7 +15,7 @@ public interface Display<T> {
     void    setVisible(boolean visible);
     boolean isVisible();
 
-    void   setMaxWidth(double maxWidth);
+    /*void   setMaxWidth(double maxWidth);
     double getMaxWidth();
 
     void   setMaxHeight(double maxHeight);
@@ -25,7 +25,7 @@ public interface Display<T> {
     double getWidth();
 
     void   setHeight(double height);
-    double getHeight();
+    double getHeight();*/
 
     T getDisplayable();
 }

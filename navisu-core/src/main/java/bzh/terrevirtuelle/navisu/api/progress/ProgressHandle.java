@@ -20,14 +20,14 @@ public interface ProgressHandle {
     void	progress(int workunit);
 
     /**
-     * Notify the user about progress by showing message with details.
+     * Notify the user about progress by showing messageText with details.
      *
      * @param message
      */
     void	progress(String message);
 
     /**
-     * Notify the user about completed workunits and show additional detailed message.
+     * Notify the user about completed workunits and show additional detailed messageText.
      *
      * @param message
      * @param workunit
@@ -35,7 +35,7 @@ public interface ProgressHandle {
     void	progress(String message, int workunit);
 
     /**
-     * Change the display title of the progress task.
+     * Change the display titleText of the progress task.
      *
      * @param newDisplayName
      */

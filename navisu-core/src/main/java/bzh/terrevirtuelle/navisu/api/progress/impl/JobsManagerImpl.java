@@ -2,7 +2,7 @@ package bzh.terrevirtuelle.navisu.api.progress.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
-import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobViewCtrl;
+import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobDisplayController;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import javafx.application.Platform;
 import javafx.scene.Node;
@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  */
 public class JobsManagerImpl implements JobsManager {
 
-    protected List<JobViewCtrl> ctrls;
+    protected List<JobDisplayController> ctrls;
     protected VBox container;
     protected int jobViewWidth = DEFAULT_JOB_VIEW_WIDTH, jobViewHeight = DEFAULT_JOB_VIEW_HEIGHT;
 
@@ -34,7 +34,7 @@ public class JobsManagerImpl implements JobsManager {
     public void newJob(final String name, final Job job) {
         Executors.newSingleThreadExecutor().execute(() -> {
 
-            JobViewCtrl jobViewCtrl = new JobViewCtrl(name);
+            JobDisplayController jobViewCtrl = new JobDisplayController(name);
             playJob(jobViewCtrl, job);
         });
     }
@@ -43,12 +43,12 @@ public class JobsManagerImpl implements JobsManager {
     public void newJob(String name, int workunit, Job job) {
         Executors.newSingleThreadExecutor().execute(() -> {
 
-            JobViewCtrl jobViewCtrl = new JobViewCtrl(name, workunit);
+            JobDisplayController jobViewCtrl = new JobDisplayController(name, workunit);
             playJob(jobViewCtrl, job);
         });
     }
 
-    protected void playJob(final JobViewCtrl jobViewCtrl, Job job) {
+    protected void playJob(final JobDisplayController jobViewCtrl, Job job) {
 
         jobViewCtrl.setViewSize(jobViewWidth, jobViewHeight);
         jobViewCtrl.setOnExit(() -> {
@@ -58,7 +58,7 @@ public class JobsManagerImpl implements JobsManager {
         ctrls.add(jobViewCtrl);
 
         // display the job view
-        Platform.runLater(() -> container.getChildren().add(jobViewCtrl.getDisplayable()));
+        Platform.runLater(() -> container.getChildren().add(jobViewCtrl.getView().getDisplayable()));
 
         // play the job
         job.run(jobViewCtrl);
@@ -67,8 +67,8 @@ public class JobsManagerImpl implements JobsManager {
         Platform.runLater(() -> stopJob(jobViewCtrl));
     }
 
-    protected void stopJob(JobViewCtrl jobViewCtrl) {
-        this.container.getChildren().removeAll(jobViewCtrl.getDisplayable());
+    protected void stopJob(JobDisplayController jobViewCtrl) {
+        this.container.getChildren().removeAll(jobViewCtrl.getView().getDisplayable());
     }
 
     @Override

@@ -1,9 +1,8 @@
 package bzh.terrevirtuelle.navisu.api.progress.impl.view;
 
+import bzh.terrevirtuelle.navisu.api.common.DisplayController;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
-import bzh.terrevirtuelle.navisu.core.view.display.jfx.impl.JFXAbstractDisplay;
 import javafx.application.Platform;
-import javafx.scene.Node;
 
 /**
  * NaVisu
@@ -11,22 +10,22 @@ import javafx.scene.Node;
  * @author tibus
  * @date 15/12/2013 15:03
  */
-public class JobViewCtrl extends JFXAbstractDisplay implements ProgressHandle {
+public class JobDisplayController implements ProgressHandle, DisplayController<JobDisplay> {
 
-    protected final JobView view;
+    protected final JobDisplay view;
     protected int finalWorkUnit, currentWorkUnit;
     protected String title, description;
     protected boolean isIndeterminate;
 
     protected Runnable exitHandle;
 
-    public JobViewCtrl(final String displayName) {
-        this.view = new JobView();
+    public JobDisplayController(final String displayName) {
+        this.view = JobDisplay.create(JobDisplay.DEFAULT_IMPL);
         this.initialize(displayName);
     }
 
-    public JobViewCtrl(final String displayName, int workunit) {
-        this.view = new JobView();
+    public JobDisplayController(final String displayName, int workunit) {
+        this.view = JobDisplay.create(JobDisplay.DEFAULT_IMPL);
         this.initialize(displayName);
 
         this.isIndeterminate = false;
@@ -39,7 +38,7 @@ public class JobViewCtrl extends JFXAbstractDisplay implements ProgressHandle {
         this.isIndeterminate = true;
         this.updateView();
 
-        this.view.closeIcon.setOnMouseClicked((e) -> {
+        this.view.closeButton().setOnMouseClicked((e) -> {
             if(this.exitHandle != null) {
                 this.exitHandle.run();
             }
@@ -47,16 +46,16 @@ public class JobViewCtrl extends JFXAbstractDisplay implements ProgressHandle {
     }
 
     @Override
-    public Node getDisplayable() {
+    public JobDisplay getView() {
         return this.view;
     }
 
     public void setViewSize(int width, int height) {
-        this.view.container.setPrefWidth(width);
-        this.view.container.setPrefHeight(height);
 
-        this.view.progressBar.setMinWidth(width/2);
-        this.view.progressBar.setMaxWidth(width/2);
+        this.view.getDisplayable().setPrefSize(width, height);
+
+        this.view.progressBar().setMinWidth(width/2);
+        this.view.progressBar().setMaxWidth(width/2);
     }
 
     public void setOnExit(Runnable runnable) {
@@ -145,16 +144,16 @@ public class JobViewCtrl extends JFXAbstractDisplay implements ProgressHandle {
     protected void updateViewSafe() {
 
 
-        this.view.titleText.setText(this.title);
-        this.view.descriptionText.setText(this.description);
+        this.view.titleText().setText(this.title);
+        this.view.messageText().setText(this.description);
 
         if(this.isIndeterminate) {
-            this.view.progressBar.setProgress(-1d);
+            this.view.progressBar().setProgress(-1d);
         }
         else {
 
             double progress = (double)this.currentWorkUnit / this.finalWorkUnit;
-            this.view.progressBar.setProgress(progress);
+            this.view.progressBar().setProgress(progress);
         }
     }
 }

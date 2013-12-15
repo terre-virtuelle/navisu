@@ -22,7 +22,7 @@ public abstract class JFXAbstractDisplay implements JFXDisplay {
         return this.getDisplayable().isVisible();
     }
 
-    @Override
+    /*@Override
     public void setMaxHeight(double maxHeight) {
 
         if(Region.class.isAssignableFrom(this.getDisplayable().getClass())) {
@@ -87,5 +87,5 @@ public abstract class JFXAbstractDisplay implements JFXDisplay {
     @Override
     public double getHeight() {
         return 0;  //TODO return the height
-    }
+    }*/
 }

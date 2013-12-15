@@ -1,17 +1,7 @@
 package bzh.terrevirtuelle.navisu.api.progress;
 
-import bzh.terrevirtuelle.navisu.api.checktree.Action;
-import bzh.terrevirtuelle.navisu.api.checktree.CheckTree;
-import bzh.terrevirtuelle.navisu.api.checktree.model.CheckTreeItemModel;
-import bzh.terrevirtuelle.navisu.api.checktree.model.TreeItemModel;
-import bzh.terrevirtuelle.navisu.api.common.Callback;
-import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobView;
-import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobViewCtrl;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
-import javafx.scene.image.Image;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;

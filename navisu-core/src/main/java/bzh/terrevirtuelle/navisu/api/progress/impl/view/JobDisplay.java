@@ -1,46 +1,43 @@
 package bzh.terrevirtuelle.navisu.api.progress.impl.view;
 
-import bzh.terrevirtuelle.navisu.core.view.display.jfx.JFXAnimatedDisplay;
-import bzh.terrevirtuelle.navisu.core.view.display.jfx.impl.JFXAbstractAnimatedDisplay;
-import javafx.animation.FadeTransition;
-import javafx.animation.Transition;
-import javafx.scene.Node;
-import javafx.util.Duration;
+import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobDisplayImpl;
+import bzh.terrevirtuelle.navisu.core.view.display.Display;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 
 /**
  * NaVisu
  *
  * @author tibus
- * @date 15/12/2013 14:55
+ * @date 15/12/2013 20:11
  */
-public class JobDisplay extends JFXAbstractAnimatedDisplay {
+public interface JobDisplay extends Display<Region> {
 
-    @Override
-    protected Transition createShowTransition() {
+    ProgressIndicator progressBar();
 
-        final FadeTransition transition = new FadeTransition(Duration.millis(1000), this.getDisplayable());
+    Text titleText();
+    Text messageText();
 
-        transition.setFromValue(0d);
-        transition.setToValue(1d);
-        transition.setCycleCount(1);
+    ImageView closeButton();
 
-        return transition;
+    public static final Class<JobDisplayImpl> DEFAULT_IMPL = JobDisplayImpl.class;
+
+    public static JobDisplay create() {
+        return create(DEFAULT_IMPL);
     }
 
-    @Override
-    protected Transition createHideTransition() {
+    public static <T extends JobDisplay> JobDisplay create(Class<T> clz) {
 
-        final FadeTransition transition = new FadeTransition(Duration.millis(1000), this.getDisplayable());
+        JobDisplay newInstance = null;
 
-        transition.setFromValue(1d);
-        transition.setToValue(0d);
-        transition.setCycleCount(1);
+        try {
+            newInstance = (JobDisplay) clz.getConstructors()[0].newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        return transition;
-    }
-
-    @Override
-    public Node getDisplayable() {
-        return null;
+        return newInstance;
     }
 }
