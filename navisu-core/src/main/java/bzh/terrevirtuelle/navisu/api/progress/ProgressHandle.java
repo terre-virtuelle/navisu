@@ -35,7 +35,7 @@ public interface ProgressHandle {
     void	progress(String message, int workunit);
 
     /**
-     * Change the display name of the progress task.
+     * Change the display title of the progress task.
      *
      * @param newDisplayName
      */
@@ -52,14 +52,6 @@ public interface ProgressHandle {
      * @param workunits
      */
     void	start(int workunits);
-
-    /**
-     * start the progress indication for a task with known number of steps and known time estimate for completing the task.
-     *
-     * @param workunits
-     * @param estimate
-     */
-    void	start(int workunits, long estimate);
 
     /**
      * Current task can switch to silent suspend mode where the progress bar stops moving, hides completely or partially.

@@ -34,8 +34,10 @@ public class UsageMain extends Application {
 
         });
 
-        JobViewCtrl jobViewCtrl = new JobViewCtrl("Charts loading");
+        JobViewCtrl jobViewCtrl = new JobViewCtrl("Charts loading", 700);
         root.setCenter(jobViewCtrl.getDisplayable());
+
+        jobViewCtrl.progress("Un message de progression", 350);
 
         stage.setTitle("Usage of progress API");
         stage.show();

@@ -35,7 +35,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     @Override
     public void createGroup(String groupName, GeoLayer<Layer>... layers) {
 
-        Checker.notNull(groupName, "Group name is null.");
+        Checker.notNull(groupName, "Group title is null.");
         Checker.keyNotExistsInMap(this.groupMap, groupName, "Group " + groupName + " already exists.");
 
         // Create the group
@@ -55,7 +55,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     @Override
     public List<GeoLayer<Layer>> getGroup(String groupName) {
 
-        Checker.notNull(groupName, "Group name is null.");
+        Checker.notNull(groupName, "Group title is null.");
         Checker.keyExistsInMap(this.groupMap, groupName, "Group " + groupName + " does not exists.");
 
         return this.groupMap.get(groupName);
@@ -92,7 +92,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     public void insertGeoLayer(String groupName, GeoLayer<Layer>... layers) {
 
 
-        Checker.notNull(groupName, "Group name is null.");
+        Checker.notNull(groupName, "Group title is null.");
         Checker.keyExistsInMap(this.groupMap, groupName, "Group " + groupName + " does not exists.");
 
         final List<GeoLayer<Layer>> group = this.groupMap.get(groupName);
@@ -110,7 +110,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     public void insertGeoLayerBeforeLayerName(GeoLayer<Layer> layer, String layerName) {
 
         Checker.notNull(layer, "Layer is null.");
-        Checker.notNull(layerName, "Layer name is null");
+        Checker.notNull(layerName, "Layer title is null");
 
         final List<GeoLayer<Layer>> defaultGroup = this.groupMap.get(DEFAULT_GROUP);
 
@@ -121,9 +121,9 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     @Override
     public void insertGeoLayerBeforeLayerName(String groupName, GeoLayer<Layer> layer, String layerName) {
 
-        Checker.notNull(groupName, "Group name is null.");
+        Checker.notNull(groupName, "Group title is null.");
         Checker.notNull(layer, "Layer is null.");
-        Checker.notNull(layerName, "Layer name is null.");
+        Checker.notNull(layerName, "Layer title is null.");
 
         final List<GeoLayer<Layer>> group = this.groupMap.get(groupName);
 
@@ -146,7 +146,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     @Override
     public void insertGeoLayerBeforeCompass(String groupName, GeoLayer<Layer>... layers) {
 
-        Checker.notNull(groupName, "Group name is null.");
+        Checker.notNull(groupName, "Group title is null.");
         Checker.keyExistsInMap(this.groupMap, groupName, "Group " + groupName + " does not exists.");
 
         final List<GeoLayer<Layer>> group = this.groupMap.get(groupName);

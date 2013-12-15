@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.api.progress.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.Job;
-import bzh.terrevirtuelle.navisu.api.progress.JobManager;
+import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobViewCtrl;
 
 import java.util.ArrayList;
@@ -13,11 +13,11 @@ import java.util.List;
  * @author tibus
  * @date 15/12/2013 14:52
  */
-public class JobManagerImpl implements JobManager {
+public class JobsManagerImpl implements JobsManager {
 
     protected List<JobViewCtrl> ctrls;
 
-    public JobManagerImpl() {
+    public JobsManagerImpl() {
         this.ctrls = new ArrayList<>();
     }
 

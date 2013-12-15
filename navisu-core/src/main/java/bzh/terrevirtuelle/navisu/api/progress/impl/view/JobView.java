@@ -31,13 +31,13 @@ public class JobView extends Group {
 
     protected final GridPane container;
 
-    public JobView(final String displayName) {
+    public JobView() {
 
         // Initialize the progress bar
         this.progressBar = new ProgressBar();
 
         // Initialize the title text
-        this.titleText = new Text(displayName);
+        this.titleText = new Text("no-title");
         this.titleText.setFill(Color.BLACK);
         this.titleText.setFont(Font.font("Arial", FontWeight.BOLD, 12d));
 
