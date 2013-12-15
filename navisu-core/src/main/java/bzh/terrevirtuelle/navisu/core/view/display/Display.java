@@ -21,5 +21,11 @@ public interface Display<T> {
     void   setMaxHeight(double maxHeight);
     double getMaxHeight();
 
+    void   setWidth(double width);
+    double getWidth();
+
+    void   setHeight(double height);
+    double getHeight();
+
     T getDisplayable();
 }

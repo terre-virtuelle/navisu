@@ -22,6 +22,7 @@ public class JobsManagerImpl implements JobsManager {
 
     protected List<JobViewCtrl> ctrls;
     protected VBox container;
+    protected int jobViewWidth = DEFAULT_JOB_VIEW_WIDTH, jobViewHeight = DEFAULT_JOB_VIEW_HEIGHT;
 
 
     public JobsManagerImpl() {
@@ -34,10 +35,7 @@ public class JobsManagerImpl implements JobsManager {
         Executors.newSingleThreadExecutor().execute(() -> {
 
             JobViewCtrl jobViewCtrl = new JobViewCtrl(name);
-            ctrls.add(jobViewCtrl);
-
-            Platform.runLater(() -> container.getChildren().add(jobViewCtrl.getDisplayable()));
-            job.run(jobViewCtrl);
+            playJob(jobViewCtrl, job);
         });
     }
 
@@ -46,11 +44,37 @@ public class JobsManagerImpl implements JobsManager {
         Executors.newSingleThreadExecutor().execute(() -> {
 
             JobViewCtrl jobViewCtrl = new JobViewCtrl(name, workunit);
-            ctrls.add(jobViewCtrl);
-
-            Platform.runLater(() -> container.getChildren().add(jobViewCtrl.getDisplayable()));
-            job.run(jobViewCtrl);
+            playJob(jobViewCtrl, job);
         });
+    }
+
+    protected void playJob(final JobViewCtrl jobViewCtrl, Job job) {
+
+        jobViewCtrl.setViewSize(jobViewWidth, jobViewHeight);
+        jobViewCtrl.setOnExit(() -> {
+
+            stopJob(jobViewCtrl);
+        });
+        ctrls.add(jobViewCtrl);
+
+        // display the job view
+        Platform.runLater(() -> container.getChildren().add(jobViewCtrl.getDisplayable()));
+
+        // play the job
+        job.run(jobViewCtrl);
+
+        // remove the job view
+        Platform.runLater(() -> stopJob(jobViewCtrl));
+    }
+
+    protected void stopJob(JobViewCtrl jobViewCtrl) {
+        this.container.getChildren().removeAll(jobViewCtrl.getDisplayable());
+    }
+
+    @Override
+    public void setJobViewSize(int width, int height) {
+        this.jobViewWidth = width;
+        this.jobViewHeight = height;
     }
 
     @Override

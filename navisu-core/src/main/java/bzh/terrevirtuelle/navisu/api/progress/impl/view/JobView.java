@@ -2,6 +2,7 @@ package bzh.terrevirtuelle.navisu.api.progress.impl.view;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.control.ProgressBar;
@@ -50,6 +51,7 @@ public class JobView extends Group {
 
         // Initialize the container
         this.container = new GridPane();
+        this.container.setAlignment(Pos.CENTER);
         this.getChildren().add(this.container);
 
         this.container.setHgap(10);

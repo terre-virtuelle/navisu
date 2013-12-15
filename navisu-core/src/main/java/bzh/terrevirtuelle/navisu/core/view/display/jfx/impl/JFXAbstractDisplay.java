@@ -60,4 +60,32 @@ public abstract class JFXAbstractDisplay implements JFXDisplay {
 
         return maxWidth;
     }
+
+    @Override
+    public void setWidth(double width) {
+
+        if(Region.class.isAssignableFrom(this.getDisplayable().getClass())) {
+            ((Region)this.getDisplayable()).setMinWidth(width);
+            ((Region)this.getDisplayable()).setMaxWidth(width);
+        }
+    }
+
+    @Override
+    public double getWidth() {
+        return 0 ;//TODO return the width
+    }
+
+    @Override
+    public void setHeight(double height) {
+
+        if(Region.class.isAssignableFrom(this.getDisplayable().getClass())) {
+            ((Region)this.getDisplayable()).setMinHeight(height);
+            ((Region)this.getDisplayable()).setMaxHeight(height);
+        }
+    }
+
+    @Override
+    public double getHeight() {
+        return 0;  //TODO return the height
+    }
 }

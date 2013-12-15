@@ -18,26 +18,49 @@ public class JobViewCtrl extends JFXAbstractDisplay implements ProgressHandle {
     protected String title, description;
     protected boolean isIndeterminate;
 
+    protected Runnable exitHandle;
 
     public JobViewCtrl(final String displayName) {
         this.view = new JobView();
-        this.title = displayName;
-        this.isIndeterminate = true;
-        this.updateView();
+        this.initialize(displayName);
     }
 
     public JobViewCtrl(final String displayName, int workunit) {
         this.view = new JobView();
-        this.title = displayName;
+        this.initialize(displayName);
+
         this.isIndeterminate = false;
         this.finalWorkUnit = workunit;
         this.currentWorkUnit = 0;
+    }
+
+    protected void initialize(final String displayName) {
+        this.title = displayName;
+        this.isIndeterminate = true;
         this.updateView();
+
+        this.view.closeIcon.setOnMouseClicked((e) -> {
+            if(this.exitHandle != null) {
+                this.exitHandle.run();
+            }
+        });
     }
 
     @Override
     public Node getDisplayable() {
         return this.view;
+    }
+
+    public void setViewSize(int width, int height) {
+        this.view.container.setPrefWidth(width);
+        this.view.container.setPrefHeight(height);
+
+        this.view.progressBar.setMinWidth(width/2);
+        this.view.progressBar.setMaxWidth(width/2);
+    }
+
+    public void setOnExit(Runnable runnable) {
+        this.exitHandle = runnable;
     }
 
     //-----------------------------------------------------------------------------------//

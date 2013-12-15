@@ -17,5 +17,10 @@ public interface JobsManager {
     void newJob(String name, Job job);
     void newJob(String name, int workunit, Job job);
 
+
+    public static final int DEFAULT_JOB_VIEW_WIDTH = 200;
+    public static final int DEFAULT_JOB_VIEW_HEIGHT = 50;
+    void setJobViewSize(int width, int height);
+
     Display<Node> getDisplay();
 }

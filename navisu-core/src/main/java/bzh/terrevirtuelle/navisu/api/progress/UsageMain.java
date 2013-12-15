@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -26,11 +27,13 @@ public class UsageMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        BorderPane root = new BorderPane();
+        Pane root = new Pane();
         Scene scene = new Scene(root, Color.TRANSPARENT);
         stage.setScene(scene);
 
-        root.setCenter(Job.manager.getDisplay().getDisplayable());
+        root.getChildren().add(Job.manager.getDisplay().getDisplayable());
+
+        Job.manager.setJobViewSize(400, 50);
 
         Job.manager.newJob("Charts Loading", (pHandle) -> {
 
@@ -62,6 +65,14 @@ public class UsageMain extends Application {
                 Thread.sleep(2000);
 
                 pHandle.progress("Bien merci", 4);
+                Thread.sleep(2000);
+
+                pHandle.switchToIndeterminate();
+                pHandle.progress("Au revoir");
+                Thread.sleep(2000);
+
+                pHandle.progress("Si vous le voulez bien...");
+                Thread.sleep(1000);
 
             } catch (InterruptedException e) {}
         });
