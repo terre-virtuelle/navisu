@@ -10,5 +10,7 @@ import org.capcaval.c3.component.ComponentService;
  */
 public interface DriverManagerServices extends ComponentService {
 
+    void init();
+
     void registerNewDriver(Driver driver);
 }

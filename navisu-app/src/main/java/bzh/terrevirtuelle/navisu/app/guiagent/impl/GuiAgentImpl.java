@@ -6,8 +6,6 @@
 
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
-import bzh.terrevirtuelle.navisu.app.grib.GribServices;
-import bzh.terrevirtuelle.navisu.app.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
@@ -19,10 +17,10 @@ import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
-import bzh.terrevirtuelle.navisu.core.view.display.Display;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -32,10 +30,10 @@ import org.capcaval.c3.component.annotation.SubComponent;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
-import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Icons.icon;
 
 /**
  * NaVisu
@@ -72,40 +70,27 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
         this.stage = stage;
 
-        BorderPane borderPane = new BorderPane();
+        StackPane root = null;
+        final FXMLLoader loader = new FXMLLoader();
+        final FXMLController ctrl = new FXMLController();
 
-        Scene scene = new Scene(borderPane, this.width, this.height, Color.ALICEBLUE);
-
-        StackPane root = new StackPane();
-        borderPane.setCenter(root);
-
-        root.getChildren().add(this.geoViewServices.getDisplayService().getDisplayable());
-
-        ToolBar toolBar = new ToolBar();
-        StackPane.setAlignment(toolBar.getDisplayable(), Pos.TOP_LEFT);
-        root.getChildren().add(toolBar.getDisplayable());
-
-        Display<Node> layerTreeDisplay = this.layerTreeServices.getDisplayService();
-        StackPane.setAlignment(layerTreeDisplay.getDisplayable(), Pos.CENTER_LEFT);
-        //layerTreeDisplay.setMaxWidth(250);
-        //layerTreeDisplay.getDisplayable().setTranslateY(toolBar.getMaxHeight());
-        root.getChildren().add(layerTreeDisplay.getDisplayable());
-        //borderPane.setLeft(layerTreeDisplay.getDisplayable());
-
-        toolBar.addAction(icon("app.exit"), (e) -> {
-
-            ComponentManager.componentManager.stopApplication();
+        try {
+            loader.setController(ctrl);
+            root = loader.load(GuiAgentImpl.class.getResourceAsStream("GuiAgent.fxml"));
+        } catch (IOException e) {
+            LOGGER.severe("Cannot load GuiAgent.fxml !");
             System.exit(0);
-        });
+        }
 
-        toolBar.addAction(icon("app.options"), (e) -> {
+        Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
 
-            optionsManagerServices.show();
-        });
+        // Place scene components
+        ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
+        ctrl.centerBorderPane.setCenter(geoViewServices.getDisplayService().getDisplayable());
 
-        borderPane.setTop(this.initializeMenuBar(this.menuServices));
-
-        borderPane.setBottom(new ControlsWidgetView().getDisplay().getDisplayable());
+        // Initialize menu
+        this.menuServices.setMenuComponent(ctrl.menuBar);
+        this.initializeMenuItems(this.menuServices);
 
         stage.setTitle("NaVisu");
         stage.setOnCloseRequest(e -> {
@@ -117,7 +102,14 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         stage.show();
     }
 
-    protected Node initializeMenuBar(final MenuManagerServices menuServices) {
+    protected class FXMLController {
+
+        @FXML MenuBar menuBar;
+        @FXML BorderPane leftBorderPane;
+        @FXML BorderPane centerBorderPane;
+    }
+
+    protected void initializeMenuItems(final MenuManagerServices menuServices) {
 
         MenuItem fileMenuItem = new MenuItem(tr("menu.file.exit"));
         fileMenuItem.setOnAction(e -> {
@@ -131,9 +123,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         preferenceMenuItem.setOnAction(e -> {
             optionsManagerServices.show();
         });
-        menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);
-
-        return menuServices.getDisplayService().getDisplayable();
+        menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);;
     }
 
     @Override

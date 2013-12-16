@@ -54,11 +54,13 @@ public class AppMain extends Application {
         PointCloudServices pointCloudServices = componentManager.getComponentService(PointCloudServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
+        driverServices.init();
+
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(pointCloudServices.getDriver());
 
-        chartsServices.openChart("data/101.KAP");
+        //chartsServices.openChart("data/101.KAP");
     }
 
     public static void main(String[] args) throws Exception {

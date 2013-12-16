@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<StackPane id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <bottom>
+        <HBox fx:id="statusHBox" prefHeight="14.0" prefWidth="600.0" />
+      </bottom>
+      <center>
+        <SplitPane dividerPositions="0.3010033444816054" focusTraversable="true" prefHeight="160.0" prefWidth="200.0">
+          <items>
+            <BorderPane fx:id="leftBorderPane" prefHeight="200.0" prefWidth="200.0" />
+            <BorderPane fx:id="centerBorderPane" prefHeight="200.0" prefWidth="200.0" />
+          </items>
+        </SplitPane>
+      </center>
+      <top>
+        <MenuBar fx:id="menuBar" useSystemMenuBar="true">
+          <menus>
+            <Menu mnemonicParsing="false" text="File">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Close" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Delete" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <items>
+                <MenuItem mnemonicParsing="false" text="About" />
+              </items>
+            </Menu>
+          </menus>
+        </MenuBar>
+      </top>
+    </BorderPane>
+  </children>
+</StackPane>

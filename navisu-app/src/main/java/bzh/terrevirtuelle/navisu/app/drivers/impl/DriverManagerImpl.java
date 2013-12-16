@@ -36,6 +36,11 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
 
     @Override
     public void componentInitiated() {
+        // ?
+    }
+
+    @Override
+    public void init() {
 
         this.fileChooser = new FileChooser();
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));

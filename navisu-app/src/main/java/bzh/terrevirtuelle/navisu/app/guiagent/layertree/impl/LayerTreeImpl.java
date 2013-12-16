@@ -51,7 +51,7 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
         this.container = new BorderPane();
         //this.container.setMaxWidth(250);
 
-        this.container.getStylesheets().add(LayerTreeImpl.class.getResource("CheckTree.css").toExternalForm());
+        this.container.getStylesheets().add(LayerTreeImpl.class.getResource("LayerTree.css").toExternalForm());
 
         this.rootItem = new TreeItem();
         this.treeView = new TreeView(this.rootItem);

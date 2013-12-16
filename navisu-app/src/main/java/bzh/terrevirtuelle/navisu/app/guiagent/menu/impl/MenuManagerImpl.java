@@ -32,10 +32,18 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
     @Override
     public void componentInitiated() {
 
-        this.menuBar = new MenuBar();
-        this.menuBar.setUseSystemMenuBar(true);
-
+        // instance menu map
         this.menuMap = new HashMap<>();
+    }
+
+    @Override
+    public void setMenuComponent(MenuBar menu) {
+
+        this.menuBar = menu;
+
+        if(this.menuBar.getMenus().size() > 0) {
+            this.menuBar.getMenus().clear();
+        }
 
         for(DefaultMenuEnum defaultMenu : DefaultMenuEnum.getAll()) {
 
@@ -83,11 +91,6 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
 
         Menu menu = this.menuMap.get(defMenu.getKey());
         menu.getItems().add(item);
-    }
-
-    @Override
-    public Display<Node> getDisplayService() {
-        return Display.factory.newDisplayNode(this.menuBar);
     }
 
     @Override
