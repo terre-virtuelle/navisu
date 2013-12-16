@@ -11,7 +11,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerTreeImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerCheckTreeImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
@@ -51,7 +51,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
     @SubComponent MenuManagerImpl menu;
     @UsedService MenuManagerServices menuServices;
 
-    @SubComponent LayerTreeImpl layerTree;
+    @SubComponent LayerCheckTreeImpl layerTree;
     @UsedService LayerTreeServices layerTreeServices;
 
     @SubComponent GeoViewImpl geoView;
