@@ -3,6 +3,9 @@ package bzh.terrevirtuelle.navisu.api.progress.impl.view;
 import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobDisplayImpl;
 import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobFXMLDisplayImpl;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
@@ -35,8 +38,8 @@ public interface JobDisplay extends Display<Region> {
 
         try {
             newInstance = (JobDisplay) clz.getConstructors()[0].newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            Logger.getLogger(JobDisplay.class.getName()).log(Level.SEVERE, null, e);
         }
 
         return newInstance;

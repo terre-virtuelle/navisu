@@ -42,6 +42,8 @@ public class UsageMain extends Application {
             } catch (InterruptedException e) {}
         });
 
+        //TODO see why it does not work on Windows ? JDK version ? Gradle launch ? 
+        /* 
         Job.manager.newJob("Grib Loading", 4, (pHandle) -> {
 
             try {
@@ -66,7 +68,8 @@ public class UsageMain extends Application {
 
             } catch (InterruptedException e) {}
         });
-
+        */
+        
         stage.setTitle("Usage of progress API");
         stage.setWidth(500);
         stage.setHeight(500);
