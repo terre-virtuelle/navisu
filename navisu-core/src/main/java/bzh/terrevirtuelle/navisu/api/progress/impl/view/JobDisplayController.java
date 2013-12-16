@@ -11,6 +11,8 @@ import javafx.application.Platform;
  *
  * @author tibus
  * @date 15/12/2013 15:03
+ * 
+ * //TODO extract interface
  */
 public class JobDisplayController implements ProgressHandle, DisplayController<JobDisplay> {
 
@@ -20,14 +22,16 @@ public class JobDisplayController implements ProgressHandle, DisplayController<J
     protected boolean isIndeterminate;
 
     protected Runnable exitHandle;
-
+    
+    {
+        this.view = JobDisplay.create(JobDisplayImpl.class);
+    }
+    
     public JobDisplayController(final String displayName) {
-        this.view = JobDisplay.create(JobDisplayImpl.class);  //
         this.initialize(displayName);
     }
 
     public JobDisplayController(final String displayName, int workunit) {
-        this.view = JobDisplay.create(JobFXMLDisplayImpl.class);
         this.initialize(displayName);
 
         this.isIndeterminate = false;
@@ -35,7 +39,7 @@ public class JobDisplayController implements ProgressHandle, DisplayController<J
         this.currentWorkUnit = 0;
     }
 
-    protected void initialize(final String displayName) {
+    protected final void initialize(final String displayName) {
         this.title = displayName;
         this.isIndeterminate = true;
         this.updateView();
