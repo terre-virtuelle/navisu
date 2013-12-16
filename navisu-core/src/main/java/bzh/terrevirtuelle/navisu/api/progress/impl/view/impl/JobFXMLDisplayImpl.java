@@ -33,11 +33,15 @@ public class JobFXMLDisplayImpl implements JobDisplay {
         final InputStream in = this.getClass().getResourceAsStream("Job.fxml");
 
         try {
-            loader.setRoot(this.root);
             this.ctrl = new FXMLController();
             loader.setController(this.ctrl);
+            
+            System.err.println("----------@before loading");
+            
             this.root = loader.load(in);
 
+            System.err.println("----------@after loading");
+            
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, null, e);
         }

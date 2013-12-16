@@ -145,7 +145,6 @@ public class JobDisplayController implements ProgressHandle, DisplayController<J
 
     protected void updateViewSafe() {
 
-
         this.view.titleText().setText(this.title);
         this.view.messageText().setText(this.description);
 
