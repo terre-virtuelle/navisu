@@ -123,9 +123,9 @@ public class ImageryInstallerImpl implements ImageryInstaller
     protected AVList computeParams(Object imageSourceObj) {
 
         AVList params = new AVListImpl();
-        // Compute the name of the image
+        // Compute the titleText of the image
         String imageSourceName = getImageSourceName(imageSourceObj);
-        // Compute the cache name of the tiles location
+        // Compute the cache titleText of the tiles location
         String cacheName = BASE_CACHE_PATH + File.separator + imageSourceName;
 
         params.setValue(AVKey.FILE_STORE_LOCATION, WorldWind.getDataFileStore().getWriteLocation().getAbsolutePath());
@@ -212,9 +212,9 @@ public class ImageryInstallerImpl implements ImageryInstaller
         
         // Cast the image source object to File
         File imageSourceFile = imageSourceToFile(imageSourceObj);
-        // Compute the image name, without its extension
+        // Compute the image titleText, without its extension
         String imageSourceName = imageSourceFile.getName().substring(0, imageSourceFile.getName().lastIndexOf("."));
-        // Return the name
+        // Return the titleText
         return imageSourceName;
     }
     

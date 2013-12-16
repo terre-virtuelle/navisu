@@ -67,7 +67,7 @@ public class LayerTreeImpl implements LayerTree, LayerTreeServices, ComponentSta
     @Override
     public void createGroup(String groupName, GeoLayer<?>... layers) {
 
-        Checker.notNull(groupName, "Group name is null.");
+        Checker.notNull(groupName, "Group titleText is null.");
         Checker.keyNotExistsInMap(this.groupMap, groupName, "Group named \"" + groupName + "\" already exists in layer checktree.");
 
         CheckBoxTreeItem<String> groupItem = new CheckBoxTreeItem<>(groupName);

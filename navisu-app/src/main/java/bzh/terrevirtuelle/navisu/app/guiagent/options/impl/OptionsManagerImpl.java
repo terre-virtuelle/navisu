@@ -72,7 +72,7 @@ public class OptionsManagerImpl implements OptionsManager, OptionsManagerService
 
         TabPane tabPane = new TabPane();
 
-        Checker.notNull(controller.getName(), "OptionsController must have a name");
+        Checker.notNull(controller.getName(), "OptionsController must have a titleText");
 
         Tab tab = new Tab(controller.getName());
         tab.setContent(controller.getOptionsView().getDisplayable());
