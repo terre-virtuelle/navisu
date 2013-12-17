@@ -61,7 +61,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
     protected int height;
     
     protected Stage stage;
-
+    
     @Override
     public void showGui(Stage stage, int width, int height) {
 
@@ -72,12 +72,19 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
         StackPane root = null;
         final FXMLLoader loader = new FXMLLoader();
-        final FXMLController ctrl = new FXMLController();
+        FXMLController ctrl;
 
         try {
-            loader.setController(ctrl);
+            loader.setController(new FXMLController());
             root = loader.load(GuiAgentImpl.class.getResourceAsStream("GuiAgent.fxml"));
-        } catch (IOException e) {
+            ctrl = loader.getController();
+            
+            System.out.println("ctrl = " + ctrl);
+            System.out.println("menuBar = " + ctrl.menuBar);
+            System.out.println("leftBorderPane = " + ctrl.leftBorderPane);
+            System.out.println("centerBorderPane = " + ctrl.centerBorderPane);
+        } 
+        catch (IOException e) {
             LOGGER.severe("Cannot load GuiAgent.fxml !");
             System.exit(0);
         }
@@ -85,15 +92,16 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
 
         // Place scene components
-        ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
-        ctrl.centerBorderPane.setCenter(geoViewServices.getDisplayService().getDisplayable());
+        //ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
+        //ctrl.centerBorderPane.setCenter(geoViewServices.getDisplayService().getDisplayable());
 
         // Initialize menu
-        this.menuServices.setMenuComponent(ctrl.menuBar);
+        //this.menuServices.setMenuComponent(ctrl.menuBar);
+        this.menuServices.setMenuComponent(new MenuBar());
         this.initializeMenuItems(this.menuServices);
 
         stage.setTitle("NaVisu");
-        stage.setOnCloseRequest(e -> {
+        stage.setOnCloseRequest((e) -> {
             LOGGER.info("Stop Application");
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
@@ -112,7 +120,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
     protected void initializeMenuItems(final MenuManagerServices menuServices) {
 
         MenuItem fileMenuItem = new MenuItem(tr("menu.file.exit"));
-        fileMenuItem.setOnAction(e -> {
+        fileMenuItem.setOnAction((e) -> {
 
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
