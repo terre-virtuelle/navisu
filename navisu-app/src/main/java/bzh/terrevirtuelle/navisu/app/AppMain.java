@@ -9,6 +9,8 @@ import bzh.terrevirtuelle.navisu.app.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
+import java.io.FileInputStream;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
@@ -32,6 +34,8 @@ public class AppMain extends Application {
     public void start(Stage stage) throws Exception {
 
         Translator.setLang(I18nLangEnum.FRENCH);
+
+        LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
