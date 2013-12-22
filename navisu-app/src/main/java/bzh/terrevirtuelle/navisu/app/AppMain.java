@@ -42,7 +42,7 @@ public class AppMain extends Application {
         final ComponentManager componentManager = ComponentManager.componentManager;
 
         // deploy components
-        LOGGER.info(
+        LOGGER.info("\n" +
                 componentManager.startApplication(
 
                         GuiAgentImpl.class,
