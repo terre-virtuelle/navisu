@@ -102,6 +102,13 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         stage.show();
     }
 
+    protected class FXMLController {
+
+        @FXML MenuBar menuBar;
+        @FXML BorderPane leftBorderPane;
+        @FXML BorderPane centerBorderPane;
+    }
+
     protected void initializeMenuItems(final MenuManagerServices menuServices) {
 
         MenuItem fileMenuItem = new MenuItem(tr("menu.file.exit"));
