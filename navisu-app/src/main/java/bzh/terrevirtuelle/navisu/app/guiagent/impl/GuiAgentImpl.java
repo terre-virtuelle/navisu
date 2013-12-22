@@ -72,11 +72,11 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
         StackPane root = null;
         final FXMLLoader loader = new FXMLLoader();
-        final FXMLController ctrl = new FXMLController();
+        GuiAgentController ctrl = null;
 
         try {
-            loader.setController(ctrl);
             root = loader.load(GuiAgentImpl.class.getResourceAsStream("GuiAgent.fxml"));
+            ctrl = loader.getController();
         } catch (IOException e) {
             LOGGER.severe("Cannot load GuiAgent.fxml !");
             System.exit(0);
@@ -100,13 +100,6 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         });
         stage.setScene(scene);
         stage.show();
-    }
-
-    protected class FXMLController {
-
-        @FXML MenuBar menuBar;
-        @FXML BorderPane leftBorderPane;
-        @FXML BorderPane centerBorderPane;
     }
 
     protected void initializeMenuItems(final MenuManagerServices menuServices) {

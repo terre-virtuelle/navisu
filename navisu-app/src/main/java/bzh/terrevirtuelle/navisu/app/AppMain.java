@@ -33,12 +33,15 @@ public class AppMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        // initialize translation
         Translator.setLang(I18nLangEnum.FRENCH);
 
+        // initialize logging
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
+        // deploy components
         LOGGER.info(
                 componentManager.startApplication(
 

@@ -16,13 +16,11 @@ public class GuiAgentController {
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentController.class.getName());
 
-    @FXML MenuBar menuBar;
+    @FXML public MenuBar menuBar;
 
-    @FXML BorderPane leftBorderPane;
+    @FXML public BorderPane leftBorderPane;
 
-    @FXML BorderPane centerBorderPane;
+    @FXML public BorderPane centerBorderPane;
 
-    public GuiAgentController() {
-        LOGGER.info("");
-    }
+    public GuiAgentController() {}
 }
