@@ -6,6 +6,8 @@
 
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
+import bzh.terrevirtuelle.navisu.api.progress.Job;
+import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
@@ -56,6 +58,8 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     @SubComponent GeoViewImpl geoView;
     @UsedService  GeoViewServices geoViewServices;
+
+    protected JobsManager jobsManager = Job.manager;
 
     protected int width;
     protected int height;
@@ -117,6 +121,11 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
             optionsManagerServices.show();
         });
         menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);;
+    }
+
+    @Override
+    public JobsManager getJobsManager() {
+        return this.jobsManager;
     }
 
     @Override

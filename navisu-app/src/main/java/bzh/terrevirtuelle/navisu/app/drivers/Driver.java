@@ -1,5 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.drivers;
 
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
+
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ public interface Driver {
 
     boolean canOpen(String file);
 
-    void open(String... files);
+    void open(ProgressHandle progressHandle, String... files);
 
     String getName();
 

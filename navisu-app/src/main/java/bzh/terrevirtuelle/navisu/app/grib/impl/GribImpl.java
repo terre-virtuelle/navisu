@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.grib.impl;
 
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.grib.Grib;
 import bzh.terrevirtuelle.navisu.app.grib.GribServices;
@@ -46,7 +47,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
             }
 
             @Override
-            public void open(String... files) {
+            public void open(ProgressHandle pHandle, String... files) {
                 for(String file : files) {
                     LOGGER.info("Opening " + file + " ...");
                     loadFile(file); //Todo Make stuff for all files

@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.charts.impl;
 
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.app.charts.ChartsManager;
@@ -57,9 +58,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     }
 
     @Override
-    public void open(String... files) {
-
-        List<String> list = Arrays.asList(files);
+    public void open(ProgressHandle pHandle, String... files) {
 
         for(String file : files) {
             this.handleOpenFile(file);
@@ -67,7 +66,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     }
 
     protected void handleOpenFile(String file) {
-        LOGGER.log(Level.INFO, "Opening {0} ...", file);
+        LOGGER.log(Level.INFO, "Opening " + file + " ...");
 
         Path inputFile = Paths.get(file);
         final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/gdal_translate";
@@ -114,7 +113,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
     @Override
     public void openChart(String file) {
-        this.open(file);
+        this.open(null, file);
     }
 
     @Override

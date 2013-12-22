@@ -3,6 +3,7 @@ package bzh.terrevirtuelle.navisu.app.drivers.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
@@ -29,6 +30,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
     protected final Logger LOGGER = Logger.getLogger(DriverManagerImpl.class.getName());
 
     @UsedService MenuManagerServices menuBarServices;
+    @UsedService GuiAgentServices guiAgentServices;
 
     protected FileChooser fileChooser;
 
@@ -69,7 +71,9 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
             Driver driver = this.findDriverForFile(file.getAbsolutePath());
             if(driver != null) {
 
-                driver.open(file.getAbsolutePath());
+                guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
+                    driver.open(progressHandle, file.getAbsolutePath());
+                });
             }
             else {
                 LOGGER.warning("Unable to find a driver for file \"" + file.getName() + "\"");
