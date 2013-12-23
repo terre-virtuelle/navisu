@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.app.pointcloud.PointCloudServices;
-import bzh.terrevirtuelle.navisu.app.pointcloud.impl.PointCloudImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -37,7 +35,7 @@ public class AppMain extends Application {
         Translator.setLang(I18nLangEnum.FRENCH);
 
         // initialize logging
-        LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
+        LogManager.getLogManager().readConfiguration(new FileInputStream("navisu-app/conf/logging.properties"));
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
@@ -48,8 +46,7 @@ public class AppMain extends Application {
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
                         ChartsManagerImpl.class,
-                        GribImpl.class,
-                        PointCloudImpl.class
+                        GribImpl.class
                 )
         );
 
@@ -58,14 +55,12 @@ public class AppMain extends Application {
 
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
-        PointCloudServices pointCloudServices = componentManager.getComponentService(PointCloudServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
 
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
-        driverServices.registerNewDriver(pointCloudServices.getDriver());
 
         //chartsServices.openChart("data/101.KAP");
     }
