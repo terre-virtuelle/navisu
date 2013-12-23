@@ -35,7 +35,7 @@ public class AppMain extends Application {
         Translator.setLang(I18nLangEnum.FRENCH);
 
         // initialize logging
-        LogManager.getLogManager().readConfiguration(new FileInputStream("navisu-app/conf/logging.properties"));
+        LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
