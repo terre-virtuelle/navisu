@@ -5,8 +5,18 @@ import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobDisplayController;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +31,31 @@ import java.util.concurrent.Executors;
 public class JobsManagerImpl implements JobsManager {
 
     protected List<JobDisplayController> ctrls;
-    protected VBox container;
-    protected int jobViewWidth = DEFAULT_JOB_VIEW_WIDTH, jobViewHeight = DEFAULT_JOB_VIEW_HEIGHT;
 
+    protected HBox container;
+    protected Text text;
+    protected ProgressIndicator progress;
+
+    protected Stage jobsDialog;
+    protected VBox jobsContainer;
+    protected int jobViewWidth = DEFAULT_JOB_VIEW_WIDTH, jobViewHeight = DEFAULT_JOB_VIEW_HEIGHT;
 
     public JobsManagerImpl() {
         this.ctrls = new ArrayList<>();
-        this.container = new VBox();
+
+        this.text = new Text("0 job processes...");
+        this.progress = new ProgressIndicator(-1d);
+        this.progress.setPrefSize(16, 16);
+
+        this.container = new HBox(this.text, this.progress);
+        this.container.setSpacing(5);
+        this.container.setAlignment(Pos.CENTER);
+        this.updateContainer();
+
+        this.jobsDialog = new Stage();
+        this.jobsDialog.initModality(Modality.WINDOW_MODAL);
+        this.jobsContainer = new VBox();
+        this.jobsDialog.setScene(new Scene(this.jobsContainer, Color.TRANSPARENT));
     }
 
     @Override
@@ -55,10 +83,12 @@ public class JobsManagerImpl implements JobsManager {
 
             stopJob(jobViewCtrl);
         });
+
         ctrls.add(jobViewCtrl);
+        updateContainer();
 
         // display the job view
-        Platform.runLater(() -> container.getChildren().add(jobViewCtrl.getView().getDisplayable()));
+        Platform.runLater(() -> jobsContainer.getChildren().add(jobViewCtrl.getView().getDisplayable()));
 
         // play the job
         job.run(jobViewCtrl);
@@ -68,7 +98,19 @@ public class JobsManagerImpl implements JobsManager {
     }
 
     protected void stopJob(JobDisplayController jobViewCtrl) {
-        this.container.getChildren().removeAll(jobViewCtrl.getView().getDisplayable());
+        this.jobsContainer.getChildren().removeAll(jobViewCtrl.getView().getDisplayable());
+        this.ctrls.remove(jobViewCtrl);
+        updateContainer();
+    }
+
+    protected void updateContainer() {
+
+        final int nbJobs = this.ctrls.size();
+
+        Platform.runLater(() -> {
+            this.text.setText(nbJobs + " job"+ (nbJobs > 1 ? "s" : "") + " processes...");
+            this.progress.setVisible(nbJobs > 0);
+        });
     }
 
     @Override

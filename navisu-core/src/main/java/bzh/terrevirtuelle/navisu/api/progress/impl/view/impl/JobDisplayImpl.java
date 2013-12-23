@@ -51,7 +51,7 @@ public class JobDisplayImpl implements JobDisplay {
         // Initialize the close icon
         this.closeIcon = new ImageView(new Image(getClass().getResourceAsStream("close.png")));
 
-        // Initialize the container
+        // Initialize the jobsContainer
         this.container = new GridPane();
         this.container.setAlignment(Pos.CENTER);
 

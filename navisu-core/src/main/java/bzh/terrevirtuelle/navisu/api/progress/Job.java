@@ -9,7 +9,5 @@ package bzh.terrevirtuelle.navisu.api.progress;
 @FunctionalInterface
 public interface Job {
 
-    public static final JobsManager manager = JobsManager.instance;
-
     void run(ProgressHandle progressHandle);
 }

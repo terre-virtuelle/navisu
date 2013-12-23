@@ -6,6 +6,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * NaVisu
  *
@@ -21,11 +25,13 @@ public class UsageMain extends Application {
         Scene scene = new Scene(root, Color.TRANSPARENT);
         stage.setScene(scene);
 
-        root.getChildren().add(Job.manager.getDisplay().getDisplayable());
+        final JobsManager jobsManager = JobsManager.create();
 
-        Job.manager.setJobViewSize(400, 50);
+        root.getChildren().add(jobsManager.getDisplay().getDisplayable());
 
-        Job.manager.newJob("Charts Loading", (pHandle) -> {
+        jobsManager.setJobViewSize(400, 50);
+
+        jobsManager.newJob("Charts Loading", (pHandle) -> {
 
             try {
                 pHandle.progress("Start progressing");
@@ -40,6 +46,22 @@ public class UsageMain extends Application {
                 pHandle.progress("Bien merci");
 
             } catch (InterruptedException e) {}
+        });
+
+        jobsManager.newJob("Long long job", pHandle -> {
+
+            DateFormat df = new SimpleDateFormat("HH:mm:ss");
+
+            while(true) {
+
+                pHandle.progress("Current time : " + df.format(new Date(System.currentTimeMillis())));
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
         //TODO see why it does not work on Windows ? JDK version ? Gradle launch ? 

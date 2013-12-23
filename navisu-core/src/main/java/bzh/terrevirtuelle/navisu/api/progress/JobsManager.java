@@ -12,8 +12,6 @@ import javafx.scene.Node;
  */
 public interface JobsManager {
 
-    public static final JobsManager instance = new JobsManagerImpl();
-
     void newJob(String name, Job job);
     void newJob(String name, int workunit, Job job);
 
@@ -23,4 +21,8 @@ public interface JobsManager {
     void setJobViewSize(int width, int height);
 
     Display<Node> getDisplay();
+
+    public static JobsManager create() {
+        return new JobsManagerImpl();
+    }
 }
