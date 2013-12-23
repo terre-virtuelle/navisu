@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.core.util;
  */
 public class OS {
 
-    public static final String name = System.getProperty("os.titleText");
+    public static final String name = System.getProperty("os.name");
     public static final String arch = System.getProperty("os.arch");
     public static final String version = System.getProperty("os.version");
 
