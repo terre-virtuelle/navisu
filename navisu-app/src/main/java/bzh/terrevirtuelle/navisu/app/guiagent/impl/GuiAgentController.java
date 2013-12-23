@@ -3,6 +3,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
 import java.util.logging.Logger;
 
@@ -21,6 +22,8 @@ public class GuiAgentController {
     @FXML public BorderPane leftBorderPane;
 
     @FXML public BorderPane centerBorderPane;
+
+    @FXML public BorderPane statusBorderPane;
 
     public GuiAgentController() {}
 }

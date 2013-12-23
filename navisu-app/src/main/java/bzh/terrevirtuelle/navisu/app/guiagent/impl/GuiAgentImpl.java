@@ -25,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -59,7 +60,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
     @SubComponent GeoViewImpl geoView;
     @UsedService  GeoViewServices geoViewServices;
 
-    protected JobsManager jobsManager = Job.manager;
+    protected JobsManager jobsManager;
 
     protected int width;
     protected int height;
@@ -73,6 +74,8 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         this.height = height;
 
         this.stage = stage;
+
+        this.jobsManager = JobsManager.create();
 
         StackPane root = null;
         final FXMLLoader loader = new FXMLLoader();
@@ -91,6 +94,8 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         // Place scene components
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
         ctrl.centerBorderPane.setCenter(geoViewServices.getDisplayService().getDisplayable());
+
+        ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
 
         // Initialize menu
         this.menuServices.setMenuComponent(ctrl.menuBar);
