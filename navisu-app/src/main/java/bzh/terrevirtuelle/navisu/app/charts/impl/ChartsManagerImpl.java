@@ -61,11 +61,11 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     public void open(ProgressHandle pHandle, String... files) {
 
         for(String file : files) {
-            this.handleOpenFile(file);
+            this.handleOpenFile(pHandle, file);
         }
     }
 
-    protected void handleOpenFile(String file) {
+    protected void handleOpenFile(ProgressHandle pHandle, String file) {
         LOGGER.log(Level.INFO, "Opening " + file + " ...");
 
         Path inputFile = Paths.get(file);
@@ -73,7 +73,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
         try {
 
-            Path tmpTif = Files.createTempFile(inputFile.getFileName().toString(), ".tif");
+            Path tmpTif = Paths.get(inputFile.toString() + ".tif");
 
             Proc.builder.create()
                     .setCmd(cmd)
@@ -94,10 +94,18 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
         ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();
         installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
 
-        Layer layer = installer.installSurfaceImage(inputFile, null);
+        Layer layer = installer.installSurfaceImage(inputFile, pHandle);
         if(layer != null) {
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+        }
+
+        if(inputFile.toString().endsWith(".tif")) {
+            try {
+                Files.delete(inputFile);
+            } catch (IOException e) {
+                LOGGER.log(Level.WARNING, null, e);
+            }
         }
     }
 

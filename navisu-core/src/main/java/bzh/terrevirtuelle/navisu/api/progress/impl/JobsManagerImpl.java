@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,12 @@ public class JobsManagerImpl implements JobsManager {
         this.ctrls = new ArrayList<>();
 
         this.text = new Text("0 job processes...");
+        this.text.setOnMousePressed(e -> {
+            if(this.ctrls.size() > 0) {
+                jobsDialog.show();
+            }
+        });
+        this.text.setOnMouseReleased(e -> jobsDialog.hide());
         this.progress = new ProgressIndicator(-1d);
         this.progress.setPrefSize(16, 16);
 
@@ -54,6 +61,7 @@ public class JobsManagerImpl implements JobsManager {
 
         this.jobsDialog = new Stage();
         this.jobsDialog.initModality(Modality.WINDOW_MODAL);
+        this.jobsDialog.initStyle(StageStyle.UNDECORATED);
         this.jobsContainer = new VBox();
         this.jobsDialog.setScene(new Scene(this.jobsContainer, Color.TRANSPARENT));
     }

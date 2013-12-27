@@ -50,7 +50,7 @@ public class ImageryInstallerImpl implements ImageryInstaller
     protected ImageFormatEnum imageFormat = ImageFormatEnum.DDS;
 
     /** A {@code TiledImageProducer} to install the imagery. */
-    protected final TiledImageProducer producer = new TiledImageProducer();
+    protected TiledImageProducer producer;
 
     /**
      * TODO handle progression
@@ -73,29 +73,30 @@ public class ImageryInstallerImpl implements ImageryInstaller
         AVList params = this.computeParams(imageSource);
 
         try  {
+            producer = new TiledImageProducer();
             // Configure the TiledImageProducer with the parameter list and the image source.
             producer.setStoreParameters(params);
             producer.offerDataSource(imageSourceToFile(imageSource), null);
 
-            producer.addPropertyChangeListener(new PropertyChangeListener() {
+            progressHandle.switchToDeterminate(100);
 
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
+            producer.addPropertyChangeListener(evt -> {
                     
-                    if(evt.getPropertyName().endsWith(AVKey.PROGRESS)) {
-                        
-                        double progress = (Double)evt.getNewValue();
-                    }
+                if(evt.getPropertyName().endsWith(AVKey.PROGRESS)) {
+
+                    int progress = (int)((Double)evt.getNewValue() * 100);
+                    progressHandle.progress("Installing " + progress + "%", progress);
                 }
             });
             
             // Install the imagery.
+            progressHandle.progress("Start production");
             producer.startProduction();
         }
         catch (Exception e)
         {
             producer.removeProductionState(); // Clean up on failure.
-            LOGGER.log(Level.SEVERE, null, e);
+            LOGGER.log(Level.SEVERE, "An unknown error occurred", e);
 
             return null;
         }

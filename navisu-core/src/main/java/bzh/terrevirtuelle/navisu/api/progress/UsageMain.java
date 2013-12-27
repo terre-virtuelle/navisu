@@ -64,6 +64,22 @@ public class UsageMain extends Application {
             }
         });
 
+        jobsManager.newJob("Loop for job", pHandle -> {
+
+            pHandle.switchToDeterminate(100);
+
+            for(int i=0; i<100;i++) {
+
+                pHandle.progress("Progressing " + i + "%", i);
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         //TODO see why it does not work on Windows ? JDK version ? Gradle launch ? 
         /* 
         Job.manager.newJob("Grib Loading", 4, (pHandle) -> {

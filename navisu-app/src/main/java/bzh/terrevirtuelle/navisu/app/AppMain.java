@@ -10,14 +10,17 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
 import java.io.FileInputStream;
+import java.nio.file.Paths;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import gov.nasa.worldwind.util.gdal.GDALUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
+import org.gdal.gdal.gdal;
 
 /**
  *
@@ -36,6 +39,11 @@ public class AppMain extends Application {
 
         // initialize logging
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
+
+        // configure GDAL_DATA path
+        //GDALUtils.canOpen(null);
+        //gdal.SetConfigOption("GDAL_DATA", "lib-external/gdal/data");
+        //System.setProperty("GDAL_DATA", Paths.get("lib-external/gdal/data").toAbsolutePath().toString());
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
