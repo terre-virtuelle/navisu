@@ -1,5 +1,7 @@
 package bzh.terrevirtuelle.navisu.app;
 
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
+import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.charts.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.charts.impl.ChartsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
@@ -15,6 +17,8 @@ import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.core.model.geom.location.Location;
+import bzh.terrevirtuelle.navisu.core.model.tmodel.TObject;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -37,17 +41,13 @@ public class AppMain extends Application {
         // initialize logging
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
 
-        // configure GDAL_DATA path
-        //GDALUtils.canOpen(null);
-        //gdal.SetConfigOption("GDAL_DATA", "lib-external/gdal/data");
-        //System.setProperty("GDAL_DATA", Paths.get("lib-external/gdal/data").toAbsolutePath().toString());
-
         final ComponentManager componentManager = ComponentManager.componentManager;
 
         // deploy components
         LOGGER.info("\n" +
                 componentManager.startApplication(
 
+                        DpAgentImpl.class,
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
                         ChartsManagerImpl.class,
@@ -68,6 +68,13 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(gribServices.getDriver());
 
         //chartsServices.openChart("data/101.KAP");
+
+        DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
+
+        TObject tObject = TObject.newBasicTObject(1, 0d, 0d);
+        dpAgentServices.create(tObject);
+        dpAgentServices.update(tObject);
+        dpAgentServices.delete(tObject);
     }
 
     public static void main(String[] args) throws Exception {

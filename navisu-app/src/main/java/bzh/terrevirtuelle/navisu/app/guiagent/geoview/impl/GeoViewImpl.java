@@ -1,8 +1,10 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl;
 
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentEvents;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.core.model.tmodel.TObject;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
@@ -12,7 +14,11 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import gov.nasa.worldwind.layers.Layer;
 import javafx.scene.Node;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.ComponentStateAdaptor;
+import org.capcaval.c3.component.annotation.ConsumedEvent;
 import org.capcaval.c3.component.annotation.UsedService;
+
+import java.util.logging.Logger;
 
 /**
  * NaVisu
@@ -20,7 +26,9 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @author tibus
  * @date 02/11/2013 11:54
  */
-public class GeoViewImpl implements GeoView, GeoViewServices, ComponentState {
+public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoViewServices {
+
+    private static final Logger LOGGER = Logger.getLogger(GeoViewImpl.class.getName());
 
     @UsedService LayerTreeServices layerTreeServices;
 
@@ -40,6 +48,27 @@ public class GeoViewImpl implements GeoView, GeoViewServices, ComponentState {
             if(geoLayerList.size() > 0)
                 layerTreeServices.createGroup(groupName, geoLayerList.toArray(new GeoLayer[geoLayerList.size()]));
         });
+    }
+
+    @ConsumedEvent
+    protected DpAgentEvents createDpAgentEvents() {
+        return new DpAgentEvents() {
+
+            @Override
+            public void notifyCreated(TObject tObject) {
+                LOGGER.info("notifyCreated(" + tObject.getID() + ")");
+            }
+
+            @Override
+            public void notifyUpdated(TObject tObject) {
+                LOGGER.info("notifyUpdated(" + tObject.getID() + ")");
+            }
+
+            @Override
+            public void notifyDeleted(TObject tObject) {
+                LOGGER.info("notifyDeleted(" + tObject.getID() + ")");
+            }
+        };
     }
 
     protected void initDefaultLayers(final LayerManager<Layer> layerManager) {
@@ -78,10 +107,4 @@ public class GeoViewImpl implements GeoView, GeoViewServices, ComponentState {
     public LayerManager<Layer> getLayerManager() {
         return this.layerManager;
     }
-
-    @Override
-    public void componentStarted() {}
-
-    @Override
-    public void componentStopped() {}
 }
