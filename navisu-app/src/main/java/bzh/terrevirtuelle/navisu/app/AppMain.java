@@ -9,6 +9,8 @@ import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.grib.GribServices;
 import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
 import java.io.FileInputStream;
@@ -17,8 +19,10 @@ import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.app.processors.TObjectProcessor;
 import bzh.terrevirtuelle.navisu.core.model.geom.location.Location;
-import bzh.terrevirtuelle.navisu.core.model.tmodel.TObject;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -67,14 +71,43 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
 
-        //chartsServices.openChart("data/101.KAP");
+
+        //------------------------------->
+        // TESTS
+        //
+        GObjectCUDProcessor proc = new TObjectProcessor();
+
+        GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
+        geoViewServices.registerProcessor(proc);
+        geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
 
         DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
 
-        TObject tObject = TObject.newBasicTObject(1, 0d, 0d);
-        dpAgentServices.create(tObject);
-        dpAgentServices.update(tObject);
-        dpAgentServices.delete(tObject);
+        guiServices.getJobsManager().newJob("Test job", pHandler -> {
+
+            double lat = 48.390834;
+            double lon = -4.485556;
+
+            TObject tObject = TObject.newBasicTObject(1, lat, lon);
+            dpAgentServices.create(tObject);
+
+            pHandler.start(100);
+
+            for(int i=0; i<100; i++) {
+
+                lon += i/1000.;
+                tObject.setLocation(Location.factory.newLocation(lat, lon));
+                dpAgentServices.update(tObject);
+
+                pHandler.progress("Moving TObject...", i);
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {}
+            }
+
+            dpAgentServices.delete(tObject);
+        });
     }
 
     public static void main(String[] args) throws Exception {
