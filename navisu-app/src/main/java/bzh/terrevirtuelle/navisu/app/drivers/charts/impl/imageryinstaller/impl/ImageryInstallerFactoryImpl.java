@@ -13,10 +13,10 @@
  * You should have received a copy of the GNU General Public License along with
  * NaVisu. If not, see <http://www.gnu.org/licenses/>.
  */
-package bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller.impl;
+package bzh.terrevirtuelle.navisu.app.drivers.charts.impl.imageryinstaller.impl;
 
-import bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller.ImageryInstaller;
-import bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller.ImageryInstallerFactory;
+import bzh.terrevirtuelle.navisu.app.drivers.charts.impl.imageryinstaller.ImageryInstaller;
+import bzh.terrevirtuelle.navisu.app.drivers.charts.impl.imageryinstaller.ImageryInstallerFactory;
 
 /**
  *

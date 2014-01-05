@@ -1,26 +1,23 @@
 package bzh.terrevirtuelle.navisu.app;
 
-import bzh.terrevirtuelle.navisu.app.charts.ChartsManagerServices;
-import bzh.terrevirtuelle.navisu.app.charts.impl.ChartsManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.charts.ChartsManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.charts.impl.ChartsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
-import bzh.terrevirtuelle.navisu.app.grib.GribServices;
-import bzh.terrevirtuelle.navisu.app.grib.impl.GribImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.GribServices;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 
 import java.io.FileInputStream;
-import java.nio.file.Paths;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import gov.nasa.worldwind.util.gdal.GDALUtils;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
-import org.gdal.gdal.gdal;
 
 /**
  *

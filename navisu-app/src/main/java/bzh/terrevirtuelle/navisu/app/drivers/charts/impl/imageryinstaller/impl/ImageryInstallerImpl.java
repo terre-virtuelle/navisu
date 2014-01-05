@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * NaVisu. If not, see <http://www.gnu.org/licenses/>.
  */
-package bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller.impl;
+package bzh.terrevirtuelle.navisu.app.drivers.charts.impl.imageryinstaller.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
@@ -22,8 +22,6 @@ import gov.nasa.worldwind.avlist.*;
 import gov.nasa.worldwind.data.TiledImageProducer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.util.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.w3c.dom.Document;
 
 import java.io.File;
@@ -31,7 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.*;
 import java.util.logging.Level;
-import bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller.ImageryInstaller;
+import bzh.terrevirtuelle.navisu.app.drivers.charts.impl.imageryinstaller.ImageryInstaller;
 
 /**
  * @author Thibault

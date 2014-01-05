@@ -1,8 +1,8 @@
-package bzh.terrevirtuelle.navisu.app.grib.impl.controller;
+package bzh.terrevirtuelle.navisu.app.drivers.grib.impl.controller;
 
-import bzh.terrevirtuelle.navisu.app.grib.GribConstants;
-import bzh.terrevirtuelle.navisu.app.grib.impl.model.GribModel;
-import bzh.terrevirtuelle.navisu.app.grib.impl.view.GribLayer;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.GribConstants;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.model.GribModel;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.view.GribLayer;
 import ucar.nc2.dt.grid.GeoGrid;
 import ucar.nc2.dt.grid.GridDataset;
 

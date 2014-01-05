@@ -1,6 +1,6 @@
-package bzh.terrevirtuelle.navisu.app.grib.impl.model;
+package bzh.terrevirtuelle.navisu.app.drivers.grib.impl.model;
 
-import bzh.terrevirtuelle.navisu.app.grib.GribConstants;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.GribConstants;
 import ucar.ma2.Array;
 import ucar.nc2.Dimension;
 import ucar.nc2.dt.grid.GeoGrid;

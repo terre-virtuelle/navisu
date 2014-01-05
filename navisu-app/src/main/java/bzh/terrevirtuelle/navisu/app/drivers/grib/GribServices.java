@@ -1,10 +1,8 @@
-package bzh.terrevirtuelle.navisu.app.grib;
+package bzh.terrevirtuelle.navisu.app.drivers.grib;
 
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
-import bzh.terrevirtuelle.navisu.app.grib.impl.view.GribLayer;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.view.GribLayer;
 import org.capcaval.c3.component.ComponentService;
-
-import java.util.Map;
 
 /**
  * User: jordan

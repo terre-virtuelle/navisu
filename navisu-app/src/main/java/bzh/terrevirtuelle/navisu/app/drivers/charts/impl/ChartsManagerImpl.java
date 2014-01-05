@@ -1,11 +1,11 @@
-package bzh.terrevirtuelle.navisu.app.charts.impl;
+package bzh.terrevirtuelle.navisu.app.drivers.charts.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
-import bzh.terrevirtuelle.navisu.app.charts.ChartsManager;
-import bzh.terrevirtuelle.navisu.app.charts.ChartsManagerServices;
-import bzh.terrevirtuelle.navisu.app.charts.impl.imageryinstaller.ImageryInstaller;
+import bzh.terrevirtuelle.navisu.app.drivers.charts.ChartsManager;
+import bzh.terrevirtuelle.navisu.app.drivers.charts.ChartsManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.charts.impl.imageryinstaller.ImageryInstaller;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

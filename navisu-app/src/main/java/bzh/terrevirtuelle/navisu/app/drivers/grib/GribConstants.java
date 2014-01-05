@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.grib;
+package bzh.terrevirtuelle.navisu.app.drivers.grib;
 
 /**
  * User: jordan

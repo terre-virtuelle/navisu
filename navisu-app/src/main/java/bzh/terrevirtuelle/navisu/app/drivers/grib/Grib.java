@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.grib;
+package bzh.terrevirtuelle.navisu.app.drivers.grib;
 
 import org.capcaval.c3.component.Component;
 

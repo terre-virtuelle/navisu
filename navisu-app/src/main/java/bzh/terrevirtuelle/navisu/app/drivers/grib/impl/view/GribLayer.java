@@ -1,16 +1,10 @@
-package bzh.terrevirtuelle.navisu.app.grib.impl.view;
+package bzh.terrevirtuelle.navisu.app.drivers.grib.impl.view;
 
-import bzh.terrevirtuelle.navisu.app.grib.impl.model.GribModel;
-import gov.nasa.worldwind.WorldWind;
-import gov.nasa.worldwind.avlist.AVKey;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.model.GribModel;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.MarkerLayer;
-import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Polygon;
-import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.markers.*;
 
 import java.util.ArrayList;

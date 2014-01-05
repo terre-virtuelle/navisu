@@ -1,13 +1,12 @@
-package bzh.terrevirtuelle.navisu.app.grib.impl;
+package bzh.terrevirtuelle.navisu.app.drivers.grib.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
-import bzh.terrevirtuelle.navisu.app.grib.Grib;
-import bzh.terrevirtuelle.navisu.app.grib.GribServices;
-import bzh.terrevirtuelle.navisu.app.grib.impl.controller.GribController;
-import bzh.terrevirtuelle.navisu.app.grib.impl.view.GribLayer;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.Grib;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.GribServices;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.controller.GribController;
+import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.view.GribLayer;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
