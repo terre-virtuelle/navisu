@@ -85,8 +85,8 @@ public class AppMain extends Application {
 
         guiServices.getJobsManager().newJob("Test job", pHandler -> {
 
-            double lat = 48.390834;
-            double lon = -4.485556;
+            double lat = 48.390834d;
+            double lon = -4.485556d;
 
             TObject tObject = TObject.newBasicTObject(1, lat, lon);
             dpAgentServices.create(tObject);
@@ -108,6 +108,9 @@ public class AppMain extends Application {
 
             dpAgentServices.delete(tObject);
         });
+        //
+        // END TESTS
+        //------------------------------->
     }
 
     public static void main(String[] args) throws Exception {

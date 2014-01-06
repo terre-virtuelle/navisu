@@ -1,0 +1,12 @@
+package bzh.terrevirtuelle.navisu.core.model.processor;
+
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
+
+/**
+ * NaVisu
+ *
+ * @author tibus
+ * @date 05/01/2014 19:09
+ */
+public interface TObjectCUDProcessor<O> extends CUDProcessor<TObject, O> {
+}
