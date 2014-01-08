@@ -10,5 +10,7 @@ mainClassName = 'bzh.terrevirtuelle.navisu.app.AppMain'
 dependencies {
     
     compile project(':navisu-core')
+    compile project(':navisu-server')
+    compile project(':navisu-client')
     compile fileTree(dir: 'lib', include: '*.jar')
 }

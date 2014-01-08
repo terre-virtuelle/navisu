@@ -36,7 +36,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import  bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 
 /**
  * NaVisu
@@ -113,7 +113,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
     protected void initializeMenuItems(final MenuManagerServices menuServices) {
 
-        MenuItem fileMenuItem = new MenuItem(tr("menu.file.exit"));
+        MenuItem fileMenuItem = new MenuItem(Translator.tr("menu.file.exit"));
         fileMenuItem.setOnAction(e -> {
 
             ComponentManager.componentManager.stopApplication();
@@ -121,7 +121,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
         });
         menuServices.addMenuItem(DefaultMenuEnum.FILE, fileMenuItem);
 
-        MenuItem preferenceMenuItem = new MenuItem(tr("menu.edit.preferences"));
+        MenuItem preferenceMenuItem = new MenuItem(Translator.tr("menu.edit.preferences"));
         preferenceMenuItem.setOnAction(e -> {
             optionsManagerServices.show();
         });

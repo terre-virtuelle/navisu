@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':navisu-nmea')
+    compile fileTree(dir: 'lib', include: '*.jar') 
+}

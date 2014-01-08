@@ -3,8 +3,6 @@ package bzh.terrevirtuelle.navisu.app.guiagent.menu.impl;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
-import bzh.terrevirtuelle.navisu.core.view.display.Display;
-import javafx.scene.Node;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -14,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import  bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 
 /**
  * NaVisu
@@ -48,7 +46,7 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
         for(DefaultMenuEnum defaultMenu : DefaultMenuEnum.getAll()) {
 
             String key = defaultMenu.getKey();
-            this.createMenu(key, tr(key));
+            this.createMenu(key, Translator.tr(key));
         }
     }
 
