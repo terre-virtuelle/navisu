@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl;
 
-import bzh.terrevirtuelle.navisu.core.model.geom.location.Location;
 import bzh.terrevirtuelle.navisu.core.model.geom.point.Point;
 import bzh.terrevirtuelle.navisu.core.view.display.jfx.impl.JFXAbstractDisplay;
 import bzh.terrevirtuelle.navisu.core.view.geoview.Projection;
@@ -9,6 +8,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLaye
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindLayerManagerImpl;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.view.CustomViewInputHandler;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
 import gov.nasa.worldwind.BasicModel;
 import gov.nasa.worldwind.Configuration;
 import gov.nasa.worldwind.Model;
@@ -20,7 +20,6 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.EarthFlat;
-import gov.nasa.worldwind.view.orbit.OrbitView;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Node;
 

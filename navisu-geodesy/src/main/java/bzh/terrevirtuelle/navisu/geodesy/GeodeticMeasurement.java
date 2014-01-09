@@ -7,6 +7,8 @@
  */
 package bzh.terrevirtuelle.navisu.geodesy;
 
+import bzh.terrevirtuelle.navisu.geodesy.GeodeticCurve;
+
 /**
  * This is the outcome of a three dimensional geodetic calculation. It
  * represents the path a between two GlobalPositions for a specified reference

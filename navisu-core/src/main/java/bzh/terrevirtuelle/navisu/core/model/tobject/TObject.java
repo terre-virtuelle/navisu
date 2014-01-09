@@ -4,8 +4,8 @@
  */
 package bzh.terrevirtuelle.navisu.core.model.tobject;
 
-import bzh.terrevirtuelle.navisu.core.model.geom.location.Location;
 import bzh.terrevirtuelle.navisu.core.util.ICloneable;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
 
 /**
  *

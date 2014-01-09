@@ -1,22 +1,22 @@
-package bzh.terrevirtuelle.navisu.core.model.geom.location.impl;
+package bzh.terrevirtuelle.navisu.geodesy.impl;
 
-import bzh.terrevirtuelle.navisu.core.model.geom.location.AbsoluteLocation;
+import bzh.terrevirtuelle.navisu.geodesy.GlobalLocation;
 
 /**
  *
  * @author Jordan Mens <jordan.mens at gmail.com>
  * @author Thibault Pensec <thibault.pensec at gmail.com>
  */
-public class AbsoluteLocationImpl extends LocationImpl implements AbsoluteLocation {
+public class GlobalLocationImpl extends LocationImpl implements GlobalLocation {
 
     protected double altitude;
 
-    public AbsoluteLocationImpl() {
+    public GlobalLocationImpl() {
         super();
         this.altitude = 0;
     }
 
-    public AbsoluteLocationImpl(double latitude, double longitude, double altitude) {
+    public GlobalLocationImpl(double latitude, double longitude, double altitude) {
         super(latitude, longitude);
         this.altitude = altitude;
     }

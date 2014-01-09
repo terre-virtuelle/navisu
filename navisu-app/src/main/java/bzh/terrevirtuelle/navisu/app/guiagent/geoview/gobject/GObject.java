@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject;
 
-import bzh.terrevirtuelle.navisu.core.model.geom.location.Location;
 import bzh.terrevirtuelle.navisu.core.util.ICloneable;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
 import gov.nasa.worldwind.render.Renderable;
 
 /**

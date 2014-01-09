@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.impl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
-import bzh.terrevirtuelle.navisu.core.model.geom.location.Location;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Renderable;

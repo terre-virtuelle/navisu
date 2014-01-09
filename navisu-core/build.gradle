@@ -1,7 +1,9 @@
 
 
 dependencies {
-    
+
+    compile project(':navisu-geodesy')
+
     compile fileTree(dir: 'lib', include: '*.jar')
 }
 

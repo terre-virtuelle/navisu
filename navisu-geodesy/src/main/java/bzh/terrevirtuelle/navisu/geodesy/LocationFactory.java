@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.core.model.geom.location;
+package bzh.terrevirtuelle.navisu.geodesy;
 
 /**
  *
@@ -11,5 +11,5 @@ public interface LocationFactory {
 
     Location newLocation(double lat, double lon);
 
-    AbsoluteLocation newAbsoluteLocation(double latitude, double longitude, double altitude);
+    GlobalLocation newAbsoluteLocation(double latitude, double longitude, double altitude);
 }

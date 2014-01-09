@@ -4,7 +4,6 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.model;
 
-import com.sun.awt.AWTUtilities;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -36,7 +35,7 @@ public class WidgetsGlassPane {
         this.width = width;
         frame = new JWindow();
         frame.setAlwaysOnTop(true);
-        AWTUtilities.setWindowOpaque(frame, false);
+        //AWTUtilities.setWindowOpaque(frame, false);
         frame.setSize(height, width);
         frame.setLayout(new BorderLayout());
         panel = new JFXPanel();

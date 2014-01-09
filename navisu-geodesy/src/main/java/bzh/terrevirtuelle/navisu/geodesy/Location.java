@@ -1,6 +1,6 @@
-package bzh.terrevirtuelle.navisu.core.model.geom.location;
+package bzh.terrevirtuelle.navisu.geodesy;
 
-import bzh.terrevirtuelle.navisu.core.model.geom.location.impl.LocationFactoryImpl;
+import bzh.terrevirtuelle.navisu.geodesy.impl.LocationFactoryImpl;
 
 /**
  *

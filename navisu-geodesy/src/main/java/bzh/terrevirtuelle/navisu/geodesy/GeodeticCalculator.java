@@ -17,8 +17,8 @@ package bzh.terrevirtuelle.navisu.geodesy;
  * 
  * @author Mike Gavaghan
  */
-public class GeodeticCalculator
-{
+public class GeodeticCalculator {
+
    private final double TwoPi = 2.0 * Math.PI;
 
    /**
@@ -34,7 +34,7 @@ public class GeodeticCalculator
     *            be populated with the result
     * @return
     */
-   public GlobalCoordinates calculateEndingGlobalCoordinates(Ellipsoid ellipsoid, GlobalCoordinates start, double startBearing, double distance,
+   public Location calculateEndingGlobalCoordinates(Ellipsoid ellipsoid, Location start, double startBearing, double distance,
          double[] endBearing)
    {
       double a = ellipsoid.getSemiMajorAxis();
@@ -42,7 +42,7 @@ public class GeodeticCalculator
       double aSquared = a * a;
       double bSquared = b * b;
       double f = ellipsoid.getFlattening();
-      double phi1 = Angle.toRadians(start.getLatitude());
+      double phi1 = Angle.toRadians(start.getLatitudeDegree());
       double alpha1 = Angle.toRadians(startBearing);
       double cosAlpha1 = Math.cos(alpha1);
       double sinAlpha1 = Math.sin(alpha1);
@@ -133,14 +133,14 @@ public class GeodeticCalculator
 
       // build result
       double latitude = Angle.toDegrees(phi2);
-      double longitude = start.getLongitude() + Angle.toDegrees(L);
+      double longitude = start.getLongitudeDegree() + Angle.toDegrees(L);
 
       if ((endBearing != null) && (endBearing.length > 0))
       {
          endBearing[0] = Angle.toDegrees(alpha2);
       }
 
-      return new GlobalCoordinates(latitude, longitude);
+      return Location.factory.newLocation(latitude, longitude);
    }
 
    /**
@@ -154,7 +154,7 @@ public class GeodeticCalculator
     * @param distance distance to travel (meters)
     * @return
     */
-   public GlobalCoordinates calculateEndingGlobalCoordinates(Ellipsoid ellipsoid, GlobalCoordinates start, double startBearing, double distance)
+   public Location calculateEndingGlobalCoordinates(Ellipsoid ellipsoid, Location start, double startBearing, double distance)
    {
       return calculateEndingGlobalCoordinates(ellipsoid, start, startBearing, distance, null);
    }
@@ -168,7 +168,7 @@ public class GeodeticCalculator
     * @param end ending coordinates
     * @return
     */
-   public GeodeticCurve calculateGeodeticCurve(Ellipsoid ellipsoid, GlobalCoordinates start, GlobalCoordinates end)
+   public GeodeticCurve calculateGeodeticCurve(Ellipsoid ellipsoid, Location start, Location end)
    {
       //
       // All equation numbers refer back to Vincenty's publication:
@@ -181,10 +181,10 @@ public class GeodeticCalculator
       double f = ellipsoid.getFlattening();
 
       // get parameters as radians
-      double phi1 = Angle.toRadians(start.getLatitude());
-      double lambda1 = Angle.toRadians(start.getLongitude());
-      double phi2 = Angle.toRadians(end.getLatitude());
-      double lambda2 = Angle.toRadians(end.getLongitude());
+      double phi1 = Angle.toRadians(start.getLatitudeDegree());
+      double lambda1 = Angle.toRadians(start.getLongitudeDegree());
+      double phi2 = Angle.toRadians(end.getLatitudeDegree());
+      double lambda2 = Angle.toRadians(end.getLongitudeDegree());
 
       // calculations
       double a2 = a * a;
@@ -343,16 +343,16 @@ public class GeodeticCalculator
     * @param end ending position
     * @return
     */
-   public GeodeticMeasurement calculateGeodeticMeasurement(Ellipsoid refEllipsoid, GlobalPosition start, GlobalPosition end)
+   public GeodeticMeasurement calculateGeodeticMeasurement(Ellipsoid refEllipsoid, GlobalLocation start, GlobalLocation end)
    {
       // calculate elevation differences
-      double elev1 = start.getElevation();
-      double elev2 = end.getElevation();
+      double elev1 = start.getAltitude();
+      double elev2 = end.getAltitude();
       double elev12 = (elev1 + elev2) / 2.0;
 
       // calculate latitude differences
-      double phi1 = Angle.toRadians(start.getLatitude());
-      double phi2 = Angle.toRadians(end.getLatitude());
+      double phi1 = Angle.toRadians(start.getLatitudeDegree());
+      double phi2 = Angle.toRadians(end.getLatitudeDegree());
       double phi12 = (phi1 + phi2) / 2.0;
 
       // calculate a new ellipsoid to accommodate average elevation

@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.core.model.geom.location;
+package bzh.terrevirtuelle.navisu.geodesy;
 
 /**
  *
