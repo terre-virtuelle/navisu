@@ -15,7 +15,7 @@
  ******************************************************************************/
 package bzh.terrevirtuelle.navisu.ais.controller.parser.impl;
 
-import bzh.terrevirtuelle.navisu.ais.controller.parser.handler.AISHandler;
+
 import bzh.terrevirtuelle.navisu.ais.model.AISFrame;
 import bzh.terrevirtuelle.navisu.ais.model.AISMessage;
 import bzh.terrevirtuelle.navisu.ais.model.AISMessageType1;
@@ -27,6 +27,7 @@ import bzh.terrevirtuelle.navisu.ais.model.AISMessageType3;
 import bzh.terrevirtuelle.navisu.ais.model.AISMessageType4;
 import bzh.terrevirtuelle.navisu.ais.model.AISMessageType5;
 import bzh.terrevirtuelle.navisu.ais.model.AISMessageType9;
+import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;
 import java.util.List;
 
 /**
@@ -40,22 +41,22 @@ public class AISParser
     /** gestion des trames de type 5 */
     private AISMessageType5 message5;
     private static boolean isFirstFrame = true;
-    private List<String> entries = null;
-    private AISHandler handler;
+    private final List<String> entries = null;
+    private Handler handler;
     static int i = 0;
 
     public AISParser() {
     }
 
-    public AISParser(AISHandler handler) {
+    public AISParser(Handler handler) {
         this.handler = handler;
     }
 
-    public AISHandler getHandler() {
+    public Handler getHandler() {
         return handler;
     }
 
-    public void setHandler(AISHandler handler) {
+    public void setHandler(Handler handler) {
         this.handler = handler;
     }
 
@@ -144,7 +145,7 @@ public class AISParser
                     } else if (whatType == 0) {
                          System.err.println("(AISPARSER) Unsupported Message");
                     } else {
-                         System.out.println("(AISPARSER) Message of Type " + whatType + " Detected"); // 10, 20, 21, 24
+                        // System.out.println("(AISPARSER) Message of Type " + whatType + " Detected"); // 10, 20, 21, 24
                     }
                 } else {
                     /** d�codage de la deux�me partie d'une trame 5, une telle trame n'a pas d'identifiant */
@@ -160,7 +161,7 @@ public class AISParser
                     isFirstFrame = true;
                 }
             }
-            // System.out.println("(AISPARSER) Message of Type " + whatType + " Detected");
+           //  System.out.println("(AISPARSER) Message of Type " + whatType + " Detected");
         } catch (Exception e) {
            // System.err.println("(AISPARSER) Trame " + ligne + " invalide !!! Type : " + whatType);
             //e.printStackTrace();

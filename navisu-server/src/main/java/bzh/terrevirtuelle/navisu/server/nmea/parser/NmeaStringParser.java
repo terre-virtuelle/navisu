@@ -8,11 +8,8 @@ package bzh.terrevirtuelle.navisu.server.nmea.parser;
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.impl.NMEALexer;
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.impl.NMEALexer;
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.impl.NMEAParser;
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.impl.NMEAParser;
 import bzh.terrevirtuelle.navisu.nmea.model.Sentences;
-import bzh.terrevirtuelle.navisu.server.nmea.parser.NmeaHandler;
 import java.util.logging.Level;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -27,6 +24,7 @@ public class NmeaStringParser {
     private NMEALexer lexer;
     private ANTLRStringStream input;
     private Handler handler;
+    private Handler aisHandler;
     private CommonTokenStream tokens;
     private Sentences sentences;
 
@@ -37,8 +35,10 @@ public class NmeaStringParser {
     public void parse(String source) {
         input = new ANTLRStringStream(source);
         handler = new NmeaHandler(sentences);
+        aisHandler = new NmeaHandler(sentences);
         lexer = new NMEALexer(input);
         lexer.setHandler(handler);
+        lexer.setAISHandler(aisHandler);
         tokens = new CommonTokenStream(lexer);
         parser = new NMEAParser(tokens);
         try {

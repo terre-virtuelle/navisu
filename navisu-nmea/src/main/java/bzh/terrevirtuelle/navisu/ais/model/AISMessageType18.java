@@ -14,16 +14,25 @@
  ******************************************************************************/
 package bzh.terrevirtuelle.navisu.ais.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Standard Class B Position Report
  * 
  */
+@XmlRootElement(name="AISMessageType18")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType18 extends AISMessage {
 
     private float sog;
     private float cog;
     private float trueHeading;
     private float latitude, longitude;
+
+    public AISMessageType18() {
+    }
 
     /**
      * decodeFrame : decode AIS message of type 18

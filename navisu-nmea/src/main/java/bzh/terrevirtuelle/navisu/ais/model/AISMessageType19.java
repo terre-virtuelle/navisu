@@ -15,16 +15,34 @@
 package bzh.terrevirtuelle.navisu.ais.model;
 
 //import objects.gps.WGS84Location;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Extended Class B Equipment Position Report
  * 
  */
+@XmlRootElement(name="AISMessageType19")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType19 extends AISMessage {
 
     private float sog;
     private float cog;
     private float trueHeading;
     private float latitude,  longitude;
+
+    public AISMessageType19() {
+    }
+
+    public float getTrueHeading() {
+        return trueHeading;
+    }
+
+    public void setTrueHeading(float trueHeading) {
+        this.trueHeading = trueHeading;
+    }
 
     /**
      * decodeFrame : decode AIS message of type 19

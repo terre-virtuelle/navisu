@@ -1,22 +1,29 @@
-/******************************************************************************
- * (c) Copyright 2007, IRENav. All rights reserved.
- * Property of ECOLE NAVALE
+/**
+ * ****************************************************************************
+ * (c) Copyright 2007, IRENav. All rights reserved. Property of ECOLE NAVALE
  *
- * For Unrestricted Internal Use Only
- * Unauthorized reproduction and/or distribution is strictly prohibited.
- * This product is protected under copyright law and trade secret law as an
- * unpublished Work.
+ * For Unrestricted Internal Use Only Unauthorized reproduction and/or
+ * distribution is strictly prohibited. This product is protected under
+ * copyright law and trade secret law as an unpublished Work.
  *
  * Modified in 03/2007.
  *
- * Original Designers : RAY, STROH, ALESSIO
- * Modified : Serge Morvan Enib
+ * Original Designers : RAY, STROH, ALESSIO Modified : Serge Morvan Enib
  *
- ******************************************************************************/
+ *****************************************************************************
+ */
 package bzh.terrevirtuelle.navisu.ais.model;
 
+import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
-public class AISMessage implements Message, Comparable<AISMessage>{
+@XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
+public class AISMessage
+        extends NMEA
+        implements Message, Comparable<AISMessage> {
 
     /**
      * MMSI Number
@@ -47,6 +54,9 @@ public class AISMessage implements Message, Comparable<AISMessage>{
      */
     protected AISFrameBinary messageAisBinary;
 
+    public AISMessage() {
+    }
+
     /**
      *
      */
@@ -65,7 +75,7 @@ public class AISMessage implements Message, Comparable<AISMessage>{
      */
     @Override
     public void displayFrame() {
-         System.out.println(this.toString());
+        System.out.println(this.toString());
     }
 
     /**
@@ -90,7 +100,6 @@ public class AISMessage implements Message, Comparable<AISMessage>{
     public void fill(String line) {
 
         //System.err.println(line);
-
         try {
 
             String patternStr = ",";
@@ -155,13 +164,11 @@ public class AISMessage implements Message, Comparable<AISMessage>{
         this.MMSI = MMSI;
     }
 
-    
-   
-
     /**
      *
      * @return
      */
+    @Override
     public String getChecksum() {
         return checksum;
     }
@@ -254,8 +261,12 @@ public class AISMessage implements Message, Comparable<AISMessage>{
         this.positionTrame = positionTrame;
     }
 
+    @Override
     public int compareTo(AISMessage o) {
         return this.MMSI - o.MMSI;
     }
+    
 }
-/** end AISMessage */
+/**
+ * end AISMessage
+ */

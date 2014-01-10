@@ -8,11 +8,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Morvan
  */
+@XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType135 extends AISMessage {
 
     // Types 1,2,3
@@ -136,6 +141,9 @@ public class AISMessageType135 extends AISMessage {
      * hour, minute of ETA
      */
     protected int hour, minute;
+
+    public AISMessageType135() {
+    }
 
     @Override
     public String toString() {

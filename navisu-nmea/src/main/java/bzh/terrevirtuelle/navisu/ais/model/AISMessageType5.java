@@ -18,12 +18,21 @@ package bzh.terrevirtuelle.navisu.ais.model;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Ship static and voyage related data
  * 
  */
+@XmlRootElement(name="AISMessageType5")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType5 extends AISMessageType135 {
+
+    public AISMessageType5() {
+    }
 
     /**
      * decodeFrame : decode AIS message of type 5

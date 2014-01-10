@@ -19,6 +19,6 @@ public class PrintHandler
        // System.out.println(data.getSentence());
         // System.out.println(data.getChecksumValidation());
         // System.out.println(data.getClass());
-        System.out.println(data);
+       // System.out.println(data);
     }
 }

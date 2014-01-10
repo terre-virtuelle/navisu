@@ -1,27 +1,35 @@
-/******************************************************************************
- * (c) Copyright 2007, IRENav. All rights reserved.
- * Property of ECOLE NAVALE
+/**
+ * ****************************************************************************
+ * (c) Copyright 2007, IRENav. All rights reserved. Property of ECOLE NAVALE
  *
- * For Unrestricted Internal Use Only
- * Unauthorized reproduction and/or distribution is strictly prohibited.
- * This product is protected under copyright law and trade secret law as an
- * unpublished Work.
+ * For Unrestricted Internal Use Only Unauthorized reproduction and/or
+ * distribution is strictly prohibited. This product is protected under
+ * copyright law and trade secret law as an unpublished Work.
  *
  * Modified in 05/2007.
  *
- * Original Designers : RAY, STROH, ALESSIO
- * Modified : Serge Morvan Enib 09/2009
+ * Original Designers : RAY, STROH, ALESSIO Modified : Serge Morvan Enib 09/2009
  *
- ******************************************************************************/
+ *****************************************************************************
+ */
 package bzh.terrevirtuelle.navisu.ais.model;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Position Report with SOTDMA
- * 
+ *
  */
-public class AISMessageType1 extends AISMessageType135 {
+@XmlRootElement(name = "AISMessageType1")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class AISMessageType1
+        extends AISMessageType135 {
 
-    
+    public AISMessageType1() {
+    }
+
     /**
      * decodeFrame : decode AIS message of type 1
      *
@@ -40,10 +48,9 @@ public class AISMessageType1 extends AISMessageType135 {
         }
     }
 
-
     @Override
     public String toString() {
-        return "(MESSAGEAISTYPE1) MMSI=" + MMSI  
+        return "(MESSAGEAISTYPE1) MMSI=" + MMSI
                 + ", STATUS = " + navigationalStatus
                 + ", HEAD =" + heading
                 + ", COG = " + cog
@@ -54,4 +61,6 @@ public class AISMessageType1 extends AISMessageType135 {
     }
 
 }
-/** end AISMessageType1 */
+/**
+ * end AISMessageType1
+ */

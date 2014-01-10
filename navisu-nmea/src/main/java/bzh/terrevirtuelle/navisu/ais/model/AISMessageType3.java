@@ -15,11 +15,20 @@
  ******************************************************************************/
 package bzh.terrevirtuelle.navisu.ais.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Position Report with ITDMA
  * 
  */
+@XmlRootElement(name="AISMessageType3")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType3 extends AISMessageType135 {
+
+    public AISMessageType3() {
+    }
 
     /**
      * decodeFrame : decode AIS message of type 3 (idem type 1 with ITDMA)

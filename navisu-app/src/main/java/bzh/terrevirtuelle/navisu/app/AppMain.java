@@ -124,7 +124,8 @@ public class AppMain extends Application {
         //dataServerServices.open();// Test avec les parametres dans properties/server.properties
         //dataServerServices.openSerialPort(); // idem
         /* Test connexion fichier */
-        dataServerServices.openFile("data/nmea/gps.txt");
+        //dataServerServices.openFile("data/nmea/gps.txt");
+        dataServerServices.openFile("data/ais/ais.txt");
         // dataServerServices.openFile();// Test avec les parametres dans properties/server.properties
 
         /* Test instanciation d'un client */

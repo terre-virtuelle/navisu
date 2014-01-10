@@ -15,16 +15,26 @@
 package bzh.terrevirtuelle.navisu.ais.model;
 
 //import objects.gps.WGS84Location;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Standard SAR Aircraft position report
  * 
  */
+@XmlRootElement(name="AISMessageType9")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType9 extends AISMessage {
 
     private float cog;
     private int altitude; // TODO: check conversion to float
     private float speed;
     private float latitude, longitude;
+
+    public AISMessageType9() {
+    }
 
     /**
      * decodeFrame : decode AIS message of type 9

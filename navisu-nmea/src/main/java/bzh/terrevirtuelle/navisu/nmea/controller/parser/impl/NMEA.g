@@ -48,13 +48,11 @@ import bzh.terrevirtuelle.navisu.nmea.model.XTE;
 import bzh.terrevirtuelle.navisu.nmea.model.ZDA;
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;  
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.impl.PrintHandler;  
+import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.impl.PrintHandler; 
+import bzh.terrevirtuelle.navisu.ais.controller.parser.impl.AISParser;
  
 import bzh.terrevirtuelle.navisu.nmea.model.GPSSatellite;
 
-import bzh.terrevirtuelle.navisu.ais.controller.parser.impl.AISParser;
-import bzh.terrevirtuelle.navisu.ais.controller.parser.handler.AISHandler;
-import bzh.terrevirtuelle.navisu.ais.controller.parser.handler.impl.AISPrintHandler;  
  
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -136,7 +134,7 @@ import java.util.StringTokenizer;
    
    /* Default handlers */
    protected Handler handler = new PrintHandler();
-   protected AISHandler aisHandler = new AISPrintHandler();
+   protected Handler aisHandler = new PrintHandler();
    protected AISParser aisParser = new AISParser(aisHandler);
    
    
@@ -144,8 +142,9 @@ import java.util.StringTokenizer;
    this.handler = handler;
    }
    
-   public void setAISHandler(AISHandler handler){
+   public void setAISHandler(Handler handler){
    this.aisHandler = handler;
+   aisParser.setHandler(handler);
    }
    
    private float latConvert(float latitude, String ns){

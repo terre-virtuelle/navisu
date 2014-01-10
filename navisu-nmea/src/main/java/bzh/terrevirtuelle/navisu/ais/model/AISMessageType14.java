@@ -14,13 +14,22 @@
  ******************************************************************************/
 package bzh.terrevirtuelle.navisu.ais.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Safety related Broadcast Message
  * 
  */
+@XmlRootElement(name="AISMessageType14")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType14 extends AISMessage {
 
     private String SecurityMessage;
+
+    public AISMessageType14() {
+    }
 
     /**
      * decodeFrame : decode AIS message of type 14

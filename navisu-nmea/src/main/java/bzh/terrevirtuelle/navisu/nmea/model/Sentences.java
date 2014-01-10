@@ -5,6 +5,15 @@
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType1;
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType11;
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType14;
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType18;
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType19;
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType3;
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType4;
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType5;
+import bzh.terrevirtuelle.navisu.ais.model.AISMessageType9;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -60,7 +69,17 @@ public class Sentences {
         @XmlElement(name = "vwr", type = VWR.class),
         @XmlElement(name = "vwt", type = VWT.class),
         @XmlElement(name = "xte", type = XTE.class),
-        @XmlElement(name = "zda", type = ZDA.class)
+
+        @XmlElement(name = "ais1", type = AISMessageType1.class),
+        @XmlElement(name = "ais11", type = AISMessageType11.class),
+        @XmlElement(name = "ais14", type = AISMessageType14.class),
+        @XmlElement(name = "ais18", type = AISMessageType18.class),
+        @XmlElement(name = "ais19", type = AISMessageType19.class),
+        @XmlElement(name = "ais3", type = AISMessageType3.class),
+        @XmlElement(name = "ais4", type = AISMessageType4.class),
+        @XmlElement(name = "ais5", type = AISMessageType5.class),
+        @XmlElement(name = "ais9", type = AISMessageType9.class)
+
     })
     List<NMEA> sentences;
 
@@ -75,10 +94,10 @@ public class Sentences {
     public List<NMEA> getSentences() {
         return sentences;
     }
- 
+
     @Override
     public String toString() {
-        return "Sentences{" + "sentences=" + sentences + '}';
+        return "Sentences{" + sentences + '}';
     }
 
 }
