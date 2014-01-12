@@ -1,4 +1,4 @@
-// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-01-10 14:55:02
+// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-01-12 19:37:15
 
 package bzh.terrevirtuelle. navisu.nmea.controller.parser.impl;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @SuppressWarnings({"all", "warnings", "unchecked"})
 public class NMEAParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "AAM", "ALR", "APB", "BEC", "BOD", "BWC", "BWR", "BWW", "CHECKSUM", "DBK", "DBS", "DBT", "DEVICE", "DPT", "EXPONENT", "GGA", "GLL", "GSA", "GSV", "HDG", "HDM", "HDT", "LETTERS", "MSK", "MTA", "MTW", "MWD", "MWV", "NUMBER", "PRO", "RMB", "RMC", "RSD", "RTE", "SEP", "SIGN", "TXT", "VBW", "VDM", "VHW", "VLW", "VPW", "VTG", "VWR", "VWT", "WS", "XTE", "ZDA"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "AAM", "ALR", "APB", "BEC", "BOD", "BWC", "BWR", "BWW", "CHECKSUM", "CLASS", "DBK", "DBS", "DBT", "DEVICE", "DPT", "EXPONENT", "GGA", "GLL", "GSA", "GSV", "HDG", "HDM", "HDT", "LETTERS", "MSK", "MTA", "MTW", "MWD", "MWV", "NUMBER", "PRO", "RMB", "RMC", "RSD", "RTE", "SEP", "SIGN", "TXT", "VBW", "VDM", "VHW", "VLW", "VPW", "VTG", "VWR", "VWT", "WS", "XTE", "ZDA"
     };
 
     public static final int EOF=-1;
@@ -26,45 +26,46 @@ public class NMEAParser extends Parser {
     public static final int BWR=10;
     public static final int BWW=11;
     public static final int CHECKSUM=12;
-    public static final int DBK=13;
-    public static final int DBS=14;
-    public static final int DBT=15;
-    public static final int DEVICE=16;
-    public static final int DPT=17;
-    public static final int EXPONENT=18;
-    public static final int GGA=19;
-    public static final int GLL=20;
-    public static final int GSA=21;
-    public static final int GSV=22;
-    public static final int HDG=23;
-    public static final int HDM=24;
-    public static final int HDT=25;
-    public static final int LETTERS=26;
-    public static final int MSK=27;
-    public static final int MTA=28;
-    public static final int MTW=29;
-    public static final int MWD=30;
-    public static final int MWV=31;
-    public static final int NUMBER=32;
-    public static final int PRO=33;
-    public static final int RMB=34;
-    public static final int RMC=35;
-    public static final int RSD=36;
-    public static final int RTE=37;
-    public static final int SEP=38;
-    public static final int SIGN=39;
-    public static final int TXT=40;
-    public static final int VBW=41;
-    public static final int VDM=42;
-    public static final int VHW=43;
-    public static final int VLW=44;
-    public static final int VPW=45;
-    public static final int VTG=46;
-    public static final int VWR=47;
-    public static final int VWT=48;
-    public static final int WS=49;
-    public static final int XTE=50;
-    public static final int ZDA=51;
+    public static final int CLASS=13;
+    public static final int DBK=14;
+    public static final int DBS=15;
+    public static final int DBT=16;
+    public static final int DEVICE=17;
+    public static final int DPT=18;
+    public static final int EXPONENT=19;
+    public static final int GGA=20;
+    public static final int GLL=21;
+    public static final int GSA=22;
+    public static final int GSV=23;
+    public static final int HDG=24;
+    public static final int HDM=25;
+    public static final int HDT=26;
+    public static final int LETTERS=27;
+    public static final int MSK=28;
+    public static final int MTA=29;
+    public static final int MTW=30;
+    public static final int MWD=31;
+    public static final int MWV=32;
+    public static final int NUMBER=33;
+    public static final int PRO=34;
+    public static final int RMB=35;
+    public static final int RMC=36;
+    public static final int RSD=37;
+    public static final int RTE=38;
+    public static final int SEP=39;
+    public static final int SIGN=40;
+    public static final int TXT=41;
+    public static final int VBW=42;
+    public static final int VDM=43;
+    public static final int VHW=44;
+    public static final int VLW=45;
+    public static final int VPW=46;
+    public static final int VTG=47;
+    public static final int VWR=48;
+    public static final int VWT=49;
+    public static final int WS=50;
+    public static final int XTE=51;
+    public static final int ZDA=52;
 
     // delegates
     public Parser[] getDelegates() {

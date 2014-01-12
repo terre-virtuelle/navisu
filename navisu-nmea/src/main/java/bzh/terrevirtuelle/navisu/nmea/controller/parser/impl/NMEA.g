@@ -1218,7 +1218,14 @@ VDM 	: '!' device=DEVICE 'VDM' SEP
 	aisParser.parse(getText());
 	}
 	;
-/** $AITXT,01,01,91,FREQ,2087,2088*57 */
+	
+	/** SECTION GPSD */
+	CLASS
+    	:	
+    	'{\"class\":'
+    	;
+	
+/* $AITXT,01,01,91,FREQ,2087,2088*57 */
 TXT	: '$' device=DEVICE 'TXT' SEP
 	('\u0021'..'\u007F' | SEP | ' ')*  
 	checksum=CHECKSUM 
