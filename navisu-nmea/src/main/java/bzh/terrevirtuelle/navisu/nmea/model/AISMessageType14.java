@@ -12,7 +12,7 @@
  * Original Designers : RAY
  *
  ******************************************************************************/
-package bzh.terrevirtuelle.navisu.ais.model;
+package bzh.terrevirtuelle.navisu.nmea.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Safety related Broadcast Message
  * 
  */
-@XmlRootElement(name="AISMessageType14")
+@XmlRootElement(name="ais14")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType14 extends AISMessage {
 
@@ -38,10 +38,10 @@ public class AISMessageType14 extends AISMessage {
     @Override
     public void decodeFrame() {
 
-        if (messageAisBinary.BinaryFrame.length() == 1008) {
+        if (messageAisBinary.length() == 1008) {
 
-            MMSI = messageAisBinary.binaryToInt(8, 38);
-            SecurityMessage = messageAisBinary.binaryToString(40, 1008);
+            MMSI = binaryToInt(messageAisBinary,8, 38);
+            SecurityMessage = binaryToString(messageAisBinary,40, 1008);
         }
     }
 

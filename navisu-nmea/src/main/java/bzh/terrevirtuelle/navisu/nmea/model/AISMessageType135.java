@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.ais.model;
+package bzh.terrevirtuelle.navisu.nmea.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,13 +10,13 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Morvan
  */
-@XmlTransient
+@XmlRootElement(name = "ais135")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType135 extends AISMessage {
 
@@ -145,10 +145,37 @@ public class AISMessageType135 extends AISMessage {
     public AISMessageType135() {
     }
 
+    public AISMessageType135(float rot, float cog, float sog, int navigationalStatus, float heading, float latitude, float longitude, int IMO, String name, int shipType, float width, float length, float draught, int electronicPositionDevice, String CallSign, Calendar ETA, String destination, int year, int month, int day, int hour, int minute) {
+        this.rot = rot;
+        this.cog = cog;
+        this.sog = sog;
+        this.navigationalStatus = navigationalStatus;
+        this.heading = heading;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.IMO = IMO;
+        this.name = name;
+        this.shipType = shipType;
+        this.width = width;
+        this.length = length;
+        this.draught = draught;
+        this.electronicPositionDevice = electronicPositionDevice;
+        this.CallSign = CallSign;
+        this.ETA = ETA;
+        this.destination = destination;
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        this.hour = hour;
+        this.minute = minute;
+    }
+
+    
+
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM");
-        StringBuffer sb = new StringBuffer("MMSI=" + MMSI
+        StringBuffer sb = new StringBuffer("(MESSAGEAISTYPE135) MMSI=" + MMSI
                 + ", IMO = " + IMO
                 + ", NAME = " + name
                 + ", STATUS = " + navigationalStatus

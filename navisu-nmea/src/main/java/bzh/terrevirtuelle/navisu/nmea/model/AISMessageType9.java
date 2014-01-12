@@ -1,30 +1,29 @@
-/******************************************************************************
- * (c) Copyright 2007, IRENav. All rights reserved.
- * Property of ECOLE NAVALE
+/**
+ * ****************************************************************************
+ * (c) Copyright 2007, IRENav. All rights reserved. Property of ECOLE NAVALE
  *
- * For Unrestricted Internal Use Only
- * Unauthorized reproduction and/or distribution is strictly prohibited.
- * This product is protected under copyright law and trade secret law as an
- * unpublished Work.
+ * For Unrestricted Internal Use Only Unauthorized reproduction and/or
+ * distribution is strictly prohibited. This product is protected under
+ * copyright law and trade secret law as an unpublished Work.
  *
  * Modified in 05/2007.
  *
  * Original Designers : RAY
  *
- ******************************************************************************/
-package bzh.terrevirtuelle.navisu.ais.model;
+ *****************************************************************************
+ */
+package bzh.terrevirtuelle.navisu.nmea.model;
 
 //import objects.gps.WGS84Location;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Standard SAR Aircraft position report
- * 
+ *
  */
-@XmlRootElement(name="AISMessageType9")
+@XmlRootElement(name = "ais9")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType9 extends AISMessage {
 
@@ -42,20 +41,21 @@ public class AISMessageType9 extends AISMessage {
      */
     @Override
     public void decodeFrame() {
-        if (messageAisBinary.BinaryFrame.length() == 167) {
+        if (messageAisBinary.length() == 167) {
 
-            MMSI = messageAisBinary.binaryToInt(8, 38);
-            altitude = messageAisBinary.binaryToInt(38, 50);
-            speed = (float) (0.1 * messageAisBinary.binaryToInt(50, 60));
-            cog = (float) (0.1 * messageAisBinary.binaryToInt(116, 128));
-            longitude = ((float) (0.0001 * messageAisBinary.complementToInt(61, 89))) / 60;
-            latitude = ((float) (0.0001 * messageAisBinary.complementToInt(89, 116))) / 60;
+            MMSI = binaryToInt(messageAisBinary, 8, 38);
+            altitude = binaryToInt(messageAisBinary, 38, 50);
+            speed = (float) (0.1 * binaryToInt(messageAisBinary, 50, 60));
+            cog = (float) (0.1 * binaryToInt(messageAisBinary, 116, 128));
+            longitude = ((float) (0.0001 * complementToInt(messageAisBinary, 61, 89))) / 60;
+            latitude = ((float) (0.0001 * complementToInt(messageAisBinary, 89, 116))) / 60;
         }
     }
 
     /**
      * displayFrame : print AIS message of type 9
      *
+     * @return 
      */
     @Override
     public String toString() {
@@ -143,4 +143,6 @@ public class AISMessageType9 extends AISMessage {
     }
 
 }
-/** end AISMessageType9 */
+/**
+ * end AISMessageType9
+ */

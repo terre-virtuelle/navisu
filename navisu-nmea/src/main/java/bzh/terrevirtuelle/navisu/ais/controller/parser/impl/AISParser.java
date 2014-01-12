@@ -16,17 +16,18 @@
 package bzh.terrevirtuelle.navisu.ais.controller.parser.impl;
 
 
-import bzh.terrevirtuelle.navisu.ais.model.AISFrame;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessage;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType1;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType11;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType14;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType18;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType19;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType3;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType4;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType5;
-import bzh.terrevirtuelle.navisu.ais.model.AISMessageType9;
+import bzh.terrevirtuelle.navisu.nmea.model.AISFrame;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessage;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType1;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType11;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType14;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType18;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType19;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType3;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType4;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType5;
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType9;
+
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;
 import java.util.List;
 
@@ -143,7 +144,7 @@ public class AISParser
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 0) {
-                         System.err.println("(AISPARSER) Unsupported Message");
+                        // System.err.println("(AISPARSER) Unsupported Message");
                     } else {
                         // System.out.println("(AISPARSER) Message of Type " + whatType + " Detected"); // 10, 20, 21, 24
                     }

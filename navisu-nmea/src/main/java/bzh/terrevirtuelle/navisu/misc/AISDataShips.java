@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.ais.model;
+package bzh.terrevirtuelle.navisu.misc;
 
+
+import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType135;
 import java.util.Map;
 
 /**

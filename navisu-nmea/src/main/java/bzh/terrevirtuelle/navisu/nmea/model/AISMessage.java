@@ -12,9 +12,8 @@
  *
  *****************************************************************************
  */
-package bzh.terrevirtuelle.navisu.ais.model;
+package bzh.terrevirtuelle.navisu.nmea.model;
 
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
@@ -52,10 +51,28 @@ public class AISMessage
     /**
      *
      */
-    protected AISFrameBinary messageAisBinary;
+ @XmlTransient
+    protected String messageAisBinary;
 
     public AISMessage() {
     }
+
+    public AISMessage(int MMSI, int padding, String checksum, int nbreTrames, int positionTrame, String messageAis, String messageAisBinary) {
+        this.MMSI = MMSI;
+        this.padding = padding;
+        this.checksum = checksum;
+        this.nbreTrames = nbreTrames;
+        this.positionTrame = positionTrame;
+        this.messageAis = messageAis;
+        this.messageAisBinary = messageAisBinary;
+    }
+
+    @Override
+    public String getSentence() {
+        return getMessageAis();
+    }
+
+    
 
     /**
      *
@@ -93,6 +110,8 @@ public class AISMessage
         checksum = champs[1];
     }
 
+   
+
     /**
      *
      * @param line
@@ -124,7 +143,7 @@ public class AISMessage
                     messageBinaire = messageBinaire.concat(charBinaire);
                 }
                 messageBinaire = messageBinaire.substring(0, messageBinaire.length() - this.padding - 1);
-                messageAisBinary = new AISFrameBinary(messageBinaire);
+                messageAisBinary = messageBinaire;
             }
 
         } catch (Exception e) {
@@ -142,12 +161,129 @@ public class AISMessage
 
         // System.out.println(messageAisBinary.binaryToInt(0,6));
         if (!messageAis.equals("")) {
-            return messageAisBinary.binaryToInt(0, 6);
+            return binaryToInt(messageAisBinary, 0, 6);
         } else {
             return -1;
         }
     }
+/**
+     * binaryToInt : convert a binary string into int
+     *
+     * @param str
+     * @param begin The starting bit in binaryFrame
+     * @param end The ending bit in binaryFrame
+     * @return int The int value of of a subset of the string binaryFrame
+     */
+    protected int binaryToInt(String str, int begin, int end) {
 
+        return PosBinStringToInt( str.substring(begin, end));
+    }
+
+    /**
+     * complementToInt : convert a string in two's complement binary format into
+     * int
+     *
+     * @param str
+     * @param begin The starting bit in binaryFrame
+     * @param end The ending bit in binaryFrame
+     * @return int The int value of of a subset of the string binaryFrame
+     */
+    protected int complementToInt(String str,int begin, int end) {
+
+        String word = str.substring(begin, end);
+        if (word.charAt(0) == '1') {
+            return (-NegBinStringToInt(word));
+        } else {
+            return PosBinStringToInt(word);
+        }
+    }
+
+    /**
+     * PosBinStringToInt : convert a string in two's complement binary format
+     * into int
+     *
+     * @param word The string that represent a positive value in two's
+     * complement binary format
+     * @return int The int value of the string
+     */
+    private int PosBinStringToInt(String word) {
+
+        int result = 0;
+        for (int i = word.length() - 1; i >= 0; i--) {
+            int puiss = 1;
+            for (int j = 1; j < word.length() - i; j++) {
+                puiss *= 2;
+            }
+            if ((int) word.charAt(i) == 49) {
+                result += puiss;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * NegBinStringToInt : convert a string in two's complement binary format
+     * into int
+     *
+     * @param word The string that represent a negative value in two's
+     * complement binary format
+     * @return int The int value of the string
+     */
+    private int NegBinStringToInt(String word) {
+
+        int result;
+
+        result = 0;
+        for (int i = word.length() - 1; i >= 1; i--) {
+            int puiss = 1;
+            for (int j = 1; j < word.length() - i; j++) {
+                puiss *= 2;
+            }
+            if ((int) word.charAt(i) == 48) {
+                result += puiss;
+            }
+        }
+        result++;
+        return result;
+    }
+
+    /**
+     * binaryToString : convert a binary string in real 'ASCII' string
+     *
+     * @param str
+     * @param begin The starting bit in binaryFrame
+     * @param end The ending bit in binaryFrame
+     * @return String The string converted
+     */
+    protected String binaryToString(String str, int begin, int end) {
+
+        int spacecount;
+        int ASCII;
+        String line;
+        String result;
+
+        spacecount = 0;
+        line = str.substring(begin, end);
+        result = new String();
+
+        for (int i = 0; i < line.length(); i = i + 6) {
+            String word = line.substring(i, i + 6);
+            ASCII = PosBinStringToInt(word);
+            if (ASCII < 31) {
+                ASCII = ASCII + 64;
+            }
+            if (ASCII == 64) {
+                ASCII = 32;
+                spacecount++;
+            } else {
+                spacecount = 0;
+            }
+            if (spacecount <= 1) {
+                result = result.concat("" + ((char) ASCII));
+            }
+        }
+        return result;
+    }
     /**
      *
      * @return
@@ -201,7 +337,7 @@ public class AISMessage
      *
      * @return
      */
-    public AISFrameBinary getMessageAisBinary() {
+    public String getMessageAisBinary() {
         return messageAisBinary;
     }
 
@@ -209,7 +345,7 @@ public class AISMessage
      *
      * @param messageAisBinary
      */
-    public void setMessageAisBinary(AISFrameBinary messageAisBinary) {
+    public void setMessageAisBinary(String messageAisBinary) {
         this.messageAisBinary = messageAisBinary;
     }
 

@@ -12,7 +12,7 @@
  * Original Designers : RAY
  *
  ******************************************************************************/
-package bzh.terrevirtuelle.navisu.ais.model;
+package bzh.terrevirtuelle.navisu.nmea.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * UTC and Date response
  * 
  */
-@XmlRootElement(name="AISMessageType11")
+@XmlRootElement(name="ais11")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType11 extends AISMessage {
 
@@ -119,18 +119,18 @@ public class AISMessageType11 extends AISMessage {
 
 
 
-        if (messageAisBinary.BinaryFrame.length() == 167) {
+        if (messageAisBinary.length() == 167) {
 
-            MMSI = messageAisBinary.binaryToInt(8, 38);
-            year = messageAisBinary.binaryToInt(38, 52);
-            month = messageAisBinary.binaryToInt(52, 56);
-            day = messageAisBinary.binaryToInt(56, 61);
-            hour = messageAisBinary.binaryToInt(61, 67);
-            minute = messageAisBinary.binaryToInt(67, 73);
-            second = messageAisBinary.binaryToInt(73, 79);
+            MMSI = binaryToInt(messageAisBinary,8, 38);
+            year = binaryToInt(messageAisBinary,38, 52);
+            month = binaryToInt(messageAisBinary,52, 56);
+            day =binaryToInt(messageAisBinary,56, 61);
+            hour = binaryToInt(messageAisBinary,61, 67);
+            minute = binaryToInt(messageAisBinary,67, 73);
+            second = binaryToInt(messageAisBinary,73, 79);
             ETADate = new GregorianCalendar(year, month, day, hour, minute, second);
-            longitude = -((float) (0.0001 * messageAisBinary.complementToInt(80, 107))) / 60;
-            latitude = ((float) (0.0001 * messageAisBinary.complementToInt(107, 134))) / 60;
+            longitude = -((float) (0.0001 * complementToInt(messageAisBinary,80, 107))) / 60;
+            latitude = ((float) (0.0001 * complementToInt(messageAisBinary,107, 134))) / 60;
             try {
                 //	position = new WGS84Location (latitude, longitude);
             } catch (NumberFormatException e) {
@@ -142,7 +142,7 @@ public class AISMessageType11 extends AISMessage {
     @Override
     public String toString() {
          DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM-yyyy");
-        return new String("(MESSAGEAISTYPE11) ISMM=" + MMSI + ", LAT=" + latitude + ", LONG=" + longitude + ", ETA=" + dateFormat.format(ETADate.getTime()));
+        return "(MESSAGEAISTYPE11) ISMM=" + MMSI + ", LAT=" + latitude + ", LONG=" + longitude + ", ETA=" + dateFormat.format(ETADate.getTime());
     }
 }
 /** end AISMessageType11 */

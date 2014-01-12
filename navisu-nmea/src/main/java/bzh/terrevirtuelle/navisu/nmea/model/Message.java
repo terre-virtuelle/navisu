@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.ais.model;
+package bzh.terrevirtuelle.navisu.nmea.model;
 
 /**
  *

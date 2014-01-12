@@ -12,7 +12,7 @@
  * Original Designers : RAY
  *
  ******************************************************************************/
-package bzh.terrevirtuelle.navisu.ais.model;
+package bzh.terrevirtuelle.navisu.nmea.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Standard Class B Position Report
  * 
  */
-@XmlRootElement(name="AISMessageType18")
+@XmlRootElement(name="ais18")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessageType18 extends AISMessage {
 
@@ -43,14 +43,14 @@ public class AISMessageType18 extends AISMessage {
 
         // TODO : v�rifier le compte de bits
 
-        if (messageAisBinary.BinaryFrame.length() >= 167) {
+        if (messageAisBinary.length() >= 167) {
 
-            MMSI = messageAisBinary.binaryToInt(8, 38);
-            sog = (float) (0.1 * messageAisBinary.binaryToInt(46, 56));
-            cog = (float) (0.1 * messageAisBinary.binaryToInt(112, 124));
-            trueHeading = (float) messageAisBinary.binaryToInt(124, 133);
-            longitude = ((float) (0.0001 * messageAisBinary.complementToInt(57, 85))) / 60;
-            latitude = ((float) (0.0001 * messageAisBinary.complementToInt(85, 112))) / 60;
+            MMSI = binaryToInt(messageAisBinary,8, 38);
+            sog = (float) (0.1 * binaryToInt(messageAisBinary,46, 56));
+            cog = (float) (0.1 * binaryToInt(messageAisBinary,112, 124));
+            trueHeading = (float)binaryToInt(messageAisBinary,124, 133);
+            longitude = ((float) (0.0001 * complementToInt(messageAisBinary,57, 85))) / 60;
+            latitude = ((float) (0.0001 * complementToInt(messageAisBinary,85, 112))) / 60;
         }
     }
 

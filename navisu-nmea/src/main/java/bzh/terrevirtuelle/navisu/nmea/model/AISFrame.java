@@ -14,7 +14,7 @@
  * 
  ******************************************************************************/
 
-package bzh.terrevirtuelle.navisu.ais.model;
+package bzh.terrevirtuelle.navisu.nmea.model;
 
 /**
  *
@@ -31,6 +31,26 @@ public class AISFrame {
      */
     protected String checksum;
 	
+    private String binaryFrame;
+
+    /**
+     * Get the value of binaryFrame
+     *
+     * @return the value of binaryFrame
+     */
+    public String getBinaryFrame() {
+        return binaryFrame;
+    }
+
+    /**
+     * Set the value of binaryFrame
+     *
+     * @param binaryFrame new value of binaryFrame
+     */
+    public void setBinaryFrame(String binaryFrame) {
+        this.binaryFrame = binaryFrame;
+    }
+
     /**
      *
      * @param line

@@ -89,9 +89,9 @@ public class NmeaClientImpl
                     websocket.dataHandler((Buffer data) -> {
                         StringBuilder stringBuilder = new StringBuilder(data.getString(0, data.length()));
                         try {
-                             response(stringBuilder); //xml data
+                            // response(stringBuilder); //xml data
                             sentences = (Sentences) unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())));
-                            //response(sentences);
+                            response(sentences);
                         } catch (JAXBException ex) {
                             System.out.println(ex);
                         }
@@ -112,7 +112,6 @@ public class NmeaClientImpl
     }
 
     public void display() {
-        System.out.println("sentences : " + sentences);
         list = sentences.getSentences();
         list.stream().forEach((n) -> {
             System.out.println(n);
