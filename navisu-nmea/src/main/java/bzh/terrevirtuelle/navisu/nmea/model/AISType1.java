@@ -24,10 +24,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ais1")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISMessageType1
-        extends AISMessageType135 {
+public class AISType1
+        extends AISType135 {
 
-    public AISMessageType1() {
+    public AISType1() {
     }
 
     /**
@@ -50,14 +50,14 @@ public class AISMessageType1
 
     @Override
     public String toString() {
-        return "(MESSAGEAISTYPE1) MMSI=" + MMSI
+        return "AISType1{MMSI=" + MMSI
                 + ", STATUS = " + navigationalStatus
                 + ", HEAD =" + heading
                 + ", COG = " + cog
                 + ", SOG = " + sog
                 + ", LAT = " + latitude
                 + ", LONG = " + longitude
-                + ", ROT = " + rot;
+                + ", ROT = " + rot + '}';
     }
 
 }

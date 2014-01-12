@@ -5,7 +5,7 @@
 package bzh.terrevirtuelle.navisu.misc;
 
 
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType135;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType135;
 import java.util.Map;
 
 /**
@@ -14,9 +14,9 @@ import java.util.Map;
  */
 public class AISDataShips {
 
-    private Map<Integer, AISMessageType135> data;
+    private Map<Integer, AISType135> data;
 
-    public AISDataShips(Map<Integer, AISMessageType135> data) {
+    public AISDataShips(Map<Integer, AISType135> data) {
         this.data = data;
     }
 
@@ -25,7 +25,7 @@ public class AISDataShips {
      *
      * @return the value of data
      */
-    public Map<Integer, AISMessageType135> getData() {
+    public Map<Integer, AISType135> getData() {
         return data;
     }
 
@@ -34,7 +34,7 @@ public class AISDataShips {
      *
      * @param data new value of data
      */
-    public void setData(Map<Integer, AISMessageType135> data) {
+    public void setData(Map<Integer, AISType135> data) {
         this.data = data;
     }
 

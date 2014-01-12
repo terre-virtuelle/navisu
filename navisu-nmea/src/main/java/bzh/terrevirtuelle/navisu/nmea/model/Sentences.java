@@ -60,17 +60,17 @@ public class Sentences {
         @XmlElement(name = "vwr", type = VWR.class),
         @XmlElement(name = "vwt", type = VWT.class),
         @XmlElement(name = "xte", type = XTE.class),
-        @XmlElement(name = "ais1", type = AISMessageType1.class),
-        @XmlElement(name = "ais11", type = AISMessageType11.class),
-        @XmlElement(name = "ais14", type = AISMessageType14.class),
-        @XmlElement(name = "ais18", type = AISMessageType18.class),
-        @XmlElement(name = "ais19", type = AISMessageType19.class),
-        @XmlElement(name = "ais3", type = AISMessageType3.class),
-        @XmlElement(name = "ais4", type = AISMessageType4.class),
-        @XmlElement(name = "ais5", type = AISMessageType5.class),
-        @XmlElement(name = "ais135", type = AISMessageType135.class),
+        @XmlElement(name = "ais1", type = AISType1.class),
+        @XmlElement(name = "ais11", type = AISType11.class),
+        @XmlElement(name = "ais14", type = AISType14.class),
+        @XmlElement(name = "ais18", type = AISType18.class),
+        @XmlElement(name = "ais19", type = AISType19.class),
+        @XmlElement(name = "ais3", type = AISType3.class),
+        @XmlElement(name = "ais4", type = AISType4.class),
+        @XmlElement(name = "ais5", type = AISType5.class),
+        @XmlElement(name = "ais135", type = AISType135.class),
         @XmlElement(name = "ais", type = AISMessage.class),
-        @XmlElement(name = "ais9", type = AISMessageType9.class)
+        @XmlElement(name = "ais9", type = AISType9.class)
     })
     List<NMEA> sentences;
 

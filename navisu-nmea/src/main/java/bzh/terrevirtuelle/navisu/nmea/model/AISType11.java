@@ -1,17 +1,17 @@
-/******************************************************************************
- * (c) Copyright 2007, IRENav. All rights reserved.
- * Property of ECOLE NAVALE
+/**
+ * ****************************************************************************
+ * (c) Copyright 2007, IRENav. All rights reserved. Property of ECOLE NAVALE
  *
- * For Unrestricted Internal Use Only
- * Unauthorized reproduction and/or distribution is strictly prohibited.
- * This product is protected under copyright law and trade secret law as an
- * unpublished Work.
+ * For Unrestricted Internal Use Only Unauthorized reproduction and/or
+ * distribution is strictly prohibited. This product is protected under
+ * copyright law and trade secret law as an unpublished Work.
  *
  * Modified in 05/2007.
  *
  * Original Designers : RAY
  *
- ******************************************************************************/
+ *****************************************************************************
+ */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
 import java.text.DateFormat;
@@ -24,18 +24,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * UTC and Date response
- * 
+ *
  */
-@XmlRootElement(name="ais11")
+@XmlRootElement(name = "ais11")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISMessageType11 extends AISMessage {
+public class AISType11 extends AISMessage {
 
     private Calendar ETADate;
-    private int year,  month,  day;
-    private int hour,  minute,  second;
-    private float latitude,  longitude;
+    private int year, month, day;
+    private int hour, minute, second;
+    private float latitude, longitude;
 
-    public AISMessageType11() {
+    public AISType11() {
     }
 
     public Calendar getETADate() {
@@ -117,20 +117,18 @@ public class AISMessageType11 extends AISMessage {
     @Override
     public void decodeFrame() {
 
-
-
         if (messageAisBinary.length() == 167) {
 
-            MMSI = binaryToInt(messageAisBinary,8, 38);
-            year = binaryToInt(messageAisBinary,38, 52);
-            month = binaryToInt(messageAisBinary,52, 56);
-            day =binaryToInt(messageAisBinary,56, 61);
-            hour = binaryToInt(messageAisBinary,61, 67);
-            minute = binaryToInt(messageAisBinary,67, 73);
-            second = binaryToInt(messageAisBinary,73, 79);
+            MMSI = binaryToInt(messageAisBinary, 8, 38);
+            year = binaryToInt(messageAisBinary, 38, 52);
+            month = binaryToInt(messageAisBinary, 52, 56);
+            day = binaryToInt(messageAisBinary, 56, 61);
+            hour = binaryToInt(messageAisBinary, 61, 67);
+            minute = binaryToInt(messageAisBinary, 67, 73);
+            second = binaryToInt(messageAisBinary, 73, 79);
             ETADate = new GregorianCalendar(year, month, day, hour, minute, second);
-            longitude = -((float) (0.0001 * complementToInt(messageAisBinary,80, 107))) / 60;
-            latitude = ((float) (0.0001 * complementToInt(messageAisBinary,107, 134))) / 60;
+            longitude = -((float) (0.0001 * complementToInt(messageAisBinary, 80, 107))) / 60;
+            latitude = ((float) (0.0001 * complementToInt(messageAisBinary, 107, 134))) / 60;
             try {
                 //	position = new WGS84Location (latitude, longitude);
             } catch (NumberFormatException e) {
@@ -141,8 +139,10 @@ public class AISMessageType11 extends AISMessage {
 
     @Override
     public String toString() {
-         DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM-yyyy");
-        return "(MESSAGEAISTYPE11) ISMM=" + MMSI + ", LAT=" + latitude + ", LONG=" + longitude + ", ETA=" + dateFormat.format(ETADate.getTime());
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM-yyyy");
+        return "AISType11{ISMM=" + MMSI + ", LAT=" + latitude + ", LONG=" + longitude + ", ETA=" + dateFormat.format(ETADate.getTime() + "}");
     }
 }
-/** end AISMessageType11 */
+/**
+ * end AISMessageType11
+ */

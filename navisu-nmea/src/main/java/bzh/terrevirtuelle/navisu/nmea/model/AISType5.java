@@ -27,9 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ais5")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISMessageType5 extends AISMessageType135 {
+public class AISType5 extends AISType135 {
 
-    public AISMessageType5() {
+    public AISType5() {
     }
 
     /**
@@ -91,7 +91,7 @@ public class AISMessageType5 extends AISMessageType135 {
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM");
         StringBuilder sb = new StringBuilder();
-        String s = "(MESSAGEAISTYPE5) MMSI=" + MMSI
+        String s = "AISType5{MMSI=" + MMSI
                 + ", NAME=" + name
                 + ", TYPE=" + shipType
                 + ", LENGTH=" + length
@@ -104,7 +104,7 @@ public class AISMessageType5 extends AISMessageType135 {
             s = ", ETA= ";
         }
         sb.append(s);
-        s = ", DEST=" + destination;
+        s = ", DEST=" + destination + "}";
         sb.append(s);
         return sb.toString();
     }

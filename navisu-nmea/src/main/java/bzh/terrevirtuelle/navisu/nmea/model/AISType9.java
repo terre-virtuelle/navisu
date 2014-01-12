@@ -25,14 +25,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ais9")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISMessageType9 extends AISMessage {
+public class AISType9 extends AISMessage {
 
     private float cog;
     private int altitude; // TODO: check conversion to float
     private float speed;
     private float latitude, longitude;
 
-    public AISMessageType9() {
+    public AISType9() {
     }
 
     /**
@@ -59,7 +59,7 @@ public class AISMessageType9 extends AISMessage {
      */
     @Override
     public String toString() {
-        return ("(MESSAGEAISTYPE9) ISMM=" + MMSI + ", ALT=" + altitude + ", COG=" + cog + ", SPEED=" + speed + ", LAT=" + latitude + ", LONG=" + longitude);
+        return ("AISType9{ISMM=" + MMSI + ", ALT=" + altitude + ", COG=" + cog + ", SPEED=" + speed + ", LAT=" + latitude + ", LONG=" + longitude + "}");
     }
 
     /**

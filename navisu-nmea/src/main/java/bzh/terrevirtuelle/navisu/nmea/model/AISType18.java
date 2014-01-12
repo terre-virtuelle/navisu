@@ -14,55 +14,50 @@
  ******************************************************************************/
 package bzh.terrevirtuelle.navisu.nmea.model;
 
-//import objects.gps.WGS84Location;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Extended Class B Equipment Position Report
+ * Standard Class B Position Report
  * 
  */
-@XmlRootElement(name="ais19")
+@XmlRootElement(name="ais18")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISMessageType19 extends AISMessage {
+public class AISType18 extends AISMessage {
 
     private float sog;
     private float cog;
     private float trueHeading;
-    private float latitude,  longitude;
+    private float latitude, longitude;
 
-    public AISMessageType19() {
-    }
-
-    public float getTrueHeading() {
-        return trueHeading;
-    }
-
-    public void setTrueHeading(float trueHeading) {
-        this.trueHeading = trueHeading;
+    public AISType18() {
     }
 
     /**
-     * decodeFrame : decode AIS message of type 19
+     * decodeFrame : decode AIS message of type 18
      *
      */
     @Override
     public void decodeFrame() {
+
+        // TODO : v�rifier le compte de bits
+
         if (messageAisBinary.length() >= 167) {
+
             MMSI = binaryToInt(messageAisBinary,8, 38);
             sog = (float) (0.1 * binaryToInt(messageAisBinary,46, 56));
             cog = (float) (0.1 * binaryToInt(messageAisBinary,112, 124));
-            trueHeading = (float) binaryToInt(messageAisBinary,124, 133);
+            trueHeading = (float)binaryToInt(messageAisBinary,124, 133);
             longitude = ((float) (0.0001 * complementToInt(messageAisBinary,57, 85))) / 60;
             latitude = ((float) (0.0001 * complementToInt(messageAisBinary,85, 112))) / 60;
         }
     }
 
+
     @Override
     public String toString() {
-        return new String("(MESSAGEAISTYPE19) ISMM=" + MMSI + ", HEAD=" + trueHeading + ", COG=" + cog + ", LAT=" + latitude + ", LONG=" + longitude);
+        return new String("AISType18{ISMM=" + MMSI + ", HEAD=" + trueHeading + ", COG=" + cog + ", LAT=" + latitude + ", LONG=" + longitude + "}");
     }
 
     /**
@@ -127,6 +122,22 @@ public class AISMessageType19 extends AISMessage {
      */
     public void setSog(float sog) {
         this.sog = sog;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public float getTrueHeading() {
+        return trueHeading;
+    }
+
+    /**
+     *
+     * @param trueHeading
+     */
+    public void setTrueHeading(float trueHeading) {
+        this.trueHeading = trueHeading;
     }
 
 }

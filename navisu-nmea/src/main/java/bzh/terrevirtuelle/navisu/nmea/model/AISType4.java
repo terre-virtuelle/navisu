@@ -28,14 +28,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ais4")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISMessageType4 extends AISMessage {
+public class AISType4 extends AISMessage {
 
     private Calendar date;
     private int year, month, day;
     private int hour, minute, second;
     private float latitude, longitude;
 
-    public AISMessageType4() {
+    public AISType4() {
     }
 
     /**
@@ -62,9 +62,10 @@ public class AISMessageType4 extends AISMessage {
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM-yyyy");
-        return "(MESSAGEAISTYPE4) ISMM=" + MMSI
+        return "AISType4{ISMM=" + MMSI
                 + ", LAT=" + latitude + ", LONG=" + longitude
-                + ", DATE=" + date != null ? dateFormat.format(date.getTime()) : "";
+                + ", DATE=" + date != null ? dateFormat.format(date.getTime()) : ""
+                +"}";
     }
 
     /**

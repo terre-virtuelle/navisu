@@ -18,15 +18,15 @@ package bzh.terrevirtuelle.navisu.ais.controller.parser.impl;
 
 import bzh.terrevirtuelle.navisu.nmea.model.AISFrame;
 import bzh.terrevirtuelle.navisu.nmea.model.AISMessage;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType1;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType11;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType14;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType18;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType19;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType3;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType4;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType5;
-import bzh.terrevirtuelle.navisu.nmea.model.AISMessageType9;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType1;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType11;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType14;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType18;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType19;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType3;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType4;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType5;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType9;
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;
 import java.util.List;
@@ -40,7 +40,7 @@ public class AISParser
         extends Parser {
 
     /** gestion des trames de type 5 */
-    private AISMessageType5 message5;
+    private AISType5 message5;
     private static boolean isFirstFrame = true;
     private final List<String> entries = null;
     private Handler handler;
@@ -100,46 +100,46 @@ public class AISParser
                 if (isFirstFrame) {
                     whatType = messageSuper.whatType();
                     if (whatType == 1) {
-                        AISMessageType1 message = new AISMessageType1();
+                        AISType1 message = new AISType1();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 3) {
-                        AISMessageType3 message = new AISMessageType3();
+                        AISType3 message = new AISType3();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 4) {
-                        AISMessageType4 message = new AISMessageType4();
+                        AISType4 message = new AISType4();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 5) {
-                        message5 = new AISMessageType5();
+                        message5 = new AISType5();
                         message5.fill(ligne);
                         isFirstFrame = false;
                     } else if (whatType == 9) {
-                        AISMessageType9 message = new AISMessageType9();
+                        AISType9 message = new AISType9();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 11) {
-                        AISMessageType11 message = new AISMessageType11();
+                        AISType11 message = new AISType11();
                         message.fill(ligne);
                         message.decodeFrame();
                        handler.doIt(message);
                     } else if (whatType == 14) {
-                        AISMessageType14 message = new AISMessageType14();
+                        AISType14 message = new AISType14();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 18) {
-                        AISMessageType18 message = new AISMessageType18();
+                        AISType18 message = new AISType18();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 19) {
-                        AISMessageType19 message = new AISMessageType19();
+                        AISType19 message = new AISType19();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);

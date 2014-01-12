@@ -24,11 +24,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name="ais14")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISMessageType14 extends AISMessage {
+public class AISType14 extends AISMessage {
 
     private String SecurityMessage;
 
-    public AISMessageType14() {
+    public AISType14() {
     }
 
     /**
@@ -48,7 +48,7 @@ public class AISMessageType14 extends AISMessage {
    
     @Override
     public String toString() {
-        return new String("(MESSAGEAISTYPE14) ISMM=" + MMSI + ", MESS=" + SecurityMessage);
+        return new String("AISType14{ISMM=" + MMSI + ", MESS=" + SecurityMessage + "}");
     }
 
     /**

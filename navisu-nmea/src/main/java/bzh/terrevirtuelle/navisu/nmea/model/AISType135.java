@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ais135")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISMessageType135 extends AISMessage {
+public class AISType135 extends AISMessage {
 
     // Types 1,2,3
     // http://www.navcen.uscg.gov/index.php
@@ -142,10 +142,10 @@ public class AISMessageType135 extends AISMessage {
      */
     protected int hour, minute;
 
-    public AISMessageType135() {
+    public AISType135() {
     }
 
-    public AISMessageType135(float rot, float cog, float sog, int navigationalStatus, float heading, float latitude, float longitude, int IMO, String name, int shipType, float width, float length, float draught, int electronicPositionDevice, String CallSign, Calendar ETA, String destination, int year, int month, int day, int hour, int minute) {
+    public AISType135(float rot, float cog, float sog, int navigationalStatus, float heading, float latitude, float longitude, int IMO, String name, int shipType, float width, float length, float draught, int electronicPositionDevice, String CallSign, Calendar ETA, String destination, int year, int month, int day, int hour, int minute) {
         this.rot = rot;
         this.cog = cog;
         this.sog = sog;
@@ -175,7 +175,7 @@ public class AISMessageType135 extends AISMessage {
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM");
-        StringBuffer sb = new StringBuffer("(MESSAGEAISTYPE135) MMSI=" + MMSI
+        StringBuffer sb = new StringBuffer("AISType135{MMSI=" + MMSI
                 + ", IMO = " + IMO
                 + ", NAME = " + name
                 + ", STATUS = " + navigationalStatus
@@ -198,7 +198,7 @@ public class AISMessageType135 extends AISMessage {
         } else {
             sb.append("");
         }
-        sb.append(", DEST = ").append(destination);
+        sb.append(", DEST = ").append(destination + "}");
         return new String(sb);
     }
 
