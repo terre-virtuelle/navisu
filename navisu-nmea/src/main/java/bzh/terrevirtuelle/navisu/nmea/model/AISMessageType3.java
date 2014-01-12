@@ -48,7 +48,7 @@ public class AISMessageType3 extends AISMessageType135 {
             latitude = ((float) (0.0001 * complementToInt(messageAisBinary,89, 116))) / 60;
         }
     }
-/*
+
     @Override
     public String toString() {
         return new String("(MESSAGEAISTYPE3) MMSI=" + MMSI 
@@ -60,6 +60,6 @@ public class AISMessageType3 extends AISMessageType135 {
                 + ", LONG = " + longitude
                 + ", ROT = " + rot);
     }
-*/
+
 }
 /** end AISMessageType3 */
