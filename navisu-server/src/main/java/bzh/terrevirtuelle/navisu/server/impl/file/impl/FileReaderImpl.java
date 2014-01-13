@@ -46,7 +46,7 @@ public class FileReaderImpl
     @Override
     public void read() {
         for (int i = dataIndex; i < dataIndex + size; i++) {
-            if (i < buffer.length) {
+            if (i < buffer.length-2) {
                 vertx.eventBus().send("comm-address" + index, buffer[i]);
             }
         }

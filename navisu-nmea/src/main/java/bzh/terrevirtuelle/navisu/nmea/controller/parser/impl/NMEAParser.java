@@ -1,4 +1,4 @@
-// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-01-12 19:37:15
+// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-01-13 10:58:49
 
 package bzh.terrevirtuelle. navisu.nmea.controller.parser.impl;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @SuppressWarnings({"all", "warnings", "unchecked"})
 public class NMEAParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "AAM", "ALR", "APB", "BEC", "BOD", "BWC", "BWR", "BWW", "CHECKSUM", "CLASS", "DBK", "DBS", "DBT", "DEVICE", "DPT", "EXPONENT", "GGA", "GLL", "GSA", "GSV", "HDG", "HDM", "HDT", "LETTERS", "MSK", "MTA", "MTW", "MWD", "MWV", "NUMBER", "PRO", "RMB", "RMC", "RSD", "RTE", "SEP", "SIGN", "TXT", "VBW", "VDM", "VHW", "VLW", "VPW", "VTG", "VWR", "VWT", "WS", "XTE", "ZDA"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "AAM", "ALR", "APB", "BEC", "BOD", "BWC", "BWR", "BWW", "CHECKSUM", "DBK", "DBS", "DBT", "DEVICE", "DPT", "EXPONENT", "GGA", "GLL", "GPSD", "GSA", "GSV", "HDG", "HDM", "HDT", "LETTERS", "MSK", "MTA", "MTW", "MWD", "MWV", "NUMBER", "PRO", "RMB", "RMC", "RSD", "RTE", "SEP", "SIGN", "TXT", "VBW", "VDM", "VHW", "VLW", "VPW", "VTG", "VWR", "VWT", "WS", "XTE", "ZDA"
     };
 
     public static final int EOF=-1;
@@ -26,15 +26,15 @@ public class NMEAParser extends Parser {
     public static final int BWR=10;
     public static final int BWW=11;
     public static final int CHECKSUM=12;
-    public static final int CLASS=13;
-    public static final int DBK=14;
-    public static final int DBS=15;
-    public static final int DBT=16;
-    public static final int DEVICE=17;
-    public static final int DPT=18;
-    public static final int EXPONENT=19;
-    public static final int GGA=20;
-    public static final int GLL=21;
+    public static final int DBK=13;
+    public static final int DBS=14;
+    public static final int DBT=15;
+    public static final int DEVICE=16;
+    public static final int DPT=17;
+    public static final int EXPONENT=18;
+    public static final int GGA=19;
+    public static final int GLL=20;
+    public static final int GPSD=21;
     public static final int GSA=22;
     public static final int GSV=23;
     public static final int HDG=24;
@@ -91,13 +91,13 @@ public class NMEAParser extends Parser {
 
 
     // $ANTLR start "entry"
-    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:198:1: entry : ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | PRO )+ ;
+    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:198:1: entry : ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | GPSD | PRO )+ ;
     public final void entry() throws RecognitionException {
         try {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:198:8: ( ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | PRO )+ )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:198:13: ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | PRO )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:198:8: ( ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | GPSD | PRO )+ )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:198:13: ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | GPSD | PRO )+
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:198:13: ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | PRO )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-nmea\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:198:13: ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | GPSD | PRO )+
             int cnt1=0;
             loop1:
             do {

@@ -201,8 +201,10 @@ entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT
 		|RSD
 		//AIS
 		|VDM|TXT|ALR
+		//GPSD
+		|GPSD
 		//PRO
-		|PRO)+ ;
+		|PRO)+;
 
 AAM	 : 	'$' device=DEVICE 'AAM' SEP
 	    (arrivalCircleEntered = LETTERS)* SEP
@@ -1219,14 +1221,16 @@ VDM 	: '!' device=DEVICE 'VDM' SEP
 	}
 	;
 	
-	/** SECTION GPSD */
-	CLASS
+/** SECTION GPSD */
+GPSD
     	:	
-    	'{\"class\":'
+    	'{"class":' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	{
+	System.out.println("GPSD sentence : " + getText());
+	}
     	;
-	
 /* $AITXT,01,01,91,FREQ,2087,2088*57 */
-TXT	: '$' device=DEVICE 'TXT' SEP
+TXT	: ('$') device=DEVICE 'TXT' SEP
 	('\u0021'..'\u007F' | SEP | ' ')*  
 	checksum=CHECKSUM 
 	{
@@ -1254,7 +1258,7 @@ NUMBER
     '0'..'9'+
     |
     ('0'..'9')+ '.' ('0'..'9')* EXPONENT?
-    |   '.' ('0'..'9')+ EXPONENT?
+    |   '.' ('0'..'9')* EXPONENT?
     |   ('0'..'9')+ EXPONENT
     ;
 
