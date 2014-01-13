@@ -202,7 +202,7 @@ entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT
 		//AIS
 		|VDM|TXT|ALR
 		//GPSD
-		|GPSD
+		|GPSD_AIS|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH
 		//PRO
 		|PRO)+;
 
@@ -1222,13 +1222,185 @@ VDM 	: '!' device=DEVICE 'VDM' SEP
 	;
 	
 /** SECTION GPSD */
-GPSD
+GPSD_AIS
     	:	
-    	'{"class":' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	'{"class":"AIS"' SEP 
+    	'"device":' dev= DEV SEP 
+    	'"type":' type = NUMBER SEP
+    	'"repeat":' repeat = NUMBER SEP
+    	'"mmsi":' mmsi = NUMBER SEP
+    	'"scaled":' scaled=LETTERS SEP
+    	//Type 1 ou 3
+    	('"status":' status=NUMBER SEP 
+    	 '"turn":' turn=SIGNED SEP 
+    	 '"speed":' speed=NUMBER SEP 
+    	 '"accuracy":' accuracy=LETTERS SEP
+    	 '"lon":' lon=SIGNED SEP 
+    	 '"lat":' lat=SIGNED SEP 
+    	 '"course":' course=NUMBER SEP
+    	 '"heading":' heading=NUMBER SEP
+    	 '"second":' second=NUMBER SEP 
+    	 '"maneuver":' maneuvrer=NUMBER SEP 
+    	 '"raim":' raim=LETTERS SEP 
+    	 '"radio":' radio=NUMBER
+    	|
+    	//Type 4
+    	'"timestamp":' timestamp=TIME_STAMP  SEP
+    	'"accuracy":' accuracy=LETTERS SEP 
+    	'"lon":' lon=SIGNED SEP 
+    	'"lat":' lat=SIGNED SEP
+    	'"epfd":' epfd=NUMBER SEP 
+    	'"raim":' raim=LETTERS SEP 
+    	'"radio":' radio=NUMBER
+    	|
+    	//Type 5
+    	'"imo":' imo=NUMBER SEP
+    	'"ais_version":' ais_version=NUMBER SEP
+    	'"callsign":'  callsign=NAME  SEP
+    	'"shipname":' shipname=NAME SEP
+    	'"shiptype":' shiptype=NUMBER SEP
+    	'"to_bow":' to_bow=NUMBER SEP
+    	'"to_stern":' to_stern=NUMBER SEP
+    	'"to_port":' to_port=NUMBER SEP
+    	'"to_starboard":' to_starboard=NUMBER SEP
+    	'"epfd":' epfd=NUMBER SEP
+    	'"eta":' eta=TIME_STAMP SEP
+    	'"draught":' draught=NUMBER SEP
+    	'"destination":'  destination=NAME  SEP 
+    	'"dte":' dte=NUMBER
+    	|
+    	//Type 18
+    	'"reserved":' reserved=NUMBER* SEP
+    	'"speed":' speed=NUMBER SEP 
+    	'"accuracy":' accuracy=LETTERS SEP
+    	'"lon":' lon=SIGNED SEP 
+    	'"lat":' lat=SIGNED SEP 
+    	'"course":' course=NUMBER SEP
+    	'"heading":' heading=NUMBER SEP
+    	'"second":' second=NUMBER SEP  
+    	'"regional":' regional=NUMBER SEP 
+    	'"cs":' cs=LETTERS SEP 
+    	'"display":' display=LETTERS SEP
+    	'"dsc":' dsc=LETTERS SEP 
+    	'"band":' band=LETTERS SEP
+    	'"msg22":' msg22=LETTERS SEP
+    	'"raim":' raim=LETTERS SEP 
+    	'"radio":' radio=NUMBER
+    	|
+    	//Type 24
+    	'"shipname":' shipname=NAME  SEP
+    	'"shiptype":' shiptype=NUMBER SEP
+    	'"vendorid":' vendorid=NAME SEP
+    	'"callsign":'  callsign=NAME  SEP
+    	'"to_bow":' to_bow=NUMBER SEP
+    	'"to_stern":' to_stern=NUMBER SEP
+    	'"to_port":' to_port=NUMBER SEP
+    	'"to_starboard":' to_starboard=NUMBER 
+    	)
+    	('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS)*
     	{
-	System.out.println("GPSD sentence : " + getText());
+	System.out.print("GPSD AIS sentence : " + "device : " + dev.getText() + " " +
+	"type : " + type.getText() + " " +
+	"repeat : " + repeat.getText() + " " +
+	"mmsi : " + mmsi.getText() + " " +
+	"scaled : " + scaled.getText());
+	switch(type.getText()){
+	case "1" :
+	case "3" :
+	  System.out.print(" status : " + status.getText());
+	  System.out.print(" turn : " + turn.getText());
+	  System.out.print(" speed : " + speed.getText());
+	  System.out.print(" accuracy : " + accuracy.getText());
+	  System.out.print(" lon : " + lon.getText());
+	  System.out.print(" lat : " + lat.getText());
+	  System.out.print(" course : " + course.getText());
+	  System.out.print(" heading : " + heading.getText());
+	  System.out.print(" second : " + second.getText());
+	  System.out.print(" maneuvrer : " + maneuvrer.getText());
+	  System.out.print(" raim : " + raim.getText());
+	  System.out.println(" radio : " + radio.getText());
+	  break;
+	  case "4" :
+	  System.out.print(" timestamp : " + timestamp.getText());
+	  System.out.print(" accuracy : " + accuracy.getText());
+	  System.out.print(" lon : " + lon.getText());
+	  System.out.print(" lat : " + lat.getText());
+	  System.out.print(" epfd : " + epfd.getText());
+	  System.out.print(" raim : " + raim.getText());
+	  System.out.println(" radio : " + radio.getText());
+	  break;
+	  case "5" :
+	  System.out.print(" imo : " + imo.getText());
+	  System.out.print(" ais_version : " + ais_version.getText());
+	  System.out.print(" callsign : " + callsign.getText());
+	  System.out.print(" shipname : " + shipname.getText());
+	  System.out.print(" shiptype : " + shiptype.getText());
+	  System.out.print(" to_bow : " + to_bow.getText());
+	  System.out.print(" to_stern : " + to_stern.getText());
+	  System.out.print(" to_starboard : " + to_starboard.getText());
+	  System.out.print(" epfd : " + epfd.getText());
+	  System.out.print(" eta : " + eta.getText());
+	  System.out.print(" draught : " + draught.getText());
+	  System.out.print(" destination : " + destination.getText());
+	  System.out.println(" dte : " + dte.getText());
+	  break;
+	  case "18" :
+	  System.out.print(" reserved : " + reserved.getText());
+	  System.out.print(" speed : " + speed.getText());
+	  System.out.print(" accuracy : " + accuracy.getText());
+	  System.out.print(" lon : " + lon.getText());
+	  System.out.print(" lat : " + lat.getText());
+	  System.out.print(" heading : " + heading.getText());
+	  System.out.print(" second : " + second.getText());
+	  System.out.print(" regional : " + regional.getText());
+	  System.out.print(" cs : " + cs.getText());
+	  System.out.print(" display : " + display.getText());
+	  System.out.print(" dsc : " + dsc.getText());
+	  System.out.print(" band : " + band.getText());
+	  System.out.print(" msg22 : " + msg22.getText());
+	  System.out.print(" raim : " + raim.getText());
+	  System.out.println(" radio : " + radio.getText());
+	  break;
+	  case "24" :
+	  System.out.print(" shipname : " + shipname.getText());
+	  System.out.print(" shiptype : " + shiptype.getText());
+	  System.out.print(" vendorid : " + vendorid.getText());
+	  System.out.print(" callsign : " + callsign.getText());
+	  System.out.print(" to_bow : " + to_bow.getText());
+	  System.out.print(" to_stern : " + to_stern.getText());
+	  System.out.println(" to_starboard : " + to_starboard.getText());
+	  }
 	}
     	;
+GPSD_DEVICE 
+        :	
+    	'{"class":"DEVICE"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	{
+	//System.out.println("GPSD DEVICE sentence : " + getText());
+	}
+    	; 
+GPSD_DEVICES 
+        :	
+    	'{"class":"DEVICES"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	{
+	//System.out.println("GPSD DEVICES sentence : " + getText());
+	}
+    	;
+GPSD_VERSION
+    	:	
+    	'{"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	{
+	//System.out.println("GPSD VERSION sentence : " + getText());
+	}
+    	;
+GPSD_WATCH
+    	:	
+    	'{"class":"WATCH"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	{
+	//System.out.println("GPSD WATCH sentence : " + getText());
+	}
+    	;
+    	  	
 /* $AITXT,01,01,91,FREQ,2087,2088*57 */
 TXT	: ('$') device=DEVICE 'TXT' SEP
 	('\u0021'..'\u007F' | SEP | ' ')*  
@@ -1253,8 +1425,12 @@ DEVICE 	:
 	// System.out.println("Device : " + getText());
 	}
 	;
+DEV     :
+	'"'( LETTERS| '/' | ':' | '#' | NUMBER)* '"'
+	;
+
 NUMBER
-    :   
+    :  
     '0'..'9'+
     |
     ('0'..'9')+ '.' ('0'..'9')* EXPONENT?
@@ -1275,13 +1451,24 @@ SEP :	(',')
 
 SIGN : ('+'|'-')
      ;
-
+     
+SIGNED :
+    SIGN? NUMBER
+	;
+	
+TIME_STAMP 
+	:	
+	'"' (LETTERS | NUMBER  | ':' | SIGN)+ '"'
+	;	
 CHECKSUM : (('*'('0'..'9')('0'..'9')) |
             ('*'('A'..'F')('0'..'9')) |
             ('*'('A'..'F')('A'..'F')) |
             ('*'('0'..'9')+('A'..'F')))
          ;   
- 
+ NAME 
+ 	:	
+ 	'"' (LETTERS | NUMBER  | ':' | SIGN | '/')* '"'
+ 	;
  LETTERS : (('A'..'Z')|('a'..'z')|' ')+
          ;// {System.out.println(getText());};        
 
