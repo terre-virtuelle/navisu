@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Position Report with ITDMA
+ * Incremental Time Division Multiple Access
  * 
  */
 @XmlRootElement(name="ais3")

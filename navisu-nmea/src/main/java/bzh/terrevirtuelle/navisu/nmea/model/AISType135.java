@@ -46,15 +46,15 @@ public class AISType135 extends AISMessage {
     protected float sog;
     /**
      * 0 = under way using engine, 1 = at anchor, 2 = not under command, 3 =
-     * restricted maneuverability, 4 = constrained by her draught, 5 = moored, 6
-     * = aground, 7 = engaged in fishing, 8 = under way sailing, 9 = reserved
-     * for future amendment of navigational status for ships carrying DG, HS, or
-     * MP, or IMO hazard or pollutant category C, high speed craft (HSC), 10 =
-     * reserved for future amendment of navigational status for ships carrying
-     * dangerous goods (DG), harmful substances (HS) or marine pollutants (MP),
-     * or IMO hazard or pollutant category A, wing in grand (WIG); 11-13 =
-     * reserved for future use, 14 = AIS-SART (active), 15 = not defined =
-     * default (also used by AIS-SART under test)
+ restricted maneuverability, 4 = constrained by her draught, 5 = moored, 6
+ = aground, 7 = engaged in fishing, 8 = under way sailing, 9 = reserved
+ for future amendment of navigational status for ships carrying DG, HS, or
+ MP, or imo hazard or pollutant category C, high speed craft (HSC), 10 =
+ reserved for future amendment of navigational status for ships carrying
+ dangerous goods (DG), harmful substances (HS) or marine pollutants (MP),
+ or imo hazard or pollutant category A, wing in grand (WIG); 11-13 =
+ reserved for future use, 14 = AIS-SART (active), 15 = not defined =
+ default (also used by AIS-SART under test)
      */
     protected int navigationalStatus;
     /**
@@ -74,16 +74,16 @@ public class AISType135 extends AISMessage {
      */
     protected float longitude;
     /**
-     * IMO number :1-999999999; 0 = not available = default
+     * imo number :1-999999999; 0 = not available = default
      */
-    protected int IMO;
+    protected int imo;
     /**
      * Name of the ship : Maximum 20 characters 6-bit ASCII, as defined in Table
      * 44.
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available = default
      */
-    protected String name;
+    protected String shipname;
     /**
      * Type of ship and cargo ship 0 = not available or no ship = default 1-99 =
      * as defined below 100-199 = reserved, for regional use 200-255 = reserved,
@@ -105,8 +105,8 @@ public class AISType135 extends AISMessage {
     protected float length;
     /**
      * Maximum present static draught In 1/10 m, 255 = draught 25.5 m or
-     * greater, 0 = not available = default; in accordance with IMO Resolution
-     * A.851
+ greater, 0 = not available = default; in accordance with imo Resolution
+ A.851
      */
     protected float draught;
     /**
@@ -120,7 +120,7 @@ public class AISType135 extends AISMessage {
      *
      * @@@@@@@ = not available = default
      */
-    protected String CallSign;
+    protected String callsign;
     /**
      * Estimated time of arrival; MMDDHHMM UTC Bits 19-16: month; 1-12; 0 = not
      * available = default Bits 15-11: day; 1-31; 0 = not available = default
@@ -142,7 +142,50 @@ public class AISType135 extends AISMessage {
      */
     protected int hour, minute;
 
+    protected int second;
+
+    /**
+     * Get the value of second
+     *
+     * @return the value of second
+     */
+    public int getSecond() {
+        return second;
+    }
+
+    /**
+     * Set the value of second
+     *
+     * @param second new value of second
+     */
+    public void setSecond(int second) {
+        this.second = second;
+    }
+
     public AISType135() {
+    }
+
+    public AISType135(float rot, float cog, float sog, int navigationalStatus, float heading, float latitude, float longitude, int second, int MMSI, String device) {
+        super(MMSI, device);
+        this.rot = rot;
+        this.cog = cog;
+        this.sog = sog;
+        this.navigationalStatus = navigationalStatus;
+        this.heading = heading;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.second = second;
+    }
+
+    public AISType135(int imo, String shipname, int shipType, float draught, String callsign, Calendar ETA, String destination, int MMSI, String device) {
+        super(MMSI, device);
+        this.imo = imo;
+        this.shipname = shipname;
+        this.shipType = shipType;
+        this.draught = draught;
+        this.callsign = callsign;
+        this.ETA = ETA;
+        this.destination = destination;
     }
 
     public AISType135(float rot, float cog, float sog, int navigationalStatus, float heading, float latitude, float longitude, int IMO, String name, int shipType, float width, float length, float draught, int electronicPositionDevice, String CallSign, Calendar ETA, String destination, int year, int month, int day, int hour, int minute) {
@@ -153,14 +196,14 @@ public class AISType135 extends AISMessage {
         this.heading = heading;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.IMO = IMO;
-        this.name = name;
+        this.imo = IMO;
+        this.shipname = name;
         this.shipType = shipType;
         this.width = width;
         this.length = length;
         this.draught = draught;
         this.electronicPositionDevice = electronicPositionDevice;
-        this.CallSign = CallSign;
+        this.callsign = CallSign;
         this.ETA = ETA;
         this.destination = destination;
         this.year = year;
@@ -170,14 +213,27 @@ public class AISType135 extends AISMessage {
         this.minute = minute;
     }
 
+    public AISType135(int MMSI, String device,int imo, String shipname, int shipType, float width, float length, float draught, String callsign, Calendar ETA, String destination) {
+        super(MMSI, device);
+        this.imo = imo;
+        this.shipname = shipname;
+        this.shipType = shipType;
+        this.width = width;
+        this.length = length;
+        this.draught = draught;
+        this.callsign = callsign;
+        this.ETA = ETA;
+        this.destination = destination;
+    }
+
     
 
     @Override
     public String toString() {
         DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM");
         StringBuffer sb = new StringBuffer("AISType135{MMSI=" + MMSI
-                + ", IMO = " + IMO
-                + ", NAME = " + name
+                + ", IMO = " + imo
+                + ", NAME = " + shipname
                 + ", STATUS = " + navigationalStatus
                 + ", TYPE = " + shipType
                 + ", LENGTH = " + length
@@ -209,8 +265,8 @@ public class AISType135 extends AISMessage {
     public String toHTML() {
 
         String text = "";
-        if (getName() != null) {
-            text += getName() + "<br/>";
+        if (getShipname() != null) {
+            text += getShipname() + "<br/>";
         } else {
             text += "" + "<br/>";
         }
@@ -242,16 +298,16 @@ public class AISType135 extends AISMessage {
      *
      * @return
      */
-    public String getCallSign() {
-        return CallSign;
+    public String getCallsign() {
+        return callsign;
     }
 
     /**
      *
-     * @param CallSign
+     * @param callsign
      */
-    public void setCallSign(String CallSign) {
-        this.CallSign = CallSign;
+    public void setCallsign(String callsign) {
+        this.callsign = callsign;
     }
 
     /**
@@ -274,16 +330,16 @@ public class AISType135 extends AISMessage {
      *
      * @return
      */
-    public int getIMO() {
-        return IMO;
+    public int getImo() {
+        return imo;
     }
 
     /**
      *
-     * @param IMO
+     * @param imo
      */
-    public void setIMO(int IMO) {
-        this.IMO = IMO;
+    public void setImo(int Imo) {
+        this.imo = Imo;
     }
 
     /**
@@ -466,16 +522,16 @@ public class AISType135 extends AISMessage {
      *
      * @return
      */
-    public String getName() {
-        return name;
+    public String getShipname() {
+        return shipname;
     }
 
     /**
      *
      * @param name
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setShipname(String name) {
+        this.shipname = name;
     }
 
     /**

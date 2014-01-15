@@ -14,12 +14,14 @@
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
+import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Position Report with SOTDMA
+ *  (Self-Organizing Time Division Multiple Access) 
  *
  */
 @XmlRootElement(name = "ais1")
@@ -29,6 +31,12 @@ public class AISType1
 
     public AISType1() {
     }
+ 
+    public AISType1(float rot, float cog, float sog, int navigationalStatus, float heading, float latitude, float longitude, int second, int MMSI, String device) {
+        super(rot, cog, sog, navigationalStatus, heading, latitude, longitude, second, MMSI, device);
+    }
+
+    
 
     /**
      * decodeFrame : decode AIS message of type 1
@@ -50,7 +58,8 @@ public class AISType1
 
     @Override
     public String toString() {
-        return "AISType1{MMSI=" + MMSI
+        return "AISType1{" + "Device = " + device
+                + "MMSI = " + MMSI
                 + ", STATUS = " + navigationalStatus
                 + ", HEAD =" + heading
                 + ", COG = " + cog

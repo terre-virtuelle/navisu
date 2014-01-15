@@ -31,7 +31,39 @@ public class AISType18 extends AISMessage {
     private float trueHeading;
     private float latitude, longitude;
 
+    private int second;
+
+    /**
+     * Get the value of second
+     *
+     * @return the value of second
+     */
+    public int getSecond() {
+        return second;
+    }
+
+    /**
+     * Set the value of second
+     *
+     * @param second new value of second
+     */
+    public void setSecond(int second) {
+        this.second = second;
+    }
+
     public AISType18() {
+    }
+
+    public AISType18(int MMSI, String device, 
+            float sog, float cog, float trueHeading, 
+            float latitude, float longitude, int second) {
+        super(MMSI, device);
+        this.sog = sog;
+        this.cog = cog;
+        this.trueHeading = trueHeading;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.second = second;
     }
 
     /**
@@ -57,7 +89,7 @@ public class AISType18 extends AISMessage {
 
     @Override
     public String toString() {
-        return new String("AISType18{ISMM=" + MMSI + ", HEAD=" + trueHeading + ", COG=" + cog + ", LAT=" + latitude + ", LONG=" + longitude + "}");
+        return new String("AISType18{MMSI = " + MMSI + ", HEAD=" + trueHeading + ", COG=" + cog + ", LAT=" + latitude + ", LONG=" + longitude + "}");
     }
 
     /**

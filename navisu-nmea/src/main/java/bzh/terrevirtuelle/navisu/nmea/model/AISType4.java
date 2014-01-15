@@ -14,8 +14,6 @@
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -28,7 +26,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ais4")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AISType4 extends AISMessage {
+public class AISType4
+        extends AISMessage {
 
     private Calendar date;
     private int year, month, day;
@@ -38,13 +37,20 @@ public class AISType4 extends AISMessage {
     public AISType4() {
     }
 
+    public AISType4(int MMSI, String device, Calendar date, float latitude, float longitude ) {
+        super(MMSI, device);
+                
+        this.date = date;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
     /**
      * decodeFrame : decode AIS message of type 4 (idem message 11)
      *
      */
     @Override
     public void decodeFrame() {
-        // System.out.println("messageAisBinary : " + messageAisBinary);
         if (messageAisBinary.length() == 167) {
             MMSI = binaryToInt(messageAisBinary, 8, 38);
             year = binaryToInt(messageAisBinary, 38, 52);
@@ -61,11 +67,10 @@ public class AISType4 extends AISMessage {
 
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM-yyyy");
-        return "AISType4{ISMM=" + MMSI
-                + ", LAT=" + latitude + ", LONG=" + longitude
-                + ", DATE=" + date != null ? dateFormat.format(date.getTime()) : ""
-                +"}";
+        return "AISType4{MMSI = " + getMMSI()
+                + ", LAT = " + latitude + ", LONG = " + longitude
+                + ", DATE = " +  date.getTime()
+                + "}";
     }
 
     /**

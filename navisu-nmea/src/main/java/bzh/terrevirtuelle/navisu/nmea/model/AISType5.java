@@ -16,6 +16,7 @@ package bzh.terrevirtuelle.navisu.nmea.model;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -32,6 +33,12 @@ public class AISType5 extends AISType135 {
     public AISType5() {
     }
 
+    public AISType5(int MMSI, String device, int imo, String shipname, int shipType, float width, float length, float draught, String callsign, Calendar ETA, String destination) {
+        super(MMSI, device, imo, shipname, shipType, width, length, draught, callsign, ETA, destination);
+    }
+
+   
+
     /**
      * decodeFrame : decode AIS message of type 5
      *
@@ -40,9 +47,9 @@ public class AISType5 extends AISType135 {
     public void decodeFrame() {
         if (messageAisBinary.length() == 425) {
             MMSI = binaryToInt(messageAisBinary, 8, 38);
-            IMO = binaryToInt(messageAisBinary, 40, 70);
-            CallSign = binaryToString(messageAisBinary, 70, 112);
-            name = binaryToString(messageAisBinary, 112, 232);
+            imo = binaryToInt(messageAisBinary, 40, 70);
+            callsign = binaryToString(messageAisBinary, 70, 112);
+            shipname = binaryToString(messageAisBinary, 112, 232);
             shipType = binaryToInt(messageAisBinary, 232, 240);
             destination = binaryToString(messageAisBinary, 302, 422);
             draught = (float) (0.1 * binaryToInt(messageAisBinary, 294, 302));
@@ -89,17 +96,17 @@ public class AISType5 extends AISType135 {
      */
     @Override
     public String toString() {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM");
+      //  DateFormat dateFormat = new SimpleDateFormat("hh:mm dd-MM");
         StringBuilder sb = new StringBuilder();
         String s = "AISType5{MMSI=" + MMSI
-                + ", NAME=" + name
+                + ", NAME=" + shipname
                 + ", TYPE=" + shipType
                 + ", LENGTH=" + length
                 + ", WIDTH=" + width
                 + ", DRAUGHT=" + draught;
         sb.append(s);
         if (ETA != null) {
-            s = ", ETA=" + dateFormat.format(ETA.getTime());
+            s = ", ETA=" + ETA.getTime();
         } else {
             s = ", ETA= ";
         }

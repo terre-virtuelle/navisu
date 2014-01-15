@@ -67,6 +67,11 @@ public class AISMessage
         this.messageAisBinary = messageAisBinary;
     }
 
+    public AISMessage(int MMSI, String device) {
+        super(device);
+        this.MMSI = MMSI;
+    }
+
     @Override
     public String getSentence() {
         return getMessageAis();

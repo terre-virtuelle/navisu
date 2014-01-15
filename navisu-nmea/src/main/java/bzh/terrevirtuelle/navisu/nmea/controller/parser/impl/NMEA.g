@@ -46,6 +46,12 @@ import bzh.terrevirtuelle.navisu.nmea.model.VWR;
 import bzh.terrevirtuelle.navisu.nmea.model.VWT;
 import bzh.terrevirtuelle.navisu.nmea.model.XTE;
 import bzh.terrevirtuelle.navisu.nmea.model.ZDA;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType1;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType3;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType4;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType5;
+import bzh.terrevirtuelle.navisu.nmea.model.AISType18;
+
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;  
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.impl.PrintHandler; 
@@ -102,7 +108,15 @@ import java.util.StringTokenizer;
    protected XTE xte = null;
    protected ZDA zda = null;
    
-      
+   protected AISType1 ais1 = null;
+   protected AISType3 ais3 = null;
+   protected AISType4 ais4 = null;
+   protected AISType5 ais5 = null;
+   protected AISType18 ais18 = null;
+   
+   protected int year;
+   protected int month;
+   protected int day;  
    protected int hours;
    protected int minutes;
    protected int seconds;
@@ -131,7 +145,7 @@ import java.util.StringTokenizer;
    protected GPSSatellite s2;
    protected GPSSatellite s3;
    protected GPSSatellite s4;
-   
+   protected String device;
    /* Default handlers */
    protected Handler handler = new PrintHandler();
    protected Handler aisHandler = new PrintHandler();
@@ -165,6 +179,13 @@ import java.util.StringTokenizer;
         }
         return lonDeg;
    }	
+   
+   private float degConvert(float latlon){
+        float latlonMin = latlon / 10000;
+        float latlonDeg = latlonMin / 60;
+        
+        return latlonDeg;
+   }
    private float ewConvert(float var, String ew){
            if (ew.contains("W")){
             var *= -1;
@@ -1235,8 +1256,8 @@ GPSD_AIS
     	 '"turn":' turn=SIGNED SEP 
     	 '"speed":' speed=NUMBER SEP 
     	 '"accuracy":' accuracy=LETTERS SEP
-    	 '"lon":' lon=SIGNED SEP 
-    	 '"lat":' lat=SIGNED SEP 
+    	 '"lon":' longitude=SIGNED SEP 
+    	 '"lat":' latitude=SIGNED SEP 
     	 '"course":' course=NUMBER SEP
     	 '"heading":' heading=NUMBER SEP
     	 '"second":' second=NUMBER SEP 
@@ -1247,8 +1268,8 @@ GPSD_AIS
     	//Type 4
     	'"timestamp":' timestamp=TIME_STAMP  SEP
     	'"accuracy":' accuracy=LETTERS SEP 
-    	'"lon":' lon=SIGNED SEP 
-    	'"lat":' lat=SIGNED SEP
+    	'"lon":' longitude=SIGNED SEP 
+    	'"lat":' latitude=SIGNED SEP
     	'"epfd":' epfd=NUMBER SEP 
     	'"raim":' raim=LETTERS SEP 
     	'"radio":' radio=NUMBER
@@ -1273,8 +1294,8 @@ GPSD_AIS
     	'"reserved":' reserved=NUMBER* SEP
     	'"speed":' speed=NUMBER SEP 
     	'"accuracy":' accuracy=LETTERS SEP
-    	'"lon":' lon=SIGNED SEP 
-    	'"lat":' lat=SIGNED SEP 
+    	'"lon":' longitude=SIGNED SEP 
+    	'"lat":' latitude=SIGNED SEP 
     	'"course":' course=NUMBER SEP
     	'"heading":' heading=NUMBER SEP
     	'"second":' second=NUMBER SEP  
@@ -1299,77 +1320,87 @@ GPSD_AIS
     	)
     	('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS)*
     	{
-	System.out.print("GPSD AIS sentence : " + "device : " + dev.getText() + " " +
-	"type : " + type.getText() + " " +
-	"repeat : " + repeat.getText() + " " +
-	"mmsi : " + mmsi.getText() + " " +
-	"scaled : " + scaled.getText());
-	switch(type.getText()){
+    	switch(type.getText()){
 	case "1" :
 	case "3" :
-	  System.out.print(" status : " + status.getText());
-	  System.out.print(" turn : " + turn.getText());
-	  System.out.print(" speed : " + speed.getText());
-	  System.out.print(" accuracy : " + accuracy.getText());
-	  System.out.print(" lon : " + lon.getText());
-	  System.out.print(" lat : " + lat.getText());
-	  System.out.print(" course : " + course.getText());
-	  System.out.print(" heading : " + heading.getText());
-	  System.out.print(" second : " + second.getText());
-	  System.out.print(" maneuvrer : " + maneuvrer.getText());
-	  System.out.print(" raim : " + raim.getText());
-	  System.out.println(" radio : " + radio.getText());
-	  break;
-	  case "4" :
-	  System.out.print(" timestamp : " + timestamp.getText());
-	  System.out.print(" accuracy : " + accuracy.getText());
-	  System.out.print(" lon : " + lon.getText());
-	  System.out.print(" lat : " + lat.getText());
-	  System.out.print(" epfd : " + epfd.getText());
-	  System.out.print(" raim : " + raim.getText());
-	  System.out.println(" radio : " + radio.getText());
-	  break;
-	  case "5" :
-	  System.out.print(" imo : " + imo.getText());
-	  System.out.print(" ais_version : " + ais_version.getText());
-	  System.out.print(" callsign : " + callsign.getText());
-	  System.out.print(" shipname : " + shipname.getText());
-	  System.out.print(" shiptype : " + shiptype.getText());
-	  System.out.print(" to_bow : " + to_bow.getText());
-	  System.out.print(" to_stern : " + to_stern.getText());
-	  System.out.print(" to_starboard : " + to_starboard.getText());
-	  System.out.print(" epfd : " + epfd.getText());
-	  System.out.print(" eta : " + eta.getText());
-	  System.out.print(" draught : " + draught.getText());
-	  System.out.print(" destination : " + destination.getText());
-	  System.out.println(" dte : " + dte.getText());
-	  break;
-	  case "18" :
-	  System.out.print(" reserved : " + reserved.getText());
-	  System.out.print(" speed : " + speed.getText());
-	  System.out.print(" accuracy : " + accuracy.getText());
-	  System.out.print(" lon : " + lon.getText());
-	  System.out.print(" lat : " + lat.getText());
-	  System.out.print(" heading : " + heading.getText());
-	  System.out.print(" second : " + second.getText());
-	  System.out.print(" regional : " + regional.getText());
-	  System.out.print(" cs : " + cs.getText());
-	  System.out.print(" display : " + display.getText());
-	  System.out.print(" dsc : " + dsc.getText());
-	  System.out.print(" band : " + band.getText());
-	  System.out.print(" msg22 : " + msg22.getText());
-	  System.out.print(" raim : " + raim.getText());
-	  System.out.println(" radio : " + radio.getText());
-	  break;
-	  case "24" :
-	  System.out.print(" shipname : " + shipname.getText());
-	  System.out.print(" shiptype : " + shiptype.getText());
-	  System.out.print(" vendorid : " + vendorid.getText());
-	  System.out.print(" callsign : " + callsign.getText());
-	  System.out.print(" to_bow : " + to_bow.getText());
-	  System.out.print(" to_stern : " + to_stern.getText());
-	  System.out.println(" to_starboard : " + to_starboard.getText());
+	  if(dev != null && mmsi != null && status != null && turn != null 
+	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
+	     
+	     ais1 = new AISType1(new Float(turn.getText()), new Float(course.getText()), new Float(speed.getText()),
+	                         new Integer(status.getText()), new Float(heading.getText()), 
+	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
+	                         new Integer(second.getText()), new Integer(mmsi.getText()), dev.getText()); 
+	  System.out.println(ais1);
 	  }
+           break;
+	case "4" :
+	  if(dev != null && mmsi != null && timestamp != null && longitude != null && latitude != null){
+	  
+	    String date = timestamp.getText();
+	    String [] tmp0 = date.split("\"");
+	    String [] tmp1 = tmp0[1].split("T");
+	    
+	    String [] tmp2 = tmp1[0].split("-");
+	    year = new Integer(tmp2[0]);
+	    month = new Integer(tmp2[1]);
+	    day = new Integer(tmp2[2]);
+	    String [] tmp3 = tmp1[1].split(":");
+	    hours = new Integer(tmp3[0]);
+	    minutes  = new Integer(tmp3[1]);
+	    seconds = new Integer(tmp3[2].substring(0, 2));
+	  
+	    ais4 = new AISType4(new Integer(mmsi.getText()), device,
+	                         new GregorianCalendar(year, month, day, hours, minutes, seconds),
+	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText()))
+	                        );  
+	                                         
+	    System.out.println(ais4);
+	 }
+	   break;
+	case "5" :
+	  if(dev != null && mmsi != null && imo != null && callsign != null && shipname != null &&
+	  to_bow != null && to_port != null && to_starboard != null && eta != null && draught != null && destination != null){
+
+	  String etaTmp = eta.getText();
+	  String [] tmp0 = etaTmp.split("\"");
+	  String [] tmp1 = tmp0[1].split("T");
+	  String [] tmp2 = tmp1[0].split("-");
+	  month = new Integer(tmp2[0]);
+	  day = new Integer(tmp2[1]);
+	  String [] tmp3 = tmp1[1].split(":");
+	  hours = new Integer(tmp3[0]);
+	  minutes  = new Integer(tmp3[1].substring(0, 2));
+
+	  date = new GregorianCalendar();
+	  date.set(Calendar.MONTH, month);
+	  date.set(Calendar.DATE, day);
+	  date.set(Calendar.HOUR, hours);
+	  date.set(Calendar.MINUTE, minutes);
+	  
+	  
+	  ais5 = new AISType5(new Integer(mmsi.getText()), device, 
+	                        new Integer(imo.getText()), shipname.getText(), new Integer(shiptype.getText()),
+	                        new Integer(to_starboard.getText())*2, new Integer(to_bow.getText())+ new Integer(to_stern.getText()),
+	                        new Integer(draught.getText()), callsign.getText(), date, destination.getText());
+	                        
+	  System.out.println(ais5);
+	  }
+	  
+	   break;
+	case "18":
+          if(dev != null && mmsi != null && speed != null && longitude != null && latitude != null &&
+             course != null && heading != null && second != null){
+              
+           ais18 = new AISType18(new Integer(mmsi.getText()), dev.getText(),
+                   new Float(speed.getText()), new Float(course.getText()), new Float(heading.getText()), 
+                   degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
+                   new Integer(second.getText()));
+                   
+            System.out.println(ais18);                        
+         }
+    	}
+    	
+    	
 	}
     	;
 GPSD_DEVICE 
