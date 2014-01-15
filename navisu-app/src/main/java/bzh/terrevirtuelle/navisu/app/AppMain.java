@@ -9,8 +9,6 @@ import bzh.terrevirtuelle.navisu.app.drivers.grib.GribServices;
 import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
-
-import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 
 import java.io.FileInputStream;
@@ -21,6 +19,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
+import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -123,16 +123,20 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         //dataServerServices.open();// Test avec les parametres dans properties/server.properties
         //dataServerServices.openSerialPort(); // idem
+         
+        /* Test connexion Gpsd */
+        dataServerServices.openGpsd("sinagot.net", 2947);
+        
         /* Test connexion fichier */
-       // dataServerServices.openFile("data/nmea/gps.txt");
-       // dataServerServices.openFile("data/ais/ais.txt");
-        dataServerServices.openFile("data/gpsd/gpsd.txt");
-        // dataServerServices.openFile();// Test avec les parametres dans properties/server.properties
+       // dataServerServices.openFile("data/nmea/gps.txt"); //NMEA0183
+       // dataServerServices.openFile("data/ais/ais.txt");  //AIS
+       // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
+       // dataServerServices.openFile();// Test avec les parametres dans properties/server.properties
 
         /* Test instanciation d'un client */
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         // nmeaClientServices.open();// Test avec les parametres dans properties/client.properties
-        nmeaClientServices.open("localhost", 8080, 100);
+        nmeaClientServices.open("localhost", 8080, 500);
         nmeaClientServices.request();
         //
         // END TESTS

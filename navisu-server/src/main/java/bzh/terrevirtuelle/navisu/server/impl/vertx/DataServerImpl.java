@@ -7,6 +7,8 @@ import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.Reader;
 import bzh.terrevirtuelle.navisu.server.impl.file.FileReader;
 import bzh.terrevirtuelle.navisu.server.impl.file.impl.FileReaderImpl;
+import bzh.terrevirtuelle.navisu.server.impl.gpsd.NetReader;
+import bzh.terrevirtuelle.navisu.server.impl.gpsd.impl.NetReaderImpl;
 import bzh.terrevirtuelle.navisu.server.impl.serial.SerialPortReader;
 import bzh.terrevirtuelle.navisu.server.nmea.parser.NmeaStringParser;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
@@ -43,6 +45,7 @@ public class DataServerImpl
     private Marshaller marshaller;
     private SerialPortReader serialPortReader;
     private FileReader fileReader;
+    private NetReader netReader;
     private String fileName;
     private int port;
     private String hostName;
@@ -124,6 +127,13 @@ public class DataServerImpl
             java.util.logging.Logger.getLogger(DataServer.class.getName()).log(Level.SEVERE, null, ex);
         }
         return stringWriter.toString();
+    }
+
+    @Override
+    public void openGpsd(String hostname, int port) {
+        netReader = new NetReaderImpl(readerIndex, vertx, hostname, port);
+        readers.add(netReader);
+        initEventBus();
     }
 
     @Override

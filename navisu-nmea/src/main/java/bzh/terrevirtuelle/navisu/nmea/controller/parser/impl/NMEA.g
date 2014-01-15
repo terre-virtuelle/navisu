@@ -1318,7 +1318,7 @@ GPSD_AIS
     	'"to_port":' to_port=NUMBER SEP
     	'"to_starboard":' to_starboard=NUMBER 
     	)
-    	('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS)*
+         ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS)*
     	{
     	switch(type.getText()){
 	case "1" :
