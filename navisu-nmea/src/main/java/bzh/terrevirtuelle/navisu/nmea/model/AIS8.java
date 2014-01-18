@@ -105,7 +105,7 @@ public class AIS8
         this.seastate = seastate;
         this.watertemp = watertemp;
         this.salinity = salinity;
-        this.ice = ice;
+        this.ice = ice; 
     }
 
     /**
