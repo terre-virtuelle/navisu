@@ -125,7 +125,9 @@ public class AppMain extends Application {
         //dataServerServices.openSerialPort(); // idem
          
         /* Test connexion Gpsd */
-        dataServerServices.openGpsd("sinagot.net", 2947);
+        //dataServerServices.openGpsd("sinagot.net", 2947);
+        dataServerServices.openGpsd("fridu.net", 2947);
+        
         
         /* Test connexion fichier */
        // dataServerServices.openFile("data/nmea/gps.txt"); //NMEA0183

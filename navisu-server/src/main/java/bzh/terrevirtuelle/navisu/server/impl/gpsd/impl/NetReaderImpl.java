@@ -27,7 +27,7 @@ public class NetReaderImpl
                 if (asyncResult.succeeded()) {
                     NetSocket socket = asyncResult.result();
                     socket.dataHandler((Buffer buffer) -> {
-                        // System.out.print("Net client receiving: " + buffer);
+                       //  System.out.print(buffer);
                         vertx.eventBus().send("comm-address" + index, buffer.toString());
                     });
                     socket.write(new Buffer("?WATCH={\"enable\":true,\"json\":true};"));

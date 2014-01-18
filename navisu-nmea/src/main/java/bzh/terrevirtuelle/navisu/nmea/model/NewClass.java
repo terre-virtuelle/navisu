@@ -12,7 +12,7 @@ package bzh.terrevirtuelle.navisu.nmea.model;
 public class NewClass {
 
     public NewClass() {
-        AISType1 ais1 = new AISType1();
+        AIS1 ais1 = new AIS1();
         ais1.setDevice(null);
         ais1.setMMSI(0);
         ais1.setNavigationalStatus(0);
@@ -24,14 +24,14 @@ public class NewClass {
         ais1.setHeading(0.0f);
         ais1.setSecond(0);
 
-        AISType4 ais4 = new AISType4();
+        AIS4 ais4 = new AIS4();
         ais4.setDevice(null);
         ais4.setMMSI(0);
         ais4.setDate(null);
         ais4.setLatitude(0.0f);
         ais4.setLongitude(0.0f);
         
-        AISType5 ais5 = new AISType5();
+        AIS5 ais5 = new AIS5();
         ais5.setDevice(null);
         ais5.setMMSI(0);
         ais5.setImo(0);
@@ -44,7 +44,7 @@ public class NewClass {
         ais5.setDraught(0.0f);
         ais5.setDestination(null);
         
-        AISType18 ais18 = new AISType18();
+        AIS18 ais18 = new AIS18();
         ais18.setSog(0);
         ais18.setLatitude(0.0f);
         ais18.setLongitude(0.0f);

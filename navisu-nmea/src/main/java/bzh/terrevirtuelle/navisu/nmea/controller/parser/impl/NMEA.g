@@ -1290,6 +1290,61 @@ GPSD_AIS
     	'"destination":'  destination=NAME  SEP 
     	'"dte":' dte=NUMBER
     	|
+    	//Type 6
+    	'"seqno":' NUMBER  SEP
+    	'"dest_mmsi":' NUMBER SEP 
+    	'"retransmit":' LETTERS SEP 
+    	'"dac":' NUMBER SEP
+    	'"fid":' NUMBER SEP 
+    	'"off_pos":' LETTERS SEP 
+    	'"alarm":' LETTERS SEP 
+    	'"stat_ext":' NUMBER SEP 
+    	'"ana_int":' NUMBER SEP 
+    	'"ana_ext1":' NUMBER SEP
+    	'"ana_ext2":' NUMBER SEP 
+    	'"racon":' NUMBER SEP
+    	'"light":' NUMBER 
+    	|
+    	//Type 8
+    	'"dac":' dac=NUMBER  SEP
+    	'"fid":' fid=NUMBER  SEP
+    	'"lat":' latitude=SIGNED SEP 
+    	'"lon":' longitude=SIGNED SEP 
+    	'"accuracy":' accuracy=LETTERS SEP
+    	'"timestamp":' timestamp=TIME_STAMP  SEP
+    	'"wspeed":' wspeed=NUMBER  SEP
+    	'"wgust":' wgust=NUMBER  SEP
+    	'"wdir":' wdir=NUMBER  SEP
+    	'"wgustdir":' wgustdir=NUMBER  SEP
+    	'"humidity":' humidity=NUMBER  SEP
+    	'"airtemp":' airtemp=SIGNED SEP
+    	'"dewpoint":' dewpoint=SIGNED SEP
+    	'"pressure":' pressure=NUMBER  SEP
+    	'"pressuretend":' pressuretend=NUMBER  SEP
+    	'"visgreater":' visgreater=LETTERS SEP
+    	'"visibility":' visibility=NUMBER  SEP
+    	'"waterlevel":' waterlevel=SIGNED SEP
+    	'"leveltrend":' leveltrend=NUMBER  SEP
+    	'"cspeed":' cspeed=NUMBER  SEP
+    	'"cdir":' cdir=NUMBER  SEP
+    	'"cspeed2":' cspeed2=NUMBER  SEP
+    	'"cdir2":' cdir2=NUMBER  SEP
+    	'"cdepth2":' cdepth2=NUMBER  SEP
+    	'"cspeed3":' cspeed3=NUMBER  SEP
+    	'"cdir3":' cdir3=NUMBER  SEP 	
+    	'"cdepth3":' (cdepth3=NUMBER |'\n') SEP 	
+    	'"waveheight":' waveheight=NUMBER  SEP
+    	'"waveperiod":' waveperiod=NUMBER  SEP
+    	'"wavedir":' wavedir=NUMBER  SEP
+    	'"swellheight":' swellheight=NUMBER  SEP
+    	'"swellperiod":' swellperiod=NUMBER  SEP
+    	'"swelldir":' swelldir=NUMBER  SEP
+    	'"seastate":' seastate=NUMBER  SEP
+    	'"watertemp":' watertemp=SIGNED SEP
+    	'"preciptype":' preciptype=NUMBER  SEP
+    	'"salinity":' salinity=NUMBER  SEP
+    	'"ice":' ice=NUMBER 
+    	|
     	//Type 18
     	'"reserved":' reserved=NUMBER* SEP
     	'"speed":' speed=NUMBER SEP 
@@ -1318,7 +1373,8 @@ GPSD_AIS
     	'"to_port":' to_port=NUMBER SEP
     	'"to_starboard":' to_starboard=NUMBER 
     	)
-         ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS)*
+         ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN)*
+         
     	{
     	switch(type.getText()){
 	case "1" :
@@ -1386,6 +1442,9 @@ GPSD_AIS
 	  System.out.println(ais5);
 	  }
 	  
+	   break;
+	case "8" :
+	   System.out.println("ais8");
 	   break;
 	case "18":
           if(dev != null && mmsi != null && speed != null && longitude != null && latitude != null &&
