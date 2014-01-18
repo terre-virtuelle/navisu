@@ -46,11 +46,13 @@ import bzh.terrevirtuelle.navisu.nmea.model.VWR;
 import bzh.terrevirtuelle.navisu.nmea.model.VWT;
 import bzh.terrevirtuelle.navisu.nmea.model.XTE;
 import bzh.terrevirtuelle.navisu.nmea.model.ZDA;
-import bzh.terrevirtuelle.navisu.nmea.model.AISType1;
-import bzh.terrevirtuelle.navisu.nmea.model.AISType3;
-import bzh.terrevirtuelle.navisu.nmea.model.AISType4;
-import bzh.terrevirtuelle.navisu.nmea.model.AISType5;
-import bzh.terrevirtuelle.navisu.nmea.model.AISType18;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS8;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS18;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS24;
 
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;  
@@ -108,11 +110,13 @@ import java.util.StringTokenizer;
    protected XTE xte = null;
    protected ZDA zda = null;
    
-   protected AISType1 ais1 = null;
-   protected AISType3 ais3 = null;
-   protected AISType4 ais4 = null;
-   protected AISType5 ais5 = null;
-   protected AISType18 ais18 = null;
+   protected AIS1 ais1 = null;
+   protected AIS3 ais3 = null;
+   protected AIS4 ais4 = null;
+   protected AIS5 ais5 = null;
+   protected AIS8 ais8 = null;
+   protected AIS18 ais18 = null;
+   protected AIS24 ais24 = null;
    
    protected int year;
    protected int month;
@@ -1382,11 +1386,12 @@ GPSD_AIS
 	  if(dev != null && mmsi != null && status != null && turn != null 
 	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
 	     
-	     ais1 = new AISType1(new Float(turn.getText()), new Float(course.getText()), new Float(speed.getText()),
+	     ais1 = new AIS1(new Float(turn.getText()), new Float(course.getText()), new Float(speed.getText()),
 	                         new Integer(status.getText()), new Float(heading.getText()), 
 	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
 	                         new Integer(second.getText()), new Integer(mmsi.getText()), dev.getText()); 
-	  System.out.println(ais1);
+	  //System.out.println(ais1);
+	   aisHandler.doIt(ais1);
 	  }
            break;
 	case "4" :
@@ -1405,7 +1410,7 @@ GPSD_AIS
 	    minutes  = new Integer(tmp3[1]);
 	    seconds = new Integer(tmp3[2].substring(0, 2));
 	  
-	    ais4 = new AISType4(new Integer(mmsi.getText()), device,
+	    ais4 = new AIS4(new Integer(mmsi.getText()), device,
 	                         new GregorianCalendar(year, month, day, hours, minutes, seconds),
 	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText()))
 	                        );  
@@ -1434,7 +1439,7 @@ GPSD_AIS
 	  date.set(Calendar.MINUTE, minutes);
 	  
 	  
-	  ais5 = new AISType5(new Integer(mmsi.getText()), device, 
+	  ais5 = new AIS5(new Integer(mmsi.getText()), device, 
 	                        new Integer(imo.getText()), shipname.getText(), new Integer(shiptype.getText()),
 	                        new Integer(to_starboard.getText())*2, new Integer(to_bow.getText())+ new Integer(to_stern.getText()),
 	                        new Integer(draught.getText()), callsign.getText(), date, destination.getText());
@@ -1450,7 +1455,7 @@ GPSD_AIS
           if(dev != null && mmsi != null && speed != null && longitude != null && latitude != null &&
              course != null && heading != null && second != null){
               
-           ais18 = new AISType18(new Integer(mmsi.getText()), dev.getText(),
+           ais18 = new AIS18(new Integer(mmsi.getText()), dev.getText(),
                    new Float(speed.getText()), new Float(course.getText()), new Float(heading.getText()), 
                    degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
                    new Integer(second.getText()));
