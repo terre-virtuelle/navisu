@@ -25,9 +25,6 @@ public class ServerMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // initialize logging
-        LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
-
         final ComponentManager componentManager = ComponentManager.componentManager;
 
         // deploy components
@@ -40,8 +37,8 @@ public class ServerMain extends Application {
         nmeaServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         nmeaServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // Test avec les parametres de comm dans properties/nmea.properties
-       //  nmeaServerServices.init();
-       //  nmeaServerServices.openSerialPort();
+        //  nmeaServerServices.init();
+        //  nmeaServerServices.openSerialPort();
         // nmeaServerServices.openFile();
 
         Button button = new Button("Stop",

@@ -31,9 +31,7 @@ public class ClientMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // initialize logging
-        LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
-
+       
         final ComponentManager componentManager = ComponentManager.componentManager;
 
         // deploy components
