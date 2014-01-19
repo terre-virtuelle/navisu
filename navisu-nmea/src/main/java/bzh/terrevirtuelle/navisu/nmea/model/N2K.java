@@ -12,12 +12,12 @@ package bzh.terrevirtuelle.navisu.nmea.model;
 public class N2K extends NMEA {
 
     private int pgn;
-    private int sid;
+    private String sid;
 
     public N2K() {
     }
 
-    public N2K(int pgn, String source, int sid) {
+    public N2K(int pgn, String source, String sid) {
         super(source);
         this.pgn = pgn;
         this.sid = sid;
@@ -33,7 +33,7 @@ public class N2K extends NMEA {
      *
      * @return the value of sid
      */
-    public int getSid() {
+    public String getSid() {
         return sid;
     }
 
@@ -42,7 +42,7 @@ public class N2K extends NMEA {
      *
      * @param sid new value of sid
      */
-    public void setSid(int sid) {
+    public void setSid(String sid) {
         this.sid = sid;
     }
 
@@ -71,4 +71,12 @@ public class N2K extends NMEA {
     public void setSource(String source) {
         setDevice(source);
     }
+
+    @Override
+    public String toString() {
+        return "N2K{" + "pgn=" + pgn + ", sid=" + sid + '}';
+    }
+
+   
+    
 }

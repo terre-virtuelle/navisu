@@ -29,7 +29,7 @@ public class SystemTime
         this.date = date;
     }
 
-    public SystemTime(int pgn, String source, int sid, Calendar date) {
+    public SystemTime(int pgn, String source, String sid, Calendar date) {
         super(pgn, source, sid);
         this.date = date;
     }
@@ -50,6 +50,11 @@ public class SystemTime
      */
     public void setDate(Calendar date) {
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "SystemTime{" + "date=" + date + '}';
     }
 
 }

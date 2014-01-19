@@ -87,4 +87,9 @@ public class NMEA {
         return result.equals(check);
     }
 
+    @Override
+    public String toString() {
+        return "NMEA{" + "device=" + device + ", sentence=" + sentence + '}';
+    }
+
 }

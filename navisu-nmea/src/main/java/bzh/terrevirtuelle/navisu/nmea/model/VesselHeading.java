@@ -20,8 +20,42 @@ public class VesselHeading
 
     private float headingSensorReading;
     private float deviation;
-
     private float variation;
+    private int headingSensorReference;
+
+    public VesselHeading() {
+    }
+
+    public VesselHeading(int pgn, String source, String sid) {
+        super(pgn, source, sid);
+    }
+
+    public VesselHeading(int pgn, String source, String sid, float headingSensorReading, float deviation, float variation, int headingSensorReference) {
+        super(pgn, source, sid);
+        this.headingSensorReading = headingSensorReading;
+        this.deviation = deviation;
+        this.variation = variation;
+        this.headingSensorReference = headingSensorReference;
+    }
+
+    
+    /**
+     * Get the value of headingSensorReference
+     *
+     * @return the value of headingSensorReference
+     */
+    public int getHeadingSensorReference() {
+        return headingSensorReference;
+    }
+
+    /**
+     * Set the value of headingSensorReference
+     *
+     * @param headingSensorReference new value of headingSensorReference
+     */
+    public void setHeadingSensorReference(int headingSensorReference) {
+        this.headingSensorReference = headingSensorReference;
+    }
 
     /**
      * Get the value of variation
@@ -59,10 +93,6 @@ public class VesselHeading
         this.deviation = deviation;
     }
 
-    public VesselHeading(int pgn, String source, int sid) {
-        super(pgn, source, sid);
-    }
-
     /**
      * Get the value of headingSensorReading
      *
@@ -79,6 +109,11 @@ public class VesselHeading
      */
     public void setHeadingSensorReading(float headingSensorReading) {
         this.headingSensorReading = headingSensorReading;
+    }
+
+    @Override
+    public String toString() {
+        return "VesselHeading{" + "headingSensorReading=" + headingSensorReading + ", deviation=" + deviation + ", variation=" + variation + ", headingSensorReference=" + headingSensorReference + '}';
     }
 
 }
