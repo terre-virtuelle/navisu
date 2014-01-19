@@ -105,7 +105,7 @@ public class GGA
     /**
      * Set the value of utc
      *
-     * @param utc new value of utc
+     * @param date
      */
     public void setDate(Calendar date) {
         this.utc = date;

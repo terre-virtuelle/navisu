@@ -1415,7 +1415,8 @@ GPSD_AIS
 	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText()))
 	                        );  
 	                                         
-	    System.out.println(ais4);
+	    //System.out.println(ais4);
+	    aisHandler.doIt(ais4);
 	 }
 	   break;
 	case "5" :
@@ -1444,7 +1445,8 @@ GPSD_AIS
 	                        new Integer(to_starboard.getText())*2, new Integer(to_bow.getText())+ new Integer(to_stern.getText()),
 	                        new Integer(draught.getText()), callsign.getText(), date, destination.getText());
 	                        
-	  System.out.println(ais5);
+	  //System.out.println(ais5);
+	  aisHandler.doIt(ais5);
 	  }
 	  
 	   break;
@@ -1460,7 +1462,8 @@ GPSD_AIS
                    degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
                    new Integer(second.getText()));
                    
-            System.out.println(ais18);                        
+            //System.out.println(ais18); 
+            aisHandler.doIt(ais18);                       
          }
     	}
     	

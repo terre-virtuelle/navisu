@@ -92,53 +92,53 @@ import java.util.Set;
 public class NMEAEventHandler
         extends Handler {
 
-    private Map<Class, Class> nmeaServices = null;
+    private Map<Class, Class> nmeaEvents = null;
     private Map<Class, Collection< ? extends NMEAEvent>> nmeaServiceProviders = null;
 
     public NMEAEventHandler() {
-        nmeaServices = new HashMap<>();
-        nmeaServices.put(AAM.class, AAMEvent.class);
-        nmeaServices.put(APB.class, APBEvent.class);
-        nmeaServices.put(BEC.class, BECEvent.class);
-        nmeaServices.put(BOD.class, BODEvent.class);
-        nmeaServices.put(BWC.class, BWCEvent.class);
-        nmeaServices.put(BWR.class, BWREvent.class);
-        nmeaServices.put(DBK.class, DBKEvent.class);
-        nmeaServices.put(DBS.class, DBSEvent.class);
-        nmeaServices.put(DBT.class, DBTEvent.class);
-        nmeaServices.put(DPT.class, DPTEvent.class);
-        nmeaServices.put(GGA.class, GGAEvent.class);
-        nmeaServices.put(GLL.class, GLLEvent.class);
-        nmeaServices.put(GSA.class, GSAEvent.class);
-        nmeaServices.put(GSV.class, GSVEvent.class);
-        nmeaServices.put(HDG.class, HDGEvent.class);
-        nmeaServices.put(HDM.class, HDMevent.class);
-        nmeaServices.put(HDT.class, HDTEvent.class);
-        nmeaServices.put(MSK.class, MSKevent.class);
-        nmeaServices.put(MTA.class, MTAEvent.class);
-        nmeaServices.put(MTW.class, MTWEvent.class);
-        nmeaServices.put(MWD.class, MWDevent.class);
-        nmeaServices.put(MWV.class, MWVEvent.class);
-        nmeaServices.put(NMEA.class, NMEAEvent.class);
-        nmeaServices.put(RMB.class, RMBEvent.class);
-        nmeaServices.put(RMC.class, RMCEvent.class);
-        nmeaServices.put(RMT.class, RMTEvent.class);
-        nmeaServices.put(RSD.class, RSDEvent.class);
-        nmeaServices.put(RTE.class, RTEEvent.class);
-        nmeaServices.put(VBW.class, VBWEvent.class);
-        nmeaServices.put(VHW.class, VHWevent.class);
-        nmeaServices.put(VLW.class, VLWEvent.class);
-        nmeaServices.put(VPW.class, VPWEvent.class);
-        nmeaServices.put(VTG.class, VTGEvent.class);
-        nmeaServices.put(VWR.class, VWREvent.class);
-        nmeaServices.put(VWT.class, VWTEvent.class);
-        nmeaServices.put(XTE.class, XTEEvent.class);
-        nmeaServices.put(ZDA.class, ZDAEvent.class);
+        nmeaEvents = new HashMap<>();
+        nmeaEvents.put(AAM.class, AAMEvent.class);
+        nmeaEvents.put(APB.class, APBEvent.class);
+        nmeaEvents.put(BEC.class, BECEvent.class);
+        nmeaEvents.put(BOD.class, BODEvent.class);
+        nmeaEvents.put(BWC.class, BWCEvent.class);
+        nmeaEvents.put(BWR.class, BWREvent.class);
+        nmeaEvents.put(DBK.class, DBKEvent.class);
+        nmeaEvents.put(DBS.class, DBSEvent.class);
+        nmeaEvents.put(DBT.class, DBTEvent.class);
+        nmeaEvents.put(DPT.class, DPTEvent.class);
+        nmeaEvents.put(GGA.class, GGAEvent.class);
+        nmeaEvents.put(GLL.class, GLLEvent.class);
+        nmeaEvents.put(GSA.class, GSAEvent.class);
+        nmeaEvents.put(GSV.class, GSVEvent.class);
+        nmeaEvents.put(HDG.class, HDGEvent.class);
+        nmeaEvents.put(HDM.class, HDMevent.class);
+        nmeaEvents.put(HDT.class, HDTEvent.class);
+        nmeaEvents.put(MSK.class, MSKevent.class);
+        nmeaEvents.put(MTA.class, MTAEvent.class);
+        nmeaEvents.put(MTW.class, MTWEvent.class);
+        nmeaEvents.put(MWD.class, MWDevent.class);
+        nmeaEvents.put(MWV.class, MWVEvent.class);
+        nmeaEvents.put(NMEA.class, NMEAEvent.class);
+        nmeaEvents.put(RMB.class, RMBEvent.class);
+        nmeaEvents.put(RMC.class, RMCEvent.class);
+        nmeaEvents.put(RMT.class, RMTEvent.class);
+        nmeaEvents.put(RSD.class, RSDEvent.class);
+        nmeaEvents.put(RTE.class, RTEEvent.class);
+        nmeaEvents.put(VBW.class, VBWEvent.class);
+        nmeaEvents.put(VHW.class, VHWevent.class);
+        nmeaEvents.put(VLW.class, VLWEvent.class);
+        nmeaEvents.put(VPW.class, VPWEvent.class);
+        nmeaEvents.put(VTG.class, VTGEvent.class);
+        nmeaEvents.put(VWR.class, VWREvent.class);
+        nmeaEvents.put(VWT.class, VWTEvent.class);
+        nmeaEvents.put(XTE.class, XTEEvent.class);
+        nmeaEvents.put(ZDA.class, ZDAEvent.class);
 
         nmeaServiceProviders = new HashMap<>();
-        Set<Class> keySet = nmeaServices.keySet();
+        Set<Class> keySet = nmeaEvents.keySet();
         for (Class claze : keySet) {
-          //  nmeaServiceProviders.put(claze, Lookup.getDefault().lookupAll(nmeaServices.get(claze)));
+          //  nmeaServiceProviders.put(claze, Lookup.getDefault().lookupAll(nmeaEvents.get(claze)));
         }
     }
 
@@ -147,7 +147,7 @@ public class NMEAEventHandler
         Collection<? extends NMEAEvent> providers;
         providers = nmeaServiceProviders.get(nmea.getClass());
         for (NMEAEvent c : providers) {
-            c.update(nmea); 
+            //c.update(nmea); 
         }
     }
 }

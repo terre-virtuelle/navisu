@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.client.nmea.impl.vertx;
 
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClient;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
+import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.impl.EventProducerImpl;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.nmea.model.Sentences;
 import java.io.FileInputStream;
@@ -20,6 +21,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.SubComponent;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.VertxFactory;
 import org.vertx.java.core.buffer.Buffer;
@@ -40,8 +42,11 @@ public class NmeaClientImpl
     private Unmarshaller unmarshaller = null;
     private String hostName;
     private int port;
-    //  private int i = 0;
     private int period;
+    private boolean xml = false;
+
+    @SubComponent
+    protected EventProducerImpl eventProducer;
 
     @Override
     public void componentInitiated() {
@@ -89,8 +94,11 @@ public class NmeaClientImpl
                     websocket.dataHandler((Buffer data) -> {
                         StringBuilder stringBuilder = new StringBuilder(data.getString(0, data.length()));
                         try {
-                            // response(stringBuilder); //xml data
-                            sentences = (Sentences) unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())));
+                            if (xml == true) {
+                               response(stringBuilder); //xml data
+                            } else {
+                                sentences = (Sentences) unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())));
+                            }
                             response(sentences);
                         } catch (JAXBException ex) {
                             System.out.println(ex);
@@ -107,6 +115,12 @@ public class NmeaClientImpl
         });
     }
 
+    @Override
+    public void requestXML() {
+        xml = true;
+        request();
+    }
+
     private void response(Sentences sentences) {
         display();
     }
@@ -117,7 +131,8 @@ public class NmeaClientImpl
             System.out.println(n);
         });
     }
-    private void response(StringBuilder stringBuilder){
+
+    private void response(StringBuilder stringBuilder) {
         System.out.println(stringBuilder);
     }
 }

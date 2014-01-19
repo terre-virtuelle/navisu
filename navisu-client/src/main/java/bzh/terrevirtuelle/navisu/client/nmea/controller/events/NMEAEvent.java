@@ -4,14 +4,20 @@
  */
 package bzh.terrevirtuelle.navisu.client.nmea.controller.events;
 
-
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import org.capcaval.c3.component.ComponentEvent;
 
 /**
  *
  * @author Serge
  */
-public interface NMEAEvent {
+public interface NMEAEvent
+        extends ComponentEvent {
 
-    public <T extends NMEA> void update(T data);
+    /**
+     *
+     * @param <T>
+     * @param data
+     */
+    public <T extends NMEA> void notifyNmeaMessageChanged(T data);
 }
