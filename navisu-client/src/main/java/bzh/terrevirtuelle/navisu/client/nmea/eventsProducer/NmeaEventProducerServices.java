@@ -12,7 +12,7 @@ import org.capcaval.c3.component.ComponentService;
  *
  * @author Serge
  */
-public interface EventProducerServices 
+public interface NmeaEventProducerServices 
 extends ComponentService{
     
 }

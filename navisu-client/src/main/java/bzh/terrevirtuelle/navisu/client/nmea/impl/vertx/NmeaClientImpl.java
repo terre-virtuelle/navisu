@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.client.nmea.impl.vertx;
 
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClient;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
-import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.impl.EventProducerImpl;
+import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.impl.NmeaEventProducerImpl;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.nmea.model.Sentences;
 import java.io.FileInputStream;
@@ -46,7 +46,7 @@ public class NmeaClientImpl
     private boolean xml = false;
 
     @SubComponent
-    protected EventProducerImpl eventProducer;
+    protected NmeaEventProducerImpl eventProducer;
 
     @Override
     public void componentInitiated() {
@@ -57,6 +57,7 @@ public class NmeaClientImpl
         } catch (IOException | JAXBException ex) {
             java.util.logging.Logger.getLogger(NmeaClientImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        eventProducer.init();
     }
 
     @Override
@@ -95,7 +96,7 @@ public class NmeaClientImpl
                         StringBuilder stringBuilder = new StringBuilder(data.getString(0, data.length()));
                         try {
                             if (xml == true) {
-                               response(stringBuilder); //xml data
+                                response(stringBuilder); //xml data
                             } else {
                                 sentences = (Sentences) unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())));
                             }
@@ -122,13 +123,21 @@ public class NmeaClientImpl
     }
 
     private void response(Sentences sentences) {
-        display();
+        notifyNMEAEvent();
+        // display();
     }
 
     public void display() {
         list = sentences.getSentences();
         list.stream().forEach((n) -> {
             System.out.println(n);
+        });
+    }
+
+    private void notifyNMEAEvent() {
+        list = sentences.getSentences();
+        list.stream().forEach((n) -> {
+            eventProducer.notifyNMEAEvent(n);
         });
     }
 

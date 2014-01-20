@@ -11,7 +11,7 @@ import org.capcaval.c3.component.Component;
  *
  * @author Serge
  */
-public interface EventProducer
+public interface NmeaEventProducer
         extends Component {
 
 }
