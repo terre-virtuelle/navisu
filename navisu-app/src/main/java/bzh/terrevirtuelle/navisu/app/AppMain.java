@@ -120,14 +120,14 @@ public class AppMain extends Application {
         dataServerServices.init("localhost", 8080);
 
         /* Test connexion GPS */
-         dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
-        // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
+        // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
+         dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         
         /* Test connexion Gpsd */
         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         
         /* Test connexion fichier */
-       // dataServerServices.openFile("data/nmea/gps.txt"); //NMEA0183
+        dataServerServices.openFile("data/nmea/gps.txt"); //NMEA0183
        // dataServerServices.openFile("data/ais/ais.txt");  //AIS
        // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
 
