@@ -11,7 +11,6 @@ import bzh.terrevirtuelle.navisu.nmea.model.GGA;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
-import static org.capcaval.c3.componentmanager.ComponentManager.componentManager;
 
 /**
  *
