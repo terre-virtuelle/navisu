@@ -12,5 +12,6 @@ dependencies {
     compile project(':navisu-core')
     compile project(':navisu-server')
     compile project(':navisu-client')
+    compile project(':navisu-instruments')
     compile fileTree(dir: 'lib', include: '*.jar')
 }
