@@ -4,6 +4,7 @@ import bzh.terrevirtuelle.navisu.server.impl.serial.impl.jssc.SerialPortReaderIm
 import bzh.terrevirtuelle.navisu.nmea.model.Sentences;
 import bzh.terrevirtuelle.navisu.server.DataServer;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
+import bzh.terrevirtuelle.navisu.server.http.impl.HttpServer;
 import bzh.terrevirtuelle.navisu.server.impl.Reader;
 import bzh.terrevirtuelle.navisu.server.impl.file.FileReader;
 import bzh.terrevirtuelle.navisu.server.impl.file.impl.FileReaderImpl;
@@ -184,5 +185,9 @@ public class DataServerImpl
             sentenceQueue.add(message.body());
         });
         readerIndex++;
+    }
+
+    public void openHttpServer(String hostname, int port) {
+        HttpServer httpserver = new HttpServer(vertx, hostname, port);
     }
 }

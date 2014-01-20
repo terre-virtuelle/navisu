@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.server;
 
 import org.capcaval.c3.component.ComponentService;
+import org.vertx.java.core.Vertx;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,4 +20,5 @@ public interface DataServerServices
     public void openFile();
     public void openFile(String fileName);
     public String response(int currentReader);
+    public void openHttpServer(String hostname, int port);
 }
