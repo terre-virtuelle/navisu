@@ -20,7 +20,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
-import bzh.terrevirtuelle.navisu.widget.Text;
+import bzh.terrevirtuelle.navisu.widget.tests.Locator;
+import bzh.terrevirtuelle.navisu.widget.tests.Text;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -121,22 +122,26 @@ public class AppMain extends Application {
 
         /* Test connexion GPS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
-         dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-        
+        dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
+
         /* Test connexion Gpsd */
         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
-        
         /* Test connexion fichier */
         dataServerServices.openFile("data/nmea/gps.txt"); //NMEA0183
-       // dataServerServices.openFile("data/ais/ais.txt");  //AIS
-       // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
-
+        // dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
+        
+        /* Test serveur Web Http */ 
+        dataServerServices.openHttpServer("localhost", 8181);
+        
         /* Test instanciation d'un client */
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8080, 500);
         nmeaClientServices.request();
         
-        Text text = new Text();
+        /* Test clients à l'écoute des événements Nmea */
+        // Text text = new Text();
+        Locator locator = new Locator();
         //
         // END TESTS
         //------------------------------->
