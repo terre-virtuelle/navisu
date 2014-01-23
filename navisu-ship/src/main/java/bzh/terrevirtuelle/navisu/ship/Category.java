@@ -97,9 +97,9 @@ public class Category {
         StringBuilder buffer = new StringBuilder();
         Set<Map.Entry<Integer, String>> entries = Category.TYPE.entrySet();
         buffer.append("[");
-        for (Map.Entry<Integer, String> e : entries) {
+        entries.stream().forEach((e) -> {
             buffer.append("[").append(e.getKey()).append(", ").append(e.getValue()).append("]");
-        }
+        });
         buffer.append("]");
         return buffer.toString();
     }
