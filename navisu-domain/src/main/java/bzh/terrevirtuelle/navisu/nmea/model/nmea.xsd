@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="AAM" type="aam"/>
+
+  <xs:element name="APA" type="apa"/>
+
+  <xs:element name="APB" type="apb"/>
+
+  <xs:element name="BEC" type="bec"/>
+
+  <xs:element name="BOD" type="bod"/>
+
+  <xs:element name="BWC" type="bwc"/>
+
+  <xs:element name="BWR" type="bwr"/>
+
+  <xs:element name="BWW" type="bww"/>
+
+  <xs:element name="DBK" type="dbk"/>
+
+  <xs:element name="DBS" type="dbs"/>
+
+  <xs:element name="DBT" type="dbt"/>
+
+  <xs:element name="DPT" type="dpt"/>
+
+  <xs:element name="GGA" type="gga"/>
+
+  <xs:element name="GLL" type="gll"/>
+
+  <xs:element name="GSA" type="gsa"/>
+
+  <xs:element name="GSV" type="gsv"/>
+
+  <xs:element name="HDG" type="hdg"/>
+
+  <xs:element name="HDM" type="hdm"/>
+
+  <xs:element name="HDT" type="hdt"/>
+
+  <xs:element name="MSK" type="msk"/>
+
+  <xs:element name="MTA" type="mta"/>
+
+  <xs:element name="MTW" type="mtw"/>
+
+  <xs:element name="MWD" type="mwd"/>
+
+  <xs:element name="MWV" type="mwv"/>
+
+  <xs:element name="RMB" type="rmb"/>
+
+  <xs:element name="RMC" type="rmc"/>
+
+  <xs:element name="RMT" type="rmt"/>
+
+  <xs:element name="RSD" type="rsd"/>
+
+  <xs:element name="RTE" type="rte"/>
+
+  <xs:element name="VBW" type="vbw"/>
+
+  <xs:element name="VHW" type="vhw"/>
+
+  <xs:element name="VLW" type="vlw"/>
+
+  <xs:element name="VPW" type="vpw"/>
+
+  <xs:element name="VTG" type="vtg"/>
+
+  <xs:element name="VWR" type="vwr"/>
+
+  <xs:element name="VWT" type="vwt"/>
+
+  <xs:element name="XTE" type="xte"/>
+
+  <xs:element name="ZDA" type="zda"/>
+
+  <xs:element name="ais1" type="aisMessageType1"/>
+
+  <xs:element name="ais11" type="aisMessageType11"/>
+
+  <xs:element name="ais135" type="aisMessageType135"/>
+
+  <xs:element name="ais14" type="aisMessageType14"/>
+
+  <xs:element name="ais18" type="aisMessageType18"/>
+
+  <xs:element name="ais19" type="aisMessageType19"/>
+
+  <xs:element name="ais3" type="aisMessageType3"/>
+
+  <xs:element name="ais4" type="aisMessageType4"/>
+
+  <xs:element name="ais5" type="aisMessageType5"/>
+
+  <xs:element name="ais9" type="aisMessageType9"/>
+
+  <xs:element name="satellite" type="gpsSatellite"/>
+
+  <xs:element name="sentences" type="sentences"/>
+
+  <xs:complexType name="aam">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="arrivalCircleEntered" type="xs:string" minOccurs="0"/>
+      <xs:element name="perpendicularPassed" type="xs:string" minOccurs="0"/>
+      <xs:element name="circleRadius" type="xs:float"/>
+      <xs:element name="waypointName" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="aisFrame">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType1">
+    <xs:complexContent>
+      <xs:extension base="aisMessageType135">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType135">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="MMSI" type="xs:int"/>
+      <xs:element name="padding" type="xs:int"/>
+      <xs:element name="checksum" type="xs:string" minOccurs="0"/>
+      <xs:element name="nbreTrames" type="xs:int"/>
+      <xs:element name="positionTrame" type="xs:int"/>
+      <xs:element name="messageAis" type="xs:string" minOccurs="0"/>
+      <xs:element name="messageAisBinary" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="rot" type="xs:float"/>
+      <xs:element name="cog" type="xs:float"/>
+      <xs:element name="sog" type="xs:float"/>
+      <xs:element name="navigationalStatus" type="xs:int"/>
+      <xs:element name="heading" type="xs:float"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+      <xs:element name="IMO" type="xs:int"/>
+      <xs:element name="name" type="xs:string" minOccurs="0"/>
+      <xs:element name="shipType" type="xs:int"/>
+      <xs:element name="width" type="xs:float"/>
+      <xs:element name="length" type="xs:float"/>
+      <xs:element name="draught" type="xs:float"/>
+      <xs:element name="electronicPositionDevice" type="xs:int"/>
+      <xs:element name="CallSign" type="xs:string" minOccurs="0"/>
+      <xs:element name="ETA" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="destination" type="xs:string" minOccurs="0"/>
+      <xs:element name="year" type="xs:int"/>
+      <xs:element name="month" type="xs:int"/>
+      <xs:element name="day" type="xs:int"/>
+      <xs:element name="hour" type="xs:int"/>
+      <xs:element name="minute" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType11">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="MMSI" type="xs:int"/>
+      <xs:element name="padding" type="xs:int"/>
+      <xs:element name="checksum" type="xs:string" minOccurs="0"/>
+      <xs:element name="nbreTrames" type="xs:int"/>
+      <xs:element name="positionTrame" type="xs:int"/>
+      <xs:element name="messageAis" type="xs:string" minOccurs="0"/>
+      <xs:element name="messageAisBinary" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="ETADate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="year" type="xs:int"/>
+      <xs:element name="month" type="xs:int"/>
+      <xs:element name="day" type="xs:int"/>
+      <xs:element name="hour" type="xs:int"/>
+      <xs:element name="minute" type="xs:int"/>
+      <xs:element name="second" type="xs:int"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType14">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="MMSI" type="xs:int"/>
+      <xs:element name="padding" type="xs:int"/>
+      <xs:element name="checksum" type="xs:string" minOccurs="0"/>
+      <xs:element name="nbreTrames" type="xs:int"/>
+      <xs:element name="positionTrame" type="xs:int"/>
+      <xs:element name="messageAis" type="xs:string" minOccurs="0"/>
+      <xs:element name="messageAisBinary" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="SecurityMessage" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType18">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="MMSI" type="xs:int"/>
+      <xs:element name="padding" type="xs:int"/>
+      <xs:element name="checksum" type="xs:string" minOccurs="0"/>
+      <xs:element name="nbreTrames" type="xs:int"/>
+      <xs:element name="positionTrame" type="xs:int"/>
+      <xs:element name="messageAis" type="xs:string" minOccurs="0"/>
+      <xs:element name="messageAisBinary" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="sog" type="xs:float"/>
+      <xs:element name="cog" type="xs:float"/>
+      <xs:element name="trueHeading" type="xs:float"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType19">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="MMSI" type="xs:int"/>
+      <xs:element name="padding" type="xs:int"/>
+      <xs:element name="checksum" type="xs:string" minOccurs="0"/>
+      <xs:element name="nbreTrames" type="xs:int"/>
+      <xs:element name="positionTrame" type="xs:int"/>
+      <xs:element name="messageAis" type="xs:string" minOccurs="0"/>
+      <xs:element name="messageAisBinary" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="sog" type="xs:float"/>
+      <xs:element name="cog" type="xs:float"/>
+      <xs:element name="trueHeading" type="xs:float"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType3">
+    <xs:complexContent>
+      <xs:extension base="aisMessageType135">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType4">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="MMSI" type="xs:int"/>
+      <xs:element name="padding" type="xs:int"/>
+      <xs:element name="checksum" type="xs:string" minOccurs="0"/>
+      <xs:element name="nbreTrames" type="xs:int"/>
+      <xs:element name="positionTrame" type="xs:int"/>
+      <xs:element name="messageAis" type="xs:string" minOccurs="0"/>
+      <xs:element name="messageAisBinary" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="year" type="xs:int"/>
+      <xs:element name="month" type="xs:int"/>
+      <xs:element name="day" type="xs:int"/>
+      <xs:element name="hour" type="xs:int"/>
+      <xs:element name="minute" type="xs:int"/>
+      <xs:element name="second" type="xs:int"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType5">
+    <xs:complexContent>
+      <xs:extension base="aisMessageType135">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="aisMessageType9">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="MMSI" type="xs:int"/>
+      <xs:element name="padding" type="xs:int"/>
+      <xs:element name="checksum" type="xs:string" minOccurs="0"/>
+      <xs:element name="nbreTrames" type="xs:int"/>
+      <xs:element name="positionTrame" type="xs:int"/>
+      <xs:element name="messageAis" type="xs:string" minOccurs="0"/>
+      <xs:element name="messageAisBinary" type="xs:anyType" minOccurs="0"/>
+      <xs:element name="cog" type="xs:float"/>
+      <xs:element name="altitude" type="xs:int"/>
+      <xs:element name="speed" type="xs:float"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="apa">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="status0" type="xs:string" minOccurs="0"/>
+      <xs:element name="status1" type="xs:string" minOccurs="0"/>
+      <xs:element name="crossTrackErrorMagnitude" type="xs:float"/>
+      <xs:element name="directionToSteer" type="xs:string" minOccurs="0"/>
+      <xs:element name="crossTrackUnits" type="xs:string" minOccurs="0"/>
+      <xs:element name="status2" type="xs:string" minOccurs="0"/>
+      <xs:element name="status3" type="xs:string" minOccurs="0"/>
+      <xs:element name="bearingOriginToDestination" type="xs:int"/>
+      <xs:element name="bearingOriginToDestinationType" type="xs:string" minOccurs="0"/>
+      <xs:element name="destinationWaypointID" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="apb">
+    <xs:complexContent>
+      <xs:extension base="apa">
+        <xs:sequence>
+          <xs:element name="bearingPresentPositionToDestination" type="xs:int"/>
+          <xs:element name="bearingPresentPositionToDestinationType" type="xs:string" minOccurs="0"/>
+          <xs:element name="headingToSteerToDestination" type="xs:int"/>
+          <xs:element name="headingToSteerToDestinationType" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="bec">
+    <xs:complexContent>
+      <xs:extension base="bwc">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="bwc">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="utc" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+      <xs:element name="bearingDegreesTrue" type="xs:float"/>
+      <xs:element name="bearingDegreesMagnetic" type="xs:float"/>
+      <xs:element name="distanceToWayPoint" type="xs:float"/>
+      <xs:element name="unitsOfDistanceToWayPoint" type="xs:string" minOccurs="0"/>
+      <xs:element name="waypointID" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bod">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="bearingTrue" type="xs:float"/>
+      <xs:element name="bearingMagnetic" type="xs:float"/>
+      <xs:element name="destinationWaypointID" type="xs:string" minOccurs="0"/>
+      <xs:element name="originWaypointID" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bwr">
+    <xs:complexContent>
+      <xs:extension base="bwc">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="bww">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="bearingDegreesTrue" type="xs:float"/>
+      <xs:element name="bearingDegreesMagnetic" type="xs:float"/>
+      <xs:element name="toWaypoint" type="xs:string" minOccurs="0"/>
+      <xs:element name="fromWaypoint" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dbk">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="depthInFeet" type="xs:float"/>
+      <xs:element name="depthInMeters" type="xs:float"/>
+      <xs:element name="depthInFathoms" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dbs">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="depthInFeet" type="xs:float"/>
+      <xs:element name="depthInMeters" type="xs:float"/>
+      <xs:element name="depthInFathoms" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dbt">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="depthInFeet" type="xs:float"/>
+      <xs:element name="depthInMeters" type="xs:float"/>
+      <xs:element name="depthInFathoms" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dpt">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="depth" type="xs:float"/>
+      <xs:element name="offset" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="gga">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="utc" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+      <xs:element name="gpsQualityIndicator" type="xs:int"/>
+      <xs:element name="numberOfSatellitesInView" type="xs:int"/>
+      <xs:element name="horizontalDilutionOfPrecision" type="xs:float"/>
+      <xs:element name="antennaAltitude" type="xs:float"/>
+      <xs:element name="unitsOfAntennaAltitude" type="xs:string" minOccurs="0"/>
+      <xs:element name="geoidAltitude" type="xs:float"/>
+      <xs:element name="unitsOfGeoidAltitude" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="gll">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+      <xs:element name="utc" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="gpsSatellite">
+    <xs:sequence>
+      <xs:element name="satellitePRNNumber" type="xs:int"/>
+      <xs:element name="elevationDegrees" type="xs:int"/>
+      <xs:element name="azimuthDegrees" type="xs:int"/>
+      <xs:element name="snr" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="gsa">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="autoOrManualSelection" type="xs:string" minOccurs="0"/>
+      <xs:element name="dimensionFix" type="xs:int"/>
+      <xs:element name="listPRNsOfSatellitesUsed" type="xs:int" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="pdop" type="xs:float"/>
+      <xs:element name="hdop" type="xs:float"/>
+      <xs:element name="vdop" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="gsv">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="numberOfSentences" type="xs:int"/>
+      <xs:element name="sentenceNumber" type="xs:int"/>
+      <xs:element name="numberOfSatellitesInView" type="xs:int"/>
+      <xs:element name="satellites" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="satellite" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="hdg">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="heading" type="xs:float"/>
+      <xs:element name="magneticDeviation" type="xs:float"/>
+      <xs:element name="magneticVariation" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="hdm">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="heading" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="hdt">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="heading" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="msk">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="frequencyToUse" type="xs:float"/>
+      <xs:element name="frequencyMode" type="xs:string" minOccurs="0"/>
+      <xs:element name="beaconBitRate" type="xs:int"/>
+      <xs:element name="bitRateMode" type="xs:string" minOccurs="0"/>
+      <xs:element name="frequencyForMSS" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mta">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="degrees" type="xs:float"/>
+      <xs:element name="unit" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mtw">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="degrees" type="xs:float"/>
+      <xs:element name="unit" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mwd">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="windDirectionTrue" type="xs:float"/>
+      <xs:element name="windDirectionMagnetic" type="xs:float"/>
+      <xs:element name="windSpeed" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="mwv">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="windAngle" type="xs:float"/>
+      <xs:element name="reference" type="xs:string" minOccurs="0"/>
+      <xs:element name="windSpeed" type="xs:float"/>
+      <xs:element name="windSpeedUnit" type="xs:string" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rte">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="totalNumberOfsentence" type="xs:int"/>
+      <xs:element name="sentenceNumber" type="xs:int"/>
+      <xs:element name="type" type="xs:string" minOccurs="0"/>
+      <xs:element name="waypoints" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="routeIndex" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sentences">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="aam" type="aam"/>
+        <xs:element name="apa" type="apa"/>
+        <xs:element name="apb" type="apb"/>
+        <xs:element name="bec" type="bec"/>
+        <xs:element name="bod" type="bod"/>
+        <xs:element name="bwc" type="bwc"/>
+        <xs:element name="bwr" type="bwr"/>
+        <xs:element name="bww" type="bww"/>
+        <xs:element name="dbk" type="dbk"/>
+        <xs:element name="dbs" type="dbs"/>
+        <xs:element name="dbt" type="dbt"/>
+        <xs:element name="dpt" type="dpt"/>
+        <xs:element name="gga" type="gga"/>
+        <xs:element name="gll" type="gll"/>
+        <xs:element name="gsa" type="gsa"/>
+        <xs:element name="gsv" type="gsv"/>
+        <xs:element name="hdg" type="hdg"/>
+        <xs:element name="hdm" type="hdm"/>
+        <xs:element name="hdt" type="hdt"/>
+        <xs:element name="msk" type="msk"/>
+        <xs:element name="mta" type="mta"/>
+        <xs:element name="mtw" type="mtw"/>
+        <xs:element name="mwd" type="mwd"/>
+        <xs:element name="mwv" type="mwv"/>
+        <xs:element name="nmea" type="xs:anyType"/>
+        <xs:element name="rmb" type="rmb"/>
+        <xs:element name="rmc" type="rmc"/>
+        <xs:element name="rmt" type="rmt"/>
+        <xs:element name="rsd" type="rsd"/>
+        <xs:element name="rte" type="rte"/>
+        <xs:element name="vbw" type="vbw"/>
+        <xs:element name="vhw" type="vhw"/>
+        <xs:element name="vlw" type="vlw"/>
+        <xs:element name="vpw" type="vpw"/>
+        <xs:element name="vtg" type="vtg"/>
+        <xs:element name="vwr" type="vwr"/>
+        <xs:element name="vwt" type="vwt"/>
+        <xs:element name="xte" type="xte"/>
+        <xs:element ref="ais1"/>
+        <xs:element ref="ais11"/>
+        <xs:element ref="ais14"/>
+        <xs:element ref="ais18"/>
+        <xs:element ref="ais19"/>
+        <xs:element ref="ais3"/>
+        <xs:element ref="ais4"/>
+        <xs:element ref="ais5"/>
+        <xs:element ref="ais135"/>
+        <xs:element name="ais" type="xs:anyType"/>
+        <xs:element ref="ais9"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rmb">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+      <xs:element name="crossTrackError" type="xs:float"/>
+      <xs:element name="directionToSteer" type="xs:string" minOccurs="0"/>
+      <xs:element name="toWaypointId" type="xs:string" minOccurs="0"/>
+      <xs:element name="fromWaypointId" type="xs:string" minOccurs="0"/>
+      <xs:element name="destinationWaypointLatitude" type="xs:float"/>
+      <xs:element name="destinationWaypointLongitude" type="xs:float"/>
+      <xs:element name="rangeToDestination" type="xs:float"/>
+      <xs:element name="bearingToDestination" type="xs:float"/>
+      <xs:element name="destinationClosingVelocity" type="xs:float"/>
+      <xs:element name="arrivalStatus" type="xs:string" minOccurs="0"/>
+      <xs:element name="faaModeIndicator" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rmc">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="eastOrWestVariation" type="xs:string" minOccurs="0"/>
+      <xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+      <xs:element name="latitude" type="xs:float"/>
+      <xs:element name="longitude" type="xs:float"/>
+      <xs:element name="variation" type="xs:float"/>
+      <xs:element name="track" type="xs:float"/>
+      <xs:element name="sog" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rmt">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="versions" type="xs:string" minOccurs="0"/>
+      <xs:element name="romChecksum" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rsd">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vbw">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="longitudinalWaterSpeed" type="xs:float"/>
+      <xs:element name="transverseWaterSpeed" type="xs:float"/>
+      <xs:element name="wStatus" type="xs:string" minOccurs="0"/>
+      <xs:element name="longitudinalGroundSpeed" type="xs:float"/>
+      <xs:element name="transverseGroundSpeed" type="xs:float"/>
+      <xs:element name="gStatus" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vhw">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="degreesTrue" type="xs:float"/>
+      <xs:element name="degreesMagnetic" type="xs:float"/>
+      <xs:element name="speedInKnots" type="xs:float"/>
+      <xs:element name="speedInKilometers" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vlw">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="dataTotalWaterDistance" type="xs:float"/>
+      <xs:element name="dataTripWaterDistance" type="xs:float"/>
+      <xs:element name="dataTotalGroundDistance" type="xs:float"/>
+      <xs:element name="dataTripGroundDistance" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vpw">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="speed" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vtg">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="trueTrackMadeGoodDegrees" type="xs:float"/>
+      <xs:element name="magneticTrackMadeGood" type="xs:float"/>
+      <xs:element name="sog" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vwr">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="windDirectionMagnitude" type="xs:int"/>
+      <xs:element name="windDirectionOfBow" type="xs:string" minOccurs="0"/>
+      <xs:element name="speed" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="vwt">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="xte">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="generalWarning" type="xs:string" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+      <xs:element name="crossTrackError" type="xs:float"/>
+      <xs:element name="directionToSteer" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="zda">
+    <xs:sequence>
+      <xs:element name="device" type="xs:string" minOccurs="0"/>
+      <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+      <xs:element name="date" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
