@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.app;
 
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.charts.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.charts.impl.ChartsManagerImpl;
@@ -8,6 +9,8 @@ import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.grib.GribServices;
 import bzh.terrevirtuelle.navisu.app.drivers.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 
@@ -17,12 +20,13 @@ import java.util.logging.Logger;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.app.processors.TObjectProcessor;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
-import bzh.terrevirtuelle.navisu.server.DataServerServices;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
 import bzh.terrevirtuelle.navisu.world.Widget3DServices;
 import bzh.terrevirtuelle.navisu.world.impl.Widget3DImpl;
-import bzh.terrevirtuelle.navisu.world.marker.Locator;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -73,8 +77,7 @@ public class AppMain extends Application {
 
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
-
-        /*
+  
          //------------------------------->
          // TESTS AGENT
          //
@@ -114,7 +117,8 @@ public class AppMain extends Application {
          //
          // END TESTS AGENT
          //------------------------------->
-         */
+         
+         /*
         //------------------------------->
         // TESTS SERVER
         //
@@ -122,32 +126,33 @@ public class AppMain extends Application {
         // Test avec choix des parametres de comm
         dataServerServices.init("localhost", 8080);
 
-        /* Test connexion GPS */
+        // Test connexion GPS 
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
 
-        /* Test connexion Gpsd */
+        // Test connexion Gpsd 
         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
-        /* Test connexion fichier */
+        // Test connexion fichier 
         dataServerServices.openFile("data/nmea/gps.txt"); //NMEA0183
         // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         
-        /* Test serveur Web Http */ 
+        // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
         
-        /* Test instanciation d'un client */
+        // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8080, 500);
         nmeaClientServices.request();
         
-        /* Test clients à l'écoute des événements Nmea */
+        // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
         widgetServices.createLocator();
 
         //
         // END TESTS SERVER
         //------------------------------->
+        */
     }
 
     public static void main(String[] args) throws Exception {
