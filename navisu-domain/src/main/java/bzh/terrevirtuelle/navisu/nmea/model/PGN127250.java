@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Serge
  */
-@XmlRootElement(name = "VesselHeading")
+@XmlRootElement(name = "PGN127250")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class VesselHeading
+public class PGN127250
         extends N2K {
 
     private float headingSensorReading;
@@ -23,20 +23,26 @@ public class VesselHeading
     private float variation;
     private int headingSensorReference;
 
-    public VesselHeading() {
+    public PGN127250() {
     }
 
-    public VesselHeading(int pgn, String source, String sid) {
-        super(pgn, source, sid);
-    }
-
-    public VesselHeading(int pgn, String source, String sid, float headingSensorReading, float deviation, float variation, int headingSensorReference) {
-        super(pgn, source, sid);
+    public PGN127250(float headingSensorReading, float deviation, float variation, int headingSensorReference, String sid, String description) {
+        super(sid, description);
         this.headingSensorReading = headingSensorReading;
         this.deviation = deviation;
         this.variation = variation;
         this.headingSensorReference = headingSensorReference;
     }
+
+    public PGN127250(float headingSensorReading, float deviation, float variation, int headingSensorReference, String description) {
+        super(description);
+        this.headingSensorReading = headingSensorReading;
+        this.deviation = deviation;
+        this.variation = variation;
+        this.headingSensorReference = headingSensorReference;
+    }
+
+   
 
     
     /**

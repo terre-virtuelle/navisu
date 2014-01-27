@@ -13,28 +13,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Serge
  */
-@XmlRootElement(name = "SpeedWaterReferenced")
+@XmlRootElement(name = "PGN128259")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SpeedWaterReferenced
+public class PGN128259
         extends N2K {
 
     private float speedWaterReferenced;
     private float speedGroundReferenced;
     private int speedWaterReferencedTYpe;
 
-    public SpeedWaterReferenced() {
+    public PGN128259() {
     }
 
-    public SpeedWaterReferenced(int pgn, String source, String sid) {
-        super(pgn, source, sid);
-    }
-
-    public SpeedWaterReferenced(int pgn, String source, String sid, float speedWaterReferenced, float speedGroundReferenced, int speedWaterReferencedTYpe) {
-        super(pgn, source, sid);
+    public PGN128259(float speedWaterReferenced, float speedGroundReferenced, int speedWaterReferencedTYpe, String sid, String description) {
+        super(sid, description);
         this.speedWaterReferenced = speedWaterReferenced;
         this.speedGroundReferenced = speedGroundReferenced;
         this.speedWaterReferencedTYpe = speedWaterReferencedTYpe;
     }
+
+    
 
     /**
      * Get the value of speedWaterReferencedTYpe

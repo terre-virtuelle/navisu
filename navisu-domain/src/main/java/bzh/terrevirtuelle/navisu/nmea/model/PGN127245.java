@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Serge
  */
-@XmlRootElement(name = "Rudder")
+@XmlRootElement(name = "PGN127245")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Rudder
+public class PGN127245
         extends N2K {
 
     private int rudderInstance;
@@ -23,20 +23,18 @@ public class Rudder
     private int angleOrder;
     private int position;
 
-    public Rudder() {
+    public PGN127245() {
     }
 
-    public Rudder(int pgn, String source) {
-        super(pgn, source);
-    }
-
-    public Rudder(int rudderInstance, int directionOrder, int angleOrder, int position, int pgn, String source) {
-        super(pgn, source);
+    public PGN127245(int rudderInstance, int directionOrder, int angleOrder, int position, String description) {
+        super(description);
         this.rudderInstance = rudderInstance;
         this.directionOrder = directionOrder;
         this.angleOrder = angleOrder;
         this.position = position;
     }
+
+   
 
     /**
      * Get the value of position

@@ -9,23 +9,40 @@ package bzh.terrevirtuelle.navisu.nmea.model;
  *
  * @author Serge
  */
-public class N2K extends NMEA {
+public class N2K
+        extends NMEA {
 
-    private int pgn;
     private String sid;
+    private String description;
 
     public N2K() {
     }
 
-    public N2K(int pgn, String source, String sid) {
-        super(source);
-        this.pgn = pgn;
-        this.sid = sid;
+    public N2K(String description) {
+        this.description = description;
     }
 
-    public N2K(int pgn, String source) {
-        super(source);
-        this.pgn = pgn;
+    public N2K(String sid, String description) {
+        this.sid = sid;
+        this.description = description;
+    }
+
+    /**
+     * Get the value of description
+     *
+     * @return the value of description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @param description new value of description
+     */
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     /**
@@ -46,37 +63,10 @@ public class N2K extends NMEA {
         this.sid = sid;
     }
 
-    /**
-     * Get the value of pgn
-     *
-     * @return the value of pgn
-     */
-    public int getPgn() {
-        return pgn;
-    }
-
-    /**
-     * Set the value of pgn
-     *
-     * @param pgn new value of pgn
-     */
-    public void setPgn(int pgn) {
-        this.pgn = pgn;
-    }
-
-    public String getSource() {
-        return getDevice();
-    }
-
-    public void setSource(String source) {
-        setDevice(source);
-    }
-
     @Override
     public String toString() {
-        return "N2K{" + "pgn=" + pgn + ", sid=" + sid + '}';
+        return "N2K{" + "sid=" + sid + ", description=" + description + '}';
     }
 
-   
     
 }

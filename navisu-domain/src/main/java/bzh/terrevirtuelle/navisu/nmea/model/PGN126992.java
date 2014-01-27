@@ -14,25 +14,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Serge
  */
-@XmlRootElement(name = "SystemTime")
+@XmlRootElement(name = "PGN126992")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class SystemTime
+public class PGN126992
         extends N2K {
 
     private Calendar date;
 
-    public SystemTime() {
+    public PGN126992() {
     }
 
-    public SystemTime(int pgn, String source, Calendar date) {
-        super(pgn, source);
+    public PGN126992(Calendar date, String sid, String description) {
+        super(sid, description);
         this.date = date;
     }
 
-    public SystemTime(int pgn, String source, String sid, Calendar date) {
-        super(pgn, source, sid);
-        this.date = date;
-    }
+    
 
     /**
      * Get the value of date
