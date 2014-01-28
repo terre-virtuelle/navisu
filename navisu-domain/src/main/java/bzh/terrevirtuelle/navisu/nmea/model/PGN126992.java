@@ -51,7 +51,6 @@ public class PGN126992
 
     @Override
     public String toString() {
-        return "SystemTime{" + "date=" + date + '}';
-    }
-
+        return "PGN126992{" + "date=" + date + '}';
+    } 
 }
