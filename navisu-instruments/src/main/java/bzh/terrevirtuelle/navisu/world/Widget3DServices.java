@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.world;
 
+import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -13,6 +14,7 @@ import org.capcaval.c3.component.ComponentService;
  */
 public interface Widget3DServices
         extends ComponentService {
+
     public void createLocator();
 
 }

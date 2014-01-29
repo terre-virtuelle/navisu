@@ -5,16 +5,21 @@
  */
 package bzh.terrevirtuelle.navisu.world.impl;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.world.Widget3D;
 import bzh.terrevirtuelle.navisu.world.Widget3DServices;
-import bzh.terrevirtuelle.navisu.world.marker.Locator;
+import bzh.terrevirtuelle.navisu.world.gps.locator.GpsLocator;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
 
 /**
  *
  * @author Serge
  */
 public class Widget3DImpl implements Widget3D, Widget3DServices, ComponentState {
+
+    @UsedService
+    GeoViewServices geoViewServices;
 
     @Override
     public void componentInitiated() {
@@ -30,6 +35,6 @@ public class Widget3DImpl implements Widget3D, Widget3DServices, ComponentState 
 
     @Override
     public void createLocator() {
-       Locator locator =  new Locator();
+        GpsLocator locator = new GpsLocator(geoViewServices);
     }
 }
