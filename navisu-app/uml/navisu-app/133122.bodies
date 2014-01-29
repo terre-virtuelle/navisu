@@ -1,0 +1,20 @@
+class I18nLangEnum
+!!!141186.java!!!	I18nLangEnum(inout locale : Locale)
+
+        this.locale = locale;
+!!!141314.java!!!	getLocale() : Locale
+        return this.locale;
+!!!141442.java!!!	getDefault() : I18nLangEnum
+        return ENGLISH;
+!!!141570.java!!!	fromLocale(inout locale : Locale) : I18nLangEnum
+
+        I18nLangEnum result = null;
+
+        if(locale.equals(Locale.FRENCH)) {
+            result = FRENCH;
+        }
+        else if(locale.equals(Locale.ENGLISH)) {
+            result = ENGLISH;
+        }
+
+        return result;

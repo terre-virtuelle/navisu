@@ -187,6 +187,7 @@ public class DataServerImpl
         readerIndex++;
     }
 
+    @Override
     public void openHttpServer(String hostname, int port) {
         HttpServer httpserver = new HttpServer(vertx, hostname, port);
     }

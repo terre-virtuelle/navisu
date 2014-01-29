@@ -1,0 +1,18 @@
+class Icons
+!!!141698.java!!!	Icons()
+        this.bundle = ResourceBundle.getBundle(BUNDLE_LOCATION);
+!!!141826.java!!!	getIcon(in key : String) : Image
+
+        String icon = this.bundle.getString(key);
+        String iconsRootPath = Icons.class.getResource("/icons").toExternalForm();
+
+        Image iconImage = new Image(iconsRootPath + File.separator + icon);
+
+        return iconImage;
+!!!141954.java!!!	icon(in key : String) : Image
+
+        if(instance == null) {
+            instance = new Icons();
+        }
+
+        return instance.getIcon(key);

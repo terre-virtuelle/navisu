@@ -1,0 +1,30 @@
+class LayerCheckTreeImpl
+!!!135682.java!!!	componentInitiated() : void
+
+        this.tree = new CheckTree<>();
+        this.groupMap = new HashMap<>();
+!!!135810.java!!!	createGroup(in groupName : String, inout layers : GeoLayer<?>...) : void
+
+        Checker.notNull(groupName, "Group titleText is null.");
+        Checker.keyNotExistsInMap(this.groupMap, groupName, "Group named \"" + groupName + "\" already exists in layer checktree.");
+
+        final Image layerIcon = new Image(LayerCheckTreeImpl.class.getResourceAsStream("layer_icon.png"));
+
+        final TreeItem<TreeItemModel> groupItem = new TreeItem<>(TreeItemModel.create(groupName, layerIcon));
+        groupItem.setExpanded(true);
+        this.tree.root().getChildren().add(groupItem);
+
+        for(GeoLayer geoLayer : layers) {
+
+            final TreeItemModel layerItemModel = CheckTreeItemModel.create(geoLayer.getName(), geoLayer.isVisible());
+            final TreeItem<TreeItemModel> layerItem = new TreeItem<>(layerItemModel);
+            groupItem.getChildren().add(layerItem);
+
+            CheckTreeItemModel.cast(layerItemModel).setOnSelect((item) -> {
+                geoLayer.setVisible(item.selected());
+            });
+        }
+!!!135938.java!!!	addGeoLayer(in groupName : String, inout layers : GeoLayer<?>...) : void
+        //TODO to implement !!
+!!!136066.java!!!	getDisplayService() : Display<Node>
+        return Display.factory.newDisplayNode(tree);

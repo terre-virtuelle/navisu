@@ -1,0 +1,40 @@
+class OptionsManagerImpl
+!!!140162.java!!!	componentInitiated() : void
+        LOGGER.info("Options Component Initiated");
+        this.optionsControllers = new ArrayList<>();
+        this.initStage();
+!!!140290.java!!!	initStage() : void
+        this.root = new Pane();
+        Scene scene = new Scene(root, 500, 500);
+
+        this.stage = new Stage();
+        this.stage.setTitle("Options");
+        this.stage.setScene(scene);
+!!!140418.java!!!	componentStarted() : void
+        LOGGER.info("Options Component Started");
+!!!140546.java!!!	componentStopped() : void
+        LOGGER.info("Options Component Stopped");
+        this.stage.close();
+!!!140674.java!!!	add(inout  : OptionsController...controllers) : void
+
+        Checker.notNull(controllers, "List of OptionsController is null");
+
+        for(OptionsController controller : controllers) {
+            this.optionsControllers.add(controller);
+            this.addOptionViewTab(controller);
+        }
+!!!140802.java!!!	addOptionViewTab(inout controller : OptionsController) : void
+
+        TabPane tabPane = new TabPane();
+
+        Checker.notNull(controller.getName(), "OptionsController must have a titleText");
+
+        Tab tab = new Tab(controller.getName());
+        tab.setContent(controller.getOptionsView().getDisplayable());
+        tabPane.getTabs().add(tab);
+
+        this.root.getChildren().add(tabPane);
+!!!140930.java!!!	show() : void
+        this.stage.show();
+!!!141058.java!!!	hide() : void
+       this.stage.hide();

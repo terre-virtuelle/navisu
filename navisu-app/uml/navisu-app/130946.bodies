@@ -1,0 +1,160 @@
+class GeoViewImpl
+!!!133250.java!!!	componentInitiated() : void
+
+        this.geoView = bzh.terrevirtuelle.navisu.core.view.geoview.GeoView.factory.newWorldWindGeo3DView();
+        this.layerManager = this.geoView.getLayerManager();
+
+        this.initDefaultLayers(this.layerManager);
+
+        this.layerManager.getGroups().forEach((groupName, geoLayerList) -> {
+
+            if(geoLayerList.size() > 0)
+                layerTreeServices.createGroup(groupName, geoLayerList.toArray(new GeoLayer[geoLayerList.size()]));
+        });
+
+        this.model = Model.factory.newModel(GObject.class);
+        this.processors = new ArrayList<>();
+!!!133378.java!!!	createGObject(inout processor : GObjectCUDProcessor, inout tObject : TObject) : void
+
+        // Create the GObject
+        final GObject newGObject = processor.processCreated(tObject.getID(), tObject);
+
+        //TODO /!\ C'est pas top de faire
+        final RenderableLayer layer = (RenderableLayer) processor.getLayer().getDisplayLayer();
+
+        for(Renderable renderable : newGObject.getRenderables()) {
+            layer.addRenderable(renderable);
+        }
+
+        // Add the new GObject in the modelÒ
+        this.model.getWriteDataServices().create(newGObject.getID(), newGObject);
+
+        // Redraw WorldWind
+        this.geoView.getWorldWindow().redraw();
+!!!133506.java!!!	updateGObject(inout processor : GObjectCUDProcessor, inout tObject : TObject) : void
+
+        // Retrieve the GObject in the model
+        final GObject gObject = this.model.getReadDataServices().read(tObject.getID());
+
+        // Update the GObject
+        final GObject updatedGObject = processor.processUpdated(gObject.getID(), tObject, gObject);
+
+        // Update the GObject in the model
+        this.model.getWriteDataServices().update(gObject.getID(), updatedGObject);
+
+        // Redraw WorldWind
+        this.geoView.getWorldWindow().redraw();
+!!!133634.java!!!	deleteGObject(inout processor : GObjectCUDProcessor, inout tObject : TObject) : void
+
+        // Retrieve the GObject in the model
+        final GObject gObject = this.model.getReadDataServices().read(tObject.getID());
+
+        // Delete the GObject
+        final GObject deletedGObject = processor.processDeleted(gObject.getID(), tObject, gObject);
+
+        //TODO /!\ C'est pas top de faire
+        final RenderableLayer layer = (RenderableLayer) processor.getLayer().getDisplayLayer();
+
+        for(Renderable renderable : deletedGObject.getRenderables()) {
+            layer.removeRenderable(renderable);
+        }
+
+        // Delete in the model
+        this.model.getWriteDataServices().delete(deletedGObject.getID());
+
+        // Redraw WorldWind
+        this.geoView.getWorldWindow().redraw();
+!!!133762.java!!!	createDpAgentEvents() : DpAgentEvents
+        return new DpAgentEvents() {
+
+            @Override
+            public void notifyCreated(TObject tObject) {
+                LOGGER.info("notifyCreated(" + tObject.getID() + ")");
+
+                GObjectCUDProcessor processor = findProcessor(tObject);
+
+                if(processor == null) {
+                    LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
+                    return;
+                }
+
+                createGObject(processor, tObject);
+            }
+
+            @Override
+            public void notifyUpdated(TObject tObject) {
+                LOGGER.info("notifyUpdated(" + tObject.getID() + ")");
+
+                GObjectCUDProcessor processor = findProcessor(tObject);
+
+                if(processor == null) {
+                    LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
+                    return;
+                }
+
+                updateGObject(processor, tObject);
+            }
+
+            @Override
+            public void notifyDeleted(TObject tObject) {
+                LOGGER.info("notifyDeleted(" + tObject.getID() + ")");
+
+                GObjectCUDProcessor processor = findProcessor(tObject);
+
+                if(processor == null) {
+                    LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
+                    return;
+                }
+
+                deleteGObject(processor, tObject);
+            }
+        };
+!!!133890.java!!!	registerProcessor(inout processor : GObjectCUDProcessor) : void
+
+        Checker.notNull(processor, "Processor is null.");
+
+        this.processors.add(processor);
+!!!134018.java!!!	findProcessor(in tObject : TObject) : GObjectCUDProcessor
+
+        Checker.notNull(tObject, "tObject is null, cannot find processor.");
+
+        GObjectCUDProcessor processor = null;
+
+        for(GObjectCUDProcessor proc : this.processors) {
+
+            if(proc.getType().isAssignableFrom(tObject.getClass())) {
+                processor = proc;
+                break;
+            }
+        }
+
+        return processor;
+!!!134146.java!!!	initDefaultLayers(in layerManager : LayerManager<Layer>) : void
+
+        layerManager.createGroup("On-earth layers",
+                WorldWindLayers.Stars.newInstance(),
+                WorldWindLayers.SkyGradient.newInstance(),
+
+                WorldWindLayers.BlueMarbleImage.newInstance(),
+                WorldWindLayers.Fog.newInstance(),
+                WorldWindLayers.BlueMarbleWMS.newInstance(),
+                WorldWindLayers.LandsatICubed.newInstance(),
+                WorldWindLayers.BingImagery.newInstance(),
+                WorldWindLayers.EarthAtNight.newInstance(),
+                WorldWindLayers.OpenStreetMap.newInstance(),
+
+                WorldWindLayers.CountryBoundaries.newInstance(),
+                WorldWindLayers.PlaceName.newInstance(),
+
+                WorldWindLayers.LatLonGraticule.newInstance()
+        );
+
+        layerManager.createGroup("On-screen layers",
+                //WorldWindLayers.WorldMap.newInstance(),
+                WorldWindLayers.ScaleBar.newInstance(),
+                WorldWindLayers.Compass.newInstance()
+        );
+!!!134274.java!!!	getDisplayService() : Display<Node>
+        return this.geoView;
+!!!134402.java!!!	getLayerManager() : LayerManager<Layer>
+        return this.layerManager;

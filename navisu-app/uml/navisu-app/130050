@@ -1,0 +1,442 @@
+format 76
+"impl" // bzh::terrevirtuelle::navisu::app::guiagent::impl
+  revision 1
+  modified_by 2 "Serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-app/src/main/java/bzh/terrevirtuelle/navisu/app/guiagent/impl/"
+  java_package "bzh.terrevirtuelle.navisu.app.guiagent.impl"
+  classview 129538 "impl"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 131202 "GuiAgentController"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "NaVisu
+
+@author tibus
+@date 21/12/2013 16:45"
+      attribute 129154 "LOGGER"
+	class_attribute const_attribute private explicit_type "Logger"
+	init_value " Logger.getLogger(GuiAgentController.class.getName())"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129282 "menuBar"
+	public explicit_type "MenuBar"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129410 "leftBorderPane"
+	public explicit_type "BorderPane"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129538 "centerBorderPane"
+	public explicit_type "BorderPane"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129666 "statusBorderPane"
+	public explicit_type "BorderPane"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	java_annotation "@FXML
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 134530 "GuiAgentController"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 131330 "GuiAgentImpl"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "NaVisu
+
+@author tibus
+@date 02/11/2013 11:54"
+      classrelation 131586 // <realization>
+	relation 131586 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131586 // <realization>
+	  b parent class_ref 129922 // GuiAgent
+      end
+
+      classrelation 131714 // <realization>
+	relation 131714 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 131714 // <realization>
+	  b parent class_ref 129794 // GuiAgentServices
+      end
+
+      attribute 129794 "LOGGER"
+	class_attribute const_attribute private explicit_type "Logger"
+	init_value " Logger.getLogger(GuiAgentImpl.class.getName())"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 131842 // optionsManager (<unidirectional association>)
+	relation 131842 --->
+	  a role_name "optionsManager" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@SubComponent
+"
+	    classrelation_ref 131842 // optionsManager (<unidirectional association>)
+	  b parent class_ref 131458 // OptionsManagerImpl
+      end
+
+      classrelation 131970 // optionsManagerServices (<unidirectional association>)
+	relation 131970 --->
+	  a role_name "optionsManagerServices" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@UsedService
+"
+	    classrelation_ref 131970 // optionsManagerServices (<unidirectional association>)
+	  b parent class_ref 131586 // OptionsManagerServices
+      end
+
+      classrelation 132098 // menu (<unidirectional association>)
+	relation 132098 --->
+	  a role_name "menu" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@SubComponent
+"
+	    classrelation_ref 132098 // menu (<unidirectional association>)
+	  b parent class_ref 131714 // MenuManagerImpl
+      end
+
+      classrelation 132226 // menuServices (<unidirectional association>)
+	relation 132226 --->
+	  a role_name "menuServices" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@UsedService
+"
+	    classrelation_ref 132226 // menuServices (<unidirectional association>)
+	  b parent class_ref 129666 // MenuManagerServices
+      end
+
+      classrelation 132354 // layerTree (<unidirectional association>)
+	relation 132354 --->
+	  a role_name "layerTree" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@SubComponent
+"
+	    classrelation_ref 132354 // layerTree (<unidirectional association>)
+	  b parent class_ref 131842 // LayerCheckTreeImpl
+      end
+
+      classrelation 132482 // layerTreeServices (<unidirectional association>)
+	relation 132482 --->
+	  a role_name "layerTreeServices" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@UsedService
+"
+	    classrelation_ref 132482 // layerTreeServices (<unidirectional association>)
+	  b parent class_ref 131074 // LayerTreeServices
+      end
+
+      classrelation 132610 // geoView (<unidirectional association>)
+	relation 132610 --->
+	  a role_name "geoView" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@SubComponent
+"
+	    classrelation_ref 132610 // geoView (<unidirectional association>)
+	  b parent class_ref 130946 // GeoViewImpl
+      end
+
+      classrelation 132738 // geoViewServices (<unidirectional association>)
+	relation 132738 --->
+	  a role_name "geoViewServices" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@UsedService
+"
+	    classrelation_ref 132738 // geoViewServices (<unidirectional association>)
+	  b parent class_ref 130178 // GeoViewServices
+      end
+
+      attribute 129922 "jobsManager"
+	protected explicit_type "JobsManager"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130050 "width"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130178 "height"
+	protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130306 "stage"
+	protected explicit_type "Stage"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 134658 "showGui"
+	public explicit_return_type "void"
+	nparams 3
+	  param inout name "stage" explicit_type "Stage"
+	  param in name "width" explicit_type "int"
+	  param in name "height" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 134786 "initializeMenuItems"
+	protected explicit_return_type "void"
+	nparams 1
+	  param in name "menuServices" type class_ref 129666 // MenuManagerServices
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}final ${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 134914 "getJobsManager"
+	public explicit_return_type "JobsManager"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135042 "isFullScreen"
+	public explicit_return_type "boolean"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 135170 "setFullScreen"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "fullScreen" explicit_type "boolean"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 129154 "impl"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 130050 "GuiAgentController"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import javafx.fxml.FXML;
+import javafx.scene.control.MenuBar;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import java.util.logging.Logger;
+${definition}"
+      associated_classes
+	class_ref 131202 // GuiAgentController
+      end
+    end
+
+    artifact 130178 "GuiAgentImpl"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.api.progress.Job;
+import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerCheckTreeImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import org.capcaval.c3.component.annotation.SubComponent;
+import org.capcaval.c3.component.annotation.UsedService;
+import org.capcaval.c3.componentmanager.ComponentManager;
+import java.io.IOException;
+import java.util.logging.Logger;
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+${definition}"
+      associated_classes
+	class_ref 131330 // GuiAgentImpl
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+end

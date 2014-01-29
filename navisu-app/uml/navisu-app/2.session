@@ -1,0 +1,25 @@
+window_sizes 1280 962 192 1082 851 35
+diagrams
+  active  classdiagram_ref 128002 // navisu-app
+    816 856 102 4 0 0
+end
+show_stereotypes
+selected class_ref 131842 // LayerCheckTreeImpl
+open
+  classview_ref 128002 // dpagent
+  classview_ref 128258 // impl
+  classview_ref 128386 // drivers
+  classview_ref 128514 // impl
+  classview_ref 128770 // guiagent
+  classview_ref 128898 // geoview
+  classview_ref 129026 // gobject
+  classview_ref 129154 // impl
+  classview_ref 129282 // impl
+  classview_ref 129410 // layertree
+  classview_ref 130050 // impl
+  classview_ref 129538 // impl
+  classview_ref 129666 // impl
+  classview_ref 130434 // processors
+  classview_ref 130562 // navisu-app
+end
+end

@@ -1,0 +1,9 @@
+class DefaultMenuEnum
+!!!137986.java!!!	DefaultMenuEnum(in key : String)
+        this.key = key;
+!!!138114.java!!!	getKey() : String
+        return key;
+!!!138242.java!!!	getAll() : DefaultMenuEnum
+        return new DefaultMenuEnum[] {
+            FILE, EDIT, WINDOW, HELP
+        };

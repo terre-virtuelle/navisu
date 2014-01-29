@@ -1,0 +1,50 @@
+class MenuManagerImpl
+!!!138882.java!!!	componentInitiated() : void
+
+        // instance menu map
+        this.menuMap = new HashMap<>();
+!!!139010.java!!!	setMenuComponent(inout menu : MenuBar) : void
+
+        this.menuBar = menu;
+
+        if(this.menuBar.getMenus().size() > 0) {
+            this.menuBar.getMenus().clear();
+        }
+
+        for(DefaultMenuEnum defaultMenu : DefaultMenuEnum.getAll()) {
+
+            String key = defaultMenu.getKey();
+            this.createMenu(key, Translator.tr(key));
+        }
+!!!139138.java!!!	createMenu(in menuKey : String, in menuName : String) : void
+
+        if(!this.menuMap.containsKey(menuKey)) {
+
+            // Create the menuBar
+            Menu menu = new Menu(menuName);
+
+            // Hold the menuBar in the map
+            this.menuMap.put(menuKey, menu);
+
+            // Add it to the menuBar bar
+            this.menuBar.getMenus().add(menu);
+        }
+        else {
+            LOGGER.warning("Menu with key \"" + menuKey + "\" already exists.");
+        }
+!!!139266.java!!!	addMenuItem(in menuKey : String, in menuName : String, inout item : MenuItem) : void
+
+        if(!this.menuMap.containsKey(menuKey)) {
+            LOGGER.info("Menu with key \"" + menuKey + "\" does not exists. It will be created.");
+            this.createMenu(menuKey, menuName);
+        }
+
+        // Get the menu
+        Menu menu = this.menuMap.get(menuKey);
+
+        // Add the menu item
+        menu.getItems().add(item);
+!!!139394.java!!!	addMenuItem(inout defMenu : DefaultMenuEnum, inout item : MenuItem) : void
+
+        Menu menu = this.menuMap.get(defMenu.getKey());
+        menu.getItems().add(item);

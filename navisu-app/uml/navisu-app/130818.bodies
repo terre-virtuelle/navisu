@@ -1,0 +1,18 @@
+class GObjectImpl
+!!!132482.java!!!	GObjectImpl(in id : int, in lat : double, in lon : double)
+        this.id = id;
+        this.placemark = new PointPlacemark(Position.fromDegrees(lat, lon));
+!!!132610.java!!!	GObjectImpl(in id : int, inout placemark : PointPlacemark)
+        this.id = id;
+        this.placemark = placemark;
+!!!132738.java!!!	getID() : int
+        return this.id;
+!!!132866.java!!!	setLocation(inout location : Location) : void
+
+        SwingUtilities.invokeLater(() ->
+            this.placemark.moveTo(Position.fromDegrees(location.getLatitudeDegree(), location.getLongitudeDegree()))
+        );
+!!!132994.java!!!	getRenderables() : Renderable
+        return new Renderable[] { this.placemark };
+!!!133122.java!!!	getClone() : Object
+        return new GObjectImpl(this.id, this.placemark);

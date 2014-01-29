@@ -1,0 +1,29 @@
+class DpAgentImpl
+!!!128770.java!!!	componentInitiated() : void
+
+        this.model = Model.factory.newModel(TObject.class);
+        this.model.getEventsSubscribe().subscribe(this.createModelEvents());
+!!!128898.java!!!	createModelEvents() : ModelEvents<TObject>
+        return new ModelEvents<TObject>() {
+
+            @Override
+            public void notifyDataCreated(int id, TObject data) {
+                produceDpAgentEvents.notifyCreated(data);
+            }
+
+            @Override
+            public void notifyDataUpdated(int id, TObject data) {
+                produceDpAgentEvents.notifyUpdated(data);
+            }
+
+            @Override
+            public void notifyDataDeleted(int id, TObject data) {
+                produceDpAgentEvents.notifyDeleted(data);
+            }
+        };
+!!!129026.java!!!	create(in tObject : TObject) : void
+        this.model.getWriteDataServices().create(tObject.getID(), tObject);
+!!!129154.java!!!	update(in tObject : TObject) : void
+        this.model.getWriteDataServices().update(tObject.getID(), tObject);
+!!!129282.java!!!	delete(in tObject : TObject) : void
+        this.model.getWriteDataServices().delete(tObject.getID());

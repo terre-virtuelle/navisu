@@ -1,0 +1,28 @@
+class Translator
+!!!142082.java!!!	Translator()
+        this.bundle = ResourceBundle.getBundle(BUNDLE_LOCATION, lang.getLocale());
+!!!142210.java!!!	_setLang(inout lang : I18nLangEnum) : void
+
+        Checker.notNull(lang, "Lang must not be null.");
+
+        this.lang = lang;
+        this.bundle = ResourceBundle.getBundle(BUNDLE_LOCATION, lang.getLocale());
+!!!142338.java!!!	_tr(in key : String) : String
+
+        Checker.notNull(key, "Key must not be null.");
+
+        return this.bundle.getString(key);
+!!!142466.java!!!	setLang(inout lang : I18nLangEnum) : void
+
+        if(instance == null) {
+            instance = new Translator();
+        }
+
+        instance._setLang(lang);
+!!!142594.java!!!	tr(in key : String) : String
+
+        if(instance == null) {
+            instance = new Translator();
+        }
+
+        return instance._tr(key);

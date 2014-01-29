@@ -1,0 +1,8 @@
+class LayerTreeOptionsViewImpl
+!!!137730.java!!!	LayerTreeOptionsViewImpl()
+
+        this.container = new Pane();
+        this.opacitySlider = new Slider();
+        this.container.getChildren().add(this.opacitySlider);
+!!!137858.java!!!	getDisplayable() : Node
+        return this.container;

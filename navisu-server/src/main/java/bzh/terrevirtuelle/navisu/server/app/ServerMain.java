@@ -34,7 +34,7 @@ public class ServerMain extends Application {
         DataServerServices nmeaServerServices = componentManager.getComponentService(DataServerServices.class);
         // Test avec choix des parametres de comm
         nmeaServerServices.init("localhost", 8080);
-        nmeaServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
+       // nmeaServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         nmeaServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // Test avec les parametres de comm dans properties/nmea.properties
         //  nmeaServerServices.init();

@@ -1,0 +1,62 @@
+class DriverManagerImpl
+!!!130178.java!!!	componentInitiated() : void
+        // ?
+!!!130306.java!!!	init() : void
+
+        this.fileChooser = new FileChooser();
+        this.fileChooser.setTitle(tr("popup.fileChooser.open"));
+        this.fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+        MenuItem menuItem = new MenuItem(tr("menu.file.open"));
+        menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
+        menuItem.setOnAction((e) -> {
+
+            // Show the file chooser
+            List<File> selectedFiles = this.fileChooser.showOpenMultipleDialog(null);
+
+            // If files has been selected
+            if(selectedFiles != null) {
+
+                // Open them
+                this.handleOpenFiles(selectedFiles);
+            }
+        });
+!!!130434.java!!!	handleOpenFiles(inout files : List<File>) : void
+
+        for(File file : files) {
+
+            Driver driver = this.findDriverForFile(file.getAbsolutePath());
+            if(driver != null) {
+
+                guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
+                    driver.open(progressHandle, file.getAbsolutePath());
+                });
+            }
+            else {
+                LOGGER.warning("Unable to find a driver for file \"" + file.getName() + "\"");
+            }
+        }
+!!!130562.java!!!	findDriverForFile(in file : String) : Driver
+
+        Driver compatibleDriver = null;
+
+        for(Driver driver : this.availableDriverList) {
+
+            if(driver.canOpen(file)) {
+                compatibleDriver = driver;
+                break;
+            }
+        }
+
+        return compatibleDriver;
+!!!130690.java!!!	registerNewDriver(inout driver : Driver) : void
+
+        Checker.notNull(driver, "Driver must not be null.");
+
+        // Hold the driver
+        this.availableDriverList.add(driver);
+
+        // Add the supported extension to the file chooser
+        this.fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(driver.getName(), driver.getExtensions())
+        );

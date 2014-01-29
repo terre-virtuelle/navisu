@@ -1,0 +1,11 @@
+class LayerTreeOptionsControllerImpl
+!!!137090.java!!!	getName() : String
+        return "Layers";
+!!!137218.java!!!	save() : void
+        //To change body of implemented methods use File | Settings | File Templates.
+!!!137346.java!!!	restoreDefault() : void
+        //To change body of implemented methods use File | Settings | File Templates.
+!!!137474.java!!!	load() : void
+        //To change body of implemented methods use File | Settings | File Templates.
+!!!137602.java!!!	getOptionsView() : OptionsView
+        return view;

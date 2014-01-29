@@ -1,0 +1,63 @@
+class GuiAgentImpl
+!!!134658.java!!!	showGui(inout stage : Stage, in width : int, in height : int) : void
+
+        this.width = width;
+        this.height = height;
+
+        this.stage = stage;
+
+        this.jobsManager = JobsManager.create();
+
+        StackPane root = null;
+        final FXMLLoader loader = new FXMLLoader();
+        GuiAgentController ctrl = null;
+
+        try {
+            root = loader.load(GuiAgentImpl.class.getResourceAsStream("GuiAgent.fxml"));
+            ctrl = loader.getController();
+        } catch (IOException e) {
+            LOGGER.severe("Cannot load GuiAgent.fxml !");
+            System.exit(0);
+        }
+
+        Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
+
+        // Place scene components
+        ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
+        ctrl.centerBorderPane.setCenter(geoViewServices.getDisplayService().getDisplayable());
+
+        ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
+
+        // Initialize menu
+        this.menuServices.setMenuComponent(ctrl.menuBar);
+        this.initializeMenuItems(this.menuServices);
+
+        stage.setTitle("NaVisu");
+        stage.setOnCloseRequest(e -> {
+            LOGGER.info("Stop Application");
+            ComponentManager.componentManager.stopApplication();
+            System.exit(0);
+        });
+        stage.setScene(scene);
+        stage.show();
+!!!134786.java!!!	initializeMenuItems(in menuServices : MenuManagerServices) : void
+
+        MenuItem fileMenuItem = new MenuItem(Translator.tr("menu.file.exit"));
+        fileMenuItem.setOnAction(e -> {
+
+            ComponentManager.componentManager.stopApplication();
+            System.exit(0);
+        });
+        menuServices.addMenuItem(DefaultMenuEnum.FILE, fileMenuItem);
+
+        MenuItem preferenceMenuItem = new MenuItem(Translator.tr("menu.edit.preferences"));
+        preferenceMenuItem.setOnAction(e -> {
+            optionsManagerServices.show();
+        });
+        menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);;
+!!!134914.java!!!	getJobsManager() : JobsManager
+        return this.jobsManager;
+!!!135042.java!!!	isFullScreen() : boolean
+        return this.stage.isFullScreen();
+!!!135170.java!!!	setFullScreen(inout fullScreen : boolean) : void
+        this.stage.setFullScreen(true);

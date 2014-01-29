@@ -1,0 +1,25 @@
+class TObjectProcessor
+!!!142722.java!!!	getLayer() : GeoLayer<Layer>
+        return GeoLayer.factory.newWorldWindGeoLayer(this.layer);
+!!!142850.java!!!	processCreated(in id : int, inout input : TObject) : GObject
+
+        final GObject gObject = new GObjectImpl(
+                id,
+                input.getLocation().getLatitudeDegree(),
+                input.getLocation().getLongitudeDegree()
+        );
+
+        return gObject;
+!!!142978.java!!!	processUpdated(in id : int, inout input : TObject, inout output : GObject) : GObject
+
+        // Very simple...
+        output.setLocation(input.getLocation());
+
+        return output;
+!!!143106.java!!!	processDeleted(in id : int, inout input : TObject, inout output : GObject) : GObject
+
+        // Nothing to do...
+
+        return output;
+!!!143234.java!!!	getType() : Class<? extends TObject>
+        return TObject.class;
