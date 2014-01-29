@@ -136,6 +136,11 @@ public class Ship implements Serializable {
      * Creates a new instance of Ship
      */
     public Ship() {
+        this.latitude = new SimpleDoubleProperty(0);
+        this.longitude = new SimpleDoubleProperty(0);
+        this.heading = new SimpleDoubleProperty(0);
+        this.cog = new  SimpleDoubleProperty(0);
+        this.sog = new  SimpleDoubleProperty(0);
     }
 
     /**

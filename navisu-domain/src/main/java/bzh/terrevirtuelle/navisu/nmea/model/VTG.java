@@ -10,10 +10,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Track made good and ground speed
- * @author Camille AUBRY, Alexis BURGER, Chintana CHANTHABOURY, Teddy VALLEE aubryc
+ *
+ * @author Camille AUBRY, Alexis BURGER, Chintana CHANTHABOURY, Teddy VALLEE
+ * aubryc
  * @author Serge Morvan
  */
-@XmlRootElement(name="VTG")
+@XmlRootElement(name = "VTG")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class VTG extends NMEA {
 
@@ -22,8 +24,9 @@ public class VTG extends NMEA {
     private float sog;
 
     /**
-     * VTG - Velocity made good. The gps receiver may use the LC prefix
-     * instead of GP if it is emulating Loran output.
+     * VTG - Velocity made good. The gps receiver may use the LC prefix instead
+     * of GP if it is emulating Loran output.
+     *
      * @param device
      * @param sentence
      * @param trueTrackMadeGoodDegrees
@@ -53,7 +56,9 @@ public class VTG extends NMEA {
         this.sog = sog;
     }
 
-   
+    public float getCog() {
+        return trueTrackMadeGoodDegrees;
+    }
 
     /**
      *
@@ -89,9 +94,9 @@ public class VTG extends NMEA {
 
     @Override
     public String toString() {
-        return "VTG{" + "trueTrackMadeGoodDegrees=" + trueTrackMadeGoodDegrees 
-                + ", magneticTrackMadeGood=" + magneticTrackMadeGood 
-                + ", groundSpeed=" + sog  + '}';
+        return "VTG{" + "trueTrackMadeGoodDegrees=" + trueTrackMadeGoodDegrees
+                + ", magneticTrackMadeGood=" + magneticTrackMadeGood
+                + ", groundSpeed=" + sog + '}';
     }
-    
+
 }
