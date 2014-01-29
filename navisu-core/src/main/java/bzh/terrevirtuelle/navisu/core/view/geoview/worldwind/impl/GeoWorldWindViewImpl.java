@@ -34,7 +34,7 @@ import java.awt.*;
 public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorldWindView {
 
     protected final WorldWindLayerManager layerManager;
-    protected final WorldWindow wwd;
+    protected final static WorldWindow wwd = new WorldWindowGLJPanel();
 
     protected EarthFlat globe;
 
@@ -47,8 +47,7 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
         Configuration.setValue(AVKey.VIEW_INPUT_HANDLER_CLASS_NAME, CustomViewInputHandler.class.getName());
 
         // Create the WorldWindow
-        this.wwd = new WorldWindowGLJPanel();
-
+        // this.wwd = new WorldWindowGLJPanel();
         // Create the Globe
         this.globe = new EarthFlat();
         this.globe.setProjection(this.projectionToWorldWindProjection(this.currentProjection));
@@ -68,13 +67,12 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
 
         SwingNode swingNode = new SwingNode();
 
-        if(wwd instanceof WorldWindowGLCanvas) {
+        if (wwd instanceof WorldWindowGLCanvas) {
             JPanel container = new JPanel(new BorderLayout());
-            container.add((WorldWindowGLCanvas)wwd, BorderLayout.CENTER);
+            container.add((WorldWindowGLCanvas) wwd, BorderLayout.CENTER);
             swingNode.setContent(container);
-        }
-        else {
-            swingNode.setContent((WorldWindowGLJPanel)wwd);
+        } else {
+            swingNode.setContent((WorldWindowGLJPanel) wwd);
         }
 
         return swingNode;
@@ -102,7 +100,9 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
 
         Position pos = this.wwd.getView().computePositionFromScreenPoint(pixel.getX(), pixel.getY());
 
-        if(pos == null) return null;
+        if (pos == null) {
+            return null;
+        }
 
         return Location.factory.newLocation(pos.latitude.degrees, pos.longitude.degrees);
     }
@@ -115,9 +115,11 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
         Vec4 pt = this.wwd.getModel().getGlobe().computePointFromLocation(
                 LatLon.fromDegrees(latLon.getLatitudeDegree(), latLon.getLongitudeDegree()));
 
-        if(pt == null) return null;
+        if (pt == null) {
+            return null;
+        }
 
-        return Point.factory.newPoint((int)pt.x, (int)pt.y);
+        return Point.factory.newPoint((int) pt.x, (int) pt.y);
     }
 
     @Override
@@ -155,5 +157,9 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
     @Override
     public Projection getProjection() {
         return this.currentProjection;
+    }
+
+    public static WorldWindow getWW() {
+        return wwd;
     }
 }
