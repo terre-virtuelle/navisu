@@ -19,40 +19,22 @@ import java.util.List;
  */
 public class ShipViewFactory {
 
-    private double latitude;
-    private double longitude;
-    private Ship ship;
+    private final double latitude;
+    private final double longitude;
+    private final double cog;
     private double[] shipShape;
     private ShapeAttributes pathAttrs;
-
-    /**
-     * Get the value of ship
-     *
-     * @return the value of ship
-     */
-    public Ship getShip() {
-        return ship;
-    }
-
-    /**
-     * Set the value of ship
-     *
-     * @param ship new value of ship
-     */
-    public void setShip(Ship ship) {
-        this.ship = ship;
-    }
 
     public ShipViewFactory(Ship ship) {
         this.latitude = ship.getLatitude();
         this.longitude = ship.getLongitude();
-        this.ship = ship;
+        this.cog = ship.getCog();
     }
 
     public ShipView build() {
         initShape();
         makeAttributes();
-        ShipView shipView = new ShipView(makePositionList(shipShape), ship);
+        ShipView shipView = new ShipView(makePositionList(shipShape), latitude, longitude, cog);
         shipView.setAttributes(pathAttrs);
         shipView.setEnableBatchPicking(true);
         return shipView;
@@ -90,41 +72,4 @@ public class ShipViewFactory {
         }
         return Arrays.asList(array);
     }
-
-    /**
-     * Get the value of longitude
-     *
-     * @return the value of longitude
-     */
-    public double getLongitude() {
-        return longitude;
-    }
-
-    /**
-     * Set the value of longitude
-     *
-     * @param longitude new value of longitude
-     */
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    /**
-     * Get the value of latitude
-     *
-     * @return the value of latitude
-     */
-    public double getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * Set the value of latitude
-     *
-     * @param latitude new value of latitude
-     */
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
 }
