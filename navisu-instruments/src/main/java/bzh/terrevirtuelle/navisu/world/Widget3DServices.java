@@ -15,6 +15,7 @@ import org.capcaval.c3.component.ComponentService;
 public interface Widget3DServices
         extends ComponentService {
 
-    public void createLocator();
+    public void createGpsLocator();
+    public void createAisLocator();
 
 }

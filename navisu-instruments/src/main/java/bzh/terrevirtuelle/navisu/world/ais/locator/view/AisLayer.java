@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.world.gps.locator.view;
+package bzh.terrevirtuelle.navisu.world.ais.locator.view;
 
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.logging.Logger;
@@ -12,13 +12,13 @@ import java.util.logging.Logger;
  *
  * @author Serge
  */
-public class GpsLayer
+public class AisLayer
         extends RenderableLayer {
 
-    protected final static Logger LOGGUER = Logger.getLogger(GpsLayer.class.getName());
+    protected final static Logger LOGGUER = Logger.getLogger(AisLayer.class.getName());
    
-    public GpsLayer() {  
-        setName("GPS Layer");
+    public AisLayer() {  
+        setName("AIS Layer");
     }
 
     public void add(ShipView shipView) {
