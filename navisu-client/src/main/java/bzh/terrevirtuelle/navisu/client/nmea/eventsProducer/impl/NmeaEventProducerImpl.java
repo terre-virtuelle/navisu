@@ -17,6 +17,7 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS8Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS9Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS135Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.APBEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.BECEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.BODEvent;
@@ -67,6 +68,7 @@ import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS8;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS9;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS135;
 import bzh.terrevirtuelle.navisu.nmea.model.APB;
 import bzh.terrevirtuelle.navisu.nmea.model.BEC;
 import bzh.terrevirtuelle.navisu.nmea.model.BOD;
@@ -188,7 +190,7 @@ public class NmeaEventProducerImpl
     protected XTEEvent xteEvent;
     @ProducedEvent
     protected ZDAEvent zdaEvent;
-    
+
     @ProducedEvent
     protected AIS1Event ais1Event;
     @ProducedEvent
@@ -211,6 +213,8 @@ public class NmeaEventProducerImpl
     protected AIS8Event ais8Event;
     @ProducedEvent
     protected AIS9Event ais9Event;
+    @ProducedEvent
+    protected AIS135Event ais135Event;
 
     private Map<Class, NMEAEvent> nmeaEvents = null;
 
@@ -262,7 +266,7 @@ public class NmeaEventProducerImpl
         nmeaEvents.put(VWT.class, vwtEvent);
         nmeaEvents.put(XTE.class, xteEvent);
         nmeaEvents.put(ZDA.class, zdaEvent);
-        
+
         nmeaEvents.put(AIS1.class, ais1Event);
         nmeaEvents.put(AIS11.class, ais11Event);
         nmeaEvents.put(AIS14.class, ais14Event);
@@ -274,7 +278,7 @@ public class NmeaEventProducerImpl
         nmeaEvents.put(AIS5.class, ais5Event);
         nmeaEvents.put(AIS8.class, ais8Event);
         nmeaEvents.put(AIS9.class, ais8Event);
-  
-        
+        nmeaEvents.put(AIS135.class, ais135Event);
+
     }
 }

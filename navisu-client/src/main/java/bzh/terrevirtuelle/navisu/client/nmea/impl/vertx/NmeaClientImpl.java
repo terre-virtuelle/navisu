@@ -124,7 +124,7 @@ public class NmeaClientImpl
 
     private void response(Sentences sentences) {
         notifyNMEAEvent();
-        // display();
+       //  display();
     }
 
     public void display() {
