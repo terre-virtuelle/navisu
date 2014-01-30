@@ -119,6 +119,7 @@ public class DataServerImpl
         sentences = new Sentences();
         parser = new NmeaStringParser(sentences);
         sentenceQueues.get(currentReader).stream().forEach((s) -> {
+            System.out.println("s : " + s);
             parser.parse(s);
         });
         StringWriter stringWriter = new StringWriter();
