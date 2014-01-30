@@ -57,7 +57,7 @@ import bzh.terrevirtuelle.navisu.nmea.model.AIS24;
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;  
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.impl.PrintHandler; 
-import bzh.terrevirtuelle.navisu.ais.controller.parser.impl.AISParser;
+import bzh.terrevirtuelle.navisu.nmea.ais.controller.parser.impl.AISParser;
  
 import bzh.terrevirtuelle.navisu.nmea.model.GPSSatellite;
 
@@ -1565,7 +1565,7 @@ CHECKSUM : (('*'('0'..'9')('0'..'9')) |
          ;   
  NAME 
  	:	
- 	'"' (LETTERS | NUMBER  | ':' | SIGN | '/')* '"'
+ 	'"' (LETTERS | NUMBER  | ':' | SIGN | '/' | '\'' | SEP | '%' | '!' )* '"'
  	;
  LETTERS : (('A'..'Z')|('a'..'z')|' ')+
          ;// {System.out.println(getText());};        
