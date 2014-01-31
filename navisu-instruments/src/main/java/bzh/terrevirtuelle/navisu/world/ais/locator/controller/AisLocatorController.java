@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.world.ais.locator.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
 import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -16,6 +17,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS135;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.ship.Ship;
@@ -46,6 +48,7 @@ public class AisLocatorController {
     ComponentManager cm = ComponentManager.componentManager;
     ComponentEventSubscribe<AIS1Event> ais1ES = cm.getComponentEventSubscribe(AIS1Event.class);
     ComponentEventSubscribe<AIS3Event> ais3ES = cm.getComponentEventSubscribe(AIS3Event.class);
+    ComponentEventSubscribe<AIS4Event> ais4ES = cm.getComponentEventSubscribe(AIS4Event.class);
     ComponentEventSubscribe<AIS5Event> ais5ES = cm.getComponentEventSubscribe(AIS5Event.class);
 
     protected AisLayer aisLayer;
@@ -94,6 +97,22 @@ public class AisLocatorController {
                     shipBuild(ais);
                     ships.put(mmsi, ship);
                 }
+                // System.out.println("ships " + ships.size());
+            }
+        });
+        ais4ES.subscribe(new AIS4Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                AIS4 ais = (AIS4) data;
+                int mmsi = ais.getMMSI();
+                if (ships.containsKey(mmsi)) {
+                    ship = ships.get(mmsi);
+                   // shipUpdate(ais); 
+                } else {
+                   // shipBuild(ais); // faire un build pour les stations fixes
+                    ships.put(mmsi, ship);
+                }
             }
         });
         ais5ES.subscribe(new AIS5Event() {
@@ -107,7 +126,7 @@ public class AisLocatorController {
                     //  shipUpdate(ais);
                 } else {
                     //  shipBuild(ais);
-                    ships.put(mmsi, ship);
+                   // ships.put(mmsi, ship);
                 }
             }
         });
@@ -122,12 +141,11 @@ public class AisLocatorController {
         ship.setLatitude(ais.getLatitude());
         ship.setLongitude(ais.getLongitude());
         ship.setCog(ais.getCog()/10);
-       /* ship.setHeading(ais.getHeading());
+/*
         System.out.println(ais.getMMSI()
                 + " lat " + ais.getLatitude() + " lon " + ais.getLongitude()
-                + "  heading " + ais.getHeading()
                 + "  cog " + ais.getCog());
-               */
+        */
     }
 
     private void shipBuild(AIS135 ais) {
