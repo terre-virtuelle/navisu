@@ -56,6 +56,7 @@ public class CustomViewInputHandler extends OrbitViewInputHandler {
             } else {
                 return super.inputActionPerformed(inputHandler, mouseWheelEvent, viewAction);
             }
+            
         }
 
         protected boolean zoomToPosition(
@@ -79,7 +80,6 @@ public class CustomViewInputHandler extends OrbitViewInputHandler {
             }
 
             onVerticalTranslate(zoomInput * scale, viewAction);
-
             return true;
         }
     }
