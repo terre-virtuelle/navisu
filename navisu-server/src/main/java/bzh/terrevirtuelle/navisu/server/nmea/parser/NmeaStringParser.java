@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bzh.terrevirtuelle.navisu.server.nmea.parser;
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.impl.NMEALexer;
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.impl.NMEAParser;
 import bzh.terrevirtuelle.navisu.nmea.model.Sentences;
+import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -20,6 +23,7 @@ import org.antlr.runtime.RecognitionException;
  * @author Serge
  */
 public class NmeaStringParser {
+
     private NMEAParser parser;
     private NMEALexer lexer;
     private ANTLRStringStream input;
@@ -27,7 +31,20 @@ public class NmeaStringParser {
     private Handler aisHandler;
     private CommonTokenStream tokens;
     private Sentences sentences;
+    protected static final Logger LOGGER = Logger.getLogger(NmeaStringParser.class.getName());
+    protected static  FileHandler fileHandler = null;
 
+    static {
+        try {
+            fileHandler = new FileHandler("parser.log");
+            fileHandler.setFormatter(new SimpleFormatter());
+        } catch (IOException | SecurityException ex) {
+            Logger.getLogger(NmeaStringParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        LOGGER.addHandler(fileHandler);
+    }
+
+    ;
     public NmeaStringParser(Sentences sentences) {
         this.sentences = sentences;
     }
@@ -44,7 +61,7 @@ public class NmeaStringParser {
         try {
             parser.entry();
         } catch (RecognitionException ex) {
-            java.util.logging.Logger.getLogger(NmeaStringParser.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, ex.getMessage());
         }
     }
 }
