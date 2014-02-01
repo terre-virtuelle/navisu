@@ -10,8 +10,11 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import java.awt.Color;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -24,6 +27,18 @@ public class ShipViewFactory {
     private final double cog;
     private double[] shipShape;
     private ShapeAttributes pathAttrs;
+    private static final Map<Integer, Material> materials;
+
+    static {
+        materials = new HashMap<>();
+        materials.put(30, Material.ORANGE);
+        materials.put(36, new Material(new Color(0xFF00FF)));
+        materials.put(37, new Material(new Color(0xFF00FF)));
+        materials.put(6, Material.BLUE);
+        materials.put(7, Material.GREEN);
+        materials.put(8, Material.RED);
+        materials.put(0, Material.WHITE);
+    }
 
     public ShipViewFactory(Ship ship) {
         this.latitude = ship.getLatitude();
@@ -58,7 +73,7 @@ public class ShipViewFactory {
         pathAttrs.setInteriorMaterial(Material.GREEN);
         pathAttrs.setDrawInterior(true);
         pathAttrs.setInteriorOpacity(1.0);
-        
+
     }
 
     protected final List<Position> makePositionList(double[] src) {

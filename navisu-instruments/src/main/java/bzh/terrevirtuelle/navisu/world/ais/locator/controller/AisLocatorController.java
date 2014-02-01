@@ -97,7 +97,6 @@ public class AisLocatorController {
                     shipBuild(ais);
                     ships.put(mmsi, ship);
                 }
-                // System.out.println("ships " + ships.size());
             }
         });
         ais4ES.subscribe(new AIS4Event() {
@@ -131,9 +130,6 @@ public class AisLocatorController {
             }
         });
 
-        /*
-         
-         */
     }
 
     private void shipUpdate(AIS135 ais) {
