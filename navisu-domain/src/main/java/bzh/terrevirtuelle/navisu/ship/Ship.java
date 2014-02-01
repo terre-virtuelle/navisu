@@ -7,7 +7,9 @@ package bzh.terrevirtuelle.navisu.ship;
 import java.io.Serializable;
 import java.util.Calendar;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  *
@@ -87,7 +89,7 @@ public class Ship implements Serializable {
      * defined in the 1949 Geneva Conventions and Additional Protocols) 59 Ships
      * according to RR Resolution No. 18 (Mob-83)
      */
-    private int type;
+    private IntegerProperty type;
     /**
      * 0 = under way using engine, 1 = at anchor, 2 = not under command, 3 =
      * restricted maneuverability, 4 = constrained by her draught, 5 = moored, 6
@@ -100,7 +102,7 @@ public class Ship implements Serializable {
      * reserved for future use, 14 = AIS-SART (active), 15 = not defined =
      * default (also used by AIS-SART under test)
      */
-    private int navigationalStatus;
+    private IntegerProperty navigationalStatus;
     /**
      * 0 = Undefined (default); 1 = GPS, 2 = GLONASS, 3 = combined GPS/GLONASS,
      * 4 = Loran-C, 5 = Chayka, 6 = integrated navigation system, 7 = surveyed;
@@ -139,8 +141,8 @@ public class Ship implements Serializable {
         this.latitude = new SimpleDoubleProperty(0);
         this.longitude = new SimpleDoubleProperty(0);
         this.heading = new SimpleDoubleProperty(0);
-        this.cog = new  SimpleDoubleProperty(0);
-        this.sog = new  SimpleDoubleProperty(0);
+        this.cog = new SimpleDoubleProperty(0);
+        this.sog = new SimpleDoubleProperty(0);
     }
 
     /**
@@ -170,8 +172,8 @@ public class Ship implements Serializable {
         this.width = width;
         this.length = length;
         this.draught = draught;
-        this.type = type;
-        this.navigationalStatus = navigationalStatus;
+        this.type = new SimpleIntegerProperty(type);
+        this.navigationalStatus = new SimpleIntegerProperty(navigationalStatus);
         this.electronicPositionDevice = electronicPositionDevice;
         this.callSign = callSign;
         this.ETA = ETA;
@@ -394,19 +396,23 @@ public class Ship implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
-    public int getNavigationalStatus() {
+
+    public IntegerProperty navigationalStatusProperty() {
         return navigationalStatus;
     }
     
-    public void setNavigationalStatus(int navigationalStatus) {
-        this.navigationalStatus = navigationalStatus;
+    public int getNavigationalStatus() {
+        return navigationalStatusProperty().get();
     }
-
+    
+    public void setNavigationalStatus(int navigationalStatus) {
+        this.navigationalStatusProperty().set(navigationalStatus);
+    }
+    
     public DoubleProperty rotProperty() {
         return rot;
     }
-
+    
     public double getRot() {
         return rotProperty().get();
     }
@@ -427,12 +433,16 @@ public class Ship implements Serializable {
         this.sogProperty().set(sog);
     }
     
-    public int getType() {
+    public IntegerProperty typeProperty() {
         return type;
+    }
+
+    public int getType() {
+        return typeProperty().get();
     }
     
     public void setType(int type) {
-        this.type = type;
+        this.typeProperty().set(type);
     }
     
     public float getWidth() {

@@ -67,9 +67,32 @@ import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
     }
     
-@members{ 
 
+@members {
+public String getErrorMessage(RecognitionException e,
+                              String[] tokenNames)
+{
+    List stack = getRuleInvocationStack(e, this.getClass().getName());
+    String msg = null;
+    if ( e instanceof NoViableAltException ) {
+       NoViableAltException nvae = (NoViableAltException)e;
+       msg = " no viable alt; token="+e.token+
+          " (decision="+nvae.decisionNumber+
+          " state "+nvae.stateNumber+")"+
+          " decision=<<"+nvae.grammarDecisionDescription+">>";
+    }
+    else {
+       msg = super.getErrorMessage(e, tokenNames);
+    }
+    return stack+" "+msg ;
 }
+public String getTokenErrorDisplay(Token t) {
+    return t.toString();
+}
+}
+
+
+
 @lexer::members{
    protected NMEA nmea = null;
    
@@ -1474,7 +1497,7 @@ GPSD_DEVICE
         :	
     	'{"class":"DEVICE"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
     	{
-	//System.out.println("GPSD DEVICE sentence : " + getText());
+	System.out.println("GPSD DEVICE sentence : " + getText());
 	}
     	; 
 GPSD_DEVICES 
