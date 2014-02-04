@@ -67,7 +67,7 @@ import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
     }
     
-
+/*
 @members {
 public String getErrorMessage(RecognitionException e,
                               String[] tokenNames)
@@ -89,6 +89,15 @@ public String getErrorMessage(RecognitionException e,
 public String getTokenErrorDisplay(Token t) {
     return t.toString();
 }
+}
+*/
+@lexer::rulecatch {
+
+    catch (RecognitionException re) {
+        System.out.println("RecognitionException");
+        reportError(re);
+    }
+
 }
 
 
@@ -242,6 +251,18 @@ public String getTokenErrorDisplay(Token t) {
      }
      return date;
    }
+   
+   protected void mismatch(IntStream input, int ttype, BitSet follow)
+throws RecognitionException {
+        System.out.println("mismatch");
+        throw new MismatchedTokenException(ttype, input);
+    }
+
+    public Object recoverFromMismatchedSet(IntStream input,
+RecognitionException e, BitSet follow) throws RecognitionException {
+        System.out.println("recoverFromMismatchedSet");
+        throw e;
+    }
 }		
 entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT|
 		MSK|MTA|MTW|MWD|MWV|RMB|RMC|RTE|VBW|VLW|VHW|VPW|VTG|VWR|VWT|XTE|ZDA
@@ -1271,7 +1292,7 @@ VDM 	: '!' device=DEVICE 'VDM' SEP
 	
 /** SECTION GPSD */
 GPSD_AIS
-    	:	
+    	:			
     	'{"class":"AIS"' SEP 
     	'"device":' dev= DEV SEP 
     	'"type":' type = NUMBER SEP
@@ -1400,8 +1421,9 @@ GPSD_AIS
     	'"to_port":' to_port=NUMBER SEP
     	'"to_starboard":' to_starboard=NUMBER 
     	)
-         ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN)*
-         
+    	
+         ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
+        // {System.out.println(getText());}
     	{
     	switch(type.getText()){
 	case "1" :
@@ -1467,8 +1489,6 @@ GPSD_AIS
 	                        new Integer(imo.getText()), shipname.getText(), new Integer(shiptype.getText()),
 	                        new Integer(to_starboard.getText())*2, new Integer(to_bow.getText())+ new Integer(to_stern.getText()),
 	                        new Integer(draught.getText()), callsign.getText(), date, destination.getText());
-	                        
-	  //System.out.println(ais5);
 	  aisHandler.doIt(ais5);
 	  }
 	  
@@ -1497,7 +1517,7 @@ GPSD_DEVICE
         :	
     	'{"class":"DEVICE"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
     	{
-	System.out.println("GPSD DEVICE sentence : " + getText());
+	 //System.out.println("GPSD DEVICE sentence : " + getText());
 	}
     	; 
 GPSD_DEVICES 

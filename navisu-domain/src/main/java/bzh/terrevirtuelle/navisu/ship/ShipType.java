@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Category {
+public class ShipType {
 
     public static final Map<Integer, String> TYPE = Collections.unmodifiableMap(new HashMap<Integer, String>() {
         {
@@ -95,7 +95,7 @@ public class Category {
     @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
-        Set<Map.Entry<Integer, String>> entries = Category.TYPE.entrySet();
+        Set<Map.Entry<Integer, String>> entries = ShipType.TYPE.entrySet();
         buffer.append("[");
         entries.stream().forEach((e) -> {
             buffer.append("[").append(e.getKey()).append(", ").append(e.getValue()).append("]");

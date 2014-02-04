@@ -89,7 +89,7 @@ public class Ship implements Serializable {
      * defined in the 1949 Geneva Conventions and Additional Protocols) 59 Ships
      * according to RR Resolution No. 18 (Mob-83)
      */
-    private IntegerProperty type;
+    private IntegerProperty shipType;
     /**
      * 0 = under way using engine, 1 = at anchor, 2 = not under command, 3 =
      * restricted maneuverability, 4 = constrained by her draught, 5 = moored, 6
@@ -159,7 +159,7 @@ public class Ship implements Serializable {
             float latitude, float longitude,
             float width, float length, float draught,
             int type, int navigationalStatus, int electronicPositionDevice, String callSign,
-            Calendar ETA, String destination) {
+            Calendar ETA, String destination, String country) {
         this.mmsi = mmsi;
         this.imo = imo;
         this.name = name;
@@ -172,38 +172,21 @@ public class Ship implements Serializable {
         this.width = width;
         this.length = length;
         this.draught = draught;
-        this.type = new SimpleIntegerProperty(type);
+        this.shipType = new SimpleIntegerProperty(type);
         this.navigationalStatus = new SimpleIntegerProperty(navigationalStatus);
         this.electronicPositionDevice = electronicPositionDevice;
         this.callSign = callSign;
         this.ETA = ETA;
         this.destination = destination;
+        this.country = country;
     }
-    
+
     @Override
     public String toString() {
-        String s = "[" + "MMSI : " + mmsi
-                + ", IMO" + imo
-                + ", name : " + name
-                + ", country : " + country
-                + ", lat : " + getLatitude()
-                + ", lon : " + getLongitude()
-                + ", heading : " + heading
-                + ", cog : " + cog
-                + ", sog : " + sog
-                + ", rot : " + rot
-                + ", width : " + width
-                + ", length : " + length
-                + ", draught : " + draught
-                + ", type : " + type
-                + ", navigationalStatus : " + navigationalStatus
-                + ", callSign : " + callSign
-                + ", destination : " + destination
-                + ", ETA : " + ETA
-                + "]";
-        return s;
+        return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country + ", latitude=" + latitude + ", longitude=" + longitude + ", heading=" + heading + ", cog=" + cog + ", sog=" + sog + ", rot=" + rot + ", width=" + width + ", length=" + length + ", draught=" + draught + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus + ", electronicPositionDevice=" + electronicPositionDevice + ", callSign=" + callSign + ", ETA=" + ETA + ", destination=" + destination + ", year=" + year + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minute=" + minute + '}';
     }
     
+  
     public int getMonth() {
         return month;
     }
@@ -434,7 +417,7 @@ public class Ship implements Serializable {
     }
     
     public IntegerProperty typeProperty() {
-        return type;
+        return shipType;
     }
 
     public int getType() {
