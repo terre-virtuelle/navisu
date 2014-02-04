@@ -21,8 +21,9 @@ import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.ship.Ship;
+import bzh.terrevirtuelle.navisu.ship.ShipBuilder;
 import bzh.terrevirtuelle.navisu.world.ais.locator.view.AisLayer;
-import bzh.terrevirtuelle.navisu.world.ais.locator.view.ShipView;
+import bzh.terrevirtuelle.navisu.world.ais.locator.view.ShipDefaultView;
 import bzh.terrevirtuelle.navisu.world.ais.locator.view.ShipViewFactory;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Position;
@@ -56,10 +57,11 @@ public class AisLocatorController {
     private double longitude;
     private double cog;
     private double heading;
+    private int type;
     private final WorldWindow wwd;
     private Map<Integer, Ship> ships;
     private Ship ship;
-    private ShipView shipView;
+    private ShipDefaultView shipView;
 
     public AisLocatorController(GeoViewServices geoViewServices) {
         ships = new HashMap<>();
@@ -107,9 +109,9 @@ public class AisLocatorController {
                 int mmsi = ais.getMMSI();
                 if (ships.containsKey(mmsi)) {
                     ship = ships.get(mmsi);
-                   // shipUpdate(ais); 
+                    // shipUpdate(ais); 
                 } else {
-                   // shipBuild(ais); // faire un build pour les stations fixes
+                    // shipBuild(ais); // faire un build pour les stations fixes
                     ships.put(mmsi, ship);
                 }
             }
@@ -122,10 +124,11 @@ public class AisLocatorController {
                 int mmsi = ais.getMMSI();
                 if (ships.containsKey(mmsi)) {
                     ship = ships.get(mmsi);
-                    //  shipUpdate(ais);
+                    System.out.println("5 : " + mmsi + " " + ais.getShipType());
+                    ship.setType(ais.getShipType());
                 } else {
-                    //  shipBuild(ais);
-                   // ships.put(mmsi, ship);
+                    // shipBuild(ais);
+                    //ships.put(mmsi, ship);
                 }
             }
         });
@@ -136,43 +139,40 @@ public class AisLocatorController {
 
         ship.setLatitude(ais.getLatitude());
         ship.setLongitude(ais.getLongitude());
-        ship.setCog(ais.getCog()/10);
-/*
-        System.out.println(ais.getMMSI()
-                + " lat " + ais.getLatitude() + " lon " + ais.getLongitude()
-                + "  cog " + ais.getCog());
-        */
+        ship.setCog(ais.getCog() / 10);
     }
 
     private void shipBuild(AIS135 ais) {
+
         ship = new Ship(ais.getMMSI(), ais.getImo(), ais.getShipname(),
                 ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
                 ais.getLatitude(), ais.getLongitude(),
                 ais.getWidth(), ais.getLength(), ais.getDraught(),
                 ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
-                ais.getETA(), ais.getDestination());
+                ais.getETA(), ais.getDestination(), "");
+
         shipView = new ShipViewFactory(ship).build();
 
         aisLayer.add(shipView);
 
         ship.latitudeProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
-            latitude = t1.doubleValue();
-            shipView.moveTo(Position.fromDegrees(latitude, longitude, 100));
+            shipView.moveTo(Position.fromDegrees(t1.doubleValue(), ship.getLongitude(), 100));
             wwd.redrawNow();
         });
         ship.longitudeProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
-            longitude = t1.doubleValue();
-            shipView.moveTo(Position.fromDegrees(latitude, longitude, 100));
+            shipView.moveTo(Position.fromDegrees(ship.getLatitude(), t1.doubleValue(), 100));
             wwd.redrawNow();
         });
-        ship.headingProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
-            heading = t1.doubleValue();
-            shipView.setRotation(heading - 90);
-            wwd.redrawNow();
-        });
+        /*
         ship.cogProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
             cog = t1.doubleValue();
             shipView.setRotation(-cog);
+            wwd.redrawNow();
+        });
+                */
+        ship.typeProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
+            type = t1.intValue();
+            shipView.setType(type);
             wwd.redrawNow();
         });
     }

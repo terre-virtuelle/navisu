@@ -21,11 +21,11 @@ public class AisLayer
         setName("AIS Layer");
     }
 
-    public void add(ShipView shipView) {
+    public void add(ShipDefaultView shipView) {
         addRenderable(shipView);
     }
 
-    public void remove(ShipView shipView) {
+    public void remove(ShipDefaultView shipView) {
         remove(shipView);
     }
 

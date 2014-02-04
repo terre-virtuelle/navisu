@@ -11,6 +11,7 @@ public class CategoryView {
 
     public static final Map<Integer, Material> VIEW = Collections.unmodifiableMap(new HashMap<Integer, Material>() {
         {
+            put(0, Material.YELLOW);
             put(20, Material.ORANGE);
             put(21, Material.WHITE);
             put(22, Material.WHITE);
@@ -22,7 +23,7 @@ public class CategoryView {
             put(28, Material.WHITE);
             put(29, Material.WHITE);
             put(30, new Material(new Color(0xFFA07A)));
-            put(31, Material.WHITE);
+            put(31, new Material(new Color(0xFFA07A)));
             put(32, Material.WHITE);
             put(33, Material.WHITE);
             put(34, Material.WHITE);
