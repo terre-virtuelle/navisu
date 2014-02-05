@@ -6,8 +6,6 @@
 package bzh.terrevirtuelle.navisu.ship;
 
 import java.util.Calendar;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
 
 /**
  *

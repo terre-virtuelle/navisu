@@ -67,39 +67,12 @@ import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
     }
     
-/*
-@members {
-public String getErrorMessage(RecognitionException e,
-                              String[] tokenNames)
-{
-    List stack = getRuleInvocationStack(e, this.getClass().getName());
-    String msg = null;
-    if ( e instanceof NoViableAltException ) {
-       NoViableAltException nvae = (NoViableAltException)e;
-       msg = " no viable alt; token="+e.token+
-          " (decision="+nvae.decisionNumber+
-          " state "+nvae.stateNumber+")"+
-          " decision=<<"+nvae.grammarDecisionDescription+">>";
-    }
-    else {
-       msg = super.getErrorMessage(e, tokenNames);
-    }
-    return stack+" "+msg ;
-}
-public String getTokenErrorDisplay(Token t) {
-    return t.toString();
-}
-}
-*/
-@lexer::rulecatch {
 
-    catch (RecognitionException re) {
-        System.out.println("RecognitionException");
-        reportError(re);
-    }
-
+@rulecatch {
+  catch (RecognitionException e) {
+    throw e;
+   }
 }
-
 
 
 @lexer::members{
@@ -1291,9 +1264,7 @@ VDM 	: '!' device=DEVICE 'VDM' SEP
 	;
 	
 /** SECTION GPSD */
-GPSD_AIS
-    	:			
-    	'{"class":"AIS"' SEP 
+GPSD_AIS : '{''"class":"AIS"' SEP 
     	'"device":' dev= DEV SEP 
     	'"type":' type = NUMBER SEP
     	'"repeat":' repeat = NUMBER SEP
@@ -1421,7 +1392,6 @@ GPSD_AIS
     	'"to_port":' to_port=NUMBER SEP
     	'"to_starboard":' to_starboard=NUMBER 
     	)
-    	
          ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
         // {System.out.println(getText());}
     	{
@@ -1515,33 +1485,32 @@ GPSD_AIS
     	;
 GPSD_DEVICE 
         :	
-    	'{"class":"DEVICE"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"DEVICE"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
     	{
 	 //System.out.println("GPSD DEVICE sentence : " + getText());
 	}
     	; 
 GPSD_DEVICES 
         :	
-    	'{"class":"DEVICES"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"DEVICES"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
     	{
 	//System.out.println("GPSD DEVICES sentence : " + getText());
 	}
     	;
 GPSD_VERSION
     	:	
-    	'{"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
     	{
 	//System.out.println("GPSD VERSION sentence : " + getText());
 	}
     	;
 GPSD_WATCH
     	:	
-    	'{"class":"WATCH"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"WATCH"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
     	{
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
-    	;
-    	  	
+    	;    	  	
 /* $AITXT,01,01,91,FREQ,2087,2088*57 */
 TXT	: ('$') device=DEVICE 'TXT' SEP
 	('\u0021'..'\u007F' | SEP | ' ')*  
@@ -1608,7 +1577,7 @@ CHECKSUM : (('*'('0'..'9')('0'..'9')) |
          ;   
  NAME 
  	:	
- 	'"' (LETTERS | NUMBER  | ':' | SIGN | '/' | '\'' | SEP | '%' | '!' )* '"'
+ 	'"' (LETTERS | NUMBER  | ':' | SIGN | '/' | '\'' | SEP | '%' | '!' | '#' )* '"'
  	;
  LETTERS : (('A'..'Z')|('a'..'z')|' ')+
          ;// {System.out.println(getText());};        

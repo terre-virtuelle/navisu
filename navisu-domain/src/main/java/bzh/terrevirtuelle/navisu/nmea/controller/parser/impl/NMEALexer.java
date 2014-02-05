@@ -1,4 +1,4 @@
-// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-02-03 15:51:52
+// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-02-05 14:45:40
 
 package bzh.terrevirtuelle.navisu.nmea.controller.parser.impl;
 
@@ -316,18 +316,18 @@ public class NMEALexer extends Lexer {
             CommonToken wayPointID=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:278:6: ( '$' device= DEVICE 'AAM' SEP (arrivalCircleEntered= LETTERS )* SEP (perpendicularPassed= LETTERS )* SEP (circleRadius= NUMBER )* SEP ( LETTERS )* SEP (wayPointID= LETTERS |wayPointID= NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:278:9: '$' device= DEVICE 'AAM' SEP (arrivalCircleEntered= LETTERS )* SEP (perpendicularPassed= LETTERS )* SEP (circleRadius= NUMBER )* SEP ( LETTERS )* SEP (wayPointID= LETTERS |wayPointID= NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:251:6: ( '$' device= DEVICE 'AAM' SEP (arrivalCircleEntered= LETTERS )* SEP (perpendicularPassed= LETTERS )* SEP (circleRadius= NUMBER )* SEP ( LETTERS )* SEP (wayPointID= LETTERS |wayPointID= NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:251:9: '$' device= DEVICE 'AAM' SEP (arrivalCircleEntered= LETTERS )* SEP (perpendicularPassed= LETTERS )* SEP (circleRadius= NUMBER )* SEP ( LETTERS )* SEP (wayPointID= LETTERS |wayPointID= NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart34 = getCharIndex();
-            int deviceStartLine34 = getLine();
-            int deviceStartCharPos34 = getCharPositionInLine();
+            int deviceStart29 = getCharIndex();
+            int deviceStartLine29 = getLine();
+            int deviceStartCharPos29 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart34, getCharIndex()-1);
-            device.setLine(deviceStartLine34);
-            device.setCharPositionInLine(deviceStartCharPos34);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart29, getCharIndex()-1);
+            device.setLine(deviceStartLine29);
+            device.setCharPositionInLine(deviceStartCharPos29);
 
 
             match("AAM"); 
@@ -337,7 +337,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:279:6: (arrivalCircleEntered= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:252:6: (arrivalCircleEntered= LETTERS )*
             loop1:
             do {
                 int alt1=2;
@@ -350,15 +350,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:279:7: arrivalCircleEntered= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:252:7: arrivalCircleEntered= LETTERS
             	    {
-            	    int arrivalCircleEnteredStart50 = getCharIndex();
-            	    int arrivalCircleEnteredStartLine50 = getLine();
-            	    int arrivalCircleEnteredStartCharPos50 = getCharPositionInLine();
+            	    int arrivalCircleEnteredStart45 = getCharIndex();
+            	    int arrivalCircleEnteredStartLine45 = getLine();
+            	    int arrivalCircleEnteredStartCharPos45 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    arrivalCircleEntered = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, arrivalCircleEnteredStart50, getCharIndex()-1);
-            	    arrivalCircleEntered.setLine(arrivalCircleEnteredStartLine50);
-            	    arrivalCircleEntered.setCharPositionInLine(arrivalCircleEnteredStartCharPos50);
+            	    arrivalCircleEntered = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, arrivalCircleEnteredStart45, getCharIndex()-1);
+            	    arrivalCircleEntered.setLine(arrivalCircleEnteredStartLine45);
+            	    arrivalCircleEntered.setCharPositionInLine(arrivalCircleEnteredStartCharPos45);
 
 
             	    }
@@ -373,7 +373,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:280:13: (perpendicularPassed= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:253:13: (perpendicularPassed= LETTERS )*
             loop2:
             do {
                 int alt2=2;
@@ -386,15 +386,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:280:14: perpendicularPassed= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:253:14: perpendicularPassed= LETTERS
             	    {
-            	    int perpendicularPassedStart73 = getCharIndex();
-            	    int perpendicularPassedStartLine73 = getLine();
-            	    int perpendicularPassedStartCharPos73 = getCharPositionInLine();
+            	    int perpendicularPassedStart68 = getCharIndex();
+            	    int perpendicularPassedStartLine68 = getLine();
+            	    int perpendicularPassedStartCharPos68 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    perpendicularPassed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, perpendicularPassedStart73, getCharIndex()-1);
-            	    perpendicularPassed.setLine(perpendicularPassedStartLine73);
-            	    perpendicularPassed.setCharPositionInLine(perpendicularPassedStartCharPos73);
+            	    perpendicularPassed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, perpendicularPassedStart68, getCharIndex()-1);
+            	    perpendicularPassed.setLine(perpendicularPassedStartLine68);
+            	    perpendicularPassed.setCharPositionInLine(perpendicularPassedStartCharPos68);
 
 
             	    }
@@ -409,7 +409,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:281:13: (circleRadius= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:254:13: (circleRadius= NUMBER )*
             loop3:
             do {
                 int alt3=2;
@@ -422,15 +422,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:281:14: circleRadius= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:254:14: circleRadius= NUMBER
             	    {
-            	    int circleRadiusStart96 = getCharIndex();
-            	    int circleRadiusStartLine96 = getLine();
-            	    int circleRadiusStartCharPos96 = getCharPositionInLine();
+            	    int circleRadiusStart91 = getCharIndex();
+            	    int circleRadiusStartLine91 = getLine();
+            	    int circleRadiusStartCharPos91 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    circleRadius = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, circleRadiusStart96, getCharIndex()-1);
-            	    circleRadius.setLine(circleRadiusStartLine96);
-            	    circleRadius.setCharPositionInLine(circleRadiusStartCharPos96);
+            	    circleRadius = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, circleRadiusStart91, getCharIndex()-1);
+            	    circleRadius.setLine(circleRadiusStartLine91);
+            	    circleRadius.setCharPositionInLine(circleRadiusStartCharPos91);
 
 
             	    }
@@ -445,7 +445,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:282:13: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:255:13: ( LETTERS )*
             loop4:
             do {
                 int alt4=2;
@@ -458,7 +458,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:282:14: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:255:14: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -475,7 +475,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:283:13: (wayPointID= LETTERS |wayPointID= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:256:13: (wayPointID= LETTERS |wayPointID= NUMBER )*
             loop5:
             do {
                 int alt5=3;
@@ -491,29 +491,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:283:14: wayPointID= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:256:14: wayPointID= LETTERS
             	    {
-            	    int wayPointIDStart138 = getCharIndex();
-            	    int wayPointIDStartLine138 = getLine();
-            	    int wayPointIDStartCharPos138 = getCharPositionInLine();
+            	    int wayPointIDStart133 = getCharIndex();
+            	    int wayPointIDStartLine133 = getLine();
+            	    int wayPointIDStartCharPos133 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    wayPointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wayPointIDStart138, getCharIndex()-1);
-            	    wayPointID.setLine(wayPointIDStartLine138);
-            	    wayPointID.setCharPositionInLine(wayPointIDStartCharPos138);
+            	    wayPointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wayPointIDStart133, getCharIndex()-1);
+            	    wayPointID.setLine(wayPointIDStartLine133);
+            	    wayPointID.setCharPositionInLine(wayPointIDStartCharPos133);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:283:37: wayPointID= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:256:37: wayPointID= NUMBER
             	    {
-            	    int wayPointIDStart146 = getCharIndex();
-            	    int wayPointIDStartLine146 = getLine();
-            	    int wayPointIDStartCharPos146 = getCharPositionInLine();
+            	    int wayPointIDStart141 = getCharIndex();
+            	    int wayPointIDStartLine141 = getLine();
+            	    int wayPointIDStartCharPos141 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    wayPointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wayPointIDStart146, getCharIndex()-1);
-            	    wayPointID.setLine(wayPointIDStartLine146);
-            	    wayPointID.setCharPositionInLine(wayPointIDStartCharPos146);
+            	    wayPointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wayPointIDStart141, getCharIndex()-1);
+            	    wayPointID.setLine(wayPointIDStartLine141);
+            	    wayPointID.setCharPositionInLine(wayPointIDStartCharPos141);
 
 
             	    }
@@ -525,13 +525,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart164 = getCharIndex();
-            int checksumStartLine164 = getLine();
-            int checksumStartCharPos164 = getCharPositionInLine();
+            int checksumStart159 = getCharIndex();
+            int checksumStartLine159 = getLine();
+            int checksumStartCharPos159 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart164, getCharIndex()-1);
-            checksum.setLine(checksumStartLine164);
-            checksum.setCharPositionInLine(checksumStartCharPos164);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart159, getCharIndex()-1);
+            checksum.setLine(checksumStartLine159);
+            checksum.setCharPositionInLine(checksumStartCharPos159);
 
 
 
@@ -577,18 +577,18 @@ public class NMEALexer extends Lexer {
             CommonToken headingToSteerToDestinationType=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:305:5: ( '$' device= DEVICE 'APB' SEP (status0= LETTERS )* SEP (status1= LETTERS )* SEP (crossTrackErrorMagnitude= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (crossTrackUnits= LETTERS )* SEP (status2= LETTERS )* SEP (status3= LETTERS )* SEP (bearingOriginToDestination= NUMBER )* SEP (bearingOriginToDestinationType= LETTERS )* SEP (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )* SEP (bearingPresentPositionToDestination= NUMBER )* SEP (bearingPresentPositionToDestinationType= LETTERS )* SEP (headingToSteerToDestination= NUMBER )* SEP (headingToSteerToDestinationType= LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:305:7: '$' device= DEVICE 'APB' SEP (status0= LETTERS )* SEP (status1= LETTERS )* SEP (crossTrackErrorMagnitude= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (crossTrackUnits= LETTERS )* SEP (status2= LETTERS )* SEP (status3= LETTERS )* SEP (bearingOriginToDestination= NUMBER )* SEP (bearingOriginToDestinationType= LETTERS )* SEP (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )* SEP (bearingPresentPositionToDestination= NUMBER )* SEP (bearingPresentPositionToDestinationType= LETTERS )* SEP (headingToSteerToDestination= NUMBER )* SEP (headingToSteerToDestinationType= LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:278:5: ( '$' device= DEVICE 'APB' SEP (status0= LETTERS )* SEP (status1= LETTERS )* SEP (crossTrackErrorMagnitude= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (crossTrackUnits= LETTERS )* SEP (status2= LETTERS )* SEP (status3= LETTERS )* SEP (bearingOriginToDestination= NUMBER )* SEP (bearingOriginToDestinationType= LETTERS )* SEP (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )* SEP (bearingPresentPositionToDestination= NUMBER )* SEP (bearingPresentPositionToDestinationType= LETTERS )* SEP (headingToSteerToDestination= NUMBER )* SEP (headingToSteerToDestinationType= LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:278:7: '$' device= DEVICE 'APB' SEP (status0= LETTERS )* SEP (status1= LETTERS )* SEP (crossTrackErrorMagnitude= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (crossTrackUnits= LETTERS )* SEP (status2= LETTERS )* SEP (status3= LETTERS )* SEP (bearingOriginToDestination= NUMBER )* SEP (bearingOriginToDestinationType= LETTERS )* SEP (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )* SEP (bearingPresentPositionToDestination= NUMBER )* SEP (bearingPresentPositionToDestinationType= LETTERS )* SEP (headingToSteerToDestination= NUMBER )* SEP (headingToSteerToDestinationType= LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart180 = getCharIndex();
-            int deviceStartLine180 = getLine();
-            int deviceStartCharPos180 = getCharPositionInLine();
+            int deviceStart175 = getCharIndex();
+            int deviceStartLine175 = getLine();
+            int deviceStartCharPos175 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart180, getCharIndex()-1);
-            device.setLine(deviceStartLine180);
-            device.setCharPositionInLine(deviceStartCharPos180);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart175, getCharIndex()-1);
+            device.setLine(deviceStartLine175);
+            device.setCharPositionInLine(deviceStartCharPos175);
 
 
             match("APB"); 
@@ -598,7 +598,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:306:15: (status0= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:279:15: (status0= LETTERS )*
             loop6:
             do {
                 int alt6=2;
@@ -611,15 +611,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:306:16: status0= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:279:16: status0= LETTERS
             	    {
-            	    int status0Start205 = getCharIndex();
-            	    int status0StartLine205 = getLine();
-            	    int status0StartCharPos205 = getCharPositionInLine();
+            	    int status0Start200 = getCharIndex();
+            	    int status0StartLine200 = getLine();
+            	    int status0StartCharPos200 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    status0 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, status0Start205, getCharIndex()-1);
-            	    status0.setLine(status0StartLine205);
-            	    status0.setCharPositionInLine(status0StartCharPos205);
+            	    status0 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, status0Start200, getCharIndex()-1);
+            	    status0.setLine(status0StartLine200);
+            	    status0.setCharPositionInLine(status0StartCharPos200);
 
 
             	    }
@@ -634,7 +634,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:307:15: (status1= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:280:15: (status1= LETTERS )*
             loop7:
             do {
                 int alt7=2;
@@ -647,15 +647,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:307:16: status1= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:280:16: status1= LETTERS
             	    {
-            	    int status1Start230 = getCharIndex();
-            	    int status1StartLine230 = getLine();
-            	    int status1StartCharPos230 = getCharPositionInLine();
+            	    int status1Start225 = getCharIndex();
+            	    int status1StartLine225 = getLine();
+            	    int status1StartCharPos225 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    status1 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, status1Start230, getCharIndex()-1);
-            	    status1.setLine(status1StartLine230);
-            	    status1.setCharPositionInLine(status1StartCharPos230);
+            	    status1 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, status1Start225, getCharIndex()-1);
+            	    status1.setLine(status1StartLine225);
+            	    status1.setCharPositionInLine(status1StartCharPos225);
 
 
             	    }
@@ -670,7 +670,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:308:15: (crossTrackErrorMagnitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:281:15: (crossTrackErrorMagnitude= NUMBER )*
             loop8:
             do {
                 int alt8=2;
@@ -683,15 +683,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:308:16: crossTrackErrorMagnitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:281:16: crossTrackErrorMagnitude= NUMBER
             	    {
-            	    int crossTrackErrorMagnitudeStart255 = getCharIndex();
-            	    int crossTrackErrorMagnitudeStartLine255 = getLine();
-            	    int crossTrackErrorMagnitudeStartCharPos255 = getCharPositionInLine();
+            	    int crossTrackErrorMagnitudeStart250 = getCharIndex();
+            	    int crossTrackErrorMagnitudeStartLine250 = getLine();
+            	    int crossTrackErrorMagnitudeStartCharPos250 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    crossTrackErrorMagnitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, crossTrackErrorMagnitudeStart255, getCharIndex()-1);
-            	    crossTrackErrorMagnitude.setLine(crossTrackErrorMagnitudeStartLine255);
-            	    crossTrackErrorMagnitude.setCharPositionInLine(crossTrackErrorMagnitudeStartCharPos255);
+            	    crossTrackErrorMagnitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, crossTrackErrorMagnitudeStart250, getCharIndex()-1);
+            	    crossTrackErrorMagnitude.setLine(crossTrackErrorMagnitudeStartLine250);
+            	    crossTrackErrorMagnitude.setCharPositionInLine(crossTrackErrorMagnitudeStartCharPos250);
 
 
             	    }
@@ -706,7 +706,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:309:15: (directionToSteer= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:282:15: (directionToSteer= LETTERS )*
             loop9:
             do {
                 int alt9=2;
@@ -719,15 +719,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:309:16: directionToSteer= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:282:16: directionToSteer= LETTERS
             	    {
-            	    int directionToSteerStart280 = getCharIndex();
-            	    int directionToSteerStartLine280 = getLine();
-            	    int directionToSteerStartCharPos280 = getCharPositionInLine();
+            	    int directionToSteerStart275 = getCharIndex();
+            	    int directionToSteerStartLine275 = getLine();
+            	    int directionToSteerStartCharPos275 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    directionToSteer = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, directionToSteerStart280, getCharIndex()-1);
-            	    directionToSteer.setLine(directionToSteerStartLine280);
-            	    directionToSteer.setCharPositionInLine(directionToSteerStartCharPos280);
+            	    directionToSteer = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, directionToSteerStart275, getCharIndex()-1);
+            	    directionToSteer.setLine(directionToSteerStartLine275);
+            	    directionToSteer.setCharPositionInLine(directionToSteerStartCharPos275);
 
 
             	    }
@@ -742,7 +742,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:310:15: (crossTrackUnits= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:283:15: (crossTrackUnits= LETTERS )*
             loop10:
             do {
                 int alt10=2;
@@ -755,15 +755,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt10) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:310:16: crossTrackUnits= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:283:16: crossTrackUnits= LETTERS
             	    {
-            	    int crossTrackUnitsStart305 = getCharIndex();
-            	    int crossTrackUnitsStartLine305 = getLine();
-            	    int crossTrackUnitsStartCharPos305 = getCharPositionInLine();
+            	    int crossTrackUnitsStart300 = getCharIndex();
+            	    int crossTrackUnitsStartLine300 = getLine();
+            	    int crossTrackUnitsStartCharPos300 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    crossTrackUnits = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, crossTrackUnitsStart305, getCharIndex()-1);
-            	    crossTrackUnits.setLine(crossTrackUnitsStartLine305);
-            	    crossTrackUnits.setCharPositionInLine(crossTrackUnitsStartCharPos305);
+            	    crossTrackUnits = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, crossTrackUnitsStart300, getCharIndex()-1);
+            	    crossTrackUnits.setLine(crossTrackUnitsStartLine300);
+            	    crossTrackUnits.setCharPositionInLine(crossTrackUnitsStartCharPos300);
 
 
             	    }
@@ -778,7 +778,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:311:15: (status2= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:284:15: (status2= LETTERS )*
             loop11:
             do {
                 int alt11=2;
@@ -791,15 +791,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt11) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:311:16: status2= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:284:16: status2= LETTERS
             	    {
-            	    int status2Start330 = getCharIndex();
-            	    int status2StartLine330 = getLine();
-            	    int status2StartCharPos330 = getCharPositionInLine();
+            	    int status2Start325 = getCharIndex();
+            	    int status2StartLine325 = getLine();
+            	    int status2StartCharPos325 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    status2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, status2Start330, getCharIndex()-1);
-            	    status2.setLine(status2StartLine330);
-            	    status2.setCharPositionInLine(status2StartCharPos330);
+            	    status2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, status2Start325, getCharIndex()-1);
+            	    status2.setLine(status2StartLine325);
+            	    status2.setCharPositionInLine(status2StartCharPos325);
 
 
             	    }
@@ -814,7 +814,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:312:15: (status3= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:285:15: (status3= LETTERS )*
             loop12:
             do {
                 int alt12=2;
@@ -827,15 +827,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt12) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:312:16: status3= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:285:16: status3= LETTERS
             	    {
-            	    int status3Start355 = getCharIndex();
-            	    int status3StartLine355 = getLine();
-            	    int status3StartCharPos355 = getCharPositionInLine();
+            	    int status3Start350 = getCharIndex();
+            	    int status3StartLine350 = getLine();
+            	    int status3StartCharPos350 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    status3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, status3Start355, getCharIndex()-1);
-            	    status3.setLine(status3StartLine355);
-            	    status3.setCharPositionInLine(status3StartCharPos355);
+            	    status3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, status3Start350, getCharIndex()-1);
+            	    status3.setLine(status3StartLine350);
+            	    status3.setCharPositionInLine(status3StartCharPos350);
 
 
             	    }
@@ -850,7 +850,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:313:15: (bearingOriginToDestination= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:286:15: (bearingOriginToDestination= NUMBER )*
             loop13:
             do {
                 int alt13=2;
@@ -863,15 +863,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt13) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:313:16: bearingOriginToDestination= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:286:16: bearingOriginToDestination= NUMBER
             	    {
-            	    int bearingOriginToDestinationStart380 = getCharIndex();
-            	    int bearingOriginToDestinationStartLine380 = getLine();
-            	    int bearingOriginToDestinationStartCharPos380 = getCharPositionInLine();
+            	    int bearingOriginToDestinationStart375 = getCharIndex();
+            	    int bearingOriginToDestinationStartLine375 = getLine();
+            	    int bearingOriginToDestinationStartCharPos375 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingOriginToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingOriginToDestinationStart380, getCharIndex()-1);
-            	    bearingOriginToDestination.setLine(bearingOriginToDestinationStartLine380);
-            	    bearingOriginToDestination.setCharPositionInLine(bearingOriginToDestinationStartCharPos380);
+            	    bearingOriginToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingOriginToDestinationStart375, getCharIndex()-1);
+            	    bearingOriginToDestination.setLine(bearingOriginToDestinationStartLine375);
+            	    bearingOriginToDestination.setCharPositionInLine(bearingOriginToDestinationStartCharPos375);
 
 
             	    }
@@ -886,7 +886,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:314:15: (bearingOriginToDestinationType= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:287:15: (bearingOriginToDestinationType= LETTERS )*
             loop14:
             do {
                 int alt14=2;
@@ -899,15 +899,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt14) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:314:16: bearingOriginToDestinationType= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:287:16: bearingOriginToDestinationType= LETTERS
             	    {
-            	    int bearingOriginToDestinationTypeStart403 = getCharIndex();
-            	    int bearingOriginToDestinationTypeStartLine403 = getLine();
-            	    int bearingOriginToDestinationTypeStartCharPos403 = getCharPositionInLine();
+            	    int bearingOriginToDestinationTypeStart398 = getCharIndex();
+            	    int bearingOriginToDestinationTypeStartLine398 = getLine();
+            	    int bearingOriginToDestinationTypeStartCharPos398 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    bearingOriginToDestinationType = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingOriginToDestinationTypeStart403, getCharIndex()-1);
-            	    bearingOriginToDestinationType.setLine(bearingOriginToDestinationTypeStartLine403);
-            	    bearingOriginToDestinationType.setCharPositionInLine(bearingOriginToDestinationTypeStartCharPos403);
+            	    bearingOriginToDestinationType = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingOriginToDestinationTypeStart398, getCharIndex()-1);
+            	    bearingOriginToDestinationType.setLine(bearingOriginToDestinationTypeStartLine398);
+            	    bearingOriginToDestinationType.setCharPositionInLine(bearingOriginToDestinationTypeStartCharPos398);
 
 
             	    }
@@ -922,7 +922,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:315:15: (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:288:15: (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )*
             loop15:
             do {
                 int alt15=3;
@@ -938,29 +938,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt15) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:315:16: destinationWaypointID= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:288:16: destinationWaypointID= LETTERS
             	    {
-            	    int destinationWaypointIDStart428 = getCharIndex();
-            	    int destinationWaypointIDStartLine428 = getLine();
-            	    int destinationWaypointIDStartCharPos428 = getCharPositionInLine();
+            	    int destinationWaypointIDStart423 = getCharIndex();
+            	    int destinationWaypointIDStartLine423 = getLine();
+            	    int destinationWaypointIDStartCharPos423 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    destinationWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointIDStart428, getCharIndex()-1);
-            	    destinationWaypointID.setLine(destinationWaypointIDStartLine428);
-            	    destinationWaypointID.setCharPositionInLine(destinationWaypointIDStartCharPos428);
+            	    destinationWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointIDStart423, getCharIndex()-1);
+            	    destinationWaypointID.setLine(destinationWaypointIDStartLine423);
+            	    destinationWaypointID.setCharPositionInLine(destinationWaypointIDStartCharPos423);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:315:50: destinationWaypointID= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:288:50: destinationWaypointID= NUMBER
             	    {
-            	    int destinationWaypointIDStart436 = getCharIndex();
-            	    int destinationWaypointIDStartLine436 = getLine();
-            	    int destinationWaypointIDStartCharPos436 = getCharPositionInLine();
+            	    int destinationWaypointIDStart431 = getCharIndex();
+            	    int destinationWaypointIDStartLine431 = getLine();
+            	    int destinationWaypointIDStartCharPos431 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    destinationWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointIDStart436, getCharIndex()-1);
-            	    destinationWaypointID.setLine(destinationWaypointIDStartLine436);
-            	    destinationWaypointID.setCharPositionInLine(destinationWaypointIDStartCharPos436);
+            	    destinationWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointIDStart431, getCharIndex()-1);
+            	    destinationWaypointID.setLine(destinationWaypointIDStartLine431);
+            	    destinationWaypointID.setCharPositionInLine(destinationWaypointIDStartCharPos431);
 
 
             	    }
@@ -975,7 +975,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:316:15: (bearingPresentPositionToDestination= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:289:15: (bearingPresentPositionToDestination= NUMBER )*
             loop16:
             do {
                 int alt16=2;
@@ -988,15 +988,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt16) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:316:16: bearingPresentPositionToDestination= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:289:16: bearingPresentPositionToDestination= NUMBER
             	    {
-            	    int bearingPresentPositionToDestinationStart461 = getCharIndex();
-            	    int bearingPresentPositionToDestinationStartLine461 = getLine();
-            	    int bearingPresentPositionToDestinationStartCharPos461 = getCharPositionInLine();
+            	    int bearingPresentPositionToDestinationStart456 = getCharIndex();
+            	    int bearingPresentPositionToDestinationStartLine456 = getLine();
+            	    int bearingPresentPositionToDestinationStartCharPos456 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingPresentPositionToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingPresentPositionToDestinationStart461, getCharIndex()-1);
-            	    bearingPresentPositionToDestination.setLine(bearingPresentPositionToDestinationStartLine461);
-            	    bearingPresentPositionToDestination.setCharPositionInLine(bearingPresentPositionToDestinationStartCharPos461);
+            	    bearingPresentPositionToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingPresentPositionToDestinationStart456, getCharIndex()-1);
+            	    bearingPresentPositionToDestination.setLine(bearingPresentPositionToDestinationStartLine456);
+            	    bearingPresentPositionToDestination.setCharPositionInLine(bearingPresentPositionToDestinationStartCharPos456);
 
 
             	    }
@@ -1011,7 +1011,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:317:15: (bearingPresentPositionToDestinationType= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:290:15: (bearingPresentPositionToDestinationType= LETTERS )*
             loop17:
             do {
                 int alt17=2;
@@ -1024,15 +1024,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:317:16: bearingPresentPositionToDestinationType= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:290:16: bearingPresentPositionToDestinationType= LETTERS
             	    {
-            	    int bearingPresentPositionToDestinationTypeStart484 = getCharIndex();
-            	    int bearingPresentPositionToDestinationTypeStartLine484 = getLine();
-            	    int bearingPresentPositionToDestinationTypeStartCharPos484 = getCharPositionInLine();
+            	    int bearingPresentPositionToDestinationTypeStart479 = getCharIndex();
+            	    int bearingPresentPositionToDestinationTypeStartLine479 = getLine();
+            	    int bearingPresentPositionToDestinationTypeStartCharPos479 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    bearingPresentPositionToDestinationType = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingPresentPositionToDestinationTypeStart484, getCharIndex()-1);
-            	    bearingPresentPositionToDestinationType.setLine(bearingPresentPositionToDestinationTypeStartLine484);
-            	    bearingPresentPositionToDestinationType.setCharPositionInLine(bearingPresentPositionToDestinationTypeStartCharPos484);
+            	    bearingPresentPositionToDestinationType = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingPresentPositionToDestinationTypeStart479, getCharIndex()-1);
+            	    bearingPresentPositionToDestinationType.setLine(bearingPresentPositionToDestinationTypeStartLine479);
+            	    bearingPresentPositionToDestinationType.setCharPositionInLine(bearingPresentPositionToDestinationTypeStartCharPos479);
 
 
             	    }
@@ -1047,7 +1047,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:318:15: (headingToSteerToDestination= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:291:15: (headingToSteerToDestination= NUMBER )*
             loop18:
             do {
                 int alt18=2;
@@ -1060,15 +1060,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt18) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:318:16: headingToSteerToDestination= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:291:16: headingToSteerToDestination= NUMBER
             	    {
-            	    int headingToSteerToDestinationStart509 = getCharIndex();
-            	    int headingToSteerToDestinationStartLine509 = getLine();
-            	    int headingToSteerToDestinationStartCharPos509 = getCharPositionInLine();
+            	    int headingToSteerToDestinationStart504 = getCharIndex();
+            	    int headingToSteerToDestinationStartLine504 = getLine();
+            	    int headingToSteerToDestinationStartCharPos504 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    headingToSteerToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingToSteerToDestinationStart509, getCharIndex()-1);
-            	    headingToSteerToDestination.setLine(headingToSteerToDestinationStartLine509);
-            	    headingToSteerToDestination.setCharPositionInLine(headingToSteerToDestinationStartCharPos509);
+            	    headingToSteerToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingToSteerToDestinationStart504, getCharIndex()-1);
+            	    headingToSteerToDestination.setLine(headingToSteerToDestinationStartLine504);
+            	    headingToSteerToDestination.setCharPositionInLine(headingToSteerToDestinationStartCharPos504);
 
 
             	    }
@@ -1083,7 +1083,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:319:15: (headingToSteerToDestinationType= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:292:15: (headingToSteerToDestinationType= LETTERS )*
             loop19:
             do {
                 int alt19=2;
@@ -1096,15 +1096,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt19) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:319:16: headingToSteerToDestinationType= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:292:16: headingToSteerToDestinationType= LETTERS
             	    {
-            	    int headingToSteerToDestinationTypeStart534 = getCharIndex();
-            	    int headingToSteerToDestinationTypeStartLine534 = getLine();
-            	    int headingToSteerToDestinationTypeStartCharPos534 = getCharPositionInLine();
+            	    int headingToSteerToDestinationTypeStart529 = getCharIndex();
+            	    int headingToSteerToDestinationTypeStartLine529 = getLine();
+            	    int headingToSteerToDestinationTypeStartCharPos529 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    headingToSteerToDestinationType = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingToSteerToDestinationTypeStart534, getCharIndex()-1);
-            	    headingToSteerToDestinationType.setLine(headingToSteerToDestinationTypeStartLine534);
-            	    headingToSteerToDestinationType.setCharPositionInLine(headingToSteerToDestinationTypeStartCharPos534);
+            	    headingToSteerToDestinationType = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingToSteerToDestinationTypeStart529, getCharIndex()-1);
+            	    headingToSteerToDestinationType.setLine(headingToSteerToDestinationTypeStartLine529);
+            	    headingToSteerToDestinationType.setCharPositionInLine(headingToSteerToDestinationTypeStartCharPos529);
 
 
             	    }
@@ -1116,13 +1116,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart554 = getCharIndex();
-            int checksumStartLine554 = getLine();
-            int checksumStartCharPos554 = getCharPositionInLine();
+            int checksumStart549 = getCharIndex();
+            int checksumStartLine549 = getLine();
+            int checksumStartCharPos549 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart554, getCharIndex()-1);
-            checksum.setLine(checksumStartLine554);
-            checksum.setCharPositionInLine(checksumStartCharPos554);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart549, getCharIndex()-1);
+            checksum.setLine(checksumStartLine549);
+            checksum.setCharPositionInLine(checksumStartCharPos549);
 
 
 
@@ -1174,18 +1174,18 @@ public class NMEALexer extends Lexer {
             CommonToken waypointID=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:345:7: ( '$' device= DEVICE 'BEC' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:345:9: '$' device= DEVICE 'BEC' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:318:7: ( '$' device= DEVICE 'BEC' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:318:9: '$' device= DEVICE 'BEC' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart574 = getCharIndex();
-            int deviceStartLine574 = getLine();
-            int deviceStartCharPos574 = getCharPositionInLine();
+            int deviceStart569 = getCharIndex();
+            int deviceStartLine569 = getLine();
+            int deviceStartCharPos569 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart574, getCharIndex()-1);
-            device.setLine(deviceStartLine574);
-            device.setCharPositionInLine(deviceStartCharPos574);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart569, getCharIndex()-1);
+            device.setLine(deviceStartLine569);
+            device.setCharPositionInLine(deviceStartCharPos569);
 
 
             match("BEC"); 
@@ -1195,7 +1195,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:346:7: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:319:7: ( ' ' )*
             loop20:
             do {
                 int alt20=2;
@@ -1208,7 +1208,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:346:7: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:319:7: ' '
             	    {
             	    match(' '); 
 
@@ -1221,16 +1221,16 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int utcStart604 = getCharIndex();
-            int utcStartLine604 = getLine();
-            int utcStartCharPos604 = getCharPositionInLine();
+            int utcStart599 = getCharIndex();
+            int utcStartLine599 = getLine();
+            int utcStartCharPos599 = getCharPositionInLine();
             mNUMBER(); 
-            utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart604, getCharIndex()-1);
-            utc.setLine(utcStartLine604);
-            utc.setCharPositionInLine(utcStartCharPos604);
+            utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart599, getCharIndex()-1);
+            utc.setLine(utcStartLine599);
+            utc.setCharPositionInLine(utcStartCharPos599);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:347:25: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:320:25: ( SEP )+
             int cnt21=0;
             loop21:
             do {
@@ -1269,7 +1269,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:348:13: (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:321:13: (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )*
             loop22:
             do {
                 int alt22=2;
@@ -1282,63 +1282,63 @@ public class NMEALexer extends Lexer {
 
                 switch (alt22) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:348:14: latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:321:14: latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP
             	    {
-            	    int latitudeStart624 = getCharIndex();
-            	    int latitudeStartLine624 = getLine();
-            	    int latitudeStartCharPos624 = getCharPositionInLine();
+            	    int latitudeStart619 = getCharIndex();
+            	    int latitudeStartLine619 = getLine();
+            	    int latitudeStartCharPos619 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart624, getCharIndex()-1);
-            	    latitude.setLine(latitudeStartLine624);
-            	    latitude.setCharPositionInLine(latitudeStartCharPos624);
+            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart619, getCharIndex()-1);
+            	    latitude.setLine(latitudeStartLine619);
+            	    latitude.setCharPositionInLine(latitudeStartCharPos619);
 
 
             	    mSEP(); 
 
 
-            	    int nsStart632 = getCharIndex();
-            	    int nsStartLine632 = getLine();
-            	    int nsStartCharPos632 = getCharPositionInLine();
+            	    int nsStart627 = getCharIndex();
+            	    int nsStartLine627 = getLine();
+            	    int nsStartCharPos627 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart632, getCharIndex()-1);
-            	    ns.setLine(nsStartLine632);
-            	    ns.setCharPositionInLine(nsStartCharPos632);
+            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart627, getCharIndex()-1);
+            	    ns.setLine(nsStartLine627);
+            	    ns.setCharPositionInLine(nsStartCharPos627);
 
 
             	    mSEP(); 
 
 
-            	    int longitudeStart638 = getCharIndex();
-            	    int longitudeStartLine638 = getLine();
-            	    int longitudeStartCharPos638 = getCharPositionInLine();
+            	    int longitudeStart633 = getCharIndex();
+            	    int longitudeStartLine633 = getLine();
+            	    int longitudeStartCharPos633 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart638, getCharIndex()-1);
-            	    longitude.setLine(longitudeStartLine638);
-            	    longitude.setCharPositionInLine(longitudeStartCharPos638);
+            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart633, getCharIndex()-1);
+            	    longitude.setLine(longitudeStartLine633);
+            	    longitude.setCharPositionInLine(longitudeStartCharPos633);
 
 
             	    mSEP(); 
 
 
-            	    int ewStart644 = getCharIndex();
-            	    int ewStartLine644 = getLine();
-            	    int ewStartCharPos644 = getCharPositionInLine();
+            	    int ewStart639 = getCharIndex();
+            	    int ewStartLine639 = getLine();
+            	    int ewStartCharPos639 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart644, getCharIndex()-1);
-            	    ew.setLine(ewStartLine644);
-            	    ew.setCharPositionInLine(ewStartCharPos644);
+            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart639, getCharIndex()-1);
+            	    ew.setLine(ewStartLine639);
+            	    ew.setCharPositionInLine(ewStartCharPos639);
 
 
             	    mSEP(); 
 
 
-            	    int bearingDegreesTrueStart650 = getCharIndex();
-            	    int bearingDegreesTrueStartLine650 = getLine();
-            	    int bearingDegreesTrueStartCharPos650 = getCharPositionInLine();
+            	    int bearingDegreesTrueStart645 = getCharIndex();
+            	    int bearingDegreesTrueStartLine645 = getLine();
+            	    int bearingDegreesTrueStartCharPos645 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart650, getCharIndex()-1);
-            	    bearingDegreesTrue.setLine(bearingDegreesTrueStartLine650);
-            	    bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos650);
+            	    bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart645, getCharIndex()-1);
+            	    bearingDegreesTrue.setLine(bearingDegreesTrueStartLine645);
+            	    bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos645);
 
 
             	    mSEP(); 
@@ -1356,7 +1356,7 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:349:22: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:322:22: ( SEP )+
             int cnt23=0;
             loop23:
             do {
@@ -1395,7 +1395,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:350:13: (bearingDegreesMagnetic= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:323:13: (bearingDegreesMagnetic= NUMBER SEP )*
             loop24:
             do {
                 int alt24=2;
@@ -1408,15 +1408,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt24) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:350:14: bearingDegreesMagnetic= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:323:14: bearingDegreesMagnetic= NUMBER SEP
             	    {
-            	    int bearingDegreesMagneticStart689 = getCharIndex();
-            	    int bearingDegreesMagneticStartLine689 = getLine();
-            	    int bearingDegreesMagneticStartCharPos689 = getCharPositionInLine();
+            	    int bearingDegreesMagneticStart684 = getCharIndex();
+            	    int bearingDegreesMagneticStartLine684 = getLine();
+            	    int bearingDegreesMagneticStartCharPos684 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart689, getCharIndex()-1);
-            	    bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine689);
-            	    bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos689);
+            	    bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart684, getCharIndex()-1);
+            	    bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine684);
+            	    bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos684);
 
 
             	    mSEP(); 
@@ -1434,7 +1434,7 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:351:22: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:324:22: ( SEP )+
             int cnt25=0;
             loop25:
             do {
@@ -1473,7 +1473,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:352:13: (distanceToWayPoint= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:325:13: (distanceToWayPoint= NUMBER SEP )*
             loop26:
             do {
                 int alt26=2;
@@ -1486,15 +1486,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt26) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:352:14: distanceToWayPoint= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:325:14: distanceToWayPoint= NUMBER SEP
             	    {
-            	    int distanceToWayPointStart729 = getCharIndex();
-            	    int distanceToWayPointStartLine729 = getLine();
-            	    int distanceToWayPointStartCharPos729 = getCharPositionInLine();
+            	    int distanceToWayPointStart724 = getCharIndex();
+            	    int distanceToWayPointStartLine724 = getLine();
+            	    int distanceToWayPointStartCharPos724 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    distanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, distanceToWayPointStart729, getCharIndex()-1);
-            	    distanceToWayPoint.setLine(distanceToWayPointStartLine729);
-            	    distanceToWayPoint.setCharPositionInLine(distanceToWayPointStartCharPos729);
+            	    distanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, distanceToWayPointStart724, getCharIndex()-1);
+            	    distanceToWayPoint.setLine(distanceToWayPointStartLine724);
+            	    distanceToWayPoint.setCharPositionInLine(distanceToWayPointStartCharPos724);
 
 
             	    mSEP(); 
@@ -1509,16 +1509,16 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int unitsOfDistanceToWayPointStart750 = getCharIndex();
-            int unitsOfDistanceToWayPointStartLine750 = getLine();
-            int unitsOfDistanceToWayPointStartCharPos750 = getCharPositionInLine();
+            int unitsOfDistanceToWayPointStart745 = getCharIndex();
+            int unitsOfDistanceToWayPointStartLine745 = getLine();
+            int unitsOfDistanceToWayPointStartCharPos745 = getCharPositionInLine();
             mLETTERS(); 
-            unitsOfDistanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfDistanceToWayPointStart750, getCharIndex()-1);
-            unitsOfDistanceToWayPoint.setLine(unitsOfDistanceToWayPointStartLine750);
-            unitsOfDistanceToWayPoint.setCharPositionInLine(unitsOfDistanceToWayPointStartCharPos750);
+            unitsOfDistanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfDistanceToWayPointStart745, getCharIndex()-1);
+            unitsOfDistanceToWayPoint.setLine(unitsOfDistanceToWayPointStartLine745);
+            unitsOfDistanceToWayPoint.setCharPositionInLine(unitsOfDistanceToWayPointStartCharPos745);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:353:48: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:326:48: ( SEP )+
             int cnt27=0;
             loop27:
             do {
@@ -1557,7 +1557,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:354:13: (waypointID= LETTERS |waypointID= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:327:13: (waypointID= LETTERS |waypointID= NUMBER )*
             loop28:
             do {
                 int alt28=3;
@@ -1573,29 +1573,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt28) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:354:14: waypointID= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:327:14: waypointID= LETTERS
             	    {
-            	    int waypointIDStart770 = getCharIndex();
-            	    int waypointIDStartLine770 = getLine();
-            	    int waypointIDStartCharPos770 = getCharPositionInLine();
+            	    int waypointIDStart765 = getCharIndex();
+            	    int waypointIDStartLine765 = getLine();
+            	    int waypointIDStartCharPos765 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart770, getCharIndex()-1);
-            	    waypointID.setLine(waypointIDStartLine770);
-            	    waypointID.setCharPositionInLine(waypointIDStartCharPos770);
+            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart765, getCharIndex()-1);
+            	    waypointID.setLine(waypointIDStartLine765);
+            	    waypointID.setCharPositionInLine(waypointIDStartCharPos765);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:354:35: waypointID= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:327:35: waypointID= NUMBER
             	    {
-            	    int waypointIDStart776 = getCharIndex();
-            	    int waypointIDStartLine776 = getLine();
-            	    int waypointIDStartCharPos776 = getCharPositionInLine();
+            	    int waypointIDStart771 = getCharIndex();
+            	    int waypointIDStartLine771 = getLine();
+            	    int waypointIDStartCharPos771 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart776, getCharIndex()-1);
-            	    waypointID.setLine(waypointIDStartLine776);
-            	    waypointID.setCharPositionInLine(waypointIDStartCharPos776);
+            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart771, getCharIndex()-1);
+            	    waypointID.setLine(waypointIDStartLine771);
+            	    waypointID.setCharPositionInLine(waypointIDStartCharPos771);
 
 
             	    }
@@ -1607,13 +1607,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart795 = getCharIndex();
-            int checksumStartLine795 = getLine();
-            int checksumStartCharPos795 = getCharPositionInLine();
+            int checksumStart790 = getCharIndex();
+            int checksumStartLine790 = getLine();
+            int checksumStartCharPos790 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart795, getCharIndex()-1);
-            checksum.setLine(checksumStartLine795);
-            checksum.setCharPositionInLine(checksumStartCharPos795);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart790, getCharIndex()-1);
+            checksum.setLine(checksumStartLine790);
+            checksum.setCharPositionInLine(checksumStartCharPos790);
 
 
 
@@ -1660,18 +1660,18 @@ public class NMEALexer extends Lexer {
             CommonToken originWaypointID=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:377:7: ( '$' device= DEVICE 'BOD' SEP (bearingDegreesTrue= NUMBER )* ( SEP )+ LETTERS SEP (bearingDegreesMagnetic= NUMBER )* ( SEP )+ LETTERS SEP (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )* SEP (originWaypointID= LETTERS |originWaypointID= NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:377:9: '$' device= DEVICE 'BOD' SEP (bearingDegreesTrue= NUMBER )* ( SEP )+ LETTERS SEP (bearingDegreesMagnetic= NUMBER )* ( SEP )+ LETTERS SEP (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )* SEP (originWaypointID= LETTERS |originWaypointID= NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:350:7: ( '$' device= DEVICE 'BOD' SEP (bearingDegreesTrue= NUMBER )* ( SEP )+ LETTERS SEP (bearingDegreesMagnetic= NUMBER )* ( SEP )+ LETTERS SEP (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )* SEP (originWaypointID= LETTERS |originWaypointID= NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:350:9: '$' device= DEVICE 'BOD' SEP (bearingDegreesTrue= NUMBER )* ( SEP )+ LETTERS SEP (bearingDegreesMagnetic= NUMBER )* ( SEP )+ LETTERS SEP (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )* SEP (originWaypointID= LETTERS |originWaypointID= NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart824 = getCharIndex();
-            int deviceStartLine824 = getLine();
-            int deviceStartCharPos824 = getCharPositionInLine();
+            int deviceStart819 = getCharIndex();
+            int deviceStartLine819 = getLine();
+            int deviceStartCharPos819 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart824, getCharIndex()-1);
-            device.setLine(deviceStartLine824);
-            device.setCharPositionInLine(deviceStartCharPos824);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart819, getCharIndex()-1);
+            device.setLine(deviceStartLine819);
+            device.setCharPositionInLine(deviceStartCharPos819);
 
 
             match("BOD"); 
@@ -1681,7 +1681,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:378:6: (bearingDegreesTrue= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:351:6: (bearingDegreesTrue= NUMBER )*
             loop29:
             do {
                 int alt29=2;
@@ -1694,15 +1694,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt29) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:378:7: bearingDegreesTrue= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:351:7: bearingDegreesTrue= NUMBER
             	    {
-            	    int bearingDegreesTrueStart838 = getCharIndex();
-            	    int bearingDegreesTrueStartLine838 = getLine();
-            	    int bearingDegreesTrueStartCharPos838 = getCharPositionInLine();
+            	    int bearingDegreesTrueStart833 = getCharIndex();
+            	    int bearingDegreesTrueStartLine833 = getLine();
+            	    int bearingDegreesTrueStartCharPos833 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart838, getCharIndex()-1);
-            	    bearingDegreesTrue.setLine(bearingDegreesTrueStartLine838);
-            	    bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos838);
+            	    bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart833, getCharIndex()-1);
+            	    bearingDegreesTrue.setLine(bearingDegreesTrueStartLine833);
+            	    bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos833);
 
 
             	    }
@@ -1714,7 +1714,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:378:35: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:351:35: ( SEP )+
             int cnt30=0;
             loop30:
             do {
@@ -1759,7 +1759,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:380:6: (bearingDegreesMagnetic= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:353:6: (bearingDegreesMagnetic= NUMBER )*
             loop31:
             do {
                 int alt31=2;
@@ -1772,15 +1772,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt31) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:380:7: bearingDegreesMagnetic= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:353:7: bearingDegreesMagnetic= NUMBER
             	    {
-            	    int bearingDegreesMagneticStart862 = getCharIndex();
-            	    int bearingDegreesMagneticStartLine862 = getLine();
-            	    int bearingDegreesMagneticStartCharPos862 = getCharPositionInLine();
+            	    int bearingDegreesMagneticStart857 = getCharIndex();
+            	    int bearingDegreesMagneticStartLine857 = getLine();
+            	    int bearingDegreesMagneticStartCharPos857 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart862, getCharIndex()-1);
-            	    bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine862);
-            	    bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos862);
+            	    bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart857, getCharIndex()-1);
+            	    bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine857);
+            	    bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos857);
 
 
             	    }
@@ -1792,7 +1792,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:380:39: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:353:39: ( SEP )+
             int cnt32=0;
             loop32:
             do {
@@ -1837,7 +1837,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:382:6: (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:355:6: (destinationWaypointID= LETTERS |destinationWaypointID= NUMBER )*
             loop33:
             do {
                 int alt33=3;
@@ -1853,29 +1853,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt33) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:382:7: destinationWaypointID= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:355:7: destinationWaypointID= LETTERS
             	    {
-            	    int destinationWaypointIDStart886 = getCharIndex();
-            	    int destinationWaypointIDStartLine886 = getLine();
-            	    int destinationWaypointIDStartCharPos886 = getCharPositionInLine();
+            	    int destinationWaypointIDStart881 = getCharIndex();
+            	    int destinationWaypointIDStartLine881 = getLine();
+            	    int destinationWaypointIDStartCharPos881 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    destinationWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointIDStart886, getCharIndex()-1);
-            	    destinationWaypointID.setLine(destinationWaypointIDStartLine886);
-            	    destinationWaypointID.setCharPositionInLine(destinationWaypointIDStartCharPos886);
+            	    destinationWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointIDStart881, getCharIndex()-1);
+            	    destinationWaypointID.setLine(destinationWaypointIDStartLine881);
+            	    destinationWaypointID.setCharPositionInLine(destinationWaypointIDStartCharPos881);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:382:39: destinationWaypointID= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:355:39: destinationWaypointID= NUMBER
             	    {
-            	    int destinationWaypointIDStart892 = getCharIndex();
-            	    int destinationWaypointIDStartLine892 = getLine();
-            	    int destinationWaypointIDStartCharPos892 = getCharPositionInLine();
+            	    int destinationWaypointIDStart887 = getCharIndex();
+            	    int destinationWaypointIDStartLine887 = getLine();
+            	    int destinationWaypointIDStartCharPos887 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    destinationWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointIDStart892, getCharIndex()-1);
-            	    destinationWaypointID.setLine(destinationWaypointIDStartLine892);
-            	    destinationWaypointID.setCharPositionInLine(destinationWaypointIDStartCharPos892);
+            	    destinationWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointIDStart887, getCharIndex()-1);
+            	    destinationWaypointID.setLine(destinationWaypointIDStartLine887);
+            	    destinationWaypointID.setCharPositionInLine(destinationWaypointIDStartCharPos887);
 
 
             	    }
@@ -1890,7 +1890,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:383:6: (originWaypointID= LETTERS |originWaypointID= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:356:6: (originWaypointID= LETTERS |originWaypointID= NUMBER )*
             loop34:
             do {
                 int alt34=3;
@@ -1906,29 +1906,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt34) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:383:7: originWaypointID= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:356:7: originWaypointID= LETTERS
             	    {
-            	    int originWaypointIDStart907 = getCharIndex();
-            	    int originWaypointIDStartLine907 = getLine();
-            	    int originWaypointIDStartCharPos907 = getCharPositionInLine();
+            	    int originWaypointIDStart902 = getCharIndex();
+            	    int originWaypointIDStartLine902 = getLine();
+            	    int originWaypointIDStartCharPos902 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    originWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, originWaypointIDStart907, getCharIndex()-1);
-            	    originWaypointID.setLine(originWaypointIDStartLine907);
-            	    originWaypointID.setCharPositionInLine(originWaypointIDStartCharPos907);
+            	    originWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, originWaypointIDStart902, getCharIndex()-1);
+            	    originWaypointID.setLine(originWaypointIDStartLine902);
+            	    originWaypointID.setCharPositionInLine(originWaypointIDStartCharPos902);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:383:34: originWaypointID= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:356:34: originWaypointID= NUMBER
             	    {
-            	    int originWaypointIDStart913 = getCharIndex();
-            	    int originWaypointIDStartLine913 = getLine();
-            	    int originWaypointIDStartCharPos913 = getCharPositionInLine();
+            	    int originWaypointIDStart908 = getCharIndex();
+            	    int originWaypointIDStartLine908 = getLine();
+            	    int originWaypointIDStartCharPos908 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    originWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, originWaypointIDStart913, getCharIndex()-1);
-            	    originWaypointID.setLine(originWaypointIDStartLine913);
-            	    originWaypointID.setCharPositionInLine(originWaypointIDStartCharPos913);
+            	    originWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, originWaypointIDStart908, getCharIndex()-1);
+            	    originWaypointID.setLine(originWaypointIDStartLine908);
+            	    originWaypointID.setCharPositionInLine(originWaypointIDStartCharPos908);
 
 
             	    }
@@ -1940,13 +1940,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart924 = getCharIndex();
-            int checksumStartLine924 = getLine();
-            int checksumStartCharPos924 = getCharPositionInLine();
+            int checksumStart919 = getCharIndex();
+            int checksumStartLine919 = getLine();
+            int checksumStartCharPos919 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart924, getCharIndex()-1);
-            checksum.setLine(checksumStartLine924);
-            checksum.setCharPositionInLine(checksumStartCharPos924);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart919, getCharIndex()-1);
+            checksum.setLine(checksumStartLine919);
+            checksum.setCharPositionInLine(checksumStartCharPos919);
 
 
 
@@ -1988,18 +1988,18 @@ public class NMEALexer extends Lexer {
             CommonToken waypointID=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:396:6: ( '$' device= DEVICE 'BWC' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:396:9: '$' device= DEVICE 'BWC' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:369:6: ( '$' device= DEVICE 'BWC' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:369:9: '$' device= DEVICE 'BWC' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart946 = getCharIndex();
-            int deviceStartLine946 = getLine();
-            int deviceStartCharPos946 = getCharPositionInLine();
+            int deviceStart941 = getCharIndex();
+            int deviceStartLine941 = getLine();
+            int deviceStartCharPos941 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart946, getCharIndex()-1);
-            device.setLine(deviceStartLine946);
-            device.setCharPositionInLine(deviceStartCharPos946);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart941, getCharIndex()-1);
+            device.setLine(deviceStartLine941);
+            device.setCharPositionInLine(deviceStartCharPos941);
 
 
             match("BWC"); 
@@ -2009,7 +2009,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:397:14: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:370:14: ( ' ' )*
             loop35:
             do {
                 int alt35=2;
@@ -2022,7 +2022,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt35) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:397:14: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:370:14: ' '
             	    {
             	    match(' '); 
 
@@ -2035,16 +2035,16 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int utcStart983 = getCharIndex();
-            int utcStartLine983 = getLine();
-            int utcStartCharPos983 = getCharPositionInLine();
+            int utcStart978 = getCharIndex();
+            int utcStartLine978 = getLine();
+            int utcStartCharPos978 = getCharPositionInLine();
             mNUMBER(); 
-            utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart983, getCharIndex()-1);
-            utc.setLine(utcStartLine983);
-            utc.setCharPositionInLine(utcStartCharPos983);
+            utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart978, getCharIndex()-1);
+            utc.setLine(utcStartLine978);
+            utc.setCharPositionInLine(utcStartCharPos978);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:398:25: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:371:25: ( SEP )+
             int cnt36=0;
             loop36:
             do {
@@ -2083,7 +2083,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:399:13: (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:372:13: (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )*
             loop37:
             do {
                 int alt37=2;
@@ -2096,63 +2096,63 @@ public class NMEALexer extends Lexer {
 
                 switch (alt37) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:399:14: latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:372:14: latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP
             	    {
-            	    int latitudeStart1003 = getCharIndex();
-            	    int latitudeStartLine1003 = getLine();
-            	    int latitudeStartCharPos1003 = getCharPositionInLine();
+            	    int latitudeStart998 = getCharIndex();
+            	    int latitudeStartLine998 = getLine();
+            	    int latitudeStartCharPos998 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart1003, getCharIndex()-1);
-            	    latitude.setLine(latitudeStartLine1003);
-            	    latitude.setCharPositionInLine(latitudeStartCharPos1003);
+            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart998, getCharIndex()-1);
+            	    latitude.setLine(latitudeStartLine998);
+            	    latitude.setCharPositionInLine(latitudeStartCharPos998);
 
 
             	    mSEP(); 
 
 
-            	    int nsStart1011 = getCharIndex();
-            	    int nsStartLine1011 = getLine();
-            	    int nsStartCharPos1011 = getCharPositionInLine();
+            	    int nsStart1006 = getCharIndex();
+            	    int nsStartLine1006 = getLine();
+            	    int nsStartCharPos1006 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart1011, getCharIndex()-1);
-            	    ns.setLine(nsStartLine1011);
-            	    ns.setCharPositionInLine(nsStartCharPos1011);
+            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart1006, getCharIndex()-1);
+            	    ns.setLine(nsStartLine1006);
+            	    ns.setCharPositionInLine(nsStartCharPos1006);
 
 
             	    mSEP(); 
 
 
-            	    int longitudeStart1017 = getCharIndex();
-            	    int longitudeStartLine1017 = getLine();
-            	    int longitudeStartCharPos1017 = getCharPositionInLine();
+            	    int longitudeStart1012 = getCharIndex();
+            	    int longitudeStartLine1012 = getLine();
+            	    int longitudeStartCharPos1012 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart1017, getCharIndex()-1);
-            	    longitude.setLine(longitudeStartLine1017);
-            	    longitude.setCharPositionInLine(longitudeStartCharPos1017);
+            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart1012, getCharIndex()-1);
+            	    longitude.setLine(longitudeStartLine1012);
+            	    longitude.setCharPositionInLine(longitudeStartCharPos1012);
 
 
             	    mSEP(); 
 
 
-            	    int ewStart1023 = getCharIndex();
-            	    int ewStartLine1023 = getLine();
-            	    int ewStartCharPos1023 = getCharPositionInLine();
+            	    int ewStart1018 = getCharIndex();
+            	    int ewStartLine1018 = getLine();
+            	    int ewStartCharPos1018 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart1023, getCharIndex()-1);
-            	    ew.setLine(ewStartLine1023);
-            	    ew.setCharPositionInLine(ewStartCharPos1023);
+            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart1018, getCharIndex()-1);
+            	    ew.setLine(ewStartLine1018);
+            	    ew.setCharPositionInLine(ewStartCharPos1018);
 
 
             	    mSEP(); 
 
 
-            	    int bearingDegreesTrueStart1029 = getCharIndex();
-            	    int bearingDegreesTrueStartLine1029 = getLine();
-            	    int bearingDegreesTrueStartCharPos1029 = getCharPositionInLine();
+            	    int bearingDegreesTrueStart1024 = getCharIndex();
+            	    int bearingDegreesTrueStartLine1024 = getLine();
+            	    int bearingDegreesTrueStartCharPos1024 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart1029, getCharIndex()-1);
-            	    bearingDegreesTrue.setLine(bearingDegreesTrueStartLine1029);
-            	    bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos1029);
+            	    bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart1024, getCharIndex()-1);
+            	    bearingDegreesTrue.setLine(bearingDegreesTrueStartLine1024);
+            	    bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos1024);
 
 
             	    mSEP(); 
@@ -2170,7 +2170,7 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:400:22: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:373:22: ( SEP )+
             int cnt38=0;
             loop38:
             do {
@@ -2209,7 +2209,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:401:13: (bearingDegreesMagnetic= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:374:13: (bearingDegreesMagnetic= NUMBER SEP )*
             loop39:
             do {
                 int alt39=2;
@@ -2222,15 +2222,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt39) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:401:14: bearingDegreesMagnetic= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:374:14: bearingDegreesMagnetic= NUMBER SEP
             	    {
-            	    int bearingDegreesMagneticStart1068 = getCharIndex();
-            	    int bearingDegreesMagneticStartLine1068 = getLine();
-            	    int bearingDegreesMagneticStartCharPos1068 = getCharPositionInLine();
+            	    int bearingDegreesMagneticStart1063 = getCharIndex();
+            	    int bearingDegreesMagneticStartLine1063 = getLine();
+            	    int bearingDegreesMagneticStartCharPos1063 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart1068, getCharIndex()-1);
-            	    bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine1068);
-            	    bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos1068);
+            	    bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart1063, getCharIndex()-1);
+            	    bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine1063);
+            	    bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos1063);
 
 
             	    mSEP(); 
@@ -2248,7 +2248,7 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:402:22: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:375:22: ( SEP )+
             int cnt40=0;
             loop40:
             do {
@@ -2287,7 +2287,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:403:13: (distanceToWayPoint= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:376:13: (distanceToWayPoint= NUMBER SEP )*
             loop41:
             do {
                 int alt41=2;
@@ -2300,15 +2300,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt41) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:403:14: distanceToWayPoint= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:376:14: distanceToWayPoint= NUMBER SEP
             	    {
-            	    int distanceToWayPointStart1108 = getCharIndex();
-            	    int distanceToWayPointStartLine1108 = getLine();
-            	    int distanceToWayPointStartCharPos1108 = getCharPositionInLine();
+            	    int distanceToWayPointStart1103 = getCharIndex();
+            	    int distanceToWayPointStartLine1103 = getLine();
+            	    int distanceToWayPointStartCharPos1103 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    distanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, distanceToWayPointStart1108, getCharIndex()-1);
-            	    distanceToWayPoint.setLine(distanceToWayPointStartLine1108);
-            	    distanceToWayPoint.setCharPositionInLine(distanceToWayPointStartCharPos1108);
+            	    distanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, distanceToWayPointStart1103, getCharIndex()-1);
+            	    distanceToWayPoint.setLine(distanceToWayPointStartLine1103);
+            	    distanceToWayPoint.setCharPositionInLine(distanceToWayPointStartCharPos1103);
 
 
             	    mSEP(); 
@@ -2323,16 +2323,16 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int unitsOfDistanceToWayPointStart1129 = getCharIndex();
-            int unitsOfDistanceToWayPointStartLine1129 = getLine();
-            int unitsOfDistanceToWayPointStartCharPos1129 = getCharPositionInLine();
+            int unitsOfDistanceToWayPointStart1124 = getCharIndex();
+            int unitsOfDistanceToWayPointStartLine1124 = getLine();
+            int unitsOfDistanceToWayPointStartCharPos1124 = getCharPositionInLine();
             mLETTERS(); 
-            unitsOfDistanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfDistanceToWayPointStart1129, getCharIndex()-1);
-            unitsOfDistanceToWayPoint.setLine(unitsOfDistanceToWayPointStartLine1129);
-            unitsOfDistanceToWayPoint.setCharPositionInLine(unitsOfDistanceToWayPointStartCharPos1129);
+            unitsOfDistanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfDistanceToWayPointStart1124, getCharIndex()-1);
+            unitsOfDistanceToWayPoint.setLine(unitsOfDistanceToWayPointStartLine1124);
+            unitsOfDistanceToWayPoint.setCharPositionInLine(unitsOfDistanceToWayPointStartCharPos1124);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:404:48: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:377:48: ( SEP )+
             int cnt42=0;
             loop42:
             do {
@@ -2371,7 +2371,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:405:13: (waypointID= LETTERS |waypointID= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:378:13: (waypointID= LETTERS |waypointID= NUMBER )*
             loop43:
             do {
                 int alt43=3;
@@ -2387,29 +2387,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt43) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:405:14: waypointID= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:378:14: waypointID= LETTERS
             	    {
-            	    int waypointIDStart1149 = getCharIndex();
-            	    int waypointIDStartLine1149 = getLine();
-            	    int waypointIDStartCharPos1149 = getCharPositionInLine();
+            	    int waypointIDStart1144 = getCharIndex();
+            	    int waypointIDStartLine1144 = getLine();
+            	    int waypointIDStartCharPos1144 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart1149, getCharIndex()-1);
-            	    waypointID.setLine(waypointIDStartLine1149);
-            	    waypointID.setCharPositionInLine(waypointIDStartCharPos1149);
+            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart1144, getCharIndex()-1);
+            	    waypointID.setLine(waypointIDStartLine1144);
+            	    waypointID.setCharPositionInLine(waypointIDStartCharPos1144);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:405:35: waypointID= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:378:35: waypointID= NUMBER
             	    {
-            	    int waypointIDStart1155 = getCharIndex();
-            	    int waypointIDStartLine1155 = getLine();
-            	    int waypointIDStartCharPos1155 = getCharPositionInLine();
+            	    int waypointIDStart1150 = getCharIndex();
+            	    int waypointIDStartLine1150 = getLine();
+            	    int waypointIDStartCharPos1150 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart1155, getCharIndex()-1);
-            	    waypointID.setLine(waypointIDStartLine1155);
-            	    waypointID.setCharPositionInLine(waypointIDStartCharPos1155);
+            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart1150, getCharIndex()-1);
+            	    waypointID.setLine(waypointIDStartLine1150);
+            	    waypointID.setCharPositionInLine(waypointIDStartCharPos1150);
 
 
             	    }
@@ -2421,13 +2421,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart1174 = getCharIndex();
-            int checksumStartLine1174 = getLine();
-            int checksumStartCharPos1174 = getCharPositionInLine();
+            int checksumStart1169 = getCharIndex();
+            int checksumStartLine1169 = getLine();
+            int checksumStartCharPos1169 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1174, getCharIndex()-1);
-            checksum.setLine(checksumStartLine1174);
-            checksum.setCharPositionInLine(checksumStartCharPos1174);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1169, getCharIndex()-1);
+            checksum.setLine(checksumStartLine1169);
+            checksum.setCharPositionInLine(checksumStartCharPos1169);
 
 
 
@@ -2480,18 +2480,18 @@ public class NMEALexer extends Lexer {
             CommonToken waypointID=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:430:6: ( '$' device= DEVICE 'BWR' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:430:10: '$' device= DEVICE 'BWR' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:403:6: ( '$' device= DEVICE 'BWR' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:403:10: '$' device= DEVICE 'BWR' SEP ( ' ' )* utc= NUMBER ( SEP )+ (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )* LETTERS ( SEP )+ (bearingDegreesMagnetic= NUMBER SEP )* LETTERS ( SEP )+ (distanceToWayPoint= NUMBER SEP )* unitsOfDistanceToWayPoint= LETTERS ( SEP )+ (waypointID= LETTERS |waypointID= NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart1208 = getCharIndex();
-            int deviceStartLine1208 = getLine();
-            int deviceStartCharPos1208 = getCharPositionInLine();
+            int deviceStart1203 = getCharIndex();
+            int deviceStartLine1203 = getLine();
+            int deviceStartCharPos1203 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1208, getCharIndex()-1);
-            device.setLine(deviceStartLine1208);
-            device.setCharPositionInLine(deviceStartCharPos1208);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1203, getCharIndex()-1);
+            device.setLine(deviceStartLine1203);
+            device.setCharPositionInLine(deviceStartCharPos1203);
 
 
             match("BWR"); 
@@ -2501,7 +2501,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:431:7: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:404:7: ( ' ' )*
             loop44:
             do {
                 int alt44=2;
@@ -2514,7 +2514,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt44) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:431:7: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:404:7: ' '
             	    {
             	    match(' '); 
 
@@ -2527,16 +2527,16 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int utcStart1239 = getCharIndex();
-            int utcStartLine1239 = getLine();
-            int utcStartCharPos1239 = getCharPositionInLine();
+            int utcStart1234 = getCharIndex();
+            int utcStartLine1234 = getLine();
+            int utcStartCharPos1234 = getCharPositionInLine();
             mNUMBER(); 
-            utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart1239, getCharIndex()-1);
-            utc.setLine(utcStartLine1239);
-            utc.setCharPositionInLine(utcStartCharPos1239);
+            utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart1234, getCharIndex()-1);
+            utc.setLine(utcStartLine1234);
+            utc.setCharPositionInLine(utcStartCharPos1234);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:432:25: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:405:25: ( SEP )+
             int cnt45=0;
             loop45:
             do {
@@ -2575,7 +2575,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:433:13: (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:406:13: (latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP )*
             loop46:
             do {
                 int alt46=2;
@@ -2588,63 +2588,63 @@ public class NMEALexer extends Lexer {
 
                 switch (alt46) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:433:14: latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:406:14: latitude= NUMBER SEP ns= LETTERS SEP longitude= NUMBER SEP ew= LETTERS SEP bearingDegreesTrue= NUMBER SEP
             	    {
-            	    int latitudeStart1259 = getCharIndex();
-            	    int latitudeStartLine1259 = getLine();
-            	    int latitudeStartCharPos1259 = getCharPositionInLine();
+            	    int latitudeStart1254 = getCharIndex();
+            	    int latitudeStartLine1254 = getLine();
+            	    int latitudeStartCharPos1254 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart1259, getCharIndex()-1);
-            	    latitude.setLine(latitudeStartLine1259);
-            	    latitude.setCharPositionInLine(latitudeStartCharPos1259);
+            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart1254, getCharIndex()-1);
+            	    latitude.setLine(latitudeStartLine1254);
+            	    latitude.setCharPositionInLine(latitudeStartCharPos1254);
 
 
             	    mSEP(); 
 
 
-            	    int nsStart1267 = getCharIndex();
-            	    int nsStartLine1267 = getLine();
-            	    int nsStartCharPos1267 = getCharPositionInLine();
+            	    int nsStart1262 = getCharIndex();
+            	    int nsStartLine1262 = getLine();
+            	    int nsStartCharPos1262 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart1267, getCharIndex()-1);
-            	    ns.setLine(nsStartLine1267);
-            	    ns.setCharPositionInLine(nsStartCharPos1267);
+            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart1262, getCharIndex()-1);
+            	    ns.setLine(nsStartLine1262);
+            	    ns.setCharPositionInLine(nsStartCharPos1262);
 
 
             	    mSEP(); 
 
 
-            	    int longitudeStart1273 = getCharIndex();
-            	    int longitudeStartLine1273 = getLine();
-            	    int longitudeStartCharPos1273 = getCharPositionInLine();
+            	    int longitudeStart1268 = getCharIndex();
+            	    int longitudeStartLine1268 = getLine();
+            	    int longitudeStartCharPos1268 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart1273, getCharIndex()-1);
-            	    longitude.setLine(longitudeStartLine1273);
-            	    longitude.setCharPositionInLine(longitudeStartCharPos1273);
+            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart1268, getCharIndex()-1);
+            	    longitude.setLine(longitudeStartLine1268);
+            	    longitude.setCharPositionInLine(longitudeStartCharPos1268);
 
 
             	    mSEP(); 
 
 
-            	    int ewStart1279 = getCharIndex();
-            	    int ewStartLine1279 = getLine();
-            	    int ewStartCharPos1279 = getCharPositionInLine();
+            	    int ewStart1274 = getCharIndex();
+            	    int ewStartLine1274 = getLine();
+            	    int ewStartCharPos1274 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart1279, getCharIndex()-1);
-            	    ew.setLine(ewStartLine1279);
-            	    ew.setCharPositionInLine(ewStartCharPos1279);
+            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart1274, getCharIndex()-1);
+            	    ew.setLine(ewStartLine1274);
+            	    ew.setCharPositionInLine(ewStartCharPos1274);
 
 
             	    mSEP(); 
 
 
-            	    int bearingDegreesTrueStart1285 = getCharIndex();
-            	    int bearingDegreesTrueStartLine1285 = getLine();
-            	    int bearingDegreesTrueStartCharPos1285 = getCharPositionInLine();
+            	    int bearingDegreesTrueStart1280 = getCharIndex();
+            	    int bearingDegreesTrueStartLine1280 = getLine();
+            	    int bearingDegreesTrueStartCharPos1280 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart1285, getCharIndex()-1);
-            	    bearingDegreesTrue.setLine(bearingDegreesTrueStartLine1285);
-            	    bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos1285);
+            	    bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart1280, getCharIndex()-1);
+            	    bearingDegreesTrue.setLine(bearingDegreesTrueStartLine1280);
+            	    bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos1280);
 
 
             	    mSEP(); 
@@ -2662,7 +2662,7 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:434:22: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:407:22: ( SEP )+
             int cnt47=0;
             loop47:
             do {
@@ -2701,7 +2701,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:435:13: (bearingDegreesMagnetic= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:408:13: (bearingDegreesMagnetic= NUMBER SEP )*
             loop48:
             do {
                 int alt48=2;
@@ -2714,15 +2714,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt48) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:435:14: bearingDegreesMagnetic= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:408:14: bearingDegreesMagnetic= NUMBER SEP
             	    {
-            	    int bearingDegreesMagneticStart1324 = getCharIndex();
-            	    int bearingDegreesMagneticStartLine1324 = getLine();
-            	    int bearingDegreesMagneticStartCharPos1324 = getCharPositionInLine();
+            	    int bearingDegreesMagneticStart1319 = getCharIndex();
+            	    int bearingDegreesMagneticStartLine1319 = getLine();
+            	    int bearingDegreesMagneticStartCharPos1319 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart1324, getCharIndex()-1);
-            	    bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine1324);
-            	    bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos1324);
+            	    bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart1319, getCharIndex()-1);
+            	    bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine1319);
+            	    bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos1319);
 
 
             	    mSEP(); 
@@ -2740,7 +2740,7 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:436:22: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:409:22: ( SEP )+
             int cnt49=0;
             loop49:
             do {
@@ -2779,7 +2779,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:437:13: (distanceToWayPoint= NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:410:13: (distanceToWayPoint= NUMBER SEP )*
             loop50:
             do {
                 int alt50=2;
@@ -2792,15 +2792,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt50) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:437:14: distanceToWayPoint= NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:410:14: distanceToWayPoint= NUMBER SEP
             	    {
-            	    int distanceToWayPointStart1364 = getCharIndex();
-            	    int distanceToWayPointStartLine1364 = getLine();
-            	    int distanceToWayPointStartCharPos1364 = getCharPositionInLine();
+            	    int distanceToWayPointStart1359 = getCharIndex();
+            	    int distanceToWayPointStartLine1359 = getLine();
+            	    int distanceToWayPointStartCharPos1359 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    distanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, distanceToWayPointStart1364, getCharIndex()-1);
-            	    distanceToWayPoint.setLine(distanceToWayPointStartLine1364);
-            	    distanceToWayPoint.setCharPositionInLine(distanceToWayPointStartCharPos1364);
+            	    distanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, distanceToWayPointStart1359, getCharIndex()-1);
+            	    distanceToWayPoint.setLine(distanceToWayPointStartLine1359);
+            	    distanceToWayPoint.setCharPositionInLine(distanceToWayPointStartCharPos1359);
 
 
             	    mSEP(); 
@@ -2815,16 +2815,16 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int unitsOfDistanceToWayPointStart1385 = getCharIndex();
-            int unitsOfDistanceToWayPointStartLine1385 = getLine();
-            int unitsOfDistanceToWayPointStartCharPos1385 = getCharPositionInLine();
+            int unitsOfDistanceToWayPointStart1380 = getCharIndex();
+            int unitsOfDistanceToWayPointStartLine1380 = getLine();
+            int unitsOfDistanceToWayPointStartCharPos1380 = getCharPositionInLine();
             mLETTERS(); 
-            unitsOfDistanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfDistanceToWayPointStart1385, getCharIndex()-1);
-            unitsOfDistanceToWayPoint.setLine(unitsOfDistanceToWayPointStartLine1385);
-            unitsOfDistanceToWayPoint.setCharPositionInLine(unitsOfDistanceToWayPointStartCharPos1385);
+            unitsOfDistanceToWayPoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfDistanceToWayPointStart1380, getCharIndex()-1);
+            unitsOfDistanceToWayPoint.setLine(unitsOfDistanceToWayPointStartLine1380);
+            unitsOfDistanceToWayPoint.setCharPositionInLine(unitsOfDistanceToWayPointStartCharPos1380);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:438:48: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:411:48: ( SEP )+
             int cnt51=0;
             loop51:
             do {
@@ -2863,7 +2863,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:439:13: (waypointID= LETTERS |waypointID= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:412:13: (waypointID= LETTERS |waypointID= NUMBER )*
             loop52:
             do {
                 int alt52=3;
@@ -2879,29 +2879,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt52) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:439:14: waypointID= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:412:14: waypointID= LETTERS
             	    {
-            	    int waypointIDStart1405 = getCharIndex();
-            	    int waypointIDStartLine1405 = getLine();
-            	    int waypointIDStartCharPos1405 = getCharPositionInLine();
+            	    int waypointIDStart1400 = getCharIndex();
+            	    int waypointIDStartLine1400 = getLine();
+            	    int waypointIDStartCharPos1400 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart1405, getCharIndex()-1);
-            	    waypointID.setLine(waypointIDStartLine1405);
-            	    waypointID.setCharPositionInLine(waypointIDStartCharPos1405);
+            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart1400, getCharIndex()-1);
+            	    waypointID.setLine(waypointIDStartLine1400);
+            	    waypointID.setCharPositionInLine(waypointIDStartCharPos1400);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:439:35: waypointID= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:412:35: waypointID= NUMBER
             	    {
-            	    int waypointIDStart1411 = getCharIndex();
-            	    int waypointIDStartLine1411 = getLine();
-            	    int waypointIDStartCharPos1411 = getCharPositionInLine();
+            	    int waypointIDStart1406 = getCharIndex();
+            	    int waypointIDStartLine1406 = getLine();
+            	    int waypointIDStartCharPos1406 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart1411, getCharIndex()-1);
-            	    waypointID.setLine(waypointIDStartLine1411);
-            	    waypointID.setCharPositionInLine(waypointIDStartCharPos1411);
+            	    waypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waypointIDStart1406, getCharIndex()-1);
+            	    waypointID.setLine(waypointIDStartLine1406);
+            	    waypointID.setCharPositionInLine(waypointIDStartCharPos1406);
 
 
             	    }
@@ -2913,13 +2913,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart1430 = getCharIndex();
-            int checksumStartLine1430 = getLine();
-            int checksumStartCharPos1430 = getCharPositionInLine();
+            int checksumStart1425 = getCharIndex();
+            int checksumStartLine1425 = getLine();
+            int checksumStartCharPos1425 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1430, getCharIndex()-1);
-            checksum.setLine(checksumStartLine1430);
-            checksum.setCharPositionInLine(checksumStartCharPos1430);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1425, getCharIndex()-1);
+            checksum.setLine(checksumStartLine1425);
+            checksum.setCharPositionInLine(checksumStartCharPos1425);
 
 
 
@@ -2966,18 +2966,18 @@ public class NMEALexer extends Lexer {
             CommonToken fromWaypointID=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:486:6: ( '$' device= DEVICE 'BWW' SEP bearingDegreesTrue= NUMBER SEP LETTERS SEP bearingDegreesMagnetic= NUMBER SEP LETTERS SEP (toWaypointID= LETTERS |toWaypointID= NUMBER ) SEP (fromWaypointID= LETTERS |fromWaypointID= NUMBER ) SEP checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:486:8: '$' device= DEVICE 'BWW' SEP bearingDegreesTrue= NUMBER SEP LETTERS SEP bearingDegreesMagnetic= NUMBER SEP LETTERS SEP (toWaypointID= LETTERS |toWaypointID= NUMBER ) SEP (fromWaypointID= LETTERS |fromWaypointID= NUMBER ) SEP checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:459:6: ( '$' device= DEVICE 'BWW' SEP bearingDegreesTrue= NUMBER SEP LETTERS SEP bearingDegreesMagnetic= NUMBER SEP LETTERS SEP (toWaypointID= LETTERS |toWaypointID= NUMBER ) SEP (fromWaypointID= LETTERS |fromWaypointID= NUMBER ) SEP checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:459:8: '$' device= DEVICE 'BWW' SEP bearingDegreesTrue= NUMBER SEP LETTERS SEP bearingDegreesMagnetic= NUMBER SEP LETTERS SEP (toWaypointID= LETTERS |toWaypointID= NUMBER ) SEP (fromWaypointID= LETTERS |fromWaypointID= NUMBER ) SEP checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart1466 = getCharIndex();
-            int deviceStartLine1466 = getLine();
-            int deviceStartCharPos1466 = getCharPositionInLine();
+            int deviceStart1461 = getCharIndex();
+            int deviceStartLine1461 = getLine();
+            int deviceStartCharPos1461 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1466, getCharIndex()-1);
-            device.setLine(deviceStartLine1466);
-            device.setCharPositionInLine(deviceStartCharPos1466);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1461, getCharIndex()-1);
+            device.setLine(deviceStartLine1461);
+            device.setCharPositionInLine(deviceStartCharPos1461);
 
 
             match("BWW"); 
@@ -2987,13 +2987,13 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int bearingDegreesTrueStart1480 = getCharIndex();
-            int bearingDegreesTrueStartLine1480 = getLine();
-            int bearingDegreesTrueStartCharPos1480 = getCharPositionInLine();
+            int bearingDegreesTrueStart1475 = getCharIndex();
+            int bearingDegreesTrueStartLine1475 = getLine();
+            int bearingDegreesTrueStartCharPos1475 = getCharPositionInLine();
             mNUMBER(); 
-            bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart1480, getCharIndex()-1);
-            bearingDegreesTrue.setLine(bearingDegreesTrueStartLine1480);
-            bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos1480);
+            bearingDegreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesTrueStart1475, getCharIndex()-1);
+            bearingDegreesTrue.setLine(bearingDegreesTrueStartLine1475);
+            bearingDegreesTrue.setCharPositionInLine(bearingDegreesTrueStartCharPos1475);
 
 
             mSEP(); 
@@ -3005,13 +3005,13 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int bearingDegreesMagneticStart1498 = getCharIndex();
-            int bearingDegreesMagneticStartLine1498 = getLine();
-            int bearingDegreesMagneticStartCharPos1498 = getCharPositionInLine();
+            int bearingDegreesMagneticStart1493 = getCharIndex();
+            int bearingDegreesMagneticStartLine1493 = getLine();
+            int bearingDegreesMagneticStartCharPos1493 = getCharPositionInLine();
             mNUMBER(); 
-            bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart1498, getCharIndex()-1);
-            bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine1498);
-            bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos1498);
+            bearingDegreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingDegreesMagneticStart1493, getCharIndex()-1);
+            bearingDegreesMagnetic.setLine(bearingDegreesMagneticStartLine1493);
+            bearingDegreesMagnetic.setCharPositionInLine(bearingDegreesMagneticStartCharPos1493);
 
 
             mSEP(); 
@@ -3023,7 +3023,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:491:4: (toWaypointID= LETTERS |toWaypointID= NUMBER )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:464:4: (toWaypointID= LETTERS |toWaypointID= NUMBER )
             int alt53=2;
             int LA53_0 = input.LA(1);
 
@@ -3042,29 +3042,29 @@ public class NMEALexer extends Lexer {
             }
             switch (alt53) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:491:5: toWaypointID= LETTERS
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:464:5: toWaypointID= LETTERS
                     {
-                    int toWaypointIDStart1515 = getCharIndex();
-                    int toWaypointIDStartLine1515 = getLine();
-                    int toWaypointIDStartCharPos1515 = getCharPositionInLine();
+                    int toWaypointIDStart1510 = getCharIndex();
+                    int toWaypointIDStartLine1510 = getLine();
+                    int toWaypointIDStartCharPos1510 = getCharPositionInLine();
                     mLETTERS(); 
-                    toWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, toWaypointIDStart1515, getCharIndex()-1);
-                    toWaypointID.setLine(toWaypointIDStartLine1515);
-                    toWaypointID.setCharPositionInLine(toWaypointIDStartCharPos1515);
+                    toWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, toWaypointIDStart1510, getCharIndex()-1);
+                    toWaypointID.setLine(toWaypointIDStartLine1510);
+                    toWaypointID.setCharPositionInLine(toWaypointIDStartCharPos1510);
 
 
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:491:28: toWaypointID= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:464:28: toWaypointID= NUMBER
                     {
-                    int toWaypointIDStart1521 = getCharIndex();
-                    int toWaypointIDStartLine1521 = getLine();
-                    int toWaypointIDStartCharPos1521 = getCharPositionInLine();
+                    int toWaypointIDStart1516 = getCharIndex();
+                    int toWaypointIDStartLine1516 = getLine();
+                    int toWaypointIDStartCharPos1516 = getCharPositionInLine();
                     mNUMBER(); 
-                    toWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, toWaypointIDStart1521, getCharIndex()-1);
-                    toWaypointID.setLine(toWaypointIDStartLine1521);
-                    toWaypointID.setCharPositionInLine(toWaypointIDStartCharPos1521);
+                    toWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, toWaypointIDStart1516, getCharIndex()-1);
+                    toWaypointID.setLine(toWaypointIDStartLine1516);
+                    toWaypointID.setCharPositionInLine(toWaypointIDStartCharPos1516);
 
 
                     }
@@ -3076,7 +3076,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:492:4: (fromWaypointID= LETTERS |fromWaypointID= NUMBER )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:465:4: (fromWaypointID= LETTERS |fromWaypointID= NUMBER )
             int alt54=2;
             int LA54_0 = input.LA(1);
 
@@ -3095,29 +3095,29 @@ public class NMEALexer extends Lexer {
             }
             switch (alt54) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:492:5: fromWaypointID= LETTERS
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:465:5: fromWaypointID= LETTERS
                     {
-                    int fromWaypointIDStart1532 = getCharIndex();
-                    int fromWaypointIDStartLine1532 = getLine();
-                    int fromWaypointIDStartCharPos1532 = getCharPositionInLine();
+                    int fromWaypointIDStart1527 = getCharIndex();
+                    int fromWaypointIDStartLine1527 = getLine();
+                    int fromWaypointIDStartCharPos1527 = getCharPositionInLine();
                     mLETTERS(); 
-                    fromWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fromWaypointIDStart1532, getCharIndex()-1);
-                    fromWaypointID.setLine(fromWaypointIDStartLine1532);
-                    fromWaypointID.setCharPositionInLine(fromWaypointIDStartCharPos1532);
+                    fromWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fromWaypointIDStart1527, getCharIndex()-1);
+                    fromWaypointID.setLine(fromWaypointIDStartLine1527);
+                    fromWaypointID.setCharPositionInLine(fromWaypointIDStartCharPos1527);
 
 
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:492:30: fromWaypointID= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:465:30: fromWaypointID= NUMBER
                     {
-                    int fromWaypointIDStart1538 = getCharIndex();
-                    int fromWaypointIDStartLine1538 = getLine();
-                    int fromWaypointIDStartCharPos1538 = getCharPositionInLine();
+                    int fromWaypointIDStart1533 = getCharIndex();
+                    int fromWaypointIDStartLine1533 = getLine();
+                    int fromWaypointIDStartCharPos1533 = getCharPositionInLine();
                     mNUMBER(); 
-                    fromWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fromWaypointIDStart1538, getCharIndex()-1);
-                    fromWaypointID.setLine(fromWaypointIDStartLine1538);
-                    fromWaypointID.setCharPositionInLine(fromWaypointIDStartCharPos1538);
+                    fromWaypointID = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fromWaypointIDStart1533, getCharIndex()-1);
+                    fromWaypointID.setLine(fromWaypointIDStartLine1533);
+                    fromWaypointID.setCharPositionInLine(fromWaypointIDStartCharPos1533);
 
 
                     }
@@ -3129,13 +3129,13 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int checksumStart1548 = getCharIndex();
-            int checksumStartLine1548 = getLine();
-            int checksumStartCharPos1548 = getCharPositionInLine();
+            int checksumStart1543 = getCharIndex();
+            int checksumStartLine1543 = getLine();
+            int checksumStartCharPos1543 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1548, getCharIndex()-1);
-            checksum.setLine(checksumStartLine1548);
-            checksum.setCharPositionInLine(checksumStartCharPos1548);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1543, getCharIndex()-1);
+            checksum.setLine(checksumStartLine1543);
+            checksum.setCharPositionInLine(checksumStartCharPos1543);
 
 
 
@@ -3171,18 +3171,18 @@ public class NMEALexer extends Lexer {
             CommonToken depthInFathoms=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:495:5: ( '$' device= DEVICE 'DBT' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:495:7: '$' device= DEVICE 'DBT' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:468:5: ( '$' device= DEVICE 'DBT' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:468:7: '$' device= DEVICE 'DBT' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )*
             {
             match('$'); 
 
-            int deviceStart1566 = getCharIndex();
-            int deviceStartLine1566 = getLine();
-            int deviceStartCharPos1566 = getCharPositionInLine();
+            int deviceStart1561 = getCharIndex();
+            int deviceStartLine1561 = getLine();
+            int deviceStartCharPos1561 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1566, getCharIndex()-1);
-            device.setLine(deviceStartLine1566);
-            device.setCharPositionInLine(deviceStartCharPos1566);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1561, getCharIndex()-1);
+            device.setLine(deviceStartLine1561);
+            device.setCharPositionInLine(deviceStartCharPos1561);
 
 
             match("DBT"); 
@@ -3192,7 +3192,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:496:2: ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:469:2: ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) )
             int alt55=2;
             int LA55_0 = input.LA(1);
 
@@ -3211,7 +3211,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt55) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:496:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:469:3: SEP
                     {
                     mSEP(); 
 
@@ -3219,18 +3219,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:496:9: (depthInFeet= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:469:9: (depthInFeet= NUMBER SEP LETTERS SEP )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:496:9: (depthInFeet= NUMBER SEP LETTERS SEP )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:496:10: depthInFeet= NUMBER SEP LETTERS SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:469:9: (depthInFeet= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:469:10: depthInFeet= NUMBER SEP LETTERS SEP
                     {
-                    int depthInFeetStart1581 = getCharIndex();
-                    int depthInFeetStartLine1581 = getLine();
-                    int depthInFeetStartCharPos1581 = getCharPositionInLine();
+                    int depthInFeetStart1576 = getCharIndex();
+                    int depthInFeetStartLine1576 = getLine();
+                    int depthInFeetStartCharPos1576 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInFeet = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFeetStart1581, getCharIndex()-1);
-                    depthInFeet.setLine(depthInFeetStartLine1581);
-                    depthInFeet.setCharPositionInLine(depthInFeetStartCharPos1581);
+                    depthInFeet = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFeetStart1576, getCharIndex()-1);
+                    depthInFeet.setLine(depthInFeetStartLine1576);
+                    depthInFeet.setCharPositionInLine(depthInFeetStartCharPos1576);
 
 
                     mSEP(); 
@@ -3251,7 +3251,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:497:2: ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:470:2: ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) )
             int alt56=2;
             int LA56_0 = input.LA(1);
 
@@ -3270,7 +3270,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt56) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:497:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:470:3: SEP
                     {
                     mSEP(); 
 
@@ -3278,18 +3278,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:497:9: (depthInMeters= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:470:9: (depthInMeters= NUMBER SEP LETTERS SEP )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:497:9: (depthInMeters= NUMBER SEP LETTERS SEP )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:497:10: depthInMeters= NUMBER SEP LETTERS SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:470:9: (depthInMeters= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:470:10: depthInMeters= NUMBER SEP LETTERS SEP
                     {
-                    int depthInMetersStart1600 = getCharIndex();
-                    int depthInMetersStartLine1600 = getLine();
-                    int depthInMetersStartCharPos1600 = getCharPositionInLine();
+                    int depthInMetersStart1595 = getCharIndex();
+                    int depthInMetersStartLine1595 = getLine();
+                    int depthInMetersStartCharPos1595 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInMeters = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInMetersStart1600, getCharIndex()-1);
-                    depthInMeters.setLine(depthInMetersStartLine1600);
-                    depthInMeters.setCharPositionInLine(depthInMetersStartCharPos1600);
+                    depthInMeters = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInMetersStart1595, getCharIndex()-1);
+                    depthInMeters.setLine(depthInMetersStartLine1595);
+                    depthInMeters.setCharPositionInLine(depthInMetersStartCharPos1595);
 
 
                     mSEP(); 
@@ -3310,7 +3310,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:498:2: ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:471:2: ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) )
             int alt57=2;
             int LA57_0 = input.LA(1);
 
@@ -3329,7 +3329,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt57) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:498:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:471:3: SEP
                     {
                     mSEP(); 
 
@@ -3337,18 +3337,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:498:9: (depthInFathoms= NUMBER SEP LETTERS )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:471:9: (depthInFathoms= NUMBER SEP LETTERS )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:498:9: (depthInFathoms= NUMBER SEP LETTERS )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:498:10: depthInFathoms= NUMBER SEP LETTERS
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:471:9: (depthInFathoms= NUMBER SEP LETTERS )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:471:10: depthInFathoms= NUMBER SEP LETTERS
                     {
-                    int depthInFathomsStart1619 = getCharIndex();
-                    int depthInFathomsStartLine1619 = getLine();
-                    int depthInFathomsStartCharPos1619 = getCharPositionInLine();
+                    int depthInFathomsStart1614 = getCharIndex();
+                    int depthInFathomsStartLine1614 = getLine();
+                    int depthInFathomsStartCharPos1614 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInFathoms = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFathomsStart1619, getCharIndex()-1);
-                    depthInFathoms.setLine(depthInFathomsStartLine1619);
-                    depthInFathoms.setCharPositionInLine(depthInFathomsStartCharPos1619);
+                    depthInFathoms = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFathomsStart1614, getCharIndex()-1);
+                    depthInFathoms.setLine(depthInFathomsStartLine1614);
+                    depthInFathoms.setCharPositionInLine(depthInFathomsStartCharPos1614);
 
 
                     mSEP(); 
@@ -3366,7 +3366,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:499:11: (checksum= CHECKSUM )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:472:11: (checksum= CHECKSUM )*
             loop58:
             do {
                 int alt58=2;
@@ -3379,15 +3379,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt58) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:499:11: checksum= CHECKSUM
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:472:11: checksum= CHECKSUM
             	    {
-            	    int checksumStart1631 = getCharIndex();
-            	    int checksumStartLine1631 = getLine();
-            	    int checksumStartCharPos1631 = getCharPositionInLine();
+            	    int checksumStart1626 = getCharIndex();
+            	    int checksumStartLine1626 = getLine();
+            	    int checksumStartCharPos1626 = getCharPositionInLine();
             	    mCHECKSUM(); 
-            	    checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1631, getCharIndex()-1);
-            	    checksum.setLine(checksumStartLine1631);
-            	    checksum.setCharPositionInLine(checksumStartCharPos1631);
+            	    checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1626, getCharIndex()-1);
+            	    checksum.setLine(checksumStartLine1626);
+            	    checksum.setCharPositionInLine(checksumStartCharPos1626);
 
 
             	    }
@@ -3430,18 +3430,18 @@ public class NMEALexer extends Lexer {
             CommonToken depthInFathoms=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:511:5: ( '$' device= DEVICE 'DBK' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:511:6: '$' device= DEVICE 'DBK' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:484:5: ( '$' device= DEVICE 'DBK' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:484:6: '$' device= DEVICE 'DBK' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )*
             {
             match('$'); 
 
-            int deviceStart1649 = getCharIndex();
-            int deviceStartLine1649 = getLine();
-            int deviceStartCharPos1649 = getCharPositionInLine();
+            int deviceStart1644 = getCharIndex();
+            int deviceStartLine1644 = getLine();
+            int deviceStartCharPos1644 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1649, getCharIndex()-1);
-            device.setLine(deviceStartLine1649);
-            device.setCharPositionInLine(deviceStartCharPos1649);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1644, getCharIndex()-1);
+            device.setLine(deviceStartLine1644);
+            device.setCharPositionInLine(deviceStartCharPos1644);
 
 
             match("DBK"); 
@@ -3451,7 +3451,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:512:2: ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:485:2: ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) )
             int alt59=2;
             int LA59_0 = input.LA(1);
 
@@ -3470,7 +3470,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt59) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:512:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:485:3: SEP
                     {
                     mSEP(); 
 
@@ -3478,18 +3478,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:512:9: (depthInFeet= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:485:9: (depthInFeet= NUMBER SEP LETTERS SEP )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:512:9: (depthInFeet= NUMBER SEP LETTERS SEP )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:512:10: depthInFeet= NUMBER SEP LETTERS SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:485:9: (depthInFeet= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:485:10: depthInFeet= NUMBER SEP LETTERS SEP
                     {
-                    int depthInFeetStart1664 = getCharIndex();
-                    int depthInFeetStartLine1664 = getLine();
-                    int depthInFeetStartCharPos1664 = getCharPositionInLine();
+                    int depthInFeetStart1659 = getCharIndex();
+                    int depthInFeetStartLine1659 = getLine();
+                    int depthInFeetStartCharPos1659 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInFeet = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFeetStart1664, getCharIndex()-1);
-                    depthInFeet.setLine(depthInFeetStartLine1664);
-                    depthInFeet.setCharPositionInLine(depthInFeetStartCharPos1664);
+                    depthInFeet = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFeetStart1659, getCharIndex()-1);
+                    depthInFeet.setLine(depthInFeetStartLine1659);
+                    depthInFeet.setCharPositionInLine(depthInFeetStartCharPos1659);
 
 
                     mSEP(); 
@@ -3510,7 +3510,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:513:2: ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:486:2: ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) )
             int alt60=2;
             int LA60_0 = input.LA(1);
 
@@ -3529,7 +3529,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt60) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:513:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:486:3: SEP
                     {
                     mSEP(); 
 
@@ -3537,18 +3537,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:513:9: (depthInMeters= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:486:9: (depthInMeters= NUMBER SEP LETTERS SEP )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:513:9: (depthInMeters= NUMBER SEP LETTERS SEP )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:513:10: depthInMeters= NUMBER SEP LETTERS SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:486:9: (depthInMeters= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:486:10: depthInMeters= NUMBER SEP LETTERS SEP
                     {
-                    int depthInMetersStart1683 = getCharIndex();
-                    int depthInMetersStartLine1683 = getLine();
-                    int depthInMetersStartCharPos1683 = getCharPositionInLine();
+                    int depthInMetersStart1678 = getCharIndex();
+                    int depthInMetersStartLine1678 = getLine();
+                    int depthInMetersStartCharPos1678 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInMeters = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInMetersStart1683, getCharIndex()-1);
-                    depthInMeters.setLine(depthInMetersStartLine1683);
-                    depthInMeters.setCharPositionInLine(depthInMetersStartCharPos1683);
+                    depthInMeters = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInMetersStart1678, getCharIndex()-1);
+                    depthInMeters.setLine(depthInMetersStartLine1678);
+                    depthInMeters.setCharPositionInLine(depthInMetersStartCharPos1678);
 
 
                     mSEP(); 
@@ -3569,7 +3569,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:514:2: ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:487:2: ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) )
             int alt61=2;
             int LA61_0 = input.LA(1);
 
@@ -3588,7 +3588,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt61) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:514:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:487:3: SEP
                     {
                     mSEP(); 
 
@@ -3596,18 +3596,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:514:9: (depthInFathoms= NUMBER SEP LETTERS )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:487:9: (depthInFathoms= NUMBER SEP LETTERS )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:514:9: (depthInFathoms= NUMBER SEP LETTERS )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:514:10: depthInFathoms= NUMBER SEP LETTERS
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:487:9: (depthInFathoms= NUMBER SEP LETTERS )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:487:10: depthInFathoms= NUMBER SEP LETTERS
                     {
-                    int depthInFathomsStart1702 = getCharIndex();
-                    int depthInFathomsStartLine1702 = getLine();
-                    int depthInFathomsStartCharPos1702 = getCharPositionInLine();
+                    int depthInFathomsStart1697 = getCharIndex();
+                    int depthInFathomsStartLine1697 = getLine();
+                    int depthInFathomsStartCharPos1697 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInFathoms = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFathomsStart1702, getCharIndex()-1);
-                    depthInFathoms.setLine(depthInFathomsStartLine1702);
-                    depthInFathoms.setCharPositionInLine(depthInFathomsStartCharPos1702);
+                    depthInFathoms = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFathomsStart1697, getCharIndex()-1);
+                    depthInFathoms.setLine(depthInFathomsStartLine1697);
+                    depthInFathoms.setCharPositionInLine(depthInFathomsStartCharPos1697);
 
 
                     mSEP(); 
@@ -3625,7 +3625,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:515:11: (checksum= CHECKSUM )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:488:11: (checksum= CHECKSUM )*
             loop62:
             do {
                 int alt62=2;
@@ -3638,15 +3638,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt62) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:515:11: checksum= CHECKSUM
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:488:11: checksum= CHECKSUM
             	    {
-            	    int checksumStart1714 = getCharIndex();
-            	    int checksumStartLine1714 = getLine();
-            	    int checksumStartCharPos1714 = getCharPositionInLine();
+            	    int checksumStart1709 = getCharIndex();
+            	    int checksumStartLine1709 = getLine();
+            	    int checksumStartCharPos1709 = getCharPositionInLine();
             	    mCHECKSUM(); 
-            	    checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1714, getCharIndex()-1);
-            	    checksum.setLine(checksumStartLine1714);
-            	    checksum.setCharPositionInLine(checksumStartCharPos1714);
+            	    checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1709, getCharIndex()-1);
+            	    checksum.setLine(checksumStartLine1709);
+            	    checksum.setCharPositionInLine(checksumStartCharPos1709);
 
 
             	    }
@@ -3689,18 +3689,18 @@ public class NMEALexer extends Lexer {
             CommonToken depthInFathoms=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:527:5: ( '$' device= DEVICE 'DBS' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:527:6: '$' device= DEVICE 'DBS' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:500:5: ( '$' device= DEVICE 'DBS' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:500:6: '$' device= DEVICE 'DBS' SEP ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) ) ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) ) (checksum= CHECKSUM )*
             {
             match('$'); 
 
-            int deviceStart1732 = getCharIndex();
-            int deviceStartLine1732 = getLine();
-            int deviceStartCharPos1732 = getCharPositionInLine();
+            int deviceStart1727 = getCharIndex();
+            int deviceStartLine1727 = getLine();
+            int deviceStartCharPos1727 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1732, getCharIndex()-1);
-            device.setLine(deviceStartLine1732);
-            device.setCharPositionInLine(deviceStartCharPos1732);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1727, getCharIndex()-1);
+            device.setLine(deviceStartLine1727);
+            device.setCharPositionInLine(deviceStartCharPos1727);
 
 
             match("DBS"); 
@@ -3710,7 +3710,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:528:2: ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:501:2: ( SEP | (depthInFeet= NUMBER SEP LETTERS SEP ) )
             int alt63=2;
             int LA63_0 = input.LA(1);
 
@@ -3729,7 +3729,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt63) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:528:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:501:3: SEP
                     {
                     mSEP(); 
 
@@ -3737,18 +3737,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:528:9: (depthInFeet= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:501:9: (depthInFeet= NUMBER SEP LETTERS SEP )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:528:9: (depthInFeet= NUMBER SEP LETTERS SEP )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:528:10: depthInFeet= NUMBER SEP LETTERS SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:501:9: (depthInFeet= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:501:10: depthInFeet= NUMBER SEP LETTERS SEP
                     {
-                    int depthInFeetStart1747 = getCharIndex();
-                    int depthInFeetStartLine1747 = getLine();
-                    int depthInFeetStartCharPos1747 = getCharPositionInLine();
+                    int depthInFeetStart1742 = getCharIndex();
+                    int depthInFeetStartLine1742 = getLine();
+                    int depthInFeetStartCharPos1742 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInFeet = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFeetStart1747, getCharIndex()-1);
-                    depthInFeet.setLine(depthInFeetStartLine1747);
-                    depthInFeet.setCharPositionInLine(depthInFeetStartCharPos1747);
+                    depthInFeet = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFeetStart1742, getCharIndex()-1);
+                    depthInFeet.setLine(depthInFeetStartLine1742);
+                    depthInFeet.setCharPositionInLine(depthInFeetStartCharPos1742);
 
 
                     mSEP(); 
@@ -3769,7 +3769,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:529:2: ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:502:2: ( SEP | (depthInMeters= NUMBER SEP LETTERS SEP ) )
             int alt64=2;
             int LA64_0 = input.LA(1);
 
@@ -3788,7 +3788,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt64) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:529:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:502:3: SEP
                     {
                     mSEP(); 
 
@@ -3796,18 +3796,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:529:9: (depthInMeters= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:502:9: (depthInMeters= NUMBER SEP LETTERS SEP )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:529:9: (depthInMeters= NUMBER SEP LETTERS SEP )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:529:10: depthInMeters= NUMBER SEP LETTERS SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:502:9: (depthInMeters= NUMBER SEP LETTERS SEP )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:502:10: depthInMeters= NUMBER SEP LETTERS SEP
                     {
-                    int depthInMetersStart1766 = getCharIndex();
-                    int depthInMetersStartLine1766 = getLine();
-                    int depthInMetersStartCharPos1766 = getCharPositionInLine();
+                    int depthInMetersStart1761 = getCharIndex();
+                    int depthInMetersStartLine1761 = getLine();
+                    int depthInMetersStartCharPos1761 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInMeters = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInMetersStart1766, getCharIndex()-1);
-                    depthInMeters.setLine(depthInMetersStartLine1766);
-                    depthInMeters.setCharPositionInLine(depthInMetersStartCharPos1766);
+                    depthInMeters = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInMetersStart1761, getCharIndex()-1);
+                    depthInMeters.setLine(depthInMetersStartLine1761);
+                    depthInMeters.setCharPositionInLine(depthInMetersStartCharPos1761);
 
 
                     mSEP(); 
@@ -3828,7 +3828,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:530:2: ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:503:2: ( SEP | (depthInFathoms= NUMBER SEP LETTERS ) )
             int alt65=2;
             int LA65_0 = input.LA(1);
 
@@ -3847,7 +3847,7 @@ public class NMEALexer extends Lexer {
             }
             switch (alt65) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:530:3: SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:503:3: SEP
                     {
                     mSEP(); 
 
@@ -3855,18 +3855,18 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:530:9: (depthInFathoms= NUMBER SEP LETTERS )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:503:9: (depthInFathoms= NUMBER SEP LETTERS )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:530:9: (depthInFathoms= NUMBER SEP LETTERS )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:530:10: depthInFathoms= NUMBER SEP LETTERS
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:503:9: (depthInFathoms= NUMBER SEP LETTERS )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:503:10: depthInFathoms= NUMBER SEP LETTERS
                     {
-                    int depthInFathomsStart1785 = getCharIndex();
-                    int depthInFathomsStartLine1785 = getLine();
-                    int depthInFathomsStartCharPos1785 = getCharPositionInLine();
+                    int depthInFathomsStart1780 = getCharIndex();
+                    int depthInFathomsStartLine1780 = getLine();
+                    int depthInFathomsStartCharPos1780 = getCharPositionInLine();
                     mNUMBER(); 
-                    depthInFathoms = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFathomsStart1785, getCharIndex()-1);
-                    depthInFathoms.setLine(depthInFathomsStartLine1785);
-                    depthInFathoms.setCharPositionInLine(depthInFathomsStartCharPos1785);
+                    depthInFathoms = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthInFathomsStart1780, getCharIndex()-1);
+                    depthInFathoms.setLine(depthInFathomsStartLine1780);
+                    depthInFathoms.setCharPositionInLine(depthInFathomsStartCharPos1780);
 
 
                     mSEP(); 
@@ -3884,7 +3884,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:531:11: (checksum= CHECKSUM )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:504:11: (checksum= CHECKSUM )*
             loop66:
             do {
                 int alt66=2;
@@ -3897,15 +3897,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt66) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:531:11: checksum= CHECKSUM
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:504:11: checksum= CHECKSUM
             	    {
-            	    int checksumStart1797 = getCharIndex();
-            	    int checksumStartLine1797 = getLine();
-            	    int checksumStartCharPos1797 = getCharPositionInLine();
+            	    int checksumStart1792 = getCharIndex();
+            	    int checksumStartLine1792 = getLine();
+            	    int checksumStartCharPos1792 = getCharPositionInLine();
             	    mCHECKSUM(); 
-            	    checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1797, getCharIndex()-1);
-            	    checksum.setLine(checksumStartLine1797);
-            	    checksum.setCharPositionInLine(checksumStartCharPos1797);
+            	    checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1792, getCharIndex()-1);
+            	    checksum.setLine(checksumStartLine1792);
+            	    checksum.setCharPositionInLine(checksumStartCharPos1792);
 
 
             	    }
@@ -3947,18 +3947,18 @@ public class NMEALexer extends Lexer {
             CommonToken offset=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:543:5: ( '$' device= DEVICE 'DPT' SEP depth= NUMBER SEP (offset= NUMBER SEP |offset= NUMBER ) (checksum= CHECKSUM )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:543:6: '$' device= DEVICE 'DPT' SEP depth= NUMBER SEP (offset= NUMBER SEP |offset= NUMBER ) (checksum= CHECKSUM )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:516:5: ( '$' device= DEVICE 'DPT' SEP depth= NUMBER SEP (offset= NUMBER SEP |offset= NUMBER ) (checksum= CHECKSUM )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:516:6: '$' device= DEVICE 'DPT' SEP depth= NUMBER SEP (offset= NUMBER SEP |offset= NUMBER ) (checksum= CHECKSUM )*
             {
             match('$'); 
 
-            int deviceStart1816 = getCharIndex();
-            int deviceStartLine1816 = getLine();
-            int deviceStartCharPos1816 = getCharPositionInLine();
+            int deviceStart1811 = getCharIndex();
+            int deviceStartLine1811 = getLine();
+            int deviceStartCharPos1811 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1816, getCharIndex()-1);
-            device.setLine(deviceStartLine1816);
-            device.setCharPositionInLine(deviceStartCharPos1816);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1811, getCharIndex()-1);
+            device.setLine(deviceStartLine1811);
+            device.setCharPositionInLine(deviceStartCharPos1811);
 
 
             match("DPT"); 
@@ -3968,32 +3968,32 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int depthStart1825 = getCharIndex();
-            int depthStartLine1825 = getLine();
-            int depthStartCharPos1825 = getCharPositionInLine();
+            int depthStart1820 = getCharIndex();
+            int depthStartLine1820 = getLine();
+            int depthStartCharPos1820 = getCharPositionInLine();
             mNUMBER(); 
-            depth = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthStart1825, getCharIndex()-1);
-            depth.setLine(depthStartLine1825);
-            depth.setCharPositionInLine(depthStartCharPos1825);
+            depth = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, depthStart1820, getCharIndex()-1);
+            depth.setLine(depthStartLine1820);
+            depth.setCharPositionInLine(depthStartCharPos1820);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:545:9: (offset= NUMBER SEP |offset= NUMBER )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:518:9: (offset= NUMBER SEP |offset= NUMBER )
             int alt67=2;
             alt67 = dfa67.predict(input);
             switch (alt67) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:545:10: offset= NUMBER SEP
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:518:10: offset= NUMBER SEP
                     {
-                    int offsetStart1840 = getCharIndex();
-                    int offsetStartLine1840 = getLine();
-                    int offsetStartCharPos1840 = getCharPositionInLine();
+                    int offsetStart1835 = getCharIndex();
+                    int offsetStartLine1835 = getLine();
+                    int offsetStartCharPos1835 = getCharPositionInLine();
                     mNUMBER(); 
-                    offset = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, offsetStart1840, getCharIndex()-1);
-                    offset.setLine(offsetStartLine1840);
-                    offset.setCharPositionInLine(offsetStartCharPos1840);
+                    offset = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, offsetStart1835, getCharIndex()-1);
+                    offset.setLine(offsetStartLine1835);
+                    offset.setCharPositionInLine(offsetStartCharPos1835);
 
 
                     mSEP(); 
@@ -4002,15 +4002,15 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:545:30: offset= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:518:30: offset= NUMBER
                     {
-                    int offsetStart1848 = getCharIndex();
-                    int offsetStartLine1848 = getLine();
-                    int offsetStartCharPos1848 = getCharPositionInLine();
+                    int offsetStart1843 = getCharIndex();
+                    int offsetStartLine1843 = getLine();
+                    int offsetStartCharPos1843 = getCharPositionInLine();
                     mNUMBER(); 
-                    offset = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, offsetStart1848, getCharIndex()-1);
-                    offset.setLine(offsetStartLine1848);
-                    offset.setCharPositionInLine(offsetStartCharPos1848);
+                    offset = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, offsetStart1843, getCharIndex()-1);
+                    offset.setLine(offsetStartLine1843);
+                    offset.setCharPositionInLine(offsetStartCharPos1843);
 
 
                     }
@@ -4019,7 +4019,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:546:18: (checksum= CHECKSUM )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:519:18: (checksum= CHECKSUM )*
             loop68:
             do {
                 int alt68=2;
@@ -4032,15 +4032,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt68) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:546:18: checksum= CHECKSUM
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:519:18: checksum= CHECKSUM
             	    {
-            	    int checksumStart1863 = getCharIndex();
-            	    int checksumStartLine1863 = getLine();
-            	    int checksumStartCharPos1863 = getCharPositionInLine();
+            	    int checksumStart1858 = getCharIndex();
+            	    int checksumStartLine1858 = getLine();
+            	    int checksumStartCharPos1858 = getCharPositionInLine();
             	    mCHECKSUM(); 
-            	    checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1863, getCharIndex()-1);
-            	    checksum.setLine(checksumStartLine1863);
-            	    checksum.setCharPositionInLine(checksumStartCharPos1863);
+            	    checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart1858, getCharIndex()-1);
+            	    checksum.setLine(checksumStartLine1858);
+            	    checksum.setCharPositionInLine(checksumStartCharPos1858);
 
 
             	    }
@@ -4091,18 +4091,18 @@ public class NMEALexer extends Lexer {
             CommonToken unitsOfGeoidAltitude=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:576:5: ( '$' device= DEVICE 'GGA' SEP (utc= NUMBER )* SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( ' ' )* (gpsQualityIndicator= NUMBER )* SEP (numberOfSatellitesInView= NUMBER )* SEP (horizontalDilutionOfPrecision= NUMBER )* SEP ( SIGN )* (antennaAltitude= NUMBER )* SEP unitsOfAntennaAltitude= LETTERS SEP ( SIGN )* (geoidAltitude= NUMBER )* SEP (unitsOfGeoidAltitude= LETTERS )* ( SEP )+ ( NUMBER SEP )* ( LETTERS | NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:576:12: '$' device= DEVICE 'GGA' SEP (utc= NUMBER )* SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( ' ' )* (gpsQualityIndicator= NUMBER )* SEP (numberOfSatellitesInView= NUMBER )* SEP (horizontalDilutionOfPrecision= NUMBER )* SEP ( SIGN )* (antennaAltitude= NUMBER )* SEP unitsOfAntennaAltitude= LETTERS SEP ( SIGN )* (geoidAltitude= NUMBER )* SEP (unitsOfGeoidAltitude= LETTERS )* ( SEP )+ ( NUMBER SEP )* ( LETTERS | NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:549:5: ( '$' device= DEVICE 'GGA' SEP (utc= NUMBER )* SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( ' ' )* (gpsQualityIndicator= NUMBER )* SEP (numberOfSatellitesInView= NUMBER )* SEP (horizontalDilutionOfPrecision= NUMBER )* SEP ( SIGN )* (antennaAltitude= NUMBER )* SEP unitsOfAntennaAltitude= LETTERS SEP ( SIGN )* (geoidAltitude= NUMBER )* SEP (unitsOfGeoidAltitude= LETTERS )* ( SEP )+ ( NUMBER SEP )* ( LETTERS | NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:549:12: '$' device= DEVICE 'GGA' SEP (utc= NUMBER )* SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( ' ' )* (gpsQualityIndicator= NUMBER )* SEP (numberOfSatellitesInView= NUMBER )* SEP (horizontalDilutionOfPrecision= NUMBER )* SEP ( SIGN )* (antennaAltitude= NUMBER )* SEP unitsOfAntennaAltitude= LETTERS SEP ( SIGN )* (geoidAltitude= NUMBER )* SEP (unitsOfGeoidAltitude= LETTERS )* ( SEP )+ ( NUMBER SEP )* ( LETTERS | NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart1888 = getCharIndex();
-            int deviceStartLine1888 = getLine();
-            int deviceStartCharPos1888 = getCharPositionInLine();
+            int deviceStart1883 = getCharIndex();
+            int deviceStartLine1883 = getLine();
+            int deviceStartCharPos1883 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1888, getCharIndex()-1);
-            device.setLine(deviceStartLine1888);
-            device.setCharPositionInLine(deviceStartCharPos1888);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart1883, getCharIndex()-1);
+            device.setLine(deviceStartLine1883);
+            device.setCharPositionInLine(deviceStartCharPos1883);
 
 
             match("GGA"); 
@@ -4112,7 +4112,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:577:17: (utc= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:550:17: (utc= NUMBER )*
             loop69:
             do {
                 int alt69=2;
@@ -4125,15 +4125,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt69) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:577:17: utc= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:550:17: utc= NUMBER
             	    {
-            	    int utcStart1909 = getCharIndex();
-            	    int utcStartLine1909 = getLine();
-            	    int utcStartCharPos1909 = getCharPositionInLine();
+            	    int utcStart1904 = getCharIndex();
+            	    int utcStartLine1904 = getLine();
+            	    int utcStartCharPos1904 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart1909, getCharIndex()-1);
-            	    utc.setLine(utcStartLine1909);
-            	    utc.setCharPositionInLine(utcStartCharPos1909);
+            	    utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart1904, getCharIndex()-1);
+            	    utc.setLine(utcStartLine1904);
+            	    utc.setCharPositionInLine(utcStartCharPos1904);
 
 
             	    }
@@ -4148,7 +4148,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:578:22: (latitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:551:22: (latitude= NUMBER )*
             loop70:
             do {
                 int alt70=2;
@@ -4161,15 +4161,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt70) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:578:22: latitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:551:22: latitude= NUMBER
             	    {
-            	    int latitudeStart1929 = getCharIndex();
-            	    int latitudeStartLine1929 = getLine();
-            	    int latitudeStartCharPos1929 = getCharPositionInLine();
+            	    int latitudeStart1924 = getCharIndex();
+            	    int latitudeStartLine1924 = getLine();
+            	    int latitudeStartCharPos1924 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart1929, getCharIndex()-1);
-            	    latitude.setLine(latitudeStartLine1929);
-            	    latitude.setCharPositionInLine(latitudeStartCharPos1929);
+            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart1924, getCharIndex()-1);
+            	    latitude.setLine(latitudeStartLine1924);
+            	    latitude.setCharPositionInLine(latitudeStartCharPos1924);
 
 
             	    }
@@ -4184,7 +4184,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:579:16: (ns= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:552:16: (ns= LETTERS )*
             loop71:
             do {
                 int alt71=2;
@@ -4197,15 +4197,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt71) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:579:16: ns= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:552:16: ns= LETTERS
             	    {
-            	    int nsStart1949 = getCharIndex();
-            	    int nsStartLine1949 = getLine();
-            	    int nsStartCharPos1949 = getCharPositionInLine();
+            	    int nsStart1944 = getCharIndex();
+            	    int nsStartLine1944 = getLine();
+            	    int nsStartCharPos1944 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart1949, getCharIndex()-1);
-            	    ns.setLine(nsStartLine1949);
-            	    ns.setCharPositionInLine(nsStartCharPos1949);
+            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart1944, getCharIndex()-1);
+            	    ns.setLine(nsStartLine1944);
+            	    ns.setCharPositionInLine(nsStartCharPos1944);
 
 
             	    }
@@ -4220,7 +4220,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:580:23: (longitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:553:23: (longitude= NUMBER )*
             loop72:
             do {
                 int alt72=2;
@@ -4233,15 +4233,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt72) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:580:23: longitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:553:23: longitude= NUMBER
             	    {
-            	    int longitudeStart1969 = getCharIndex();
-            	    int longitudeStartLine1969 = getLine();
-            	    int longitudeStartCharPos1969 = getCharPositionInLine();
+            	    int longitudeStart1964 = getCharIndex();
+            	    int longitudeStartLine1964 = getLine();
+            	    int longitudeStartCharPos1964 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart1969, getCharIndex()-1);
-            	    longitude.setLine(longitudeStartLine1969);
-            	    longitude.setCharPositionInLine(longitudeStartCharPos1969);
+            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart1964, getCharIndex()-1);
+            	    longitude.setLine(longitudeStartLine1964);
+            	    longitude.setCharPositionInLine(longitudeStartCharPos1964);
 
 
             	    }
@@ -4256,7 +4256,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:581:16: (ew= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:554:16: (ew= LETTERS )*
             loop73:
             do {
                 int alt73=2;
@@ -4269,15 +4269,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt73) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:581:16: ew= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:554:16: ew= LETTERS
             	    {
-            	    int ewStart1989 = getCharIndex();
-            	    int ewStartLine1989 = getLine();
-            	    int ewStartCharPos1989 = getCharPositionInLine();
+            	    int ewStart1984 = getCharIndex();
+            	    int ewStartLine1984 = getLine();
+            	    int ewStartCharPos1984 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart1989, getCharIndex()-1);
-            	    ew.setLine(ewStartLine1989);
-            	    ew.setCharPositionInLine(ewStartCharPos1989);
+            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart1984, getCharIndex()-1);
+            	    ew.setLine(ewStartLine1984);
+            	    ew.setCharPositionInLine(ewStartCharPos1984);
 
 
             	    }
@@ -4292,7 +4292,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:583:14: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:556:14: ( ' ' )*
             loop74:
             do {
                 int alt74=2;
@@ -4305,7 +4305,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt74) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:583:14: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:556:14: ' '
             	    {
             	    match(' '); 
 
@@ -4318,7 +4318,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:584:33: (gpsQualityIndicator= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:557:33: (gpsQualityIndicator= NUMBER )*
             loop75:
             do {
                 int alt75=2;
@@ -4331,15 +4331,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt75) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:584:33: gpsQualityIndicator= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:557:33: gpsQualityIndicator= NUMBER
             	    {
-            	    int gpsQualityIndicatorStart2039 = getCharIndex();
-            	    int gpsQualityIndicatorStartLine2039 = getLine();
-            	    int gpsQualityIndicatorStartCharPos2039 = getCharPositionInLine();
+            	    int gpsQualityIndicatorStart2034 = getCharIndex();
+            	    int gpsQualityIndicatorStartLine2034 = getLine();
+            	    int gpsQualityIndicatorStartCharPos2034 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    gpsQualityIndicator = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, gpsQualityIndicatorStart2039, getCharIndex()-1);
-            	    gpsQualityIndicator.setLine(gpsQualityIndicatorStartLine2039);
-            	    gpsQualityIndicator.setCharPositionInLine(gpsQualityIndicatorStartCharPos2039);
+            	    gpsQualityIndicator = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, gpsQualityIndicatorStart2034, getCharIndex()-1);
+            	    gpsQualityIndicator.setLine(gpsQualityIndicatorStartLine2034);
+            	    gpsQualityIndicator.setCharPositionInLine(gpsQualityIndicatorStartCharPos2034);
 
 
             	    }
@@ -4354,7 +4354,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:585:38: (numberOfSatellitesInView= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:558:38: (numberOfSatellitesInView= NUMBER )*
             loop76:
             do {
                 int alt76=2;
@@ -4367,15 +4367,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt76) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:585:38: numberOfSatellitesInView= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:558:38: numberOfSatellitesInView= NUMBER
             	    {
-            	    int numberOfSatellitesInViewStart2059 = getCharIndex();
-            	    int numberOfSatellitesInViewStartLine2059 = getLine();
-            	    int numberOfSatellitesInViewStartCharPos2059 = getCharPositionInLine();
+            	    int numberOfSatellitesInViewStart2054 = getCharIndex();
+            	    int numberOfSatellitesInViewStartLine2054 = getLine();
+            	    int numberOfSatellitesInViewStartCharPos2054 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    numberOfSatellitesInView = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, numberOfSatellitesInViewStart2059, getCharIndex()-1);
-            	    numberOfSatellitesInView.setLine(numberOfSatellitesInViewStartLine2059);
-            	    numberOfSatellitesInView.setCharPositionInLine(numberOfSatellitesInViewStartCharPos2059);
+            	    numberOfSatellitesInView = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, numberOfSatellitesInViewStart2054, getCharIndex()-1);
+            	    numberOfSatellitesInView.setLine(numberOfSatellitesInViewStartLine2054);
+            	    numberOfSatellitesInView.setCharPositionInLine(numberOfSatellitesInViewStartCharPos2054);
 
 
             	    }
@@ -4390,7 +4390,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:586:43: (horizontalDilutionOfPrecision= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:559:43: (horizontalDilutionOfPrecision= NUMBER )*
             loop77:
             do {
                 int alt77=2;
@@ -4403,15 +4403,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt77) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:586:43: horizontalDilutionOfPrecision= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:559:43: horizontalDilutionOfPrecision= NUMBER
             	    {
-            	    int horizontalDilutionOfPrecisionStart2079 = getCharIndex();
-            	    int horizontalDilutionOfPrecisionStartLine2079 = getLine();
-            	    int horizontalDilutionOfPrecisionStartCharPos2079 = getCharPositionInLine();
+            	    int horizontalDilutionOfPrecisionStart2074 = getCharIndex();
+            	    int horizontalDilutionOfPrecisionStartLine2074 = getLine();
+            	    int horizontalDilutionOfPrecisionStartCharPos2074 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    horizontalDilutionOfPrecision = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, horizontalDilutionOfPrecisionStart2079, getCharIndex()-1);
-            	    horizontalDilutionOfPrecision.setLine(horizontalDilutionOfPrecisionStartLine2079);
-            	    horizontalDilutionOfPrecision.setCharPositionInLine(horizontalDilutionOfPrecisionStartCharPos2079);
+            	    horizontalDilutionOfPrecision = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, horizontalDilutionOfPrecisionStart2074, getCharIndex()-1);
+            	    horizontalDilutionOfPrecision.setLine(horizontalDilutionOfPrecisionStartLine2074);
+            	    horizontalDilutionOfPrecision.setCharPositionInLine(horizontalDilutionOfPrecisionStartCharPos2074);
 
 
             	    }
@@ -4426,7 +4426,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:588:14: ( SIGN )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:561:14: ( SIGN )*
             loop78:
             do {
                 int alt78=2;
@@ -4460,7 +4460,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:589:14: (antennaAltitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:562:14: (antennaAltitude= NUMBER )*
             loop79:
             do {
                 int alt79=2;
@@ -4473,15 +4473,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt79) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:589:15: antennaAltitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:562:15: antennaAltitude= NUMBER
             	    {
-            	    int antennaAltitudeStart2130 = getCharIndex();
-            	    int antennaAltitudeStartLine2130 = getLine();
-            	    int antennaAltitudeStartCharPos2130 = getCharPositionInLine();
+            	    int antennaAltitudeStart2125 = getCharIndex();
+            	    int antennaAltitudeStartLine2125 = getLine();
+            	    int antennaAltitudeStartCharPos2125 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    antennaAltitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, antennaAltitudeStart2130, getCharIndex()-1);
-            	    antennaAltitude.setLine(antennaAltitudeStartLine2130);
-            	    antennaAltitude.setCharPositionInLine(antennaAltitudeStartCharPos2130);
+            	    antennaAltitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, antennaAltitudeStart2125, getCharIndex()-1);
+            	    antennaAltitude.setLine(antennaAltitudeStartLine2125);
+            	    antennaAltitude.setCharPositionInLine(antennaAltitudeStartCharPos2125);
 
 
             	    }
@@ -4496,19 +4496,19 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int unitsOfAntennaAltitudeStart2151 = getCharIndex();
-            int unitsOfAntennaAltitudeStartLine2151 = getLine();
-            int unitsOfAntennaAltitudeStartCharPos2151 = getCharPositionInLine();
+            int unitsOfAntennaAltitudeStart2146 = getCharIndex();
+            int unitsOfAntennaAltitudeStartLine2146 = getLine();
+            int unitsOfAntennaAltitudeStartCharPos2146 = getCharPositionInLine();
             mLETTERS(); 
-            unitsOfAntennaAltitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfAntennaAltitudeStart2151, getCharIndex()-1);
-            unitsOfAntennaAltitude.setLine(unitsOfAntennaAltitudeStartLine2151);
-            unitsOfAntennaAltitude.setCharPositionInLine(unitsOfAntennaAltitudeStartCharPos2151);
+            unitsOfAntennaAltitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfAntennaAltitudeStart2146, getCharIndex()-1);
+            unitsOfAntennaAltitude.setLine(unitsOfAntennaAltitudeStartLine2146);
+            unitsOfAntennaAltitude.setCharPositionInLine(unitsOfAntennaAltitudeStartCharPos2146);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:591:14: ( SIGN )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:564:14: ( SIGN )*
             loop80:
             do {
                 int alt80=2;
@@ -4542,7 +4542,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:592:14: (geoidAltitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:565:14: (geoidAltitude= NUMBER )*
             loop81:
             do {
                 int alt81=2;
@@ -4555,15 +4555,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt81) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:592:15: geoidAltitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:565:15: geoidAltitude= NUMBER
             	    {
-            	    int geoidAltitudeStart2188 = getCharIndex();
-            	    int geoidAltitudeStartLine2188 = getLine();
-            	    int geoidAltitudeStartCharPos2188 = getCharPositionInLine();
+            	    int geoidAltitudeStart2183 = getCharIndex();
+            	    int geoidAltitudeStartLine2183 = getLine();
+            	    int geoidAltitudeStartCharPos2183 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    geoidAltitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, geoidAltitudeStart2188, getCharIndex()-1);
-            	    geoidAltitude.setLine(geoidAltitudeStartLine2188);
-            	    geoidAltitude.setCharPositionInLine(geoidAltitudeStartCharPos2188);
+            	    geoidAltitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, geoidAltitudeStart2183, getCharIndex()-1);
+            	    geoidAltitude.setLine(geoidAltitudeStartLine2183);
+            	    geoidAltitude.setCharPositionInLine(geoidAltitudeStartCharPos2183);
 
 
             	    }
@@ -4578,7 +4578,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:593:14: (unitsOfGeoidAltitude= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:566:14: (unitsOfGeoidAltitude= LETTERS )*
             loop82:
             do {
                 int alt82=2;
@@ -4591,15 +4591,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt82) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:593:15: unitsOfGeoidAltitude= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:566:15: unitsOfGeoidAltitude= LETTERS
             	    {
-            	    int unitsOfGeoidAltitudeStart2211 = getCharIndex();
-            	    int unitsOfGeoidAltitudeStartLine2211 = getLine();
-            	    int unitsOfGeoidAltitudeStartCharPos2211 = getCharPositionInLine();
+            	    int unitsOfGeoidAltitudeStart2206 = getCharIndex();
+            	    int unitsOfGeoidAltitudeStartLine2206 = getLine();
+            	    int unitsOfGeoidAltitudeStartCharPos2206 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    unitsOfGeoidAltitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfGeoidAltitudeStart2211, getCharIndex()-1);
-            	    unitsOfGeoidAltitude.setLine(unitsOfGeoidAltitudeStartLine2211);
-            	    unitsOfGeoidAltitude.setCharPositionInLine(unitsOfGeoidAltitudeStartCharPos2211);
+            	    unitsOfGeoidAltitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitsOfGeoidAltitudeStart2206, getCharIndex()-1);
+            	    unitsOfGeoidAltitude.setLine(unitsOfGeoidAltitudeStartLine2206);
+            	    unitsOfGeoidAltitude.setCharPositionInLine(unitsOfGeoidAltitudeStartCharPos2206);
 
 
             	    }
@@ -4611,7 +4611,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:593:46: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:566:46: ( SEP )+
             int cnt83=0;
             loop83:
             do {
@@ -4650,14 +4650,14 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:595:14: ( NUMBER SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:568:14: ( NUMBER SEP )*
             loop84:
             do {
                 int alt84=2;
                 alt84 = dfa84.predict(input);
                 switch (alt84) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:595:16: NUMBER SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:568:16: NUMBER SEP
             	    {
             	    mNUMBER(); 
 
@@ -4674,7 +4674,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:596:14: ( LETTERS | NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:569:14: ( LETTERS | NUMBER )*
             loop85:
             do {
                 int alt85=3;
@@ -4690,7 +4690,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt85) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:596:16: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:569:16: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -4698,7 +4698,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:596:26: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:569:26: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -4712,13 +4712,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart2304 = getCharIndex();
-            int checksumStartLine2304 = getLine();
-            int checksumStartCharPos2304 = getCharPositionInLine();
+            int checksumStart2299 = getCharIndex();
+            int checksumStartLine2299 = getLine();
+            int checksumStartCharPos2299 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart2304, getCharIndex()-1);
-            checksum.setLine(checksumStartLine2304);
-            checksum.setCharPositionInLine(checksumStartCharPos2304);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart2299, getCharIndex()-1);
+            checksum.setLine(checksumStartLine2299);
+            checksum.setCharPositionInLine(checksumStartCharPos2299);
 
 
 
@@ -4780,18 +4780,18 @@ public class NMEALexer extends Lexer {
             CommonToken status=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:634:5: ( '$' device= DEVICE 'GLL' SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP (utc= NUMBER )* SEP status= LETTERS ( SEP )* ( LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:634:7: '$' device= DEVICE 'GLL' SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP (utc= NUMBER )* SEP status= LETTERS ( SEP )* ( LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:607:5: ( '$' device= DEVICE 'GLL' SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP (utc= NUMBER )* SEP status= LETTERS ( SEP )* ( LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:607:7: '$' device= DEVICE 'GLL' SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP (utc= NUMBER )* SEP status= LETTERS ( SEP )* ( LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart2337 = getCharIndex();
-            int deviceStartLine2337 = getLine();
-            int deviceStartCharPos2337 = getCharPositionInLine();
+            int deviceStart2332 = getCharIndex();
+            int deviceStartLine2332 = getLine();
+            int deviceStartCharPos2332 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart2337, getCharIndex()-1);
-            device.setLine(deviceStartLine2337);
-            device.setCharPositionInLine(deviceStartCharPos2337);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart2332, getCharIndex()-1);
+            device.setLine(deviceStartLine2332);
+            device.setCharPositionInLine(deviceStartCharPos2332);
 
 
             match("GLL"); 
@@ -4801,7 +4801,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:635:12: (latitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:608:12: (latitude= NUMBER )*
             loop86:
             do {
                 int alt86=2;
@@ -4814,15 +4814,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt86) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:635:12: latitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:608:12: latitude= NUMBER
             	    {
-            	    int latitudeStart2348 = getCharIndex();
-            	    int latitudeStartLine2348 = getLine();
-            	    int latitudeStartCharPos2348 = getCharPositionInLine();
+            	    int latitudeStart2343 = getCharIndex();
+            	    int latitudeStartLine2343 = getLine();
+            	    int latitudeStartCharPos2343 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart2348, getCharIndex()-1);
-            	    latitude.setLine(latitudeStartLine2348);
-            	    latitude.setCharPositionInLine(latitudeStartCharPos2348);
+            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart2343, getCharIndex()-1);
+            	    latitude.setLine(latitudeStartLine2343);
+            	    latitude.setCharPositionInLine(latitudeStartCharPos2343);
 
 
             	    }
@@ -4837,7 +4837,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:636:17: (ns= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:609:17: (ns= LETTERS )*
             loop87:
             do {
                 int alt87=2;
@@ -4850,15 +4850,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt87) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:636:17: ns= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:609:17: ns= LETTERS
             	    {
-            	    int nsStart2369 = getCharIndex();
-            	    int nsStartLine2369 = getLine();
-            	    int nsStartCharPos2369 = getCharPositionInLine();
+            	    int nsStart2364 = getCharIndex();
+            	    int nsStartLine2364 = getLine();
+            	    int nsStartCharPos2364 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart2369, getCharIndex()-1);
-            	    ns.setLine(nsStartLine2369);
-            	    ns.setCharPositionInLine(nsStartCharPos2369);
+            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart2364, getCharIndex()-1);
+            	    ns.setLine(nsStartLine2364);
+            	    ns.setCharPositionInLine(nsStartCharPos2364);
 
 
             	    }
@@ -4873,7 +4873,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:637:24: (longitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:610:24: (longitude= NUMBER )*
             loop88:
             do {
                 int alt88=2;
@@ -4886,15 +4886,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt88) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:637:24: longitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:610:24: longitude= NUMBER
             	    {
-            	    int longitudeStart2390 = getCharIndex();
-            	    int longitudeStartLine2390 = getLine();
-            	    int longitudeStartCharPos2390 = getCharPositionInLine();
+            	    int longitudeStart2385 = getCharIndex();
+            	    int longitudeStartLine2385 = getLine();
+            	    int longitudeStartCharPos2385 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart2390, getCharIndex()-1);
-            	    longitude.setLine(longitudeStartLine2390);
-            	    longitude.setCharPositionInLine(longitudeStartCharPos2390);
+            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart2385, getCharIndex()-1);
+            	    longitude.setLine(longitudeStartLine2385);
+            	    longitude.setCharPositionInLine(longitudeStartCharPos2385);
 
 
             	    }
@@ -4909,7 +4909,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:638:17: (ew= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:611:17: (ew= LETTERS )*
             loop89:
             do {
                 int alt89=2;
@@ -4922,15 +4922,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt89) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:638:17: ew= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:611:17: ew= LETTERS
             	    {
-            	    int ewStart2411 = getCharIndex();
-            	    int ewStartLine2411 = getLine();
-            	    int ewStartCharPos2411 = getCharPositionInLine();
+            	    int ewStart2406 = getCharIndex();
+            	    int ewStartLine2406 = getLine();
+            	    int ewStartCharPos2406 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart2411, getCharIndex()-1);
-            	    ew.setLine(ewStartLine2411);
-            	    ew.setCharPositionInLine(ewStartCharPos2411);
+            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart2406, getCharIndex()-1);
+            	    ew.setLine(ewStartLine2406);
+            	    ew.setCharPositionInLine(ewStartCharPos2406);
 
 
             	    }
@@ -4945,7 +4945,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:639:18: (utc= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:612:18: (utc= NUMBER )*
             loop90:
             do {
                 int alt90=2;
@@ -4958,15 +4958,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt90) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:639:18: utc= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:612:18: utc= NUMBER
             	    {
-            	    int utcStart2432 = getCharIndex();
-            	    int utcStartLine2432 = getLine();
-            	    int utcStartCharPos2432 = getCharPositionInLine();
+            	    int utcStart2427 = getCharIndex();
+            	    int utcStartLine2427 = getLine();
+            	    int utcStartCharPos2427 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart2432, getCharIndex()-1);
-            	    utc.setLine(utcStartLine2432);
-            	    utc.setCharPositionInLine(utcStartCharPos2432);
+            	    utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart2427, getCharIndex()-1);
+            	    utc.setLine(utcStartLine2427);
+            	    utc.setCharPositionInLine(utcStartCharPos2427);
 
 
             	    }
@@ -4981,16 +4981,16 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int statusStart2453 = getCharIndex();
-            int statusStartLine2453 = getLine();
-            int statusStartCharPos2453 = getCharPositionInLine();
+            int statusStart2448 = getCharIndex();
+            int statusStartLine2448 = getLine();
+            int statusStartCharPos2448 = getCharPositionInLine();
             mLETTERS(); 
-            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart2453, getCharIndex()-1);
-            status.setLine(statusStartLine2453);
-            status.setCharPositionInLine(statusStartCharPos2453);
+            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart2448, getCharIndex()-1);
+            status.setLine(statusStartLine2448);
+            status.setCharPositionInLine(statusStartCharPos2448);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:640:30: ( SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:613:30: ( SEP )*
             loop91:
             do {
                 int alt91=2;
@@ -5024,7 +5024,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:641:15: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:614:15: ( LETTERS )*
             loop92:
             do {
                 int alt92=2;
@@ -5037,7 +5037,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt92) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:641:15: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:614:15: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -5051,13 +5051,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart2492 = getCharIndex();
-            int checksumStartLine2492 = getLine();
-            int checksumStartCharPos2492 = getCharPositionInLine();
+            int checksumStart2487 = getCharIndex();
+            int checksumStartLine2487 = getLine();
+            int checksumStartCharPos2487 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart2492, getCharIndex()-1);
-            checksum.setLine(checksumStartLine2492);
-            checksum.setCharPositionInLine(checksumStartCharPos2492);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart2487, getCharIndex()-1);
+            checksum.setLine(checksumStartLine2487);
+            checksum.setCharPositionInLine(checksumStartCharPos2487);
 
 
 
@@ -5112,18 +5112,18 @@ public class NMEALexer extends Lexer {
             CommonToken VDOP=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:661:6: ( '$' device= DEVICE 'GSA' SEP autoOrManualSelection= LETTERS SEP ( ' ' )* dimensionFix= NUMBER SEP ( ( ' ' )* PRNOfSatellitesUsed1= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed2= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed3= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed4= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed5= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed6= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed7= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed8= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed9= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed10= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed11= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed12= NUMBER )* SEP ( ( ' ' )* PDOP= NUMBER )* SEP ( ( ' ' )* HDOP= NUMBER )* SEP ( ( ' ' )* VDOP= NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:661:11: '$' device= DEVICE 'GSA' SEP autoOrManualSelection= LETTERS SEP ( ' ' )* dimensionFix= NUMBER SEP ( ( ' ' )* PRNOfSatellitesUsed1= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed2= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed3= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed4= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed5= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed6= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed7= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed8= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed9= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed10= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed11= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed12= NUMBER )* SEP ( ( ' ' )* PDOP= NUMBER )* SEP ( ( ' ' )* HDOP= NUMBER )* SEP ( ( ' ' )* VDOP= NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:634:6: ( '$' device= DEVICE 'GSA' SEP autoOrManualSelection= LETTERS SEP ( ' ' )* dimensionFix= NUMBER SEP ( ( ' ' )* PRNOfSatellitesUsed1= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed2= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed3= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed4= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed5= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed6= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed7= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed8= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed9= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed10= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed11= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed12= NUMBER )* SEP ( ( ' ' )* PDOP= NUMBER )* SEP ( ( ' ' )* HDOP= NUMBER )* SEP ( ( ' ' )* VDOP= NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:634:11: '$' device= DEVICE 'GSA' SEP autoOrManualSelection= LETTERS SEP ( ' ' )* dimensionFix= NUMBER SEP ( ( ' ' )* PRNOfSatellitesUsed1= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed2= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed3= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed4= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed5= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed6= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed7= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed8= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed9= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed10= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed11= NUMBER )* SEP ( ( ' ' )* PRNOfSatellitesUsed12= NUMBER )* SEP ( ( ' ' )* PDOP= NUMBER )* SEP ( ( ' ' )* HDOP= NUMBER )* SEP ( ( ' ' )* VDOP= NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart2527 = getCharIndex();
-            int deviceStartLine2527 = getLine();
-            int deviceStartCharPos2527 = getCharPositionInLine();
+            int deviceStart2522 = getCharIndex();
+            int deviceStartLine2522 = getLine();
+            int deviceStartCharPos2522 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart2527, getCharIndex()-1);
-            device.setLine(deviceStartLine2527);
-            device.setCharPositionInLine(deviceStartCharPos2527);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart2522, getCharIndex()-1);
+            device.setLine(deviceStartLine2522);
+            device.setCharPositionInLine(deviceStartCharPos2522);
 
 
             match("GSA"); 
@@ -5133,19 +5133,19 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int autoOrManualSelectionStart2550 = getCharIndex();
-            int autoOrManualSelectionStartLine2550 = getLine();
-            int autoOrManualSelectionStartCharPos2550 = getCharPositionInLine();
+            int autoOrManualSelectionStart2545 = getCharIndex();
+            int autoOrManualSelectionStartLine2545 = getLine();
+            int autoOrManualSelectionStartCharPos2545 = getCharPositionInLine();
             mLETTERS(); 
-            autoOrManualSelection = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, autoOrManualSelectionStart2550, getCharIndex()-1);
-            autoOrManualSelection.setLine(autoOrManualSelectionStartLine2550);
-            autoOrManualSelection.setCharPositionInLine(autoOrManualSelectionStartCharPos2550);
+            autoOrManualSelection = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, autoOrManualSelectionStart2545, getCharIndex()-1);
+            autoOrManualSelection.setLine(autoOrManualSelectionStartLine2545);
+            autoOrManualSelection.setCharPositionInLine(autoOrManualSelectionStartCharPos2545);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:663:14: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:636:14: ( ' ' )*
             loop93:
             do {
                 int alt93=2;
@@ -5158,7 +5158,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt93) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:663:14: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:636:14: ' '
             	    {
             	    match(' '); 
 
@@ -5171,19 +5171,19 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int dimensionFixStart2574 = getCharIndex();
-            int dimensionFixStartLine2574 = getLine();
-            int dimensionFixStartCharPos2574 = getCharPositionInLine();
+            int dimensionFixStart2569 = getCharIndex();
+            int dimensionFixStartLine2569 = getLine();
+            int dimensionFixStartCharPos2569 = getCharPositionInLine();
             mNUMBER(); 
-            dimensionFix = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dimensionFixStart2574, getCharIndex()-1);
-            dimensionFix.setLine(dimensionFixStartLine2574);
-            dimensionFix.setCharPositionInLine(dimensionFixStartCharPos2574);
+            dimensionFix = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dimensionFixStart2569, getCharIndex()-1);
+            dimensionFix.setLine(dimensionFixStartLine2569);
+            dimensionFix.setCharPositionInLine(dimensionFixStartCharPos2569);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:664:14: ( ( ' ' )* PRNOfSatellitesUsed1= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:637:14: ( ( ' ' )* PRNOfSatellitesUsed1= NUMBER )*
             loop95:
             do {
                 int alt95=2;
@@ -5196,9 +5196,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt95) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:664:15: ( ' ' )* PRNOfSatellitesUsed1= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:637:15: ( ' ' )* PRNOfSatellitesUsed1= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:664:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:637:15: ( ' ' )*
             	    loop94:
             	    do {
             	        int alt94=2;
@@ -5211,7 +5211,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt94) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:664:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:637:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5224,13 +5224,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed1Start2599 = getCharIndex();
-            	    int PRNOfSatellitesUsed1StartLine2599 = getLine();
-            	    int PRNOfSatellitesUsed1StartCharPos2599 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed1Start2594 = getCharIndex();
+            	    int PRNOfSatellitesUsed1StartLine2594 = getLine();
+            	    int PRNOfSatellitesUsed1StartCharPos2594 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed1 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed1Start2599, getCharIndex()-1);
-            	    PRNOfSatellitesUsed1.setLine(PRNOfSatellitesUsed1StartLine2599);
-            	    PRNOfSatellitesUsed1.setCharPositionInLine(PRNOfSatellitesUsed1StartCharPos2599);
+            	    PRNOfSatellitesUsed1 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed1Start2594, getCharIndex()-1);
+            	    PRNOfSatellitesUsed1.setLine(PRNOfSatellitesUsed1StartLine2594);
+            	    PRNOfSatellitesUsed1.setCharPositionInLine(PRNOfSatellitesUsed1StartCharPos2594);
 
 
             	    }
@@ -5245,7 +5245,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:665:14: ( ( ' ' )* PRNOfSatellitesUsed2= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:638:14: ( ( ' ' )* PRNOfSatellitesUsed2= NUMBER )*
             loop97:
             do {
                 int alt97=2;
@@ -5258,9 +5258,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt97) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:665:15: ( ' ' )* PRNOfSatellitesUsed2= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:638:15: ( ' ' )* PRNOfSatellitesUsed2= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:665:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:638:15: ( ' ' )*
             	    loop96:
             	    do {
             	        int alt96=2;
@@ -5273,7 +5273,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt96) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:665:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:638:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5286,13 +5286,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed2Start2626 = getCharIndex();
-            	    int PRNOfSatellitesUsed2StartLine2626 = getLine();
-            	    int PRNOfSatellitesUsed2StartCharPos2626 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed2Start2621 = getCharIndex();
+            	    int PRNOfSatellitesUsed2StartLine2621 = getLine();
+            	    int PRNOfSatellitesUsed2StartCharPos2621 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed2Start2626, getCharIndex()-1);
-            	    PRNOfSatellitesUsed2.setLine(PRNOfSatellitesUsed2StartLine2626);
-            	    PRNOfSatellitesUsed2.setCharPositionInLine(PRNOfSatellitesUsed2StartCharPos2626);
+            	    PRNOfSatellitesUsed2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed2Start2621, getCharIndex()-1);
+            	    PRNOfSatellitesUsed2.setLine(PRNOfSatellitesUsed2StartLine2621);
+            	    PRNOfSatellitesUsed2.setCharPositionInLine(PRNOfSatellitesUsed2StartCharPos2621);
 
 
             	    }
@@ -5307,7 +5307,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:666:14: ( ( ' ' )* PRNOfSatellitesUsed3= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:639:14: ( ( ' ' )* PRNOfSatellitesUsed3= NUMBER )*
             loop99:
             do {
                 int alt99=2;
@@ -5320,9 +5320,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt99) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:666:15: ( ' ' )* PRNOfSatellitesUsed3= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:639:15: ( ' ' )* PRNOfSatellitesUsed3= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:666:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:639:15: ( ' ' )*
             	    loop98:
             	    do {
             	        int alt98=2;
@@ -5335,7 +5335,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt98) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:666:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:639:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5348,13 +5348,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed3Start2653 = getCharIndex();
-            	    int PRNOfSatellitesUsed3StartLine2653 = getLine();
-            	    int PRNOfSatellitesUsed3StartCharPos2653 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed3Start2648 = getCharIndex();
+            	    int PRNOfSatellitesUsed3StartLine2648 = getLine();
+            	    int PRNOfSatellitesUsed3StartCharPos2648 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed3Start2653, getCharIndex()-1);
-            	    PRNOfSatellitesUsed3.setLine(PRNOfSatellitesUsed3StartLine2653);
-            	    PRNOfSatellitesUsed3.setCharPositionInLine(PRNOfSatellitesUsed3StartCharPos2653);
+            	    PRNOfSatellitesUsed3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed3Start2648, getCharIndex()-1);
+            	    PRNOfSatellitesUsed3.setLine(PRNOfSatellitesUsed3StartLine2648);
+            	    PRNOfSatellitesUsed3.setCharPositionInLine(PRNOfSatellitesUsed3StartCharPos2648);
 
 
             	    }
@@ -5369,7 +5369,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:667:14: ( ( ' ' )* PRNOfSatellitesUsed4= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:640:14: ( ( ' ' )* PRNOfSatellitesUsed4= NUMBER )*
             loop101:
             do {
                 int alt101=2;
@@ -5382,9 +5382,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt101) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:667:15: ( ' ' )* PRNOfSatellitesUsed4= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:640:15: ( ' ' )* PRNOfSatellitesUsed4= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:667:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:640:15: ( ' ' )*
             	    loop100:
             	    do {
             	        int alt100=2;
@@ -5397,7 +5397,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt100) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:667:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:640:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5410,13 +5410,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed4Start2680 = getCharIndex();
-            	    int PRNOfSatellitesUsed4StartLine2680 = getLine();
-            	    int PRNOfSatellitesUsed4StartCharPos2680 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed4Start2675 = getCharIndex();
+            	    int PRNOfSatellitesUsed4StartLine2675 = getLine();
+            	    int PRNOfSatellitesUsed4StartCharPos2675 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed4 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed4Start2680, getCharIndex()-1);
-            	    PRNOfSatellitesUsed4.setLine(PRNOfSatellitesUsed4StartLine2680);
-            	    PRNOfSatellitesUsed4.setCharPositionInLine(PRNOfSatellitesUsed4StartCharPos2680);
+            	    PRNOfSatellitesUsed4 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed4Start2675, getCharIndex()-1);
+            	    PRNOfSatellitesUsed4.setLine(PRNOfSatellitesUsed4StartLine2675);
+            	    PRNOfSatellitesUsed4.setCharPositionInLine(PRNOfSatellitesUsed4StartCharPos2675);
 
 
             	    }
@@ -5431,7 +5431,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:668:14: ( ( ' ' )* PRNOfSatellitesUsed5= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:641:14: ( ( ' ' )* PRNOfSatellitesUsed5= NUMBER )*
             loop103:
             do {
                 int alt103=2;
@@ -5444,9 +5444,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt103) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:668:15: ( ' ' )* PRNOfSatellitesUsed5= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:641:15: ( ' ' )* PRNOfSatellitesUsed5= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:668:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:641:15: ( ' ' )*
             	    loop102:
             	    do {
             	        int alt102=2;
@@ -5459,7 +5459,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt102) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:668:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:641:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5472,13 +5472,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed5Start2707 = getCharIndex();
-            	    int PRNOfSatellitesUsed5StartLine2707 = getLine();
-            	    int PRNOfSatellitesUsed5StartCharPos2707 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed5Start2702 = getCharIndex();
+            	    int PRNOfSatellitesUsed5StartLine2702 = getLine();
+            	    int PRNOfSatellitesUsed5StartCharPos2702 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed5 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed5Start2707, getCharIndex()-1);
-            	    PRNOfSatellitesUsed5.setLine(PRNOfSatellitesUsed5StartLine2707);
-            	    PRNOfSatellitesUsed5.setCharPositionInLine(PRNOfSatellitesUsed5StartCharPos2707);
+            	    PRNOfSatellitesUsed5 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed5Start2702, getCharIndex()-1);
+            	    PRNOfSatellitesUsed5.setLine(PRNOfSatellitesUsed5StartLine2702);
+            	    PRNOfSatellitesUsed5.setCharPositionInLine(PRNOfSatellitesUsed5StartCharPos2702);
 
 
             	    }
@@ -5493,7 +5493,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:669:14: ( ( ' ' )* PRNOfSatellitesUsed6= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:642:14: ( ( ' ' )* PRNOfSatellitesUsed6= NUMBER )*
             loop105:
             do {
                 int alt105=2;
@@ -5506,9 +5506,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt105) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:669:15: ( ' ' )* PRNOfSatellitesUsed6= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:642:15: ( ' ' )* PRNOfSatellitesUsed6= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:669:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:642:15: ( ' ' )*
             	    loop104:
             	    do {
             	        int alt104=2;
@@ -5521,7 +5521,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt104) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:669:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:642:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5534,13 +5534,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed6Start2734 = getCharIndex();
-            	    int PRNOfSatellitesUsed6StartLine2734 = getLine();
-            	    int PRNOfSatellitesUsed6StartCharPos2734 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed6Start2729 = getCharIndex();
+            	    int PRNOfSatellitesUsed6StartLine2729 = getLine();
+            	    int PRNOfSatellitesUsed6StartCharPos2729 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed6 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed6Start2734, getCharIndex()-1);
-            	    PRNOfSatellitesUsed6.setLine(PRNOfSatellitesUsed6StartLine2734);
-            	    PRNOfSatellitesUsed6.setCharPositionInLine(PRNOfSatellitesUsed6StartCharPos2734);
+            	    PRNOfSatellitesUsed6 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed6Start2729, getCharIndex()-1);
+            	    PRNOfSatellitesUsed6.setLine(PRNOfSatellitesUsed6StartLine2729);
+            	    PRNOfSatellitesUsed6.setCharPositionInLine(PRNOfSatellitesUsed6StartCharPos2729);
 
 
             	    }
@@ -5555,7 +5555,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:670:14: ( ( ' ' )* PRNOfSatellitesUsed7= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:643:14: ( ( ' ' )* PRNOfSatellitesUsed7= NUMBER )*
             loop107:
             do {
                 int alt107=2;
@@ -5568,9 +5568,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt107) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:670:15: ( ' ' )* PRNOfSatellitesUsed7= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:643:15: ( ' ' )* PRNOfSatellitesUsed7= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:670:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:643:15: ( ' ' )*
             	    loop106:
             	    do {
             	        int alt106=2;
@@ -5583,7 +5583,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt106) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:670:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:643:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5596,13 +5596,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed7Start2761 = getCharIndex();
-            	    int PRNOfSatellitesUsed7StartLine2761 = getLine();
-            	    int PRNOfSatellitesUsed7StartCharPos2761 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed7Start2756 = getCharIndex();
+            	    int PRNOfSatellitesUsed7StartLine2756 = getLine();
+            	    int PRNOfSatellitesUsed7StartCharPos2756 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed7 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed7Start2761, getCharIndex()-1);
-            	    PRNOfSatellitesUsed7.setLine(PRNOfSatellitesUsed7StartLine2761);
-            	    PRNOfSatellitesUsed7.setCharPositionInLine(PRNOfSatellitesUsed7StartCharPos2761);
+            	    PRNOfSatellitesUsed7 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed7Start2756, getCharIndex()-1);
+            	    PRNOfSatellitesUsed7.setLine(PRNOfSatellitesUsed7StartLine2756);
+            	    PRNOfSatellitesUsed7.setCharPositionInLine(PRNOfSatellitesUsed7StartCharPos2756);
 
 
             	    }
@@ -5617,7 +5617,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:671:14: ( ( ' ' )* PRNOfSatellitesUsed8= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:644:14: ( ( ' ' )* PRNOfSatellitesUsed8= NUMBER )*
             loop109:
             do {
                 int alt109=2;
@@ -5630,9 +5630,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt109) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:671:15: ( ' ' )* PRNOfSatellitesUsed8= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:644:15: ( ' ' )* PRNOfSatellitesUsed8= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:671:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:644:15: ( ' ' )*
             	    loop108:
             	    do {
             	        int alt108=2;
@@ -5645,7 +5645,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt108) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:671:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:644:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5658,13 +5658,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed8Start2788 = getCharIndex();
-            	    int PRNOfSatellitesUsed8StartLine2788 = getLine();
-            	    int PRNOfSatellitesUsed8StartCharPos2788 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed8Start2783 = getCharIndex();
+            	    int PRNOfSatellitesUsed8StartLine2783 = getLine();
+            	    int PRNOfSatellitesUsed8StartCharPos2783 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed8 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed8Start2788, getCharIndex()-1);
-            	    PRNOfSatellitesUsed8.setLine(PRNOfSatellitesUsed8StartLine2788);
-            	    PRNOfSatellitesUsed8.setCharPositionInLine(PRNOfSatellitesUsed8StartCharPos2788);
+            	    PRNOfSatellitesUsed8 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed8Start2783, getCharIndex()-1);
+            	    PRNOfSatellitesUsed8.setLine(PRNOfSatellitesUsed8StartLine2783);
+            	    PRNOfSatellitesUsed8.setCharPositionInLine(PRNOfSatellitesUsed8StartCharPos2783);
 
 
             	    }
@@ -5679,7 +5679,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:672:14: ( ( ' ' )* PRNOfSatellitesUsed9= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:645:14: ( ( ' ' )* PRNOfSatellitesUsed9= NUMBER )*
             loop111:
             do {
                 int alt111=2;
@@ -5692,9 +5692,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt111) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:672:15: ( ' ' )* PRNOfSatellitesUsed9= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:645:15: ( ' ' )* PRNOfSatellitesUsed9= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:672:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:645:15: ( ' ' )*
             	    loop110:
             	    do {
             	        int alt110=2;
@@ -5707,7 +5707,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt110) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:672:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:645:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5720,13 +5720,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed9Start2815 = getCharIndex();
-            	    int PRNOfSatellitesUsed9StartLine2815 = getLine();
-            	    int PRNOfSatellitesUsed9StartCharPos2815 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed9Start2810 = getCharIndex();
+            	    int PRNOfSatellitesUsed9StartLine2810 = getLine();
+            	    int PRNOfSatellitesUsed9StartCharPos2810 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed9 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed9Start2815, getCharIndex()-1);
-            	    PRNOfSatellitesUsed9.setLine(PRNOfSatellitesUsed9StartLine2815);
-            	    PRNOfSatellitesUsed9.setCharPositionInLine(PRNOfSatellitesUsed9StartCharPos2815);
+            	    PRNOfSatellitesUsed9 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed9Start2810, getCharIndex()-1);
+            	    PRNOfSatellitesUsed9.setLine(PRNOfSatellitesUsed9StartLine2810);
+            	    PRNOfSatellitesUsed9.setCharPositionInLine(PRNOfSatellitesUsed9StartCharPos2810);
 
 
             	    }
@@ -5741,7 +5741,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:673:14: ( ( ' ' )* PRNOfSatellitesUsed10= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:646:14: ( ( ' ' )* PRNOfSatellitesUsed10= NUMBER )*
             loop113:
             do {
                 int alt113=2;
@@ -5754,9 +5754,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt113) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:673:15: ( ' ' )* PRNOfSatellitesUsed10= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:646:15: ( ' ' )* PRNOfSatellitesUsed10= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:673:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:646:15: ( ' ' )*
             	    loop112:
             	    do {
             	        int alt112=2;
@@ -5769,7 +5769,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt112) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:673:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:646:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5782,13 +5782,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed10Start2842 = getCharIndex();
-            	    int PRNOfSatellitesUsed10StartLine2842 = getLine();
-            	    int PRNOfSatellitesUsed10StartCharPos2842 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed10Start2837 = getCharIndex();
+            	    int PRNOfSatellitesUsed10StartLine2837 = getLine();
+            	    int PRNOfSatellitesUsed10StartCharPos2837 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed10 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed10Start2842, getCharIndex()-1);
-            	    PRNOfSatellitesUsed10.setLine(PRNOfSatellitesUsed10StartLine2842);
-            	    PRNOfSatellitesUsed10.setCharPositionInLine(PRNOfSatellitesUsed10StartCharPos2842);
+            	    PRNOfSatellitesUsed10 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed10Start2837, getCharIndex()-1);
+            	    PRNOfSatellitesUsed10.setLine(PRNOfSatellitesUsed10StartLine2837);
+            	    PRNOfSatellitesUsed10.setCharPositionInLine(PRNOfSatellitesUsed10StartCharPos2837);
 
 
             	    }
@@ -5803,7 +5803,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:674:14: ( ( ' ' )* PRNOfSatellitesUsed11= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:647:14: ( ( ' ' )* PRNOfSatellitesUsed11= NUMBER )*
             loop115:
             do {
                 int alt115=2;
@@ -5816,9 +5816,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt115) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:674:15: ( ' ' )* PRNOfSatellitesUsed11= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:647:15: ( ' ' )* PRNOfSatellitesUsed11= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:674:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:647:15: ( ' ' )*
             	    loop114:
             	    do {
             	        int alt114=2;
@@ -5831,7 +5831,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt114) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:674:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:647:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5844,13 +5844,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed11Start2869 = getCharIndex();
-            	    int PRNOfSatellitesUsed11StartLine2869 = getLine();
-            	    int PRNOfSatellitesUsed11StartCharPos2869 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed11Start2864 = getCharIndex();
+            	    int PRNOfSatellitesUsed11StartLine2864 = getLine();
+            	    int PRNOfSatellitesUsed11StartCharPos2864 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed11 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed11Start2869, getCharIndex()-1);
-            	    PRNOfSatellitesUsed11.setLine(PRNOfSatellitesUsed11StartLine2869);
-            	    PRNOfSatellitesUsed11.setCharPositionInLine(PRNOfSatellitesUsed11StartCharPos2869);
+            	    PRNOfSatellitesUsed11 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed11Start2864, getCharIndex()-1);
+            	    PRNOfSatellitesUsed11.setLine(PRNOfSatellitesUsed11StartLine2864);
+            	    PRNOfSatellitesUsed11.setCharPositionInLine(PRNOfSatellitesUsed11StartCharPos2864);
 
 
             	    }
@@ -5865,7 +5865,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:675:14: ( ( ' ' )* PRNOfSatellitesUsed12= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:648:14: ( ( ' ' )* PRNOfSatellitesUsed12= NUMBER )*
             loop117:
             do {
                 int alt117=2;
@@ -5878,9 +5878,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt117) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:675:15: ( ' ' )* PRNOfSatellitesUsed12= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:648:15: ( ' ' )* PRNOfSatellitesUsed12= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:675:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:648:15: ( ' ' )*
             	    loop116:
             	    do {
             	        int alt116=2;
@@ -5893,7 +5893,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt116) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:675:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:648:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5906,13 +5906,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PRNOfSatellitesUsed12Start2896 = getCharIndex();
-            	    int PRNOfSatellitesUsed12StartLine2896 = getLine();
-            	    int PRNOfSatellitesUsed12StartCharPos2896 = getCharPositionInLine();
+            	    int PRNOfSatellitesUsed12Start2891 = getCharIndex();
+            	    int PRNOfSatellitesUsed12StartLine2891 = getLine();
+            	    int PRNOfSatellitesUsed12StartCharPos2891 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PRNOfSatellitesUsed12 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed12Start2896, getCharIndex()-1);
-            	    PRNOfSatellitesUsed12.setLine(PRNOfSatellitesUsed12StartLine2896);
-            	    PRNOfSatellitesUsed12.setCharPositionInLine(PRNOfSatellitesUsed12StartCharPos2896);
+            	    PRNOfSatellitesUsed12 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PRNOfSatellitesUsed12Start2891, getCharIndex()-1);
+            	    PRNOfSatellitesUsed12.setLine(PRNOfSatellitesUsed12StartLine2891);
+            	    PRNOfSatellitesUsed12.setCharPositionInLine(PRNOfSatellitesUsed12StartCharPos2891);
 
 
             	    }
@@ -5927,7 +5927,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:676:14: ( ( ' ' )* PDOP= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:649:14: ( ( ' ' )* PDOP= NUMBER )*
             loop119:
             do {
                 int alt119=2;
@@ -5940,9 +5940,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt119) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:676:15: ( ' ' )* PDOP= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:649:15: ( ' ' )* PDOP= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:676:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:649:15: ( ' ' )*
             	    loop118:
             	    do {
             	        int alt118=2;
@@ -5955,7 +5955,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt118) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:676:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:649:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -5968,13 +5968,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int PDOPStart2923 = getCharIndex();
-            	    int PDOPStartLine2923 = getLine();
-            	    int PDOPStartCharPos2923 = getCharPositionInLine();
+            	    int PDOPStart2918 = getCharIndex();
+            	    int PDOPStartLine2918 = getLine();
+            	    int PDOPStartCharPos2918 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    PDOP = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PDOPStart2923, getCharIndex()-1);
-            	    PDOP.setLine(PDOPStartLine2923);
-            	    PDOP.setCharPositionInLine(PDOPStartCharPos2923);
+            	    PDOP = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, PDOPStart2918, getCharIndex()-1);
+            	    PDOP.setLine(PDOPStartLine2918);
+            	    PDOP.setCharPositionInLine(PDOPStartCharPos2918);
 
 
             	    }
@@ -5989,7 +5989,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:677:14: ( ( ' ' )* HDOP= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:650:14: ( ( ' ' )* HDOP= NUMBER )*
             loop121:
             do {
                 int alt121=2;
@@ -6002,9 +6002,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt121) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:677:15: ( ' ' )* HDOP= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:650:15: ( ' ' )* HDOP= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:677:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:650:15: ( ' ' )*
             	    loop120:
             	    do {
             	        int alt120=2;
@@ -6017,7 +6017,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt120) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:677:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:650:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -6030,13 +6030,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int HDOPStart2950 = getCharIndex();
-            	    int HDOPStartLine2950 = getLine();
-            	    int HDOPStartCharPos2950 = getCharPositionInLine();
+            	    int HDOPStart2945 = getCharIndex();
+            	    int HDOPStartLine2945 = getLine();
+            	    int HDOPStartCharPos2945 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    HDOP = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, HDOPStart2950, getCharIndex()-1);
-            	    HDOP.setLine(HDOPStartLine2950);
-            	    HDOP.setCharPositionInLine(HDOPStartCharPos2950);
+            	    HDOP = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, HDOPStart2945, getCharIndex()-1);
+            	    HDOP.setLine(HDOPStartLine2945);
+            	    HDOP.setCharPositionInLine(HDOPStartCharPos2945);
 
 
             	    }
@@ -6051,7 +6051,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:678:14: ( ( ' ' )* VDOP= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:651:14: ( ( ' ' )* VDOP= NUMBER )*
             loop123:
             do {
                 int alt123=2;
@@ -6064,9 +6064,9 @@ public class NMEALexer extends Lexer {
 
                 switch (alt123) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:678:15: ( ' ' )* VDOP= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:651:15: ( ' ' )* VDOP= NUMBER
             	    {
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:678:15: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:651:15: ( ' ' )*
             	    loop122:
             	    do {
             	        int alt122=2;
@@ -6079,7 +6079,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt122) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:678:15: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:651:15: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -6092,13 +6092,13 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    int VDOPStart2977 = getCharIndex();
-            	    int VDOPStartLine2977 = getLine();
-            	    int VDOPStartCharPos2977 = getCharPositionInLine();
+            	    int VDOPStart2972 = getCharIndex();
+            	    int VDOPStartLine2972 = getLine();
+            	    int VDOPStartCharPos2972 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    VDOP = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, VDOPStart2977, getCharIndex()-1);
-            	    VDOP.setLine(VDOPStartLine2977);
-            	    VDOP.setCharPositionInLine(VDOPStartCharPos2977);
+            	    VDOP = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, VDOPStart2972, getCharIndex()-1);
+            	    VDOP.setLine(VDOPStartLine2972);
+            	    VDOP.setCharPositionInLine(VDOPStartCharPos2972);
 
 
             	    }
@@ -6110,13 +6110,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart2996 = getCharIndex();
-            int checksumStartLine2996 = getLine();
-            int checksumStartCharPos2996 = getCharPositionInLine();
+            int checksumStart2991 = getCharIndex();
+            int checksumStartLine2991 = getLine();
+            int checksumStartCharPos2991 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart2996, getCharIndex()-1);
-            checksum.setLine(checksumStartLine2996);
-            checksum.setCharPositionInLine(checksumStartCharPos2996);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart2991, getCharIndex()-1);
+            checksum.setLine(checksumStartLine2991);
+            checksum.setCharPositionInLine(checksumStartCharPos2991);
 
 
 
@@ -6210,25 +6210,25 @@ public class NMEALexer extends Lexer {
             CommonToken device=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:774:5: ( '$' device= DEVICE 'GSV' ( NUMBER | SEP )+ checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:774:10: '$' device= DEVICE 'GSV' ( NUMBER | SEP )+ checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:747:5: ( '$' device= DEVICE 'GSV' ( NUMBER | SEP )+ checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:747:10: '$' device= DEVICE 'GSV' ( NUMBER | SEP )+ checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3026 = getCharIndex();
-            int deviceStartLine3026 = getLine();
-            int deviceStartCharPos3026 = getCharPositionInLine();
+            int deviceStart3021 = getCharIndex();
+            int deviceStartLine3021 = getLine();
+            int deviceStartCharPos3021 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3026, getCharIndex()-1);
-            device.setLine(deviceStartLine3026);
-            device.setCharPositionInLine(deviceStartCharPos3026);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3021, getCharIndex()-1);
+            device.setLine(deviceStartLine3021);
+            device.setCharPositionInLine(deviceStartCharPos3021);
 
 
             match("GSV"); 
 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:775:3: ( NUMBER | SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:748:3: ( NUMBER | SEP )+
             int cnt124=0;
             loop124:
             do {
@@ -6245,7 +6245,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt124) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:775:4: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:748:4: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -6253,7 +6253,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:775:13: SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:748:13: SEP
             	    {
             	    mSEP(); 
 
@@ -6271,13 +6271,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart3047 = getCharIndex();
-            int checksumStartLine3047 = getLine();
-            int checksumStartCharPos3047 = getCharPositionInLine();
+            int checksumStart3042 = getCharIndex();
+            int checksumStartLine3042 = getLine();
+            int checksumStartCharPos3042 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3047, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3047);
-            checksum.setCharPositionInLine(checksumStartCharPos3047);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3042, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3042);
+            checksum.setCharPositionInLine(checksumStartCharPos3042);
 
 
 
@@ -6348,18 +6348,18 @@ public class NMEALexer extends Lexer {
             CommonToken ew=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:810:7: ( '$' device= DEVICE 'HDG' SEP heading= NUMBER ( SEP )+ (dev= NUMBER SEP we= LETTERS SEP )* var= NUMBER SEP ew= LETTERS checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:810:9: '$' device= DEVICE 'HDG' SEP heading= NUMBER ( SEP )+ (dev= NUMBER SEP we= LETTERS SEP )* var= NUMBER SEP ew= LETTERS checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:783:7: ( '$' device= DEVICE 'HDG' SEP heading= NUMBER ( SEP )+ (dev= NUMBER SEP we= LETTERS SEP )* var= NUMBER SEP ew= LETTERS checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:783:9: '$' device= DEVICE 'HDG' SEP heading= NUMBER ( SEP )+ (dev= NUMBER SEP we= LETTERS SEP )* var= NUMBER SEP ew= LETTERS checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3087 = getCharIndex();
-            int deviceStartLine3087 = getLine();
-            int deviceStartCharPos3087 = getCharPositionInLine();
+            int deviceStart3082 = getCharIndex();
+            int deviceStartLine3082 = getLine();
+            int deviceStartCharPos3082 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3087, getCharIndex()-1);
-            device.setLine(deviceStartLine3087);
-            device.setCharPositionInLine(deviceStartCharPos3087);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3082, getCharIndex()-1);
+            device.setLine(deviceStartLine3082);
+            device.setCharPositionInLine(deviceStartCharPos3082);
 
 
             match("HDG"); 
@@ -6369,16 +6369,16 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int headingStart3101 = getCharIndex();
-            int headingStartLine3101 = getLine();
-            int headingStartCharPos3101 = getCharPositionInLine();
+            int headingStart3096 = getCharIndex();
+            int headingStartLine3096 = getLine();
+            int headingStartCharPos3096 = getCharPositionInLine();
             mNUMBER(); 
-            heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart3101, getCharIndex()-1);
-            heading.setLine(headingStartLine3101);
-            heading.setCharPositionInLine(headingStartCharPos3101);
+            heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart3096, getCharIndex()-1);
+            heading.setLine(headingStartLine3096);
+            heading.setCharPositionInLine(headingStartCharPos3096);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:811:22: ( SEP )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:784:22: ( SEP )+
             int cnt125=0;
             loop125:
             do {
@@ -6417,34 +6417,34 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:812:5: (dev= NUMBER SEP we= LETTERS SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:785:5: (dev= NUMBER SEP we= LETTERS SEP )*
             loop126:
             do {
                 int alt126=2;
                 alt126 = dfa126.predict(input);
                 switch (alt126) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:812:6: dev= NUMBER SEP we= LETTERS SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:785:6: dev= NUMBER SEP we= LETTERS SEP
             	    {
-            	    int devStart3115 = getCharIndex();
-            	    int devStartLine3115 = getLine();
-            	    int devStartCharPos3115 = getCharPositionInLine();
+            	    int devStart3110 = getCharIndex();
+            	    int devStartLine3110 = getLine();
+            	    int devStartCharPos3110 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    dev = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, devStart3115, getCharIndex()-1);
-            	    dev.setLine(devStartLine3115);
-            	    dev.setCharPositionInLine(devStartCharPos3115);
+            	    dev = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, devStart3110, getCharIndex()-1);
+            	    dev.setLine(devStartLine3110);
+            	    dev.setCharPositionInLine(devStartCharPos3110);
 
 
             	    mSEP(); 
 
 
-            	    int weStart3123 = getCharIndex();
-            	    int weStartLine3123 = getLine();
-            	    int weStartCharPos3123 = getCharPositionInLine();
+            	    int weStart3118 = getCharIndex();
+            	    int weStartLine3118 = getLine();
+            	    int weStartCharPos3118 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    we = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, weStart3123, getCharIndex()-1);
-            	    we.setLine(weStartLine3123);
-            	    we.setCharPositionInLine(weStartCharPos3123);
+            	    we = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, weStart3118, getCharIndex()-1);
+            	    we.setLine(weStartLine3118);
+            	    we.setCharPositionInLine(weStartCharPos3118);
 
 
             	    mSEP(); 
@@ -6459,34 +6459,34 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int varStart3137 = getCharIndex();
-            int varStartLine3137 = getLine();
-            int varStartCharPos3137 = getCharPositionInLine();
+            int varStart3132 = getCharIndex();
+            int varStartLine3132 = getLine();
+            int varStartCharPos3132 = getCharPositionInLine();
             mNUMBER(); 
-            var = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, varStart3137, getCharIndex()-1);
-            var.setLine(varStartLine3137);
-            var.setCharPositionInLine(varStartCharPos3137);
+            var = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, varStart3132, getCharIndex()-1);
+            var.setLine(varStartLine3132);
+            var.setCharPositionInLine(varStartCharPos3132);
 
 
             mSEP(); 
 
 
-            int ewStart3149 = getCharIndex();
-            int ewStartLine3149 = getLine();
-            int ewStartCharPos3149 = getCharPositionInLine();
+            int ewStart3144 = getCharIndex();
+            int ewStartLine3144 = getLine();
+            int ewStartCharPos3144 = getCharPositionInLine();
             mLETTERS(); 
-            ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart3149, getCharIndex()-1);
-            ew.setLine(ewStartLine3149);
-            ew.setCharPositionInLine(ewStartCharPos3149);
+            ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart3144, getCharIndex()-1);
+            ew.setLine(ewStartLine3144);
+            ew.setCharPositionInLine(ewStartCharPos3144);
 
 
-            int checksumStart3157 = getCharIndex();
-            int checksumStartLine3157 = getLine();
-            int checksumStartCharPos3157 = getCharPositionInLine();
+            int checksumStart3152 = getCharIndex();
+            int checksumStartLine3152 = getLine();
+            int checksumStartCharPos3152 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3157, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3157);
-            checksum.setCharPositionInLine(checksumStartCharPos3157);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3152, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3152);
+            checksum.setCharPositionInLine(checksumStartCharPos3152);
 
 
 
@@ -6518,18 +6518,18 @@ public class NMEALexer extends Lexer {
             CommonToken heading=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:826:8: ( '$' device= DEVICE 'HDM' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:826:11: '$' device= DEVICE 'HDM' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:799:8: ( '$' device= DEVICE 'HDM' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:799:11: '$' device= DEVICE 'HDM' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3181 = getCharIndex();
-            int deviceStartLine3181 = getLine();
-            int deviceStartCharPos3181 = getCharPositionInLine();
+            int deviceStart3176 = getCharIndex();
+            int deviceStartLine3176 = getLine();
+            int deviceStartCharPos3176 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3181, getCharIndex()-1);
-            device.setLine(deviceStartLine3181);
-            device.setCharPositionInLine(deviceStartCharPos3181);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3176, getCharIndex()-1);
+            device.setLine(deviceStartLine3176);
+            device.setCharPositionInLine(deviceStartCharPos3176);
 
 
             match("HDM"); 
@@ -6539,19 +6539,19 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int headingStart3205 = getCharIndex();
-            int headingStartLine3205 = getLine();
-            int headingStartCharPos3205 = getCharPositionInLine();
+            int headingStart3200 = getCharIndex();
+            int headingStartLine3200 = getLine();
+            int headingStartCharPos3200 = getCharPositionInLine();
             mNUMBER(); 
-            heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart3205, getCharIndex()-1);
-            heading.setLine(headingStartLine3205);
-            heading.setCharPositionInLine(headingStartCharPos3205);
+            heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart3200, getCharIndex()-1);
+            heading.setLine(headingStartLine3200);
+            heading.setCharPositionInLine(headingStartCharPos3200);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:828:15: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:801:15: ( LETTERS )*
             loop127:
             do {
                 int alt127=2;
@@ -6564,7 +6564,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt127) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:828:17: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:801:17: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -6578,13 +6578,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart3242 = getCharIndex();
-            int checksumStartLine3242 = getLine();
-            int checksumStartCharPos3242 = getCharPositionInLine();
+            int checksumStart3237 = getCharIndex();
+            int checksumStartLine3237 = getLine();
+            int checksumStartCharPos3237 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3242, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3242);
-            checksum.setCharPositionInLine(checksumStartCharPos3242);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3237, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3237);
+            checksum.setCharPositionInLine(checksumStartCharPos3237);
 
 
 
@@ -6614,18 +6614,18 @@ public class NMEALexer extends Lexer {
             CommonToken heading=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:842:7: ( '$' device= DEVICE 'HDT' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:842:8: '$' device= DEVICE 'HDT' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:815:7: ( '$' device= DEVICE 'HDT' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:815:8: '$' device= DEVICE 'HDT' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3263 = getCharIndex();
-            int deviceStartLine3263 = getLine();
-            int deviceStartCharPos3263 = getCharPositionInLine();
+            int deviceStart3258 = getCharIndex();
+            int deviceStartLine3258 = getLine();
+            int deviceStartCharPos3258 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3263, getCharIndex()-1);
-            device.setLine(deviceStartLine3263);
-            device.setCharPositionInLine(deviceStartCharPos3263);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3258, getCharIndex()-1);
+            device.setLine(deviceStartLine3258);
+            device.setCharPositionInLine(deviceStartCharPos3258);
 
 
             match("HDT"); 
@@ -6635,19 +6635,19 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int headingStart3287 = getCharIndex();
-            int headingStartLine3287 = getLine();
-            int headingStartCharPos3287 = getCharPositionInLine();
+            int headingStart3282 = getCharIndex();
+            int headingStartLine3282 = getLine();
+            int headingStartCharPos3282 = getCharPositionInLine();
             mNUMBER(); 
-            heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart3287, getCharIndex()-1);
-            heading.setLine(headingStartLine3287);
-            heading.setCharPositionInLine(headingStartCharPos3287);
+            heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart3282, getCharIndex()-1);
+            heading.setLine(headingStartLine3282);
+            heading.setCharPositionInLine(headingStartCharPos3282);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:844:15: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:817:15: ( LETTERS )*
             loop128:
             do {
                 int alt128=2;
@@ -6660,7 +6660,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt128) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:844:16: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:817:16: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -6674,13 +6674,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart3327 = getCharIndex();
-            int checksumStartLine3327 = getLine();
-            int checksumStartCharPos3327 = getCharPositionInLine();
+            int checksumStart3322 = getCharIndex();
+            int checksumStartLine3322 = getLine();
+            int checksumStartCharPos3322 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3327, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3327);
-            checksum.setCharPositionInLine(checksumStartCharPos3327);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3322, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3322);
+            checksum.setCharPositionInLine(checksumStartCharPos3322);
 
 
 
@@ -6713,18 +6713,18 @@ public class NMEALexer extends Lexer {
             CommonToken frequencyForMSS=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:851:6: ( '$' device= DEVICE 'MSK' SEP frequencyToUse= NUMBER SEP frequencyMode= LETTERS SEP beaconBitRate= NUMBER SEP bitRateMode= LETTERS SEP (frequencyForMSS= NUMBER )* ( SEP )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:851:8: '$' device= DEVICE 'MSK' SEP frequencyToUse= NUMBER SEP frequencyMode= LETTERS SEP beaconBitRate= NUMBER SEP bitRateMode= LETTERS SEP (frequencyForMSS= NUMBER )* ( SEP )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:824:6: ( '$' device= DEVICE 'MSK' SEP frequencyToUse= NUMBER SEP frequencyMode= LETTERS SEP beaconBitRate= NUMBER SEP bitRateMode= LETTERS SEP (frequencyForMSS= NUMBER )* ( SEP )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:824:8: '$' device= DEVICE 'MSK' SEP frequencyToUse= NUMBER SEP frequencyMode= LETTERS SEP beaconBitRate= NUMBER SEP bitRateMode= LETTERS SEP (frequencyForMSS= NUMBER )* ( SEP )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3348 = getCharIndex();
-            int deviceStartLine3348 = getLine();
-            int deviceStartCharPos3348 = getCharPositionInLine();
+            int deviceStart3343 = getCharIndex();
+            int deviceStartLine3343 = getLine();
+            int deviceStartCharPos3343 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3348, getCharIndex()-1);
-            device.setLine(deviceStartLine3348);
-            device.setCharPositionInLine(deviceStartCharPos3348);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3343, getCharIndex()-1);
+            device.setLine(deviceStartLine3343);
+            device.setCharPositionInLine(deviceStartCharPos3343);
 
 
             match("MSK"); 
@@ -6734,55 +6734,55 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int frequencyToUseStart3363 = getCharIndex();
-            int frequencyToUseStartLine3363 = getLine();
-            int frequencyToUseStartCharPos3363 = getCharPositionInLine();
+            int frequencyToUseStart3358 = getCharIndex();
+            int frequencyToUseStartLine3358 = getLine();
+            int frequencyToUseStartCharPos3358 = getCharPositionInLine();
             mNUMBER(); 
-            frequencyToUse = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, frequencyToUseStart3363, getCharIndex()-1);
-            frequencyToUse.setLine(frequencyToUseStartLine3363);
-            frequencyToUse.setCharPositionInLine(frequencyToUseStartCharPos3363);
+            frequencyToUse = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, frequencyToUseStart3358, getCharIndex()-1);
+            frequencyToUse.setLine(frequencyToUseStartLine3358);
+            frequencyToUse.setCharPositionInLine(frequencyToUseStartCharPos3358);
 
 
             mSEP(); 
 
 
-            int frequencyModeStart3383 = getCharIndex();
-            int frequencyModeStartLine3383 = getLine();
-            int frequencyModeStartCharPos3383 = getCharPositionInLine();
+            int frequencyModeStart3378 = getCharIndex();
+            int frequencyModeStartLine3378 = getLine();
+            int frequencyModeStartCharPos3378 = getCharPositionInLine();
             mLETTERS(); 
-            frequencyMode = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, frequencyModeStart3383, getCharIndex()-1);
-            frequencyMode.setLine(frequencyModeStartLine3383);
-            frequencyMode.setCharPositionInLine(frequencyModeStartCharPos3383);
+            frequencyMode = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, frequencyModeStart3378, getCharIndex()-1);
+            frequencyMode.setLine(frequencyModeStartLine3378);
+            frequencyMode.setCharPositionInLine(frequencyModeStartCharPos3378);
 
 
             mSEP(); 
 
 
-            int beaconBitRateStart3403 = getCharIndex();
-            int beaconBitRateStartLine3403 = getLine();
-            int beaconBitRateStartCharPos3403 = getCharPositionInLine();
+            int beaconBitRateStart3398 = getCharIndex();
+            int beaconBitRateStartLine3398 = getLine();
+            int beaconBitRateStartCharPos3398 = getCharPositionInLine();
             mNUMBER(); 
-            beaconBitRate = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, beaconBitRateStart3403, getCharIndex()-1);
-            beaconBitRate.setLine(beaconBitRateStartLine3403);
-            beaconBitRate.setCharPositionInLine(beaconBitRateStartCharPos3403);
+            beaconBitRate = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, beaconBitRateStart3398, getCharIndex()-1);
+            beaconBitRate.setLine(beaconBitRateStartLine3398);
+            beaconBitRate.setCharPositionInLine(beaconBitRateStartCharPos3398);
 
 
             mSEP(); 
 
 
-            int bitRateModeStart3423 = getCharIndex();
-            int bitRateModeStartLine3423 = getLine();
-            int bitRateModeStartCharPos3423 = getCharPositionInLine();
+            int bitRateModeStart3418 = getCharIndex();
+            int bitRateModeStartLine3418 = getLine();
+            int bitRateModeStartCharPos3418 = getCharPositionInLine();
             mLETTERS(); 
-            bitRateMode = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bitRateModeStart3423, getCharIndex()-1);
-            bitRateMode.setLine(bitRateModeStartLine3423);
-            bitRateMode.setCharPositionInLine(bitRateModeStartCharPos3423);
+            bitRateMode = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bitRateModeStart3418, getCharIndex()-1);
+            bitRateMode.setLine(bitRateModeStartLine3418);
+            bitRateMode.setCharPositionInLine(bitRateModeStartCharPos3418);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:856:29: (frequencyForMSS= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:829:29: (frequencyForMSS= NUMBER )*
             loop129:
             do {
                 int alt129=2;
@@ -6795,15 +6795,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt129) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:856:29: frequencyForMSS= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:829:29: frequencyForMSS= NUMBER
             	    {
-            	    int frequencyForMSSStart3443 = getCharIndex();
-            	    int frequencyForMSSStartLine3443 = getLine();
-            	    int frequencyForMSSStartCharPos3443 = getCharPositionInLine();
+            	    int frequencyForMSSStart3438 = getCharIndex();
+            	    int frequencyForMSSStartLine3438 = getLine();
+            	    int frequencyForMSSStartCharPos3438 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    frequencyForMSS = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, frequencyForMSSStart3443, getCharIndex()-1);
-            	    frequencyForMSS.setLine(frequencyForMSSStartLine3443);
-            	    frequencyForMSS.setCharPositionInLine(frequencyForMSSStartCharPos3443);
+            	    frequencyForMSS = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, frequencyForMSSStart3438, getCharIndex()-1);
+            	    frequencyForMSS.setLine(frequencyForMSSStartLine3438);
+            	    frequencyForMSS.setCharPositionInLine(frequencyForMSSStartCharPos3438);
 
 
             	    }
@@ -6815,7 +6815,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:856:39: ( SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:829:39: ( SEP )*
             loop130:
             do {
                 int alt130=2;
@@ -6849,13 +6849,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart3463 = getCharIndex();
-            int checksumStartLine3463 = getLine();
-            int checksumStartCharPos3463 = getCharPositionInLine();
+            int checksumStart3458 = getCharIndex();
+            int checksumStartLine3458 = getLine();
+            int checksumStartCharPos3458 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3463, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3463);
-            checksum.setCharPositionInLine(checksumStartCharPos3463);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3458, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3458);
+            checksum.setCharPositionInLine(checksumStartCharPos3458);
 
 
 
@@ -6890,18 +6890,18 @@ public class NMEALexer extends Lexer {
             CommonToken unit=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:874:5: ( '$' device= DEVICE 'MTA' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:874:7: '$' device= DEVICE 'MTA' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:847:5: ( '$' device= DEVICE 'MTA' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:847:7: '$' device= DEVICE 'MTA' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3481 = getCharIndex();
-            int deviceStartLine3481 = getLine();
-            int deviceStartCharPos3481 = getCharPositionInLine();
+            int deviceStart3476 = getCharIndex();
+            int deviceStartLine3476 = getLine();
+            int deviceStartCharPos3476 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3481, getCharIndex()-1);
-            device.setLine(deviceStartLine3481);
-            device.setCharPositionInLine(deviceStartCharPos3481);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3476, getCharIndex()-1);
+            device.setLine(deviceStartLine3476);
+            device.setCharPositionInLine(deviceStartCharPos3476);
 
 
             match("MTA"); 
@@ -6911,7 +6911,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:875:4: (temperature= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:848:4: (temperature= NUMBER )*
             loop131:
             do {
                 int alt131=2;
@@ -6924,15 +6924,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt131) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:875:5: temperature= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:848:5: temperature= NUMBER
             	    {
-            	    int temperatureStart3495 = getCharIndex();
-            	    int temperatureStartLine3495 = getLine();
-            	    int temperatureStartCharPos3495 = getCharPositionInLine();
+            	    int temperatureStart3490 = getCharIndex();
+            	    int temperatureStartLine3490 = getLine();
+            	    int temperatureStartCharPos3490 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    temperature = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, temperatureStart3495, getCharIndex()-1);
-            	    temperature.setLine(temperatureStartLine3495);
-            	    temperature.setCharPositionInLine(temperatureStartCharPos3495);
+            	    temperature = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, temperatureStart3490, getCharIndex()-1);
+            	    temperature.setLine(temperatureStartLine3490);
+            	    temperature.setCharPositionInLine(temperatureStartCharPos3490);
 
 
             	    }
@@ -6947,22 +6947,22 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int unitStart3515 = getCharIndex();
-            int unitStartLine3515 = getLine();
-            int unitStartCharPos3515 = getCharPositionInLine();
+            int unitStart3510 = getCharIndex();
+            int unitStartLine3510 = getLine();
+            int unitStartCharPos3510 = getCharPositionInLine();
             mLETTERS(); 
-            unit = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitStart3515, getCharIndex()-1);
-            unit.setLine(unitStartLine3515);
-            unit.setCharPositionInLine(unitStartCharPos3515);
+            unit = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitStart3510, getCharIndex()-1);
+            unit.setLine(unitStartLine3510);
+            unit.setCharPositionInLine(unitStartCharPos3510);
 
 
-            int checksumStart3530 = getCharIndex();
-            int checksumStartLine3530 = getLine();
-            int checksumStartCharPos3530 = getCharPositionInLine();
+            int checksumStart3525 = getCharIndex();
+            int checksumStartLine3525 = getLine();
+            int checksumStartCharPos3525 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3530, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3530);
-            checksum.setCharPositionInLine(checksumStartCharPos3530);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3525, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3525);
+            checksum.setCharPositionInLine(checksumStartCharPos3525);
 
 
 
@@ -6994,18 +6994,18 @@ public class NMEALexer extends Lexer {
             CommonToken unit=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:891:6: ( '$' device= DEVICE 'MTW' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:891:8: '$' device= DEVICE 'MTW' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:864:6: ( '$' device= DEVICE 'MTW' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:864:8: '$' device= DEVICE 'MTW' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3549 = getCharIndex();
-            int deviceStartLine3549 = getLine();
-            int deviceStartCharPos3549 = getCharPositionInLine();
+            int deviceStart3544 = getCharIndex();
+            int deviceStartLine3544 = getLine();
+            int deviceStartCharPos3544 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3549, getCharIndex()-1);
-            device.setLine(deviceStartLine3549);
-            device.setCharPositionInLine(deviceStartCharPos3549);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3544, getCharIndex()-1);
+            device.setLine(deviceStartLine3544);
+            device.setCharPositionInLine(deviceStartCharPos3544);
 
 
             match("MTW"); 
@@ -7015,7 +7015,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:892:4: (temperature= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:865:4: (temperature= NUMBER )*
             loop132:
             do {
                 int alt132=2;
@@ -7028,15 +7028,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt132) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:892:5: temperature= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:865:5: temperature= NUMBER
             	    {
-            	    int temperatureStart3563 = getCharIndex();
-            	    int temperatureStartLine3563 = getLine();
-            	    int temperatureStartCharPos3563 = getCharPositionInLine();
+            	    int temperatureStart3558 = getCharIndex();
+            	    int temperatureStartLine3558 = getLine();
+            	    int temperatureStartCharPos3558 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    temperature = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, temperatureStart3563, getCharIndex()-1);
-            	    temperature.setLine(temperatureStartLine3563);
-            	    temperature.setCharPositionInLine(temperatureStartCharPos3563);
+            	    temperature = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, temperatureStart3558, getCharIndex()-1);
+            	    temperature.setLine(temperatureStartLine3558);
+            	    temperature.setCharPositionInLine(temperatureStartCharPos3558);
 
 
             	    }
@@ -7051,22 +7051,22 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int unitStart3583 = getCharIndex();
-            int unitStartLine3583 = getLine();
-            int unitStartCharPos3583 = getCharPositionInLine();
+            int unitStart3578 = getCharIndex();
+            int unitStartLine3578 = getLine();
+            int unitStartCharPos3578 = getCharPositionInLine();
             mLETTERS(); 
-            unit = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitStart3583, getCharIndex()-1);
-            unit.setLine(unitStartLine3583);
-            unit.setCharPositionInLine(unitStartCharPos3583);
+            unit = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitStart3578, getCharIndex()-1);
+            unit.setLine(unitStartLine3578);
+            unit.setCharPositionInLine(unitStartCharPos3578);
 
 
-            int checksumStart3598 = getCharIndex();
-            int checksumStartLine3598 = getLine();
-            int checksumStartCharPos3598 = getCharPositionInLine();
+            int checksumStart3593 = getCharIndex();
+            int checksumStartLine3593 = getLine();
+            int checksumStartCharPos3593 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3598, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3598);
-            checksum.setCharPositionInLine(checksumStartCharPos3598);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3593, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3593);
+            checksum.setCharPositionInLine(checksumStartCharPos3593);
 
 
 
@@ -7099,18 +7099,18 @@ public class NMEALexer extends Lexer {
             CommonToken windSpeed=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:903:7: ( '$' device= DEVICE 'MWD' SEP (windDirectionTrue= NUMBER )* SEP LETTERS SEP (windDirectionMagnetic= NUMBER )* SEP LETTERS SEP (windSpeed= NUMBER )* SEP LETTERS SEP NUMBER SEP LETTERS checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:903:9: '$' device= DEVICE 'MWD' SEP (windDirectionTrue= NUMBER )* SEP LETTERS SEP (windDirectionMagnetic= NUMBER )* SEP LETTERS SEP (windSpeed= NUMBER )* SEP LETTERS SEP NUMBER SEP LETTERS checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:876:7: ( '$' device= DEVICE 'MWD' SEP (windDirectionTrue= NUMBER )* SEP LETTERS SEP (windDirectionMagnetic= NUMBER )* SEP LETTERS SEP (windSpeed= NUMBER )* SEP LETTERS SEP NUMBER SEP LETTERS checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:876:9: '$' device= DEVICE 'MWD' SEP (windDirectionTrue= NUMBER )* SEP LETTERS SEP (windDirectionMagnetic= NUMBER )* SEP LETTERS SEP (windSpeed= NUMBER )* SEP LETTERS SEP NUMBER SEP LETTERS checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3621 = getCharIndex();
-            int deviceStartLine3621 = getLine();
-            int deviceStartCharPos3621 = getCharPositionInLine();
+            int deviceStart3616 = getCharIndex();
+            int deviceStartLine3616 = getLine();
+            int deviceStartCharPos3616 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3621, getCharIndex()-1);
-            device.setLine(deviceStartLine3621);
-            device.setCharPositionInLine(deviceStartCharPos3621);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3616, getCharIndex()-1);
+            device.setLine(deviceStartLine3616);
+            device.setCharPositionInLine(deviceStartCharPos3616);
 
 
             match("MWD"); 
@@ -7120,7 +7120,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:904:22: (windDirectionTrue= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:877:22: (windDirectionTrue= NUMBER )*
             loop133:
             do {
                 int alt133=2;
@@ -7133,15 +7133,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt133) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:904:22: windDirectionTrue= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:877:22: windDirectionTrue= NUMBER
             	    {
-            	    int windDirectionTrueStart3634 = getCharIndex();
-            	    int windDirectionTrueStartLine3634 = getLine();
-            	    int windDirectionTrueStartCharPos3634 = getCharPositionInLine();
+            	    int windDirectionTrueStart3629 = getCharIndex();
+            	    int windDirectionTrueStartLine3629 = getLine();
+            	    int windDirectionTrueStartCharPos3629 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    windDirectionTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windDirectionTrueStart3634, getCharIndex()-1);
-            	    windDirectionTrue.setLine(windDirectionTrueStartLine3634);
-            	    windDirectionTrue.setCharPositionInLine(windDirectionTrueStartCharPos3634);
+            	    windDirectionTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windDirectionTrueStart3629, getCharIndex()-1);
+            	    windDirectionTrue.setLine(windDirectionTrueStartLine3629);
+            	    windDirectionTrue.setCharPositionInLine(windDirectionTrueStartCharPos3629);
 
 
             	    }
@@ -7162,7 +7162,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:906:36: (windDirectionMagnetic= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:879:36: (windDirectionMagnetic= NUMBER )*
             loop134:
             do {
                 int alt134=2;
@@ -7175,15 +7175,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt134) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:906:36: windDirectionMagnetic= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:879:36: windDirectionMagnetic= NUMBER
             	    {
-            	    int windDirectionMagneticStart3673 = getCharIndex();
-            	    int windDirectionMagneticStartLine3673 = getLine();
-            	    int windDirectionMagneticStartCharPos3673 = getCharPositionInLine();
+            	    int windDirectionMagneticStart3668 = getCharIndex();
+            	    int windDirectionMagneticStartLine3668 = getLine();
+            	    int windDirectionMagneticStartCharPos3668 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    windDirectionMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windDirectionMagneticStart3673, getCharIndex()-1);
-            	    windDirectionMagnetic.setLine(windDirectionMagneticStartLine3673);
-            	    windDirectionMagnetic.setCharPositionInLine(windDirectionMagneticStartCharPos3673);
+            	    windDirectionMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windDirectionMagneticStart3668, getCharIndex()-1);
+            	    windDirectionMagnetic.setLine(windDirectionMagneticStartLine3668);
+            	    windDirectionMagnetic.setCharPositionInLine(windDirectionMagneticStartCharPos3668);
 
 
             	    }
@@ -7204,7 +7204,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:908:13: (windSpeed= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:881:13: (windSpeed= NUMBER )*
             loop135:
             do {
                 int alt135=2;
@@ -7217,15 +7217,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt135) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:908:13: windSpeed= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:881:13: windSpeed= NUMBER
             	    {
-            	    int windSpeedStart3701 = getCharIndex();
-            	    int windSpeedStartLine3701 = getLine();
-            	    int windSpeedStartCharPos3701 = getCharPositionInLine();
+            	    int windSpeedStart3696 = getCharIndex();
+            	    int windSpeedStartLine3696 = getLine();
+            	    int windSpeedStartCharPos3696 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    windSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windSpeedStart3701, getCharIndex()-1);
-            	    windSpeed.setLine(windSpeedStartLine3701);
-            	    windSpeed.setCharPositionInLine(windSpeedStartCharPos3701);
+            	    windSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windSpeedStart3696, getCharIndex()-1);
+            	    windSpeed.setLine(windSpeedStartLine3696);
+            	    windSpeed.setCharPositionInLine(windSpeedStartCharPos3696);
 
 
             	    }
@@ -7255,13 +7255,13 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            int checksumStart3768 = getCharIndex();
-            int checksumStartLine3768 = getLine();
-            int checksumStartCharPos3768 = getCharPositionInLine();
+            int checksumStart3763 = getCharIndex();
+            int checksumStartLine3763 = getLine();
+            int checksumStartCharPos3763 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3768, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3768);
-            checksum.setCharPositionInLine(checksumStartCharPos3768);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3763, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3763);
+            checksum.setCharPositionInLine(checksumStartCharPos3763);
 
 
 
@@ -7296,18 +7296,18 @@ public class NMEALexer extends Lexer {
             CommonToken status=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:922:6: ( '$' device= DEVICE 'MWV' SEP windAngle= NUMBER SEP reference= LETTERS SEP windSpeed= NUMBER SEP unit= LETTERS SEP status= LETTERS checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:922:8: '$' device= DEVICE 'MWV' SEP windAngle= NUMBER SEP reference= LETTERS SEP windSpeed= NUMBER SEP unit= LETTERS SEP status= LETTERS checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:895:6: ( '$' device= DEVICE 'MWV' SEP windAngle= NUMBER SEP reference= LETTERS SEP windSpeed= NUMBER SEP unit= LETTERS SEP status= LETTERS checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:895:8: '$' device= DEVICE 'MWV' SEP windAngle= NUMBER SEP reference= LETTERS SEP windSpeed= NUMBER SEP unit= LETTERS SEP status= LETTERS checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3792 = getCharIndex();
-            int deviceStartLine3792 = getLine();
-            int deviceStartCharPos3792 = getCharPositionInLine();
+            int deviceStart3787 = getCharIndex();
+            int deviceStartLine3787 = getLine();
+            int deviceStartCharPos3787 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3792, getCharIndex()-1);
-            device.setLine(deviceStartLine3792);
-            device.setCharPositionInLine(deviceStartCharPos3792);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3787, getCharIndex()-1);
+            device.setLine(deviceStartLine3787);
+            device.setCharPositionInLine(deviceStartCharPos3787);
 
 
             match("MWV"); 
@@ -7317,70 +7317,70 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int windAngleStart3805 = getCharIndex();
-            int windAngleStartLine3805 = getLine();
-            int windAngleStartCharPos3805 = getCharPositionInLine();
+            int windAngleStart3800 = getCharIndex();
+            int windAngleStartLine3800 = getLine();
+            int windAngleStartCharPos3800 = getCharPositionInLine();
             mNUMBER(); 
-            windAngle = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windAngleStart3805, getCharIndex()-1);
-            windAngle.setLine(windAngleStartLine3805);
-            windAngle.setCharPositionInLine(windAngleStartCharPos3805);
+            windAngle = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windAngleStart3800, getCharIndex()-1);
+            windAngle.setLine(windAngleStartLine3800);
+            windAngle.setCharPositionInLine(windAngleStartCharPos3800);
 
 
             mSEP(); 
 
 
-            int referenceStart3826 = getCharIndex();
-            int referenceStartLine3826 = getLine();
-            int referenceStartCharPos3826 = getCharPositionInLine();
+            int referenceStart3821 = getCharIndex();
+            int referenceStartLine3821 = getLine();
+            int referenceStartCharPos3821 = getCharPositionInLine();
             mLETTERS(); 
-            reference = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, referenceStart3826, getCharIndex()-1);
-            reference.setLine(referenceStartLine3826);
-            reference.setCharPositionInLine(referenceStartCharPos3826);
+            reference = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, referenceStart3821, getCharIndex()-1);
+            reference.setLine(referenceStartLine3821);
+            reference.setCharPositionInLine(referenceStartCharPos3821);
 
 
             mSEP(); 
 
 
-            int windSpeedStart3847 = getCharIndex();
-            int windSpeedStartLine3847 = getLine();
-            int windSpeedStartCharPos3847 = getCharPositionInLine();
+            int windSpeedStart3842 = getCharIndex();
+            int windSpeedStartLine3842 = getLine();
+            int windSpeedStartCharPos3842 = getCharPositionInLine();
             mNUMBER(); 
-            windSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windSpeedStart3847, getCharIndex()-1);
-            windSpeed.setLine(windSpeedStartLine3847);
-            windSpeed.setCharPositionInLine(windSpeedStartCharPos3847);
+            windSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windSpeedStart3842, getCharIndex()-1);
+            windSpeed.setLine(windSpeedStartLine3842);
+            windSpeed.setCharPositionInLine(windSpeedStartCharPos3842);
 
 
             mSEP(); 
 
 
-            int unitStart3868 = getCharIndex();
-            int unitStartLine3868 = getLine();
-            int unitStartCharPos3868 = getCharPositionInLine();
+            int unitStart3863 = getCharIndex();
+            int unitStartLine3863 = getLine();
+            int unitStartCharPos3863 = getCharPositionInLine();
             mLETTERS(); 
-            unit = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitStart3868, getCharIndex()-1);
-            unit.setLine(unitStartLine3868);
-            unit.setCharPositionInLine(unitStartCharPos3868);
+            unit = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, unitStart3863, getCharIndex()-1);
+            unit.setLine(unitStartLine3863);
+            unit.setCharPositionInLine(unitStartCharPos3863);
 
 
             mSEP(); 
 
 
-            int statusStart3889 = getCharIndex();
-            int statusStartLine3889 = getLine();
-            int statusStartCharPos3889 = getCharPositionInLine();
+            int statusStart3884 = getCharIndex();
+            int statusStartLine3884 = getLine();
+            int statusStartCharPos3884 = getCharPositionInLine();
             mLETTERS(); 
-            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart3889, getCharIndex()-1);
-            status.setLine(statusStartLine3889);
-            status.setCharPositionInLine(statusStartCharPos3889);
+            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart3884, getCharIndex()-1);
+            status.setLine(statusStartLine3884);
+            status.setCharPositionInLine(statusStartCharPos3884);
 
 
-            int checksumStart3906 = getCharIndex();
-            int checksumStartLine3906 = getLine();
-            int checksumStartCharPos3906 = getCharPositionInLine();
+            int checksumStart3901 = getCharIndex();
+            int checksumStartLine3901 = getLine();
+            int checksumStartCharPos3901 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3906, getCharIndex()-1);
-            checksum.setLine(checksumStartLine3906);
-            checksum.setCharPositionInLine(checksumStartCharPos3906);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart3901, getCharIndex()-1);
+            checksum.setLine(checksumStartLine3901);
+            checksum.setCharPositionInLine(checksumStartCharPos3901);
 
 
 
@@ -7426,18 +7426,18 @@ public class NMEALexer extends Lexer {
             CommonToken arrivalStatus=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:946:8: ( '$' device= DEVICE 'RMB' SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (fromWaypointId= LETTERS |fromWaypointId= NUMBER )* SEP (toWaypointId= LETTERS |toWaypointId= NUMBER )* SEP (destinationWaypointLatitude= NUMBER )* SEP (ns= LETTERS )* SEP (destinationWaypointLongitude= NUMBER )* SEP (ew= LETTERS )* SEP (rangeToDestination= NUMBER )* SEP (bearingToDestination= NUMBER )* SEP (destinationClosingVelocity= NUMBER )* SEP ( LETTERS SEP )* (arrivalStatus= LETTERS | '\\u0000' )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:946:10: '$' device= DEVICE 'RMB' SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (fromWaypointId= LETTERS |fromWaypointId= NUMBER )* SEP (toWaypointId= LETTERS |toWaypointId= NUMBER )* SEP (destinationWaypointLatitude= NUMBER )* SEP (ns= LETTERS )* SEP (destinationWaypointLongitude= NUMBER )* SEP (ew= LETTERS )* SEP (rangeToDestination= NUMBER )* SEP (bearingToDestination= NUMBER )* SEP (destinationClosingVelocity= NUMBER )* SEP ( LETTERS SEP )* (arrivalStatus= LETTERS | '\\u0000' )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:919:8: ( '$' device= DEVICE 'RMB' SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (fromWaypointId= LETTERS |fromWaypointId= NUMBER )* SEP (toWaypointId= LETTERS |toWaypointId= NUMBER )* SEP (destinationWaypointLatitude= NUMBER )* SEP (ns= LETTERS )* SEP (destinationWaypointLongitude= NUMBER )* SEP (ew= LETTERS )* SEP (rangeToDestination= NUMBER )* SEP (bearingToDestination= NUMBER )* SEP (destinationClosingVelocity= NUMBER )* SEP ( LETTERS SEP )* (arrivalStatus= LETTERS | '\\u0000' )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:919:10: '$' device= DEVICE 'RMB' SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (fromWaypointId= LETTERS |fromWaypointId= NUMBER )* SEP (toWaypointId= LETTERS |toWaypointId= NUMBER )* SEP (destinationWaypointLatitude= NUMBER )* SEP (ns= LETTERS )* SEP (destinationWaypointLongitude= NUMBER )* SEP (ew= LETTERS )* SEP (rangeToDestination= NUMBER )* SEP (bearingToDestination= NUMBER )* SEP (destinationClosingVelocity= NUMBER )* SEP ( LETTERS SEP )* (arrivalStatus= LETTERS | '\\u0000' )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart3939 = getCharIndex();
-            int deviceStartLine3939 = getLine();
-            int deviceStartCharPos3939 = getCharPositionInLine();
+            int deviceStart3934 = getCharIndex();
+            int deviceStartLine3934 = getLine();
+            int deviceStartCharPos3934 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3939, getCharIndex()-1);
-            device.setLine(deviceStartLine3939);
-            device.setCharPositionInLine(deviceStartCharPos3939);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart3934, getCharIndex()-1);
+            device.setLine(deviceStartLine3934);
+            device.setCharPositionInLine(deviceStartCharPos3934);
 
 
             match("RMB"); 
@@ -7447,19 +7447,19 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int statusStart3960 = getCharIndex();
-            int statusStartLine3960 = getLine();
-            int statusStartCharPos3960 = getCharPositionInLine();
+            int statusStart3955 = getCharIndex();
+            int statusStartLine3955 = getLine();
+            int statusStartCharPos3955 = getCharPositionInLine();
             mLETTERS(); 
-            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart3960, getCharIndex()-1);
-            status.setLine(statusStartLine3960);
-            status.setCharPositionInLine(statusStartCharPos3960);
+            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart3955, getCharIndex()-1);
+            status.setLine(statusStartLine3955);
+            status.setCharPositionInLine(statusStartCharPos3955);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:948:11: (crossTrackError= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:921:11: (crossTrackError= NUMBER )*
             loop136:
             do {
                 int alt136=2;
@@ -7472,15 +7472,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt136) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:948:12: crossTrackError= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:921:12: crossTrackError= NUMBER
             	    {
-            	    int crossTrackErrorStart3982 = getCharIndex();
-            	    int crossTrackErrorStartLine3982 = getLine();
-            	    int crossTrackErrorStartCharPos3982 = getCharPositionInLine();
+            	    int crossTrackErrorStart3977 = getCharIndex();
+            	    int crossTrackErrorStartLine3977 = getLine();
+            	    int crossTrackErrorStartCharPos3977 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    crossTrackError = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, crossTrackErrorStart3982, getCharIndex()-1);
-            	    crossTrackError.setLine(crossTrackErrorStartLine3982);
-            	    crossTrackError.setCharPositionInLine(crossTrackErrorStartCharPos3982);
+            	    crossTrackError = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, crossTrackErrorStart3977, getCharIndex()-1);
+            	    crossTrackError.setLine(crossTrackErrorStartLine3977);
+            	    crossTrackError.setCharPositionInLine(crossTrackErrorStartCharPos3977);
 
 
             	    }
@@ -7495,7 +7495,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:949:11: (directionToSteer= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:922:11: (directionToSteer= LETTERS )*
             loop137:
             do {
                 int alt137=2;
@@ -7508,15 +7508,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt137) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:949:12: directionToSteer= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:922:12: directionToSteer= LETTERS
             	    {
-            	    int directionToSteerStart4003 = getCharIndex();
-            	    int directionToSteerStartLine4003 = getLine();
-            	    int directionToSteerStartCharPos4003 = getCharPositionInLine();
+            	    int directionToSteerStart3998 = getCharIndex();
+            	    int directionToSteerStartLine3998 = getLine();
+            	    int directionToSteerStartCharPos3998 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    directionToSteer = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, directionToSteerStart4003, getCharIndex()-1);
-            	    directionToSteer.setLine(directionToSteerStartLine4003);
-            	    directionToSteer.setCharPositionInLine(directionToSteerStartCharPos4003);
+            	    directionToSteer = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, directionToSteerStart3998, getCharIndex()-1);
+            	    directionToSteer.setLine(directionToSteerStartLine3998);
+            	    directionToSteer.setCharPositionInLine(directionToSteerStartCharPos3998);
 
 
             	    }
@@ -7531,7 +7531,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:950:11: (fromWaypointId= LETTERS |fromWaypointId= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:923:11: (fromWaypointId= LETTERS |fromWaypointId= NUMBER )*
             loop138:
             do {
                 int alt138=3;
@@ -7547,29 +7547,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt138) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:950:12: fromWaypointId= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:923:12: fromWaypointId= LETTERS
             	    {
-            	    int fromWaypointIdStart4024 = getCharIndex();
-            	    int fromWaypointIdStartLine4024 = getLine();
-            	    int fromWaypointIdStartCharPos4024 = getCharPositionInLine();
+            	    int fromWaypointIdStart4019 = getCharIndex();
+            	    int fromWaypointIdStartLine4019 = getLine();
+            	    int fromWaypointIdStartCharPos4019 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    fromWaypointId = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fromWaypointIdStart4024, getCharIndex()-1);
-            	    fromWaypointId.setLine(fromWaypointIdStartLine4024);
-            	    fromWaypointId.setCharPositionInLine(fromWaypointIdStartCharPos4024);
+            	    fromWaypointId = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fromWaypointIdStart4019, getCharIndex()-1);
+            	    fromWaypointId.setLine(fromWaypointIdStartLine4019);
+            	    fromWaypointId.setCharPositionInLine(fromWaypointIdStartCharPos4019);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:950:38: fromWaypointId= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:923:38: fromWaypointId= NUMBER
             	    {
-            	    int fromWaypointIdStart4031 = getCharIndex();
-            	    int fromWaypointIdStartLine4031 = getLine();
-            	    int fromWaypointIdStartCharPos4031 = getCharPositionInLine();
+            	    int fromWaypointIdStart4026 = getCharIndex();
+            	    int fromWaypointIdStartLine4026 = getLine();
+            	    int fromWaypointIdStartCharPos4026 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    fromWaypointId = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fromWaypointIdStart4031, getCharIndex()-1);
-            	    fromWaypointId.setLine(fromWaypointIdStartLine4031);
-            	    fromWaypointId.setCharPositionInLine(fromWaypointIdStartCharPos4031);
+            	    fromWaypointId = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fromWaypointIdStart4026, getCharIndex()-1);
+            	    fromWaypointId.setLine(fromWaypointIdStartLine4026);
+            	    fromWaypointId.setCharPositionInLine(fromWaypointIdStartCharPos4026);
 
 
             	    }
@@ -7584,7 +7584,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:951:11: (toWaypointId= LETTERS |toWaypointId= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:924:11: (toWaypointId= LETTERS |toWaypointId= NUMBER )*
             loop139:
             do {
                 int alt139=3;
@@ -7600,29 +7600,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt139) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:951:12: toWaypointId= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:924:12: toWaypointId= LETTERS
             	    {
-            	    int toWaypointIdStart4054 = getCharIndex();
-            	    int toWaypointIdStartLine4054 = getLine();
-            	    int toWaypointIdStartCharPos4054 = getCharPositionInLine();
+            	    int toWaypointIdStart4049 = getCharIndex();
+            	    int toWaypointIdStartLine4049 = getLine();
+            	    int toWaypointIdStartCharPos4049 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    toWaypointId = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, toWaypointIdStart4054, getCharIndex()-1);
-            	    toWaypointId.setLine(toWaypointIdStartLine4054);
-            	    toWaypointId.setCharPositionInLine(toWaypointIdStartCharPos4054);
+            	    toWaypointId = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, toWaypointIdStart4049, getCharIndex()-1);
+            	    toWaypointId.setLine(toWaypointIdStartLine4049);
+            	    toWaypointId.setCharPositionInLine(toWaypointIdStartCharPos4049);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:951:38: toWaypointId= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:924:38: toWaypointId= NUMBER
             	    {
-            	    int toWaypointIdStart4062 = getCharIndex();
-            	    int toWaypointIdStartLine4062 = getLine();
-            	    int toWaypointIdStartCharPos4062 = getCharPositionInLine();
+            	    int toWaypointIdStart4057 = getCharIndex();
+            	    int toWaypointIdStartLine4057 = getLine();
+            	    int toWaypointIdStartCharPos4057 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    toWaypointId = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, toWaypointIdStart4062, getCharIndex()-1);
-            	    toWaypointId.setLine(toWaypointIdStartLine4062);
-            	    toWaypointId.setCharPositionInLine(toWaypointIdStartCharPos4062);
+            	    toWaypointId = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, toWaypointIdStart4057, getCharIndex()-1);
+            	    toWaypointId.setLine(toWaypointIdStartLine4057);
+            	    toWaypointId.setCharPositionInLine(toWaypointIdStartCharPos4057);
 
 
             	    }
@@ -7637,7 +7637,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:952:11: (destinationWaypointLatitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:925:11: (destinationWaypointLatitude= NUMBER )*
             loop140:
             do {
                 int alt140=2;
@@ -7650,15 +7650,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt140) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:952:12: destinationWaypointLatitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:925:12: destinationWaypointLatitude= NUMBER
             	    {
-            	    int destinationWaypointLatitudeStart4084 = getCharIndex();
-            	    int destinationWaypointLatitudeStartLine4084 = getLine();
-            	    int destinationWaypointLatitudeStartCharPos4084 = getCharPositionInLine();
+            	    int destinationWaypointLatitudeStart4079 = getCharIndex();
+            	    int destinationWaypointLatitudeStartLine4079 = getLine();
+            	    int destinationWaypointLatitudeStartCharPos4079 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    destinationWaypointLatitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointLatitudeStart4084, getCharIndex()-1);
-            	    destinationWaypointLatitude.setLine(destinationWaypointLatitudeStartLine4084);
-            	    destinationWaypointLatitude.setCharPositionInLine(destinationWaypointLatitudeStartCharPos4084);
+            	    destinationWaypointLatitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointLatitudeStart4079, getCharIndex()-1);
+            	    destinationWaypointLatitude.setLine(destinationWaypointLatitudeStartLine4079);
+            	    destinationWaypointLatitude.setCharPositionInLine(destinationWaypointLatitudeStartCharPos4079);
 
 
             	    }
@@ -7673,7 +7673,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:952:56: (ns= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:925:56: (ns= LETTERS )*
             loop141:
             do {
                 int alt141=2;
@@ -7686,15 +7686,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt141) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:952:57: ns= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:925:57: ns= LETTERS
             	    {
-            	    int nsStart4095 = getCharIndex();
-            	    int nsStartLine4095 = getLine();
-            	    int nsStartCharPos4095 = getCharPositionInLine();
+            	    int nsStart4090 = getCharIndex();
+            	    int nsStartLine4090 = getLine();
+            	    int nsStartCharPos4090 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart4095, getCharIndex()-1);
-            	    ns.setLine(nsStartLine4095);
-            	    ns.setCharPositionInLine(nsStartCharPos4095);
+            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart4090, getCharIndex()-1);
+            	    ns.setLine(nsStartLine4090);
+            	    ns.setCharPositionInLine(nsStartCharPos4090);
 
 
             	    }
@@ -7709,7 +7709,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:953:11: (destinationWaypointLongitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:926:11: (destinationWaypointLongitude= NUMBER )*
             loop142:
             do {
                 int alt142=2;
@@ -7722,15 +7722,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt142) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:953:12: destinationWaypointLongitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:926:12: destinationWaypointLongitude= NUMBER
             	    {
-            	    int destinationWaypointLongitudeStart4118 = getCharIndex();
-            	    int destinationWaypointLongitudeStartLine4118 = getLine();
-            	    int destinationWaypointLongitudeStartCharPos4118 = getCharPositionInLine();
+            	    int destinationWaypointLongitudeStart4113 = getCharIndex();
+            	    int destinationWaypointLongitudeStartLine4113 = getLine();
+            	    int destinationWaypointLongitudeStartCharPos4113 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    destinationWaypointLongitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointLongitudeStart4118, getCharIndex()-1);
-            	    destinationWaypointLongitude.setLine(destinationWaypointLongitudeStartLine4118);
-            	    destinationWaypointLongitude.setCharPositionInLine(destinationWaypointLongitudeStartCharPos4118);
+            	    destinationWaypointLongitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationWaypointLongitudeStart4113, getCharIndex()-1);
+            	    destinationWaypointLongitude.setLine(destinationWaypointLongitudeStartLine4113);
+            	    destinationWaypointLongitude.setCharPositionInLine(destinationWaypointLongitudeStartCharPos4113);
 
 
             	    }
@@ -7745,7 +7745,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:953:58: (ew= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:926:58: (ew= LETTERS )*
             loop143:
             do {
                 int alt143=2;
@@ -7758,15 +7758,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt143) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:953:59: ew= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:926:59: ew= LETTERS
             	    {
-            	    int ewStart4130 = getCharIndex();
-            	    int ewStartLine4130 = getLine();
-            	    int ewStartCharPos4130 = getCharPositionInLine();
+            	    int ewStart4125 = getCharIndex();
+            	    int ewStartLine4125 = getLine();
+            	    int ewStartCharPos4125 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart4130, getCharIndex()-1);
-            	    ew.setLine(ewStartLine4130);
-            	    ew.setCharPositionInLine(ewStartCharPos4130);
+            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart4125, getCharIndex()-1);
+            	    ew.setLine(ewStartLine4125);
+            	    ew.setCharPositionInLine(ewStartCharPos4125);
 
 
             	    }
@@ -7781,7 +7781,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:954:11: (rangeToDestination= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:927:11: (rangeToDestination= NUMBER )*
             loop144:
             do {
                 int alt144=2;
@@ -7794,15 +7794,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt144) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:954:12: rangeToDestination= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:927:12: rangeToDestination= NUMBER
             	    {
-            	    int rangeToDestinationStart4152 = getCharIndex();
-            	    int rangeToDestinationStartLine4152 = getLine();
-            	    int rangeToDestinationStartCharPos4152 = getCharPositionInLine();
+            	    int rangeToDestinationStart4147 = getCharIndex();
+            	    int rangeToDestinationStartLine4147 = getLine();
+            	    int rangeToDestinationStartCharPos4147 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    rangeToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, rangeToDestinationStart4152, getCharIndex()-1);
-            	    rangeToDestination.setLine(rangeToDestinationStartLine4152);
-            	    rangeToDestination.setCharPositionInLine(rangeToDestinationStartCharPos4152);
+            	    rangeToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, rangeToDestinationStart4147, getCharIndex()-1);
+            	    rangeToDestination.setLine(rangeToDestinationStartLine4147);
+            	    rangeToDestination.setCharPositionInLine(rangeToDestinationStartCharPos4147);
 
 
             	    }
@@ -7817,7 +7817,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:955:11: (bearingToDestination= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:928:11: (bearingToDestination= NUMBER )*
             loop145:
             do {
                 int alt145=2;
@@ -7830,15 +7830,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt145) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:955:12: bearingToDestination= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:928:12: bearingToDestination= NUMBER
             	    {
-            	    int bearingToDestinationStart4174 = getCharIndex();
-            	    int bearingToDestinationStartLine4174 = getLine();
-            	    int bearingToDestinationStartCharPos4174 = getCharPositionInLine();
+            	    int bearingToDestinationStart4169 = getCharIndex();
+            	    int bearingToDestinationStartLine4169 = getLine();
+            	    int bearingToDestinationStartCharPos4169 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    bearingToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingToDestinationStart4174, getCharIndex()-1);
-            	    bearingToDestination.setLine(bearingToDestinationStartLine4174);
-            	    bearingToDestination.setCharPositionInLine(bearingToDestinationStartCharPos4174);
+            	    bearingToDestination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bearingToDestinationStart4169, getCharIndex()-1);
+            	    bearingToDestination.setLine(bearingToDestinationStartLine4169);
+            	    bearingToDestination.setCharPositionInLine(bearingToDestinationStartCharPos4169);
 
 
             	    }
@@ -7853,7 +7853,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:956:11: (destinationClosingVelocity= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:929:11: (destinationClosingVelocity= NUMBER )*
             loop146:
             do {
                 int alt146=2;
@@ -7866,15 +7866,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt146) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:956:12: destinationClosingVelocity= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:929:12: destinationClosingVelocity= NUMBER
             	    {
-            	    int destinationClosingVelocityStart4196 = getCharIndex();
-            	    int destinationClosingVelocityStartLine4196 = getLine();
-            	    int destinationClosingVelocityStartCharPos4196 = getCharPositionInLine();
+            	    int destinationClosingVelocityStart4191 = getCharIndex();
+            	    int destinationClosingVelocityStartLine4191 = getLine();
+            	    int destinationClosingVelocityStartCharPos4191 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    destinationClosingVelocity = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationClosingVelocityStart4196, getCharIndex()-1);
-            	    destinationClosingVelocity.setLine(destinationClosingVelocityStartLine4196);
-            	    destinationClosingVelocity.setCharPositionInLine(destinationClosingVelocityStartCharPos4196);
+            	    destinationClosingVelocity = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationClosingVelocityStart4191, getCharIndex()-1);
+            	    destinationClosingVelocity.setLine(destinationClosingVelocityStartLine4191);
+            	    destinationClosingVelocity.setCharPositionInLine(destinationClosingVelocityStartCharPos4191);
 
 
             	    }
@@ -7889,14 +7889,14 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:957:11: ( LETTERS SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:930:11: ( LETTERS SEP )*
             loop147:
             do {
                 int alt147=2;
                 alt147 = dfa147.predict(input);
                 switch (alt147) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:957:12: LETTERS SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:930:12: LETTERS SEP
             	    {
             	    mLETTERS(); 
 
@@ -7913,7 +7913,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:958:11: (arrivalStatus= LETTERS | '\\u0000' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:931:11: (arrivalStatus= LETTERS | '\\u0000' )*
             loop148:
             do {
                 int alt148=3;
@@ -7929,21 +7929,21 @@ public class NMEALexer extends Lexer {
 
                 switch (alt148) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:958:12: arrivalStatus= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:931:12: arrivalStatus= LETTERS
             	    {
-            	    int arrivalStatusStart4249 = getCharIndex();
-            	    int arrivalStatusStartLine4249 = getLine();
-            	    int arrivalStatusStartCharPos4249 = getCharPositionInLine();
+            	    int arrivalStatusStart4244 = getCharIndex();
+            	    int arrivalStatusStartLine4244 = getLine();
+            	    int arrivalStatusStartCharPos4244 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    arrivalStatus = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, arrivalStatusStart4249, getCharIndex()-1);
-            	    arrivalStatus.setLine(arrivalStatusStartLine4249);
-            	    arrivalStatus.setCharPositionInLine(arrivalStatusStartCharPos4249);
+            	    arrivalStatus = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, arrivalStatusStart4244, getCharIndex()-1);
+            	    arrivalStatus.setLine(arrivalStatusStartLine4244);
+            	    arrivalStatus.setCharPositionInLine(arrivalStatusStartCharPos4244);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:958:38: '\\u0000'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:931:38: '\\u0000'
             	    {
             	    match('\u0000'); 
 
@@ -7956,13 +7956,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart4270 = getCharIndex();
-            int checksumStartLine4270 = getLine();
-            int checksumStartCharPos4270 = getCharPositionInLine();
+            int checksumStart4265 = getCharIndex();
+            int checksumStartLine4265 = getLine();
+            int checksumStartCharPos4265 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4270, getCharIndex()-1);
-            checksum.setLine(checksumStartLine4270);
-            checksum.setCharPositionInLine(checksumStartCharPos4270);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4265, getCharIndex()-1);
+            checksum.setLine(checksumStartLine4265);
+            checksum.setCharPositionInLine(checksumStartCharPos4265);
 
 
 
@@ -8014,18 +8014,18 @@ public class NMEALexer extends Lexer {
             CommonToken nsew=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1009:6: ( '$' device= DEVICE 'RMC' SEP (utc= NUMBER )* SEP status= LETTERS SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( SIGN )* (sog= NUMBER )* SEP (track= NUMBER )* SEP (yymmdd= NUMBER )* SEP (magneticVariation= NUMBER )* SEP (nsew= LETTERS )* ( SEP LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1009:8: '$' device= DEVICE 'RMC' SEP (utc= NUMBER )* SEP status= LETTERS SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( SIGN )* (sog= NUMBER )* SEP (track= NUMBER )* SEP (yymmdd= NUMBER )* SEP (magneticVariation= NUMBER )* SEP (nsew= LETTERS )* ( SEP LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:982:6: ( '$' device= DEVICE 'RMC' SEP (utc= NUMBER )* SEP status= LETTERS SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( SIGN )* (sog= NUMBER )* SEP (track= NUMBER )* SEP (yymmdd= NUMBER )* SEP (magneticVariation= NUMBER )* SEP (nsew= LETTERS )* ( SEP LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:982:8: '$' device= DEVICE 'RMC' SEP (utc= NUMBER )* SEP status= LETTERS SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( SIGN )* (sog= NUMBER )* SEP (track= NUMBER )* SEP (yymmdd= NUMBER )* SEP (magneticVariation= NUMBER )* SEP (nsew= LETTERS )* ( SEP LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart4302 = getCharIndex();
-            int deviceStartLine4302 = getLine();
-            int deviceStartCharPos4302 = getCharPositionInLine();
+            int deviceStart4297 = getCharIndex();
+            int deviceStartLine4297 = getLine();
+            int deviceStartCharPos4297 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4302, getCharIndex()-1);
-            device.setLine(deviceStartLine4302);
-            device.setCharPositionInLine(deviceStartCharPos4302);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4297, getCharIndex()-1);
+            device.setLine(deviceStartLine4297);
+            device.setCharPositionInLine(deviceStartCharPos4297);
 
 
             match("RMC"); 
@@ -8035,7 +8035,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1010:16: (utc= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:983:16: (utc= NUMBER )*
             loop149:
             do {
                 int alt149=2;
@@ -8048,15 +8048,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt149) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1010:16: utc= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:983:16: utc= NUMBER
             	    {
-            	    int utcStart4323 = getCharIndex();
-            	    int utcStartLine4323 = getLine();
-            	    int utcStartCharPos4323 = getCharPositionInLine();
+            	    int utcStart4318 = getCharIndex();
+            	    int utcStartLine4318 = getLine();
+            	    int utcStartCharPos4318 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart4323, getCharIndex()-1);
-            	    utc.setLine(utcStartLine4323);
-            	    utc.setCharPositionInLine(utcStartCharPos4323);
+            	    utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart4318, getCharIndex()-1);
+            	    utc.setLine(utcStartLine4318);
+            	    utc.setCharPositionInLine(utcStartCharPos4318);
 
 
             	    }
@@ -8071,19 +8071,19 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int statusStart4343 = getCharIndex();
-            int statusStartLine4343 = getLine();
-            int statusStartCharPos4343 = getCharPositionInLine();
+            int statusStart4338 = getCharIndex();
+            int statusStartLine4338 = getLine();
+            int statusStartCharPos4338 = getCharPositionInLine();
             mLETTERS(); 
-            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart4343, getCharIndex()-1);
-            status.setLine(statusStartLine4343);
-            status.setCharPositionInLine(statusStartCharPos4343);
+            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart4338, getCharIndex()-1);
+            status.setLine(statusStartLine4338);
+            status.setCharPositionInLine(statusStartCharPos4338);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1012:20: (latitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:985:20: (latitude= NUMBER )*
             loop150:
             do {
                 int alt150=2;
@@ -8096,15 +8096,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt150) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1012:20: latitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:985:20: latitude= NUMBER
             	    {
-            	    int latitudeStart4360 = getCharIndex();
-            	    int latitudeStartLine4360 = getLine();
-            	    int latitudeStartCharPos4360 = getCharPositionInLine();
+            	    int latitudeStart4355 = getCharIndex();
+            	    int latitudeStartLine4355 = getLine();
+            	    int latitudeStartCharPos4355 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart4360, getCharIndex()-1);
-            	    latitude.setLine(latitudeStartLine4360);
-            	    latitude.setCharPositionInLine(latitudeStartCharPos4360);
+            	    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart4355, getCharIndex()-1);
+            	    latitude.setLine(latitudeStartLine4355);
+            	    latitude.setCharPositionInLine(latitudeStartCharPos4355);
 
 
             	    }
@@ -8119,7 +8119,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1012:36: (ns= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:985:36: (ns= LETTERS )*
             loop151:
             do {
                 int alt151=2;
@@ -8132,15 +8132,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt151) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1012:36: ns= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:985:36: ns= LETTERS
             	    {
-            	    int nsStart4369 = getCharIndex();
-            	    int nsStartLine4369 = getLine();
-            	    int nsStartCharPos4369 = getCharPositionInLine();
+            	    int nsStart4364 = getCharIndex();
+            	    int nsStartLine4364 = getLine();
+            	    int nsStartCharPos4364 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart4369, getCharIndex()-1);
-            	    ns.setLine(nsStartLine4369);
-            	    ns.setCharPositionInLine(nsStartCharPos4369);
+            	    ns = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsStart4364, getCharIndex()-1);
+            	    ns.setLine(nsStartLine4364);
+            	    ns.setCharPositionInLine(nsStartCharPos4364);
 
 
             	    }
@@ -8155,7 +8155,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1012:60: (longitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:985:60: (longitude= NUMBER )*
             loop152:
             do {
                 int alt152=2;
@@ -8168,15 +8168,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt152) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1012:60: longitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:985:60: longitude= NUMBER
             	    {
-            	    int longitudeStart4376 = getCharIndex();
-            	    int longitudeStartLine4376 = getLine();
-            	    int longitudeStartCharPos4376 = getCharPositionInLine();
+            	    int longitudeStart4371 = getCharIndex();
+            	    int longitudeStartLine4371 = getLine();
+            	    int longitudeStartCharPos4371 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart4376, getCharIndex()-1);
-            	    longitude.setLine(longitudeStartLine4376);
-            	    longitude.setCharPositionInLine(longitudeStartCharPos4376);
+            	    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart4371, getCharIndex()-1);
+            	    longitude.setLine(longitudeStartLine4371);
+            	    longitude.setCharPositionInLine(longitudeStartCharPos4371);
 
 
             	    }
@@ -8191,7 +8191,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1012:75: (ew= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:985:75: (ew= LETTERS )*
             loop153:
             do {
                 int alt153=2;
@@ -8204,15 +8204,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt153) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1012:75: ew= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:985:75: ew= LETTERS
             	    {
-            	    int ewStart4383 = getCharIndex();
-            	    int ewStartLine4383 = getLine();
-            	    int ewStartCharPos4383 = getCharPositionInLine();
+            	    int ewStart4378 = getCharIndex();
+            	    int ewStartLine4378 = getLine();
+            	    int ewStartCharPos4378 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart4383, getCharIndex()-1);
-            	    ew.setLine(ewStartLine4383);
-            	    ew.setCharPositionInLine(ewStartCharPos4383);
+            	    ew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ewStart4378, getCharIndex()-1);
+            	    ew.setLine(ewStartLine4378);
+            	    ew.setCharPositionInLine(ewStartCharPos4378);
 
 
             	    }
@@ -8227,7 +8227,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1013:12: ( SIGN )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:986:12: ( SIGN )*
             loop154:
             do {
                 int alt154=2;
@@ -8261,7 +8261,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1013:18: (sog= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:986:18: (sog= NUMBER )*
             loop155:
             do {
                 int alt155=2;
@@ -8274,15 +8274,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt155) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1013:19: sog= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:986:19: sog= NUMBER
             	    {
-            	    int sogStart4407 = getCharIndex();
-            	    int sogStartLine4407 = getLine();
-            	    int sogStartCharPos4407 = getCharPositionInLine();
+            	    int sogStart4402 = getCharIndex();
+            	    int sogStartLine4402 = getLine();
+            	    int sogStartCharPos4402 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    sog = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, sogStart4407, getCharIndex()-1);
-            	    sog.setLine(sogStartLine4407);
-            	    sog.setCharPositionInLine(sogStartCharPos4407);
+            	    sog = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, sogStart4402, getCharIndex()-1);
+            	    sog.setLine(sogStartLine4402);
+            	    sog.setCharPositionInLine(sogStartCharPos4402);
 
 
             	    }
@@ -8297,7 +8297,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1014:12: (track= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:987:12: (track= NUMBER )*
             loop156:
             do {
                 int alt156=2;
@@ -8310,15 +8310,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt156) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1014:13: track= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:987:13: track= NUMBER
             	    {
-            	    int trackStart4429 = getCharIndex();
-            	    int trackStartLine4429 = getLine();
-            	    int trackStartCharPos4429 = getCharPositionInLine();
+            	    int trackStart4424 = getCharIndex();
+            	    int trackStartLine4424 = getLine();
+            	    int trackStartCharPos4424 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    track = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, trackStart4429, getCharIndex()-1);
-            	    track.setLine(trackStartLine4429);
-            	    track.setCharPositionInLine(trackStartCharPos4429);
+            	    track = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, trackStart4424, getCharIndex()-1);
+            	    track.setLine(trackStartLine4424);
+            	    track.setCharPositionInLine(trackStartCharPos4424);
 
 
             	    }
@@ -8333,7 +8333,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1015:13: (yymmdd= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:988:13: (yymmdd= NUMBER )*
             loop157:
             do {
                 int alt157=2;
@@ -8346,15 +8346,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt157) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1015:14: yymmdd= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:988:14: yymmdd= NUMBER
             	    {
-            	    int yymmddStart4452 = getCharIndex();
-            	    int yymmddStartLine4452 = getLine();
-            	    int yymmddStartCharPos4452 = getCharPositionInLine();
+            	    int yymmddStart4447 = getCharIndex();
+            	    int yymmddStartLine4447 = getLine();
+            	    int yymmddStartCharPos4447 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    yymmdd = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yymmddStart4452, getCharIndex()-1);
-            	    yymmdd.setLine(yymmddStartLine4452);
-            	    yymmdd.setCharPositionInLine(yymmddStartCharPos4452);
+            	    yymmdd = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yymmddStart4447, getCharIndex()-1);
+            	    yymmdd.setLine(yymmddStartLine4447);
+            	    yymmdd.setCharPositionInLine(yymmddStartCharPos4447);
 
 
             	    }
@@ -8369,7 +8369,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1016:31: (magneticVariation= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:989:31: (magneticVariation= NUMBER )*
             loop158:
             do {
                 int alt158=2;
@@ -8382,15 +8382,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt158) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1016:31: magneticVariation= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:989:31: magneticVariation= NUMBER
             	    {
-            	    int magneticVariationStart4474 = getCharIndex();
-            	    int magneticVariationStartLine4474 = getLine();
-            	    int magneticVariationStartCharPos4474 = getCharPositionInLine();
+            	    int magneticVariationStart4469 = getCharIndex();
+            	    int magneticVariationStartLine4469 = getLine();
+            	    int magneticVariationStartCharPos4469 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    magneticVariation = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, magneticVariationStart4474, getCharIndex()-1);
-            	    magneticVariation.setLine(magneticVariationStartLine4474);
-            	    magneticVariation.setCharPositionInLine(magneticVariationStartCharPos4474);
+            	    magneticVariation = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, magneticVariationStart4469, getCharIndex()-1);
+            	    magneticVariation.setLine(magneticVariationStartLine4469);
+            	    magneticVariation.setCharPositionInLine(magneticVariationStartCharPos4469);
 
 
             	    }
@@ -8405,7 +8405,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1017:18: (nsew= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:990:18: (nsew= LETTERS )*
             loop159:
             do {
                 int alt159=2;
@@ -8418,15 +8418,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt159) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1017:18: nsew= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:990:18: nsew= LETTERS
             	    {
-            	    int nsewStart4496 = getCharIndex();
-            	    int nsewStartLine4496 = getLine();
-            	    int nsewStartCharPos4496 = getCharPositionInLine();
+            	    int nsewStart4491 = getCharIndex();
+            	    int nsewStartLine4491 = getLine();
+            	    int nsewStartCharPos4491 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    nsew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsewStart4496, getCharIndex()-1);
-            	    nsew.setLine(nsewStartLine4496);
-            	    nsew.setCharPositionInLine(nsewStartCharPos4496);
+            	    nsew = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, nsewStart4491, getCharIndex()-1);
+            	    nsew.setLine(nsewStartLine4491);
+            	    nsew.setCharPositionInLine(nsewStartCharPos4491);
 
 
             	    }
@@ -8438,7 +8438,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1018:13: ( SEP LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:991:13: ( SEP LETTERS )*
             loop160:
             do {
                 int alt160=2;
@@ -8451,7 +8451,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt160) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1018:14: SEP LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:991:14: SEP LETTERS
             	    {
             	    mSEP(); 
 
@@ -8468,13 +8468,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart4532 = getCharIndex();
-            int checksumStartLine4532 = getLine();
-            int checksumStartCharPos4532 = getCharPositionInLine();
+            int checksumStart4527 = getCharIndex();
+            int checksumStartLine4527 = getLine();
+            int checksumStartCharPos4527 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4532, getCharIndex()-1);
-            checksum.setLine(checksumStartLine4532);
-            checksum.setCharPositionInLine(checksumStartCharPos4532);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4527, getCharIndex()-1);
+            checksum.setLine(checksumStartLine4527);
+            checksum.setCharPositionInLine(checksumStartCharPos4527);
 
 
 
@@ -8524,18 +8524,18 @@ public class NMEALexer extends Lexer {
             CommonToken device=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1034:6: ( '$' device= DEVICE 'RSD' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1034:9: '$' device= DEVICE 'RSD' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1007:6: ( '$' device= DEVICE 'RSD' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1007:9: '$' device= DEVICE 'RSD' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart4561 = getCharIndex();
-            int deviceStartLine4561 = getLine();
-            int deviceStartCharPos4561 = getCharPositionInLine();
+            int deviceStart4556 = getCharIndex();
+            int deviceStartLine4556 = getLine();
+            int deviceStartCharPos4556 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4561, getCharIndex()-1);
-            device.setLine(deviceStartLine4561);
-            device.setCharPositionInLine(deviceStartCharPos4561);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4556, getCharIndex()-1);
+            device.setLine(deviceStartLine4556);
+            device.setCharPositionInLine(deviceStartCharPos4556);
 
 
             match("RSD"); 
@@ -8545,7 +8545,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1035:3: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1008:3: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
             loop161:
             do {
                 int alt161=2;
@@ -8573,13 +8573,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart4591 = getCharIndex();
-            int checksumStartLine4591 = getLine();
-            int checksumStartCharPos4591 = getCharPositionInLine();
+            int checksumStart4586 = getCharIndex();
+            int checksumStartLine4586 = getLine();
+            int checksumStartCharPos4586 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4591, getCharIndex()-1);
-            checksum.setLine(checksumStartLine4591);
-            checksum.setCharPositionInLine(checksumStartCharPos4591);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4586, getCharIndex()-1);
+            checksum.setLine(checksumStartLine4586);
+            checksum.setCharPositionInLine(checksumStartCharPos4586);
 
 
 
@@ -8608,18 +8608,18 @@ public class NMEALexer extends Lexer {
             CommonToken type=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1048:5: ( '$' device= DEVICE 'RTE' SEP totalNumberOfsentence= NUMBER SEP sentenceNumber= NUMBER SEP type= LETTERS SEP ( LETTERS | NUMBER | '-' | '_' | SEP )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1048:7: '$' device= DEVICE 'RTE' SEP totalNumberOfsentence= NUMBER SEP sentenceNumber= NUMBER SEP type= LETTERS SEP ( LETTERS | NUMBER | '-' | '_' | SEP )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1021:5: ( '$' device= DEVICE 'RTE' SEP totalNumberOfsentence= NUMBER SEP sentenceNumber= NUMBER SEP type= LETTERS SEP ( LETTERS | NUMBER | '-' | '_' | SEP )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1021:7: '$' device= DEVICE 'RTE' SEP totalNumberOfsentence= NUMBER SEP sentenceNumber= NUMBER SEP type= LETTERS SEP ( LETTERS | NUMBER | '-' | '_' | SEP )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart4610 = getCharIndex();
-            int deviceStartLine4610 = getLine();
-            int deviceStartCharPos4610 = getCharPositionInLine();
+            int deviceStart4605 = getCharIndex();
+            int deviceStartLine4605 = getLine();
+            int deviceStartCharPos4605 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4610, getCharIndex()-1);
-            device.setLine(deviceStartLine4610);
-            device.setCharPositionInLine(deviceStartCharPos4610);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4605, getCharIndex()-1);
+            device.setLine(deviceStartLine4605);
+            device.setCharPositionInLine(deviceStartCharPos4605);
 
 
             match("RTE"); 
@@ -8629,43 +8629,43 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int totalNumberOfsentenceStart4621 = getCharIndex();
-            int totalNumberOfsentenceStartLine4621 = getLine();
-            int totalNumberOfsentenceStartCharPos4621 = getCharPositionInLine();
+            int totalNumberOfsentenceStart4616 = getCharIndex();
+            int totalNumberOfsentenceStartLine4616 = getLine();
+            int totalNumberOfsentenceStartCharPos4616 = getCharPositionInLine();
             mNUMBER(); 
-            totalNumberOfsentence = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, totalNumberOfsentenceStart4621, getCharIndex()-1);
-            totalNumberOfsentence.setLine(totalNumberOfsentenceStartLine4621);
-            totalNumberOfsentence.setCharPositionInLine(totalNumberOfsentenceStartCharPos4621);
+            totalNumberOfsentence = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, totalNumberOfsentenceStart4616, getCharIndex()-1);
+            totalNumberOfsentence.setLine(totalNumberOfsentenceStartLine4616);
+            totalNumberOfsentence.setCharPositionInLine(totalNumberOfsentenceStartCharPos4616);
 
 
             mSEP(); 
 
 
-            int sentenceNumberStart4630 = getCharIndex();
-            int sentenceNumberStartLine4630 = getLine();
-            int sentenceNumberStartCharPos4630 = getCharPositionInLine();
+            int sentenceNumberStart4625 = getCharIndex();
+            int sentenceNumberStartLine4625 = getLine();
+            int sentenceNumberStartCharPos4625 = getCharPositionInLine();
             mNUMBER(); 
-            sentenceNumber = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, sentenceNumberStart4630, getCharIndex()-1);
-            sentenceNumber.setLine(sentenceNumberStartLine4630);
-            sentenceNumber.setCharPositionInLine(sentenceNumberStartCharPos4630);
+            sentenceNumber = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, sentenceNumberStart4625, getCharIndex()-1);
+            sentenceNumber.setLine(sentenceNumberStartLine4625);
+            sentenceNumber.setCharPositionInLine(sentenceNumberStartCharPos4625);
 
 
             mSEP(); 
 
 
-            int typeStart4639 = getCharIndex();
-            int typeStartLine4639 = getLine();
-            int typeStartCharPos4639 = getCharPositionInLine();
+            int typeStart4634 = getCharIndex();
+            int typeStartLine4634 = getLine();
+            int typeStartCharPos4634 = getCharPositionInLine();
             mLETTERS(); 
-            type = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, typeStart4639, getCharIndex()-1);
-            type.setLine(typeStartLine4639);
-            type.setCharPositionInLine(typeStartCharPos4639);
+            type = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, typeStart4634, getCharIndex()-1);
+            type.setLine(typeStartLine4634);
+            type.setCharPositionInLine(typeStartCharPos4634);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1052:2: ( LETTERS | NUMBER | '-' | '_' | SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1025:2: ( LETTERS | NUMBER | '-' | '_' | SEP )*
             loop162:
             do {
                 int alt162=6;
@@ -8762,7 +8762,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt162) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1052:3: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1025:3: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -8770,7 +8770,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1052:13: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1025:13: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -8778,21 +8778,21 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1052:22: '-'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1025:22: '-'
             	    {
             	    match('-'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1052:28: '_'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1025:28: '_'
             	    {
             	    match('_'); 
 
             	    }
             	    break;
             	case 5 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1052:34: SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1025:34: SEP
             	    {
             	    mSEP(); 
 
@@ -8806,13 +8806,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart4669 = getCharIndex();
-            int checksumStartLine4669 = getLine();
-            int checksumStartCharPos4669 = getCharPositionInLine();
+            int checksumStart4664 = getCharIndex();
+            int checksumStartLine4664 = getLine();
+            int checksumStartCharPos4664 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4669, getCharIndex()-1);
-            checksum.setLine(checksumStartLine4669);
-            checksum.setCharPositionInLine(checksumStartCharPos4669);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4664, getCharIndex()-1);
+            checksum.setLine(checksumStartLine4664);
+            checksum.setCharPositionInLine(checksumStartCharPos4664);
 
 
 
@@ -8854,18 +8854,18 @@ public class NMEALexer extends Lexer {
             CommonToken gstatus=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1067:6: ( '$' device= DEVICE 'VBW' SEP ( ' ' )* ( SIGN )* longitudinalWaterSpeed= NUMBER SEP ( ' ' )* ( SIGN )* transverseWaterSpeed= NUMBER SEP wstatus= LETTERS ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1067:8: '$' device= DEVICE 'VBW' SEP ( ' ' )* ( SIGN )* longitudinalWaterSpeed= NUMBER SEP ( ' ' )* ( SIGN )* transverseWaterSpeed= NUMBER SEP wstatus= LETTERS ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1040:6: ( '$' device= DEVICE 'VBW' SEP ( ' ' )* ( SIGN )* longitudinalWaterSpeed= NUMBER SEP ( ' ' )* ( SIGN )* transverseWaterSpeed= NUMBER SEP wstatus= LETTERS ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1040:8: '$' device= DEVICE 'VBW' SEP ( ' ' )* ( SIGN )* longitudinalWaterSpeed= NUMBER SEP ( ' ' )* ( SIGN )* transverseWaterSpeed= NUMBER SEP wstatus= LETTERS ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart4688 = getCharIndex();
-            int deviceStartLine4688 = getLine();
-            int deviceStartCharPos4688 = getCharPositionInLine();
+            int deviceStart4683 = getCharIndex();
+            int deviceStartLine4683 = getLine();
+            int deviceStartCharPos4683 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4688, getCharIndex()-1);
-            device.setLine(deviceStartLine4688);
-            device.setCharPositionInLine(deviceStartCharPos4688);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4683, getCharIndex()-1);
+            device.setLine(deviceStartLine4683);
+            device.setCharPositionInLine(deviceStartCharPos4683);
 
 
             match("VBW"); 
@@ -8875,7 +8875,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1068:2: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1041:2: ( ' ' )*
             loop163:
             do {
                 int alt163=2;
@@ -8888,7 +8888,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt163) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1068:2: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1041:2: ' '
             	    {
             	    match(' '); 
 
@@ -8901,7 +8901,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1068:7: ( SIGN )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1041:7: ( SIGN )*
             loop164:
             do {
                 int alt164=2;
@@ -8935,19 +8935,19 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int longitudinalWaterSpeedStart4705 = getCharIndex();
-            int longitudinalWaterSpeedStartLine4705 = getLine();
-            int longitudinalWaterSpeedStartCharPos4705 = getCharPositionInLine();
+            int longitudinalWaterSpeedStart4700 = getCharIndex();
+            int longitudinalWaterSpeedStartLine4700 = getLine();
+            int longitudinalWaterSpeedStartCharPos4700 = getCharPositionInLine();
             mNUMBER(); 
-            longitudinalWaterSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudinalWaterSpeedStart4705, getCharIndex()-1);
-            longitudinalWaterSpeed.setLine(longitudinalWaterSpeedStartLine4705);
-            longitudinalWaterSpeed.setCharPositionInLine(longitudinalWaterSpeedStartCharPos4705);
+            longitudinalWaterSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudinalWaterSpeedStart4700, getCharIndex()-1);
+            longitudinalWaterSpeed.setLine(longitudinalWaterSpeedStartLine4700);
+            longitudinalWaterSpeed.setCharPositionInLine(longitudinalWaterSpeedStartCharPos4700);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1069:2: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1042:2: ( ' ' )*
             loop165:
             do {
                 int alt165=2;
@@ -8960,7 +8960,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt165) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1069:2: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1042:2: ' '
             	    {
             	    match(' '); 
 
@@ -8973,7 +8973,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1069:7: ( SIGN )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1042:7: ( SIGN )*
             loop166:
             do {
                 int alt166=2;
@@ -9007,28 +9007,28 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int transverseWaterSpeedStart4720 = getCharIndex();
-            int transverseWaterSpeedStartLine4720 = getLine();
-            int transverseWaterSpeedStartCharPos4720 = getCharPositionInLine();
+            int transverseWaterSpeedStart4715 = getCharIndex();
+            int transverseWaterSpeedStartLine4715 = getLine();
+            int transverseWaterSpeedStartCharPos4715 = getCharPositionInLine();
             mNUMBER(); 
-            transverseWaterSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, transverseWaterSpeedStart4720, getCharIndex()-1);
-            transverseWaterSpeed.setLine(transverseWaterSpeedStartLine4720);
-            transverseWaterSpeed.setCharPositionInLine(transverseWaterSpeedStartCharPos4720);
+            transverseWaterSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, transverseWaterSpeedStart4715, getCharIndex()-1);
+            transverseWaterSpeed.setLine(transverseWaterSpeedStartLine4715);
+            transverseWaterSpeed.setCharPositionInLine(transverseWaterSpeedStartCharPos4715);
 
 
             mSEP(); 
 
 
-            int wstatusStart4729 = getCharIndex();
-            int wstatusStartLine4729 = getLine();
-            int wstatusStartCharPos4729 = getCharPositionInLine();
+            int wstatusStart4724 = getCharIndex();
+            int wstatusStartLine4724 = getLine();
+            int wstatusStartCharPos4724 = getCharPositionInLine();
             mLETTERS(); 
-            wstatus = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wstatusStart4729, getCharIndex()-1);
-            wstatus.setLine(wstatusStartLine4729);
-            wstatus.setCharPositionInLine(wstatusStartCharPos4729);
+            wstatus = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wstatusStart4724, getCharIndex()-1);
+            wstatus.setLine(wstatusStartLine4724);
+            wstatus.setCharPositionInLine(wstatusStartCharPos4724);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1071:2: ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1044:2: ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )*
             loop173:
             do {
                 int alt173=2;
@@ -9041,12 +9041,12 @@ public class NMEALexer extends Lexer {
 
                 switch (alt173) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1071:3: SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1044:3: SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS
             	    {
             	    mSEP(); 
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1071:7: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1044:7: ( ' ' )*
             	    loop167:
             	    do {
             	        int alt167=2;
@@ -9059,7 +9059,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt167) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1071:7: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1044:7: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -9072,7 +9072,7 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1071:12: ( SIGN )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1044:12: ( SIGN )*
             	    loop168:
             	    do {
             	        int alt168=2;
@@ -9106,7 +9106,7 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1071:18: (longitudinalGroundSpeed= NUMBER )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1044:18: (longitudinalGroundSpeed= NUMBER )*
             	    loop169:
             	    do {
             	        int alt169=2;
@@ -9119,15 +9119,15 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt169) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1071:19: longitudinalGroundSpeed= NUMBER
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1044:19: longitudinalGroundSpeed= NUMBER
             	    	    {
-            	    	    int longitudinalGroundSpeedStart4746 = getCharIndex();
-            	    	    int longitudinalGroundSpeedStartLine4746 = getLine();
-            	    	    int longitudinalGroundSpeedStartCharPos4746 = getCharPositionInLine();
+            	    	    int longitudinalGroundSpeedStart4741 = getCharIndex();
+            	    	    int longitudinalGroundSpeedStartLine4741 = getLine();
+            	    	    int longitudinalGroundSpeedStartCharPos4741 = getCharPositionInLine();
             	    	    mNUMBER(); 
-            	    	    longitudinalGroundSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudinalGroundSpeedStart4746, getCharIndex()-1);
-            	    	    longitudinalGroundSpeed.setLine(longitudinalGroundSpeedStartLine4746);
-            	    	    longitudinalGroundSpeed.setCharPositionInLine(longitudinalGroundSpeedStartCharPos4746);
+            	    	    longitudinalGroundSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudinalGroundSpeedStart4741, getCharIndex()-1);
+            	    	    longitudinalGroundSpeed.setLine(longitudinalGroundSpeedStartLine4741);
+            	    	    longitudinalGroundSpeed.setCharPositionInLine(longitudinalGroundSpeedStartCharPos4741);
 
 
             	    	    }
@@ -9142,7 +9142,7 @@ public class NMEALexer extends Lexer {
             	    mSEP(); 
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1072:2: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1045:2: ( ' ' )*
             	    loop170:
             	    do {
             	        int alt170=2;
@@ -9155,7 +9155,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt170) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1072:2: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1045:2: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -9168,7 +9168,7 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1072:7: ( SIGN )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1045:7: ( SIGN )*
             	    loop171:
             	    do {
             	        int alt171=2;
@@ -9202,7 +9202,7 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1072:13: (transverseGroundSpeed= NUMBER )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1045:13: (transverseGroundSpeed= NUMBER )*
             	    loop172:
             	    do {
             	        int alt172=2;
@@ -9215,15 +9215,15 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt172) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1072:14: transverseGroundSpeed= NUMBER
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1045:14: transverseGroundSpeed= NUMBER
             	    	    {
-            	    	    int transverseGroundSpeedStart4764 = getCharIndex();
-            	    	    int transverseGroundSpeedStartLine4764 = getLine();
-            	    	    int transverseGroundSpeedStartCharPos4764 = getCharPositionInLine();
+            	    	    int transverseGroundSpeedStart4759 = getCharIndex();
+            	    	    int transverseGroundSpeedStartLine4759 = getLine();
+            	    	    int transverseGroundSpeedStartCharPos4759 = getCharPositionInLine();
             	    	    mNUMBER(); 
-            	    	    transverseGroundSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, transverseGroundSpeedStart4764, getCharIndex()-1);
-            	    	    transverseGroundSpeed.setLine(transverseGroundSpeedStartLine4764);
-            	    	    transverseGroundSpeed.setCharPositionInLine(transverseGroundSpeedStartCharPos4764);
+            	    	    transverseGroundSpeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, transverseGroundSpeedStart4759, getCharIndex()-1);
+            	    	    transverseGroundSpeed.setLine(transverseGroundSpeedStartLine4759);
+            	    	    transverseGroundSpeed.setCharPositionInLine(transverseGroundSpeedStartCharPos4759);
 
 
             	    	    }
@@ -9238,13 +9238,13 @@ public class NMEALexer extends Lexer {
             	    mSEP(); 
 
 
-            	    int gstatusStart4775 = getCharIndex();
-            	    int gstatusStartLine4775 = getLine();
-            	    int gstatusStartCharPos4775 = getCharPositionInLine();
+            	    int gstatusStart4770 = getCharIndex();
+            	    int gstatusStartLine4770 = getLine();
+            	    int gstatusStartCharPos4770 = getCharPositionInLine();
             	    mLETTERS(); 
-            	    gstatus = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, gstatusStart4775, getCharIndex()-1);
-            	    gstatus.setLine(gstatusStartLine4775);
-            	    gstatus.setCharPositionInLine(gstatusStartCharPos4775);
+            	    gstatus = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, gstatusStart4770, getCharIndex()-1);
+            	    gstatus.setLine(gstatusStartLine4770);
+            	    gstatus.setCharPositionInLine(gstatusStartCharPos4770);
 
 
             	    }
@@ -9256,13 +9256,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart4785 = getCharIndex();
-            int checksumStartLine4785 = getLine();
-            int checksumStartCharPos4785 = getCharPositionInLine();
+            int checksumStart4780 = getCharIndex();
+            int checksumStartLine4780 = getLine();
+            int checksumStartCharPos4780 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4785, getCharIndex()-1);
-            checksum.setLine(checksumStartLine4785);
-            checksum.setCharPositionInLine(checksumStartCharPos4785);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4780, getCharIndex()-1);
+            checksum.setLine(checksumStartLine4780);
+            checksum.setCharPositionInLine(checksumStartCharPos4780);
 
 
 
@@ -9299,18 +9299,18 @@ public class NMEALexer extends Lexer {
             CommonToken dataTripGroundDistance=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1089:5: ( '$' device= DEVICE 'VLW' SEP ( ' ' )* (dataTotalWaterDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripWaterDistance= NUMBER )* SEP LETTERS ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1089:7: '$' device= DEVICE 'VLW' SEP ( ' ' )* (dataTotalWaterDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripWaterDistance= NUMBER )* SEP LETTERS ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1062:5: ( '$' device= DEVICE 'VLW' SEP ( ' ' )* (dataTotalWaterDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripWaterDistance= NUMBER )* SEP LETTERS ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1062:7: '$' device= DEVICE 'VLW' SEP ( ' ' )* (dataTotalWaterDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripWaterDistance= NUMBER )* SEP LETTERS ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart4803 = getCharIndex();
-            int deviceStartLine4803 = getLine();
-            int deviceStartCharPos4803 = getCharPositionInLine();
+            int deviceStart4798 = getCharIndex();
+            int deviceStartLine4798 = getLine();
+            int deviceStartCharPos4798 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4803, getCharIndex()-1);
-            device.setLine(deviceStartLine4803);
-            device.setCharPositionInLine(deviceStartCharPos4803);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4798, getCharIndex()-1);
+            device.setLine(deviceStartLine4798);
+            device.setCharPositionInLine(deviceStartCharPos4798);
 
 
             match("VLW"); 
@@ -9320,7 +9320,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1090:6: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1063:6: ( ' ' )*
             loop174:
             do {
                 int alt174=2;
@@ -9333,7 +9333,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt174) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1090:6: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1063:6: ' '
             	    {
             	    match(' '); 
 
@@ -9346,7 +9346,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1090:11: (dataTotalWaterDistance= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1063:11: (dataTotalWaterDistance= NUMBER )*
             loop175:
             do {
                 int alt175=2;
@@ -9359,15 +9359,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt175) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1090:12: dataTotalWaterDistance= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1063:12: dataTotalWaterDistance= NUMBER
             	    {
-            	    int dataTotalWaterDistanceStart4822 = getCharIndex();
-            	    int dataTotalWaterDistanceStartLine4822 = getLine();
-            	    int dataTotalWaterDistanceStartCharPos4822 = getCharPositionInLine();
+            	    int dataTotalWaterDistanceStart4817 = getCharIndex();
+            	    int dataTotalWaterDistanceStartLine4817 = getLine();
+            	    int dataTotalWaterDistanceStartCharPos4817 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    dataTotalWaterDistance = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dataTotalWaterDistanceStart4822, getCharIndex()-1);
-            	    dataTotalWaterDistance.setLine(dataTotalWaterDistanceStartLine4822);
-            	    dataTotalWaterDistance.setCharPositionInLine(dataTotalWaterDistanceStartCharPos4822);
+            	    dataTotalWaterDistance = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dataTotalWaterDistanceStart4817, getCharIndex()-1);
+            	    dataTotalWaterDistance.setLine(dataTotalWaterDistanceStartLine4817);
+            	    dataTotalWaterDistance.setCharPositionInLine(dataTotalWaterDistanceStartCharPos4817);
 
 
             	    }
@@ -9388,7 +9388,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1092:6: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1065:6: ( ' ' )*
             loop176:
             do {
                 int alt176=2;
@@ -9401,7 +9401,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt176) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1092:6: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1065:6: ' '
             	    {
             	    match(' '); 
 
@@ -9414,7 +9414,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1092:11: (dataTripWaterDistance= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1065:11: (dataTripWaterDistance= NUMBER )*
             loop177:
             do {
                 int alt177=2;
@@ -9427,15 +9427,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt177) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1092:12: dataTripWaterDistance= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1065:12: dataTripWaterDistance= NUMBER
             	    {
-            	    int dataTripWaterDistanceStart4850 = getCharIndex();
-            	    int dataTripWaterDistanceStartLine4850 = getLine();
-            	    int dataTripWaterDistanceStartCharPos4850 = getCharPositionInLine();
+            	    int dataTripWaterDistanceStart4845 = getCharIndex();
+            	    int dataTripWaterDistanceStartLine4845 = getLine();
+            	    int dataTripWaterDistanceStartCharPos4845 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    dataTripWaterDistance = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dataTripWaterDistanceStart4850, getCharIndex()-1);
-            	    dataTripWaterDistance.setLine(dataTripWaterDistanceStartLine4850);
-            	    dataTripWaterDistance.setCharPositionInLine(dataTripWaterDistanceStartCharPos4850);
+            	    dataTripWaterDistance = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dataTripWaterDistanceStart4845, getCharIndex()-1);
+            	    dataTripWaterDistance.setLine(dataTripWaterDistanceStartLine4845);
+            	    dataTripWaterDistance.setCharPositionInLine(dataTripWaterDistanceStartCharPos4845);
 
 
             	    }
@@ -9453,7 +9453,7 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1094:6: ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1067:6: ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )*
             loop182:
             do {
                 int alt182=2;
@@ -9466,12 +9466,12 @@ public class NMEALexer extends Lexer {
 
                 switch (alt182) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1094:7: SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1067:7: SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS
             	    {
             	    mSEP(); 
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1094:11: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1067:11: ( ' ' )*
             	    loop178:
             	    do {
             	        int alt178=2;
@@ -9484,7 +9484,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt178) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1094:11: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1067:11: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -9497,7 +9497,7 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1094:16: (dataTotalGroundDistance= NUMBER )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1067:16: (dataTotalGroundDistance= NUMBER )*
             	    loop179:
             	    do {
             	        int alt179=2;
@@ -9510,15 +9510,15 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt179) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1094:17: dataTotalGroundDistance= NUMBER
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1067:17: dataTotalGroundDistance= NUMBER
             	    	    {
-            	    	    int dataTotalGroundDistanceStart4880 = getCharIndex();
-            	    	    int dataTotalGroundDistanceStartLine4880 = getLine();
-            	    	    int dataTotalGroundDistanceStartCharPos4880 = getCharPositionInLine();
+            	    	    int dataTotalGroundDistanceStart4875 = getCharIndex();
+            	    	    int dataTotalGroundDistanceStartLine4875 = getLine();
+            	    	    int dataTotalGroundDistanceStartCharPos4875 = getCharPositionInLine();
             	    	    mNUMBER(); 
-            	    	    dataTotalGroundDistance = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dataTotalGroundDistanceStart4880, getCharIndex()-1);
-            	    	    dataTotalGroundDistance.setLine(dataTotalGroundDistanceStartLine4880);
-            	    	    dataTotalGroundDistance.setCharPositionInLine(dataTotalGroundDistanceStartCharPos4880);
+            	    	    dataTotalGroundDistance = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dataTotalGroundDistanceStart4875, getCharIndex()-1);
+            	    	    dataTotalGroundDistance.setLine(dataTotalGroundDistanceStartLine4875);
+            	    	    dataTotalGroundDistance.setCharPositionInLine(dataTotalGroundDistanceStartCharPos4875);
 
 
             	    	    }
@@ -9539,7 +9539,7 @@ public class NMEALexer extends Lexer {
             	    mSEP(); 
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1096:6: ( ' ' )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1069:6: ( ' ' )*
             	    loop180:
             	    do {
             	        int alt180=2;
@@ -9552,7 +9552,7 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt180) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1096:6: ' '
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1069:6: ' '
             	    	    {
             	    	    match(' '); 
 
@@ -9565,7 +9565,7 @@ public class NMEALexer extends Lexer {
             	    } while (true);
 
 
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1096:11: (dataTripGroundDistance= NUMBER )*
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1069:11: (dataTripGroundDistance= NUMBER )*
             	    loop181:
             	    do {
             	        int alt181=2;
@@ -9578,15 +9578,15 @@ public class NMEALexer extends Lexer {
 
             	        switch (alt181) {
             	    	case 1 :
-            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1096:12: dataTripGroundDistance= NUMBER
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1069:12: dataTripGroundDistance= NUMBER
             	    	    {
-            	    	    int dataTripGroundDistanceStart4908 = getCharIndex();
-            	    	    int dataTripGroundDistanceStartLine4908 = getLine();
-            	    	    int dataTripGroundDistanceStartCharPos4908 = getCharPositionInLine();
+            	    	    int dataTripGroundDistanceStart4903 = getCharIndex();
+            	    	    int dataTripGroundDistanceStartLine4903 = getLine();
+            	    	    int dataTripGroundDistanceStartCharPos4903 = getCharPositionInLine();
             	    	    mNUMBER(); 
-            	    	    dataTripGroundDistance = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dataTripGroundDistanceStart4908, getCharIndex()-1);
-            	    	    dataTripGroundDistance.setLine(dataTripGroundDistanceStartLine4908);
-            	    	    dataTripGroundDistance.setCharPositionInLine(dataTripGroundDistanceStartCharPos4908);
+            	    	    dataTripGroundDistance = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dataTripGroundDistanceStart4903, getCharIndex()-1);
+            	    	    dataTripGroundDistance.setLine(dataTripGroundDistanceStartLine4903);
+            	    	    dataTripGroundDistance.setCharPositionInLine(dataTripGroundDistanceStartCharPos4903);
 
 
             	    	    }
@@ -9613,13 +9613,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart4937 = getCharIndex();
-            int checksumStartLine4937 = getLine();
-            int checksumStartCharPos4937 = getCharPositionInLine();
+            int checksumStart4932 = getCharIndex();
+            int checksumStartLine4932 = getLine();
+            int checksumStartCharPos4932 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4937, getCharIndex()-1);
-            checksum.setLine(checksumStartLine4937);
-            checksum.setCharPositionInLine(checksumStartCharPos4937);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart4932, getCharIndex()-1);
+            checksum.setLine(checksumStartLine4932);
+            checksum.setCharPositionInLine(checksumStartCharPos4932);
 
 
 
@@ -9654,18 +9654,18 @@ public class NMEALexer extends Lexer {
             CommonToken speedInKilometers=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1117:5: ( '$' device= DEVICE 'VHW' SEP ( ' ' )* (degreesTrue= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (degreesMagnetic= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKnots= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKilometers= NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1117:8: '$' device= DEVICE 'VHW' SEP ( ' ' )* (degreesTrue= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (degreesMagnetic= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKnots= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKilometers= NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1090:5: ( '$' device= DEVICE 'VHW' SEP ( ' ' )* (degreesTrue= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (degreesMagnetic= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKnots= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKilometers= NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1090:8: '$' device= DEVICE 'VHW' SEP ( ' ' )* (degreesTrue= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (degreesMagnetic= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKnots= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKilometers= NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart4960 = getCharIndex();
-            int deviceStartLine4960 = getLine();
-            int deviceStartCharPos4960 = getCharPositionInLine();
+            int deviceStart4955 = getCharIndex();
+            int deviceStartLine4955 = getLine();
+            int deviceStartCharPos4955 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4960, getCharIndex()-1);
-            device.setLine(deviceStartLine4960);
-            device.setCharPositionInLine(deviceStartCharPos4960);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart4955, getCharIndex()-1);
+            device.setLine(deviceStartLine4955);
+            device.setCharPositionInLine(deviceStartCharPos4955);
 
 
             match("VHW"); 
@@ -9675,7 +9675,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1118:6: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1091:6: ( ' ' )*
             loop183:
             do {
                 int alt183=2;
@@ -9688,7 +9688,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt183) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1118:6: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1091:6: ' '
             	    {
             	    match(' '); 
 
@@ -9701,7 +9701,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1118:11: (degreesTrue= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1091:11: (degreesTrue= NUMBER )*
             loop184:
             do {
                 int alt184=2;
@@ -9714,15 +9714,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt184) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1118:12: degreesTrue= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1091:12: degreesTrue= NUMBER
             	    {
-            	    int degreesTrueStart4979 = getCharIndex();
-            	    int degreesTrueStartLine4979 = getLine();
-            	    int degreesTrueStartCharPos4979 = getCharPositionInLine();
+            	    int degreesTrueStart4974 = getCharIndex();
+            	    int degreesTrueStartLine4974 = getLine();
+            	    int degreesTrueStartCharPos4974 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    degreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, degreesTrueStart4979, getCharIndex()-1);
-            	    degreesTrue.setLine(degreesTrueStartLine4979);
-            	    degreesTrue.setCharPositionInLine(degreesTrueStartCharPos4979);
+            	    degreesTrue = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, degreesTrueStart4974, getCharIndex()-1);
+            	    degreesTrue.setLine(degreesTrueStartLine4974);
+            	    degreesTrue.setCharPositionInLine(degreesTrueStartCharPos4974);
 
 
             	    }
@@ -9737,7 +9737,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1119:13: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1092:13: ( LETTERS )*
             loop185:
             do {
                 int alt185=2;
@@ -9750,7 +9750,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt185) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1119:13: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1092:13: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -9767,7 +9767,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1120:13: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1093:13: ( ' ' )*
             loop186:
             do {
                 int alt186=2;
@@ -9780,7 +9780,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt186) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1120:13: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1093:13: ' '
             	    {
             	    match(' '); 
 
@@ -9793,7 +9793,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1120:18: (degreesMagnetic= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1093:18: (degreesMagnetic= NUMBER )*
             loop187:
             do {
                 int alt187=2;
@@ -9806,15 +9806,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt187) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1120:19: degreesMagnetic= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1093:19: degreesMagnetic= NUMBER
             	    {
-            	    int degreesMagneticStart5022 = getCharIndex();
-            	    int degreesMagneticStartLine5022 = getLine();
-            	    int degreesMagneticStartCharPos5022 = getCharPositionInLine();
+            	    int degreesMagneticStart5017 = getCharIndex();
+            	    int degreesMagneticStartLine5017 = getLine();
+            	    int degreesMagneticStartCharPos5017 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    degreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, degreesMagneticStart5022, getCharIndex()-1);
-            	    degreesMagnetic.setLine(degreesMagneticStartLine5022);
-            	    degreesMagnetic.setCharPositionInLine(degreesMagneticStartCharPos5022);
+            	    degreesMagnetic = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, degreesMagneticStart5017, getCharIndex()-1);
+            	    degreesMagnetic.setLine(degreesMagneticStartLine5017);
+            	    degreesMagnetic.setCharPositionInLine(degreesMagneticStartCharPos5017);
 
 
             	    }
@@ -9829,7 +9829,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1121:13: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1094:13: ( LETTERS )*
             loop188:
             do {
                 int alt188=2;
@@ -9842,7 +9842,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt188) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1121:13: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1094:13: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -9859,7 +9859,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1122:13: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1095:13: ( ' ' )*
             loop189:
             do {
                 int alt189=2;
@@ -9872,7 +9872,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt189) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1122:13: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1095:13: ' '
             	    {
             	    match(' '); 
 
@@ -9885,7 +9885,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1122:18: (speedInKnots= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1095:18: (speedInKnots= NUMBER )*
             loop190:
             do {
                 int alt190=2;
@@ -9898,15 +9898,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt190) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1122:19: speedInKnots= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1095:19: speedInKnots= NUMBER
             	    {
-            	    int speedInKnotsStart5065 = getCharIndex();
-            	    int speedInKnotsStartLine5065 = getLine();
-            	    int speedInKnotsStartCharPos5065 = getCharPositionInLine();
+            	    int speedInKnotsStart5060 = getCharIndex();
+            	    int speedInKnotsStartLine5060 = getLine();
+            	    int speedInKnotsStartCharPos5060 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    speedInKnots = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedInKnotsStart5065, getCharIndex()-1);
-            	    speedInKnots.setLine(speedInKnotsStartLine5065);
-            	    speedInKnots.setCharPositionInLine(speedInKnotsStartCharPos5065);
+            	    speedInKnots = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedInKnotsStart5060, getCharIndex()-1);
+            	    speedInKnots.setLine(speedInKnotsStartLine5060);
+            	    speedInKnots.setCharPositionInLine(speedInKnotsStartCharPos5060);
 
 
             	    }
@@ -9921,7 +9921,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1123:13: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1096:13: ( LETTERS )*
             loop191:
             do {
                 int alt191=2;
@@ -9934,7 +9934,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt191) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1123:13: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1096:13: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -9951,7 +9951,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1124:13: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1097:13: ( ' ' )*
             loop192:
             do {
                 int alt192=2;
@@ -9964,7 +9964,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt192) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1124:13: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1097:13: ' '
             	    {
             	    match(' '); 
 
@@ -9977,7 +9977,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1124:18: (speedInKilometers= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1097:18: (speedInKilometers= NUMBER )*
             loop193:
             do {
                 int alt193=2;
@@ -9990,15 +9990,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt193) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1124:19: speedInKilometers= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1097:19: speedInKilometers= NUMBER
             	    {
-            	    int speedInKilometersStart5108 = getCharIndex();
-            	    int speedInKilometersStartLine5108 = getLine();
-            	    int speedInKilometersStartCharPos5108 = getCharPositionInLine();
+            	    int speedInKilometersStart5103 = getCharIndex();
+            	    int speedInKilometersStartLine5103 = getLine();
+            	    int speedInKilometersStartCharPos5103 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    speedInKilometers = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedInKilometersStart5108, getCharIndex()-1);
-            	    speedInKilometers.setLine(speedInKilometersStartLine5108);
-            	    speedInKilometers.setCharPositionInLine(speedInKilometersStartCharPos5108);
+            	    speedInKilometers = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedInKilometersStart5103, getCharIndex()-1);
+            	    speedInKilometers.setLine(speedInKilometersStartLine5103);
+            	    speedInKilometers.setCharPositionInLine(speedInKilometersStartCharPos5103);
 
 
             	    }
@@ -10013,7 +10013,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1125:13: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1098:13: ( LETTERS )*
             loop194:
             do {
                 int alt194=2;
@@ -10026,7 +10026,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt194) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1125:13: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1098:13: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -10040,13 +10040,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart5143 = getCharIndex();
-            int checksumStartLine5143 = getLine();
-            int checksumStartCharPos5143 = getCharPositionInLine();
+            int checksumStart5138 = getCharIndex();
+            int checksumStartLine5138 = getLine();
+            int checksumStartCharPos5138 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5143, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5143);
-            checksum.setCharPositionInLine(checksumStartCharPos5143);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5138, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5138);
+            checksum.setCharPositionInLine(checksumStartCharPos5138);
 
 
 
@@ -10078,18 +10078,18 @@ public class NMEALexer extends Lexer {
             CommonToken speed=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1143:6: ( '$' device= DEVICE 'VPW' SEP ( ' ' )* (speed= NUMBER |speed= SIGN )* SEP LETTERS SEP ( ' ' )* ( NUMBER | '-' )* SEP ( LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1143:9: '$' device= DEVICE 'VPW' SEP ( ' ' )* (speed= NUMBER |speed= SIGN )* SEP LETTERS SEP ( ' ' )* ( NUMBER | '-' )* SEP ( LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1116:6: ( '$' device= DEVICE 'VPW' SEP ( ' ' )* (speed= NUMBER |speed= SIGN )* SEP LETTERS SEP ( ' ' )* ( NUMBER | '-' )* SEP ( LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1116:9: '$' device= DEVICE 'VPW' SEP ( ' ' )* (speed= NUMBER |speed= SIGN )* SEP LETTERS SEP ( ' ' )* ( NUMBER | '-' )* SEP ( LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart5172 = getCharIndex();
-            int deviceStartLine5172 = getLine();
-            int deviceStartCharPos5172 = getCharPositionInLine();
+            int deviceStart5167 = getCharIndex();
+            int deviceStartLine5167 = getLine();
+            int deviceStartCharPos5167 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5172, getCharIndex()-1);
-            device.setLine(deviceStartLine5172);
-            device.setCharPositionInLine(deviceStartCharPos5172);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5167, getCharIndex()-1);
+            device.setLine(deviceStartLine5167);
+            device.setCharPositionInLine(deviceStartCharPos5167);
 
 
             match("VPW"); 
@@ -10099,7 +10099,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1144:2: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1117:2: ( ' ' )*
             loop195:
             do {
                 int alt195=2;
@@ -10112,7 +10112,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt195) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1144:2: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1117:2: ' '
             	    {
             	    match(' '); 
 
@@ -10125,7 +10125,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1144:7: (speed= NUMBER |speed= SIGN )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1117:7: (speed= NUMBER |speed= SIGN )*
             loop196:
             do {
                 int alt196=3;
@@ -10141,29 +10141,29 @@ public class NMEALexer extends Lexer {
 
                 switch (alt196) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1144:8: speed= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1117:8: speed= NUMBER
             	    {
-            	    int speedStart5187 = getCharIndex();
-            	    int speedStartLine5187 = getLine();
-            	    int speedStartCharPos5187 = getCharPositionInLine();
+            	    int speedStart5182 = getCharIndex();
+            	    int speedStartLine5182 = getLine();
+            	    int speedStartCharPos5182 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    speed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedStart5187, getCharIndex()-1);
-            	    speed.setLine(speedStartLine5187);
-            	    speed.setCharPositionInLine(speedStartCharPos5187);
+            	    speed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedStart5182, getCharIndex()-1);
+            	    speed.setLine(speedStartLine5182);
+            	    speed.setCharPositionInLine(speedStartCharPos5182);
 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1144:25: speed= SIGN
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1117:25: speed= SIGN
             	    {
-            	    int speedStart5195 = getCharIndex();
-            	    int speedStartLine5195 = getLine();
-            	    int speedStartCharPos5195 = getCharPositionInLine();
+            	    int speedStart5190 = getCharIndex();
+            	    int speedStartLine5190 = getLine();
+            	    int speedStartCharPos5190 = getCharPositionInLine();
             	    mSIGN(); 
-            	    speed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedStart5195, getCharIndex()-1);
-            	    speed.setLine(speedStartLine5195);
-            	    speed.setCharPositionInLine(speedStartCharPos5195);
+            	    speed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedStart5190, getCharIndex()-1);
+            	    speed.setLine(speedStartLine5190);
+            	    speed.setCharPositionInLine(speedStartCharPos5190);
 
 
             	    }
@@ -10184,7 +10184,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1146:3: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1119:3: ( ' ' )*
             loop197:
             do {
                 int alt197=2;
@@ -10197,7 +10197,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt197) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1146:3: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1119:3: ' '
             	    {
             	    match(' '); 
 
@@ -10210,7 +10210,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1146:8: ( NUMBER | '-' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1119:8: ( NUMBER | '-' )*
             loop198:
             do {
                 int alt198=3;
@@ -10226,7 +10226,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt198) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1146:9: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1119:9: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -10234,7 +10234,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1146:18: '-'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1119:18: '-'
             	    {
             	    match('-'); 
 
@@ -10250,7 +10250,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1147:10: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1120:10: ( LETTERS )*
             loop199:
             do {
                 int alt199=2;
@@ -10263,7 +10263,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt199) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1147:10: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1120:10: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -10277,13 +10277,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart5246 = getCharIndex();
-            int checksumStartLine5246 = getLine();
-            int checksumStartCharPos5246 = getCharPositionInLine();
+            int checksumStart5241 = getCharIndex();
+            int checksumStartLine5241 = getLine();
+            int checksumStartCharPos5241 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5246, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5246);
-            checksum.setCharPositionInLine(checksumStartCharPos5246);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5241, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5241);
+            checksum.setCharPositionInLine(checksumStartCharPos5241);
 
 
 
@@ -10316,18 +10316,18 @@ public class NMEALexer extends Lexer {
             CommonToken groundSpeedKph=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1159:6: ( '$' device= DEVICE 'VTG' SEP ( ' ' )* (trueTrackMadeGoodDegrees= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (magneticTrackMadeGood= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKnots= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKph= NUMBER )* SEP ( LETTERS SEP )* ( LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1159:9: '$' device= DEVICE 'VTG' SEP ( ' ' )* (trueTrackMadeGoodDegrees= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (magneticTrackMadeGood= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKnots= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKph= NUMBER )* SEP ( LETTERS SEP )* ( LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1132:6: ( '$' device= DEVICE 'VTG' SEP ( ' ' )* (trueTrackMadeGoodDegrees= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (magneticTrackMadeGood= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKnots= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKph= NUMBER )* SEP ( LETTERS SEP )* ( LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1132:9: '$' device= DEVICE 'VTG' SEP ( ' ' )* (trueTrackMadeGoodDegrees= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (magneticTrackMadeGood= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKnots= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKph= NUMBER )* SEP ( LETTERS SEP )* ( LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart5266 = getCharIndex();
-            int deviceStartLine5266 = getLine();
-            int deviceStartCharPos5266 = getCharPositionInLine();
+            int deviceStart5261 = getCharIndex();
+            int deviceStartLine5261 = getLine();
+            int deviceStartCharPos5261 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5266, getCharIndex()-1);
-            device.setLine(deviceStartLine5266);
-            device.setCharPositionInLine(deviceStartCharPos5266);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5261, getCharIndex()-1);
+            device.setLine(deviceStartLine5261);
+            device.setCharPositionInLine(deviceStartCharPos5261);
 
 
             match("VTG"); 
@@ -10337,7 +10337,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1160:13: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1133:13: ( ' ' )*
             loop200:
             do {
                 int alt200=2;
@@ -10350,7 +10350,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt200) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1160:13: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1133:13: ' '
             	    {
             	    match(' '); 
 
@@ -10363,7 +10363,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1160:18: (trueTrackMadeGoodDegrees= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1133:18: (trueTrackMadeGoodDegrees= NUMBER )*
             loop201:
             do {
                 int alt201=2;
@@ -10376,15 +10376,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt201) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1160:19: trueTrackMadeGoodDegrees= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1133:19: trueTrackMadeGoodDegrees= NUMBER
             	    {
-            	    int trueTrackMadeGoodDegreesStart5292 = getCharIndex();
-            	    int trueTrackMadeGoodDegreesStartLine5292 = getLine();
-            	    int trueTrackMadeGoodDegreesStartCharPos5292 = getCharPositionInLine();
+            	    int trueTrackMadeGoodDegreesStart5287 = getCharIndex();
+            	    int trueTrackMadeGoodDegreesStartLine5287 = getLine();
+            	    int trueTrackMadeGoodDegreesStartCharPos5287 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    trueTrackMadeGoodDegrees = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, trueTrackMadeGoodDegreesStart5292, getCharIndex()-1);
-            	    trueTrackMadeGoodDegrees.setLine(trueTrackMadeGoodDegreesStartLine5292);
-            	    trueTrackMadeGoodDegrees.setCharPositionInLine(trueTrackMadeGoodDegreesStartCharPos5292);
+            	    trueTrackMadeGoodDegrees = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, trueTrackMadeGoodDegreesStart5287, getCharIndex()-1);
+            	    trueTrackMadeGoodDegrees.setLine(trueTrackMadeGoodDegreesStartLine5287);
+            	    trueTrackMadeGoodDegrees.setCharPositionInLine(trueTrackMadeGoodDegreesStartCharPos5287);
 
 
             	    }
@@ -10399,8 +10399,8 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1161:13: ( LETTERS )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1161:14: LETTERS
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1134:13: ( LETTERS )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1134:14: LETTERS
             {
             mLETTERS(); 
 
@@ -10411,7 +10411,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1162:13: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1135:13: ( ' ' )*
             loop202:
             do {
                 int alt202=2;
@@ -10424,7 +10424,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt202) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1162:13: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1135:13: ' '
             	    {
             	    match(' '); 
 
@@ -10437,7 +10437,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1162:18: (magneticTrackMadeGood= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1135:18: (magneticTrackMadeGood= NUMBER )*
             loop203:
             do {
                 int alt203=2;
@@ -10450,15 +10450,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt203) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1162:19: magneticTrackMadeGood= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1135:19: magneticTrackMadeGood= NUMBER
             	    {
-            	    int magneticTrackMadeGoodStart5336 = getCharIndex();
-            	    int magneticTrackMadeGoodStartLine5336 = getLine();
-            	    int magneticTrackMadeGoodStartCharPos5336 = getCharPositionInLine();
+            	    int magneticTrackMadeGoodStart5331 = getCharIndex();
+            	    int magneticTrackMadeGoodStartLine5331 = getLine();
+            	    int magneticTrackMadeGoodStartCharPos5331 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    magneticTrackMadeGood = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, magneticTrackMadeGoodStart5336, getCharIndex()-1);
-            	    magneticTrackMadeGood.setLine(magneticTrackMadeGoodStartLine5336);
-            	    magneticTrackMadeGood.setCharPositionInLine(magneticTrackMadeGoodStartCharPos5336);
+            	    magneticTrackMadeGood = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, magneticTrackMadeGoodStart5331, getCharIndex()-1);
+            	    magneticTrackMadeGood.setLine(magneticTrackMadeGoodStartLine5331);
+            	    magneticTrackMadeGood.setCharPositionInLine(magneticTrackMadeGoodStartCharPos5331);
 
 
             	    }
@@ -10473,8 +10473,8 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1163:13: ( LETTERS )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1163:14: LETTERS
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1136:13: ( LETTERS )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1136:14: LETTERS
             {
             mLETTERS(); 
 
@@ -10485,7 +10485,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1164:13: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1137:13: ( ' ' )*
             loop204:
             do {
                 int alt204=2;
@@ -10498,7 +10498,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt204) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1164:13: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1137:13: ' '
             	    {
             	    match(' '); 
 
@@ -10511,7 +10511,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1164:18: (groundSpeedKnots= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1137:18: (groundSpeedKnots= NUMBER )*
             loop205:
             do {
                 int alt205=2;
@@ -10524,15 +10524,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt205) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1164:19: groundSpeedKnots= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1137:19: groundSpeedKnots= NUMBER
             	    {
-            	    int groundSpeedKnotsStart5380 = getCharIndex();
-            	    int groundSpeedKnotsStartLine5380 = getLine();
-            	    int groundSpeedKnotsStartCharPos5380 = getCharPositionInLine();
+            	    int groundSpeedKnotsStart5375 = getCharIndex();
+            	    int groundSpeedKnotsStartLine5375 = getLine();
+            	    int groundSpeedKnotsStartCharPos5375 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    groundSpeedKnots = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, groundSpeedKnotsStart5380, getCharIndex()-1);
-            	    groundSpeedKnots.setLine(groundSpeedKnotsStartLine5380);
-            	    groundSpeedKnots.setCharPositionInLine(groundSpeedKnotsStartCharPos5380);
+            	    groundSpeedKnots = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, groundSpeedKnotsStart5375, getCharIndex()-1);
+            	    groundSpeedKnots.setLine(groundSpeedKnotsStartLine5375);
+            	    groundSpeedKnots.setCharPositionInLine(groundSpeedKnotsStartCharPos5375);
 
 
             	    }
@@ -10547,8 +10547,8 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1165:13: ( LETTERS )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1165:14: LETTERS
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1138:13: ( LETTERS )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1138:14: LETTERS
             {
             mLETTERS(); 
 
@@ -10559,7 +10559,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1166:13: ( ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1139:13: ( ' ' )*
             loop206:
             do {
                 int alt206=2;
@@ -10572,7 +10572,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt206) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1166:13: ' '
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1139:13: ' '
             	    {
             	    match(' '); 
 
@@ -10585,7 +10585,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1166:18: (groundSpeedKph= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1139:18: (groundSpeedKph= NUMBER )*
             loop207:
             do {
                 int alt207=2;
@@ -10598,15 +10598,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt207) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1166:19: groundSpeedKph= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1139:19: groundSpeedKph= NUMBER
             	    {
-            	    int groundSpeedKphStart5424 = getCharIndex();
-            	    int groundSpeedKphStartLine5424 = getLine();
-            	    int groundSpeedKphStartCharPos5424 = getCharPositionInLine();
+            	    int groundSpeedKphStart5419 = getCharIndex();
+            	    int groundSpeedKphStartLine5419 = getLine();
+            	    int groundSpeedKphStartCharPos5419 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    groundSpeedKph = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, groundSpeedKphStart5424, getCharIndex()-1);
-            	    groundSpeedKph.setLine(groundSpeedKphStartLine5424);
-            	    groundSpeedKph.setCharPositionInLine(groundSpeedKphStartCharPos5424);
+            	    groundSpeedKph = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, groundSpeedKphStart5419, getCharIndex()-1);
+            	    groundSpeedKph.setLine(groundSpeedKphStartLine5419);
+            	    groundSpeedKph.setCharPositionInLine(groundSpeedKphStartCharPos5419);
 
 
             	    }
@@ -10621,14 +10621,14 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1167:13: ( LETTERS SEP )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1140:13: ( LETTERS SEP )*
             loop208:
             do {
                 int alt208=2;
                 alt208 = dfa208.predict(input);
                 switch (alt208) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1167:14: LETTERS SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1140:14: LETTERS SEP
             	    {
             	    mLETTERS(); 
 
@@ -10645,7 +10645,7 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1168:13: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1141:13: ( LETTERS )*
             loop209:
             do {
                 int alt209=2;
@@ -10658,7 +10658,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt209) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1168:13: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1141:13: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -10672,13 +10672,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart5478 = getCharIndex();
-            int checksumStartLine5478 = getLine();
-            int checksumStartCharPos5478 = getCharPositionInLine();
+            int checksumStart5473 = getCharIndex();
+            int checksumStartLine5473 = getLine();
+            int checksumStartCharPos5473 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5478, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5478);
-            checksum.setCharPositionInLine(checksumStartCharPos5478);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5473, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5473);
+            checksum.setCharPositionInLine(checksumStartCharPos5473);
 
 
 
@@ -10712,18 +10712,18 @@ public class NMEALexer extends Lexer {
             CommonToken speedInKnots=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1185:6: ( '$' device= DEVICE 'VWR' SEP (windDirectionMagnitude= NUMBER )* SEP windDirectionOfBow= LETTERS SEP (speedInKnots= NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1185:8: '$' device= DEVICE 'VWR' SEP (windDirectionMagnitude= NUMBER )* SEP windDirectionOfBow= LETTERS SEP (speedInKnots= NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1158:6: ( '$' device= DEVICE 'VWR' SEP (windDirectionMagnitude= NUMBER )* SEP windDirectionOfBow= LETTERS SEP (speedInKnots= NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1158:8: '$' device= DEVICE 'VWR' SEP (windDirectionMagnitude= NUMBER )* SEP windDirectionOfBow= LETTERS SEP (speedInKnots= NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart5508 = getCharIndex();
-            int deviceStartLine5508 = getLine();
-            int deviceStartCharPos5508 = getCharPositionInLine();
+            int deviceStart5503 = getCharIndex();
+            int deviceStartLine5503 = getLine();
+            int deviceStartCharPos5503 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5508, getCharIndex()-1);
-            device.setLine(deviceStartLine5508);
-            device.setCharPositionInLine(deviceStartCharPos5508);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5503, getCharIndex()-1);
+            device.setLine(deviceStartLine5503);
+            device.setCharPositionInLine(deviceStartCharPos5503);
 
 
             match("VWR"); 
@@ -10733,7 +10733,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1186:27: (windDirectionMagnitude= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1159:27: (windDirectionMagnitude= NUMBER )*
             loop210:
             do {
                 int alt210=2;
@@ -10746,15 +10746,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt210) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1186:27: windDirectionMagnitude= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1159:27: windDirectionMagnitude= NUMBER
             	    {
-            	    int windDirectionMagnitudeStart5521 = getCharIndex();
-            	    int windDirectionMagnitudeStartLine5521 = getLine();
-            	    int windDirectionMagnitudeStartCharPos5521 = getCharPositionInLine();
+            	    int windDirectionMagnitudeStart5516 = getCharIndex();
+            	    int windDirectionMagnitudeStartLine5516 = getLine();
+            	    int windDirectionMagnitudeStartCharPos5516 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    windDirectionMagnitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windDirectionMagnitudeStart5521, getCharIndex()-1);
-            	    windDirectionMagnitude.setLine(windDirectionMagnitudeStartLine5521);
-            	    windDirectionMagnitude.setCharPositionInLine(windDirectionMagnitudeStartCharPos5521);
+            	    windDirectionMagnitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windDirectionMagnitudeStart5516, getCharIndex()-1);
+            	    windDirectionMagnitude.setLine(windDirectionMagnitudeStartLine5516);
+            	    windDirectionMagnitude.setCharPositionInLine(windDirectionMagnitudeStartCharPos5516);
 
 
             	    }
@@ -10769,19 +10769,19 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int windDirectionOfBowStart5533 = getCharIndex();
-            int windDirectionOfBowStartLine5533 = getLine();
-            int windDirectionOfBowStartCharPos5533 = getCharPositionInLine();
+            int windDirectionOfBowStart5528 = getCharIndex();
+            int windDirectionOfBowStartLine5528 = getLine();
+            int windDirectionOfBowStartCharPos5528 = getCharPositionInLine();
             mLETTERS(); 
-            windDirectionOfBow = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windDirectionOfBowStart5533, getCharIndex()-1);
-            windDirectionOfBow.setLine(windDirectionOfBowStartLine5533);
-            windDirectionOfBow.setCharPositionInLine(windDirectionOfBowStartCharPos5533);
+            windDirectionOfBow = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, windDirectionOfBowStart5528, getCharIndex()-1);
+            windDirectionOfBow.setLine(windDirectionOfBowStartLine5528);
+            windDirectionOfBow.setCharPositionInLine(windDirectionOfBowStartCharPos5528);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1188:16: (speedInKnots= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1161:16: (speedInKnots= NUMBER )*
             loop211:
             do {
                 int alt211=2;
@@ -10794,15 +10794,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt211) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1188:16: speedInKnots= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1161:16: speedInKnots= NUMBER
             	    {
-            	    int speedInKnotsStart5543 = getCharIndex();
-            	    int speedInKnotsStartLine5543 = getLine();
-            	    int speedInKnotsStartCharPos5543 = getCharPositionInLine();
+            	    int speedInKnotsStart5538 = getCharIndex();
+            	    int speedInKnotsStartLine5538 = getLine();
+            	    int speedInKnotsStartCharPos5538 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    speedInKnots = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedInKnotsStart5543, getCharIndex()-1);
-            	    speedInKnots.setLine(speedInKnotsStartLine5543);
-            	    speedInKnots.setCharPositionInLine(speedInKnotsStartCharPos5543);
+            	    speedInKnots = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedInKnotsStart5538, getCharIndex()-1);
+            	    speedInKnots.setLine(speedInKnotsStartLine5538);
+            	    speedInKnots.setCharPositionInLine(speedInKnotsStartCharPos5538);
 
 
             	    }
@@ -10823,7 +10823,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1190:3: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1163:3: ( NUMBER )*
             loop212:
             do {
                 int alt212=2;
@@ -10836,7 +10836,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt212) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1190:3: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1163:3: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -10859,7 +10859,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1192:3: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1165:3: ( NUMBER )*
             loop213:
             do {
                 int alt213=2;
@@ -10872,7 +10872,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt213) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1192:3: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1165:3: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -10889,7 +10889,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1193:3: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1166:3: ( LETTERS )*
             loop214:
             do {
                 int alt214=2;
@@ -10902,7 +10902,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt214) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1193:3: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1166:3: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -10916,13 +10916,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart5584 = getCharIndex();
-            int checksumStartLine5584 = getLine();
-            int checksumStartCharPos5584 = getCharPositionInLine();
+            int checksumStart5579 = getCharIndex();
+            int checksumStartLine5579 = getLine();
+            int checksumStartCharPos5579 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5584, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5584);
-            checksum.setCharPositionInLine(checksumStartCharPos5584);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5579, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5579);
+            checksum.setCharPositionInLine(checksumStartCharPos5579);
 
 
 
@@ -10952,18 +10952,18 @@ public class NMEALexer extends Lexer {
             CommonToken device=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1210:5: ( '$' device= DEVICE 'VWT' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1210:7: '$' device= DEVICE 'VWT' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1183:5: ( '$' device= DEVICE 'VWT' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1183:7: '$' device= DEVICE 'VWT' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart5607 = getCharIndex();
-            int deviceStartLine5607 = getLine();
-            int deviceStartCharPos5607 = getCharPositionInLine();
+            int deviceStart5602 = getCharIndex();
+            int deviceStartLine5602 = getLine();
+            int deviceStartCharPos5602 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5607, getCharIndex()-1);
-            device.setLine(deviceStartLine5607);
-            device.setCharPositionInLine(deviceStartCharPos5607);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5602, getCharIndex()-1);
+            device.setLine(deviceStartLine5602);
+            device.setCharPositionInLine(deviceStartCharPos5602);
 
 
             match("VWT"); 
@@ -10973,7 +10973,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1211:2: ( '\\u0021' .. '\\u007F' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1184:2: ( '\\u0021' .. '\\u007F' )+
             int cnt215=0;
             loop215:
             do {
@@ -11009,7 +11009,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1212:5: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1185:5: ( NUMBER )*
             loop216:
             do {
                 int alt216=2;
@@ -11022,7 +11022,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt216) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1212:5: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1185:5: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -11036,13 +11036,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart5637 = getCharIndex();
-            int checksumStartLine5637 = getLine();
-            int checksumStartCharPos5637 = getCharPositionInLine();
+            int checksumStart5632 = getCharIndex();
+            int checksumStartLine5632 = getLine();
+            int checksumStartCharPos5632 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5637, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5637);
-            checksum.setCharPositionInLine(checksumStartCharPos5637);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5632, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5632);
+            checksum.setCharPositionInLine(checksumStartCharPos5632);
 
 
 
@@ -11071,18 +11071,18 @@ public class NMEALexer extends Lexer {
             CommonToken directionToSteer=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:6: ( '$' device= DEVICE 'XTE' SEP generalWarning= LETTERS SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP directionToSteer= LETTERS SEP LETTERS checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:8: '$' device= DEVICE 'XTE' SEP generalWarning= LETTERS SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP directionToSteer= LETTERS SEP LETTERS checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1223:6: ( '$' device= DEVICE 'XTE' SEP generalWarning= LETTERS SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP directionToSteer= LETTERS SEP LETTERS checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1223:8: '$' device= DEVICE 'XTE' SEP generalWarning= LETTERS SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP directionToSteer= LETTERS SEP LETTERS checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart5656 = getCharIndex();
-            int deviceStartLine5656 = getLine();
-            int deviceStartCharPos5656 = getCharPositionInLine();
+            int deviceStart5651 = getCharIndex();
+            int deviceStartLine5651 = getLine();
+            int deviceStartCharPos5651 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5656, getCharIndex()-1);
-            device.setLine(deviceStartLine5656);
-            device.setCharPositionInLine(deviceStartCharPos5656);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5651, getCharIndex()-1);
+            device.setLine(deviceStartLine5651);
+            device.setCharPositionInLine(deviceStartCharPos5651);
 
 
             match("XTE"); 
@@ -11092,31 +11092,31 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int generalWarningStart5665 = getCharIndex();
-            int generalWarningStartLine5665 = getLine();
-            int generalWarningStartCharPos5665 = getCharPositionInLine();
+            int generalWarningStart5660 = getCharIndex();
+            int generalWarningStartLine5660 = getLine();
+            int generalWarningStartCharPos5660 = getCharPositionInLine();
             mLETTERS(); 
-            generalWarning = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, generalWarningStart5665, getCharIndex()-1);
-            generalWarning.setLine(generalWarningStartLine5665);
-            generalWarning.setCharPositionInLine(generalWarningStartCharPos5665);
+            generalWarning = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, generalWarningStart5660, getCharIndex()-1);
+            generalWarning.setLine(generalWarningStartLine5660);
+            generalWarning.setCharPositionInLine(generalWarningStartCharPos5660);
 
 
             mSEP(); 
 
 
-            int statusStart5672 = getCharIndex();
-            int statusStartLine5672 = getLine();
-            int statusStartCharPos5672 = getCharPositionInLine();
+            int statusStart5667 = getCharIndex();
+            int statusStartLine5667 = getLine();
+            int statusStartCharPos5667 = getCharPositionInLine();
             mLETTERS(); 
-            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart5672, getCharIndex()-1);
-            status.setLine(statusStartLine5672);
-            status.setCharPositionInLine(statusStartCharPos5672);
+            status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart5667, getCharIndex()-1);
+            status.setLine(statusStartLine5667);
+            status.setCharPositionInLine(statusStartCharPos5667);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1253:17: (crossTrackError= NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1226:17: (crossTrackError= NUMBER )*
             loop217:
             do {
                 int alt217=2;
@@ -11129,15 +11129,15 @@ public class NMEALexer extends Lexer {
 
                 switch (alt217) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1253:17: crossTrackError= NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1226:17: crossTrackError= NUMBER
             	    {
-            	    int crossTrackErrorStart5679 = getCharIndex();
-            	    int crossTrackErrorStartLine5679 = getLine();
-            	    int crossTrackErrorStartCharPos5679 = getCharPositionInLine();
+            	    int crossTrackErrorStart5674 = getCharIndex();
+            	    int crossTrackErrorStartLine5674 = getLine();
+            	    int crossTrackErrorStartCharPos5674 = getCharPositionInLine();
             	    mNUMBER(); 
-            	    crossTrackError = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, crossTrackErrorStart5679, getCharIndex()-1);
-            	    crossTrackError.setLine(crossTrackErrorStartLine5679);
-            	    crossTrackError.setCharPositionInLine(crossTrackErrorStartCharPos5679);
+            	    crossTrackError = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, crossTrackErrorStart5674, getCharIndex()-1);
+            	    crossTrackError.setLine(crossTrackErrorStartLine5674);
+            	    crossTrackError.setCharPositionInLine(crossTrackErrorStartCharPos5674);
 
 
             	    }
@@ -11152,13 +11152,13 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int directionToSteerStart5687 = getCharIndex();
-            int directionToSteerStartLine5687 = getLine();
-            int directionToSteerStartCharPos5687 = getCharPositionInLine();
+            int directionToSteerStart5682 = getCharIndex();
+            int directionToSteerStartLine5682 = getLine();
+            int directionToSteerStartCharPos5682 = getCharPositionInLine();
             mLETTERS(); 
-            directionToSteer = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, directionToSteerStart5687, getCharIndex()-1);
-            directionToSteer.setLine(directionToSteerStartLine5687);
-            directionToSteer.setCharPositionInLine(directionToSteerStartCharPos5687);
+            directionToSteer = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, directionToSteerStart5682, getCharIndex()-1);
+            directionToSteer.setLine(directionToSteerStartLine5682);
+            directionToSteer.setCharPositionInLine(directionToSteerStartCharPos5682);
 
 
             mSEP(); 
@@ -11167,13 +11167,13 @@ public class NMEALexer extends Lexer {
             mLETTERS(); 
 
 
-            int checksumStart5697 = getCharIndex();
-            int checksumStartLine5697 = getLine();
-            int checksumStartCharPos5697 = getCharPositionInLine();
+            int checksumStart5692 = getCharIndex();
+            int checksumStartLine5692 = getLine();
+            int checksumStartCharPos5692 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5697, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5697);
-            checksum.setCharPositionInLine(checksumStartCharPos5697);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5692, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5692);
+            checksum.setCharPositionInLine(checksumStartCharPos5692);
 
 
 
@@ -11208,18 +11208,18 @@ public class NMEALexer extends Lexer {
             CommonToken yy=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1253:6: ( '$' device= DEVICE 'ZDA' SEP utc= NUMBER SEP dd= NUMBER SEP mm= NUMBER SEP yy= NUMBER SEP ( NUMBER )* SEP ( NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1253:9: '$' device= DEVICE 'ZDA' SEP utc= NUMBER SEP dd= NUMBER SEP mm= NUMBER SEP yy= NUMBER SEP ( NUMBER )* SEP ( NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1226:6: ( '$' device= DEVICE 'ZDA' SEP utc= NUMBER SEP dd= NUMBER SEP mm= NUMBER SEP yy= NUMBER SEP ( NUMBER )* SEP ( NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1226:9: '$' device= DEVICE 'ZDA' SEP utc= NUMBER SEP dd= NUMBER SEP mm= NUMBER SEP yy= NUMBER SEP ( NUMBER )* SEP ( NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart5720 = getCharIndex();
-            int deviceStartLine5720 = getLine();
-            int deviceStartCharPos5720 = getCharPositionInLine();
+            int deviceStart5715 = getCharIndex();
+            int deviceStartLine5715 = getLine();
+            int deviceStartCharPos5715 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5720, getCharIndex()-1);
-            device.setLine(deviceStartLine5720);
-            device.setCharPositionInLine(deviceStartCharPos5720);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5715, getCharIndex()-1);
+            device.setLine(deviceStartLine5715);
+            device.setCharPositionInLine(deviceStartCharPos5715);
 
 
             match("ZDA"); 
@@ -11229,55 +11229,55 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            int utcStart5732 = getCharIndex();
-            int utcStartLine5732 = getLine();
-            int utcStartCharPos5732 = getCharPositionInLine();
+            int utcStart5727 = getCharIndex();
+            int utcStartLine5727 = getLine();
+            int utcStartCharPos5727 = getCharPositionInLine();
             mNUMBER(); 
-            utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart5732, getCharIndex()-1);
-            utc.setLine(utcStartLine5732);
-            utc.setCharPositionInLine(utcStartCharPos5732);
+            utc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, utcStart5727, getCharIndex()-1);
+            utc.setLine(utcStartLine5727);
+            utc.setCharPositionInLine(utcStartCharPos5727);
 
 
             mSEP(); 
 
 
-            int ddStart5742 = getCharIndex();
-            int ddStartLine5742 = getLine();
-            int ddStartCharPos5742 = getCharPositionInLine();
+            int ddStart5737 = getCharIndex();
+            int ddStartLine5737 = getLine();
+            int ddStartCharPos5737 = getCharPositionInLine();
             mNUMBER(); 
-            dd = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ddStart5742, getCharIndex()-1);
-            dd.setLine(ddStartLine5742);
-            dd.setCharPositionInLine(ddStartCharPos5742);
+            dd = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ddStart5737, getCharIndex()-1);
+            dd.setLine(ddStartLine5737);
+            dd.setCharPositionInLine(ddStartCharPos5737);
 
 
             mSEP(); 
 
 
-            int mmStart5752 = getCharIndex();
-            int mmStartLine5752 = getLine();
-            int mmStartCharPos5752 = getCharPositionInLine();
+            int mmStart5747 = getCharIndex();
+            int mmStartLine5747 = getLine();
+            int mmStartCharPos5747 = getCharPositionInLine();
             mNUMBER(); 
-            mm = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, mmStart5752, getCharIndex()-1);
-            mm.setLine(mmStartLine5752);
-            mm.setCharPositionInLine(mmStartCharPos5752);
+            mm = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, mmStart5747, getCharIndex()-1);
+            mm.setLine(mmStartLine5747);
+            mm.setCharPositionInLine(mmStartCharPos5747);
 
 
             mSEP(); 
 
 
-            int yyStart5762 = getCharIndex();
-            int yyStartLine5762 = getLine();
-            int yyStartCharPos5762 = getCharPositionInLine();
+            int yyStart5757 = getCharIndex();
+            int yyStartLine5757 = getLine();
+            int yyStartCharPos5757 = getCharPositionInLine();
             mNUMBER(); 
-            yy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yyStart5762, getCharIndex()-1);
-            yy.setLine(yyStartLine5762);
-            yy.setCharPositionInLine(yyStartCharPos5762);
+            yy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, yyStart5757, getCharIndex()-1);
+            yy.setLine(yyStartLine5757);
+            yy.setCharPositionInLine(yyStartCharPos5757);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1258:3: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1231:3: ( NUMBER )*
             loop218:
             do {
                 int alt218=2;
@@ -11290,7 +11290,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt218) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1258:3: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1231:3: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -11307,7 +11307,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:3: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1232:3: ( NUMBER )*
             loop219:
             do {
                 int alt219=2;
@@ -11320,7 +11320,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt219) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:3: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1232:3: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -11334,13 +11334,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart5783 = getCharIndex();
-            int checksumStartLine5783 = getLine();
-            int checksumStartCharPos5783 = getCharPositionInLine();
+            int checksumStart5778 = getCharIndex();
+            int checksumStartLine5778 = getLine();
+            int checksumStartCharPos5778 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5783, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5783);
-            checksum.setCharPositionInLine(checksumStartCharPos5783);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5778, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5778);
+            checksum.setCharPositionInLine(checksumStartCharPos5778);
 
 
 
@@ -11373,18 +11373,18 @@ public class NMEALexer extends Lexer {
             CommonToken device=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1275:5: ( '$' device= DEVICE 'ALR' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1275:7: '$' device= DEVICE 'ALR' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1248:5: ( '$' device= DEVICE 'ALR' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1248:7: '$' device= DEVICE 'ALR' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart5801 = getCharIndex();
-            int deviceStartLine5801 = getLine();
-            int deviceStartCharPos5801 = getCharPositionInLine();
+            int deviceStart5796 = getCharIndex();
+            int deviceStartLine5796 = getLine();
+            int deviceStartCharPos5796 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5801, getCharIndex()-1);
-            device.setLine(deviceStartLine5801);
-            device.setCharPositionInLine(deviceStartCharPos5801);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5796, getCharIndex()-1);
+            device.setLine(deviceStartLine5796);
+            device.setCharPositionInLine(deviceStartCharPos5796);
 
 
             match("ALR"); 
@@ -11394,7 +11394,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1276:2: ( '\\u0021' .. '\\u007F' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1249:2: ( '\\u0021' .. '\\u007F' )+
             int cnt220=0;
             loop220:
             do {
@@ -11430,7 +11430,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1277:5: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:5: ( NUMBER )*
             loop221:
             do {
                 int alt221=2;
@@ -11443,7 +11443,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt221) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1277:5: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:5: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -11457,13 +11457,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart5831 = getCharIndex();
-            int checksumStartLine5831 = getLine();
-            int checksumStartCharPos5831 = getCharPositionInLine();
+            int checksumStart5826 = getCharIndex();
+            int checksumStartLine5826 = getLine();
+            int checksumStartCharPos5826 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5831, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5831);
-            checksum.setCharPositionInLine(checksumStartCharPos5831);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5826, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5826);
+            checksum.setCharPositionInLine(checksumStartCharPos5826);
 
 
 
@@ -11488,18 +11488,18 @@ public class NMEALexer extends Lexer {
             CommonToken device=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1280:6: ( '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1280:8: '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1253:6: ( '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1253:8: '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
             {
             match('!'); 
 
-            int deviceStart5848 = getCharIndex();
-            int deviceStartLine5848 = getLine();
-            int deviceStartCharPos5848 = getCharPositionInLine();
+            int deviceStart5843 = getCharIndex();
+            int deviceStartLine5843 = getLine();
+            int deviceStartCharPos5843 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5848, getCharIndex()-1);
-            device.setLine(deviceStartLine5848);
-            device.setCharPositionInLine(deviceStartCharPos5848);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5843, getCharIndex()-1);
+            device.setLine(deviceStartLine5843);
+            device.setCharPositionInLine(deviceStartCharPos5843);
 
 
             match("VDM"); 
@@ -11509,7 +11509,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:4: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1254:4: ( NUMBER )*
             loop222:
             do {
                 int alt222=2;
@@ -11522,7 +11522,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt222) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:4: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1254:4: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -11539,7 +11539,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1282:4: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1255:4: ( NUMBER )*
             loop223:
             do {
                 int alt223=2;
@@ -11552,7 +11552,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt223) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1282:4: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1255:4: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -11569,7 +11569,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1283:4: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1256:4: ( NUMBER )*
             loop224:
             do {
                 int alt224=2;
@@ -11582,7 +11582,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt224) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1283:4: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1256:4: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -11599,7 +11599,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1284:4: ( LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1257:4: ( LETTERS )*
             loop225:
             do {
                 int alt225=2;
@@ -11612,7 +11612,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt225) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1284:4: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1257:4: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -11629,7 +11629,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1285:4: ( '\\u0021' .. '\\u007F' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1258:4: ( '\\u0021' .. '\\u007F' )+
             int cnt226=0;
             loop226:
             do {
@@ -11665,7 +11665,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1286:5: ( NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:5: ( NUMBER )*
             loop227:
             do {
                 int alt227=2;
@@ -11678,7 +11678,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt227) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1286:5: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:5: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -11692,13 +11692,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart5912 = getCharIndex();
-            int checksumStartLine5912 = getLine();
-            int checksumStartCharPos5912 = getCharPositionInLine();
+            int checksumStart5907 = getCharIndex();
+            int checksumStartLine5907 = getLine();
+            int checksumStartCharPos5907 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5912, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5912);
-            checksum.setCharPositionInLine(checksumStartCharPos5912);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5907, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5907);
+            checksum.setCharPositionInLine(checksumStartCharPos5907);
 
 
 
@@ -11796,10 +11796,12 @@ public class NMEALexer extends Lexer {
             CommonToken msg22=null;
             CommonToken vendorid=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1296:6: ( '{\"class\":\"AIS\"' SEP '\"device\":' dev= DEV SEP '\"type\":' type= NUMBER SEP '\"repeat\":' repeat= NUMBER SEP '\"mmsi\":' mmsi= NUMBER SEP '\"scaled\":' scaled= LETTERS SEP ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER ) ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1297:6: '{\"class\":\"AIS\"' SEP '\"device\":' dev= DEV SEP '\"type\":' type= NUMBER SEP '\"repeat\":' repeat= NUMBER SEP '\"mmsi\":' mmsi= NUMBER SEP '\"scaled\":' scaled= LETTERS SEP ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER ) ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1268:10: ( '{' '\"class\":\"AIS\"' SEP '\"device\":' dev= DEV SEP '\"type\":' type= NUMBER SEP '\"repeat\":' repeat= NUMBER SEP '\"mmsi\":' mmsi= NUMBER SEP '\"scaled\":' scaled= LETTERS SEP ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER ) ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1268:12: '{' '\"class\":\"AIS\"' SEP '\"device\":' dev= DEV SEP '\"type\":' type= NUMBER SEP '\"repeat\":' repeat= NUMBER SEP '\"mmsi\":' mmsi= NUMBER SEP '\"scaled\":' scaled= LETTERS SEP ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER ) ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
             {
-            match("{\"class\":\"AIS\""); 
+            match('{'); 
+
+            match("\"class\":\"AIS\""); 
 
 
 
@@ -11810,13 +11812,13 @@ public class NMEALexer extends Lexer {
 
 
 
-            int devStart5954 = getCharIndex();
-            int devStartLine5954 = getLine();
-            int devStartCharPos5954 = getCharPositionInLine();
+            int devStart5937 = getCharIndex();
+            int devStartLine5937 = getLine();
+            int devStartCharPos5937 = getCharPositionInLine();
             mDEV(); 
-            dev = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, devStart5954, getCharIndex()-1);
-            dev.setLine(devStartLine5954);
-            dev.setCharPositionInLine(devStartCharPos5954);
+            dev = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, devStart5937, getCharIndex()-1);
+            dev.setLine(devStartLine5937);
+            dev.setCharPositionInLine(devStartCharPos5937);
 
 
             mSEP(); 
@@ -11826,13 +11828,13 @@ public class NMEALexer extends Lexer {
 
 
 
-            int typeStart5970 = getCharIndex();
-            int typeStartLine5970 = getLine();
-            int typeStartCharPos5970 = getCharPositionInLine();
+            int typeStart5953 = getCharIndex();
+            int typeStartLine5953 = getLine();
+            int typeStartCharPos5953 = getCharPositionInLine();
             mNUMBER(); 
-            type = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, typeStart5970, getCharIndex()-1);
-            type.setLine(typeStartLine5970);
-            type.setCharPositionInLine(typeStartCharPos5970);
+            type = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, typeStart5953, getCharIndex()-1);
+            type.setLine(typeStartLine5953);
+            type.setCharPositionInLine(typeStartCharPos5953);
 
 
             mSEP(); 
@@ -11842,13 +11844,13 @@ public class NMEALexer extends Lexer {
 
 
 
-            int repeatStart5985 = getCharIndex();
-            int repeatStartLine5985 = getLine();
-            int repeatStartCharPos5985 = getCharPositionInLine();
+            int repeatStart5968 = getCharIndex();
+            int repeatStartLine5968 = getLine();
+            int repeatStartCharPos5968 = getCharPositionInLine();
             mNUMBER(); 
-            repeat = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, repeatStart5985, getCharIndex()-1);
-            repeat.setLine(repeatStartLine5985);
-            repeat.setCharPositionInLine(repeatStartCharPos5985);
+            repeat = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, repeatStart5968, getCharIndex()-1);
+            repeat.setLine(repeatStartLine5968);
+            repeat.setCharPositionInLine(repeatStartCharPos5968);
 
 
             mSEP(); 
@@ -11858,13 +11860,13 @@ public class NMEALexer extends Lexer {
 
 
 
-            int mmsiStart6000 = getCharIndex();
-            int mmsiStartLine6000 = getLine();
-            int mmsiStartCharPos6000 = getCharPositionInLine();
+            int mmsiStart5983 = getCharIndex();
+            int mmsiStartLine5983 = getLine();
+            int mmsiStartCharPos5983 = getCharPositionInLine();
             mNUMBER(); 
-            mmsi = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, mmsiStart6000, getCharIndex()-1);
-            mmsi.setLine(mmsiStartLine6000);
-            mmsi.setCharPositionInLine(mmsiStartCharPos6000);
+            mmsi = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, mmsiStart5983, getCharIndex()-1);
+            mmsi.setLine(mmsiStartLine5983);
+            mmsi.setCharPositionInLine(mmsiStartCharPos5983);
 
 
             mSEP(); 
@@ -11874,19 +11876,19 @@ public class NMEALexer extends Lexer {
 
 
 
-            int scaledStart6013 = getCharIndex();
-            int scaledStartLine6013 = getLine();
-            int scaledStartCharPos6013 = getCharPositionInLine();
+            int scaledStart5996 = getCharIndex();
+            int scaledStartLine5996 = getLine();
+            int scaledStartCharPos5996 = getCharPositionInLine();
             mLETTERS(); 
-            scaled = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, scaledStart6013, getCharIndex()-1);
-            scaled.setLine(scaledStartLine6013);
-            scaled.setCharPositionInLine(scaledStartCharPos6013);
+            scaled = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, scaledStart5996, getCharIndex()-1);
+            scaled.setLine(scaledStartLine5996);
+            scaled.setCharPositionInLine(scaledStartCharPos5996);
 
 
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1304:6: ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1275:6: ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER )
             int alt230=7;
             int LA230_0 = input.LA(1);
 
@@ -11944,7 +11946,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 230, 1, input);
 
-                   // throw nvae;
+                    throw nvae;
 
                 }
 
@@ -11953,24 +11955,24 @@ public class NMEALexer extends Lexer {
                 NoViableAltException nvae =
                     new NoViableAltException("", 230, 0, input);
 
-              //  throw nvae;
+                throw nvae;
 
             }
             switch (alt230) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1304:7: '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1275:7: '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
                     {
                     match("\"status\":"); 
 
 
 
-                    int statusStart6033 = getCharIndex();
-                    int statusStartLine6033 = getLine();
-                    int statusStartCharPos6033 = getCharPositionInLine();
+                    int statusStart6016 = getCharIndex();
+                    int statusStartLine6016 = getLine();
+                    int statusStartCharPos6016 = getCharPositionInLine();
                     mNUMBER(); 
-                    status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart6033, getCharIndex()-1);
-                    status.setLine(statusStartLine6033);
-                    status.setCharPositionInLine(statusStartCharPos6033);
+                    status = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, statusStart6016, getCharIndex()-1);
+                    status.setLine(statusStartLine6016);
+                    status.setCharPositionInLine(statusStartCharPos6016);
 
 
                     mSEP(); 
@@ -11980,13 +11982,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int turnStart6048 = getCharIndex();
-                    int turnStartLine6048 = getLine();
-                    int turnStartCharPos6048 = getCharPositionInLine();
+                    int turnStart6031 = getCharIndex();
+                    int turnStartLine6031 = getLine();
+                    int turnStartCharPos6031 = getCharPositionInLine();
                     mSIGNED(); 
-                    turn = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, turnStart6048, getCharIndex()-1);
-                    turn.setLine(turnStartLine6048);
-                    turn.setCharPositionInLine(turnStartCharPos6048);
+                    turn = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, turnStart6031, getCharIndex()-1);
+                    turn.setLine(turnStartLine6031);
+                    turn.setCharPositionInLine(turnStartCharPos6031);
 
 
                     mSEP(); 
@@ -11996,13 +11998,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int speedStart6063 = getCharIndex();
-                    int speedStartLine6063 = getLine();
-                    int speedStartCharPos6063 = getCharPositionInLine();
+                    int speedStart6046 = getCharIndex();
+                    int speedStartLine6046 = getLine();
+                    int speedStartCharPos6046 = getCharPositionInLine();
                     mNUMBER(); 
-                    speed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedStart6063, getCharIndex()-1);
-                    speed.setLine(speedStartLine6063);
-                    speed.setCharPositionInLine(speedStartCharPos6063);
+                    speed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedStart6046, getCharIndex()-1);
+                    speed.setLine(speedStartLine6046);
+                    speed.setCharPositionInLine(speedStartCharPos6046);
 
 
                     mSEP(); 
@@ -12012,13 +12014,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int accuracyStart6078 = getCharIndex();
-                    int accuracyStartLine6078 = getLine();
-                    int accuracyStartCharPos6078 = getCharPositionInLine();
+                    int accuracyStart6061 = getCharIndex();
+                    int accuracyStartLine6061 = getLine();
+                    int accuracyStartCharPos6061 = getCharPositionInLine();
                     mLETTERS(); 
-                    accuracy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, accuracyStart6078, getCharIndex()-1);
-                    accuracy.setLine(accuracyStartLine6078);
-                    accuracy.setCharPositionInLine(accuracyStartCharPos6078);
+                    accuracy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, accuracyStart6061, getCharIndex()-1);
+                    accuracy.setLine(accuracyStartLine6061);
+                    accuracy.setCharPositionInLine(accuracyStartCharPos6061);
 
 
                     mSEP(); 
@@ -12028,13 +12030,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int longitudeStart6092 = getCharIndex();
-                    int longitudeStartLine6092 = getLine();
-                    int longitudeStartCharPos6092 = getCharPositionInLine();
+                    int longitudeStart6075 = getCharIndex();
+                    int longitudeStartLine6075 = getLine();
+                    int longitudeStartCharPos6075 = getCharPositionInLine();
                     mSIGNED(); 
-                    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart6092, getCharIndex()-1);
-                    longitude.setLine(longitudeStartLine6092);
-                    longitude.setCharPositionInLine(longitudeStartCharPos6092);
+                    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart6075, getCharIndex()-1);
+                    longitude.setLine(longitudeStartLine6075);
+                    longitude.setCharPositionInLine(longitudeStartCharPos6075);
 
 
                     mSEP(); 
@@ -12044,13 +12046,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int latitudeStart6107 = getCharIndex();
-                    int latitudeStartLine6107 = getLine();
-                    int latitudeStartCharPos6107 = getCharPositionInLine();
+                    int latitudeStart6090 = getCharIndex();
+                    int latitudeStartLine6090 = getLine();
+                    int latitudeStartCharPos6090 = getCharPositionInLine();
                     mSIGNED(); 
-                    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart6107, getCharIndex()-1);
-                    latitude.setLine(latitudeStartLine6107);
-                    latitude.setCharPositionInLine(latitudeStartCharPos6107);
+                    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart6090, getCharIndex()-1);
+                    latitude.setLine(latitudeStartLine6090);
+                    latitude.setCharPositionInLine(latitudeStartCharPos6090);
 
 
                     mSEP(); 
@@ -12060,13 +12062,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int courseStart6122 = getCharIndex();
-                    int courseStartLine6122 = getLine();
-                    int courseStartCharPos6122 = getCharPositionInLine();
+                    int courseStart6105 = getCharIndex();
+                    int courseStartLine6105 = getLine();
+                    int courseStartCharPos6105 = getCharPositionInLine();
                     mNUMBER(); 
-                    course = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, courseStart6122, getCharIndex()-1);
-                    course.setLine(courseStartLine6122);
-                    course.setCharPositionInLine(courseStartCharPos6122);
+                    course = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, courseStart6105, getCharIndex()-1);
+                    course.setLine(courseStartLine6105);
+                    course.setCharPositionInLine(courseStartCharPos6105);
 
 
                     mSEP(); 
@@ -12076,13 +12078,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int headingStart6136 = getCharIndex();
-                    int headingStartLine6136 = getLine();
-                    int headingStartCharPos6136 = getCharPositionInLine();
+                    int headingStart6119 = getCharIndex();
+                    int headingStartLine6119 = getLine();
+                    int headingStartCharPos6119 = getCharPositionInLine();
                     mNUMBER(); 
-                    heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart6136, getCharIndex()-1);
-                    heading.setLine(headingStartLine6136);
-                    heading.setCharPositionInLine(headingStartCharPos6136);
+                    heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart6119, getCharIndex()-1);
+                    heading.setLine(headingStartLine6119);
+                    heading.setCharPositionInLine(headingStartCharPos6119);
 
 
                     mSEP(); 
@@ -12092,13 +12094,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int secondStart6150 = getCharIndex();
-                    int secondStartLine6150 = getLine();
-                    int secondStartCharPos6150 = getCharPositionInLine();
+                    int secondStart6133 = getCharIndex();
+                    int secondStartLine6133 = getLine();
+                    int secondStartCharPos6133 = getCharPositionInLine();
                     mNUMBER(); 
-                    second = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, secondStart6150, getCharIndex()-1);
-                    second.setLine(secondStartLine6150);
-                    second.setCharPositionInLine(secondStartCharPos6150);
+                    second = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, secondStart6133, getCharIndex()-1);
+                    second.setLine(secondStartLine6133);
+                    second.setCharPositionInLine(secondStartCharPos6133);
 
 
                     mSEP(); 
@@ -12108,13 +12110,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int maneuvrerStart6165 = getCharIndex();
-                    int maneuvrerStartLine6165 = getLine();
-                    int maneuvrerStartCharPos6165 = getCharPositionInLine();
+                    int maneuvrerStart6148 = getCharIndex();
+                    int maneuvrerStartLine6148 = getLine();
+                    int maneuvrerStartCharPos6148 = getCharPositionInLine();
                     mNUMBER(); 
-                    maneuvrer = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, maneuvrerStart6165, getCharIndex()-1);
-                    maneuvrer.setLine(maneuvrerStartLine6165);
-                    maneuvrer.setCharPositionInLine(maneuvrerStartCharPos6165);
+                    maneuvrer = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, maneuvrerStart6148, getCharIndex()-1);
+                    maneuvrer.setLine(maneuvrerStartLine6148);
+                    maneuvrer.setCharPositionInLine(maneuvrerStartCharPos6148);
 
 
                     mSEP(); 
@@ -12124,13 +12126,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int raimStart6180 = getCharIndex();
-                    int raimStartLine6180 = getLine();
-                    int raimStartCharPos6180 = getCharPositionInLine();
+                    int raimStart6163 = getCharIndex();
+                    int raimStartLine6163 = getLine();
+                    int raimStartCharPos6163 = getCharPositionInLine();
                     mLETTERS(); 
-                    raim = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, raimStart6180, getCharIndex()-1);
-                    raim.setLine(raimStartLine6180);
-                    raim.setCharPositionInLine(raimStartCharPos6180);
+                    raim = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, raimStart6163, getCharIndex()-1);
+                    raim.setLine(raimStartLine6163);
+                    raim.setCharPositionInLine(raimStartCharPos6163);
 
 
                     mSEP(); 
@@ -12140,31 +12142,31 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int radioStart6195 = getCharIndex();
-                    int radioStartLine6195 = getLine();
-                    int radioStartCharPos6195 = getCharPositionInLine();
+                    int radioStart6178 = getCharIndex();
+                    int radioStartLine6178 = getLine();
+                    int radioStartCharPos6178 = getCharPositionInLine();
                     mNUMBER(); 
-                    radio = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, radioStart6195, getCharIndex()-1);
-                    radio.setLine(radioStartLine6195);
-                    radio.setCharPositionInLine(radioStartCharPos6195);
+                    radio = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, radioStart6178, getCharIndex()-1);
+                    radio.setLine(radioStartLine6178);
+                    radio.setCharPositionInLine(radioStartCharPos6178);
 
 
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1318:6: '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1289:6: '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
                     {
                     match("\"timestamp\":"); 
 
 
 
-                    int timestampStart6219 = getCharIndex();
-                    int timestampStartLine6219 = getLine();
-                    int timestampStartCharPos6219 = getCharPositionInLine();
+                    int timestampStart6202 = getCharIndex();
+                    int timestampStartLine6202 = getLine();
+                    int timestampStartCharPos6202 = getCharPositionInLine();
                     mTIME_STAMP(); 
-                    timestamp = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, timestampStart6219, getCharIndex()-1);
-                    timestamp.setLine(timestampStartLine6219);
-                    timestamp.setCharPositionInLine(timestampStartCharPos6219);
+                    timestamp = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, timestampStart6202, getCharIndex()-1);
+                    timestamp.setLine(timestampStartLine6202);
+                    timestamp.setCharPositionInLine(timestampStartCharPos6202);
 
 
                     mSEP(); 
@@ -12174,13 +12176,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int accuracyStart6233 = getCharIndex();
-                    int accuracyStartLine6233 = getLine();
-                    int accuracyStartCharPos6233 = getCharPositionInLine();
+                    int accuracyStart6216 = getCharIndex();
+                    int accuracyStartLine6216 = getLine();
+                    int accuracyStartCharPos6216 = getCharPositionInLine();
                     mLETTERS(); 
-                    accuracy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, accuracyStart6233, getCharIndex()-1);
-                    accuracy.setLine(accuracyStartLine6233);
-                    accuracy.setCharPositionInLine(accuracyStartCharPos6233);
+                    accuracy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, accuracyStart6216, getCharIndex()-1);
+                    accuracy.setLine(accuracyStartLine6216);
+                    accuracy.setCharPositionInLine(accuracyStartCharPos6216);
 
 
                     mSEP(); 
@@ -12190,13 +12192,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int longitudeStart6247 = getCharIndex();
-                    int longitudeStartLine6247 = getLine();
-                    int longitudeStartCharPos6247 = getCharPositionInLine();
+                    int longitudeStart6230 = getCharIndex();
+                    int longitudeStartLine6230 = getLine();
+                    int longitudeStartCharPos6230 = getCharPositionInLine();
                     mSIGNED(); 
-                    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart6247, getCharIndex()-1);
-                    longitude.setLine(longitudeStartLine6247);
-                    longitude.setCharPositionInLine(longitudeStartCharPos6247);
+                    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart6230, getCharIndex()-1);
+                    longitude.setLine(longitudeStartLine6230);
+                    longitude.setCharPositionInLine(longitudeStartCharPos6230);
 
 
                     mSEP(); 
@@ -12206,13 +12208,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int latitudeStart6261 = getCharIndex();
-                    int latitudeStartLine6261 = getLine();
-                    int latitudeStartCharPos6261 = getCharPositionInLine();
+                    int latitudeStart6244 = getCharIndex();
+                    int latitudeStartLine6244 = getLine();
+                    int latitudeStartCharPos6244 = getCharPositionInLine();
                     mSIGNED(); 
-                    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart6261, getCharIndex()-1);
-                    latitude.setLine(latitudeStartLine6261);
-                    latitude.setCharPositionInLine(latitudeStartCharPos6261);
+                    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart6244, getCharIndex()-1);
+                    latitude.setLine(latitudeStartLine6244);
+                    latitude.setCharPositionInLine(latitudeStartCharPos6244);
 
 
                     mSEP(); 
@@ -12222,13 +12224,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int epfdStart6274 = getCharIndex();
-                    int epfdStartLine6274 = getLine();
-                    int epfdStartCharPos6274 = getCharPositionInLine();
+                    int epfdStart6257 = getCharIndex();
+                    int epfdStartLine6257 = getLine();
+                    int epfdStartCharPos6257 = getCharPositionInLine();
                     mNUMBER(); 
-                    epfd = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, epfdStart6274, getCharIndex()-1);
-                    epfd.setLine(epfdStartLine6274);
-                    epfd.setCharPositionInLine(epfdStartCharPos6274);
+                    epfd = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, epfdStart6257, getCharIndex()-1);
+                    epfd.setLine(epfdStartLine6257);
+                    epfd.setCharPositionInLine(epfdStartCharPos6257);
 
 
                     mSEP(); 
@@ -12238,13 +12240,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int raimStart6288 = getCharIndex();
-                    int raimStartLine6288 = getLine();
-                    int raimStartCharPos6288 = getCharPositionInLine();
+                    int raimStart6271 = getCharIndex();
+                    int raimStartLine6271 = getLine();
+                    int raimStartCharPos6271 = getCharPositionInLine();
                     mLETTERS(); 
-                    raim = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, raimStart6288, getCharIndex()-1);
-                    raim.setLine(raimStartLine6288);
-                    raim.setCharPositionInLine(raimStartCharPos6288);
+                    raim = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, raimStart6271, getCharIndex()-1);
+                    raim.setLine(raimStartLine6271);
+                    raim.setCharPositionInLine(raimStartCharPos6271);
 
 
                     mSEP(); 
@@ -12254,31 +12256,31 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int radioStart6302 = getCharIndex();
-                    int radioStartLine6302 = getLine();
-                    int radioStartCharPos6302 = getCharPositionInLine();
+                    int radioStart6285 = getCharIndex();
+                    int radioStartLine6285 = getLine();
+                    int radioStartCharPos6285 = getCharPositionInLine();
                     mNUMBER(); 
-                    radio = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, radioStart6302, getCharIndex()-1);
-                    radio.setLine(radioStartLine6302);
-                    radio.setCharPositionInLine(radioStartCharPos6302);
+                    radio = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, radioStart6285, getCharIndex()-1);
+                    radio.setLine(radioStartLine6285);
+                    radio.setCharPositionInLine(radioStartCharPos6285);
 
 
                     }
                     break;
                 case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1327:6: '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1298:6: '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER
                     {
                     match("\"imo\":"); 
 
 
 
-                    int imoStart6326 = getCharIndex();
-                    int imoStartLine6326 = getLine();
-                    int imoStartCharPos6326 = getCharPositionInLine();
+                    int imoStart6309 = getCharIndex();
+                    int imoStartLine6309 = getLine();
+                    int imoStartCharPos6309 = getCharPositionInLine();
                     mNUMBER(); 
-                    imo = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, imoStart6326, getCharIndex()-1);
-                    imo.setLine(imoStartLine6326);
-                    imo.setCharPositionInLine(imoStartCharPos6326);
+                    imo = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, imoStart6309, getCharIndex()-1);
+                    imo.setLine(imoStartLine6309);
+                    imo.setCharPositionInLine(imoStartCharPos6309);
 
 
                     mSEP(); 
@@ -12288,13 +12290,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int ais_versionStart6339 = getCharIndex();
-                    int ais_versionStartLine6339 = getLine();
-                    int ais_versionStartCharPos6339 = getCharPositionInLine();
+                    int ais_versionStart6322 = getCharIndex();
+                    int ais_versionStartLine6322 = getLine();
+                    int ais_versionStartCharPos6322 = getCharPositionInLine();
                     mNUMBER(); 
-                    ais_version = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ais_versionStart6339, getCharIndex()-1);
-                    ais_version.setLine(ais_versionStartLine6339);
-                    ais_version.setCharPositionInLine(ais_versionStartCharPos6339);
+                    ais_version = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, ais_versionStart6322, getCharIndex()-1);
+                    ais_version.setLine(ais_versionStartLine6322);
+                    ais_version.setCharPositionInLine(ais_versionStartCharPos6322);
 
 
                     mSEP(); 
@@ -12304,13 +12306,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int callsignStart6353 = getCharIndex();
-                    int callsignStartLine6353 = getLine();
-                    int callsignStartCharPos6353 = getCharPositionInLine();
+                    int callsignStart6336 = getCharIndex();
+                    int callsignStartLine6336 = getLine();
+                    int callsignStartCharPos6336 = getCharPositionInLine();
                     mNAME(); 
-                    callsign = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, callsignStart6353, getCharIndex()-1);
-                    callsign.setLine(callsignStartLine6353);
-                    callsign.setCharPositionInLine(callsignStartCharPos6353);
+                    callsign = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, callsignStart6336, getCharIndex()-1);
+                    callsign.setLine(callsignStartLine6336);
+                    callsign.setCharPositionInLine(callsignStartCharPos6336);
 
 
                     mSEP(); 
@@ -12320,13 +12322,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int shipnameStart6367 = getCharIndex();
-                    int shipnameStartLine6367 = getLine();
-                    int shipnameStartCharPos6367 = getCharPositionInLine();
+                    int shipnameStart6350 = getCharIndex();
+                    int shipnameStartLine6350 = getLine();
+                    int shipnameStartCharPos6350 = getCharPositionInLine();
                     mNAME(); 
-                    shipname = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, shipnameStart6367, getCharIndex()-1);
-                    shipname.setLine(shipnameStartLine6367);
-                    shipname.setCharPositionInLine(shipnameStartCharPos6367);
+                    shipname = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, shipnameStart6350, getCharIndex()-1);
+                    shipname.setLine(shipnameStartLine6350);
+                    shipname.setCharPositionInLine(shipnameStartCharPos6350);
 
 
                     mSEP(); 
@@ -12336,13 +12338,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int shiptypeStart6380 = getCharIndex();
-                    int shiptypeStartLine6380 = getLine();
-                    int shiptypeStartCharPos6380 = getCharPositionInLine();
+                    int shiptypeStart6363 = getCharIndex();
+                    int shiptypeStartLine6363 = getLine();
+                    int shiptypeStartCharPos6363 = getCharPositionInLine();
                     mNUMBER(); 
-                    shiptype = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, shiptypeStart6380, getCharIndex()-1);
-                    shiptype.setLine(shiptypeStartLine6380);
-                    shiptype.setCharPositionInLine(shiptypeStartCharPos6380);
+                    shiptype = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, shiptypeStart6363, getCharIndex()-1);
+                    shiptype.setLine(shiptypeStartLine6363);
+                    shiptype.setCharPositionInLine(shiptypeStartCharPos6363);
 
 
                     mSEP(); 
@@ -12352,13 +12354,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int to_bowStart6393 = getCharIndex();
-                    int to_bowStartLine6393 = getLine();
-                    int to_bowStartCharPos6393 = getCharPositionInLine();
+                    int to_bowStart6376 = getCharIndex();
+                    int to_bowStartLine6376 = getLine();
+                    int to_bowStartCharPos6376 = getCharPositionInLine();
                     mNUMBER(); 
-                    to_bow = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_bowStart6393, getCharIndex()-1);
-                    to_bow.setLine(to_bowStartLine6393);
-                    to_bow.setCharPositionInLine(to_bowStartCharPos6393);
+                    to_bow = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_bowStart6376, getCharIndex()-1);
+                    to_bow.setLine(to_bowStartLine6376);
+                    to_bow.setCharPositionInLine(to_bowStartCharPos6376);
 
 
                     mSEP(); 
@@ -12368,13 +12370,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int to_sternStart6406 = getCharIndex();
-                    int to_sternStartLine6406 = getLine();
-                    int to_sternStartCharPos6406 = getCharPositionInLine();
+                    int to_sternStart6389 = getCharIndex();
+                    int to_sternStartLine6389 = getLine();
+                    int to_sternStartCharPos6389 = getCharPositionInLine();
                     mNUMBER(); 
-                    to_stern = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_sternStart6406, getCharIndex()-1);
-                    to_stern.setLine(to_sternStartLine6406);
-                    to_stern.setCharPositionInLine(to_sternStartCharPos6406);
+                    to_stern = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_sternStart6389, getCharIndex()-1);
+                    to_stern.setLine(to_sternStartLine6389);
+                    to_stern.setCharPositionInLine(to_sternStartCharPos6389);
 
 
                     mSEP(); 
@@ -12384,13 +12386,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int to_portStart6419 = getCharIndex();
-                    int to_portStartLine6419 = getLine();
-                    int to_portStartCharPos6419 = getCharPositionInLine();
+                    int to_portStart6402 = getCharIndex();
+                    int to_portStartLine6402 = getLine();
+                    int to_portStartCharPos6402 = getCharPositionInLine();
                     mNUMBER(); 
-                    to_port = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_portStart6419, getCharIndex()-1);
-                    to_port.setLine(to_portStartLine6419);
-                    to_port.setCharPositionInLine(to_portStartCharPos6419);
+                    to_port = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_portStart6402, getCharIndex()-1);
+                    to_port.setLine(to_portStartLine6402);
+                    to_port.setCharPositionInLine(to_portStartCharPos6402);
 
 
                     mSEP(); 
@@ -12400,13 +12402,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int to_starboardStart6432 = getCharIndex();
-                    int to_starboardStartLine6432 = getLine();
-                    int to_starboardStartCharPos6432 = getCharPositionInLine();
+                    int to_starboardStart6415 = getCharIndex();
+                    int to_starboardStartLine6415 = getLine();
+                    int to_starboardStartCharPos6415 = getCharPositionInLine();
                     mNUMBER(); 
-                    to_starboard = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_starboardStart6432, getCharIndex()-1);
-                    to_starboard.setLine(to_starboardStartLine6432);
-                    to_starboard.setCharPositionInLine(to_starboardStartCharPos6432);
+                    to_starboard = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_starboardStart6415, getCharIndex()-1);
+                    to_starboard.setLine(to_starboardStartLine6415);
+                    to_starboard.setCharPositionInLine(to_starboardStartCharPos6415);
 
 
                     mSEP(); 
@@ -12416,13 +12418,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int epfdStart6445 = getCharIndex();
-                    int epfdStartLine6445 = getLine();
-                    int epfdStartCharPos6445 = getCharPositionInLine();
+                    int epfdStart6428 = getCharIndex();
+                    int epfdStartLine6428 = getLine();
+                    int epfdStartCharPos6428 = getCharPositionInLine();
                     mNUMBER(); 
-                    epfd = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, epfdStart6445, getCharIndex()-1);
-                    epfd.setLine(epfdStartLine6445);
-                    epfd.setCharPositionInLine(epfdStartCharPos6445);
+                    epfd = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, epfdStart6428, getCharIndex()-1);
+                    epfd.setLine(epfdStartLine6428);
+                    epfd.setCharPositionInLine(epfdStartCharPos6428);
 
 
                     mSEP(); 
@@ -12432,13 +12434,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int etaStart6458 = getCharIndex();
-                    int etaStartLine6458 = getLine();
-                    int etaStartCharPos6458 = getCharPositionInLine();
+                    int etaStart6441 = getCharIndex();
+                    int etaStartLine6441 = getLine();
+                    int etaStartCharPos6441 = getCharPositionInLine();
                     mTIME_STAMP(); 
-                    eta = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, etaStart6458, getCharIndex()-1);
-                    eta.setLine(etaStartLine6458);
-                    eta.setCharPositionInLine(etaStartCharPos6458);
+                    eta = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, etaStart6441, getCharIndex()-1);
+                    eta.setLine(etaStartLine6441);
+                    eta.setCharPositionInLine(etaStartCharPos6441);
 
 
                     mSEP(); 
@@ -12448,13 +12450,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int draughtStart6471 = getCharIndex();
-                    int draughtStartLine6471 = getLine();
-                    int draughtStartCharPos6471 = getCharPositionInLine();
+                    int draughtStart6454 = getCharIndex();
+                    int draughtStartLine6454 = getLine();
+                    int draughtStartCharPos6454 = getCharPositionInLine();
                     mNUMBER(); 
-                    draught = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, draughtStart6471, getCharIndex()-1);
-                    draught.setLine(draughtStartLine6471);
-                    draught.setCharPositionInLine(draughtStartCharPos6471);
+                    draught = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, draughtStart6454, getCharIndex()-1);
+                    draught.setLine(draughtStartLine6454);
+                    draught.setCharPositionInLine(draughtStartCharPos6454);
 
 
                     mSEP(); 
@@ -12464,13 +12466,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int destinationStart6485 = getCharIndex();
-                    int destinationStartLine6485 = getLine();
-                    int destinationStartCharPos6485 = getCharPositionInLine();
+                    int destinationStart6468 = getCharIndex();
+                    int destinationStartLine6468 = getLine();
+                    int destinationStartCharPos6468 = getCharPositionInLine();
                     mNAME(); 
-                    destination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationStart6485, getCharIndex()-1);
-                    destination.setLine(destinationStartLine6485);
-                    destination.setCharPositionInLine(destinationStartCharPos6485);
+                    destination = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, destinationStart6468, getCharIndex()-1);
+                    destination.setLine(destinationStartLine6468);
+                    destination.setCharPositionInLine(destinationStartCharPos6468);
 
 
                     mSEP(); 
@@ -12480,19 +12482,19 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int dteStart6500 = getCharIndex();
-                    int dteStartLine6500 = getLine();
-                    int dteStartCharPos6500 = getCharPositionInLine();
+                    int dteStart6483 = getCharIndex();
+                    int dteStartLine6483 = getLine();
+                    int dteStartCharPos6483 = getCharPositionInLine();
                     mNUMBER(); 
-                    dte = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dteStart6500, getCharIndex()-1);
-                    dte.setLine(dteStartLine6500);
-                    dte.setCharPositionInLine(dteStartCharPos6500);
+                    dte = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dteStart6483, getCharIndex()-1);
+                    dte.setLine(dteStartLine6483);
+                    dte.setCharPositionInLine(dteStartCharPos6483);
 
 
                     }
                     break;
                 case 4 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1343:6: '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1314:6: '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER
                     {
                     match("\"seqno\":"); 
 
@@ -12624,19 +12626,19 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1358:6: '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1329:6: '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER
                     {
                     match("\"dac\":"); 
 
 
 
-                    int dacStart6688 = getCharIndex();
-                    int dacStartLine6688 = getLine();
-                    int dacStartCharPos6688 = getCharPositionInLine();
+                    int dacStart6671 = getCharIndex();
+                    int dacStartLine6671 = getLine();
+                    int dacStartCharPos6671 = getCharPositionInLine();
                     mNUMBER(); 
-                    dac = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dacStart6688, getCharIndex()-1);
-                    dac.setLine(dacStartLine6688);
-                    dac.setCharPositionInLine(dacStartCharPos6688);
+                    dac = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dacStart6671, getCharIndex()-1);
+                    dac.setLine(dacStartLine6671);
+                    dac.setCharPositionInLine(dacStartCharPos6671);
 
 
                     mSEP(); 
@@ -12646,13 +12648,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int fidStart6702 = getCharIndex();
-                    int fidStartLine6702 = getLine();
-                    int fidStartCharPos6702 = getCharPositionInLine();
+                    int fidStart6685 = getCharIndex();
+                    int fidStartLine6685 = getLine();
+                    int fidStartCharPos6685 = getCharPositionInLine();
                     mNUMBER(); 
-                    fid = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fidStart6702, getCharIndex()-1);
-                    fid.setLine(fidStartLine6702);
-                    fid.setCharPositionInLine(fidStartCharPos6702);
+                    fid = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, fidStart6685, getCharIndex()-1);
+                    fid.setLine(fidStartLine6685);
+                    fid.setCharPositionInLine(fidStartCharPos6685);
 
 
                     mSEP(); 
@@ -12662,13 +12664,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int latitudeStart6716 = getCharIndex();
-                    int latitudeStartLine6716 = getLine();
-                    int latitudeStartCharPos6716 = getCharPositionInLine();
+                    int latitudeStart6699 = getCharIndex();
+                    int latitudeStartLine6699 = getLine();
+                    int latitudeStartCharPos6699 = getCharPositionInLine();
                     mSIGNED(); 
-                    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart6716, getCharIndex()-1);
-                    latitude.setLine(latitudeStartLine6716);
-                    latitude.setCharPositionInLine(latitudeStartCharPos6716);
+                    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart6699, getCharIndex()-1);
+                    latitude.setLine(latitudeStartLine6699);
+                    latitude.setCharPositionInLine(latitudeStartCharPos6699);
 
 
                     mSEP(); 
@@ -12678,13 +12680,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int longitudeStart6730 = getCharIndex();
-                    int longitudeStartLine6730 = getLine();
-                    int longitudeStartCharPos6730 = getCharPositionInLine();
+                    int longitudeStart6713 = getCharIndex();
+                    int longitudeStartLine6713 = getLine();
+                    int longitudeStartCharPos6713 = getCharPositionInLine();
                     mSIGNED(); 
-                    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart6730, getCharIndex()-1);
-                    longitude.setLine(longitudeStartLine6730);
-                    longitude.setCharPositionInLine(longitudeStartCharPos6730);
+                    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart6713, getCharIndex()-1);
+                    longitude.setLine(longitudeStartLine6713);
+                    longitude.setCharPositionInLine(longitudeStartCharPos6713);
 
 
                     mSEP(); 
@@ -12694,13 +12696,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int accuracyStart6744 = getCharIndex();
-                    int accuracyStartLine6744 = getLine();
-                    int accuracyStartCharPos6744 = getCharPositionInLine();
+                    int accuracyStart6727 = getCharIndex();
+                    int accuracyStartLine6727 = getLine();
+                    int accuracyStartCharPos6727 = getCharPositionInLine();
                     mLETTERS(); 
-                    accuracy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, accuracyStart6744, getCharIndex()-1);
-                    accuracy.setLine(accuracyStartLine6744);
-                    accuracy.setCharPositionInLine(accuracyStartCharPos6744);
+                    accuracy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, accuracyStart6727, getCharIndex()-1);
+                    accuracy.setLine(accuracyStartLine6727);
+                    accuracy.setCharPositionInLine(accuracyStartCharPos6727);
 
 
                     mSEP(); 
@@ -12710,13 +12712,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int timestampStart6757 = getCharIndex();
-                    int timestampStartLine6757 = getLine();
-                    int timestampStartCharPos6757 = getCharPositionInLine();
+                    int timestampStart6740 = getCharIndex();
+                    int timestampStartLine6740 = getLine();
+                    int timestampStartCharPos6740 = getCharPositionInLine();
                     mTIME_STAMP(); 
-                    timestamp = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, timestampStart6757, getCharIndex()-1);
-                    timestamp.setLine(timestampStartLine6757);
-                    timestamp.setCharPositionInLine(timestampStartCharPos6757);
+                    timestamp = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, timestampStart6740, getCharIndex()-1);
+                    timestamp.setLine(timestampStartLine6740);
+                    timestamp.setCharPositionInLine(timestampStartCharPos6740);
 
 
                     mSEP(); 
@@ -12726,13 +12728,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int wspeedStart6771 = getCharIndex();
-                    int wspeedStartLine6771 = getLine();
-                    int wspeedStartCharPos6771 = getCharPositionInLine();
+                    int wspeedStart6754 = getCharIndex();
+                    int wspeedStartLine6754 = getLine();
+                    int wspeedStartCharPos6754 = getCharPositionInLine();
                     mNUMBER(); 
-                    wspeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wspeedStart6771, getCharIndex()-1);
-                    wspeed.setLine(wspeedStartLine6771);
-                    wspeed.setCharPositionInLine(wspeedStartCharPos6771);
+                    wspeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wspeedStart6754, getCharIndex()-1);
+                    wspeed.setLine(wspeedStartLine6754);
+                    wspeed.setCharPositionInLine(wspeedStartCharPos6754);
 
 
                     mSEP(); 
@@ -12742,13 +12744,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int wgustStart6785 = getCharIndex();
-                    int wgustStartLine6785 = getLine();
-                    int wgustStartCharPos6785 = getCharPositionInLine();
+                    int wgustStart6768 = getCharIndex();
+                    int wgustStartLine6768 = getLine();
+                    int wgustStartCharPos6768 = getCharPositionInLine();
                     mNUMBER(); 
-                    wgust = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wgustStart6785, getCharIndex()-1);
-                    wgust.setLine(wgustStartLine6785);
-                    wgust.setCharPositionInLine(wgustStartCharPos6785);
+                    wgust = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wgustStart6768, getCharIndex()-1);
+                    wgust.setLine(wgustStartLine6768);
+                    wgust.setCharPositionInLine(wgustStartCharPos6768);
 
 
                     mSEP(); 
@@ -12758,13 +12760,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int wdirStart6799 = getCharIndex();
-                    int wdirStartLine6799 = getLine();
-                    int wdirStartCharPos6799 = getCharPositionInLine();
+                    int wdirStart6782 = getCharIndex();
+                    int wdirStartLine6782 = getLine();
+                    int wdirStartCharPos6782 = getCharPositionInLine();
                     mNUMBER(); 
-                    wdir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wdirStart6799, getCharIndex()-1);
-                    wdir.setLine(wdirStartLine6799);
-                    wdir.setCharPositionInLine(wdirStartCharPos6799);
+                    wdir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wdirStart6782, getCharIndex()-1);
+                    wdir.setLine(wdirStartLine6782);
+                    wdir.setCharPositionInLine(wdirStartCharPos6782);
 
 
                     mSEP(); 
@@ -12774,13 +12776,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int wgustdirStart6813 = getCharIndex();
-                    int wgustdirStartLine6813 = getLine();
-                    int wgustdirStartCharPos6813 = getCharPositionInLine();
+                    int wgustdirStart6796 = getCharIndex();
+                    int wgustdirStartLine6796 = getLine();
+                    int wgustdirStartCharPos6796 = getCharPositionInLine();
                     mNUMBER(); 
-                    wgustdir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wgustdirStart6813, getCharIndex()-1);
-                    wgustdir.setLine(wgustdirStartLine6813);
-                    wgustdir.setCharPositionInLine(wgustdirStartCharPos6813);
+                    wgustdir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wgustdirStart6796, getCharIndex()-1);
+                    wgustdir.setLine(wgustdirStartLine6796);
+                    wgustdir.setCharPositionInLine(wgustdirStartCharPos6796);
 
 
                     mSEP(); 
@@ -12790,13 +12792,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int humidityStart6827 = getCharIndex();
-                    int humidityStartLine6827 = getLine();
-                    int humidityStartCharPos6827 = getCharPositionInLine();
+                    int humidityStart6810 = getCharIndex();
+                    int humidityStartLine6810 = getLine();
+                    int humidityStartCharPos6810 = getCharPositionInLine();
                     mNUMBER(); 
-                    humidity = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, humidityStart6827, getCharIndex()-1);
-                    humidity.setLine(humidityStartLine6827);
-                    humidity.setCharPositionInLine(humidityStartCharPos6827);
+                    humidity = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, humidityStart6810, getCharIndex()-1);
+                    humidity.setLine(humidityStartLine6810);
+                    humidity.setCharPositionInLine(humidityStartCharPos6810);
 
 
                     mSEP(); 
@@ -12806,13 +12808,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int airtempStart6841 = getCharIndex();
-                    int airtempStartLine6841 = getLine();
-                    int airtempStartCharPos6841 = getCharPositionInLine();
+                    int airtempStart6824 = getCharIndex();
+                    int airtempStartLine6824 = getLine();
+                    int airtempStartCharPos6824 = getCharPositionInLine();
                     mSIGNED(); 
-                    airtemp = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, airtempStart6841, getCharIndex()-1);
-                    airtemp.setLine(airtempStartLine6841);
-                    airtemp.setCharPositionInLine(airtempStartCharPos6841);
+                    airtemp = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, airtempStart6824, getCharIndex()-1);
+                    airtemp.setLine(airtempStartLine6824);
+                    airtemp.setCharPositionInLine(airtempStartCharPos6824);
 
 
                     mSEP(); 
@@ -12822,13 +12824,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int dewpointStart6854 = getCharIndex();
-                    int dewpointStartLine6854 = getLine();
-                    int dewpointStartCharPos6854 = getCharPositionInLine();
+                    int dewpointStart6837 = getCharIndex();
+                    int dewpointStartLine6837 = getLine();
+                    int dewpointStartCharPos6837 = getCharPositionInLine();
                     mSIGNED(); 
-                    dewpoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dewpointStart6854, getCharIndex()-1);
-                    dewpoint.setLine(dewpointStartLine6854);
-                    dewpoint.setCharPositionInLine(dewpointStartCharPos6854);
+                    dewpoint = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dewpointStart6837, getCharIndex()-1);
+                    dewpoint.setLine(dewpointStartLine6837);
+                    dewpoint.setCharPositionInLine(dewpointStartCharPos6837);
 
 
                     mSEP(); 
@@ -12838,13 +12840,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int pressureStart6867 = getCharIndex();
-                    int pressureStartLine6867 = getLine();
-                    int pressureStartCharPos6867 = getCharPositionInLine();
+                    int pressureStart6850 = getCharIndex();
+                    int pressureStartLine6850 = getLine();
+                    int pressureStartCharPos6850 = getCharPositionInLine();
                     mNUMBER(); 
-                    pressure = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, pressureStart6867, getCharIndex()-1);
-                    pressure.setLine(pressureStartLine6867);
-                    pressure.setCharPositionInLine(pressureStartCharPos6867);
+                    pressure = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, pressureStart6850, getCharIndex()-1);
+                    pressure.setLine(pressureStartLine6850);
+                    pressure.setCharPositionInLine(pressureStartCharPos6850);
 
 
                     mSEP(); 
@@ -12854,13 +12856,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int pressuretendStart6881 = getCharIndex();
-                    int pressuretendStartLine6881 = getLine();
-                    int pressuretendStartCharPos6881 = getCharPositionInLine();
+                    int pressuretendStart6864 = getCharIndex();
+                    int pressuretendStartLine6864 = getLine();
+                    int pressuretendStartCharPos6864 = getCharPositionInLine();
                     mNUMBER(); 
-                    pressuretend = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, pressuretendStart6881, getCharIndex()-1);
-                    pressuretend.setLine(pressuretendStartLine6881);
-                    pressuretend.setCharPositionInLine(pressuretendStartCharPos6881);
+                    pressuretend = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, pressuretendStart6864, getCharIndex()-1);
+                    pressuretend.setLine(pressuretendStartLine6864);
+                    pressuretend.setCharPositionInLine(pressuretendStartCharPos6864);
 
 
                     mSEP(); 
@@ -12870,13 +12872,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int visgreaterStart6895 = getCharIndex();
-                    int visgreaterStartLine6895 = getLine();
-                    int visgreaterStartCharPos6895 = getCharPositionInLine();
+                    int visgreaterStart6878 = getCharIndex();
+                    int visgreaterStartLine6878 = getLine();
+                    int visgreaterStartCharPos6878 = getCharPositionInLine();
                     mLETTERS(); 
-                    visgreater = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, visgreaterStart6895, getCharIndex()-1);
-                    visgreater.setLine(visgreaterStartLine6895);
-                    visgreater.setCharPositionInLine(visgreaterStartCharPos6895);
+                    visgreater = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, visgreaterStart6878, getCharIndex()-1);
+                    visgreater.setLine(visgreaterStartLine6878);
+                    visgreater.setCharPositionInLine(visgreaterStartCharPos6878);
 
 
                     mSEP(); 
@@ -12886,13 +12888,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int visibilityStart6908 = getCharIndex();
-                    int visibilityStartLine6908 = getLine();
-                    int visibilityStartCharPos6908 = getCharPositionInLine();
+                    int visibilityStart6891 = getCharIndex();
+                    int visibilityStartLine6891 = getLine();
+                    int visibilityStartCharPos6891 = getCharPositionInLine();
                     mNUMBER(); 
-                    visibility = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, visibilityStart6908, getCharIndex()-1);
-                    visibility.setLine(visibilityStartLine6908);
-                    visibility.setCharPositionInLine(visibilityStartCharPos6908);
+                    visibility = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, visibilityStart6891, getCharIndex()-1);
+                    visibility.setLine(visibilityStartLine6891);
+                    visibility.setCharPositionInLine(visibilityStartCharPos6891);
 
 
                     mSEP(); 
@@ -12902,13 +12904,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int waterlevelStart6922 = getCharIndex();
-                    int waterlevelStartLine6922 = getLine();
-                    int waterlevelStartCharPos6922 = getCharPositionInLine();
+                    int waterlevelStart6905 = getCharIndex();
+                    int waterlevelStartLine6905 = getLine();
+                    int waterlevelStartCharPos6905 = getCharPositionInLine();
                     mSIGNED(); 
-                    waterlevel = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waterlevelStart6922, getCharIndex()-1);
-                    waterlevel.setLine(waterlevelStartLine6922);
-                    waterlevel.setCharPositionInLine(waterlevelStartCharPos6922);
+                    waterlevel = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waterlevelStart6905, getCharIndex()-1);
+                    waterlevel.setLine(waterlevelStartLine6905);
+                    waterlevel.setCharPositionInLine(waterlevelStartCharPos6905);
 
 
                     mSEP(); 
@@ -12918,13 +12920,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int leveltrendStart6935 = getCharIndex();
-                    int leveltrendStartLine6935 = getLine();
-                    int leveltrendStartCharPos6935 = getCharPositionInLine();
+                    int leveltrendStart6918 = getCharIndex();
+                    int leveltrendStartLine6918 = getLine();
+                    int leveltrendStartCharPos6918 = getCharPositionInLine();
                     mNUMBER(); 
-                    leveltrend = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, leveltrendStart6935, getCharIndex()-1);
-                    leveltrend.setLine(leveltrendStartLine6935);
-                    leveltrend.setCharPositionInLine(leveltrendStartCharPos6935);
+                    leveltrend = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, leveltrendStart6918, getCharIndex()-1);
+                    leveltrend.setLine(leveltrendStartLine6918);
+                    leveltrend.setCharPositionInLine(leveltrendStartCharPos6918);
 
 
                     mSEP(); 
@@ -12934,13 +12936,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int cspeedStart6949 = getCharIndex();
-                    int cspeedStartLine6949 = getLine();
-                    int cspeedStartCharPos6949 = getCharPositionInLine();
+                    int cspeedStart6932 = getCharIndex();
+                    int cspeedStartLine6932 = getLine();
+                    int cspeedStartCharPos6932 = getCharPositionInLine();
                     mNUMBER(); 
-                    cspeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cspeedStart6949, getCharIndex()-1);
-                    cspeed.setLine(cspeedStartLine6949);
-                    cspeed.setCharPositionInLine(cspeedStartCharPos6949);
+                    cspeed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cspeedStart6932, getCharIndex()-1);
+                    cspeed.setLine(cspeedStartLine6932);
+                    cspeed.setCharPositionInLine(cspeedStartCharPos6932);
 
 
                     mSEP(); 
@@ -12950,13 +12952,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int cdirStart6963 = getCharIndex();
-                    int cdirStartLine6963 = getLine();
-                    int cdirStartCharPos6963 = getCharPositionInLine();
+                    int cdirStart6946 = getCharIndex();
+                    int cdirStartLine6946 = getLine();
+                    int cdirStartCharPos6946 = getCharPositionInLine();
                     mNUMBER(); 
-                    cdir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdirStart6963, getCharIndex()-1);
-                    cdir.setLine(cdirStartLine6963);
-                    cdir.setCharPositionInLine(cdirStartCharPos6963);
+                    cdir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdirStart6946, getCharIndex()-1);
+                    cdir.setLine(cdirStartLine6946);
+                    cdir.setCharPositionInLine(cdirStartCharPos6946);
 
 
                     mSEP(); 
@@ -12966,13 +12968,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int cspeed2Start6977 = getCharIndex();
-                    int cspeed2StartLine6977 = getLine();
-                    int cspeed2StartCharPos6977 = getCharPositionInLine();
+                    int cspeed2Start6960 = getCharIndex();
+                    int cspeed2StartLine6960 = getLine();
+                    int cspeed2StartCharPos6960 = getCharPositionInLine();
                     mNUMBER(); 
-                    cspeed2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cspeed2Start6977, getCharIndex()-1);
-                    cspeed2.setLine(cspeed2StartLine6977);
-                    cspeed2.setCharPositionInLine(cspeed2StartCharPos6977);
+                    cspeed2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cspeed2Start6960, getCharIndex()-1);
+                    cspeed2.setLine(cspeed2StartLine6960);
+                    cspeed2.setCharPositionInLine(cspeed2StartCharPos6960);
 
 
                     mSEP(); 
@@ -12982,13 +12984,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int cdir2Start6991 = getCharIndex();
-                    int cdir2StartLine6991 = getLine();
-                    int cdir2StartCharPos6991 = getCharPositionInLine();
+                    int cdir2Start6974 = getCharIndex();
+                    int cdir2StartLine6974 = getLine();
+                    int cdir2StartCharPos6974 = getCharPositionInLine();
                     mNUMBER(); 
-                    cdir2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdir2Start6991, getCharIndex()-1);
-                    cdir2.setLine(cdir2StartLine6991);
-                    cdir2.setCharPositionInLine(cdir2StartCharPos6991);
+                    cdir2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdir2Start6974, getCharIndex()-1);
+                    cdir2.setLine(cdir2StartLine6974);
+                    cdir2.setCharPositionInLine(cdir2StartCharPos6974);
 
 
                     mSEP(); 
@@ -12998,13 +13000,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int cdepth2Start7005 = getCharIndex();
-                    int cdepth2StartLine7005 = getLine();
-                    int cdepth2StartCharPos7005 = getCharPositionInLine();
+                    int cdepth2Start6988 = getCharIndex();
+                    int cdepth2StartLine6988 = getLine();
+                    int cdepth2StartCharPos6988 = getCharPositionInLine();
                     mNUMBER(); 
-                    cdepth2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdepth2Start7005, getCharIndex()-1);
-                    cdepth2.setLine(cdepth2StartLine7005);
-                    cdepth2.setCharPositionInLine(cdepth2StartCharPos7005);
+                    cdepth2 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdepth2Start6988, getCharIndex()-1);
+                    cdepth2.setLine(cdepth2StartLine6988);
+                    cdepth2.setCharPositionInLine(cdepth2StartCharPos6988);
 
 
                     mSEP(); 
@@ -13014,13 +13016,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int cspeed3Start7019 = getCharIndex();
-                    int cspeed3StartLine7019 = getLine();
-                    int cspeed3StartCharPos7019 = getCharPositionInLine();
+                    int cspeed3Start7002 = getCharIndex();
+                    int cspeed3StartLine7002 = getLine();
+                    int cspeed3StartCharPos7002 = getCharPositionInLine();
                     mNUMBER(); 
-                    cspeed3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cspeed3Start7019, getCharIndex()-1);
-                    cspeed3.setLine(cspeed3StartLine7019);
-                    cspeed3.setCharPositionInLine(cspeed3StartCharPos7019);
+                    cspeed3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cspeed3Start7002, getCharIndex()-1);
+                    cspeed3.setLine(cspeed3StartLine7002);
+                    cspeed3.setCharPositionInLine(cspeed3StartCharPos7002);
 
 
                     mSEP(); 
@@ -13030,13 +13032,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int cdir3Start7033 = getCharIndex();
-                    int cdir3StartLine7033 = getLine();
-                    int cdir3StartCharPos7033 = getCharPositionInLine();
+                    int cdir3Start7016 = getCharIndex();
+                    int cdir3StartLine7016 = getLine();
+                    int cdir3StartCharPos7016 = getCharPositionInLine();
                     mNUMBER(); 
-                    cdir3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdir3Start7033, getCharIndex()-1);
-                    cdir3.setLine(cdir3StartLine7033);
-                    cdir3.setCharPositionInLine(cdir3StartCharPos7033);
+                    cdir3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdir3Start7016, getCharIndex()-1);
+                    cdir3.setLine(cdir3StartLine7016);
+                    cdir3.setCharPositionInLine(cdir3StartCharPos7016);
 
 
                     mSEP(); 
@@ -13046,7 +13048,7 @@ public class NMEALexer extends Lexer {
 
 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1384:19: (cdepth3= NUMBER | '\\n' )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1355:19: (cdepth3= NUMBER | '\\n' )
                     int alt228=2;
                     int LA228_0 = input.LA(1);
 
@@ -13060,26 +13062,26 @@ public class NMEALexer extends Lexer {
                         NoViableAltException nvae =
                             new NoViableAltException("", 228, 0, input);
 
-                      //  throw nvae;
+                        throw nvae;
 
                     }
                     switch (alt228) {
                         case 1 :
-                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1384:20: cdepth3= NUMBER
+                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1355:20: cdepth3= NUMBER
                             {
-                            int cdepth3Start7050 = getCharIndex();
-                            int cdepth3StartLine7050 = getLine();
-                            int cdepth3StartCharPos7050 = getCharPositionInLine();
+                            int cdepth3Start7033 = getCharIndex();
+                            int cdepth3StartLine7033 = getLine();
+                            int cdepth3StartCharPos7033 = getCharPositionInLine();
                             mNUMBER(); 
-                            cdepth3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdepth3Start7050, getCharIndex()-1);
-                            cdepth3.setLine(cdepth3StartLine7050);
-                            cdepth3.setCharPositionInLine(cdepth3StartCharPos7050);
+                            cdepth3 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, cdepth3Start7033, getCharIndex()-1);
+                            cdepth3.setLine(cdepth3StartLine7033);
+                            cdepth3.setCharPositionInLine(cdepth3StartCharPos7033);
 
 
                             }
                             break;
                         case 2 :
-                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1384:36: '\\n'
+                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1355:36: '\\n'
                             {
                             match('\n'); 
 
@@ -13096,13 +13098,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int waveheightStart7069 = getCharIndex();
-                    int waveheightStartLine7069 = getLine();
-                    int waveheightStartCharPos7069 = getCharPositionInLine();
+                    int waveheightStart7052 = getCharIndex();
+                    int waveheightStartLine7052 = getLine();
+                    int waveheightStartCharPos7052 = getCharPositionInLine();
                     mNUMBER(); 
-                    waveheight = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waveheightStart7069, getCharIndex()-1);
-                    waveheight.setLine(waveheightStartLine7069);
-                    waveheight.setCharPositionInLine(waveheightStartCharPos7069);
+                    waveheight = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waveheightStart7052, getCharIndex()-1);
+                    waveheight.setLine(waveheightStartLine7052);
+                    waveheight.setCharPositionInLine(waveheightStartCharPos7052);
 
 
                     mSEP(); 
@@ -13112,13 +13114,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int waveperiodStart7083 = getCharIndex();
-                    int waveperiodStartLine7083 = getLine();
-                    int waveperiodStartCharPos7083 = getCharPositionInLine();
+                    int waveperiodStart7066 = getCharIndex();
+                    int waveperiodStartLine7066 = getLine();
+                    int waveperiodStartCharPos7066 = getCharPositionInLine();
                     mNUMBER(); 
-                    waveperiod = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waveperiodStart7083, getCharIndex()-1);
-                    waveperiod.setLine(waveperiodStartLine7083);
-                    waveperiod.setCharPositionInLine(waveperiodStartCharPos7083);
+                    waveperiod = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, waveperiodStart7066, getCharIndex()-1);
+                    waveperiod.setLine(waveperiodStartLine7066);
+                    waveperiod.setCharPositionInLine(waveperiodStartCharPos7066);
 
 
                     mSEP(); 
@@ -13128,13 +13130,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int wavedirStart7097 = getCharIndex();
-                    int wavedirStartLine7097 = getLine();
-                    int wavedirStartCharPos7097 = getCharPositionInLine();
+                    int wavedirStart7080 = getCharIndex();
+                    int wavedirStartLine7080 = getLine();
+                    int wavedirStartCharPos7080 = getCharPositionInLine();
                     mNUMBER(); 
-                    wavedir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wavedirStart7097, getCharIndex()-1);
-                    wavedir.setLine(wavedirStartLine7097);
-                    wavedir.setCharPositionInLine(wavedirStartCharPos7097);
+                    wavedir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, wavedirStart7080, getCharIndex()-1);
+                    wavedir.setLine(wavedirStartLine7080);
+                    wavedir.setCharPositionInLine(wavedirStartCharPos7080);
 
 
                     mSEP(); 
@@ -13144,13 +13146,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int swellheightStart7111 = getCharIndex();
-                    int swellheightStartLine7111 = getLine();
-                    int swellheightStartCharPos7111 = getCharPositionInLine();
+                    int swellheightStart7094 = getCharIndex();
+                    int swellheightStartLine7094 = getLine();
+                    int swellheightStartCharPos7094 = getCharPositionInLine();
                     mNUMBER(); 
-                    swellheight = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, swellheightStart7111, getCharIndex()-1);
-                    swellheight.setLine(swellheightStartLine7111);
-                    swellheight.setCharPositionInLine(swellheightStartCharPos7111);
+                    swellheight = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, swellheightStart7094, getCharIndex()-1);
+                    swellheight.setLine(swellheightStartLine7094);
+                    swellheight.setCharPositionInLine(swellheightStartCharPos7094);
 
 
                     mSEP(); 
@@ -13160,13 +13162,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int swellperiodStart7125 = getCharIndex();
-                    int swellperiodStartLine7125 = getLine();
-                    int swellperiodStartCharPos7125 = getCharPositionInLine();
+                    int swellperiodStart7108 = getCharIndex();
+                    int swellperiodStartLine7108 = getLine();
+                    int swellperiodStartCharPos7108 = getCharPositionInLine();
                     mNUMBER(); 
-                    swellperiod = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, swellperiodStart7125, getCharIndex()-1);
-                    swellperiod.setLine(swellperiodStartLine7125);
-                    swellperiod.setCharPositionInLine(swellperiodStartCharPos7125);
+                    swellperiod = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, swellperiodStart7108, getCharIndex()-1);
+                    swellperiod.setLine(swellperiodStartLine7108);
+                    swellperiod.setCharPositionInLine(swellperiodStartCharPos7108);
 
 
                     mSEP(); 
@@ -13176,13 +13178,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int swelldirStart7139 = getCharIndex();
-                    int swelldirStartLine7139 = getLine();
-                    int swelldirStartCharPos7139 = getCharPositionInLine();
+                    int swelldirStart7122 = getCharIndex();
+                    int swelldirStartLine7122 = getLine();
+                    int swelldirStartCharPos7122 = getCharPositionInLine();
                     mNUMBER(); 
-                    swelldir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, swelldirStart7139, getCharIndex()-1);
-                    swelldir.setLine(swelldirStartLine7139);
-                    swelldir.setCharPositionInLine(swelldirStartCharPos7139);
+                    swelldir = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, swelldirStart7122, getCharIndex()-1);
+                    swelldir.setLine(swelldirStartLine7122);
+                    swelldir.setCharPositionInLine(swelldirStartCharPos7122);
 
 
                     mSEP(); 
@@ -13192,13 +13194,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int seastateStart7153 = getCharIndex();
-                    int seastateStartLine7153 = getLine();
-                    int seastateStartCharPos7153 = getCharPositionInLine();
+                    int seastateStart7136 = getCharIndex();
+                    int seastateStartLine7136 = getLine();
+                    int seastateStartCharPos7136 = getCharPositionInLine();
                     mNUMBER(); 
-                    seastate = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, seastateStart7153, getCharIndex()-1);
-                    seastate.setLine(seastateStartLine7153);
-                    seastate.setCharPositionInLine(seastateStartCharPos7153);
+                    seastate = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, seastateStart7136, getCharIndex()-1);
+                    seastate.setLine(seastateStartLine7136);
+                    seastate.setCharPositionInLine(seastateStartCharPos7136);
 
 
                     mSEP(); 
@@ -13208,13 +13210,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int watertempStart7167 = getCharIndex();
-                    int watertempStartLine7167 = getLine();
-                    int watertempStartCharPos7167 = getCharPositionInLine();
+                    int watertempStart7150 = getCharIndex();
+                    int watertempStartLine7150 = getLine();
+                    int watertempStartCharPos7150 = getCharPositionInLine();
                     mSIGNED(); 
-                    watertemp = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, watertempStart7167, getCharIndex()-1);
-                    watertemp.setLine(watertempStartLine7167);
-                    watertemp.setCharPositionInLine(watertempStartCharPos7167);
+                    watertemp = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, watertempStart7150, getCharIndex()-1);
+                    watertemp.setLine(watertempStartLine7150);
+                    watertemp.setCharPositionInLine(watertempStartCharPos7150);
 
 
                     mSEP(); 
@@ -13224,13 +13226,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int preciptypeStart7180 = getCharIndex();
-                    int preciptypeStartLine7180 = getLine();
-                    int preciptypeStartCharPos7180 = getCharPositionInLine();
+                    int preciptypeStart7163 = getCharIndex();
+                    int preciptypeStartLine7163 = getLine();
+                    int preciptypeStartCharPos7163 = getCharPositionInLine();
                     mNUMBER(); 
-                    preciptype = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, preciptypeStart7180, getCharIndex()-1);
-                    preciptype.setLine(preciptypeStartLine7180);
-                    preciptype.setCharPositionInLine(preciptypeStartCharPos7180);
+                    preciptype = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, preciptypeStart7163, getCharIndex()-1);
+                    preciptype.setLine(preciptypeStartLine7163);
+                    preciptype.setCharPositionInLine(preciptypeStartCharPos7163);
 
 
                     mSEP(); 
@@ -13240,13 +13242,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int salinityStart7194 = getCharIndex();
-                    int salinityStartLine7194 = getLine();
-                    int salinityStartCharPos7194 = getCharPositionInLine();
+                    int salinityStart7177 = getCharIndex();
+                    int salinityStartLine7177 = getLine();
+                    int salinityStartCharPos7177 = getCharPositionInLine();
                     mNUMBER(); 
-                    salinity = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, salinityStart7194, getCharIndex()-1);
-                    salinity.setLine(salinityStartLine7194);
-                    salinity.setCharPositionInLine(salinityStartCharPos7194);
+                    salinity = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, salinityStart7177, getCharIndex()-1);
+                    salinity.setLine(salinityStartLine7177);
+                    salinity.setCharPositionInLine(salinityStartCharPos7177);
 
 
                     mSEP(); 
@@ -13256,25 +13258,25 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int iceStart7208 = getCharIndex();
-                    int iceStartLine7208 = getLine();
-                    int iceStartCharPos7208 = getCharPositionInLine();
+                    int iceStart7191 = getCharIndex();
+                    int iceStartLine7191 = getLine();
+                    int iceStartCharPos7191 = getCharPositionInLine();
                     mNUMBER(); 
-                    ice = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, iceStart7208, getCharIndex()-1);
-                    ice.setLine(iceStartLine7208);
-                    ice.setCharPositionInLine(iceStartCharPos7208);
+                    ice = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, iceStart7191, getCharIndex()-1);
+                    ice.setLine(iceStartLine7191);
+                    ice.setCharPositionInLine(iceStartCharPos7191);
 
 
                     }
                     break;
                 case 6 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1398:6: '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1369:6: '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
                     {
                     match("\"reserved\":"); 
 
 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1398:28: (reserved= NUMBER )*
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1369:28: (reserved= NUMBER )*
                     loop229:
                     do {
                         int alt229=2;
@@ -13287,15 +13289,15 @@ public class NMEALexer extends Lexer {
 
                         switch (alt229) {
                     	case 1 :
-                    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1398:28: reserved= NUMBER
+                    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1369:28: reserved= NUMBER
                     	    {
-                    	    int reservedStart7233 = getCharIndex();
-                    	    int reservedStartLine7233 = getLine();
-                    	    int reservedStartCharPos7233 = getCharPositionInLine();
+                    	    int reservedStart7216 = getCharIndex();
+                    	    int reservedStartLine7216 = getLine();
+                    	    int reservedStartCharPos7216 = getCharPositionInLine();
                     	    mNUMBER(); 
-                    	    reserved = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, reservedStart7233, getCharIndex()-1);
-                    	    reserved.setLine(reservedStartLine7233);
-                    	    reserved.setCharPositionInLine(reservedStartCharPos7233);
+                    	    reserved = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, reservedStart7216, getCharIndex()-1);
+                    	    reserved.setLine(reservedStartLine7216);
+                    	    reserved.setCharPositionInLine(reservedStartCharPos7216);
 
 
                     	    }
@@ -13314,13 +13316,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int speedStart7247 = getCharIndex();
-                    int speedStartLine7247 = getLine();
-                    int speedStartCharPos7247 = getCharPositionInLine();
+                    int speedStart7230 = getCharIndex();
+                    int speedStartLine7230 = getLine();
+                    int speedStartCharPos7230 = getCharPositionInLine();
                     mNUMBER(); 
-                    speed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedStart7247, getCharIndex()-1);
-                    speed.setLine(speedStartLine7247);
-                    speed.setCharPositionInLine(speedStartCharPos7247);
+                    speed = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, speedStart7230, getCharIndex()-1);
+                    speed.setLine(speedStartLine7230);
+                    speed.setCharPositionInLine(speedStartCharPos7230);
 
 
                     mSEP(); 
@@ -13330,13 +13332,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int accuracyStart7261 = getCharIndex();
-                    int accuracyStartLine7261 = getLine();
-                    int accuracyStartCharPos7261 = getCharPositionInLine();
+                    int accuracyStart7244 = getCharIndex();
+                    int accuracyStartLine7244 = getLine();
+                    int accuracyStartCharPos7244 = getCharPositionInLine();
                     mLETTERS(); 
-                    accuracy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, accuracyStart7261, getCharIndex()-1);
-                    accuracy.setLine(accuracyStartLine7261);
-                    accuracy.setCharPositionInLine(accuracyStartCharPos7261);
+                    accuracy = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, accuracyStart7244, getCharIndex()-1);
+                    accuracy.setLine(accuracyStartLine7244);
+                    accuracy.setCharPositionInLine(accuracyStartCharPos7244);
 
 
                     mSEP(); 
@@ -13346,13 +13348,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int longitudeStart7274 = getCharIndex();
-                    int longitudeStartLine7274 = getLine();
-                    int longitudeStartCharPos7274 = getCharPositionInLine();
+                    int longitudeStart7257 = getCharIndex();
+                    int longitudeStartLine7257 = getLine();
+                    int longitudeStartCharPos7257 = getCharPositionInLine();
                     mSIGNED(); 
-                    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart7274, getCharIndex()-1);
-                    longitude.setLine(longitudeStartLine7274);
-                    longitude.setCharPositionInLine(longitudeStartCharPos7274);
+                    longitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, longitudeStart7257, getCharIndex()-1);
+                    longitude.setLine(longitudeStartLine7257);
+                    longitude.setCharPositionInLine(longitudeStartCharPos7257);
 
 
                     mSEP(); 
@@ -13362,13 +13364,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int latitudeStart7288 = getCharIndex();
-                    int latitudeStartLine7288 = getLine();
-                    int latitudeStartCharPos7288 = getCharPositionInLine();
+                    int latitudeStart7271 = getCharIndex();
+                    int latitudeStartLine7271 = getLine();
+                    int latitudeStartCharPos7271 = getCharPositionInLine();
                     mSIGNED(); 
-                    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart7288, getCharIndex()-1);
-                    latitude.setLine(latitudeStartLine7288);
-                    latitude.setCharPositionInLine(latitudeStartCharPos7288);
+                    latitude = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, latitudeStart7271, getCharIndex()-1);
+                    latitude.setLine(latitudeStartLine7271);
+                    latitude.setCharPositionInLine(latitudeStartCharPos7271);
 
 
                     mSEP(); 
@@ -13378,13 +13380,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int courseStart7302 = getCharIndex();
-                    int courseStartLine7302 = getLine();
-                    int courseStartCharPos7302 = getCharPositionInLine();
+                    int courseStart7285 = getCharIndex();
+                    int courseStartLine7285 = getLine();
+                    int courseStartCharPos7285 = getCharPositionInLine();
                     mNUMBER(); 
-                    course = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, courseStart7302, getCharIndex()-1);
-                    course.setLine(courseStartLine7302);
-                    course.setCharPositionInLine(courseStartCharPos7302);
+                    course = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, courseStart7285, getCharIndex()-1);
+                    course.setLine(courseStartLine7285);
+                    course.setCharPositionInLine(courseStartCharPos7285);
 
 
                     mSEP(); 
@@ -13394,13 +13396,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int headingStart7315 = getCharIndex();
-                    int headingStartLine7315 = getLine();
-                    int headingStartCharPos7315 = getCharPositionInLine();
+                    int headingStart7298 = getCharIndex();
+                    int headingStartLine7298 = getLine();
+                    int headingStartCharPos7298 = getCharPositionInLine();
                     mNUMBER(); 
-                    heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart7315, getCharIndex()-1);
-                    heading.setLine(headingStartLine7315);
-                    heading.setCharPositionInLine(headingStartCharPos7315);
+                    heading = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, headingStart7298, getCharIndex()-1);
+                    heading.setLine(headingStartLine7298);
+                    heading.setCharPositionInLine(headingStartCharPos7298);
 
 
                     mSEP(); 
@@ -13410,13 +13412,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int secondStart7328 = getCharIndex();
-                    int secondStartLine7328 = getLine();
-                    int secondStartCharPos7328 = getCharPositionInLine();
+                    int secondStart7311 = getCharIndex();
+                    int secondStartLine7311 = getLine();
+                    int secondStartCharPos7311 = getCharPositionInLine();
                     mNUMBER(); 
-                    second = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, secondStart7328, getCharIndex()-1);
-                    second.setLine(secondStartLine7328);
-                    second.setCharPositionInLine(secondStartCharPos7328);
+                    second = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, secondStart7311, getCharIndex()-1);
+                    second.setLine(secondStartLine7311);
+                    second.setCharPositionInLine(secondStartCharPos7311);
 
 
                     mSEP(); 
@@ -13426,13 +13428,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int regionalStart7343 = getCharIndex();
-                    int regionalStartLine7343 = getLine();
-                    int regionalStartCharPos7343 = getCharPositionInLine();
+                    int regionalStart7326 = getCharIndex();
+                    int regionalStartLine7326 = getLine();
+                    int regionalStartCharPos7326 = getCharPositionInLine();
                     mNUMBER(); 
-                    regional = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, regionalStart7343, getCharIndex()-1);
-                    regional.setLine(regionalStartLine7343);
-                    regional.setCharPositionInLine(regionalStartCharPos7343);
+                    regional = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, regionalStart7326, getCharIndex()-1);
+                    regional.setLine(regionalStartLine7326);
+                    regional.setCharPositionInLine(regionalStartCharPos7326);
 
 
                     mSEP(); 
@@ -13442,13 +13444,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int csStart7357 = getCharIndex();
-                    int csStartLine7357 = getLine();
-                    int csStartCharPos7357 = getCharPositionInLine();
+                    int csStart7340 = getCharIndex();
+                    int csStartLine7340 = getLine();
+                    int csStartCharPos7340 = getCharPositionInLine();
                     mLETTERS(); 
-                    cs = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, csStart7357, getCharIndex()-1);
-                    cs.setLine(csStartLine7357);
-                    cs.setCharPositionInLine(csStartCharPos7357);
+                    cs = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, csStart7340, getCharIndex()-1);
+                    cs.setLine(csStartLine7340);
+                    cs.setCharPositionInLine(csStartCharPos7340);
 
 
                     mSEP(); 
@@ -13458,13 +13460,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int displayStart7371 = getCharIndex();
-                    int displayStartLine7371 = getLine();
-                    int displayStartCharPos7371 = getCharPositionInLine();
+                    int displayStart7354 = getCharIndex();
+                    int displayStartLine7354 = getLine();
+                    int displayStartCharPos7354 = getCharPositionInLine();
                     mLETTERS(); 
-                    display = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, displayStart7371, getCharIndex()-1);
-                    display.setLine(displayStartLine7371);
-                    display.setCharPositionInLine(displayStartCharPos7371);
+                    display = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, displayStart7354, getCharIndex()-1);
+                    display.setLine(displayStartLine7354);
+                    display.setCharPositionInLine(displayStartCharPos7354);
 
 
                     mSEP(); 
@@ -13474,13 +13476,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int dscStart7384 = getCharIndex();
-                    int dscStartLine7384 = getLine();
-                    int dscStartCharPos7384 = getCharPositionInLine();
+                    int dscStart7367 = getCharIndex();
+                    int dscStartLine7367 = getLine();
+                    int dscStartCharPos7367 = getCharPositionInLine();
                     mLETTERS(); 
-                    dsc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dscStart7384, getCharIndex()-1);
-                    dsc.setLine(dscStartLine7384);
-                    dsc.setCharPositionInLine(dscStartCharPos7384);
+                    dsc = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, dscStart7367, getCharIndex()-1);
+                    dsc.setLine(dscStartLine7367);
+                    dsc.setCharPositionInLine(dscStartCharPos7367);
 
 
                     mSEP(); 
@@ -13490,13 +13492,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int bandStart7398 = getCharIndex();
-                    int bandStartLine7398 = getLine();
-                    int bandStartCharPos7398 = getCharPositionInLine();
+                    int bandStart7381 = getCharIndex();
+                    int bandStartLine7381 = getLine();
+                    int bandStartCharPos7381 = getCharPositionInLine();
                     mLETTERS(); 
-                    band = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bandStart7398, getCharIndex()-1);
-                    band.setLine(bandStartLine7398);
-                    band.setCharPositionInLine(bandStartCharPos7398);
+                    band = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, bandStart7381, getCharIndex()-1);
+                    band.setLine(bandStartLine7381);
+                    band.setCharPositionInLine(bandStartCharPos7381);
 
 
                     mSEP(); 
@@ -13506,13 +13508,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int msg22Start7411 = getCharIndex();
-                    int msg22StartLine7411 = getLine();
-                    int msg22StartCharPos7411 = getCharPositionInLine();
+                    int msg22Start7394 = getCharIndex();
+                    int msg22StartLine7394 = getLine();
+                    int msg22StartCharPos7394 = getCharPositionInLine();
                     mLETTERS(); 
-                    msg22 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, msg22Start7411, getCharIndex()-1);
-                    msg22.setLine(msg22StartLine7411);
-                    msg22.setCharPositionInLine(msg22StartCharPos7411);
+                    msg22 = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, msg22Start7394, getCharIndex()-1);
+                    msg22.setLine(msg22StartLine7394);
+                    msg22.setCharPositionInLine(msg22StartCharPos7394);
 
 
                     mSEP(); 
@@ -13522,13 +13524,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int raimStart7424 = getCharIndex();
-                    int raimStartLine7424 = getLine();
-                    int raimStartCharPos7424 = getCharPositionInLine();
+                    int raimStart7407 = getCharIndex();
+                    int raimStartLine7407 = getLine();
+                    int raimStartCharPos7407 = getCharPositionInLine();
                     mLETTERS(); 
-                    raim = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, raimStart7424, getCharIndex()-1);
-                    raim.setLine(raimStartLine7424);
-                    raim.setCharPositionInLine(raimStartCharPos7424);
+                    raim = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, raimStart7407, getCharIndex()-1);
+                    raim.setLine(raimStartLine7407);
+                    raim.setCharPositionInLine(raimStartCharPos7407);
 
 
                     mSEP(); 
@@ -13538,31 +13540,31 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int radioStart7438 = getCharIndex();
-                    int radioStartLine7438 = getLine();
-                    int radioStartCharPos7438 = getCharPositionInLine();
+                    int radioStart7421 = getCharIndex();
+                    int radioStartLine7421 = getLine();
+                    int radioStartCharPos7421 = getCharPositionInLine();
                     mNUMBER(); 
-                    radio = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, radioStart7438, getCharIndex()-1);
-                    radio.setLine(radioStartLine7438);
-                    radio.setCharPositionInLine(radioStartCharPos7438);
+                    radio = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, radioStart7421, getCharIndex()-1);
+                    radio.setLine(radioStartLine7421);
+                    radio.setCharPositionInLine(radioStartCharPos7421);
 
 
                     }
                     break;
                 case 7 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1416:6: '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1387:6: '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER
                     {
                     match("\"shipname\":"); 
 
 
 
-                    int shipnameStart7462 = getCharIndex();
-                    int shipnameStartLine7462 = getLine();
-                    int shipnameStartCharPos7462 = getCharPositionInLine();
+                    int shipnameStart7445 = getCharIndex();
+                    int shipnameStartLine7445 = getLine();
+                    int shipnameStartCharPos7445 = getCharPositionInLine();
                     mNAME(); 
-                    shipname = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, shipnameStart7462, getCharIndex()-1);
-                    shipname.setLine(shipnameStartLine7462);
-                    shipname.setCharPositionInLine(shipnameStartCharPos7462);
+                    shipname = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, shipnameStart7445, getCharIndex()-1);
+                    shipname.setLine(shipnameStartLine7445);
+                    shipname.setCharPositionInLine(shipnameStartCharPos7445);
 
 
                     mSEP(); 
@@ -13572,13 +13574,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int shiptypeStart7476 = getCharIndex();
-                    int shiptypeStartLine7476 = getLine();
-                    int shiptypeStartCharPos7476 = getCharPositionInLine();
+                    int shiptypeStart7459 = getCharIndex();
+                    int shiptypeStartLine7459 = getLine();
+                    int shiptypeStartCharPos7459 = getCharPositionInLine();
                     mNUMBER(); 
-                    shiptype = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, shiptypeStart7476, getCharIndex()-1);
-                    shiptype.setLine(shiptypeStartLine7476);
-                    shiptype.setCharPositionInLine(shiptypeStartCharPos7476);
+                    shiptype = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, shiptypeStart7459, getCharIndex()-1);
+                    shiptype.setLine(shiptypeStartLine7459);
+                    shiptype.setCharPositionInLine(shiptypeStartCharPos7459);
 
 
                     mSEP(); 
@@ -13588,13 +13590,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int vendoridStart7489 = getCharIndex();
-                    int vendoridStartLine7489 = getLine();
-                    int vendoridStartCharPos7489 = getCharPositionInLine();
+                    int vendoridStart7472 = getCharIndex();
+                    int vendoridStartLine7472 = getLine();
+                    int vendoridStartCharPos7472 = getCharPositionInLine();
                     mNAME(); 
-                    vendorid = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, vendoridStart7489, getCharIndex()-1);
-                    vendorid.setLine(vendoridStartLine7489);
-                    vendorid.setCharPositionInLine(vendoridStartCharPos7489);
+                    vendorid = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, vendoridStart7472, getCharIndex()-1);
+                    vendorid.setLine(vendoridStartLine7472);
+                    vendorid.setCharPositionInLine(vendoridStartCharPos7472);
 
 
                     mSEP(); 
@@ -13604,13 +13606,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int callsignStart7503 = getCharIndex();
-                    int callsignStartLine7503 = getLine();
-                    int callsignStartCharPos7503 = getCharPositionInLine();
+                    int callsignStart7486 = getCharIndex();
+                    int callsignStartLine7486 = getLine();
+                    int callsignStartCharPos7486 = getCharPositionInLine();
                     mNAME(); 
-                    callsign = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, callsignStart7503, getCharIndex()-1);
-                    callsign.setLine(callsignStartLine7503);
-                    callsign.setCharPositionInLine(callsignStartCharPos7503);
+                    callsign = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, callsignStart7486, getCharIndex()-1);
+                    callsign.setLine(callsignStartLine7486);
+                    callsign.setCharPositionInLine(callsignStartCharPos7486);
 
 
                     mSEP(); 
@@ -13620,13 +13622,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int to_bowStart7517 = getCharIndex();
-                    int to_bowStartLine7517 = getLine();
-                    int to_bowStartCharPos7517 = getCharPositionInLine();
+                    int to_bowStart7500 = getCharIndex();
+                    int to_bowStartLine7500 = getLine();
+                    int to_bowStartCharPos7500 = getCharPositionInLine();
                     mNUMBER(); 
-                    to_bow = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_bowStart7517, getCharIndex()-1);
-                    to_bow.setLine(to_bowStartLine7517);
-                    to_bow.setCharPositionInLine(to_bowStartCharPos7517);
+                    to_bow = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_bowStart7500, getCharIndex()-1);
+                    to_bow.setLine(to_bowStartLine7500);
+                    to_bow.setCharPositionInLine(to_bowStartCharPos7500);
 
 
                     mSEP(); 
@@ -13636,13 +13638,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int to_sternStart7530 = getCharIndex();
-                    int to_sternStartLine7530 = getLine();
-                    int to_sternStartCharPos7530 = getCharPositionInLine();
+                    int to_sternStart7513 = getCharIndex();
+                    int to_sternStartLine7513 = getLine();
+                    int to_sternStartCharPos7513 = getCharPositionInLine();
                     mNUMBER(); 
-                    to_stern = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_sternStart7530, getCharIndex()-1);
-                    to_stern.setLine(to_sternStartLine7530);
-                    to_stern.setCharPositionInLine(to_sternStartCharPos7530);
+                    to_stern = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_sternStart7513, getCharIndex()-1);
+                    to_stern.setLine(to_sternStartLine7513);
+                    to_stern.setCharPositionInLine(to_sternStartCharPos7513);
 
 
                     mSEP(); 
@@ -13652,13 +13654,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int to_portStart7543 = getCharIndex();
-                    int to_portStartLine7543 = getLine();
-                    int to_portStartCharPos7543 = getCharPositionInLine();
+                    int to_portStart7526 = getCharIndex();
+                    int to_portStartLine7526 = getLine();
+                    int to_portStartCharPos7526 = getCharPositionInLine();
                     mNUMBER(); 
-                    to_port = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_portStart7543, getCharIndex()-1);
-                    to_port.setLine(to_portStartLine7543);
-                    to_port.setCharPositionInLine(to_portStartCharPos7543);
+                    to_port = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_portStart7526, getCharIndex()-1);
+                    to_port.setLine(to_portStartLine7526);
+                    to_port.setCharPositionInLine(to_portStartCharPos7526);
 
 
                     mSEP(); 
@@ -13668,13 +13670,13 @@ public class NMEALexer extends Lexer {
 
 
 
-                    int to_starboardStart7556 = getCharIndex();
-                    int to_starboardStartLine7556 = getLine();
-                    int to_starboardStartCharPos7556 = getCharPositionInLine();
+                    int to_starboardStart7539 = getCharIndex();
+                    int to_starboardStartLine7539 = getLine();
+                    int to_starboardStartCharPos7539 = getCharPositionInLine();
                     mNUMBER(); 
-                    to_starboard = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_starboardStart7556, getCharIndex()-1);
-                    to_starboard.setLine(to_starboardStartLine7556);
-                    to_starboard.setCharPositionInLine(to_starboardStartCharPos7556);
+                    to_starboard = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, to_starboardStart7539, getCharIndex()-1);
+                    to_starboard.setLine(to_starboardStartLine7539);
+                    to_starboard.setCharPositionInLine(to_starboardStartCharPos7539);
 
 
                     }
@@ -13683,7 +13685,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:10: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:10: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
             loop231:
             do {
                 int alt231=12;
@@ -13811,63 +13813,63 @@ public class NMEALexer extends Lexer {
 
                 switch (alt231) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:11: '\"'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:11: '\"'
             	    {
             	    match('\"'); 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:17: '['
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:17: '['
             	    {
             	    match('['); 
 
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:23: ']'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:23: ']'
             	    {
             	    match(']'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:29: ':'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:29: ':'
             	    {
             	    match(':'); 
 
             	    }
             	    break;
             	case 5 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:35: '/'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:35: '/'
             	    {
             	    match('/'); 
 
             	    }
             	    break;
             	case 6 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:42: '}'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:42: '}'
             	    {
             	    match('}'); 
 
             	    }
             	    break;
             	case 7 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:48: '_'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:48: '_'
             	    {
             	    match('_'); 
 
             	    }
             	    break;
             	case 8 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:54: '#'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:54: '#'
             	    {
             	    match('#'); 
 
             	    }
             	    break;
             	case 9 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:60: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:60: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -13875,7 +13877,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 10 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:69: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:69: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -13883,7 +13885,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 11 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1426:79: SIGN
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1396:79: SIGN
             	    {
             	    mSIGN(); 
 
@@ -14002,14 +14004,16 @@ public class NMEALexer extends Lexer {
         try {
             int _type = GPSD_DEVICE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1517:9: ( '{\"class\":\"DEVICE\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:6: '{\"class\":\"DEVICE\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1487:9: ( '{' '\"class\":\"DEVICE\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:6: '{' '\"class\":\"DEVICE\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
             {
-            match("{\"class\":\"DEVICE\""); 
+            match('{'); 
+
+            match("\"class\":\"DEVICE\""); 
 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:26: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:28: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
             loop232:
             do {
                 int alt232=13;
@@ -14142,63 +14146,63 @@ public class NMEALexer extends Lexer {
 
                 switch (alt232) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:27: '\"'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:29: '\"'
             	    {
             	    match('\"'); 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:33: '['
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:35: '['
             	    {
             	    match('['); 
 
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:39: ']'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:41: ']'
             	    {
             	    match(']'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:45: ':'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:47: ':'
             	    {
             	    match(':'); 
 
             	    }
             	    break;
             	case 5 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:51: '/'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:53: '/'
             	    {
             	    match('/'); 
 
             	    }
             	    break;
             	case 6 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:58: '}'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:60: '}'
             	    {
             	    match('}'); 
 
             	    }
             	    break;
             	case 7 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:64: '_'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:66: '_'
             	    {
             	    match('_'); 
 
             	    }
             	    break;
             	case 8 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:70: '#'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:72: '#'
             	    {
             	    match('#'); 
 
             	    }
             	    break;
             	case 9 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:77: SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:79: SEP
             	    {
             	    mSEP(); 
 
@@ -14206,7 +14210,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 10 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:83: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:85: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -14214,7 +14218,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 11 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:92: SIGN
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:94: SIGN
             	    {
             	    mSIGN(); 
 
@@ -14222,7 +14226,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 12 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1518:99: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1488:101: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -14256,14 +14260,16 @@ public class NMEALexer extends Lexer {
         try {
             int _type = GPSD_DEVICES;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1524:9: ( '{\"class\":\"DEVICES\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:6: '{\"class\":\"DEVICES\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1494:9: ( '{' '\"class\":\"DEVICES\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:6: '{' '\"class\":\"DEVICES\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
             {
-            match("{\"class\":\"DEVICES\""); 
+            match('{'); 
+
+            match("\"class\":\"DEVICES\""); 
 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:27: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:29: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
             loop233:
             do {
                 int alt233=13;
@@ -14396,63 +14402,63 @@ public class NMEALexer extends Lexer {
 
                 switch (alt233) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:28: '\"'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:30: '\"'
             	    {
             	    match('\"'); 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:34: '['
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:36: '['
             	    {
             	    match('['); 
 
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:40: ']'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:42: ']'
             	    {
             	    match(']'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:46: ':'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:48: ':'
             	    {
             	    match(':'); 
 
             	    }
             	    break;
             	case 5 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:52: '/'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:54: '/'
             	    {
             	    match('/'); 
 
             	    }
             	    break;
             	case 6 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:59: '}'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:61: '}'
             	    {
             	    match('}'); 
 
             	    }
             	    break;
             	case 7 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:65: '_'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:67: '_'
             	    {
             	    match('_'); 
 
             	    }
             	    break;
             	case 8 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:71: '#'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:73: '#'
             	    {
             	    match('#'); 
 
             	    }
             	    break;
             	case 9 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:78: SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:80: SEP
             	    {
             	    mSEP(); 
 
@@ -14460,7 +14466,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 10 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:84: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:86: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -14468,7 +14474,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 11 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:93: SIGN
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:95: SIGN
             	    {
             	    mSIGN(); 
 
@@ -14476,7 +14482,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 12 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1525:100: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1495:102: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -14510,14 +14516,16 @@ public class NMEALexer extends Lexer {
         try {
             int _type = GPSD_VERSION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1531:6: ( '{\"class\":\"VERSION\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:6: '{\"class\":\"VERSION\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1501:6: ( '{' '\"class\":\"VERSION\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:6: '{' '\"class\":\"VERSION\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
             {
-            match("{\"class\":\"VERSION\""); 
+            match('{'); 
+
+            match("\"class\":\"VERSION\""); 
 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:27: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:29: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
             loop234:
             do {
                 int alt234=13;
@@ -14650,63 +14658,63 @@ public class NMEALexer extends Lexer {
 
                 switch (alt234) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:28: '\"'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:30: '\"'
             	    {
             	    match('\"'); 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:34: '['
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:36: '['
             	    {
             	    match('['); 
 
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:40: ']'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:42: ']'
             	    {
             	    match(']'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:46: ':'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:48: ':'
             	    {
             	    match(':'); 
 
             	    }
             	    break;
             	case 5 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:52: '/'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:54: '/'
             	    {
             	    match('/'); 
 
             	    }
             	    break;
             	case 6 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:59: '}'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:61: '}'
             	    {
             	    match('}'); 
 
             	    }
             	    break;
             	case 7 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:65: '_'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:67: '_'
             	    {
             	    match('_'); 
 
             	    }
             	    break;
             	case 8 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:71: '#'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:73: '#'
             	    {
             	    match('#'); 
 
             	    }
             	    break;
             	case 9 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:78: SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:80: SEP
             	    {
             	    mSEP(); 
 
@@ -14714,7 +14722,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 10 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:84: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:86: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -14722,7 +14730,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 11 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:93: SIGN
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:95: SIGN
             	    {
             	    mSIGN(); 
 
@@ -14730,7 +14738,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 12 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:100: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1502:102: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -14764,14 +14772,16 @@ public class NMEALexer extends Lexer {
         try {
             int _type = GPSD_WATCH;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1538:6: ( '{\"class\":\"WATCH\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:6: '{\"class\":\"WATCH\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1508:6: ( '{' '\"class\":\"WATCH\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:6: '{' '\"class\":\"WATCH\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
             {
-            match("{\"class\":\"WATCH\""); 
+            match('{'); 
+
+            match("\"class\":\"WATCH\""); 
 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:25: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:27: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
             loop235:
             do {
                 int alt235=13;
@@ -14904,63 +14914,63 @@ public class NMEALexer extends Lexer {
 
                 switch (alt235) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:26: '\"'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:28: '\"'
             	    {
             	    match('\"'); 
 
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:32: '['
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:34: '['
             	    {
             	    match('['); 
 
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:38: ']'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:40: ']'
             	    {
             	    match(']'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:44: ':'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:46: ':'
             	    {
             	    match(':'); 
 
             	    }
             	    break;
             	case 5 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:50: '/'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:52: '/'
             	    {
             	    match('/'); 
 
             	    }
             	    break;
             	case 6 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:57: '}'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:59: '}'
             	    {
             	    match('}'); 
 
             	    }
             	    break;
             	case 7 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:63: '_'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:65: '_'
             	    {
             	    match('_'); 
 
             	    }
             	    break;
             	case 8 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:69: '#'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:71: '#'
             	    {
             	    match('#'); 
 
             	    }
             	    break;
             	case 9 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:76: SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:78: SEP
             	    {
             	    mSEP(); 
 
@@ -14968,7 +14978,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 10 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:82: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:84: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -14976,7 +14986,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 11 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:91: SIGN
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:93: SIGN
             	    {
             	    mSIGN(); 
 
@@ -14984,7 +14994,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 12 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:98: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1509:100: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -15021,24 +15031,24 @@ public class NMEALexer extends Lexer {
             CommonToken device=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:5: ( ( '$' ) device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:7: ( '$' ) device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1515:5: ( ( '$' ) device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1515:7: ( '$' ) device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:7: ( '$' )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:8: '$'
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1515:7: ( '$' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1515:8: '$'
             {
             match('$'); 
 
             }
 
 
-            int deviceStart7997 = getCharIndex();
-            int deviceStartLine7997 = getLine();
-            int deviceStartCharPos7997 = getCharPositionInLine();
+            int deviceStart7978 = getCharIndex();
+            int deviceStartLine7978 = getLine();
+            int deviceStartCharPos7978 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart7997, getCharIndex()-1);
-            device.setLine(deviceStartLine7997);
-            device.setCharPositionInLine(deviceStartCharPos7997);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart7978, getCharIndex()-1);
+            device.setLine(deviceStartLine7978);
+            device.setCharPositionInLine(deviceStartCharPos7978);
 
 
             match("TXT"); 
@@ -15048,7 +15058,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1547:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1516:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
             loop236:
             do {
                 int alt236=2;
@@ -15063,7 +15073,7 @@ public class NMEALexer extends Lexer {
             	    else {
             	        MismatchedSetException mse = new MismatchedSetException(null,input);
             	        recover(mse);
-            	      //  throw mse;
+            	        throw mse;
             	    }
 
 
@@ -15076,13 +15086,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart8024 = getCharIndex();
-            int checksumStartLine8024 = getLine();
-            int checksumStartCharPos8024 = getCharPositionInLine();
+            int checksumStart8005 = getCharIndex();
+            int checksumStartLine8005 = getLine();
+            int checksumStartCharPos8005 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart8024, getCharIndex()-1);
-            checksum.setLine(checksumStartLine8024);
-            checksum.setCharPositionInLine(checksumStartCharPos8024);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart8005, getCharIndex()-1);
+            checksum.setLine(checksumStartLine8005);
+            checksum.setCharPositionInLine(checksumStartCharPos8005);
 
 
 
@@ -15106,10 +15116,10 @@ public class NMEALexer extends Lexer {
             int _channel = DEFAULT_TOKEN_CHANNEL;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1559:5: ( ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1559:7: ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1528:5: ( ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1528:7: ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1559:7: ( '$PR' | '$PG' | '$PS' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1528:7: ( '$PR' | '$PG' | '$PS' )
             int alt237=3;
             int LA237_0 = input.LA(1);
 
@@ -15137,7 +15147,7 @@ public class NMEALexer extends Lexer {
                         NoViableAltException nvae =
                             new NoViableAltException("", 237, 2, input);
 
-                       // throw nvae;
+                        throw nvae;
 
                     }
 
@@ -15146,7 +15156,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 237, 1, input);
 
-                  //  throw nvae;
+                    throw nvae;
 
                 }
             }
@@ -15154,12 +15164,12 @@ public class NMEALexer extends Lexer {
                 NoViableAltException nvae =
                     new NoViableAltException("", 237, 0, input);
 
-               // throw nvae;
+                throw nvae;
 
             }
             switch (alt237) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1559:8: '$PR'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1528:8: '$PR'
                     {
                     match("$PR"); 
 
@@ -15168,7 +15178,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1559:15: '$PG'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1528:15: '$PG'
                     {
                     match("$PG"); 
 
@@ -15177,7 +15187,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1559:22: '$PS'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1528:22: '$PS'
                     {
                     match("$PS"); 
 
@@ -15189,7 +15199,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1559:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1528:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
             loop238:
             do {
                 int alt238=2;
@@ -15204,7 +15214,7 @@ public class NMEALexer extends Lexer {
             	    else {
             	        MismatchedSetException mse = new MismatchedSetException(null,input);
             	        recover(mse);
-            	      //  throw mse;
+            	        throw mse;
             	    }
 
 
@@ -15217,13 +15227,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart8070 = getCharIndex();
-            int checksumStartLine8070 = getLine();
-            int checksumStartCharPos8070 = getCharPositionInLine();
+            int checksumStart8051 = getCharIndex();
+            int checksumStartLine8051 = getLine();
+            int checksumStartCharPos8051 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart8070, getCharIndex()-1);
-            checksum.setLine(checksumStartLine8070);
-            checksum.setCharPositionInLine(checksumStartCharPos8070);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart8051, getCharIndex()-1);
+            checksum.setLine(checksumStartLine8051);
+            checksum.setCharPositionInLine(checksumStartCharPos8051);
 
 
 
@@ -15246,10 +15256,10 @@ public class NMEALexer extends Lexer {
         try {
             int _type = DEVICE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1563:9: ( ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1532:9: ( ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
             int alt239=35;
             switch ( input.LA(1) ) {
             case 'G':
@@ -15271,7 +15281,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 2, input);
 
-                   // throw nvae;
+                    throw nvae;
 
                 }
                 }
@@ -15298,7 +15308,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 3, input);
 
-                   // throw nvae;
+                    throw nvae;
 
                 }
 
@@ -15341,7 +15351,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 4, input);
 
-                 //   throw nvae;
+                    throw nvae;
 
                 }
 
@@ -15361,7 +15371,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 5, input);
 
-                  //  throw nvae;
+                    throw nvae;
 
                 }
                 }
@@ -15388,7 +15398,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 6, input);
 
-                  //  throw nvae;
+                    throw nvae;
 
                 }
 
@@ -15416,7 +15426,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 7, input);
 
-                   // throw nvae;
+                    throw nvae;
 
                 }
 
@@ -15454,7 +15464,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 9, input);
 
-                  //  throw nvae;
+                    throw nvae;
 
                 }
 
@@ -15474,7 +15484,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 10, input);
 
-                  //  throw nvae;
+                    throw nvae;
 
                 }
                 }
@@ -15493,7 +15503,7 @@ public class NMEALexer extends Lexer {
                     NoViableAltException nvae =
                         new NoViableAltException("", 239, 11, input);
 
-                 //   throw nvae;
+                    throw nvae;
 
                 }
                 }
@@ -15551,7 +15561,7 @@ public class NMEALexer extends Lexer {
 
             switch (alt239) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:5: 'GP'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:5: 'GP'
                     {
                     match("GP"); 
 
@@ -15560,7 +15570,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:10: 'II'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:10: 'II'
                     {
                     match("II"); 
 
@@ -15569,7 +15579,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:15: 'AG'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:15: 'AG'
                     {
                     match("AG"); 
 
@@ -15578,7 +15588,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:20: 'AI'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:20: 'AI'
                     {
                     match("AI"); 
 
@@ -15587,7 +15597,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:25: 'AP'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:25: 'AP'
                     {
                     match("AP"); 
 
@@ -15596,7 +15606,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:30: 'CC'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:30: 'CC'
                     {
                     match("CC"); 
 
@@ -15605,7 +15615,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:35: 'CD'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:35: 'CD'
                     {
                     match("CD"); 
 
@@ -15614,7 +15624,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 8 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:40: 'CS'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:40: 'CS'
                     {
                     match("CS"); 
 
@@ -15623,7 +15633,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 9 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:45: 'CT'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:45: 'CT'
                     {
                     match("CT"); 
 
@@ -15632,7 +15642,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 10 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:50: 'CV'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:50: 'CV'
                     {
                     match("CV"); 
 
@@ -15641,7 +15651,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 11 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:55: 'CX'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:55: 'CX'
                     {
                     match("CX"); 
 
@@ -15650,7 +15660,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 12 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:60: 'DF'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:60: 'DF'
                     {
                     match("DF"); 
 
@@ -15659,7 +15669,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 13 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:65: 'EC'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:65: 'EC'
                     {
                     match("EC"); 
 
@@ -15668,7 +15678,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 14 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:70: 'EP'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:70: 'EP'
                     {
                     match("EP"); 
 
@@ -15677,7 +15687,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 15 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:75: 'ER'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:75: 'ER'
                     {
                     match("ER"); 
 
@@ -15686,7 +15696,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 16 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:80: 'HC'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:80: 'HC'
                     {
                     match("HC"); 
 
@@ -15695,7 +15705,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 17 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:85: 'HE'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:85: 'HE'
                     {
                     match("HE"); 
 
@@ -15704,7 +15714,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 18 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:90: 'HN'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:90: 'HN'
                     {
                     match("HN"); 
 
@@ -15713,7 +15723,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 19 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:95: 'IN'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:95: 'IN'
                     {
                     match("IN"); 
 
@@ -15722,7 +15732,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 20 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:100: 'RA'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:100: 'RA'
                     {
                     match("RA"); 
 
@@ -15731,7 +15741,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 21 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:105: 'SD'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:105: 'SD'
                     {
                     match("SD"); 
 
@@ -15740,7 +15750,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 22 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:110: 'SM'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:110: 'SM'
                     {
                     match("SM"); 
 
@@ -15749,7 +15759,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 23 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:115: 'SN'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:115: 'SN'
                     {
                     match("SN"); 
 
@@ -15758,7 +15768,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 24 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:120: 'SS'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:120: 'SS'
                     {
                     match("SS"); 
 
@@ -15767,7 +15777,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 25 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:125: 'TI'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:125: 'TI'
                     {
                     match("TI"); 
 
@@ -15776,7 +15786,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 26 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:130: 'TR'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:130: 'TR'
                     {
                     match("TR"); 
 
@@ -15785,7 +15795,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 27 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:135: 'VD'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:135: 'VD'
                     {
                     match("VD"); 
 
@@ -15794,7 +15804,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 28 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:140: 'DM'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:140: 'DM'
                     {
                     match("DM"); 
 
@@ -15803,7 +15813,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 29 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:145: 'VW'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:145: 'VW'
                     {
                     match("VW"); 
 
@@ -15812,7 +15822,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 30 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:150: 'WI'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:150: 'WI'
                     {
                     match("WI"); 
 
@@ -15821,7 +15831,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 31 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:155: 'YX'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:155: 'YX'
                     {
                     match("YX"); 
 
@@ -15830,7 +15840,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 32 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:160: 'ZA'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:160: 'ZA'
                     {
                     match("ZA"); 
 
@@ -15839,7 +15849,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 33 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:165: 'ZC'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:165: 'ZC'
                     {
                     match("ZC"); 
 
@@ -15848,7 +15858,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 34 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:170: 'ZQ'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:170: 'ZQ'
                     {
                     match("ZQ"); 
 
@@ -15857,7 +15867,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 35 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1564:175: 'ZV'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1533:175: 'ZV'
                     {
                     match("ZV"); 
 
@@ -15889,12 +15899,12 @@ public class NMEALexer extends Lexer {
         try {
             int _type = DEV;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1569:9: ( '\"' ( LETTERS | '/' | ':' | '#' | NUMBER )* '\"' )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1570:2: '\"' ( LETTERS | '/' | ':' | '#' | NUMBER )* '\"'
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1538:9: ( '\"' ( LETTERS | '/' | ':' | '#' | NUMBER )* '\"' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:2: '\"' ( LETTERS | '/' | ':' | '#' | NUMBER )* '\"'
             {
             match('\"'); 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1570:5: ( LETTERS | '/' | ':' | '#' | NUMBER )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:5: ( LETTERS | '/' | ':' | '#' | NUMBER )*
             loop240:
             do {
                 int alt240=6;
@@ -15991,7 +16001,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt240) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1570:7: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:7: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -15999,28 +16009,28 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1570:16: '/'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:16: '/'
             	    {
             	    match('/'); 
 
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1570:22: ':'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:22: ':'
             	    {
             	    match(':'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1570:28: '#'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:28: '#'
             	    {
             	    match('#'); 
 
             	    }
             	    break;
             	case 5 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1570:34: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1539:34: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -16052,14 +16062,14 @@ public class NMEALexer extends Lexer {
         try {
             int _type = NUMBER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1574:5: ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )* ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1543:5: ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )* ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
             int alt248=4;
             alt248 = dfa248.predict(input);
             switch (alt248) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1575:5: ( '0' .. '9' )+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1544:5: ( '0' .. '9' )+
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1575:5: ( '0' .. '9' )+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1544:5: ( '0' .. '9' )+
                     int cnt241=0;
                     loop241:
                     do {
@@ -16101,9 +16111,9 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1577:5: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:5: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1577:5: ( '0' .. '9' )+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:5: ( '0' .. '9' )+
                     int cnt242=0;
                     loop242:
                     do {
@@ -16144,7 +16154,7 @@ public class NMEALexer extends Lexer {
 
                     match('.'); 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1577:21: ( '0' .. '9' )*
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:21: ( '0' .. '9' )*
                     loop243:
                     do {
                         int alt243=2;
@@ -16178,7 +16188,7 @@ public class NMEALexer extends Lexer {
                     } while (true);
 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1577:33: ( EXPONENT )?
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:33: ( EXPONENT )?
                     int alt244=2;
                     int LA244_0 = input.LA(1);
 
@@ -16187,7 +16197,7 @@ public class NMEALexer extends Lexer {
                     }
                     switch (alt244) {
                         case 1 :
-                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1577:33: EXPONENT
+                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1546:33: EXPONENT
                             {
                             mEXPONENT(); 
 
@@ -16201,11 +16211,11 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1578:9: '.' ( '0' .. '9' )* ( EXPONENT )?
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1547:9: '.' ( '0' .. '9' )* ( EXPONENT )?
                     {
                     match('.'); 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1578:13: ( '0' .. '9' )*
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1547:13: ( '0' .. '9' )*
                     loop245:
                     do {
                         int alt245=2;
@@ -16239,7 +16249,7 @@ public class NMEALexer extends Lexer {
                     } while (true);
 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1578:25: ( EXPONENT )?
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1547:25: ( EXPONENT )?
                     int alt246=2;
                     int LA246_0 = input.LA(1);
 
@@ -16248,7 +16258,7 @@ public class NMEALexer extends Lexer {
                     }
                     switch (alt246) {
                         case 1 :
-                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1578:25: EXPONENT
+                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1547:25: EXPONENT
                             {
                             mEXPONENT(); 
 
@@ -16262,9 +16272,9 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1579:9: ( '0' .. '9' )+ EXPONENT
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1548:9: ( '0' .. '9' )+ EXPONENT
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1579:9: ( '0' .. '9' )+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1548:9: ( '0' .. '9' )+
                     int cnt247=0;
                     loop247:
                     do {
@@ -16324,8 +16334,8 @@ public class NMEALexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1582:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1582:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1551:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1551:9: ( ' ' | '\\t' | '\\r' | '\\n' )
             {
             if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -16355,8 +16365,8 @@ public class NMEALexer extends Lexer {
         try {
             int _type = SEP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1589:5: ( ( ',' ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1589:7: ( ',' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1558:5: ( ( ',' ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1558:7: ( ',' )
             {
             if ( input.LA(1)==',' ) {
                 input.consume();
@@ -16384,7 +16394,7 @@ public class NMEALexer extends Lexer {
         try {
             int _type = SIGN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1593:6: ( ( '+' | '-' ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1562:6: ( ( '+' | '-' ) )
             // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
             {
             if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
@@ -16413,10 +16423,10 @@ public class NMEALexer extends Lexer {
         try {
             int _type = SIGNED;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1596:8: ( ( SIGN )? NUMBER )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1597:5: ( SIGN )? NUMBER
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1565:8: ( ( SIGN )? NUMBER )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1566:5: ( SIGN )? NUMBER
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1597:5: ( SIGN )?
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1566:5: ( SIGN )?
             int alt249=2;
             int LA249_0 = input.LA(1);
 
@@ -16462,12 +16472,12 @@ public class NMEALexer extends Lexer {
         try {
             int _type = TIME_STAMP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1601:2: ( '\"' ( LETTERS | NUMBER | ':' | SIGN )+ '\"' )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1602:2: '\"' ( LETTERS | NUMBER | ':' | SIGN )+ '\"'
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1570:2: ( '\"' ( LETTERS | NUMBER | ':' | SIGN )+ '\"' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1571:2: '\"' ( LETTERS | NUMBER | ':' | SIGN )+ '\"'
             {
             match('\"'); 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1602:6: ( LETTERS | NUMBER | ':' | SIGN )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1571:6: ( LETTERS | NUMBER | ':' | SIGN )+
             int cnt250=0;
             loop250:
             do {
@@ -16561,7 +16571,7 @@ public class NMEALexer extends Lexer {
 
                 switch (alt250) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1602:7: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1571:7: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -16569,7 +16579,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1602:17: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1571:17: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -16577,14 +16587,14 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1602:27: ':'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1571:27: ':'
             	    {
             	    match(':'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1602:33: SIGN
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1571:33: SIGN
             	    {
             	    mSIGN(); 
 
@@ -16620,10 +16630,10 @@ public class NMEALexer extends Lexer {
         try {
             int _type = CHECKSUM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1604:10: ( ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1604:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1573:10: ( ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1573:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1604:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1573:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
             int alt252=4;
             int LA252_0 = input.LA(1);
 
@@ -16688,10 +16698,10 @@ public class NMEALexer extends Lexer {
             }
             switch (alt252) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1604:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1573:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1604:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1604:14: '*' ( '0' .. '9' ) ( '0' .. '9' )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1573:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1573:14: '*' ( '0' .. '9' ) ( '0' .. '9' )
                     {
                     match('*'); 
 
@@ -16721,10 +16731,10 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1605:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1574:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1605:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1605:14: '*' ( 'A' .. 'F' ) ( '0' .. '9' )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1574:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1574:14: '*' ( 'A' .. 'F' ) ( '0' .. '9' )
                     {
                     match('*'); 
 
@@ -16754,10 +16764,10 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1606:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1575:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1606:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1606:14: '*' ( 'A' .. 'F' ) ( 'A' .. 'F' )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1575:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1575:14: '*' ( 'A' .. 'F' ) ( 'A' .. 'F' )
                     {
                     match('*'); 
 
@@ -16787,14 +16797,14 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1607:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1576:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1607:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1607:14: '*' ( '0' .. '9' )+ ( 'A' .. 'F' )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1576:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1576:14: '*' ( '0' .. '9' )+ ( 'A' .. 'F' )
                     {
                     match('*'); 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1607:17: ( '0' .. '9' )+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1576:17: ( '0' .. '9' )+
                     int cnt251=0;
                     loop251:
                     do {
@@ -16868,15 +16878,15 @@ public class NMEALexer extends Lexer {
         try {
             int _type = NAME;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1610:3: ( '\"' ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' )* '\"' )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:3: '\"' ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' )* '\"'
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1579:3: ( '\"' ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' )* '\"' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:3: '\"' ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' )* '\"'
             {
             match('\"'); 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:7: ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:7: ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' )*
             loop253:
             do {
-                int alt253=10;
+                int alt253=11;
                 switch ( input.LA(1) ) {
                 case ' ':
                 case 'A':
@@ -16986,12 +16996,17 @@ public class NMEALexer extends Lexer {
                     alt253=9;
                     }
                     break;
+                case '#':
+                    {
+                    alt253=10;
+                    }
+                    break;
 
                 }
 
                 switch (alt253) {
             	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:8: LETTERS
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:8: LETTERS
             	    {
             	    mLETTERS(); 
 
@@ -16999,7 +17014,7 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:18: NUMBER
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:18: NUMBER
             	    {
             	    mNUMBER(); 
 
@@ -17007,14 +17022,14 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 3 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:28: ':'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:28: ':'
             	    {
             	    match(':'); 
 
             	    }
             	    break;
             	case 4 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:34: SIGN
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:34: SIGN
             	    {
             	    mSIGN(); 
 
@@ -17022,21 +17037,21 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 5 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:41: '/'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:41: '/'
             	    {
             	    match('/'); 
 
             	    }
             	    break;
             	case 6 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:47: '\\''
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:47: '\\''
             	    {
             	    match('\''); 
 
             	    }
             	    break;
             	case 7 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:54: SEP
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:54: SEP
             	    {
             	    mSEP(); 
 
@@ -17044,16 +17059,23 @@ public class NMEALexer extends Lexer {
             	    }
             	    break;
             	case 8 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:60: '%'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:60: '%'
             	    {
             	    match('%'); 
 
             	    }
             	    break;
             	case 9 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1611:66: '!'
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:66: '!'
             	    {
             	    match('!'); 
+
+            	    }
+            	    break;
+            	case 10 :
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1580:72: '#'
+            	    {
+            	    match('#'); 
 
             	    }
             	    break;
@@ -17082,10 +17104,10 @@ public class NMEALexer extends Lexer {
         try {
             int _type = LETTERS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1613:9: ( ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+ )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1613:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1582:9: ( ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+ )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1582:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1613:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1582:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
             int cnt254=0;
             loop254:
             do {
@@ -17138,8 +17160,8 @@ public class NMEALexer extends Lexer {
     // $ANTLR start "EXPONENT"
     public final void mEXPONENT() throws RecognitionException {
         try {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1619:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1619:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1588:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1588:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -17151,7 +17173,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1619:22: ( '+' | '-' )?
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1588:22: ( '+' | '-' )?
             int alt255=2;
             int LA255_0 = input.LA(1);
 
@@ -17178,7 +17200,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1619:33: ( '0' .. '9' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1588:33: ( '0' .. '9' )+
             int cnt256=0;
             loop256:
             do {
@@ -17763,7 +17785,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA67_transition;
         }
         public String getDescription() {
-            return "545:9: (offset= NUMBER SEP |offset= NUMBER )";
+            return "518:9: (offset= NUMBER SEP |offset= NUMBER )";
         }
     }
     static final String DFA84_eotS =
@@ -17862,7 +17884,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA84_transition;
         }
         public String getDescription() {
-            return "()* loopback of 595:14: ( NUMBER SEP )*";
+            return "()* loopback of 568:14: ( NUMBER SEP )*";
         }
     }
     static final String DFA126_eotS =
@@ -17932,7 +17954,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA126_transition;
         }
         public String getDescription() {
-            return "()* loopback of 812:5: (dev= NUMBER SEP we= LETTERS SEP )*";
+            return "()* loopback of 785:5: (dev= NUMBER SEP we= LETTERS SEP )*";
         }
     }
     static final String DFA147_eotS =
@@ -17985,7 +18007,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA147_transition;
         }
         public String getDescription() {
-            return "()* loopback of 957:11: ( LETTERS SEP )*";
+            return "()* loopback of 930:11: ( LETTERS SEP )*";
         }
     }
     static final String DFA161_eotS =
@@ -18044,7 +18066,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA161_transition;
         }
         public String getDescription() {
-            return "()* loopback of 1035:3: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
+            return "()* loopback of 1008:3: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
         }
     }
     static final String DFA208_eotS =
@@ -18096,7 +18118,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA208_transition;
         }
         public String getDescription() {
-            return "()* loopback of 1167:13: ( LETTERS SEP )*";
+            return "()* loopback of 1140:13: ( LETTERS SEP )*";
         }
     }
     static final String DFA215_eotS =
@@ -18181,7 +18203,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA215_transition;
         }
         public String getDescription() {
-            return "()+ loopback of 1211:2: ( '\\u0021' .. '\\u007F' )+";
+            return "()+ loopback of 1184:2: ( '\\u0021' .. '\\u007F' )+";
         }
     }
     static final String DFA220_eotS =
@@ -18266,7 +18288,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA220_transition;
         }
         public String getDescription() {
-            return "()+ loopback of 1276:2: ( '\\u0021' .. '\\u007F' )+";
+            return "()+ loopback of 1249:2: ( '\\u0021' .. '\\u007F' )+";
         }
     }
     static final String DFA226_eotS =
@@ -18351,7 +18373,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA226_transition;
         }
         public String getDescription() {
-            return "()+ loopback of 1285:4: ( '\\u0021' .. '\\u007F' )+";
+            return "()+ loopback of 1258:4: ( '\\u0021' .. '\\u007F' )+";
         }
     }
     static final String DFA236_eotS =
@@ -18410,7 +18432,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA236_transition;
         }
         public String getDescription() {
-            return "()* loopback of 1547:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
+            return "()* loopback of 1516:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
         }
     }
     static final String DFA238_eotS =
@@ -18469,7 +18491,7 @@ public class NMEALexer extends Lexer {
             this.transition = DFA238_transition;
         }
         public String getDescription() {
-            return "()* loopback of 1559:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
+            return "()* loopback of 1528:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
         }
     }
     static final String DFA248_eotS =
@@ -18523,49 +18545,48 @@ public class NMEALexer extends Lexer {
             this.transition = DFA248_transition;
         }
         public String getDescription() {
-            return "1573:1: NUMBER : ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )* ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
+            return "1542:1: NUMBER : ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )* ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
         }
     }
     static final String DFA257_eotS =
         "\4\uffff\16\32\1\uffff\2\127\1\31\1\uffff\1\134\23\uffff\43\u0082"+
-        "\12\uffff\1\127\1\uffff\1\127\66\uffff\1\127\2\uffff\1\127\1\uffff"+
+        "\12\uffff\1\127\1\uffff\1\127\67\uffff\1\127\2\uffff\1\127\1\uffff"+
         "\1\127\35\uffff\1\127\u0081\uffff";
     static final String DFA257_eofS =
-        "\u0136\uffff";
+        "\u0137\uffff";
     static final String DFA257_minS =
         "\1\11\1\101\1\uffff\1\42\1\120\1\111\1\107\1\103\1\106\2\103\1\101"+
         "\1\104\1\111\1\104\1\111\1\130\1\101\1\40\1\56\1\60\1\40\1\uffff"+
         "\1\56\4\uffff\1\120\1\111\1\107\1\103\1\106\2\103\1\101\1\104\1"+
-        "\111\1\104\1\111\1\130\1\101\1\143\46\40\1\uffff\2\40\1\uffff\1"+
-        "\40\2\uffff\1\60\1\53\1\60\1\53\2\uffff\43\101\1\154\2\uffff\10"+
-        "\40\1\uffff\4\40\1\60\1\53\4\60\1\101\1\105\1\102\1\107\1\104\1"+
-        "\123\1\115\1\102\3\uffff\1\141\13\40\1\uffff\4\40\2\60\5\uffff\1"+
-        "\103\1\113\3\uffff\1\101\1\107\1\uffff\1\101\1\104\1\102\7\uffff"+
-        "\1\122\1\163\25\40\23\uffff\1\163\22\40\1\42\14\40\1\72\7\40\1\42"+
-        "\6\40\1\101\4\40\1\uffff\1\105\2\uffff\1\40\1\126\1\111\1\103\1"+
-        "\105\1\42\2\uffff";
+        "\111\1\104\1\111\1\130\1\101\1\143\51\40\1\uffff\1\40\2\uffff\1"+
+        "\60\1\53\1\60\1\53\2\uffff\43\101\1\154\2\uffff\10\40\2\uffff\4"+
+        "\40\1\60\1\53\4\60\1\101\1\105\1\102\1\107\1\104\1\123\1\115\1\102"+
+        "\3\uffff\1\141\13\40\1\uffff\4\40\2\60\5\uffff\1\103\1\113\3\uffff"+
+        "\1\101\1\107\1\uffff\1\101\1\104\1\102\7\uffff\1\122\1\163\25\40"+
+        "\23\uffff\1\163\22\40\1\42\14\40\1\72\7\40\1\42\6\40\1\101\4\40"+
+        "\1\uffff\1\105\2\uffff\1\40\1\126\1\111\1\103\1\105\1\42\2\uffff";
     static final String DFA257_maxS =
         "\1\173\1\132\1\uffff\1\42\1\120\1\116\1\120\1\130\1\115\1\122\1"+
         "\116\1\101\1\123\1\122\1\127\1\111\1\130\1\126\1\172\2\145\1\172"+
         "\1\uffff\1\71\4\uffff\1\120\1\116\1\120\1\130\1\115\1\122\1\116"+
-        "\1\101\1\123\1\122\1\127\1\111\1\130\1\126\1\143\46\172\1\uffff"+
-        "\2\172\1\uffff\1\172\2\uffff\1\145\1\71\1\145\1\71\2\uffff\43\132"+
-        "\1\154\2\uffff\10\172\1\uffff\4\172\1\145\5\71\1\120\1\127\1\120"+
-        "\1\123\1\104\1\127\1\124\1\127\3\uffff\1\141\13\172\1\uffff\4\172"+
-        "\2\71\5\uffff\1\127\1\124\3\uffff\1\126\1\124\1\uffff\1\127\1\126"+
-        "\1\103\7\uffff\1\124\1\163\25\172\23\uffff\1\163\22\172\1\42\14"+
-        "\172\1\72\7\172\1\42\6\172\1\127\4\172\1\uffff\1\105\2\uffff\1\172"+
-        "\1\126\1\111\1\103\1\105\1\123\2\uffff";
+        "\1\101\1\123\1\122\1\127\1\111\1\130\1\126\1\143\51\172\1\uffff"+
+        "\1\172\2\uffff\1\145\1\71\1\145\1\71\2\uffff\43\132\1\154\2\uffff"+
+        "\10\172\2\uffff\4\172\1\145\5\71\1\120\1\127\1\120\1\123\1\104\1"+
+        "\127\1\124\1\127\3\uffff\1\141\13\172\1\uffff\4\172\2\71\5\uffff"+
+        "\1\127\1\124\3\uffff\1\126\1\124\1\uffff\1\127\1\126\1\103\7\uffff"+
+        "\1\124\1\163\25\172\23\uffff\1\163\22\172\1\42\14\172\1\72\7\172"+
+        "\1\42\6\172\1\127\4\172\1\uffff\1\105\2\uffff\1\172\1\126\1\111"+
+        "\1\103\1\105\1\123\2\uffff";
     static final String DFA257_acceptS =
-        "\2\uffff\1\46\23\uffff\1\62\1\uffff\1\66\1\61\1\70\1\55\65\uffff"+
-        "\1\57\2\uffff\1\57\1\uffff\1\67\1\60\4\uffff\1\63\1\64\44\uffff"+
-        "\1\56\1\57\10\uffff\1\65\22\uffff\1\43\1\44\1\54\14\uffff\1\65\6"+
-        "\uffff\1\1\1\2\1\45\1\3\1\4\2\uffff\1\13\1\14\1\15\2\uffff\1\23"+
-        "\3\uffff\1\32\1\33\1\34\1\35\1\36\1\37\1\40\27\uffff\1\5\1\6\1\7"+
-        "\1\10\1\11\1\12\1\16\1\17\1\20\1\21\1\22\1\24\1\25\1\26\1\27\1\30"+
-        "\1\31\1\41\1\42\64\uffff\1\47\1\uffff\1\52\1\53\6\uffff\1\50\1\51";
+        "\2\uffff\1\46\23\uffff\1\62\1\uffff\1\66\1\61\1\70\1\55\70\uffff"+
+        "\1\57\1\uffff\1\67\1\60\4\uffff\1\63\1\64\44\uffff\1\56\1\57\10"+
+        "\uffff\1\57\1\65\22\uffff\1\43\1\44\1\54\14\uffff\1\65\6\uffff\1"+
+        "\1\1\2\1\45\1\3\1\4\2\uffff\1\13\1\14\1\15\2\uffff\1\23\3\uffff"+
+        "\1\32\1\33\1\34\1\35\1\36\1\37\1\40\27\uffff\1\5\1\6\1\7\1\10\1"+
+        "\11\1\12\1\16\1\17\1\20\1\21\1\22\1\24\1\25\1\26\1\27\1\30\1\31"+
+        "\1\41\1\42\64\uffff\1\47\1\uffff\1\52\1\53\6\uffff\1\50\1\51";
     static final String DFA257_specialS =
-        "\u0136\uffff}>";
+        "\u0137\uffff}>";
     static final String[] DFA257_transitionS = {
             "\2\31\2\uffff\1\31\22\uffff\1\25\1\2\1\22\1\uffff\1\1\5\uffff"+
             "\1\30\1\27\1\26\1\27\1\24\1\uffff\12\23\7\uffff\1\6\1\32\1\7"+
@@ -18661,7 +18682,9 @@ public class NMEALexer extends Lexer {
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
             "\1\125\1\126\1\125\1\123\1\117\12\122\1\120\6\uffff\32\116\6"+
             "\uffff\32\116",
-            "",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\3\126\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\6\uffff"+
+            "\32\u0084",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
             "\1\125\1\126\1\125\1\u0089\1\117\12\122\1\120\6\uffff\4\116"+
             "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
@@ -18669,123 +18692,123 @@ public class NMEALexer extends Lexer {
             "\1\125\1\126\1\125\1\123\1\117\12\u008a\1\120\6\uffff\4\116"+
             "\1\u008b\25\116\6\uffff\4\116\1\u008b\25\116",
             "",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u008e\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
             "",
             "",
-            "\12\u0091\13\uffff\1\u0092\37\uffff\1\u0092",
-            "\1\u0093\1\uffff\1\u0093\2\uffff\12\u0094",
+            "\12\u0092\13\uffff\1\u0093\37\uffff\1\u0093",
+            "\1\u0094\1\uffff\1\u0094\2\uffff\12\u0095",
             "\12\132\13\uffff\1\133\37\uffff\1\133",
-            "\1\u0095\1\uffff\1\u0095\2\uffff\12\u0096",
+            "\1\u0096\1\uffff\1\u0096\2\uffff\12\u0097",
             "",
             "",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u0097\1\u0098\1\uffff\1\u0099\2\uffff\1\u009a\1\u009b\4"+
-            "\uffff\1\u009c\4\uffff\1\u009d\1\uffff\1\u00a1\1\uffff\1\u009e"+
-            "\1\uffff\1\u009f\1\uffff\1\u00a0",
-            "\1\u00a2",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u0098\1\u0099\1\uffff\1\u009a\2\uffff\1\u009b\1\u009c\4"+
+            "\uffff\1\u009d\4\uffff\1\u009e\1\uffff\1\u00a2\1\uffff\1\u009f"+
+            "\1\uffff\1\u00a0\1\uffff\1\u00a1",
+            "\1\u00a3",
             "",
             "",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
@@ -18795,189 +18818,190 @@ public class NMEALexer extends Lexer {
             "\3\126\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\6\uffff"+
             "\32\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u0086\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
+            "\3\126\1\u00a5\1\117\12\u0086\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u0087\1\117\12\u00a5\1\u0085\6\uffff\4\u0084\1\u00a6"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a6\25\u0084",
+            "\3\126\1\u0087\1\117\12\u00a6\1\u0085\6\uffff\4\u0084\1\u00a7"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a7\25\u0084",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00a8\1\126\1\u00a8\1\123\1\117\12\u00a7\1\120\6\uffff\32"+
+            "\1\u00a9\1\126\1\u00a9\1\123\1\117\12\u00a8\1\120\6\uffff\32"+
             "\116\6\uffff\32\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\123\1\117\12\u00a9\1\120\6\uffff\4\116"+
-            "\1\u00aa\25\116\6\uffff\4\116\1\u00aa\25\116",
-            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u008a\1\120\6\uffff\4\116"+
+            "\1\125\1\126\1\125\1\123\1\117\12\u00aa\1\120\6\uffff\4\116"+
             "\1\u00ab\25\116\6\uffff\4\116\1\u00ab\25\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00ac\1\126\1\u00ac\1\123\1\117\12\u00ad\1\120\6\uffff\32"+
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u008a\1\120\6\uffff\4\116"+
+            "\1\u00ac\25\116\6\uffff\4\116\1\u00ac\25\116",
+            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\u00ad\1\126\1\u00ad\1\123\1\117\12\u00ae\1\120\6\uffff\32"+
             "\116\6\uffff\32\116",
             "",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u008e\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00b0\1\126\12\u008e\1\u0090\6\uffff\4"+
-            "\u008d\1\u00af\25\u008d\6\uffff\4\u008d\1\u00af\25\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u00b1\1\u0090\6\uffff\4"+
-            "\u008d\1\u00b2\25\u008d\6\uffff\4\u008d\1\u00b2\25\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u008e\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\12\u0091\13\uffff\1\u0092\37\uffff\1\u0092",
-            "\1\u00b3\1\uffff\1\u00b3\2\uffff\12\u00b4",
-            "\12\u0094",
-            "\12\u0094",
-            "\12\u0096",
-            "\12\u0096",
-            "\1\u00b5\12\uffff\1\u00b7\3\uffff\1\u00b6",
-            "\1\u00b8\11\uffff\1\u00b9\7\uffff\1\u00ba",
-            "\1\u00bb\15\uffff\1\u00bc",
-            "\1\u00bd\4\uffff\1\u00be\6\uffff\1\u00bf",
-            "\1\u00c0",
-            "\1\u00c1\1\u00c2\2\uffff\1\u00c3",
-            "\1\u00c4\5\uffff\1\u00c5\1\u00c6",
-            "\1\u00c7\5\uffff\1\u00c9\3\uffff\1\u00c8\3\uffff\1\u00ca\3"+
-            "\uffff\1\u00cb\2\uffff\1\u00cc",
+            "",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u00b1\1\126\12\u008f\1\u0091\6\uffff"+
+            "\4\u008e\1\u00b0\25\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u00b2\1\u0091\6\uffff"+
+            "\4\u008e\1\u00b3\25\u008e\6\uffff\4\u008e\1\u00b3\25\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
+            "\12\u0092\13\uffff\1\u0093\37\uffff\1\u0093",
+            "\1\u00b4\1\uffff\1\u00b4\2\uffff\12\u00b5",
+            "\12\u0095",
+            "\12\u0095",
+            "\12\u0097",
+            "\12\u0097",
+            "\1\u00b6\12\uffff\1\u00b8\3\uffff\1\u00b7",
+            "\1\u00b9\11\uffff\1\u00ba\7\uffff\1\u00bb",
+            "\1\u00bc\15\uffff\1\u00bd",
+            "\1\u00be\4\uffff\1\u00bf\6\uffff\1\u00c0",
+            "\1\u00c1",
+            "\1\u00c2\1\u00c3\2\uffff\1\u00c4",
+            "\1\u00c5\5\uffff\1\u00c6\1\u00c7",
+            "\1\u00c8\5\uffff\1\u00ca\3\uffff\1\u00c9\3\uffff\1\u00cb\3"+
+            "\uffff\1\u00cc\2\uffff\1\u00cd",
             "",
             "",
             "",
-            "\1\u00cd",
+            "\1\u00ce",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00cf\1\126\1\u00cf\1\u0087\1\117\12\u00ce\1\u0085\6\uffff"+
+            "\1\u00d0\1\126\1\u00d0\1\u0087\1\117\12\u00cf\1\u0085\6\uffff"+
             "\32\u0084\6\uffff\32\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u0087\1\117\12\u00d0\1\u0085\6\uffff\4\u0084\1\u00d1"+
-            "\25\u0084\6\uffff\4\u0084\1\u00d1\25\u0084",
-            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u00a5\1\u0085\6\uffff\4\u0084\1\u00d2"+
+            "\3\126\1\u0087\1\117\12\u00d1\1\u0085\6\uffff\4\u0084\1\u00d2"+
             "\25\u0084\6\uffff\4\u0084\1\u00d2\25\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00d3\1\126\1\u00d3\1\u0087\1\117\12\u00d4\1\u0085\6\uffff"+
+            "\3\126\1\u00a5\1\117\12\u00a6\1\u0085\6\uffff\4\u0084\1\u00d3"+
+            "\25\u0084\6\uffff\4\u0084\1\u00d3\25\u0084",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\u00d4\1\126\1\u00d4\1\u0087\1\117\12\u00d5\1\u0085\6\uffff"+
             "\32\u0084\6\uffff\32\u0084",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u00a7\1\120\6\uffff\4\116"+
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u00a8\1\120\6\uffff\4\116"+
             "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u00d5\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u00d6\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u00a9\1\120\6\uffff\4\116"+
-            "\1\u00d6\25\116\6\uffff\4\116\1\u00d6\25\116",
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u00aa\1\120\6\uffff\4\116"+
+            "\1\u00d7\25\116\6\uffff\4\116\1\u00d7\25\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00d7\1\126\1\u00d7\1\123\1\117\12\u00d8\1\120\6\uffff\32"+
+            "\1\u00d8\1\126\1\u00d8\1\123\1\117\12\u00d9\1\120\6\uffff\32"+
             "\116\6\uffff\32\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00d9\1\126\1\u00d9\1\123\1\117\12\u00da\1\120\6\uffff\32"+
+            "\1\u00da\1\126\1\u00da\1\123\1\117\12\u00db\1\120\6\uffff\32"+
             "\116\6\uffff\32\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u00db\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u00dc\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u00ad\1\120\6\uffff\4\116"+
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u00ae\1\120\6\uffff\4\116"+
             "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
             "",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00dd\1\126\1\u00dd\1\u008f\1\126\12\u00dc\1\u0090\6\uffff"+
-            "\32\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u00de\1\u0090\6\uffff\4"+
-            "\u008d\1\u00df\25\u008d\6\uffff\4\u008d\1\u00df\25\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00b0\1\126\12\u00b1\1\u0090\6\uffff\4"+
-            "\u008d\1\u00e0\25\u008d\6\uffff\4\u008d\1\u00e0\25\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00e1\1\126\1\u00e1\1\u008f\1\126\12\u00e2\1\u0090\6\uffff"+
-            "\32\u008d\6\uffff\32\u008d",
-            "\12\u00b4",
-            "\12\u00b4",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\u00de\1\126\1\u00de\1\u0090\1\126\12\u00dd\1\u0091"+
+            "\6\uffff\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u00df\1\u0091\6\uffff"+
+            "\4\u008e\1\u00e0\25\u008e\6\uffff\4\u008e\1\u00e0\25\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u00b1\1\126\12\u00b2\1\u0091\6\uffff"+
+            "\4\u008e\1\u00e1\25\u008e\6\uffff\4\u008e\1\u00e1\25\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\u00e2\1\126\1\u00e2\1\u0090\1\126\12\u00e3\1\u0091"+
+            "\6\uffff\32\u008e\6\uffff\32\u008e",
+            "\12\u00b5",
+            "\12\u00b5",
             "",
             "",
             "",
             "",
             "",
-            "\1\u00e3\16\uffff\1\u00e4\4\uffff\1\u00e5",
-            "\1\u00e7\7\uffff\1\u00e8\1\u00e6",
+            "\1\u00e4\16\uffff\1\u00e5\4\uffff\1\u00e6",
+            "\1\u00e8\7\uffff\1\u00e9\1\u00e7",
             "",
             "",
             "",
-            "\1\u00e9\24\uffff\1\u00ea",
-            "\1\u00eb\5\uffff\1\u00ec\6\uffff\1\u00ed",
+            "\1\u00ea\24\uffff\1\u00eb",
+            "\1\u00ec\5\uffff\1\u00ed\6\uffff\1\u00ee",
             "",
-            "\1\u00ee\25\uffff\1\u00ef",
-            "\1\u00f0\21\uffff\1\u00f1",
-            "\1\u00f2\1\u00f3",
-            "",
-            "",
+            "\1\u00ef\25\uffff\1\u00f0",
+            "\1\u00f1\21\uffff\1\u00f2",
+            "\1\u00f3\1\u00f4",
             "",
             "",
             "",
             "",
             "",
-            "\1\u00f4\1\uffff\1\u00f5",
-            "\1\u00f6",
+            "",
+            "",
+            "\1\u00f5\1\uffff\1\u00f6",
+            "\1\u00f7",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u00ce\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
-            "\3\126\2\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u00f7\1"+
+            "\3\126\1\u00a5\1\117\12\u00cf\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
+            "\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u00f8\1"+
             "\126\6\uffff\32\126\6\uffff\32\126",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u00d0\1\u0085\6\uffff\4\u0084\1\u00f8"+
-            "\25\u0084\6\uffff\4\u0084\1\u00f8\25\u0084",
+            "\3\126\1\u00a5\1\117\12\u00d1\1\u0085\6\uffff\4\u0084\1\u00f9"+
+            "\25\u0084\6\uffff\4\u0084\1\u00f9\25\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00f9\1\126\1\u00f9\1\u0087\1\117\12\u00fa\1\u0085\6\uffff"+
+            "\1\u00fa\1\126\1\u00fa\1\u0087\1\117\12\u00fb\1\u0085\6\uffff"+
             "\32\u0084\6\uffff\32\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00fb\1\126\1\u00fb\1\u0087\1\117\12\u00fc\1\u0085\6\uffff"+
+            "\1\u00fc\1\126\1\u00fc\1\u0087\1\117\12\u00fd\1\u0085\6\uffff"+
             "\32\u0084\6\uffff\32\u0084",
-            "\3\126\2\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u00fd\1"+
+            "\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u00fe\1"+
             "\126\6\uffff\32\126\6\uffff\32\126",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u00d4\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
+            "\3\126\1\u00a5\1\117\12\u00d5\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00ff\1\117\12\u00a7\1\120\6\uffff\4\116"+
-            "\1\u00fe\25\116\6\uffff\4\116\1\u00fe\25\116",
+            "\1\125\1\126\1\125\1\u0100\1\117\12\u00a8\1\120\6\uffff\4\116"+
+            "\1\u00ff\25\116\6\uffff\4\116\1\u00ff\25\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u0100\1\126\1\u0100\1\123\1\117\12\u0101\1\120\6\uffff\32"+
+            "\1\u0101\1\126\1\u0101\1\123\1\117\12\u0102\1\120\6\uffff\32"+
             "\116\6\uffff\32\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u0102\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u0103\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u00d8\1\120\6\uffff\4\116"+
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u00d9\1\120\6\uffff\4\116"+
             "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u0103\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u0104\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u00da\1\120\6\uffff\4\116"+
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u00db\1\120\6\uffff\4\116"+
             "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00ff\1\117\12\u00ad\1\120\6\uffff\4\116"+
-            "\1\u00fe\25\116\6\uffff\4\116\1\u00fe\25\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00b0\1\126\12\u00dc\1\u0090\6\uffff\4"+
-            "\u008d\1\u00af\25\u008d\6\uffff\4\u008d\1\u00af\25\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u00dc\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00b0\1\126\12\u00de\1\u0090\6\uffff\4"+
-            "\u008d\1\u0104\25\u008d\6\uffff\4\u008d\1\u0104\25\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u0105\1\126\1\u0105\1\u008f\1\126\12\u0106\1\u0090\6\uffff"+
-            "\32\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u0107\1\126\1\u0107\1\u008f\1\126\12\u0108\1\u0090\6\uffff"+
-            "\32\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u00e2\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00b0\1\126\12\u00e2\1\u0090\6\uffff\4"+
-            "\u008d\1\u00af\25\u008d\6\uffff\4\u008d\1\u00af\25\u008d",
+            "\1\125\1\126\1\125\1\u0100\1\117\12\u00ae\1\120\6\uffff\4\116"+
+            "\1\u00ff\25\116\6\uffff\4\116\1\u00ff\25\116",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u00b1\1\126\12\u00dd\1\u0091\6\uffff"+
+            "\4\u008e\1\u00b0\25\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u00dd\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u00b1\1\126\12\u00df\1\u0091\6\uffff"+
+            "\4\u008e\1\u0105\25\u008e\6\uffff\4\u008e\1\u0105\25\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\u0106\1\126\1\u0106\1\u0090\1\126\12\u0107\1\u0091"+
+            "\6\uffff\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\u0108\1\126\1\u0108\1\u0090\1\126\12\u0109\1\u0091"+
+            "\6\uffff\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u00e3\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u00b1\1\126\12\u00e3\1\u0091\6\uffff"+
+            "\4\u008e\1\u00b0\25\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
             "",
             "",
             "",
@@ -18997,159 +19021,159 @@ public class NMEALexer extends Lexer {
             "",
             "",
             "",
-            "\1\u0109",
+            "\1\u010a",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u010b\1\117\12\u00ce\1\u0085\6\uffff\4\u0084\1\u010a"+
-            "\25\u0084\6\uffff\4\u0084\1\u010a\25\u0084",
+            "\3\126\1\u010c\1\117\12\u00cf\1\u0085\6\uffff\4\u0084\1\u010b"+
+            "\25\u0084\6\uffff\4\u0084\1\u010b\25\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u010c\1\126\1\u010c\1\u0087\1\117\12\u010d\1\u0085\6\uffff"+
+            "\1\u010d\1\126\1\u010d\1\u0087\1\117\12\u010e\1\u0085\6\uffff"+
             "\32\u0084\6\uffff\32\u0084",
-            "\3\126\2\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u010e\1"+
+            "\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u010f\1"+
             "\126\6\uffff\32\126\6\uffff\32\126",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u00fa\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
-            "\3\126\2\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u010f\1"+
+            "\3\126\1\u00a5\1\117\12\u00fb\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
+            "\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u0110\1"+
             "\126\6\uffff\32\126\6\uffff\32\126",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u00fc\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
+            "\3\126\1\u00a5\1\117\12\u00fd\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u010b\1\117\12\u00d4\1\u0085\6\uffff\4\u0084\1\u010a"+
-            "\25\u0084\6\uffff\4\u0084\1\u010a\25\u0084",
+            "\3\126\1\u010c\1\117\12\u00d5\1\u0085\6\uffff\4\u0084\1\u010b"+
+            "\25\u0084\6\uffff\4\u0084\1\u010b\25\u0084",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u00dd\1\126\1\u00dd\1\123\1\117\12\u0110\1\120\6\uffff\32"+
+            "\1\u00de\1\126\1\u00de\1\123\1\117\12\u0111\1\120\6\uffff\32"+
             "\116\6\uffff\32\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\123\1\117\12\u0111\1\120\6\uffff\4\116"+
-            "\1\u0112\25\116\6\uffff\4\116\1\u0112\25\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u0113\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
+            "\1\125\1\126\1\125\1\123\1\117\12\u0112\1\120\6\uffff\4\116"+
+            "\1\u0113\25\116\6\uffff\4\116\1\u0113\25\116",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u0114\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u0101\1\120\6\uffff\4\116"+
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u0102\1\120\6\uffff\4\116"+
             "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00ff\1\117\12\u00d8\1\120\6\uffff\4\116"+
-            "\1\u00fe\25\116\6\uffff\4\116\1\u00fe\25\116",
+            "\1\125\1\126\1\125\1\u0100\1\117\12\u00d9\1\120\6\uffff\4\116"+
+            "\1\u00ff\25\116\6\uffff\4\116\1\u00ff\25\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00ff\1\117\12\u00da\1\120\6\uffff\4\116"+
-            "\1\u00fe\25\116\6\uffff\4\116\1\u00fe\25\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u0114\1\126\1\u0114\1\u008f\1\126\12\u0115\1\u0090\6\uffff"+
-            "\32\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u0106\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00b0\1\126\12\u0106\1\u0090\6\uffff\4"+
-            "\u008d\1\u00af\25\u008d\6\uffff\4\u008d\1\u00af\25\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u0108\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00b0\1\126\12\u0108\1\u0090\6\uffff\4"+
-            "\u008d\1\u00af\25\u008d\6\uffff\4\u008d\1\u00af\25\u008d",
-            "\1\u0116",
+            "\1\125\1\126\1\125\1\u0100\1\117\12\u00db\1\120\6\uffff\4\116"+
+            "\1\u00ff\25\116\6\uffff\4\116\1\u00ff\25\116",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\u0115\1\126\1\u0115\1\u0090\1\126\12\u0116\1\u0091"+
+            "\6\uffff\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u0107\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u00b1\1\126\12\u0107\1\u0091\6\uffff"+
+            "\4\u008e\1\u00b0\25\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u0109\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u00b1\1\126\12\u0109\1\u0091\6\uffff"+
+            "\4\u008e\1\u00b0\25\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+            "\1\u0117",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u0087\1\117\12\u0117\1\u0085\6\uffff\32\u0084\6\uffff"+
+            "\3\126\1\u0087\1\117\12\u0118\1\u0085\6\uffff\32\u0084\6\uffff"+
             "\32\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u0087\1\117\12\u0118\1\u0085\6\uffff\4\u0084\1\u0119"+
-            "\25\u0084\6\uffff\4\u0084\1\u0119\25\u0084",
-            "\3\126\2\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u011a\1"+
+            "\3\126\1\u0087\1\117\12\u0119\1\u0085\6\uffff\4\u0084\1\u011a"+
+            "\25\u0084\6\uffff\4\u0084\1\u011a\25\u0084",
+            "\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u011b\1"+
             "\126\6\uffff\32\126\6\uffff\32\126",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u010d\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
+            "\3\126\1\u00a5\1\117\12\u010e\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u010b\1\117\12\u00fa\1\u0085\6\uffff\4\u0084\1\u010a"+
-            "\25\u0084\6\uffff\4\u0084\1\u010a\25\u0084",
+            "\3\126\1\u010c\1\117\12\u00fb\1\u0085\6\uffff\4\u0084\1\u010b"+
+            "\25\u0084\6\uffff\4\u0084\1\u010b\25\u0084",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u010b\1\117\12\u00fc\1\u0085\6\uffff\4\u0084\1\u010a"+
-            "\25\u0084\6\uffff\4\u0084\1\u010a\25\u0084",
-            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u0110\1\120\6\uffff\4\116"+
-            "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
+            "\3\126\1\u010c\1\117\12\u00fd\1\u0085\6\uffff\4\u0084\1\u010b"+
+            "\25\u0084\6\uffff\4\u0084\1\u010b\25\u0084",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
             "\1\125\1\126\1\125\1\u0089\1\117\12\u0111\1\120\6\uffff\4\116"+
-            "\1\u011b\25\116\6\uffff\4\116\1\u011b\25\116",
-            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u011c\1\126\1\u011c\1\123\1\117\12\u011d\1\120\6\uffff\32"+
-            "\116\6\uffff\32\116",
-            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00ff\1\117\12\u0101\1\120\6\uffff\4\116"+
-            "\1\u00fe\25\116\6\uffff\4\116\1\u00fe\25\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u0115\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00b0\1\126\12\u0115\1\u0090\6\uffff\4"+
-            "\u008d\1\u00af\25\u008d\6\uffff\4\u008d\1\u00af\25\u008d",
-            "\1\u011e",
-            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u0117\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
-            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u0118\1\u0085\6\uffff\4\u0084\1\u011f"+
-            "\25\u0084\6\uffff\4\u0084\1\u011f\25\u0084",
-            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u0120\1\126\1\u0120\1\u0087\1\117\12\u0121\1\u0085\6\uffff"+
-            "\32\u0084\6\uffff\32\u0084",
-            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u010b\1\117\12\u010d\1\u0085\6\uffff\4\u0084\1\u010a"+
-            "\25\u0084\6\uffff\4\u0084\1\u010a\25\u0084",
-            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u0122\1\126\1\u0122\1\123\1\117\12\u0123\1\120\6\uffff\32"+
-            "\116\6\uffff\32\116",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u0124\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u011d\1\120\6\uffff\4\116"+
-            "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
-            "\1\u0125",
-            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\u0126\1\126\1\u0126\1\u0087\1\117\12\u0127\1\u0085\6\uffff"+
-            "\32\u0084\6\uffff\32\u0084",
-            "\3\126\2\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u0128\1"+
-            "\126\6\uffff\32\126\6\uffff\32\126",
-            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u0121\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
-            "\1\u008d\1\126\1\u008c\2\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u008f\1\126\12\u0129\1\u0090\6\uffff\32"+
-            "\u008d\6\uffff\32\u008d",
-            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u0089\1\117\12\u0123\1\120\6\uffff\4\116"+
             "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00ff\1\117\12\u011d\1\120\6\uffff\4\116"+
-            "\1\u00fe\25\116\6\uffff\4\116\1\u00fe\25\116",
-            "\1\u012a\2\uffff\1\u012b\21\uffff\1\u012c\1\u012d",
-            "\3\126\2\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u012e\1"+
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u0112\1\120\6\uffff\4\116"+
+            "\1\u011c\25\116\6\uffff\4\116\1\u011c\25\116",
+            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\u011d\1\126\1\u011d\1\123\1\117\12\u011e\1\120\6\uffff\32"+
+            "\116\6\uffff\32\116",
+            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\125\1\126\1\125\1\u0100\1\117\12\u0102\1\120\6\uffff\4\116"+
+            "\1\u00ff\25\116\6\uffff\4\116\1\u00ff\25\116",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u0116\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u00b1\1\126\12\u0116\1\u0091\6\uffff"+
+            "\4\u008e\1\u00b0\25\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+            "\1\u011f",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\3\126\1\u00a5\1\117\12\u0118\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\3\126\1\u00a5\1\117\12\u0119\1\u0085\6\uffff\4\u0084\1\u0120"+
+            "\25\u0084\6\uffff\4\u0084\1\u0120\25\u0084",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\u0121\1\126\1\u0121\1\u0087\1\117\12\u0122\1\u0085\6\uffff"+
+            "\32\u0084\6\uffff\32\u0084",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\3\126\1\u010c\1\117\12\u010e\1\u0085\6\uffff\4\u0084\1\u010b"+
+            "\25\u0084\6\uffff\4\u0084\1\u010b\25\u0084",
+            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\u0123\1\126\1\u0123\1\123\1\117\12\u0124\1\120\6\uffff\32"+
+            "\116\6\uffff\32\116",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u0125\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
+            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u011e\1\120\6\uffff\4\116"+
+            "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
+            "\1\u0126",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\u0127\1\126\1\u0127\1\u0087\1\117\12\u0128\1\u0085\6\uffff"+
+            "\32\u0084\6\uffff\32\u0084",
+            "\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u0129\1"+
             "\126\6\uffff\32\126\6\uffff\32\126",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u00a4\1\117\12\u0127\1\u0085\6\uffff\4\u0084\1\u00a3"+
-            "\25\u0084\6\uffff\4\u0084\1\u00a3\25\u0084",
-            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u010b\1\117\12\u0121\1\u0085\6\uffff\4\u0084\1\u010a"+
-            "\25\u0084\6\uffff\4\u0084\1\u010a\25\u0084",
+            "\3\126\1\u00a5\1\117\12\u0122\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
+            "\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3"+
+            "\uffff\1\125\1\126\1\125\1\u0090\1\126\12\u012a\1\u0091\6\uffff"+
+            "\32\u008e\6\uffff\32\u008e",
             "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\1\125\1\126\1\125\1\u00ff\1\117\12\u0123\1\120\6\uffff\4\116"+
-            "\1\u00fe\25\116\6\uffff\4\116\1\u00fe\25\116",
-            "",
-            "\1\u012f",
-            "",
-            "",
+            "\1\125\1\126\1\125\1\u0089\1\117\12\u0124\1\120\6\uffff\4\116"+
+            "\1\u0088\25\116\6\uffff\4\116\1\u0088\25\116",
+            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\125\1\126\1\125\1\u0100\1\117\12\u011e\1\120\6\uffff\4\116"+
+            "\1\u00ff\25\116\6\uffff\4\116\1\u00ff\25\116",
+            "\1\u012b\2\uffff\1\u012c\21\uffff\1\u012d\1\u012e",
+            "\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u012f\1"+
+            "\126\6\uffff\32\126\6\uffff\32\126",
             "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
-            "\3\126\1\u010b\1\117\12\u0127\1\u0085\6\uffff\4\u0084\1\u010a"+
-            "\25\u0084\6\uffff\4\u0084\1\u010a\25\u0084",
+            "\3\126\1\u00a5\1\117\12\u0128\1\u0085\6\uffff\4\u0084\1\u00a4"+
+            "\25\u0084\6\uffff\4\u0084\1\u00a4\25\u0084",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\3\126\1\u010c\1\117\12\u0122\1\u0085\6\uffff\4\u0084\1\u010b"+
+            "\25\u0084\6\uffff\4\u0084\1\u010b\25\u0084",
+            "\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\1\125\1\126\1\125\1\u0100\1\117\12\u0124\1\120\6\uffff\4\116"+
+            "\1\u00ff\25\116\6\uffff\4\116\1\u00ff\25\116",
+            "",
             "\1\u0130",
+            "",
+            "",
+            "\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff"+
+            "\3\126\1\u010c\1\117\12\u0128\1\u0085\6\uffff\4\u0084\1\u010b"+
+            "\25\u0084\6\uffff\4\u0084\1\u010b\25\u0084",
             "\1\u0131",
             "\1\u0132",
             "\1\u0133",
-            "\1\u0134\60\uffff\1\u0135",
+            "\1\u0134",
+            "\1\u0135\60\uffff\1\u0136",
             "",
             ""
     };
