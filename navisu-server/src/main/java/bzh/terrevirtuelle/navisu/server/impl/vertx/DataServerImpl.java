@@ -26,10 +26,15 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * Created with IntelliJ IDEA. User: Serge Morvan Date: 18/12/13 Time: 16:01 To
@@ -55,6 +60,19 @@ public class DataServerImpl
     private int readerIndex = 0;
     private int currentReaderIndex = 0;
     private int queueSize;
+
+    protected static final Logger LOGGER = Logger.getLogger(DataServerImpl.class.getName());
+    protected static FileHandler fileHandler = null;
+
+    static {
+        try {
+            fileHandler = new FileHandler("sentences.log");
+            fileHandler.setFormatter(new MyFormatter());
+        } catch (IOException | SecurityException ex) {
+            Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        LOGGER.addHandler(fileHandler);
+    }
 
     @Override
     public void componentInitiated() {
@@ -93,6 +111,7 @@ public class DataServerImpl
                     if (readers.get(currentReaderIndex).getClass().getSimpleName().equals("FileReaderImpl")) {
                         readers.get(currentReaderIndex).read();
                     }
+
                     ws.writeTextFrame(response(currentReaderIndex).toString());
                     // rotation dans les buffers des readers
                     currentReaderIndex = (currentReaderIndex + 1) % sentenceQueues.size();
@@ -112,6 +131,7 @@ public class DataServerImpl
         if (serialPortReader != null) {
             serialPortReader.closePort();
         }
+       fileHandler.close();
     }
 
     @Override
@@ -119,7 +139,7 @@ public class DataServerImpl
         sentences = new Sentences();
         parser = new NmeaStringParser(sentences);
         sentenceQueues.get(currentReader).stream().forEach((s) -> {
-            //System.out.println("s : " + s);
+          //  LOGGER.info(s);
             parser.parse(s);
         });
         StringWriter stringWriter = new StringWriter();
@@ -193,3 +213,12 @@ public class DataServerImpl
         HttpServer httpserver = new HttpServer(vertx, hostname, port);
     }
 }
+class MyFormatter extends Formatter {
+
+    @Override
+    public String format(LogRecord record) {
+        return record.getMessage()+"\n";
+    }
+
+}
+

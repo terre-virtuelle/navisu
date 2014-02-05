@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 
 /**
  *
@@ -50,18 +49,23 @@ public class NmeaStringParser {
     }
 
     public void parse(String source) {
+      if((source.startsWith("{") && source.endsWith("}")) // Gpsd
+              || source.startsWith("!") // AIS
+              || source.startsWith("$") // NMEA0183
+              || source.startsWith("PGN")){ // N2K
         input = new ANTLRStringStream(source);
         handler = new NmeaHandler(sentences);
         aisHandler = new NmeaHandler(sentences);
         lexer = new NMEALexer(input);
         lexer.setHandler(handler);
         lexer.setAISHandler(aisHandler);
-        tokens = new CommonTokenStream(lexer);
-        parser = new NMEAParser(tokens);
+        parser = new NMEAParser(new CommonTokenStream(lexer));
         try {
             parser.entry();
-        } catch (RecognitionException ex) {
-            LOGGER.log(Level.SEVERE, ex.getMessage());
-        }
+        } catch (Exception  ex) {
+          //  LOGGER.log(Level.SEVERE, ex.getMessage());
+        } 
+      }
+        
     }
 }
