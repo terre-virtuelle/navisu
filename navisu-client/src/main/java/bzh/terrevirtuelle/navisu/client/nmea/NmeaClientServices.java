@@ -16,9 +16,9 @@ public interface NmeaClientServices
 
     public void open();
 
-    public void open(String hostName, int port, int period);
+    public void open(String hostName, int port);
 
-    public void request();
+    public void request(int period);
     
-    public void requestXML();
+    public void requestXML(int period);
 }

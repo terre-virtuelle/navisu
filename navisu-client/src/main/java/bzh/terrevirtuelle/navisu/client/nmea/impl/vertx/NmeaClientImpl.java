@@ -79,10 +79,10 @@ public class NmeaClientImpl
     }
 
     @Override
-    public void open(String hostName, int port, int period) {
+    public void open(String hostName, int port) {
         this.hostName = hostName;
         this.port = port;
-        this.period = period;
+        // this.period = period;
         initVertx();
     }
 
@@ -110,21 +110,23 @@ public class NmeaClientImpl
     }
 
     @Override
-    public void request() {
+    public void request(int period) {
+        this.period = period;
         vertx.setPeriodic(period, (Long timerID) -> {
             ws.writeTextFrame("request");
         });
     }
 
     @Override
-    public void requestXML() {
+    public void requestXML(int period) {
+        this.period = period;
         xml = true;
-        request();
+        request(period);
     }
 
     private void response(Sentences sentences) {
         notifyNMEAEvent();
-       //  display();
+        //  display();
     }
 
     public void display() {

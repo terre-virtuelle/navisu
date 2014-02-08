@@ -39,8 +39,8 @@ public class ClientMain extends Application {
                 NmeaClientImpl.class
         ));
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
-        nmeaClientServices.open("localhost", 8080, 100);
-        nmeaClientServices.request();
+        nmeaClientServices.open("localhost", 8080);
+        nmeaClientServices.request(100);
 
         Button button = new Button("Stop",
                 new ImageView(new Image(getClass().getResourceAsStream("stop_40x40.png"))));
