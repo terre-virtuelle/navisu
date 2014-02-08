@@ -26,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.FileHandler;
@@ -34,7 +33,6 @@ import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 /**
  * Created with IntelliJ IDEA. User: Serge Morvan Date: 18/12/13 Time: 16:01 To
@@ -139,7 +137,7 @@ public class DataServerImpl
         sentences = new Sentences();
         parser = new NmeaStringParser(sentences);
         sentenceQueues.get(currentReader).stream().forEach((s) -> {
-          //  LOGGER.info(s);
+           // LOGGER.info(s);
             parser.parse(s);
         });
         StringWriter stringWriter = new StringWriter();
