@@ -84,7 +84,6 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
                     .exec();
 
             inputFile = tmpTif;
-
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);
         }

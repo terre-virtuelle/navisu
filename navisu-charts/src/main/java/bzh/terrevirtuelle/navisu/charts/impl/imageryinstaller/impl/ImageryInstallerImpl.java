@@ -131,7 +131,6 @@ public class ImageryInstallerImpl implements ImageryInstaller
         params.setValue(AVKey.DATA_CACHE_NAME, cacheName);
         params.setValue(AVKey.DATASET_NAME, imageSourceName);
         params.setValue(AVKey.IMAGE_FORMAT, this.imageFormatToString(this.imageFormat));
-
         return params;
     }
 
@@ -211,6 +210,7 @@ public class ImageryInstallerImpl implements ImageryInstaller
         
         // Cast the image source object to File
         File imageSourceFile = imageSourceToFile(imageSourceObj);
+        System.out.println("imageSourceObj : " + imageSourceObj);
         // Compute the image titleText, without its extension
         String imageSourceName = imageSourceFile.getName().substring(0, imageSourceFile.getName().lastIndexOf("."));
         // Return the titleText
@@ -244,7 +244,6 @@ public class ImageryInstallerImpl implements ImageryInstaller
         {
             return new File((String) imageSource);
         }
-        
         return (File) imageSource;
     }
 }
