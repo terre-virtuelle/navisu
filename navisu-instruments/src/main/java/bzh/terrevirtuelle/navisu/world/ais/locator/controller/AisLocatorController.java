@@ -1,4 +1,4 @@
- /*
+  /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -21,7 +21,6 @@ import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.ship.Ship;
-import bzh.terrevirtuelle.navisu.ship.ShipBuilder;
 import bzh.terrevirtuelle.navisu.world.ais.locator.view.AisLayer;
 import bzh.terrevirtuelle.navisu.world.ais.locator.view.ShipDefaultView;
 import bzh.terrevirtuelle.navisu.world.ais.locator.view.ShipViewFactory;
@@ -109,9 +108,9 @@ public class AisLocatorController {
                 int mmsi = ais.getMMSI();
                 if (ships.containsKey(mmsi)) {
                     ship = ships.get(mmsi);
-                    // shipUpdate(ais); 
+                    //shipUpdate(ais);
                 } else {
-                    // shipBuild(ais); // faire un build pour les stations fixes
+                    shipBuild(ais); // faire un build pour les stations fixes
                     ships.put(mmsi, ship);
                 }
             }
@@ -142,6 +141,15 @@ public class AisLocatorController {
         ship.setCog(ais.getCog() / 10);
     }
 
+    private void shipBuild(AIS4 ais) {
+
+        ship = new Ship(ais.getMMSI(), ais.getLatitude(), ais.getLongitude());
+
+        shipView = new ShipViewFactory(ship).build();
+
+        aisLayer.add(shipView);
+    }
+
     private void shipBuild(AIS135 ais) {
 
         ship = new Ship(ais.getMMSI(), ais.getImo(), ais.getShipname(),
@@ -164,16 +172,17 @@ public class AisLocatorController {
             wwd.redrawNow();
         });
         /*
-        ship.cogProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
-            cog = t1.doubleValue();
-            shipView.setRotation(-cog);
-            wwd.redrawNow();
-        });
-                */
+         ship.cogProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
+         cog = t1.doubleValue();
+         shipView.setRotation(-cog);
+         wwd.redrawNow();
+         });
+         */
         ship.typeProperty().addListener((ObservableValue<? extends Number> ov, Number t, Number t1) -> {
             type = t1.intValue();
             shipView.setType(type);
             wwd.redrawNow();
         });
     }
+
 }
