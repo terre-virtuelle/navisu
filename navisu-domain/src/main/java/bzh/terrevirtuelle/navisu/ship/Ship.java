@@ -134,6 +134,8 @@ public class Ship implements Serializable {
      */
     private int hour, minute;
 
+    
+
     /**
      * Creates a new instance of Ship
      */
@@ -153,7 +155,6 @@ public class Ship implements Serializable {
     public Ship(int mmsi) {
         this.mmsi = mmsi;
     }
-    
     public Ship(int mmsi, int imo, String name,
             float heading, float cog, float sog, float rot,
             float latitude, float longitude,
@@ -179,6 +180,11 @@ public class Ship implements Serializable {
         this.ETA = ETA;
         this.destination = destination;
         this.country = country;
+    }
+    public Ship(int mmsi, float latitude, float longitude) {
+        this.mmsi = mmsi;
+        this.latitude = new SimpleDoubleProperty(latitude);
+        this.longitude = new SimpleDoubleProperty(longitude);
     }
 
     @Override

@@ -1270,7 +1270,7 @@ GPSD_AIS : '{''"class":"AIS"' SEP
     	'"repeat":' repeat = NUMBER SEP
     	'"mmsi":' mmsi = NUMBER SEP
     	'"scaled":' scaled=LETTERS SEP
-    	//Type 1 ou 3
+    	//Type 1 ou 2 ou 3
     	('"status":' status=NUMBER SEP 
     	 '"turn":' turn=SIGNED SEP 
     	 '"speed":' speed=NUMBER SEP 
@@ -1397,6 +1397,7 @@ GPSD_AIS : '{''"class":"AIS"' SEP
     	{
     	switch(type.getText()){
 	case "1" :
+	case "2" :
 	case "3" :
 	  if(dev != null && mmsi != null && status != null && turn != null 
 	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){

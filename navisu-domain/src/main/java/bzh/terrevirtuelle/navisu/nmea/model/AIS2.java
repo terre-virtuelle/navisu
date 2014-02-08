@@ -1,16 +1,7 @@
-/**
- * ****************************************************************************
- * (c) Copyright 2007, IRENav. All rights reserved. Property of ECOLE NAVALE
- *
- * For Unrestricted Internal Use Only Unauthorized reproduction and/or
- * distribution is strictly prohibited. This product is protected under
- * copyright law and trade secret law as an unpublished Work.
- *
- * Modified in 05/2007.
- *
- * Original Designers : RAY, STROH, ALESSIO Modified : Serge Morvan Enib 09/2009
- *
- *****************************************************************************
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
@@ -19,23 +10,20 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Position Report with SOTDMA
- *  (Self-Organizing Time Division Multiple Access) 
  *
+ * @author Serge
  */
-@XmlRootElement(name = "ais1")
+@XmlRootElement(name = "ais2")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AIS1
+public class AIS2
         extends AIS135 {
 
-    public AIS1() {
-    }
- 
-    public AIS1(float rot, float cog, float sog, int navigationalStatus, float heading, float latitude, float longitude, int second, int MMSI, String device) {
-        super(rot, cog, sog, navigationalStatus, heading, latitude, longitude, second, MMSI, device);
+    public AIS2() {
     }
 
-    
+    public AIS2(float rot, float cog, float sog, int navigationalStatus, float heading, float latitude, float longitude, int second, int MMSI, String device) {
+        super(rot, cog, sog, navigationalStatus, heading, latitude, longitude, second, MMSI, device);
+    }
 
     /**
      * decodeFrame : decode AIS message of type 1
@@ -69,6 +57,3 @@ public class AIS1
     }
 
 }
-/**
- * end AISMessageType1
- */

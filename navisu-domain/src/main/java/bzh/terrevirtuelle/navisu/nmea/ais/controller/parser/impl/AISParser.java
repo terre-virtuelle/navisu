@@ -29,6 +29,7 @@ import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS9;
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS2;
 import java.util.List;
 
 /**
@@ -101,6 +102,12 @@ public class AISParser
                     whatType = messageSuper.whatType();
                     if (whatType == 1) {
                         AIS1 message = new AIS1();
+                        message.fill(ligne);
+                        message.decodeFrame();
+                        handler.doIt(message);
+                    }
+                        if (whatType == 2) {
+                        AIS2 message = new AIS2();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
