@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
 import bzh.terrevirtuelle.navisu.world.Widget3DServices;
@@ -30,9 +31,9 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @author Jordan Mens <jordan.mens at gmail.com>
  */
 public class AppMain extends Application {
-
+    
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
-
+    
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -41,7 +42,7 @@ public class AppMain extends Application {
 
         // initialize logging
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
-
+        
         final ComponentManager componentManager = ComponentManager.componentManager;
 
         // deploy components
@@ -57,19 +58,21 @@ public class AppMain extends Application {
                         Widget3DImpl.class
                 )
         );
-
+        
         GuiAgentServices guiServices = componentManager.getComponentService(GuiAgentServices.class);
         guiServices.showGui(stage, 800, 500);
-
+        
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
+       
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
-
+        
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
-
         driverServices.registerNewDriver(chartsServices.getDriver());
+       // chartsServices.openChart("data/101.KAP");
         driverServices.registerNewDriver(gribServices.getDriver());
-
+        
+        
          //------------------------------->
         // TESTS AGENT
         //
@@ -112,42 +115,41 @@ public class AppMain extends Application {
          //
         // END TESTS AGENT
         //------------------------------->
-         //------------------------------->
+        //------------------------------->
         // TESTS SERVER
         //
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
-        
+
         // Test avec choix des parametres de comm
         dataServerServices.init("localhost", 8080);
 
          // Test connexion GPS 
-         //dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
-         //dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-         // Test connexion Gpsd 
-        dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+        //dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
+        //dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
+        // Test connexion Gpsd 
+       //ls dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // Test connexion fichier 
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
 
-         // Test serveur Web Http 
+        // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
-        nmeaClientServices.open("localhost", 8080, 500);
-        nmeaClientServices.request();
+      //  nmeaClientServices.open("localhost", 8080, 500);
+      //  nmeaClientServices.request();
 
         // Test clients à l'écoute des événements Nmea 
-    
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
-        widgetServices.createGpsLocator();
-        widgetServices.createAisLocator();
+       // widgetServices.createGpsLocator();
+        //widgetServices.createAisLocator();
 
-         //
+        //
         // END TESTS SERVER
         //------------------------------->
     }
-
+    
     public static void main(String[] args) throws Exception {
         Application.launch();
     }
