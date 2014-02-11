@@ -6,17 +6,16 @@
 package bzh.terrevirtuelle.navisu.world.ais.locator.view;
 
 import bzh.terrevirtuelle.navisu.ship.Ship;
+import bzh.terrevirtuelle.navisu.world.ais.locator.view.impl.ShipDefaultViewImpl;
+import bzh.terrevirtuelle.navisu.world.ais.locator.view.impl.ShipViewImpl;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import java.awt.Color;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -26,27 +25,31 @@ public class ShipViewFactory {
 
     private final double latitude;
     private final double longitude;
-    private final double cog;
+    private double cog;
     private final int type;
     private double[] shipShape;
-    private ShapeAttributes pathAttrs;
+    private ShapeAttributes shapeAttributes;
+    private final int aisType;
 
-    public ShipViewFactory(Ship ship) {
+    public ShipViewFactory(Ship ship, int aisType) {
         this.latitude = ship.getLatitude();
         this.longitude = ship.getLongitude();
         this.cog = ship.getCog();
         this.type = ship.getType();
+        this.aisType = aisType;
     }
 
-    public ShipDefaultView build() {
-        // initTriangleShape();
-        initSquareShape();
-        makeAttributes();
-      //  ShipDefaultView shipView = new ShipDefaultView(makePositionList(shipShape), latitude, longitude, cog);
-      ShipDefaultView shipView = new ShipDefaultView(new LatLon(Angle.fromDegrees(latitude), 
-              Angle.fromDegrees(longitude)), 50.0);  
-        shipView.setAttributes(pathAttrs);
-        shipView.setEnableBatchPicking(true);
+    public ShipView buildDefault() {
+        ShipView shipView = new ShipDefaultViewImpl(new LatLon(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude)), 50.0);
+        shipView.setAttributes(makeAttributes());
+        //  shipView.setEnableBatchPicking(true);
+        return shipView;
+    }
+
+    public ShipView build() {
+        initTriangleShape();
+        ShipView shipView = new ShipViewImpl(makePositionList(shipShape), latitude, longitude, cog);
+        shipView.setAttributes(makeAttributes());
         return shipView;
     }
 
@@ -86,15 +89,22 @@ public class ShipViewFactory {
         shipShape[9] = latitude - .0005;
     }
 
-    private void makeAttributes() {
-        pathAttrs = new BasicShapeAttributes();
-        pathAttrs.setOutlineMaterial(Material.YELLOW);
-        pathAttrs.setOutlineOpacity(0.8);
-        pathAttrs.setOutlineWidth(1);
-        pathAttrs.setInteriorMaterial(CategoryView.VIEW.get(type));
-        pathAttrs.setDrawInterior(true);
-        pathAttrs.setInteriorOpacity(1.0);
+    private ShapeAttributes makeAttributes() {
+        shapeAttributes = new BasicShapeAttributes();
+        if (aisType != 4) {
+            shapeAttributes.setOutlineMaterial(CategoryView.VIEW.get(type));
+            shapeAttributes.setInteriorMaterial(CategoryView.VIEW.get(type));
+        }
+        if (aisType == 4) {
+            shapeAttributes.setOutlineMaterial(Material.RED);
+            shapeAttributes.setInteriorMaterial(Material.RED);
+        }
 
+        shapeAttributes.setOutlineOpacity(0.8);
+        shapeAttributes.setOutlineWidth(1);
+        shapeAttributes.setDrawInterior(true);
+        shapeAttributes.setInteriorOpacity(1.0);
+        return shapeAttributes;
     }
 
     protected final List<Position> makePositionList(double[] src) {
