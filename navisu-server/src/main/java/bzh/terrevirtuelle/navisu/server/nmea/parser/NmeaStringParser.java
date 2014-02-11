@@ -31,7 +31,7 @@ public class NmeaStringParser {
     private CommonTokenStream tokens;
     private Sentences sentences;
     protected static final Logger LOGGER = Logger.getLogger(NmeaStringParser.class.getName());
-    protected static  FileHandler fileHandler = null;
+    protected static FileHandler fileHandler = null;
 
     static {
         try {
@@ -48,11 +48,15 @@ public class NmeaStringParser {
         this.sentences = sentences;
     }
 
-    public void parse(String source) {
-      if((source.startsWith("{") && source.endsWith("}")) // Gpsd
-              || source.startsWith("!") // AIS
-              || source.startsWith("$") // NMEA0183
-              || source.startsWith("PGN")){ // N2K
+    public void parse(final String s) {
+        String source = new StringBuilder(s).toString().trim();
+        /*
+         if ((source.startsWith("{") && source.endsWith("}")) // Gpsd well formatted
+         || source.startsWith("!") // AIS
+         || source.startsWith("$") // NMEA0183
+         || source.startsWith("PGN")) { // N2K
+         */
+
         input = new ANTLRStringStream(source);
         handler = new NmeaHandler(sentences);
         aisHandler = new NmeaHandler(sentences);
@@ -62,10 +66,10 @@ public class NmeaStringParser {
         parser = new NMEAParser(new CommonTokenStream(lexer));
         try {
             parser.entry();
-        } catch (Exception  ex) {
-          //  LOGGER.log(Level.SEVERE, ex.getMessage());
-        } 
-      }
-        
+        } catch (Exception ex) {
+            //  LOGGER.log(Level.SEVERE, ex.getMessage());
+        }
+        //  }
+
     }
 }

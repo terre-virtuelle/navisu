@@ -27,7 +27,13 @@ public class NetReaderImpl
                 if (asyncResult.succeeded()) {
                     NetSocket socket = asyncResult.result();
                     socket.dataHandler((Buffer buffer) -> {
-                        vertx.eventBus().send("comm-address" + index, buffer.toString().trim());
+                        String source = buffer.toString().trim();
+                        if ((source.startsWith("{") && source.endsWith("}")) // Gpsd well formatted
+                                || source.startsWith("!") // AIS
+                                || source.startsWith("$") // NMEA0183
+                                || source.startsWith("PGN")) { // N2K
+                            vertx.eventBus().send("comm-address" + index, source);
+                        }
                     });
                     socket.write(new Buffer("?WATCH={\"enable\":true,\"json\":true};"));
                 }
