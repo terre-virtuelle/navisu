@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
 import bzh.terrevirtuelle.navisu.world.Widget3DServices;
@@ -127,23 +126,23 @@ public class AppMain extends Application {
         //dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         //dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // Test connexion Gpsd 
-       //ls dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+        //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // Test connexion fichier 
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        // dataServerServices.openFile("data/ais/ais.txt");  //AIS
+         dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
 
         // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
-      //  nmeaClientServices.open("localhost", 8080, 500);
-      //  nmeaClientServices.request();
+        nmeaClientServices.open("localhost", 8080);
+        nmeaClientServices.request(5000);
 
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
        // widgetServices.createGpsLocator();
-        //widgetServices.createAisLocator();
+        widgetServices.createAisLocator();
 
         //
         // END TESTS SERVER
