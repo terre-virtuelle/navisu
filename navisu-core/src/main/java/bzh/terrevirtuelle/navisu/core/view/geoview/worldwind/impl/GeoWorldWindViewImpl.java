@@ -16,10 +16,13 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
 import gov.nasa.worldwind.awt.WorldWindowGLJPanel;
+import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.EarthFlat;
+import gov.nasa.worldwindx.examples.util.HighlightController;
+import gov.nasa.worldwindx.examples.util.HotSpotController;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Node;
 
@@ -61,6 +64,12 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
 
         // Create the JavaFX display node
         this.swingNode = this.createSwingDisplayNode(this.wwd);
+        
+         // Register a select listener to print the class names of the items under the cursor. // Register a select listener to print the class names of the items under the cursor.
+        wwd.getSceneController().setDeepPickEnabled(true);
+        // Add controllers to manage highlighting and tool tips.
+        HotSpotController hotSpotController = new HotSpotController(wwd);
+        HighlightController highlightController = new HighlightController(this.wwd, SelectEvent.ROLLOVER);
     }
 
     protected SwingNode createSwingDisplayNode(WorldWindow wwd) {
