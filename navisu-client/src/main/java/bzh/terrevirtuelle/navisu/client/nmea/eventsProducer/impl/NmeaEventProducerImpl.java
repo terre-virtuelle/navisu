@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS18Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS19Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS24Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
@@ -69,6 +70,7 @@ import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS8;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS9;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS135;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.nmea.model.APB;
 import bzh.terrevirtuelle.navisu.nmea.model.BEC;
 import bzh.terrevirtuelle.navisu.nmea.model.BOD;
@@ -204,6 +206,8 @@ public class NmeaEventProducerImpl
     @ProducedEvent
     protected AIS24Event ais24Event;
     @ProducedEvent
+    protected AIS2Event ais2Event;
+    @ProducedEvent
     protected AIS3Event ais3Event;
     @ProducedEvent
     protected AIS4Event ais4Event;
@@ -273,6 +277,7 @@ public class NmeaEventProducerImpl
         nmeaEvents.put(AIS18.class, ais18Event);
         nmeaEvents.put(AIS19.class, ais19Event);
         nmeaEvents.put(AIS24.class, ais24Event);
+        nmeaEvents.put(AIS2.class, ais24Event);
         nmeaEvents.put(AIS3.class, ais3Event);
         nmeaEvents.put(AIS4.class, ais4Event);
         nmeaEvents.put(AIS5.class, ais5Event);
