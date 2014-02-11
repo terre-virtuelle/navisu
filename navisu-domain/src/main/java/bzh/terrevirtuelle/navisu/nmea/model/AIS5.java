@@ -87,6 +87,7 @@ public class AIS5 extends AIS135 {
         /* remove padding bits at the end the message */
         messageBinaire = messageBinaire.substring(0, messageBinaire.length() - this.padding - 1);
         messageAisBinary = messageBinaire;
+        toString();
     }
 
     /**

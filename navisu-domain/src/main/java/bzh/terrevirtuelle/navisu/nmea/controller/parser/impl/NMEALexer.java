@@ -1,4 +1,4 @@
-// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-02-07 18:34:19
+// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-02-11 17:08:33
 
 package bzh.terrevirtuelle.navisu.nmea.controller.parser.impl;
 
@@ -13907,7 +13907,7 @@ public class NMEALexer extends Lexer {
             	  if(dev != null && mmsi != null && status != null && turn != null 
             	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
             	     
-            	     ais1 = new AIS1(new Float(turn.getText()), new Float(course.getText()), new Float(speed.getText()),
+            	     ais1 = new AIS1(new Float(turn.getText()), (new Float(course.getText()))/10.0f, (new Float(speed.getText()))/10.0f,
             	                         new Integer(status.getText()), new Float(heading.getText()), 
             	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
             	                         new Integer(second.getText()), new Integer(mmsi.getText()), dev.getText()); 
@@ -15043,13 +15043,13 @@ public class NMEALexer extends Lexer {
             }
 
 
-            int deviceStart7978 = getCharIndex();
-            int deviceStartLine7978 = getLine();
-            int deviceStartCharPos7978 = getCharPositionInLine();
+            int deviceStart7977 = getCharIndex();
+            int deviceStartLine7977 = getLine();
+            int deviceStartCharPos7977 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart7978, getCharIndex()-1);
-            device.setLine(deviceStartLine7978);
-            device.setCharPositionInLine(deviceStartCharPos7978);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart7977, getCharIndex()-1);
+            device.setLine(deviceStartLine7977);
+            device.setCharPositionInLine(deviceStartCharPos7977);
 
 
             match("TXT"); 
@@ -15087,13 +15087,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart8005 = getCharIndex();
-            int checksumStartLine8005 = getLine();
-            int checksumStartCharPos8005 = getCharPositionInLine();
+            int checksumStart8004 = getCharIndex();
+            int checksumStartLine8004 = getLine();
+            int checksumStartCharPos8004 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart8005, getCharIndex()-1);
-            checksum.setLine(checksumStartLine8005);
-            checksum.setCharPositionInLine(checksumStartCharPos8005);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart8004, getCharIndex()-1);
+            checksum.setLine(checksumStartLine8004);
+            checksum.setCharPositionInLine(checksumStartCharPos8004);
 
 
 
@@ -15228,13 +15228,13 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart8051 = getCharIndex();
-            int checksumStartLine8051 = getLine();
-            int checksumStartCharPos8051 = getCharPositionInLine();
+            int checksumStart8050 = getCharIndex();
+            int checksumStartLine8050 = getLine();
+            int checksumStartCharPos8050 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart8051, getCharIndex()-1);
-            checksum.setLine(checksumStartLine8051);
-            checksum.setCharPositionInLine(checksumStartCharPos8051);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart8050, getCharIndex()-1);
+            checksum.setLine(checksumStartLine8050);
+            checksum.setCharPositionInLine(checksumStartCharPos8050);
 
 
 

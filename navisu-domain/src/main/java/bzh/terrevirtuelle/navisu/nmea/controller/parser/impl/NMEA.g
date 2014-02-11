@@ -1393,7 +1393,7 @@ GPSD_AIS : '{''"class":"AIS"' SEP
     	'"to_starboard":' to_starboard=NUMBER 
     	)
          ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
-        // {System.out.println(getText());}
+       // {System.out.println(getText());}
     	{
     	switch(type.getText()){
 	case "1" :
@@ -1402,7 +1402,7 @@ GPSD_AIS : '{''"class":"AIS"' SEP
 	  if(dev != null && mmsi != null && status != null && turn != null 
 	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
 	     
-	     ais1 = new AIS1(new Float(turn.getText()), new Float(course.getText()), new Float(speed.getText()),
+	     ais1 = new AIS1(new Float(turn.getText()), (new Float(course.getText()))/10.0f, (new Float(speed.getText()))/10.0f,
 	                         new Integer(status.getText()), new Float(heading.getText()), 
 	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
 	                         new Integer(second.getText()), new Integer(mmsi.getText()), dev.getText()); 
