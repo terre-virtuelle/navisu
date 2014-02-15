@@ -8,6 +8,8 @@ package bzh.terrevirtuelle.navisu.api.option.mapping;
  */
 public class IntMapper implements StringMapper<Integer> {
 
+    public static final String CLASS_NAME = "bzh.terrevirtuelle.navisu.api.option.mapping.InMapper";
+
     @Override
     public String map(Integer value) {
         return value.toString();

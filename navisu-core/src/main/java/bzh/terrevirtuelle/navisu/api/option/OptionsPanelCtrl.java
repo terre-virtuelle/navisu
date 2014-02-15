@@ -6,13 +6,16 @@ package bzh.terrevirtuelle.navisu.api.option;
  * @author tibus
  * @date 15/02/2014 17:22
  */
-public interface OptionsPanelCtrl<T> {
+public interface OptionsPanelCtrl<V extends OptionsPanel, T> {
 
-    void load(T model);
+    void load(V view, T model);
 
-    T store(T oldModel);
+    T store(V view, T oldModel);
 
-    boolean valid(T model);
+    boolean valid(V view);
 
-    OptionsPanel getView();
+    String getTitle();
+
+    Class<V> getViewType();
+    Class<T> getModelType();
 }

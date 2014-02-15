@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.api.option.usage;
 
-import bzh.terrevirtuelle.navisu.api.option.OptionsWindow;
 import bzh.terrevirtuelle.navisu.api.option.OptionsWindowCtrl;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -24,13 +23,16 @@ public class UsageMain extends Application {
         OptionsWindowCtrl optionWindow = new OptionsWindowCtrl();
         root.setCenter(optionWindow.getView().getDisplayable());
 
+        TestOptionsPanelCtrl testOptionsPanelCtrl = optionWindow.newOptionsPanelCtrl(TestOptionsPanelCtrl.class);
+
+
         stage.setWidth(700);
         stage.setHeight(500);
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void main(String[] args) {
-        Application.launch(UsageMain.class, args);
+    public static void main(String[] args) throws Exception {
+        launch(UsageMain.class, args);
     }
 }

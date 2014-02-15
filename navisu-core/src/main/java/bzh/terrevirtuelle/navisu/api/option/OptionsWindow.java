@@ -36,7 +36,10 @@ public class OptionsWindow extends JFXAbstractDisplay {
         this.southContainer.setPadding(new Insets(20));
 
         this.cancelBtn = new Button(this.getCancelButtonText());
+
         this.applyBtn = new Button(this.getApplyButtonText());
+        this.applyBtn.setDisable(true);
+
         this.okBtn = new Button(this.getOkButtonText());
 
         this.southContainer.getChildren().addAll(
@@ -46,9 +49,6 @@ public class OptionsWindow extends JFXAbstractDisplay {
 
         this.content.setCenter(this.tabPane);
         this.content.setBottom(this.southContainer);
-
-        this.tabPane.getTabs().add(new Tab("Charts"));
-        this.tabPane.getTabs().add(new Tab("GPS"));
     }
 
     protected String getCancelButtonText() {
@@ -61,6 +61,12 @@ public class OptionsWindow extends JFXAbstractDisplay {
 
     protected String getOkButtonText() {
         return "Ok";
+    }
+
+    public void addTab(String title, Node content) {
+        Tab tab = new Tab(title);
+        tab.setContent(content);
+        this.tabPane.getTabs().add(tab);
     }
 
     @Override
