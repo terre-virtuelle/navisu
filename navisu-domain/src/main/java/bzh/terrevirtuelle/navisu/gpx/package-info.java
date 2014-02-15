@@ -4,6 +4,5 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2012.12.03 at 09:49:42 AM CET 
 //
-
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.topografix.com/GPX/1/1", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package fr.navisu.gpx.model;
+package bzh.terrevirtuelle.navisu.gpx;

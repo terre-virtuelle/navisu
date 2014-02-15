@@ -50,6 +50,15 @@ public class PersonType {
     protected EmailType email;
     protected LinkType link;
 
+    public PersonType() {
+    }
+
+    public PersonType(String name, EmailType email, LinkType link) {
+        this.name = name;
+        this.email = email;
+        this.link = link;
+    }
+
     /**
      * Gets the value of the name property.
      * 

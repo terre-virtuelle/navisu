@@ -56,6 +56,15 @@ public class CopyrightType {
     @XmlAttribute(name = "author", required = true)
     protected String author;
 
+    public CopyrightType() {
+    }
+
+    public CopyrightType(XMLGregorianCalendar year, String license, String author) {
+        this.year = year;
+        this.license = license;
+        this.author = author;
+    }
+
     /**
      * Gets the value of the year property.
      * 

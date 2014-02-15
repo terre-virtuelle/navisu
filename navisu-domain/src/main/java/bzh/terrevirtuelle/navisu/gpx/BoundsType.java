@@ -52,6 +52,16 @@ public class BoundsType {
     @XmlAttribute(name = "maxlon", required = true)
     protected BigDecimal maxlon;
 
+    public BoundsType() {
+    }
+
+    public BoundsType(BigDecimal minlat, BigDecimal minlon, BigDecimal maxlat, BigDecimal maxlon) {
+        this.minlat = minlat;
+        this.minlon = minlon;
+        this.maxlat = maxlat;
+        this.maxlon = maxlon;
+    }
+
     /**
      * Gets the value of the minlat property.
      * 

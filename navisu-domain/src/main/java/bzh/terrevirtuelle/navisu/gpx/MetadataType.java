@@ -74,6 +74,21 @@ public class MetadataType {
     protected BoundsType bounds;
     protected ExtensionsType extensions;
 
+    public MetadataType() {
+    }
+
+    public MetadataType(String name, String desc, PersonType author, CopyrightType copyright, List<LinkType> link, XMLGregorianCalendar time, String keywords, BoundsType bounds, ExtensionsType extensions) {
+        this.name = name;
+        this.desc = desc;
+        this.author = author;
+        this.copyright = copyright;
+        this.link = link;
+        this.time = time;
+        this.keywords = keywords;
+        this.bounds = bounds;
+        this.extensions = extensions;
+    }
+
     /**
      * Gets the value of the name property.
      * 

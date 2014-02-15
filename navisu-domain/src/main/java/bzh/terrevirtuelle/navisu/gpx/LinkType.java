@@ -53,6 +53,15 @@ public class LinkType {
     @XmlSchemaType(name = "anyURI")
     protected String href;
 
+    public LinkType() {
+    }
+
+    public LinkType(String text, String type, String href) {
+        this.text = text;
+        this.type = type;
+        this.href = href;
+    }
+
     /**
      * Gets the value of the text property.
      * 

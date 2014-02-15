@@ -73,6 +73,21 @@ public class TrkType {
     protected ExtensionsType extensions;
     protected List<TrksegType> trkseg;
 
+    public TrkType() {
+    }
+
+    public TrkType(String name, String cmt, String desc, String src, List<LinkType> link, BigInteger number, String type, ExtensionsType extensions, List<TrksegType> trkseg) {
+        this.name = name;
+        this.cmt = cmt;
+        this.desc = desc;
+        this.src = src;
+        this.link = link;
+        this.number = number;
+        this.type = type;
+        this.extensions = extensions;
+        this.trkseg = trkseg;
+    }
+
     /**
      * Gets the value of the name property.
      * 

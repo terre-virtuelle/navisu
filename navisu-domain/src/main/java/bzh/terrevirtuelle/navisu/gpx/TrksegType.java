@@ -49,6 +49,14 @@ public class TrksegType {
     protected List<WptType> trkpt;
     protected ExtensionsType extensions;
 
+    public TrksegType() {
+    }
+
+    public TrksegType(List<WptType> trkpt, ExtensionsType extensions) {
+        this.trkpt = trkpt;
+        this.extensions = extensions;
+    }
+
     /**
      * Gets the value of the trkpt property.
      * 

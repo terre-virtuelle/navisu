@@ -49,6 +49,13 @@ public class ExtensionsType {
     @XmlAnyElement(lax = true)
     protected List<Object> any;
 
+    public ExtensionsType() {
+    }
+
+    public ExtensionsType(List<Object> any) {
+        this.any = any;
+    }
+
     /**
      * Gets the value of the any property.
      * 

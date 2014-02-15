@@ -73,6 +73,21 @@ public class RteType {
     protected ExtensionsType extensions;
     protected List<WptType> rtept;
 
+    public RteType() {
+    }
+
+    public RteType(String name, String cmt, String desc, String src, List<LinkType> link, BigInteger number, String type, ExtensionsType extensions, List<WptType> rtept) {
+        this.name = name;
+        this.cmt = cmt;
+        this.desc = desc;
+        this.src = src;
+        this.link = link;
+        this.number = number;
+        this.type = type;
+        this.extensions = extensions;
+        this.rtept = rtept;
+    }
+
     /**
      * Gets the value of the name property.
      * 

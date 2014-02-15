@@ -46,6 +46,13 @@ public class PtsegType {
 
     protected List<PtType> pt;
 
+    public PtsegType() {
+    }
+
+    public PtsegType(List<PtType> pt) {
+        this.pt = pt;
+    }
+
     /**
      * Gets the value of the pt property.
      * 

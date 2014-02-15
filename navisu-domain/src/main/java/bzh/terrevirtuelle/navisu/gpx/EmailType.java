@@ -45,6 +45,14 @@ public class EmailType {
     @XmlAttribute(name = "domain", required = true)
     protected String domain;
 
+    public EmailType() {
+    }
+
+    public EmailType(String id, String domain) {
+        this.id = id;
+        this.domain = domain;
+    }
+
     /**
      * Gets the value of the id property.
      * 

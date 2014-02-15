@@ -57,6 +57,16 @@ public class PtType {
     @XmlAttribute(name = "lon", required = true)
     protected BigDecimal lon;
 
+    public PtType() {
+    }
+
+    public PtType(BigDecimal ele, XMLGregorianCalendar time, BigDecimal lat, BigDecimal lon) {
+        this.ele = ele;
+        this.time = time;
+        this.lat = lat;
+        this.lon = lon;
+    }
+
     /**
      * Gets the value of the ele property.
      * 

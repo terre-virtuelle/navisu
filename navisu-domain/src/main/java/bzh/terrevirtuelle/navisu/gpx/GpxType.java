@@ -66,6 +66,19 @@ public class GpxType {
     @XmlAttribute(name = "creator", required = true)
     protected String creator;
 
+    public GpxType() {
+    }
+
+    public GpxType(MetadataType metadata, List<WptType> wpt, List<RteType> rte, List<TrkType> trk, ExtensionsType extensions, String version, String creator) {
+        this.metadata = metadata;
+        this.wpt = wpt;
+        this.rte = rte;
+        this.trk = trk;
+        this.extensions = extensions;
+        this.version = version;
+        this.creator = creator;
+    }
+
     /**
      * Gets the value of the metadata property.
      * 
