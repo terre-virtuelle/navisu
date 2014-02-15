@@ -39,6 +39,29 @@ public class OptionsAnnotationUtils {
         return null;
     }
 
+    public static void initField(Object target, Field field) throws Exception  {
+
+        if(field.getDeclaredAnnotations().length > 0) {
+
+            if(field.isAnnotationPresent(IntOption.class)) {
+                IntOption annotation = field.getAnnotation(IntOption.class);
+                field.setAccessible(true);
+                field.setInt(target, annotation.value());
+            }
+
+            else if(field.isAnnotationPresent(DoubleOption.class)) {
+                DoubleOption annotation = field.getAnnotation(DoubleOption.class);
+                field.setAccessible(true);
+                field.setDouble(target, annotation.value());
+            }
+
+            else if(field.isAnnotationPresent(Option.class)) {
+                Option annotation = field.getAnnotation(Option.class);
+                field.setAccessible(true);
+                field.set(target, annotation.value());
+            }
+        }
+    }
 
     private OptionsAnnotationUtils() {}
 }

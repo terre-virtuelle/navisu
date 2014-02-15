@@ -20,11 +20,14 @@ public class UsageMain extends Application {
         BorderPane root = new BorderPane();
         Scene scene = new Scene(root);
 
-        OptionsWindowCtrl optionWindow = new OptionsWindowCtrl();
-        root.setCenter(optionWindow.getView().getDisplayable());
+        final OptionsWindowCtrl optionWindow = new OptionsWindowCtrl();
+        root.setCenter(optionWindow.getDisplayable());
 
-        TestOptionsPanelCtrl testOptionsPanelCtrl = optionWindow.newOptionsPanelCtrl(TestOptionsPanelCtrl.class);
+        final TestOptionsPanelCtrl testOptionsPanelCtrl = optionWindow.newOptionsPanelCtrl(TestOptionsPanelCtrl.class);
+        optionWindow.setVisible(true);
 
+
+        stage.setOnCloseRequest(e -> optionWindow.setVisible(false));
 
         stage.setWidth(700);
         stage.setHeight(500);

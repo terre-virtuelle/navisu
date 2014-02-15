@@ -15,14 +15,14 @@ import java.util.List;
  */
 public class TestModel {
 
-    @IntOption(18)
-    private Integer intValue;
+    @IntOption(100)
+    private int intValue;
 
     @Option("Hello World")
     private String stringValue;
 
     @DoubleOption(3.14)
-    private Double doubleValue;
+    private double doubleValue;
 
     public TestModel() {}
 
