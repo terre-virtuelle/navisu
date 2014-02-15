@@ -10,7 +10,7 @@ public interface OptionsPanelCtrl<V extends OptionsPanel, T> {
 
     void load(V view, T model);
 
-    void store(V view, T oldModel);
+    void store(V view, T model);
 
     boolean valid(V view);
 

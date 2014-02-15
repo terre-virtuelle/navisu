@@ -1,7 +1,6 @@
 package bzh.terrevirtuelle.navisu.api.option;
 
 import bzh.terrevirtuelle.navisu.api.option.annotation.OptionsAnnotationUtils;
-import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.display.jfx.impl.JFXAbstractDisplay;
 import javafx.scene.Node;
 
@@ -75,7 +74,7 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
             return ctrl;
 
         } catch (Exception e) {
-            String message = "Cannot create options controller [" + clz + "]";
+            //String message = "Cannot create options controller [" + clz + "]";
             throw new RuntimeException(e);
         }
     }

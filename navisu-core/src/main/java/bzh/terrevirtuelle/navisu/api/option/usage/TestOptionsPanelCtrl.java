@@ -20,14 +20,26 @@ public class TestOptionsPanelCtrl implements OptionsPanelCtrl<TestOptionsPanel, 
     }
 
     @Override
-    public void store(TestOptionsPanel view, TestModel oldModel) {
+    public void store(TestOptionsPanel view, TestModel model) {
         System.out.println(TestOptionsPanelCtrl.class + " store");
+
+        model.setDoubleValue(Double.valueOf(view.getDoubleValueTextField().getText()));
+        model.setIntValue(Integer.valueOf(view.getIntValueTextField().getText()));
+        model.setStringValue(view.getStringValueTextField().getText());
     }
 
     @Override
     public boolean valid(TestOptionsPanel view) {
         System.out.println(TestOptionsPanelCtrl.class + " valid");
-        return false;
+
+        try {
+            Double.valueOf(view.getDoubleValueTextField().getText());
+            Integer.valueOf(view.getIntValueTextField().getText());
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
