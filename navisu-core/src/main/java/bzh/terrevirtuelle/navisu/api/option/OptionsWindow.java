@@ -26,6 +26,11 @@ public class OptionsWindow extends JFXAbstractDisplay {
     protected Button applyBtn;
     protected Button okBtn;
 
+    protected Runnable onOkListener;
+    protected Runnable onCancelListener;
+    protected Runnable onApplyListener;
+
+
     public OptionsWindow() {
 
         this.content = new BorderPane();
@@ -36,11 +41,20 @@ public class OptionsWindow extends JFXAbstractDisplay {
         this.southContainer.setPadding(new Insets(20));
 
         this.cancelBtn = new Button(this.getCancelButtonText());
+        this.cancelBtn.setOnAction(e -> {
+            if(this.onCancelListener != null) this.onCancelListener.run();
+        });
 
         this.applyBtn = new Button(this.getApplyButtonText());
+        this.applyBtn.setOnAction(e -> {
+            if(this.onApplyListener != null) this.onApplyListener.run();
+        });
         this.applyBtn.setDisable(true);
 
         this.okBtn = new Button(this.getOkButtonText());
+        this.okBtn.setOnAction(e -> {
+            if(this.onOkListener != null) this.onOkListener.run();
+        });
 
         this.southContainer.getChildren().addAll(
                 this.cancelBtn,
@@ -67,6 +81,30 @@ public class OptionsWindow extends JFXAbstractDisplay {
         Tab tab = new Tab(title);
         tab.setContent(content);
         this.tabPane.getTabs().add(tab);
+    }
+
+    public void onOk(Runnable runnable) {
+        this.onOkListener = runnable;
+    }
+
+    public void onCancel(Runnable runnable) {
+        this.onCancelListener = runnable;
+    }
+
+    public void onApply(Runnable runnable) {
+        this.onApplyListener = runnable;
+    }
+
+    public Button getCancelBtn() {
+        return cancelBtn;
+    }
+
+    public Button getApplyBtn() {
+        return applyBtn;
+    }
+
+    public Button getOkBtn() {
+        return okBtn;
     }
 
     @Override

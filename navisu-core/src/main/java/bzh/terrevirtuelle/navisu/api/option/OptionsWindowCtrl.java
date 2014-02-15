@@ -31,6 +31,23 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     public OptionsWindowCtrl() {
 
         this.optionsWindow = new OptionsWindow();
+
+        this.optionsWindow.onOk(() -> this.handleOnOk());
+        this.optionsWindow.onApply(() -> this.handleOnApply());
+        this.optionsWindow.onCancel(() -> this.handleOnCancel());
+    }
+
+    protected void handleOnCancel() {
+
+    }
+
+    protected void handleOnApply() {
+        this.storeControllers();
+        this.optionsWindow.getApplyBtn().setDisable(true);
+    }
+
+    protected void handleOnOk() {
+
     }
 
     public <T extends OptionsPanelCtrl> T newOptionsPanelCtrl(Class<T> clz) {
@@ -79,20 +96,35 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
         super.setVisible(visible);
 
         if(visible) {
-
-            //TODO load models from persistence file
-
-            for(OptionsPanelCtrl ctrl : this.ctrlList) {
-                ctrl.load(this.viewsForCtrlMap.get(ctrl), this.modelsForCtrlMap.get(ctrl));
-            }
+            this.loadControllers();
         }
         else {
-            for(OptionsPanelCtrl ctrl : this.ctrlList) {
-                ctrl.store(this.viewsForCtrlMap.get(ctrl), this.modelsForCtrlMap.get(ctrl));
-            }
-
-            //TODO store models in persistence file
+            this.storeControllers();
         }
+    }
+
+    protected void loadControllers() {
+        LOG.entering(OptionsWindowCtrl.class.getName(), "loadControllers");
+
+        //TODO load models from persistence file
+
+        for(OptionsPanelCtrl ctrl : this.ctrlList) {
+            ctrl.load(this.viewsForCtrlMap.get(ctrl), this.modelsForCtrlMap.get(ctrl));
+        }
+
+        LOG.exiting(OptionsWindowCtrl.class.getName(), "loadControllers");
+    }
+
+    protected void storeControllers() {
+        LOG.entering(OptionsWindowCtrl.class.getName(), "storeControllers");
+
+        for(OptionsPanelCtrl ctrl : this.ctrlList) {
+            ctrl.store(this.viewsForCtrlMap.get(ctrl), this.modelsForCtrlMap.get(ctrl));
+        }
+
+        //TODO store models in persistence file
+
+        LOG.exiting(OptionsWindowCtrl.class.getName(), "storeControllers");
     }
 
     @Override
