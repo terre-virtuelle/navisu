@@ -47,29 +47,29 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "gpxType", propOrder = {
+@XmlType(name = "gpx", propOrder = {
     "metadata",
     "wpt",
     "rte",
     "trk",
     "extensions"
 })
-public class GpxType {
+public class Gpx {
 
-    protected MetadataType metadata;
-    protected List<WptType> wpt;
-    protected List<RteType> rte;
-    protected List<TrkType> trk;
-    protected ExtensionsType extensions;
+    protected Metadata metadata;
+    protected List<Wpt> wpt;
+    protected List<Rte> rte;
+    protected List<Trk> trk;
+    protected Extensions extensions;
     @XmlAttribute(name = "version", required = true)
     protected String version;
     @XmlAttribute(name = "creator", required = true)
     protected String creator;
 
-    public GpxType() {
+    public Gpx() {
     }
 
-    public GpxType(MetadataType metadata, List<WptType> wpt, List<RteType> rte, List<TrkType> trk, ExtensionsType extensions, String version, String creator) {
+    public Gpx(Metadata metadata, List<Wpt> wpt, List<Rte> rte, List<Trk> trk, Extensions extensions, String version, String creator) {
         this.metadata = metadata;
         this.wpt = wpt;
         this.rte = rte;
@@ -84,10 +84,10 @@ public class GpxType {
      * 
      * @return
      *     possible object is
-     *     {@link MetadataType }
+     *     {@link Metadata }
      *     
      */
-    public MetadataType getMetadata() {
+    public Metadata getMetadata() {
         return metadata;
     }
 
@@ -96,10 +96,10 @@ public class GpxType {
      * 
      * @param value
      *     allowed object is
-     *     {@link MetadataType }
+     *     {@link Metadata }
      *     
      */
-    public void setMetadata(MetadataType value) {
+    public void setMetadata(Metadata value) {
         this.metadata = value;
     }
 
@@ -121,13 +121,13 @@ public class GpxType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link WptType }
+     * {@link Wpt }
      * 
      * 
      */
-    public List<WptType> getWpt() {
+    public List<Wpt> getWpt() {
         if (wpt == null) {
-            wpt = new ArrayList<WptType>();
+            wpt = new ArrayList<Wpt>();
         }
         return this.wpt;
     }
@@ -150,13 +150,13 @@ public class GpxType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link RteType }
+     * {@link Rte }
      * 
      * 
      */
-    public List<RteType> getRte() {
+    public List<Rte> getRte() {
         if (rte == null) {
-            rte = new ArrayList<RteType>();
+            rte = new ArrayList<Rte>();
         }
         return this.rte;
     }
@@ -179,13 +179,13 @@ public class GpxType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link TrkType }
+     * {@link Trk }
      * 
      * 
      */
-    public List<TrkType> getTrk() {
+    public List<Trk> getTrk() {
         if (trk == null) {
-            trk = new ArrayList<TrkType>();
+            trk = new ArrayList<Trk>();
         }
         return this.trk;
     }
@@ -195,10 +195,10 @@ public class GpxType {
      * 
      * @return
      *     possible object is
-     *     {@link ExtensionsType }
+     *     {@link Extensions }
      *     
      */
-    public ExtensionsType getExtensions() {
+    public Extensions getExtensions() {
         return extensions;
     }
 
@@ -207,10 +207,10 @@ public class GpxType {
      * 
      * @param value
      *     allowed object is
-     *     {@link ExtensionsType }
+     *     {@link Extensions }
      *     
      */
-    public void setExtensions(ExtensionsType value) {
+    public void setExtensions(Extensions value) {
         this.extensions = value;
     }
 

@@ -64,7 +64,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "wptType", propOrder = {
+@XmlType(name = "wpt", propOrder = {
     "ele",
     "time",
     "magvar",
@@ -85,7 +85,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "dgpsid",
     "extensions"
 })
-public class WptType {
+public class Wpt {
 
     protected BigDecimal ele;
     @XmlSchemaType(name = "dateTime")
@@ -96,7 +96,7 @@ public class WptType {
     protected String cmt;
     protected String desc;
     protected String src;
-    protected List<LinkType> link;
+    protected List<Link> link;
     protected String sym;
     protected String type;
     protected String fix;
@@ -107,16 +107,16 @@ public class WptType {
     protected BigDecimal pdop;
     protected BigDecimal ageofdgpsdata;
     protected Integer dgpsid;
-    protected ExtensionsType extensions;
+    protected Extensions extensions;
     @XmlAttribute(name = "lat", required = true)
     protected BigDecimal lat;
     @XmlAttribute(name = "lon", required = true)
     protected BigDecimal lon;
 
-    public WptType() {
+    public Wpt() {
     }
 
-    public WptType(BigDecimal ele, XMLGregorianCalendar time, BigDecimal magvar, BigDecimal geoidheight, String name, String cmt, String desc, String src, List<LinkType> link, String sym, String type, String fix, BigInteger sat, BigDecimal hdop, BigDecimal vdop, BigDecimal pdop, BigDecimal ageofdgpsdata, Integer dgpsid, ExtensionsType extensions, BigDecimal lat, BigDecimal lon) {
+    public Wpt(BigDecimal ele, XMLGregorianCalendar time, BigDecimal magvar, BigDecimal geoidheight, String name, String cmt, String desc, String src, List<Link> link, String sym, String type, String fix, BigInteger sat, BigDecimal hdop, BigDecimal vdop, BigDecimal pdop, BigDecimal ageofdgpsdata, Integer dgpsid, Extensions extensions, BigDecimal lat, BigDecimal lon) {
         this.ele = ele;
         this.time = time;
         this.magvar = magvar;
@@ -318,13 +318,13 @@ public class WptType {
      *
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link LinkType }
+     * {@link Link }
      *
      *
      */
-    public List<LinkType> getLink() {
+    public List<Link> getLink() {
         if (link == null) {
-            link = new ArrayList<LinkType>();
+            link = new ArrayList<Link>();
         }
         return this.link;
     }
@@ -512,20 +512,20 @@ public class WptType {
     /**
      * Gets the value of the extensions property.
      *
-     * @return possible object is {@link ExtensionsType }
+     * @return possible object is {@link Extensions }
      *
      */
-    public ExtensionsType getExtensions() {
+    public Extensions getExtensions() {
         return extensions;
     }
 
     /**
      * Sets the value of the extensions property.
      *
-     * @param value allowed object is {@link ExtensionsType }
+     * @param value allowed object is {@link Extensions }
      *
      */
-    public void setExtensions(ExtensionsType value) {
+    public void setExtensions(Extensions value) {
         this.extensions = value;
     }
 

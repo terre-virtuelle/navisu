@@ -43,11 +43,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "copyrightType", propOrder = {
+@XmlType(name = "copyright", propOrder = {
     "year",
     "license"
 })
-public class CopyrightType {
+public class Copyright {
 
     @XmlSchemaType(name = "gYear")
     protected XMLGregorianCalendar year;
@@ -56,10 +56,10 @@ public class CopyrightType {
     @XmlAttribute(name = "author", required = true)
     protected String author;
 
-    public CopyrightType() {
+    public Copyright() {
     }
 
-    public CopyrightType(XMLGregorianCalendar year, String license, String author) {
+    public Copyright(XMLGregorianCalendar year, String license, String author) {
         this.year = year;
         this.license = license;
         this.author = author;

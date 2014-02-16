@@ -37,18 +37,18 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "emailType")
-public class EmailType {
+@XmlType(name = "email")
+public class Email {
 
     @XmlAttribute(name = "id", required = true)
     protected String id;
     @XmlAttribute(name = "domain", required = true)
     protected String domain;
 
-    public EmailType() {
+    public Email() {
     }
 
-    public EmailType(String id, String domain) {
+    public Email(String id, String domain) {
         this.id = id;
         this.domain = domain;
     }

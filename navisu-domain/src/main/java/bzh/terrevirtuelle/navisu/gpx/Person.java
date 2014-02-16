@@ -39,21 +39,21 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "personType", propOrder = {
+@XmlType(name = "person", propOrder = {
     "name",
     "email",
     "link"
 })
-public class PersonType {
+public class Person {
 
     protected String name;
-    protected EmailType email;
-    protected LinkType link;
+    protected Email email;
+    protected Link link;
 
-    public PersonType() {
+    public Person() {
     }
 
-    public PersonType(String name, EmailType email, LinkType link) {
+    public Person(String name, Email email, Link link) {
         this.name = name;
         this.email = email;
         this.link = link;
@@ -88,10 +88,10 @@ public class PersonType {
      * 
      * @return
      *     possible object is
-     *     {@link EmailType }
+     *     {@link Email }
      *     
      */
-    public EmailType getEmail() {
+    public Email getEmail() {
         return email;
     }
 
@@ -100,10 +100,10 @@ public class PersonType {
      * 
      * @param value
      *     allowed object is
-     *     {@link EmailType }
+     *     {@link Email }
      *     
      */
-    public void setEmail(EmailType value) {
+    public void setEmail(Email value) {
         this.email = value;
     }
 
@@ -112,10 +112,10 @@ public class PersonType {
      * 
      * @return
      *     possible object is
-     *     {@link LinkType }
+     *     {@link Link }
      *     
      */
-    public LinkType getLink() {
+    public Link getLink() {
         return link;
     }
 
@@ -124,10 +124,10 @@ public class PersonType {
      * 
      * @param value
      *     allowed object is
-     *     {@link LinkType }
+     *     {@link Link }
      *     
      */
-    public void setLink(LinkType value) {
+    public void setLink(Link value) {
         this.link = value;
     }
 

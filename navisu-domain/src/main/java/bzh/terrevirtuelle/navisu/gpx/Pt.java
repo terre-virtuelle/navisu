@@ -43,11 +43,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ptType", propOrder = {
+@XmlType(name = "pt", propOrder = {
     "ele",
     "time"
 })
-public class PtType {
+public class Pt {
 
     protected BigDecimal ele;
     @XmlSchemaType(name = "dateTime")
@@ -57,10 +57,10 @@ public class PtType {
     @XmlAttribute(name = "lon", required = true)
     protected BigDecimal lon;
 
-    public PtType() {
+    public Pt() {
     }
 
-    public PtType(BigDecimal ele, XMLGregorianCalendar time, BigDecimal lat, BigDecimal lon) {
+    public Pt(BigDecimal ele, XMLGregorianCalendar time, BigDecimal lat, BigDecimal lon) {
         this.ele = ele;
         this.time = time;
         this.lat = lat;

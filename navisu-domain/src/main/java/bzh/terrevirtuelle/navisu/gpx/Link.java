@@ -41,11 +41,11 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "linkType", propOrder = {
+@XmlType(name = "link", propOrder = {
     "text",
     "type"
 })
-public class LinkType {
+public class Link {
 
     protected String text;
     protected String type;
@@ -53,10 +53,10 @@ public class LinkType {
     @XmlSchemaType(name = "anyURI")
     protected String href;
 
-    public LinkType() {
+    public Link() {
     }
 
-    public LinkType(String text, String type, String href) {
+    public Link(String text, String type, String href) {
         this.text = text;
         this.type = type;
         this.href = href;
