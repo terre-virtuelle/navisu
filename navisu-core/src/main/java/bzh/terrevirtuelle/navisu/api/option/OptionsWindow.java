@@ -23,12 +23,10 @@ public class OptionsWindow extends JFXAbstractDisplay {
 
     protected HBox southContainer;
     protected Button cancelBtn;
-//    protected Button applyBtn;
     protected Button okBtn;
 
     protected Runnable onOkListener;
     protected Runnable onCancelListener;
-    protected Runnable onApplyListener;
 
 
     public OptionsWindow() {
@@ -45,12 +43,6 @@ public class OptionsWindow extends JFXAbstractDisplay {
             if(this.onCancelListener != null) this.onCancelListener.run();
         });
 
-//        this.applyBtn = new Button(this.getApplyButtonText());
-//        this.applyBtn.setOnAction(e -> {
-//            if(this.onApplyListener != null) this.onApplyListener.run();
-//        });
-//        this.applyBtn.setDisable(true);
-
         this.okBtn = new Button(this.getOkButtonText());
         this.okBtn.setOnAction(e -> {
             if(this.onOkListener != null) this.onOkListener.run();
@@ -58,7 +50,6 @@ public class OptionsWindow extends JFXAbstractDisplay {
 
         this.southContainer.getChildren().addAll(
                 this.cancelBtn,
-//                this.applyBtn,
                 this.okBtn);
 
         this.content.setCenter(this.tabPane);
@@ -69,10 +60,6 @@ public class OptionsWindow extends JFXAbstractDisplay {
         return "Cancel";
     }
 
-    protected String getApplyButtonText() {
-        return "Apply";
-    }
-
     protected String getOkButtonText() {
         return "Ok";
     }
@@ -80,6 +67,7 @@ public class OptionsWindow extends JFXAbstractDisplay {
     public void addTab(String title, Node content) {
         Tab tab = new Tab(title);
         tab.setContent(content);
+        tab.setClosable(false);
         this.tabPane.getTabs().add(tab);
     }
 
@@ -91,17 +79,9 @@ public class OptionsWindow extends JFXAbstractDisplay {
         this.onCancelListener = runnable;
     }
 
-    public void onApply(Runnable runnable) {
-        this.onApplyListener = runnable;
-    }
-
     public Button getCancelBtn() {
         return cancelBtn;
     }
-
-//    public Button getApplyBtn() {
-//        return applyBtn;
-//    }
 
     public Button getOkBtn() {
         return okBtn;

@@ -42,7 +42,6 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
         this.optionsWindow = new OptionsWindow();
 
         this.optionsWindow.onOk(() -> this.handleOnOk());
-//        this.optionsWindow.onApply(() -> this.handleOnApply());
         this.optionsWindow.onCancel(() -> this.handleOnCancel());
 
         this.tmpDir = Paths.get(System.getProperty("user.dir"), "tmp");
@@ -108,11 +107,6 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     protected void handleOnCancel() {
 
     }
-
-//    protected void handleOnApply() {
-//        this.storeControllers();
-//        this.optionsWindow.getApplyBtn().setDisable(true);
-//    }
 
     protected void handleOnOk() {
 
