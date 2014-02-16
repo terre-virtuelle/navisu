@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "rteType", propOrder = {
+@XmlType(name = "rte", propOrder = {
     "name",
     "cmt",
     "desc",
@@ -60,23 +60,23 @@ import javax.xml.bind.annotation.XmlType;
     "extensions",
     "rtept"
 })
-public class RteType {
+public class Rte {
 
     protected String name;
     protected String cmt;
     protected String desc;
     protected String src;
-    protected List<LinkType> link;
+    protected List<Link> link;
     @XmlSchemaType(name = "nonNegativeInteger")
     protected BigInteger number;
     protected String type;
-    protected ExtensionsType extensions;
-    protected List<WptType> rtept;
+    protected Extensions extensions;
+    protected List<Wpt> rtept;
 
-    public RteType() {
+    public Rte() {
     }
 
-    public RteType(String name, String cmt, String desc, String src, List<LinkType> link, BigInteger number, String type, ExtensionsType extensions, List<WptType> rtept) {
+    public Rte(String name, String cmt, String desc, String src, List<Link> link, BigInteger number, String type, Extensions extensions, List<Wpt> rtept) {
         this.name = name;
         this.cmt = cmt;
         this.desc = desc;
@@ -202,13 +202,13 @@ public class RteType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link LinkType }
+     * {@link Link }
      * 
      * 
      */
-    public List<LinkType> getLink() {
+    public List<Link> getLink() {
         if (link == null) {
-            link = new ArrayList<LinkType>();
+            link = new ArrayList<Link>();
         }
         return this.link;
     }
@@ -266,10 +266,10 @@ public class RteType {
      * 
      * @return
      *     possible object is
-     *     {@link ExtensionsType }
+     *     {@link Extensions }
      *     
      */
-    public ExtensionsType getExtensions() {
+    public Extensions getExtensions() {
         return extensions;
     }
 
@@ -278,10 +278,10 @@ public class RteType {
      * 
      * @param value
      *     allowed object is
-     *     {@link ExtensionsType }
+     *     {@link Extensions }
      *     
      */
-    public void setExtensions(ExtensionsType value) {
+    public void setExtensions(Extensions value) {
         this.extensions = value;
     }
 
@@ -303,13 +303,13 @@ public class RteType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link WptType }
+     * {@link Wpt }
      * 
      * 
      */
-    public List<WptType> getRtept() {
+    public List<Wpt> getRtept() {
         if (rtept == null) {
-            rtept = new ArrayList<WptType>();
+            rtept = new ArrayList<Wpt>();
         }
         return this.rtept;
     }

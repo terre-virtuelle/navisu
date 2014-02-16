@@ -40,8 +40,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "boundsType")
-public class BoundsType {
+@XmlType(name = "bounds")
+public class Bounds {
 
     @XmlAttribute(name = "minlat", required = true)
     protected BigDecimal minlat;
@@ -52,10 +52,10 @@ public class BoundsType {
     @XmlAttribute(name = "maxlon", required = true)
     protected BigDecimal maxlon;
 
-    public BoundsType() {
+    public Bounds() {
     }
 
-    public BoundsType(BigDecimal minlat, BigDecimal minlon, BigDecimal maxlat, BigDecimal maxlon) {
+    public Bounds(BigDecimal minlat, BigDecimal minlon, BigDecimal maxlat, BigDecimal maxlon) {
         this.minlat = minlat;
         this.minlon = minlon;
         this.maxlat = maxlat;

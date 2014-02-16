@@ -41,124 +41,124 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GpxType }
+     * Create an instance of {@link Gpx }
      * 
      */
-    public GpxType createGpxType() {
-        return new GpxType();
+    public Gpx createGpxType() {
+        return new Gpx();
     }
 
     /**
-     * Create an instance of {@link WptType }
+     * Create an instance of {@link Wpt }
      * 
      */
-    public WptType createWptType() {
-        return new WptType();
+    public Wpt createWptType() {
+        return new Wpt();
     }
 
     /**
-     * Create an instance of {@link BoundsType }
+     * Create an instance of {@link Bounds }
      * 
      */
-    public BoundsType createBoundsType() {
-        return new BoundsType();
+    public Bounds createBoundsType() {
+        return new Bounds();
     }
 
     /**
-     * Create an instance of {@link CopyrightType }
+     * Create an instance of {@link Copyright }
      * 
      */
-    public CopyrightType createCopyrightType() {
-        return new CopyrightType();
+    public Copyright createCopyrightType() {
+        return new Copyright();
     }
 
     /**
-     * Create an instance of {@link LinkType }
+     * Create an instance of {@link Link }
      * 
      */
-    public LinkType createLinkType() {
-        return new LinkType();
+    public Link createLinkType() {
+        return new Link();
     }
 
     /**
-     * Create an instance of {@link MetadataType }
+     * Create an instance of {@link Metadata }
      * 
      */
-    public MetadataType createMetadataType() {
-        return new MetadataType();
+    public Metadata createMetadataType() {
+        return new Metadata();
     }
 
     /**
-     * Create an instance of {@link ExtensionsType }
+     * Create an instance of {@link Extensions }
      * 
      */
-    public ExtensionsType createExtensionsType() {
-        return new ExtensionsType();
+    public Extensions createExtensionsType() {
+        return new Extensions();
     }
 
     /**
-     * Create an instance of {@link RteType }
+     * Create an instance of {@link Rte }
      * 
      */
-    public RteType createRteType() {
-        return new RteType();
+    public Rte createRteType() {
+        return new Rte();
     }
 
     /**
-     * Create an instance of {@link EmailType }
+     * Create an instance of {@link Email }
      * 
      */
-    public EmailType createEmailType() {
-        return new EmailType();
+    public Email createEmailType() {
+        return new Email();
     }
 
     /**
-     * Create an instance of {@link PtsegType }
+     * Create an instance of {@link Ptseg }
      * 
      */
-    public PtsegType createPtsegType() {
-        return new PtsegType();
+    public Ptseg createPtsegType() {
+        return new Ptseg();
     }
 
     /**
-     * Create an instance of {@link PtType }
+     * Create an instance of {@link Pt }
      * 
      */
-    public PtType createPtType() {
-        return new PtType();
+    public Pt createPtType() {
+        return new Pt();
     }
 
     /**
-     * Create an instance of {@link TrksegType }
+     * Create an instance of {@link Trkseg }
      * 
      */
-    public TrksegType createTrksegType() {
-        return new TrksegType();
+    public Trkseg createTrksegType() {
+        return new Trkseg();
     }
 
     /**
-     * Create an instance of {@link PersonType }
+     * Create an instance of {@link Person }
      * 
      */
-    public PersonType createPersonType() {
-        return new PersonType();
+    public Person createPersonType() {
+        return new Person();
     }
 
     /**
-     * Create an instance of {@link TrkType }
+     * Create an instance of {@link Trk }
      * 
      */
-    public TrkType createTrkType() {
-        return new TrkType();
+    public Trk createTrkType() {
+        return new Trk();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GpxType }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Gpx }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://www.topografix.com/GPX/1/1", name = "gpx")
-    public JAXBElement<GpxType> createGpx(GpxType value) {
-        return new JAXBElement<GpxType>(_Gpx_QNAME, GpxType.class, null, value);
+    public JAXBElement<Gpx> createGpx(Gpx value) {
+        return new JAXBElement<Gpx>(_Gpx_QNAME, Gpx.class, null, value);
     }
 
 }

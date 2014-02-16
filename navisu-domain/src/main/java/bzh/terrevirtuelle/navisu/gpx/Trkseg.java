@@ -40,19 +40,19 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "trksegType", propOrder = {
+@XmlType(name = "trkseg", propOrder = {
     "trkpt",
     "extensions"
 })
-public class TrksegType {
+public class Trkseg {
 
-    protected List<WptType> trkpt;
-    protected ExtensionsType extensions;
+    protected List<Wpt> trkpt;
+    protected Extensions extensions;
 
-    public TrksegType() {
+    public Trkseg() {
     }
 
-    public TrksegType(List<WptType> trkpt, ExtensionsType extensions) {
+    public Trkseg(List<Wpt> trkpt, Extensions extensions) {
         this.trkpt = trkpt;
         this.extensions = extensions;
     }
@@ -75,13 +75,13 @@ public class TrksegType {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link WptType }
+     * {@link Wpt }
      * 
      * 
      */
-    public List<WptType> getTrkpt() {
+    public List<Wpt> getTrkpt() {
         if (trkpt == null) {
-            trkpt = new ArrayList<WptType>();
+            trkpt = new ArrayList<Wpt>();
         }
         return this.trkpt;
     }
@@ -91,10 +91,10 @@ public class TrksegType {
      * 
      * @return
      *     possible object is
-     *     {@link ExtensionsType }
+     *     {@link Extensions }
      *     
      */
-    public ExtensionsType getExtensions() {
+    public Extensions getExtensions() {
         return extensions;
     }
 
@@ -103,10 +103,10 @@ public class TrksegType {
      * 
      * @param value
      *     allowed object is
-     *     {@link ExtensionsType }
+     *     {@link Extensions }
      *     
      */
-    public void setExtensions(ExtensionsType value) {
+    public void setExtensions(Extensions value) {
         this.extensions = value;
     }
 

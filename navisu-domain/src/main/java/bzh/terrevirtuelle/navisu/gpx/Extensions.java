@@ -12,24 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlType;
+import org.w3c.dom.Element;
 
 
 /**
  * 
- * 	 An ordered sequence of points.  (for polygons or polylines, e.g.)
+ * 	 You can add extend GPX by adding your own elements from another schema here.
  *     
  * 
- * <p>Java class for ptsegType complex type.
+ * <p>Java class for extensionsType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="ptsegType">
+ * &lt;complexType name="extensionsType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="pt" type="{http://www.topografix.com/GPX/1/1}ptType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;any processContents='lax' namespace='##other' maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,47 +41,49 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ptsegType", propOrder = {
-    "pt"
+@XmlType(name = "extensions", propOrder = {
+    "any"
 })
-public class PtsegType {
+public class Extensions {
 
-    protected List<PtType> pt;
+    @XmlAnyElement(lax = true)
+    protected List<Object> any;
 
-    public PtsegType() {
+    public Extensions() {
     }
 
-    public PtsegType(List<PtType> pt) {
-        this.pt = pt;
+    public Extensions(List<Object> any) {
+        this.any = any;
     }
 
     /**
-     * Gets the value of the pt property.
+     * Gets the value of the any property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the pt property.
+     * This is why there is not a <CODE>set</CODE> method for the any property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getPt().add(newItem);
+     *    getAny().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link PtType }
+     * {@link Object }
+     * {@link Element }
      * 
      * 
      */
-    public List<PtType> getPt() {
-        if (pt == null) {
-            pt = new ArrayList<PtType>();
+    public List<Object> getAny() {
+        if (any == null) {
+            any = new ArrayList<Object>();
         }
-        return this.pt;
+        return this.any;
     }
 
 }
