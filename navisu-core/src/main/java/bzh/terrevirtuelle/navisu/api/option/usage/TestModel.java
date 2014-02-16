@@ -5,6 +5,7 @@ import bzh.terrevirtuelle.navisu.api.option.annotation.IntOption;
 import bzh.terrevirtuelle.navisu.api.option.annotation.Option;
 import bzh.terrevirtuelle.navisu.api.option.mapping.IntMapper;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ import java.util.List;
  * @author tibus
  * @date 15/02/2014 18:11
  */
+@XmlRootElement
 public class TestModel {
 
     @IntOption(100)

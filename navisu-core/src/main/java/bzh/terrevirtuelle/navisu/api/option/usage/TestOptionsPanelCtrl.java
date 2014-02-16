@@ -12,7 +12,7 @@ public class TestOptionsPanelCtrl implements OptionsPanelCtrl<TestOptionsPanel, 
 
     @Override
     public void load(TestOptionsPanel view, TestModel model) {
-        System.out.println(TestOptionsPanelCtrl.class + " load");
+        //System.out.println(TestOptionsPanelCtrl.class + " load");
 
         view.getDoubleValueTextField().setText(model.getDoubleValue().toString());
         view.getIntValueTextField().setText(model.getIntValue().toString());
@@ -21,7 +21,7 @@ public class TestOptionsPanelCtrl implements OptionsPanelCtrl<TestOptionsPanel, 
 
     @Override
     public void store(TestOptionsPanel view, TestModel model) {
-        System.out.println(TestOptionsPanelCtrl.class + " store");
+        //System.out.println(TestOptionsPanelCtrl.class + " store");
 
         model.setDoubleValue(Double.valueOf(view.getDoubleValueTextField().getText()));
         model.setIntValue(Integer.valueOf(view.getIntValueTextField().getText()));
