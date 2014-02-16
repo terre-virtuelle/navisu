@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.logging.Logger;
+
 /**
  * NaVisu
  *
@@ -13,6 +15,8 @@ import javafx.stage.Stage;
  * @date 15/02/2014 16:42
  */
 public class UsageMain extends Application {
+
+    public static final Logger LOG = Logger.getLogger(UsageMain.class.getName());
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -24,10 +28,12 @@ public class UsageMain extends Application {
         root.setCenter(optionWindow.getDisplayable());
 
         final TestOptionsPanelCtrl testOptionsPanelCtrl = optionWindow.newOptionsPanelCtrl(TestOptionsPanelCtrl.class);
-        optionWindow.setVisible(true);
-        optionWindow.setOnCloseListener(() -> {
-            stage.close();
+        testOptionsPanelCtrl.setOnModelCHangedListener((model) -> {
+            LOG.info("Model changed: " + model);
         });
+
+        optionWindow.setOnCloseListener(() -> stage.close());
+        optionWindow.setVisible(true);
 
         stage.setOnCloseRequest(e -> optionWindow.setVisible(false));
 

@@ -9,7 +9,7 @@ import javafx.scene.layout.Border;
  * @author tibus
  * @date 15/02/2014 18:13
  */
-public class TestOptionsPanelCtrl implements OptionsPanelCtrl<TestOptionsPanel, TestModel> {
+public class TestOptionsPanelCtrl extends OptionsPanelCtrl<TestOptionsPanel, TestModel> {
 
     @Override
     public void load(TestOptionsPanel view, TestModel model) {
@@ -72,4 +72,5 @@ public class TestOptionsPanelCtrl implements OptionsPanelCtrl<TestOptionsPanel, 
     public Class<TestModel> getModelType() {
         return TestModel.class;
     }
+
 }

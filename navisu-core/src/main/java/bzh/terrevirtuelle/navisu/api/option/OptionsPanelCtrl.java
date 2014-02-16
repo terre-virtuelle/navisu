@@ -6,16 +6,24 @@ package bzh.terrevirtuelle.navisu.api.option;
  * @author tibus
  * @date 15/02/2014 17:22
  */
-public interface OptionsPanelCtrl<V extends OptionsPanel, T> {
+public abstract class OptionsPanelCtrl<V extends OptionsPanel, T> {
 
-    void load(V view, T model);
+    protected ModelChangedEvents<T> modelChangedListener;
 
-    void store(V view, T model);
+    public abstract void load(V view, T model);
 
-    boolean valid(V view);
+    public abstract void store(V view, T model);
 
-    String getTitle();
+    public abstract boolean valid(V view);
 
-    Class<V> getViewType();
-    Class<T> getModelType();
+    public abstract String getTitle();
+
+    public abstract Class<V> getViewType();
+    public abstract Class<T> getModelType();
+
+    public void setOnModelCHangedListener(ModelChangedEvents<T> modelChangedListener) {
+        this.modelChangedListener = modelChangedListener;
+    }
+
+    protected ModelChangedEvents<T> getModelChangedListener() { return this.modelChangedListener; }
 }

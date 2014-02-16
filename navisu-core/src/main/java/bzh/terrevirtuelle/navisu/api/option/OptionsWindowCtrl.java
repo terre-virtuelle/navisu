@@ -217,6 +217,12 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
         }
 
         this.storeModelToPersistenceFile(pFile, model);
+
+        final ModelChangedEvents modelChangedListener = ctrl.getModelChangedListener();
+        if(modelChangedListener != null) {
+            modelChangedListener.onModelChanged(model);
+        }
+
         return true;
     }
 

@@ -57,4 +57,13 @@ public class TestModel {
     public void setDoubleValue(Double doubleValue) {
         this.doubleValue = doubleValue;
     }
+
+    @Override
+    public String toString() {
+        return "TestModel{" +
+                "intValue=" + intValue +
+                ", stringValue='" + stringValue + '\'' +
+                ", doubleValue=" + doubleValue +
+                '}';
+    }
 }
