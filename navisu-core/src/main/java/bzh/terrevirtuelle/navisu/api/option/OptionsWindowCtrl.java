@@ -42,7 +42,7 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
         this.optionsWindow = new OptionsWindow();
 
         this.optionsWindow.onOk(() -> this.handleOnOk());
-        this.optionsWindow.onApply(() -> this.handleOnApply());
+//        this.optionsWindow.onApply(() -> this.handleOnApply());
         this.optionsWindow.onCancel(() -> this.handleOnCancel());
 
         this.tmpDir = Paths.get(System.getProperty("user.dir"), "tmp");
@@ -109,10 +109,10 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
 
     }
 
-    protected void handleOnApply() {
-        this.storeControllers();
-        this.optionsWindow.getApplyBtn().setDisable(true);
-    }
+//    protected void handleOnApply() {
+//        this.storeControllers();
+//        this.optionsWindow.getApplyBtn().setDisable(true);
+//    }
 
     protected void handleOnOk() {
 
@@ -198,8 +198,13 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
 
         final Path pFile = this.pFileForCtrlMap.get(ctrl);
         final Object model = this.modelsForCtrlMap.get(ctrl);
+        final OptionsPanel view = this.viewsForCtrlMap.get(ctrl);
 
-        ctrl.store(this.viewsForCtrlMap.get(ctrl), model);
+        if(ctrl.valid(view)) {
+            ctrl.store(view, model);
+        } else {
+            // some stuff
+        }
 
         this.storeModelToPersistenceFile(pFile, model);
     }

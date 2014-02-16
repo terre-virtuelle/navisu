@@ -23,7 +23,7 @@ public class OptionsWindow extends JFXAbstractDisplay {
 
     protected HBox southContainer;
     protected Button cancelBtn;
-    protected Button applyBtn;
+//    protected Button applyBtn;
     protected Button okBtn;
 
     protected Runnable onOkListener;
@@ -45,11 +45,11 @@ public class OptionsWindow extends JFXAbstractDisplay {
             if(this.onCancelListener != null) this.onCancelListener.run();
         });
 
-        this.applyBtn = new Button(this.getApplyButtonText());
-        this.applyBtn.setOnAction(e -> {
-            if(this.onApplyListener != null) this.onApplyListener.run();
-        });
-        this.applyBtn.setDisable(true);
+//        this.applyBtn = new Button(this.getApplyButtonText());
+//        this.applyBtn.setOnAction(e -> {
+//            if(this.onApplyListener != null) this.onApplyListener.run();
+//        });
+//        this.applyBtn.setDisable(true);
 
         this.okBtn = new Button(this.getOkButtonText());
         this.okBtn.setOnAction(e -> {
@@ -58,7 +58,7 @@ public class OptionsWindow extends JFXAbstractDisplay {
 
         this.southContainer.getChildren().addAll(
                 this.cancelBtn,
-                this.applyBtn,
+//                this.applyBtn,
                 this.okBtn);
 
         this.content.setCenter(this.tabPane);
@@ -99,9 +99,9 @@ public class OptionsWindow extends JFXAbstractDisplay {
         return cancelBtn;
     }
 
-    public Button getApplyBtn() {
-        return applyBtn;
-    }
+//    public Button getApplyBtn() {
+//        return applyBtn;
+//    }
 
     public Button getOkBtn() {
         return okBtn;
