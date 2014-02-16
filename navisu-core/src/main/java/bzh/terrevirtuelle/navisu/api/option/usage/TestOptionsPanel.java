@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -24,7 +25,11 @@ public class TestOptionsPanel extends OptionsPanel {
     private BorderPane container = new BorderPane();
 
     private final TextField intValueTextField;
+    private final Label intErrorLabel;
+
     private final TextField doubleValueTextField;
+    private final Label doubleErrorLabel;
+
     private final TextField stringValueTextField;
 
     public TestOptionsPanel() {
@@ -39,19 +44,29 @@ public class TestOptionsPanel extends OptionsPanel {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
+        // INT
         Label intValueLabel = new Label("Int value:");
         grid.add(intValueLabel, 0, 1);
         intValueTextField = new TextField();
         grid.add(intValueTextField, 1, 1);
+        intErrorLabel = new Label("X");
+        intErrorLabel.setTextFill(Color.RED);
+        intErrorLabel.setVisible(false);
+        grid.add(intErrorLabel, 2, 1);
 
+        // DOUBLE
         Label doubleValueLabel = new Label("Double value:");
         grid.add(doubleValueLabel, 0, 2);
         doubleValueTextField = new TextField();
         grid.add(doubleValueTextField, 1, 2);
+        doubleErrorLabel = new Label("X");
+        doubleErrorLabel.setTextFill(Color.RED);
+        doubleErrorLabel.setVisible(false);
+        grid.add(doubleErrorLabel, 2, 2);
 
+        // STRING
         Label stringValueLabel = new Label("String value:");
         grid.add(stringValueLabel, 0, 3);
-
         stringValueTextField = new TextField();
         grid.add(stringValueTextField, 1, 3);
 
@@ -62,8 +77,16 @@ public class TestOptionsPanel extends OptionsPanel {
         return intValueTextField;
     }
 
+    public Label getIntErrorLabel() {
+        return intErrorLabel;
+    }
+
     public TextField getDoubleValueTextField() {
         return doubleValueTextField;
+    }
+
+    public Label getDoubleErrorLabel() {
+        return doubleErrorLabel;
     }
 
     public TextField getStringValueTextField() {

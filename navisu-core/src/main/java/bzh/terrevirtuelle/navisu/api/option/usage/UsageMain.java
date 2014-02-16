@@ -25,7 +25,9 @@ public class UsageMain extends Application {
 
         final TestOptionsPanelCtrl testOptionsPanelCtrl = optionWindow.newOptionsPanelCtrl(TestOptionsPanelCtrl.class);
         optionWindow.setVisible(true);
-
+        optionWindow.setOnCloseListener(() -> {
+            stage.close();
+        });
 
         stage.setOnCloseRequest(e -> optionWindow.setVisible(false));
 

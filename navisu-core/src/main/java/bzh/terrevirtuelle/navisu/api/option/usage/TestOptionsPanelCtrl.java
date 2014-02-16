@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.api.option.usage;
 
 import bzh.terrevirtuelle.navisu.api.option.OptionsPanelCtrl;
+import javafx.scene.layout.Border;
 
 /**
  * NaVisu
@@ -30,12 +31,27 @@ public class TestOptionsPanelCtrl implements OptionsPanelCtrl<TestOptionsPanel, 
 
     @Override
     public boolean valid(TestOptionsPanel view) {
-        System.out.println(TestOptionsPanelCtrl.class + " valid");
+        return this.validDoubleTextField(view) && this.validIntTextField(view);
+    }
+
+    protected boolean validDoubleTextField(TestOptionsPanel view) {
 
         try {
             Double.valueOf(view.getDoubleValueTextField().getText());
+        } catch (NumberFormatException ex) {
+            view.getDoubleErrorLabel().setVisible(true);
+            return false;
+        }
+
+        return true;
+    }
+
+    protected boolean validIntTextField(TestOptionsPanel view) {
+
+        try {
             Integer.valueOf(view.getIntValueTextField().getText());
         } catch (NumberFormatException ex) {
+            view.getIntErrorLabel().setVisible(true);
             return false;
         }
 

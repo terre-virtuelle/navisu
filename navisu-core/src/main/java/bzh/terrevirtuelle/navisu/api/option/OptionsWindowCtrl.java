@@ -5,7 +5,6 @@ import bzh.terrevirtuelle.navisu.core.view.display.jfx.impl.JFXAbstractDisplay;
 import javafx.scene.Node;
 
 import javax.xml.bind.*;
-import javax.xml.bind.helpers.DefaultValidationEventHandler;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
@@ -37,6 +36,8 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
 
     protected Path tmpDir;
 
+    protected Runnable onCloseListener;
+
     public OptionsWindowCtrl() {
 
         this.optionsWindow = new OptionsWindow();
@@ -57,14 +58,19 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
 
     @Override
     public void setVisible(boolean visible) {
-        super.setVisible(visible);
 
         if(visible) {
             this.loadControllers();
         }
         else {
-            this.storeControllers();
+            boolean isValid = this.storeControllers();
+            if(!isValid) {
+                LOG.severe("ERROR");
+                return;
+            }
         }
+
+        super.setVisible(visible);
     }
 
     @Override
@@ -105,11 +111,17 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     }
 
     protected void handleOnCancel() {
-
+        this.onCloseListener.run();
     }
 
     protected void handleOnOk() {
 
+        boolean isValid = this.storeControllers();
+        if(!isValid) {
+            return;
+        }
+
+        this.onCloseListener.run();
     }
 
     /**
@@ -178,17 +190,21 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     //------------------------------------------------------------------------------------------------------------------
     // STORING
     //
-    protected void storeControllers() {
+    protected boolean storeControllers() {
         LOG.entering(OptionsWindowCtrl.class.getName(), "storeControllers");
 
         for(OptionsPanelCtrl ctrl : this.ctrlList) {
-            this.storeController(ctrl);
+            if(!this.storeController(ctrl)) {
+                return false;
+            }
         }
 
         LOG.exiting(OptionsWindowCtrl.class.getName(), "storeControllers");
+
+        return true;
     }
 
-    protected void storeController(OptionsPanelCtrl ctrl) {
+    protected boolean storeController(OptionsPanelCtrl ctrl) {
 
         final Path pFile = this.pFileForCtrlMap.get(ctrl);
         final Object model = this.modelsForCtrlMap.get(ctrl);
@@ -197,10 +213,11 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
         if(ctrl.valid(view)) {
             ctrl.store(view, model);
         } else {
-            // some stuff
+           return false;
         }
 
         this.storeModelToPersistenceFile(pFile, model);
+        return true;
     }
 
     protected void storeModelToPersistenceFile(Path pFile, Object model) {
@@ -220,4 +237,9 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     }
     //
     //------------------------------------------------------------------------------------------------------------------
+
+
+    public void setOnCloseListener(Runnable onCloseListener) {
+        this.onCloseListener = onCloseListener;
+    }
 }
