@@ -8,7 +8,7 @@
 
 package bzh.terrevirtuelle.navisu.gpx;
 
-import java.math.BigInteger;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -19,15 +19,15 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * 
- * 		trk represents a track - an ordered list of points describing a path.
+ * 		rte represents route - an ordered list of waypoints representing a series of turn points leading to a destination.
  * 	  
  * 
- * <p>Java class for trkType complex type.
+ * <p>Java class for rteType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="trkType">
+ * &lt;complexType name="rteType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="number" type="{http://www.w3.org/2001/XMLSchema}nonNegativeInteger" minOccurs="0"/>
  *         &lt;element name="type" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="extensions" type="{http://www.topografix.com/GPX/1/1}extensionsType" minOccurs="0"/>
- *         &lt;element name="trkseg" type="{http://www.topografix.com/GPX/1/1}trksegType" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="rtept" type="{http://www.topografix.com/GPX/1/1}wptType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "trk", propOrder = {
+@XmlType(name = "rte", propOrder = {
     "name",
     "cmt",
     "desc",
@@ -58,9 +58,9 @@ import javax.xml.bind.annotation.XmlType;
     "number",
     "type",
     "extensions",
-    "trkseg"
+    "rtept"
 })
-public class Trk {
+public class Route {
 
     protected String name;
     protected String cmt;
@@ -68,15 +68,17 @@ public class Trk {
     protected String src;
     protected List<Link> link;
     @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger number;
+    protected int number;
     protected String type;
     protected Extensions extensions;
-    protected List<Trkseg> trkseg;
+    protected List<Waypoint> rtept;
 
-    public Trk() {
+    public Route() {
     }
 
-    public Trk(String name, String cmt, String desc, String src, List<Link> link, BigInteger number, String type, Extensions extensions, List<Trkseg> trkseg) {
+    public Route(String name, String cmt, String desc, String src, 
+            List<Link> link, int number, String type, 
+            Extensions extensions, List<Waypoint> rtept) {
         this.name = name;
         this.cmt = cmt;
         this.desc = desc;
@@ -85,7 +87,7 @@ public class Trk {
         this.number = number;
         this.type = type;
         this.extensions = extensions;
-        this.trkseg = trkseg;
+        this.rtept = rtept;
     }
 
     /**
@@ -218,10 +220,10 @@ public class Trk {
      * 
      * @return
      *     possible object is
-     *     {@link BigInteger }
+     *     {@link int }
      *     
      */
-    public BigInteger getNumber() {
+    public int getNumber() {
         return number;
     }
 
@@ -230,10 +232,10 @@ public class Trk {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigInteger }
+     *     {@link int }
      *     
      */
-    public void setNumber(BigInteger value) {
+    public void setNumber(int value) {
         this.number = value;
     }
 
@@ -286,32 +288,32 @@ public class Trk {
     }
 
     /**
-     * Gets the value of the trkseg property.
+     * Gets the value of the rtept property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the trkseg property.
+     * This is why there is not a <CODE>set</CODE> method for the rtept property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getTrkseg().add(newItem);
-     * </pre>
+    getRoutept().add(newItem);
+ </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Trkseg }
+     * {@link Waypoint }
      * 
      * 
      */
-    public List<Trkseg> getTrkseg() {
-        if (trkseg == null) {
-            trkseg = new ArrayList<Trkseg>();
+    public List<Waypoint> getRtept() {
+        if (rtept == null) {
+            rtept = new ArrayList<Waypoint>();
         }
-        return this.trkseg;
+        return this.rtept;
     }
 
 }

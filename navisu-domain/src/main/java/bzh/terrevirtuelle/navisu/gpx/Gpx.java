@@ -57,9 +57,9 @@ import javax.xml.bind.annotation.XmlType;
 public class Gpx {
 
     protected Metadata metadata;
-    protected List<Wpt> wpt;
-    protected List<Rte> rte;
-    protected List<Trk> trk;
+    protected List<Waypoint> wpt;
+    protected List<Route> rte;
+    protected List<Track> trk;
     protected Extensions extensions;
     @XmlAttribute(name = "version", required = true)
     protected String version;
@@ -69,7 +69,8 @@ public class Gpx {
     public Gpx() {
     }
 
-    public Gpx(Metadata metadata, List<Wpt> wpt, List<Rte> rte, List<Trk> trk, Extensions extensions, String version, String creator) {
+    public Gpx(Metadata metadata, List<Waypoint> wpt, List<Route> rte, List<Track> trk, 
+            Extensions extensions, String version, String creator) {
         this.metadata = metadata;
         this.wpt = wpt;
         this.rte = rte;
@@ -115,19 +116,19 @@ public class Gpx {
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getWpt().add(newItem);
-     * </pre>
+    getWaypoint().add(newItem);
+ </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Wpt }
+     * {@link Waypoint }
      * 
      * 
      */
-    public List<Wpt> getWpt() {
+    public List<Waypoint> getWpt() {
         if (wpt == null) {
-            wpt = new ArrayList<Wpt>();
+            wpt = new ArrayList<Waypoint>();
         }
         return this.wpt;
     }
@@ -144,19 +145,19 @@ public class Gpx {
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getRte().add(newItem);
-     * </pre>
+    getRoute().add(newItem);
+ </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Rte }
+     * {@link Route }
      * 
      * 
      */
-    public List<Rte> getRte() {
+    public List<Route> getRte() {
         if (rte == null) {
-            rte = new ArrayList<Rte>();
+            rte = new ArrayList<Route>();
         }
         return this.rte;
     }
@@ -173,19 +174,19 @@ public class Gpx {
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getTrk().add(newItem);
-     * </pre>
+    getTrack().add(newItem);
+ </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Trk }
+     * {@link Track }
      * 
      * 
      */
-    public List<Trk> getTrk() {
+    public List<Track> getTrk() {
         if (trk == null) {
-            trk = new ArrayList<Trk>();
+            trk = new ArrayList<Track>();
         }
         return this.trk;
     }

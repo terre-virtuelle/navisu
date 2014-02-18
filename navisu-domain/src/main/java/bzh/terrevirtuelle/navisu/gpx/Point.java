@@ -7,13 +7,14 @@
 
 
 package bzh.terrevirtuelle.navisu.gpx;
-import java.math.BigDecimal;
+
+import java.util.GregorianCalendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
+
 
 
 /**
@@ -47,24 +48,35 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "ele",
     "time"
 })
-public class Pt {
+public class Point {
 
-    protected BigDecimal ele;
+    protected double ele;
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar time;
+    protected GregorianCalendar time;
     @XmlAttribute(name = "lat", required = true)
-    protected BigDecimal lat;
+    protected double latitude;
     @XmlAttribute(name = "lon", required = true)
-    protected BigDecimal lon;
+    protected double longitude;
 
-    public Pt() {
+    public Point() {
     }
 
-    public Pt(BigDecimal ele, XMLGregorianCalendar time, BigDecimal lat, BigDecimal lon) {
+    public Point(double ele, GregorianCalendar time, double lat, double lon) {
         this.ele = ele;
         this.time = time;
-        this.lat = lat;
-        this.lon = lon;
+        this.latitude = lat;
+        this.longitude = lon;
+    }
+
+    public Point(GregorianCalendar time, double lat, double lon) {
+        this.time = time;
+        this.latitude = lat;
+        this.longitude = lon;
+    }
+
+    public Point(double lat, double lon) {
+        this.latitude = lat;
+        this.longitude = lon;
     }
 
     /**
@@ -72,10 +84,10 @@ public class Pt {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public BigDecimal getEle() {
+    public double getEle() {
         return ele;
     }
 
@@ -84,10 +96,10 @@ public class Pt {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public void setEle(BigDecimal value) {
+    public void setEle(double value) {
         this.ele = value;
     }
 
@@ -96,10 +108,10 @@ public class Pt {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link GregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getTime() {
+    public GregorianCalendar getTime() {
         return time;
     }
 
@@ -108,10 +120,10 @@ public class Pt {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link GregorianCalendar }
      *     
      */
-    public void setTime(XMLGregorianCalendar value) {
+    public void setTime(GregorianCalendar value) {
         this.time = value;
     }
 
@@ -120,11 +132,11 @@ public class Pt {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public BigDecimal getLat() {
-        return lat;
+    public double getLatitude() {
+        return latitude;
     }
 
     /**
@@ -132,11 +144,11 @@ public class Pt {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public void setLat(BigDecimal value) {
-        this.lat = value;
+    public void setLatitude(double value) {
+        this.latitude = value;
     }
 
     /**
@@ -144,11 +156,11 @@ public class Pt {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public BigDecimal getLon() {
-        return lon;
+    public double getLongitude() {
+        return longitude;
     }
 
     /**
@@ -156,11 +168,11 @@ public class Pt {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public void setLon(BigDecimal value) {
-        this.lon = value;
+    public void setLongitude(double value) {
+        this.longitude = value;
     }
 
 }

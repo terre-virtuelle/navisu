@@ -50,6 +50,7 @@ public class Extensions {
     protected List<Object> any;
 
     public Extensions() {
+        any = new ArrayList<>();
     }
 
     public Extensions(List<Object> any) {

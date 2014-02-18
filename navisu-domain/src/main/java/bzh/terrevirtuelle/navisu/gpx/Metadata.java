@@ -9,12 +9,13 @@
 package bzh.terrevirtuelle.navisu.gpx;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
+
 
 
 /**
@@ -69,7 +70,7 @@ public class Metadata {
     protected Copyright copyright;
     protected List<Link> link;
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar time;
+    protected GregorianCalendar time;
     protected String keywords;
     protected Bounds bounds;
     protected Extensions extensions;
@@ -77,7 +78,7 @@ public class Metadata {
     public Metadata() {
     }
 
-    public Metadata(String name, String desc, Person author, Copyright copyright, List<Link> link, XMLGregorianCalendar time, String keywords, Bounds bounds, Extensions extensions) {
+    public Metadata(String name, String desc, Person author, Copyright copyright, List<Link> link, GregorianCalendar time, String keywords, Bounds bounds, Extensions extensions) {
         this.name = name;
         this.desc = desc;
         this.author = author;
@@ -219,10 +220,10 @@ public class Metadata {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link GregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getTime() {
+    public GregorianCalendar getTime() {
         return time;
     }
 
@@ -231,10 +232,10 @@ public class Metadata {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link GregorianCalendar }
      *     
      */
-    public void setTime(XMLGregorianCalendar value) {
+    public void setTime(GregorianCalendar value) {
         this.time = value;
     }
 

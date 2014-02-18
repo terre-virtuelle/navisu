@@ -44,15 +44,15 @@ import javax.xml.bind.annotation.XmlType;
     "trkpt",
     "extensions"
 })
-public class Trkseg {
+public class TrackSegment {
 
-    protected List<Wpt> trkpt;
+    protected List<Waypoint> trkpt;
     protected Extensions extensions;
 
-    public Trkseg() {
+    public TrackSegment() {
     }
 
-    public Trkseg(List<Wpt> trkpt, Extensions extensions) {
+    public TrackSegment(List<Waypoint> trkpt, Extensions extensions) {
         this.trkpt = trkpt;
         this.extensions = extensions;
     }
@@ -75,13 +75,13 @@ public class Trkseg {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Wpt }
+     * {@link Waypoint }
      * 
      * 
      */
-    public List<Wpt> getTrkpt() {
+    public List<Waypoint> getTrkpt() {
         if (trkpt == null) {
-            trkpt = new ArrayList<Wpt>();
+            trkpt = new ArrayList<Waypoint>();
         }
         return this.trkpt;
     }

@@ -6,16 +6,16 @@
 //
 package bzh.terrevirtuelle.navisu.gpx;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
+
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
+
 
 /**
  *
@@ -85,13 +85,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "dgpsid",
     "extensions"
 })
-public class Wpt {
+public class Waypoint {
 
-    protected BigDecimal ele;
+    protected double ele;
     @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar time;
-    protected BigDecimal magvar;
-    protected BigDecimal geoidheight;
+    protected GregorianCalendar time;
+    protected double magvar;
+    protected double geoidheight;
     protected String name;
     protected String cmt;
     protected String desc;
@@ -101,22 +101,27 @@ public class Wpt {
     protected String type;
     protected String fix;
     @XmlSchemaType(name = "nonNegativeInteger")
-    protected BigInteger sat;
-    protected BigDecimal hdop;
-    protected BigDecimal vdop;
-    protected BigDecimal pdop;
-    protected BigDecimal ageofdgpsdata;
-    protected Integer dgpsid;
+    protected int sat;
+    protected double hdop;
+    protected double vdop;
+    protected double pdop;
+    protected double ageofdgpsdata;
+    protected int dgpsid;
     protected Extensions extensions;
     @XmlAttribute(name = "lat", required = true)
-    protected BigDecimal lat;
+    protected double latitude;
     @XmlAttribute(name = "lon", required = true)
-    protected BigDecimal lon;
+    protected double longitude;
 
-    public Wpt() {
+    public Waypoint() {
+      
     }
 
-    public Wpt(BigDecimal ele, XMLGregorianCalendar time, BigDecimal magvar, BigDecimal geoidheight, String name, String cmt, String desc, String src, List<Link> link, String sym, String type, String fix, BigInteger sat, BigDecimal hdop, BigDecimal vdop, BigDecimal pdop, BigDecimal ageofdgpsdata, Integer dgpsid, Extensions extensions, BigDecimal lat, BigDecimal lon) {
+    public Waypoint(double ele, GregorianCalendar time, double magvar, double geoidheight,
+            String name, String cmt, String desc, String src, List<Link> link,
+            String sym, String type, String fix, int sat, double hdop,
+            double vdop, double pdop, double ageofdgpsdata,
+            int dgpsid, Extensions extensions, double lat, double lon) {
         this.ele = ele;
         this.time = time;
         this.magvar = magvar;
@@ -136,87 +141,87 @@ public class Wpt {
         this.ageofdgpsdata = ageofdgpsdata;
         this.dgpsid = dgpsid;
         this.extensions = extensions;
-        this.lat = lat;
-        this.lon = lon;
+        this.latitude = lat;
+        this.longitude =lon;
     }
 
     /**
      * Gets the value of the ele property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getEle() {
+    public double getEle() {
         return ele;
     }
 
     /**
      * Sets the value of the ele property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setEle(BigDecimal value) {
+    public void setEle(double value) {
         this.ele = value;
     }
 
     /**
      * Gets the value of the time property.
      *
-     * @return possible object is {@link XMLGregorianCalendar }
+     * @return possible object is {@link GregorianCalendar }
      *
      */
-    public XMLGregorianCalendar getTime() {
+    public GregorianCalendar getTime() {
         return time;
     }
 
     /**
      * Sets the value of the time property.
      *
-     * @param value allowed object is {@link XMLGregorianCalendar }
+     * @param value allowed object is {@link GregorianCalendar }
      *
      */
-    public void setTime(XMLGregorianCalendar value) {
+    public void setTime(GregorianCalendar value) {
         this.time = value;
     }
 
     /**
      * Gets the value of the magvar property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getMagvar() {
+    public double getMagvar() {
         return magvar;
     }
 
     /**
      * Sets the value of the magvar property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setMagvar(BigDecimal value) {
+    public void setMagvar(double value) {
         this.magvar = value;
     }
 
     /**
      * Gets the value of the geoidheight property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getGeoidheight() {
+    public double getGeoidheight() {
         return geoidheight;
     }
 
     /**
      * Sets the value of the geoidheight property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setGeoidheight(BigDecimal value) {
+    public void setGeoidheight(double value) {
         this.geoidheight = value;
     }
 
@@ -317,8 +322,7 @@ public class Wpt {
      *
      *
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Link }
+     * Objects of the following type(s) are allowed in the list {@link Link }
      *
      *
      */
@@ -392,120 +396,120 @@ public class Wpt {
     /**
      * Gets the value of the sat property.
      *
-     * @return possible object is {@link BigInteger }
+     * @return possible object is {@link int }
      *
      */
-    public BigInteger getSat() {
+    public int getSat() {
         return sat;
     }
 
     /**
      * Sets the value of the sat property.
      *
-     * @param value allowed object is {@link BigInteger }
+     * @param value allowed object is {@link int }
      *
      */
-    public void setSat(BigInteger value) {
+    public void setSat(int value) {
         this.sat = value;
     }
 
     /**
      * Gets the value of the hdop property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getHdop() {
+    public double getHdop() {
         return hdop;
     }
 
     /**
      * Sets the value of the hdop property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setHdop(BigDecimal value) {
+    public void setHdop(double value) {
         this.hdop = value;
     }
 
     /**
      * Gets the value of the vdop property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getVdop() {
+    public double getVdop() {
         return vdop;
     }
 
     /**
      * Sets the value of the vdop property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setVdop(BigDecimal value) {
+    public void setVdop(double value) {
         this.vdop = value;
     }
 
     /**
      * Gets the value of the pdop property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getPdop() {
+    public double getPdop() {
         return pdop;
     }
 
     /**
      * Sets the value of the pdop property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setPdop(BigDecimal value) {
+    public void setPdop(double value) {
         this.pdop = value;
     }
 
     /**
      * Gets the value of the ageofdgpsdata property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getAgeofdgpsdata() {
+    public double getAgeofdgpsdata() {
         return ageofdgpsdata;
     }
 
     /**
      * Sets the value of the ageofdgpsdata property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setAgeofdgpsdata(BigDecimal value) {
+    public void setAgeofdgpsdata(double value) {
         this.ageofdgpsdata = value;
     }
 
     /**
      * Gets the value of the dgpsid property.
      *
-     * @return possible object is {@link Integer }
+     * @return possible object is {@link int }
      *
      */
-    public Integer getDgpsid() {
+    public int getDgpsid() {
         return dgpsid;
     }
 
     /**
      * Sets the value of the dgpsid property.
      *
-     * @param value allowed object is {@link Integer }
+     * @param value allowed object is {@link int }
      *
      */
-    public void setDgpsid(Integer value) {
+    public void setDgpsid(int value) {
         this.dgpsid = value;
     }
 
@@ -532,41 +536,41 @@ public class Wpt {
     /**
      * Gets the value of the lat property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getLat() {
-        return lat;
+    public double getLatitude() {
+        return latitude;
     }
 
     /**
      * Sets the value of the lat property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setLat(BigDecimal value) {
-        this.lat = value;
+    public void setLatitude(double value) {
+        this.latitude = value;
     }
 
     /**
      * Gets the value of the lon property.
      *
-     * @return possible object is {@link BigDecimal }
+     * @return possible object is {@link double }
      *
      */
-    public BigDecimal getLon() {
-        return lon;
+    public double getLongitude() {
+        return longitude;
     }
 
     /**
      * Sets the value of the lon property.
      *
-     * @param value allowed object is {@link BigDecimal }
+     * @param value allowed object is {@link double }
      *
      */
-    public void setLon(BigDecimal value) {
-        this.lon = value;
+    public void setLongitude(double value) {
+        this.longitude = value;
     }
 
 }

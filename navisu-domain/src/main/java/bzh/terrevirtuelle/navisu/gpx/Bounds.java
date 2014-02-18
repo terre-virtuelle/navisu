@@ -8,7 +8,7 @@
 
 package bzh.terrevirtuelle.navisu.gpx;
 
-import java.math.BigDecimal;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -44,18 +44,18 @@ import javax.xml.bind.annotation.XmlType;
 public class Bounds {
 
     @XmlAttribute(name = "minlat", required = true)
-    protected BigDecimal minlat;
+    protected double minlat;
     @XmlAttribute(name = "minlon", required = true)
-    protected BigDecimal minlon;
+    protected double minlon;
     @XmlAttribute(name = "maxlat", required = true)
-    protected BigDecimal maxlat;
+    protected double maxlat;
     @XmlAttribute(name = "maxlon", required = true)
-    protected BigDecimal maxlon;
+    protected double maxlon;
 
     public Bounds() {
     }
 
-    public Bounds(BigDecimal minlat, BigDecimal minlon, BigDecimal maxlat, BigDecimal maxlon) {
+    public Bounds(double minlat, double minlon, double maxlat, double maxlon) {
         this.minlat = minlat;
         this.minlon = minlon;
         this.maxlat = maxlat;
@@ -67,10 +67,10 @@ public class Bounds {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public BigDecimal getMinlat() {
+    public double getMinlat() {
         return minlat;
     }
 
@@ -79,10 +79,10 @@ public class Bounds {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public void setMinlat(BigDecimal value) {
+    public void setMinlat(double value) {
         this.minlat = value;
     }
 
@@ -91,10 +91,10 @@ public class Bounds {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public BigDecimal getMinlon() {
+    public double getMinlon() {
         return minlon;
     }
 
@@ -103,10 +103,10 @@ public class Bounds {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public void setMinlon(BigDecimal value) {
+    public void setMinlon(double value) {
         this.minlon = value;
     }
 
@@ -115,10 +115,10 @@ public class Bounds {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public BigDecimal getMaxlat() {
+    public double getMaxlat() {
         return maxlat;
     }
 
@@ -127,10 +127,10 @@ public class Bounds {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public void setMaxlat(BigDecimal value) {
+    public void setMaxlat(double value) {
         this.maxlat = value;
     }
 
@@ -139,10 +139,10 @@ public class Bounds {
      * 
      * @return
      *     possible object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public BigDecimal getMaxlon() {
+    public double getMaxlon() {
         return maxlon;
     }
 
@@ -151,10 +151,10 @@ public class Bounds {
      * 
      * @param value
      *     allowed object is
-     *     {@link BigDecimal }
+     *     {@link double }
      *     
      */
-    public void setMaxlon(BigDecimal value) {
+    public void setMaxlon(double value) {
         this.maxlon = value;
     }
 

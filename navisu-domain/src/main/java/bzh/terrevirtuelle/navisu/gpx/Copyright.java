@@ -8,12 +8,13 @@
 
 package bzh.terrevirtuelle.navisu.gpx;
 
+import java.util.GregorianCalendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
+
 
 
 /**
@@ -50,7 +51,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class Copyright {
 
     @XmlSchemaType(name = "gYear")
-    protected XMLGregorianCalendar year;
+    protected GregorianCalendar year;
     @XmlSchemaType(name = "anyURI")
     protected String license;
     @XmlAttribute(name = "author", required = true)
@@ -59,7 +60,7 @@ public class Copyright {
     public Copyright() {
     }
 
-    public Copyright(XMLGregorianCalendar year, String license, String author) {
+    public Copyright(GregorianCalendar year, String license, String author) {
         this.year = year;
         this.license = license;
         this.author = author;
@@ -70,10 +71,10 @@ public class Copyright {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link GregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getYear() {
+    public GregorianCalendar getYear() {
         return year;
     }
 
@@ -82,10 +83,10 @@ public class Copyright {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link GregorianCalendar }
      *     
      */
-    public void setYear(XMLGregorianCalendar value) {
+    public void setYear(GregorianCalendar value) {
         this.year = value;
     }
 

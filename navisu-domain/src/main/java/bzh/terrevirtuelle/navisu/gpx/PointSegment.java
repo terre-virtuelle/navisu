@@ -42,14 +42,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ptseg", propOrder = {
     "pt"
 })
-public class Ptseg {
+public class PointSegment {
 
-    protected List<Pt> pt;
+    protected List<Point> pt;
 
-    public Ptseg() {
+    public PointSegment() {
     }
 
-    public Ptseg(List<Pt> pt) {
+    public PointSegment(List<Point> pt) {
         this.pt = pt;
     }
 
@@ -65,19 +65,19 @@ public class Ptseg {
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getPt().add(newItem);
-     * </pre>
+    getPoint().add(newItem);
+ </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Pt }
+     * {@link Point }
      * 
      * 
      */
-    public List<Pt> getPt() {
+    public List<Point> getPt() {
         if (pt == null) {
-            pt = new ArrayList<Pt>();
+            pt = new ArrayList<Point>();
         }
         return this.pt;
     }
