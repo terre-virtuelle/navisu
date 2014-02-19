@@ -140,7 +140,7 @@ public class AisLocatorController {
                 System.out.println("type : 4");
                 int mmsi = ais.getMMSI();
                 //   if (ships.containsKey(mmsi)) {
-                //       ship = ships.get(mmsi);
+                //       tShip = ships.get(mmsi);
                 //shipUpdate(ais);
                 //   } else {
                 // shipBuild4(ais); // faire un buildDefault pour les stations fixes

@@ -57,7 +57,7 @@ public class GpsLocatorController {
         aisLayer = new GpsLayer();
         ship = new Ship();
         wwd = GeoWorldWindViewImpl.getWW();
-        
+
         ggaES.subscribe(new GGAEvent() {
 
             @Override

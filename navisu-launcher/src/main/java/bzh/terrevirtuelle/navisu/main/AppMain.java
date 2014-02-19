@@ -128,8 +128,8 @@ public class AppMain extends Application {
         // Test connexion Gpsd 
         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // Test connexion fichier 
-        // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-         dataServerServices.openFile("data/ais/ais.txt");  //AIS
+         dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
 
         // Test serveur Web Http 
@@ -141,8 +141,8 @@ public class AppMain extends Application {
 
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
-       // widgetServices.createGpsLocator();
-        widgetServices.createAisLocator();
+        widgetServices.createGpsLocator();
+        //widgetServices.createAisLocator();
 
         //
         // END TESTS SERVER

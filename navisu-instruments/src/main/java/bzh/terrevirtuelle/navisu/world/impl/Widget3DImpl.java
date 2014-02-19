@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.world.impl;
 
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.world.Widget3D;
 import bzh.terrevirtuelle.navisu.world.Widget3DServices;
@@ -22,6 +23,9 @@ public class Widget3DImpl implements Widget3D, Widget3DServices, ComponentState 
     @UsedService
     GeoViewServices geoViewServices;
 
+    @UsedService
+    DpAgentServices dpAgentServices;
+
     @Override
     public void componentInitiated() {
     }
@@ -36,7 +40,7 @@ public class Widget3DImpl implements Widget3D, Widget3DServices, ComponentState 
 
     @Override
     public void createGpsLocator() {
-        GpsLocator locator = new GpsLocator(geoViewServices);
+        GpsLocator locator = new GpsLocator(geoViewServices, dpAgentServices);
     }
 
     @Override
