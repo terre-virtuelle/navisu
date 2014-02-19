@@ -4,6 +4,8 @@ package bzh.terrevirtuelle.navisu.api.option;
  * NaVisu
  *
  * @author tibus
+ * @param <V>
+ * @param <T>
  * @date 15/02/2014 17:22
  */
 public abstract class OptionsPanelCtrl<V extends OptionsPanel, T> {
