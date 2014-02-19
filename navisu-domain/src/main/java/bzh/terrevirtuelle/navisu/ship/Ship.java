@@ -31,12 +31,13 @@ public class Ship implements Serializable {
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available = default
      */
-    private String name;
+    private String name = "....";
     /**
      * Country of the ship
      *
      */
-    private String country;
+    private String country = "....";
+    ;
     private DoubleProperty latitude;
     private DoubleProperty longitude;
     /**
@@ -112,7 +113,7 @@ public class Ship implements Serializable {
     /**
      * 7 = 6 bit ASCII characters, @@@@@@@ = not available = default
      */
-    private String callSign;
+    private String callSign = "....";
     /**
      * Estimated time of arrival; MMDDHHMM UTC Bits 19-16: month; 1-12; 0 = not
      * available = default Bits 15-11: day; 1-31; 0 = not available = default
@@ -124,7 +125,7 @@ public class Ship implements Serializable {
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available
      */
-    private String destination;
+    private String destination = "....";
     /**
      * year, month, day of ETA
      */
@@ -134,8 +135,6 @@ public class Ship implements Serializable {
      */
     private int hour, minute;
 
-    
-
     /**
      * Creates a new instance of Ship
      */
@@ -143,8 +142,8 @@ public class Ship implements Serializable {
         this.latitude = new SimpleDoubleProperty(0);
         this.longitude = new SimpleDoubleProperty(0);
         this.heading = new SimpleDoubleProperty(0);
-        this.cog = new SimpleDoubleProperty(0);
-        this.sog = new SimpleDoubleProperty(0);
+        this.cog = new SimpleDoubleProperty(3600);
+        this.sog = new SimpleDoubleProperty(1023);
     }
 
     /**
@@ -155,6 +154,7 @@ public class Ship implements Serializable {
     public Ship(int mmsi) {
         this.mmsi = mmsi;
     }
+
     public Ship(int mmsi, int imo, String name,
             float heading, float cog, float sog, float rot,
             float latitude, float longitude,
@@ -181,6 +181,7 @@ public class Ship implements Serializable {
         this.destination = destination;
         this.country = country;
     }
+
     public Ship(int mmsi, float latitude, float longitude) {
         this.mmsi = mmsi;
         this.latitude = new SimpleDoubleProperty(latitude);
@@ -191,16 +192,15 @@ public class Ship implements Serializable {
     public String toString() {
         return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country + ", latitude=" + latitude + ", longitude=" + longitude + ", heading=" + heading + ", cog=" + cog + ", sog=" + sog + ", rot=" + rot + ", width=" + width + ", length=" + length + ", draught=" + draught + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus + ", electronicPositionDevice=" + electronicPositionDevice + ", callSign=" + callSign + ", ETA=" + ETA + ", destination=" + destination + ", year=" + year + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minute=" + minute + '}';
     }
-    
-  
+
     public int getMonth() {
         return month;
     }
-    
+
     public void setMonth(int month) {
         this.month = month;
     }
-    
+
     public DoubleProperty latitudeProperty() {
         return this.latitude;
     }
@@ -220,7 +220,7 @@ public class Ship implements Serializable {
     public void setLatitude(double latitude) {
         this.latitudeProperty().set(latitude);
     }
-    
+
     public DoubleProperty longitudeProperty() {
         return this.longitude;
     }
@@ -238,7 +238,7 @@ public class Ship implements Serializable {
      * @param longitude
      */
     public void setLongitude(double longitude) {
-        
+
         this.longitudeProperty().set(longitude);
     }
 
@@ -257,131 +257,131 @@ public class Ship implements Serializable {
     public void setCountry(String country) {
         this.country = country;
     }
-    
+
     public Calendar getETA() {
         return ETA;
     }
-    
+
     public void setETA(Calendar ETA) {
         this.ETA = ETA;
     }
-    
+
     public int getDay() {
         return day;
     }
-    
+
     public void setDay(int day) {
         this.day = day;
     }
-    
+
     public int getHour() {
         return hour;
     }
-    
+
     public void setHour(int hour) {
         this.hour = hour;
     }
-    
+
     public int getMinute() {
         return minute;
     }
-    
+
     public void setMinute(int minute) {
         this.minute = minute;
     }
-    
+
     public int getYear() {
         return year;
     }
-    
+
     public void setYear(int year) {
         this.year = year;
     }
-    
+
     public String getCallSign() {
         return callSign;
     }
-    
+
     public void setCallSign(String callSign) {
         this.callSign = callSign;
     }
-    
+
     public DoubleProperty cogProperty() {
         return cog;
     }
-    
+
     public double getCog() {
         return cogProperty().get();
     }
-    
+
     public void setCog(float cog) {
         this.cogProperty().set(cog);
     }
-    
+
     public String getDestination() {
         return destination;
     }
-    
+
     public void setDestination(String destination) {
         this.destination = destination;
     }
-    
+
     public float getDraught() {
         return draught;
     }
-    
+
     public void setDraught(float draught) {
         this.draught = draught;
     }
-    
+
     public int getElectronicPositionDevice() {
         return electronicPositionDevice;
     }
-    
+
     public void setElectronicPositionDevice(int electronicPositionDevice) {
         this.electronicPositionDevice = electronicPositionDevice;
     }
-    
+
     public DoubleProperty headingProperty() {
         return this.heading;
     }
-    
+
     public double getHeading() {
         return headingProperty().get();
     }
-    
+
     public void setHeading(float heading) {
         this.headingProperty().set(heading);
     }
-    
+
     public int getImo() {
         return imo;
     }
-    
+
     public void setImo(int imo) {
         this.imo = imo;
     }
-    
+
     public float getLength() {
         return length;
     }
-    
+
     public void setLength(float length) {
         this.length = length;
     }
-    
+
     public int getMmsi() {
         return mmsi;
     }
-    
+
     public void setMmsi(int mmsi) {
         this.mmsi = mmsi;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -389,39 +389,39 @@ public class Ship implements Serializable {
     public IntegerProperty navigationalStatusProperty() {
         return navigationalStatus;
     }
-    
+
     public int getNavigationalStatus() {
         return navigationalStatusProperty().get();
     }
-    
+
     public void setNavigationalStatus(int navigationalStatus) {
         this.navigationalStatusProperty().set(navigationalStatus);
     }
-    
+
     public DoubleProperty rotProperty() {
         return rot;
     }
-    
+
     public double getRot() {
         return rotProperty().get();
     }
-    
+
     public void setRot(float rot) {
         this.rotProperty().set(rot);
     }
-    
+
     public DoubleProperty sogProperty() {
         return sog;
     }
-    
+
     public double getSog() {
         return sogProperty().get();
     }
-    
+
     public void setSog(float sog) {
         this.sogProperty().set(sog);
     }
-    
+
     public IntegerProperty typeProperty() {
         return shipType;
     }
@@ -429,17 +429,17 @@ public class Ship implements Serializable {
     public int getType() {
         return typeProperty().get();
     }
-    
+
     public void setType(int type) {
         this.typeProperty().set(type);
     }
-    
+
     public float getWidth() {
         return width;
     }
-    
+
     public void setWidth(float width) {
         this.width = width;
     }
-    
+
 }
