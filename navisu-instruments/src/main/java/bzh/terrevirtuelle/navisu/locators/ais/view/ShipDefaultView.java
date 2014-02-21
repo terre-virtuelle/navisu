@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.locators.ais.view;
 
-import bzh.terrevirtuelle.navisu.locators.view.CategoryView;
+import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.ShapeAttributes;
@@ -54,6 +54,6 @@ public class ShipDefaultView
     }
     
     public void setType(int type) {
-        pathAttrs.setInteriorMaterial(CategoryView.VIEW.get(type));
+        pathAttrs.setInteriorMaterial(ShipTypeColor.VIEW.get(type));
     }
 }

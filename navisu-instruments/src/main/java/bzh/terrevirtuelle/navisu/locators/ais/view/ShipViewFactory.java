@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.locators.ais.view;
 
-import bzh.terrevirtuelle.navisu.locators.view.CategoryView;
+import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
 import bzh.terrevirtuelle.navisu.ship.Ship;
 import bzh.terrevirtuelle.navisu.locators.ais.view.impl.ShipDefaultViewImpl;
 import bzh.terrevirtuelle.navisu.locators.ais.view.impl.ShipViewImpl;
@@ -93,8 +93,8 @@ public class ShipViewFactory {
     private ShapeAttributes makeAttributes() {
         shapeAttributes = new BasicShapeAttributes();
         if (aisType != 4) {
-            shapeAttributes.setOutlineMaterial(CategoryView.VIEW.get(type));
-            shapeAttributes.setInteriorMaterial(CategoryView.VIEW.get(type));
+            shapeAttributes.setOutlineMaterial(ShipTypeColor.VIEW.get(type));
+            shapeAttributes.setInteriorMaterial(ShipTypeColor.VIEW.get(type));
         }
         if (aisType == 4) {
             shapeAttributes.setOutlineMaterial(Material.RED);

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class CategoryView {
+public class ShipTypeColor {
 
     public static final Map<Integer, Material> VIEW = Collections.unmodifiableMap(new HashMap<Integer, Material>() {
         {
@@ -98,7 +98,7 @@ public class CategoryView {
     @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
-        Set<Map.Entry<Integer, Material>> entries = CategoryView.VIEW.entrySet();
+        Set<Map.Entry<Integer, Material>> entries = ShipTypeColor.VIEW.entrySet();
         buffer.append("[");
         entries.stream().forEach((e) -> {
             buffer.append("[").append(e.getKey()).append(", ").append(e.getValue()).append("]");

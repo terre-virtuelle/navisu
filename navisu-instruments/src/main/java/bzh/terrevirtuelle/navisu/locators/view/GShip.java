@@ -6,6 +6,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfaceCircle;
 
 import java.util.List;
 
@@ -20,8 +21,9 @@ public class GShip implements GObject {
     protected final int id;
 
     protected Polygon polygon;
+    protected SurfaceCircle circle;
     protected Renderable[] renderables;
-
+protected int type;
     public GShip(int id, Polygon polygon) {
         this.id = id;
         this.polygon = polygon;
@@ -35,6 +37,11 @@ public class GShip implements GObject {
         this.setCog(cog);
     }
 
+    public GShip(int id, SurfaceCircle circle) {
+        this.id = id;
+        this.circle = circle;
+    }
+
     @Override
     public int getID() {
         return this.id;
@@ -42,15 +49,14 @@ public class GShip implements GObject {
 
     @Override
     public void setLocation(Location location) {
-        this.polygon.moveTo(Position.fromDegrees(location.getLatitudeDegree(), 
+        this.polygon.moveTo(Position.fromDegrees(location.getLatitudeDegree(),
                 location.getLongitudeDegree(), 100));
     }
 
     @Override
     public Renderable[] getRenderables() {
-        return  new Renderable[] {
-                this.polygon,
-        };
+        return new Renderable[]{
+            this.polygon,};
     }
 
     public void setCog(double cog) {

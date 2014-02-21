@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.locators.ais.view.impl;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.locators.view.CategoryView;
+import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
 import bzh.terrevirtuelle.navisu.locators.ais.view.ShipView;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Position;
@@ -57,7 +57,7 @@ public class ShipViewImpl
 
     @Override
     public void setType(int type) {
-        getAttributes().setInteriorMaterial(CategoryView.VIEW.get(type));
+        getAttributes().setInteriorMaterial(ShipTypeColor.VIEW.get(type));
     }
 
     @Override
