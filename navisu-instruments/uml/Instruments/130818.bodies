@@ -1,0 +1,8 @@
+class GpsLayer
+!!!135298.java!!!	GpsLayer()
+  
+        setName("GPS Layer");
+!!!135426.java!!!	add(inout shipView : ShipView) : void
+        addRenderable(shipView);
+!!!135554.java!!!	remove(inout shipView : ShipView) : void
+        remove(shipView);

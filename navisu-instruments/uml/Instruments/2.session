@@ -1,0 +1,17 @@
+window_sizes 1280 962 300 900 682 82
+diagrams
+  active  classdiagram_ref 128002 // gps
+    974 806 100 4 0 0
+end
+show_stereotypes
+selected class_ref 130818 // GpsLayer
+open
+  classview_ref 128770 // locator
+  classview_ref 128898 // view
+  classview_ref 129026 // controller
+  deploymentview_ref 128642 // locator
+  classview_ref 129154 // model
+  classview_ref 129410 // gps
+  classview_ref 129282 // impl
+end
+end

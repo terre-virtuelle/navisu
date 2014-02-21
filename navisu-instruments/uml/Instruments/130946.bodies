@@ -1,0 +1,20 @@
+class ShipView
+!!!137858.java!!!	ShipView(inout positions : List<Position>, in latitude : double, in longitude : double, in cog : double)
+        super(positions);
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.cog = cog;
+!!!137986.java!!!	setCog(in cog : double) : void
+        setRotation(cog - 90);
+!!!138114.java!!!	setLatitude(in latitude : double) : void
+        this.latitude = latitude;
+        moveTo(Position.fromDegrees(latitude, longitude, 100));
+!!!138242.java!!!	setLongitude(in longitude : double) : void
+        this.longitude = longitude;
+        moveTo(Position.fromDegrees(latitude, longitude, 100));
+!!!138370.java!!!	setLatLon(in latitude : double, in longitude : double) : void
+        this.latitude = latitude;
+        this.longitude = longitude;
+
+!!!138498.java!!!	setPathAttrs(inout pathAttrs : ShapeAttributes) : void
+        setAttributes(pathAttrs);

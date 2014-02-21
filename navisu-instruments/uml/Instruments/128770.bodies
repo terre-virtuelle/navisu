@@ -1,0 +1,9 @@
+class AisLayer
+!!!129282.java!!!	AisLayer()
+        setName("AIS Layer");
+!!!129410.java!!!	add(inout shipView : ShipViewImpl) : void
+        addRenderable(shipView);
+!!!129538.java!!!	add(inout shipView : ShipDefaultViewImpl) : void
+        addRenderable(shipView);
+!!!129666.java!!!	remove(inout shipView : ShipView) : void
+        remove(shipView);
