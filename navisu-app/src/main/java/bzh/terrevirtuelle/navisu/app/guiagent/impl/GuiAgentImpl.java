@@ -45,6 +45,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
     @SubComponent OptionsManagerImpl optionsManager;
     @UsedService OptionsManagerServices optionsManagerServices;
 
+
     @SubComponent MenuManagerImpl menu;
     @UsedService MenuManagerServices menuServices;
 
