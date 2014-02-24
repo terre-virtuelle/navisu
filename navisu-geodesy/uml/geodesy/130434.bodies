@@ -1,0 +1,7 @@
+class ReadWriteGlobalLocationImpl
+!!!134530.java!!!	ReadWriteGlobalLocationImpl(in latitude : double, in longitude : double, in altitude : double)
+        super(latitude, longitude, altitude);
+!!!134658.java!!!	ReadWriteGlobalLocationImpl()
+        this.altitude = 0d;
+!!!134786.java!!!	setAltitude(in altitude : double) : void
+        this.altitude = altitude;

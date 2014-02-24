@@ -1,0 +1,23 @@
+class ReadWriteLocationImpl
+!!!134914.java!!!	ReadWriteLocationImpl()
+        this.latitude = 0d;
+        this.longitude = 0d;
+!!!135042.java!!!	ReadWriteLocationImpl(in latitude : double, in longitude : double)
+        super(latitude, longitude);
+!!!135170.java!!!	setLatitudeDegree(in latitude : double) : void
+
+        if (latitude < Location.MIN_LAT || latitude > Location.MAX_LAT) {
+            throw new IllegalArgumentException("Latitude value must be between " + Location.MIN_LAT + " to " + Location.MAX_LAT + "degrees");
+        }
+
+        this.latitude = latitude;
+!!!135298.java!!!	setLongitudeDegree(in longitude : double) : void
+
+        if (longitude < Location.MIN_LON || longitude > Location.MAX_LON) {
+            throw new IllegalArgumentException("Longitude value must be between " + Location.MIN_LON + " to " + Location.MAX_LON + "degrees");
+        }
+
+        this.longitude = longitude;
+!!!135426.java!!!	setLatitudeLongitudeDegree(in latitude : double, in longitude : double) : void
+        this.setLatitudeDegree(latitude);
+        this.setLongitudeDegree(longitude);

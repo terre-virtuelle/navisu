@@ -1,0 +1,12 @@
+class OrientationImpl
+!!!134146.java!!!	OrientationImpl()
+        orientation = 0.0;
+!!!134274.java!!!	OrientationImpl(in orientation : double)
+        if (orientation < Orientation.MIN_ORIENTATION || orientation > Orientation.MAX_ORIENTATION) {
+            throw new IllegalArgumentException("Orientation value must be between "
+                    + Orientation.MIN_ORIENTATION + " to "
+                    + Orientation.MAX_ORIENTATION + "degrees");
+        }
+        this.orientation = orientation;
+!!!134402.java!!!	getOrientationDegree() : double
+        return orientation;

@@ -1,0 +1,20 @@
+class LocationImpl
+!!!132610.java!!!	LocationImpl()
+        this.latitude = 0;
+        this.longitude = 0;
+!!!132738.java!!!	LocationImpl(in latitude : double, in longitude : double)
+
+        if(latitude < Location.MIN_LAT || latitude > Location.MAX_LAT) {
+            throw new IllegalArgumentException("Latitude value must be between " + Location.MIN_LAT + " to " + Location.MAX_LAT + "degrees");
+        }
+
+        if(longitude < Location.MIN_LON || longitude > Location.MAX_LON) {
+            throw new IllegalArgumentException("Longitude value must be between " + Location.MIN_LON + " to " + Location.MAX_LON + "degrees");
+        }
+
+        this.latitude = latitude;
+        this.longitude = longitude;
+!!!132866.java!!!	getLatitudeDegree() : double
+        return this.latitude;
+!!!132994.java!!!	getLongitudeDegree() : double
+        return this.longitude;

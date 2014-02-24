@@ -1,0 +1,1354 @@
+format 76
+"geodesy" // bzh::terrevirtuelle::navisu::geodesy
+  revision 1
+  modified_by 2 "Serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-geodesy/src/main/java/bzh/terrevirtuelle/navisu/geodesy/"
+  java_package "bzh.terrevirtuelle.navisu.geodesy"
+  classview 128002 "geodesy"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 128002 "Angle"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "Utility interface for dealing with angles.
+ 
+@author tibus29"
+      attribute 128002 "PiOver180"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " Math.PI / 180.0"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Degrees/Radians conversion constant. "
+      end
+
+      operation 128002 "toRadians"
+	class_operation public explicit_return_type "double"
+	nparams 1
+	  param in name "degrees" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128130 "Ellipsoid"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "Encapsulation of an ellipsoid, and declaration of common reference ellipsoids.
+@author Mike Gavaghan"
+      classrelation 128002 // <realization>
+	relation 128002 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 128002 // <realization>
+	  b parent class_ref 128258 // Serializable
+      end
+
+      attribute 128130 "mSemiMajorAxis"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Semi major axis (meters). "
+      end
+
+      attribute 128258 "mSemiMinorAxis"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Semi minor axis (meters). "
+      end
+
+      attribute 128386 "mFlattening"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Flattening. "
+      end
+
+      attribute 128514 "mInverseFlattening"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Inverse flattening. "
+      end
+
+      operation 128130 "Ellipsoid"
+	private explicit_return_type ""
+	nparams 4
+	  param in name "semiMajor" explicit_type "double"
+	  param in name "semiMinor" explicit_type "double"
+	  param in name "flattening" explicit_type "double"
+	  param in name "inverseFlattening" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Construct a new Ellipsoid.  This is private to ensure the values are
+consistent (flattening = 1.0 / inverseFlattening).  Use the methods 
+fromAAndInverseF() and fromAAndF() to create new instances.
+@param semiMajor
+@param semiMinor
+@param flattening
+@param inverseFlattening"
+      end
+
+      classrelation 128130 // WGS84 (<unidirectional association>)
+	relation 128130 --->
+	  a role_name "WGS84" init_value " fromAAndInverseF(6378137.0, 298.257223563)" class_relation const_relation public
+	    comment " The WGS84 ellipsoid. 
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128130 // WGS84 (<unidirectional association>)
+	  b parent class_ref 128130 // Ellipsoid
+      end
+
+      classrelation 128258 // GRS80 (<unidirectional association>)
+	relation 128258 --->
+	  a role_name "GRS80" init_value " fromAAndInverseF(6378137.0, 298.257222101)" class_relation const_relation public
+	    comment " The GRS80 ellipsoid. 
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128258 // GRS80 (<unidirectional association>)
+	  b parent class_ref 128130 // Ellipsoid
+      end
+
+      classrelation 128386 // GRS67 (<unidirectional association>)
+	relation 128386 --->
+	  a role_name "GRS67" init_value " fromAAndInverseF(6378160.0, 298.25)" class_relation const_relation public
+	    comment " The GRS67 ellipsoid. 
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128386 // GRS67 (<unidirectional association>)
+	  b parent class_ref 128130 // Ellipsoid
+      end
+
+      classrelation 128514 // ANS (<unidirectional association>)
+	relation 128514 --->
+	  a role_name "ANS" init_value " fromAAndInverseF(6378160.0, 298.25)" class_relation const_relation public
+	    comment " The ANS ellipsoid. 
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128514 // ANS (<unidirectional association>)
+	  b parent class_ref 128130 // Ellipsoid
+      end
+
+      classrelation 128642 // WGS72 (<unidirectional association>)
+	relation 128642 --->
+	  a role_name "WGS72" init_value " fromAAndInverseF(6378135.0, 298.26)" class_relation const_relation public
+	    comment " The WGS72 ellipsoid. 
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128642 // WGS72 (<unidirectional association>)
+	  b parent class_ref 128130 // Ellipsoid
+      end
+
+      classrelation 128770 // Clarke1858 (<unidirectional association>)
+	relation 128770 --->
+	  a role_name "Clarke1858" init_value " fromAAndInverseF(6378293.645, 294.26)" class_relation const_relation public
+	    comment " The Clarke1858 ellipsoid. 
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128770 // Clarke1858 (<unidirectional association>)
+	  b parent class_ref 128130 // Ellipsoid
+      end
+
+      classrelation 128898 // Clarke1880 (<unidirectional association>)
+	relation 128898 --->
+	  a role_name "Clarke1880" init_value " fromAAndInverseF(6378249.145, 293.465)" class_relation const_relation public
+	    comment " The Clarke1880 ellipsoid. 
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 128898 // Clarke1880 (<unidirectional association>)
+	  b parent class_ref 128130 // Ellipsoid
+      end
+
+      classrelation 129026 // Sphere (<unidirectional association>)
+	relation 129026 --->
+	  a role_name "Sphere" init_value " fromAAndF(6371000, 0.0)" class_relation const_relation public
+	    comment " A spherical \"ellipsoid\". 
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129026 // Sphere (<unidirectional association>)
+	  b parent class_ref 128130 // Ellipsoid
+      end
+
+      operation 128258 "fromAAndInverseF"
+	class_operation public return_type class_ref 128130 // Ellipsoid
+	nparams 2
+	  param in name "semiMajor" explicit_type "double"
+	  param in name "inverseFlattening" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Build an Ellipsoid from the semi major axis measurement and the inverse flattening.
+@param semiMajor semi major axis (meters)
+@param inverseFlattening
+@return"
+      end
+
+      operation 128386 "fromAAndF"
+	class_operation public return_type class_ref 128130 // Ellipsoid
+	nparams 2
+	  param in name "semiMajor" explicit_type "double"
+	  param in name "flattening" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Build an Ellipsoid from the semi major axis measurement and the flattening.
+@param semiMajor semi major axis (meters)
+@param flattening
+@return"
+      end
+
+      operation 128514 "getSemiMajorAxis"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get semi-major axis.
+@return semi-major axis (in meters)."
+      end
+
+      operation 128642 "getSemiMinorAxis"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get semi-minor axis.
+@return semi-minor axis (in meters)."
+      end
+
+      operation 128770 "getFlattening"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get flattening
+@return"
+      end
+
+      operation 128898 "getInverseFlattening"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get inverse flattening.
+@return"
+      end
+    end
+
+    class 128386 "GeodeticCalculator"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "<p>
+Implementation of Thaddeus Vincenty's algorithms to solve the direct and
+inverse geodetic problems. For more information, see Vincent's original
+publication on the NOAA website:
+</p>
+See http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf
+
+@author Mike Gavaghan"
+      attribute 128642 "TwoPi"
+	const_attribute private explicit_type "double"
+	init_value " 2.0 * Math.PI"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 129026 "calculateEndingGlobalCoordinates"
+	public return_type class_ref 128514 // Location
+	nparams 5
+	  param inout name "ellipsoid" type class_ref 128130 // Ellipsoid
+	  param inout name "start" type class_ref 128514 // Location
+	  param in name "startBearing" explicit_type "double"
+	  param in name "distance" explicit_type "double"
+	  param inout name "endBearing" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4}[] ${p4}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Calculate the destination and final bearing after traveling a specified
+distance, and a specified starting bearing, for an initial location. This
+is the solution to the direct geodetic problem.
+
+@param ellipsoid reference ellipsoid to use
+@param start starting location
+@param startBearing starting bearing (degrees)
+@param distance distance to travel (meters)
+@param endBearing bearing at destination (degrees) element at index 0 will
+           be populated with the result
+@return"
+      end
+
+      operation 129154 "calculateEndingGlobalCoordinates"
+	public return_type class_ref 128514 // Location
+	nparams 4
+	  param inout name "ellipsoid" type class_ref 128130 // Ellipsoid
+	  param inout name "start" type class_ref 128514 // Location
+	  param in name "startBearing" explicit_type "double"
+	  param in name "distance" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Calculate the destination after traveling a specified distance, and a
+specified starting bearing, for an initial location. This is the solution
+to the direct geodetic problem.
+
+@param ellipsoid reference ellipsoid to use
+@param start starting location
+@param startBearing starting bearing (degrees)
+@param distance distance to travel (meters)
+@return"
+      end
+
+      operation 129282 "calculateGeodeticCurve"
+	public return_type class_ref 128642 // GeodeticCurve
+	nparams 3
+	  param inout name "ellipsoid" type class_ref 128130 // Ellipsoid
+	  param inout name "start" type class_ref 128514 // Location
+	  param inout name "end" type class_ref 128514 // Location
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Calculate the geodetic curve between two points on a specified reference
+ellipsoid. This is the solution to the inverse geodetic problem.
+
+@param ellipsoid reference ellipsoid to use
+@param start starting coordinates
+@param end ending coordinates
+@return"
+      end
+
+      operation 129410 "calculateGeodeticMeasurement"
+	public return_type class_ref 128770 // GeodeticMeasurement
+	nparams 3
+	  param inout name "refEllipsoid" type class_ref 128130 // Ellipsoid
+	  param inout name "start" type class_ref 128898 // GlobalLocation
+	  param inout name "end" type class_ref 128898 // GlobalLocation
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "<p>
+Calculate the three dimensional geodetic measurement between two positions
+measured in reference to a specified ellipsoid.
+</p>
+<p>
+This calculation is performed by first computing a new ellipsoid by
+expanding or contracting the reference ellipsoid such that the new
+ellipsoid passes through the average elevation of the two positions. A
+geodetic curve across the new ellisoid is calculated. The point-to-point
+distance is calculated as the hypotenuse of a right triangle where the
+length of one side is the ellipsoidal distance and the other is the
+difference in elevation.
+</p>
+
+@param refEllipsoid reference ellipsoid to use
+@param start starting position
+@param end ending position
+@return"
+      end
+    end
+
+    class 128514 "Location"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Thibault Pensec <thibault.pensec at gmail.com>
+@author Jordan Mens <jordan.mens at gmail.com>"
+      classrelation 129410 // factory (<unidirectional association>)
+	relation 129410 --->
+	  a role_name "factory" init_value " new LocationFactoryImpl()" class_relation const_relation public
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129410 // factory (<unidirectional association>)
+	  b parent class_ref 129026 // LocationFactory
+      end
+
+      attribute 129410 "MAX_LAT"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " 90d"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129538 "MIN_LAT"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " -90d"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129666 "MAX_LON"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " 180d"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 129794 "MIN_LON"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " -180d"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 130818 "getLatitudeDegree"
+	public explicit_return_type "double"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 130946 "getLongitudeDegree"
+	public explicit_return_type "double"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128642 "GeodeticCurve"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "This is the outcome of a geodetic calculation. It represents the path and
+ellipsoidal distance between two GlobalCoordinates for a specified reference
+ellipsoid.
+
+@author Mike Gavaghan"
+      classrelation 129154 // <realization>
+	relation 129154 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129154 // <realization>
+	  b parent class_ref 128258 // Serializable
+      end
+
+      attribute 128770 "mEllipsoidalDistance"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Ellipsoidal distance (in meters). "
+      end
+
+      attribute 128898 "mAzimuth"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Azimuth (degrees from north). "
+      end
+
+      attribute 129026 "mReverseAzimuth"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " Reverse azimuth (degrees from north). "
+      end
+
+      operation 129538 "GeodeticCurve"
+	public explicit_return_type ""
+	nparams 3
+	  param in name "ellipsoidalDistance" explicit_type "double"
+	  param in name "azimuth" explicit_type "double"
+	  param in name "reverseAzimuth" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Create a new GeodeticCurve.
+@param ellipsoidalDistance ellipsoidal distance in meters
+@param azimuth azimuth in degrees
+@param reverseAzimuth reverse azimuth in degrees"
+      end
+
+      operation 129666 "getEllipsoidalDistance"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the ellipsoidal distance.
+@return ellipsoidal distance in meters"
+      end
+
+      operation 129794 "getAzimuth"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the azimuth.
+@return azimuth in degrees"
+      end
+
+      operation 129922 "getReverseAzimuth"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the reverse azimuth.
+@return reverse azimuth in degrees"
+      end
+
+      operation 130050 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get curve as a string.
+@return"
+      end
+    end
+
+    class 128770 "GeodeticMeasurement"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "This is the outcome of a three dimensional geodetic calculation. It
+represents the path a between two GlobalPositions for a specified reference
+ellipsoid.
+
+@author Mike Gavaghan"
+      classrelation 129282 // <generalisation>
+	relation 129282 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129282 // <generalisation>
+	  b parent class_ref 128642 // GeodeticCurve
+      end
+
+      attribute 129154 "mElevationChange"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "The elevation change, in meters, going from the starting to the ending
+point.
+"
+      end
+
+      attribute 129282 "mP2P"
+	const_attribute private explicit_type "double"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " The distance travelled, in meters, going from one point to the next. "
+      end
+
+      operation 130178 "GeodeticMeasurement"
+	public explicit_return_type ""
+	nparams 4
+	  param in name "ellipsoidalDistance" explicit_type "double"
+	  param in name "azimuth" explicit_type "double"
+	  param in name "reverseAzimuth" explicit_type "double"
+	  param in name "elevationChange" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Creates a new instance of GeodeticMeasurement.
+
+@param ellipsoidalDistance ellipsoidal distance in meters
+@param azimuth azimuth in degrees
+@param reverseAzimuth reverse azimuth in degrees
+@param elevationChange the change in elevation, in meters, going from the
+          starting point to the ending point"
+      end
+
+      operation 130306 "GeodeticMeasurement"
+	public explicit_return_type ""
+	nparams 2
+	  param inout name "averageCurve" type class_ref 128642 // GeodeticCurve
+	  param in name "elevationChange" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Creates a new instance of GeodeticMeasurement.
+
+@param averageCurve average geodetic curve
+@param elevationChange the change in elevation, in meters, going from the
+          starting point to the ending point"
+      end
+
+      operation 130434 "getElevationChange"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the elevation change.
+
+@return elevation change, in meters, going from the starting to the ending
+        point"
+      end
+
+      operation 130562 "getPointToPointDistance"
+	public explicit_return_type "double"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the point-to-point distance.
+
+@return the distance travelled, in meters, going from one point to the
+        next"
+      end
+
+      operation 130690 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "Get the GeodeticMeasurement as a string."
+      end
+    end
+
+    class 128898 "GlobalLocation"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Jordan Mens <jordan.mens at gmail.com>
+@author Thibault Pensec <thibault.pensec at gmail.com>"
+      classrelation 129538 // <generalisation>
+	relation 129538 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129538 // <generalisation>
+	  b parent class_ref 128514 // Location
+      end
+
+      operation 131074 "getAltitude"
+	public explicit_return_type "double"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129026 "LocationFactory"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Thibault Pensec <thibault.pensec at gmail.com>
+@author Jordan Mens <jordan.mens at gmail.com>"
+      operation 131202 "newLocation"
+	public return_type class_ref 128514 // Location
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131330 "newLocation"
+	public return_type class_ref 128514 // Location
+	nparams 2
+	  param in name "lat" explicit_type "double"
+	  param in name "lon" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131458 "newAbsoluteLocation"
+	public return_type class_ref 128898 // GlobalLocation
+	nparams 3
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	  param in name "altitude" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129154 "Orientation"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 129666 // factory (<unidirectional association>)
+	relation 129666 --->
+	  a role_name "factory" init_value " new OrientationFactoryImpl()" class_relation const_relation public
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129666 // factory (<unidirectional association>)
+	  b parent class_ref 129282 // OrientationFactory
+      end
+
+      attribute 129922 "MAX_ORIENTATION"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " 360d"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130050 "MIN_ORIENTATION"
+	class_attribute const_attribute public explicit_type "double"
+	init_value " 0d"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 131586 "getOrientationDegree"
+	public explicit_return_type "double"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129282 "OrientationFactory"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Thibault Pensec <thibault.pensec at gmail.com>
+@author Jordan Mens <jordan.mens at gmail.com>"
+      operation 131714 "newOrientation"
+	public return_type class_ref 129154 // Orientation
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 131842 "newOrientation"
+	public return_type class_ref 129154 // Orientation
+	nparams 1
+	  param in name "orientation" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129410 "ReadWriteGlobalLocation"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Jordan Mens <jordan.mens at gmail.com>
+@author Thibault Pensec <thibault.pensec at gmail.com>"
+      classrelation 129794 // <generalisation>
+	relation 129794 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129794 // <generalisation>
+	  b parent class_ref 128898 // GlobalLocation
+      end
+
+      operation 131970 "setAltitude"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "altitude" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129538 "ReadWriteLocation"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Thibault Pensec <thibault.pensec at gmail.com>
+@author Jordan Mens <jordan.mens at gmail.com>"
+      classrelation 129922 // <generalisation>
+	relation 129922 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129922 // <generalisation>
+	  b parent class_ref 128514 // Location
+      end
+
+      operation 132098 "setLatitudeDegree"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "latitude" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132226 "setLongitudeDegree"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "longitude" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 132354 "setLatitudeLongitudeDegree"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 129666 "ReadWriteOrientation"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Thibault Pensec <thibault.pensec at gmail.com>
+@author Jordan Mens <jordan.mens at gmail.com>"
+      classrelation 130050 // <generalisation>
+	relation 130050 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 130050 // <generalisation>
+	  b parent class_ref 129154 // Orientation
+      end
+
+      operation 132482 "setOrientationDegree"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "orientation" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128002 "geodesy"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 128002 "Ellipsoid"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.Serializable;
+${definition}"
+      associated_classes
+	class_ref 128130 // Ellipsoid
+      end
+      comment " Geodesy by Mike Gavaghan
+
+http://www.gavaghan.org/blog/free-source-code/geodesy-library-vincentys-formula/
+
+This code may be freely used and modified on any personal or professional
+project.  It comes with no warranty."
+    end
+
+    artifact 128130 "GeodeticCalculator"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 128386 // GeodeticCalculator
+      end
+      comment " Geodesy by Mike Gavaghan
+
+http://www.gavaghan.org/blog/free-source-code/geodesy-library-vincentys-formula/
+
+This code may be freely used and modified on any personal or professional
+project.  It comes with no warranty."
+    end
+
+    artifact 128258 "GeodeticCurve"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import java.io.Serializable;
+${definition}"
+      associated_classes
+	class_ref 128642 // GeodeticCurve
+      end
+      comment " Geodesy by Mike Gavaghan
+
+http://www.gavaghan.org/blog/free-source-code/geodesy-library-vincentys-formula/
+
+This code may be freely used and modified on any personal or professional
+project.  It comes with no warranty."
+    end
+
+    artifact 128386 "GeodeticMeasurement"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.geodesy.GeodeticCurve;
+${definition}"
+      associated_classes
+	class_ref 128770 // GeodeticMeasurement
+      end
+      comment " Geodesy by Mike Gavaghan
+
+http://www.gavaghan.org/blog/free-source-code/geodesy-library-vincentys-formula/
+
+This code may be freely used and modified on any personal or professional
+project.  It comes with no warranty."
+    end
+
+    artifact 128514 "Location"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.geodesy.impl.LocationFactoryImpl;
+${definition}"
+      associated_classes
+	class_ref 128514 // Location
+      end
+    end
+
+    artifact 128642 "GlobalLocation"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 128898 // GlobalLocation
+      end
+    end
+
+    artifact 128770 "LocationFactory"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 129026 // LocationFactory
+      end
+    end
+
+    artifact 128898 "Orientation"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.geodesy.impl.OrientationFactoryImpl;
+${definition}"
+      associated_classes
+	class_ref 129154 // Orientation
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 129026 "OrientationFactory"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 129282 // OrientationFactory
+      end
+    end
+
+    artifact 129154 "ReadWriteGlobalLocation"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 129410 // ReadWriteGlobalLocation
+      end
+    end
+
+    artifact 129282 "ReadWriteLocation"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 129538 // ReadWriteLocation
+      end
+    end
+
+    artifact 129410 "ReadWriteOrientation"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+${definition}"
+      associated_classes
+	class_ref 129666 // ReadWriteOrientation
+      end
+    end
+  end
+
+  package_ref 128642 // impl
+end

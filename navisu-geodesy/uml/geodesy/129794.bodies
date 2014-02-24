@@ -1,0 +1,9 @@
+class GlobalLocationImpl
+!!!133122.java!!!	GlobalLocationImpl()
+        super();
+        this.altitude = 0;
+!!!133250.java!!!	GlobalLocationImpl(in latitude : double, in longitude : double, in altitude : double)
+        super(latitude, longitude);
+        this.altitude = altitude;
+!!!133378.java!!!	getAltitude() : double
+        return this.altitude;

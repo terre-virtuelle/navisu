@@ -1,0 +1,21 @@
+class GeodeticMeasurement
+!!!130178.java!!!	GeodeticMeasurement(in ellipsoidalDistance : double, in azimuth : double, in reverseAzimuth : double, in elevationChange : double)
+      super(ellipsoidalDistance, azimuth, reverseAzimuth);
+      mElevationChange = elevationChange;
+      mP2P = Math.sqrt(ellipsoidalDistance * ellipsoidalDistance + mElevationChange * mElevationChange);
+!!!130306.java!!!	GeodeticMeasurement(inout averageCurve : GeodeticCurve, in elevationChange : double)
+      this(averageCurve.getEllipsoidalDistance(), averageCurve.getAzimuth(), averageCurve.getReverseAzimuth(), elevationChange);
+!!!130434.java!!!	getElevationChange() : double
+      return mElevationChange;
+!!!130562.java!!!	getPointToPointDistance() : double
+      return mP2P;
+!!!130690.java!!!	toString() : String
+      StringBuffer buffer = new StringBuffer();
+
+      buffer.append(super.toString());
+      buffer.append("elev12=");
+      buffer.append(mElevationChange);
+      buffer.append(";p2p=");
+      buffer.append(mP2P);
+
+      return buffer.toString();

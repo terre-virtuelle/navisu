@@ -8,7 +8,9 @@ import bzh.terrevirtuelle.navisu.geodesy.ReadWriteLocation;
  * @author Thibault Pensec <thibault.pensec at gmail.com>
  * @author Jordan Mens <jordan.mens at gmail.com>
  */
-public class ReadWriteLocationImpl extends LocationImpl implements ReadWriteLocation {
+public class ReadWriteLocationImpl
+        extends LocationImpl
+        implements ReadWriteLocation {
 
     public ReadWriteLocationImpl() {
         this.latitude = 0d;
@@ -22,7 +24,7 @@ public class ReadWriteLocationImpl extends LocationImpl implements ReadWriteLoca
     @Override
     public void setLatitudeDegree(double latitude) {
 
-        if(latitude < Location.MIN_LAT || latitude > Location.MAX_LAT) {
+        if (latitude < Location.MIN_LAT || latitude > Location.MAX_LAT) {
             throw new IllegalArgumentException("Latitude value must be between " + Location.MIN_LAT + " to " + Location.MAX_LAT + "degrees");
         }
 
@@ -32,7 +34,7 @@ public class ReadWriteLocationImpl extends LocationImpl implements ReadWriteLoca
     @Override
     public void setLongitudeDegree(double longitude) {
 
-        if(longitude < Location.MIN_LON || longitude > Location.MAX_LON) {
+        if (longitude < Location.MIN_LON || longitude > Location.MAX_LON) {
             throw new IllegalArgumentException("Longitude value must be between " + Location.MIN_LON + " to " + Location.MAX_LON + "degrees");
         }
 

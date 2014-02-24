@@ -1,0 +1,5 @@
+class OrientationFactoryImpl
+!!!133890.java!!!	newOrientation() : Orientation
+        return new ReadWriteOrientationImpl();
+!!!134018.java!!!	newOrientation(in orientation : double) : Orientation
+        return new ReadWriteOrientationImpl(orientation);

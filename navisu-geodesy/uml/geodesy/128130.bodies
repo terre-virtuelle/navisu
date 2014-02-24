@@ -1,0 +1,24 @@
+class Ellipsoid
+!!!128130.java!!!	Ellipsoid(in semiMajor : double, in semiMinor : double, in flattening : double, in inverseFlattening : double)
+     mSemiMajorAxis = semiMajor;
+     mSemiMinorAxis = semiMinor;
+     mFlattening = flattening;
+     mInverseFlattening = inverseFlattening;
+!!!128258.java!!!	fromAAndInverseF(in semiMajor : double, in inverseFlattening : double) : Ellipsoid
+     double f = 1.0 / inverseFlattening;
+     double b = (1.0 - f) * semiMajor;
+
+     return new Ellipsoid(semiMajor, b, f, inverseFlattening);
+!!!128386.java!!!	fromAAndF(in semiMajor : double, in flattening : double) : Ellipsoid
+     double inverseF = 1.0 / flattening;
+     double b = (1.0 - flattening) * semiMajor;
+
+     return new Ellipsoid(semiMajor, b, flattening, inverseF);
+!!!128514.java!!!	getSemiMajorAxis() : double
+     return mSemiMajorAxis;
+!!!128642.java!!!	getSemiMinorAxis() : double
+     return mSemiMinorAxis;
+!!!128770.java!!!	getFlattening() : double
+     return mFlattening;
+!!!128898.java!!!	getInverseFlattening() : double
+     return mInverseFlattening;

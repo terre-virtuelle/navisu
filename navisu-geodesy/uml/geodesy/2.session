@@ -1,0 +1,13 @@
+window_sizes 1280 962 409 865 682 82
+diagrams
+  active  classdiagram_ref 128002 // geodesy
+    865 804 100 4 0 0
+end
+show_stereotypes
+selected class_ref 130562 // ReadWriteLocationImpl
+open
+  classview_ref 128002 // geodesy
+  classview_ref 128258 // impl
+  classview_ref 128386 // geodesy
+end
+end

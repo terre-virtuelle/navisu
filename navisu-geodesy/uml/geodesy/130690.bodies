@@ -1,0 +1,12 @@
+class ReadWriteOrientationImpl
+!!!135554.java!!!	ReadWriteOrientationImpl()
+        this.orientation = 0d;
+!!!135682.java!!!	ReadWriteOrientationImpl(in orientation : double)
+        super(orientation);
+!!!135810.java!!!	setOrientationDegree(in orientation : double) : void
+        if (orientation < Orientation.MIN_ORIENTATION || orientation > Orientation.MAX_ORIENTATION) {
+            throw new IllegalArgumentException("Orientation value must be between "
+                    + Orientation.MIN_ORIENTATION + " to "
+                    + Orientation.MAX_ORIENTATION + "degrees");
+        }
+        this.orientation = orientation;

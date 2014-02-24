@@ -1,0 +1,7 @@
+class LocationFactoryImpl
+!!!133506.java!!!	newLocation() : Location
+        return new ReadWriteLocationImpl();
+!!!133634.java!!!	newLocation(in latitude : double, in longitude : double) : Location
+        return new ReadWriteLocationImpl(latitude, longitude);
+!!!133762.java!!!	newAbsoluteLocation(in latitude : double, in longitude : double, in altitude : double) : GlobalLocation
+        return new ReadWriteGlobalLocationImpl(latitude, longitude, altitude);

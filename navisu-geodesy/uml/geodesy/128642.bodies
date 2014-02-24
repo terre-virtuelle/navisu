@@ -1,0 +1,23 @@
+class GeodeticCurve
+!!!129538.java!!!	GeodeticCurve(in ellipsoidalDistance : double, in azimuth : double, in reverseAzimuth : double)
+      mEllipsoidalDistance = ellipsoidalDistance;
+      mAzimuth = azimuth;
+      mReverseAzimuth = reverseAzimuth;
+!!!129666.java!!!	getEllipsoidalDistance() : double
+      return mEllipsoidalDistance;
+!!!129794.java!!!	getAzimuth() : double
+      return mAzimuth;
+!!!129922.java!!!	getReverseAzimuth() : double
+      return mReverseAzimuth;
+!!!130050.java!!!	toString() : String
+      StringBuffer buffer = new StringBuffer();
+
+      buffer.append("s=");
+      buffer.append(mEllipsoidalDistance);
+      buffer.append(";a12=");
+      buffer.append(mAzimuth);
+      buffer.append(";a21=");
+      buffer.append(mReverseAzimuth);
+      buffer.append(";");
+
+      return buffer.toString();
