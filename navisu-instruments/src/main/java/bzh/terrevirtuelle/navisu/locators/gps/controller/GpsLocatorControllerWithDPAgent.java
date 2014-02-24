@@ -12,6 +12,7 @@ package bzh.terrevirtuelle.navisu.locators.gps.controller;
  import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
  import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
  import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
+import bzh.terrevirtuelle.navisu.locators.model.MShip;
  import bzh.terrevirtuelle.navisu.nmea.model.GGA;
  import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
  import bzh.terrevirtuelle.navisu.nmea.model.VTG;
