@@ -7,6 +7,7 @@ import bzh.terrevirtuelle.navisu.core.util.ICloneable;
  *
  * @author Thibault Pensec <thibault.pensec at gmail.com>
  * @author Jordan Mens <jordan.mens at gmail.com>
+ * @param <T>
  */
 public interface Model<T extends ICloneable> {
 
