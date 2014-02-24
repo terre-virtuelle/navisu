@@ -23,7 +23,8 @@ public class GShip implements GObject {
     protected Polygon polygon;
     protected SurfaceCircle circle;
     protected Renderable[] renderables;
-protected int type;
+    protected int type;
+
     public GShip(int id, Polygon polygon) {
         this.id = id;
         this.polygon = polygon;

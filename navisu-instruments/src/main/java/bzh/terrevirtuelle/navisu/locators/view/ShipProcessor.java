@@ -38,7 +38,7 @@ public class ShipProcessor
         double lon = tShip.getLongitude();
 
         Position position = Position.fromDegrees(lat, lon);
-        List<Position> positions = this.makePositionList(this.initShape(lat, lon));
+        List<Position> positions = this.makePositionList(this.initTriangleShape(lat, lon));
 
         GShip gShip = new GShip(id, positions, position, tShip.getCog());
         gShip.setPathAttrs(this.makeAttributes());
@@ -52,7 +52,7 @@ public class ShipProcessor
         GShip gShip = (GShip) output;
 
         gShip.setLocation(input.getLocation());
-
+//gShip.setCog(input.get);
         return output;
     }
 
@@ -71,6 +71,17 @@ public class ShipProcessor
         pathAttrs.setDrawInterior(true);
         pathAttrs.setInteriorOpacity(1.0);
         return pathAttrs;
+    }
+
+    private double[] initTriangleShape(double latitude, double longitude) {
+        double[] shipShape = new double[6];
+        shipShape[0] = longitude;
+        shipShape[1] = latitude + 0.0015;
+        shipShape[2] = longitude + .001;
+        shipShape[3] = latitude - .0015;
+        shipShape[4] = longitude - .001;
+        shipShape[5] = latitude - .0015;
+        return shipShape;
     }
 
     private double[] initShape(double latitude, double longitude) {
