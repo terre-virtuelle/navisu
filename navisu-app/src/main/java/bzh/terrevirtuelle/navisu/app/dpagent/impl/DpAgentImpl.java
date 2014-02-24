@@ -5,7 +5,7 @@ import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentEvents;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.core.model.generic.Model;
 import bzh.terrevirtuelle.navisu.core.model.generic.ModelEvents;
-import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
+import bzh.terrevirtuelle.navisu.core.model.iobject.TObject;
 import org.capcaval.c3.component.ComponentStateAdaptor;
 import org.capcaval.c3.component.annotation.ProducedEvent;
 

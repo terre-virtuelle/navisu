@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.dpagent;
 
-import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
+import bzh.terrevirtuelle.navisu.core.model.iobject.TObject;
 import org.capcaval.c3.component.ComponentEvent;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 
