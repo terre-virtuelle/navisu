@@ -7,7 +7,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.model.generic.Model;
-import bzh.terrevirtuelle.navisu.core.model.iobject.TObject;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;

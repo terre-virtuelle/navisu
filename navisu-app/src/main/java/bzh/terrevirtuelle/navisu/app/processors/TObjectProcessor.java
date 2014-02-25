@@ -3,7 +3,7 @@ package bzh.terrevirtuelle.navisu.app.processors;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.impl.GObjectImpl;
-import bzh.terrevirtuelle.navisu.core.model.iobject.TObject;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
