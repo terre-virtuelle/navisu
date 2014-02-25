@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.core.model.iobject;
+package bzh.terrevirtuelle.navisu.core.model.tobject;
 
 import bzh.terrevirtuelle.navisu.core.util.ICloneable;
 import bzh.terrevirtuelle.navisu.geodesy.Location;

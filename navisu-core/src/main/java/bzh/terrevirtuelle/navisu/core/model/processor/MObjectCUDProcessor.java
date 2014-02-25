@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.core.model.processor;
 
-import bzh.terrevirtuelle.navisu.core.model.iobject.MObject;
+import bzh.terrevirtuelle.navisu.core.model.tobject.MObject;
 
 /**
  * NaVisu
