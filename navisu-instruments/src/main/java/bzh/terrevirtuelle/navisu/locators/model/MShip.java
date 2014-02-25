@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.locators.model;
 
-import bzh.terrevirtuelle.navisu.core.model.iobject.OObject;
-import bzh.terrevirtuelle.navisu.core.model.iobject.TObject;
+import bzh.terrevirtuelle.navisu.core.model.tobject.OObject;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;
 import bzh.terrevirtuelle.navisu.ship.Ship;
