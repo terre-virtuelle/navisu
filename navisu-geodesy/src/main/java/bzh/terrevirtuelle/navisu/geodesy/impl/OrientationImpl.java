@@ -21,11 +21,6 @@ public class OrientationImpl
     }
 
     public OrientationImpl(double orientation) {
-        if (orientation < Orientation.MIN_ORIENTATION || orientation > Orientation.MAX_ORIENTATION) {
-            throw new IllegalArgumentException("Orientation value must be between "
-                    + Orientation.MIN_ORIENTATION + " to "
-                    + Orientation.MAX_ORIENTATION + "degrees");
-        }
         this.orientation = orientation;
     }
 
