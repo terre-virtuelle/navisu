@@ -40,7 +40,6 @@ public class TObjectProcessor implements GObjectCUDProcessor {
 
         // Very simple...
         output.setLocation(input.getLocation());
-
         return output;
     }
 
