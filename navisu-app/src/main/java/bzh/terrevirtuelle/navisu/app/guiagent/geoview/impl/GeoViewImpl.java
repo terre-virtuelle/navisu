@@ -128,7 +128,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
             @Override
             public void notifyCreated(TObject tObject) {
-                LOGGER.info("notifyCreated(" + tObject.getID() + ")");
+            //    LOGGER.info("notifyCreated(" + tObject.getID() + ")");
 
                 GObjectCUDProcessor processor = findProcessor(tObject);
 
@@ -142,7 +142,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
             @Override
             public void notifyUpdated(TObject tObject) {
-                LOGGER.info("notifyUpdated(" + tObject.getID() + ")");
+             //   LOGGER.info("notifyUpdated(" + tObject.getID() + ")");
 
                 GObjectCUDProcessor processor = findProcessor(tObject);
 
@@ -156,7 +156,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
             @Override
             public void notifyDeleted(TObject tObject) {
-                LOGGER.info("notifyDeleted(" + tObject.getID() + ")");
+            //    LOGGER.info("notifyDeleted(" + tObject.getID() + ")");
 
                 GObjectCUDProcessor processor = findProcessor(tObject);
 
