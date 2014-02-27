@@ -34,6 +34,7 @@ public class OrientationImpl
      *
      * @return the value of orientation
      */
+    @Override
     public double getOrientationDegree() {
         return orientation;
     }
