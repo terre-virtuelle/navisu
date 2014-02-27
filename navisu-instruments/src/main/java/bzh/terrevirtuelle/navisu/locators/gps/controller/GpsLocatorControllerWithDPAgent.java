@@ -16,7 +16,6 @@ import bzh.terrevirtuelle.navisu.locators.model.OShip;
 import bzh.terrevirtuelle.navisu.nmea.model.GGA;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.nmea.model.VTG;
-import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import gov.nasa.worldwind.layers.Layer;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -39,14 +38,14 @@ public class GpsLocatorControllerWithDPAgent {
     ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
     ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
 
-    protected OShip tShip;
+    protected OShip ship;
 
     public GpsLocatorControllerWithDPAgent(final DpAgentServices dpAgentServices) {
 
         // creation du TObject (l'objet metier)
-        tShip = new OShip(IDGenerator.newIntID());
+        ship = new OShip(IDGenerator.newIntID());
         // insertion dans le DPAgent
-        dpAgentServices.create(tShip);
+        dpAgentServices.create(ship);
 
         ggaES.subscribe(new GGAEvent() {
 
@@ -54,12 +53,11 @@ public class GpsLocatorControllerWithDPAgent {
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
 
                 GGA gga = (GGA) data;
-                tShip.setLatitude(gga.getLatitude());
-                tShip.setLongitude(gga.getLongitude());
+                ship.setLatitude(gga.getLatitude());
+                ship.setLongitude(gga.getLongitude());
 
-                System.out.println("update location[" + gga.getLatitude() + "," + gga.getLongitude() + "]");
                 // mise à jour via le DPAgent
-                dpAgentServices.update(tShip);
+                dpAgentServices.update(ship);
             }
         });
         vtgES.subscribe(new VTGEvent() {
@@ -67,10 +65,9 @@ public class GpsLocatorControllerWithDPAgent {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 VTG vtg = (VTG) data;
-                tShip.setCog(vtg.getCog());
-                System.out.println("update cog[" + vtg.getCog() + "]");
+                ship.setCog(vtg.getCog());
                 // mise à jour via la DPAgent
-                dpAgentServices.update(tShip);
+                dpAgentServices.update(ship);
             }
         });
     }

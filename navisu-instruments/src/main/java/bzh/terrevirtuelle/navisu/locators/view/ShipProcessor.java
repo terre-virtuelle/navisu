@@ -53,7 +53,6 @@ public class ShipProcessor
         GShip gShip = (GShip) output;
 
         gShip.setLocation(input.getLocation());
-        System.out.println("input  " +((TOrientedObject)input).getOrientation().getOrientationDegree());
         gShip.setCog(((TOrientedObject)input).getOrientation().getOrientationDegree());
         return output;
     }

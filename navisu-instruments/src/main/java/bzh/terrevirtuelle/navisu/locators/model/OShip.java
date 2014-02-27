@@ -38,9 +38,8 @@ public class OShip
     }
     
     @Override
-    public Orientation getOrientation() {
-      //  System.out.println("this.getHeading() " + this.getCog());
-        return Orientation.factory.newOrientation(this.getCog()/10);
+    public Orientation getOrientation() { 
+        return Orientation.factory.newOrientation(this.getCog());
     }
     
     @Override

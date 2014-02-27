@@ -61,7 +61,7 @@ public class GShip implements GObject {
     }
 
     public void setCog(double cog) {
-        this.polygon.setRotation(cog - 90);
+        this.polygon.setRotation(-cog);
     }
 
     public void setPathAttrs(ShapeAttributes pathAttrs) {
