@@ -18,7 +18,7 @@ public interface TOrientedObject extends TObject {
 
     void setOrientation(Orientation orientation);
 
-    public static TOrientedObject newBasicOObject(final int id,
+    public static TOrientedObject newBasicOrientedObject(final int id,
             final double lat, final double lon,
             final double orientation) {
         return new TOrientedObject() {
@@ -53,7 +53,7 @@ public interface TOrientedObject extends TObject {
 
             @Override
             public Object getClone() {
-                return TOrientedObject.newBasicOObject(id,
+                return TOrientedObject.newBasicOrientedObject(id,
                         loc.getLatitudeDegree(), loc.getLongitudeDegree(),
                         angle.getOrientationDegree());
             }
