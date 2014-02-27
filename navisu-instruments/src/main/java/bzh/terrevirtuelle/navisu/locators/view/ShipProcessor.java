@@ -2,9 +2,10 @@ package bzh.terrevirtuelle.navisu.locators.view;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.model.OShip;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -32,7 +33,7 @@ public class ShipProcessor
     @Override
     public GObject processCreated(int id, TObject input) {
 
-        TShip tShip = (TShip) input;
+        OShip tShip = (OShip) input;
 
         double lat = tShip.getLatitude();
         double lon = tShip.getLongitude();
@@ -52,7 +53,8 @@ public class ShipProcessor
         GShip gShip = (GShip) output;
 
         gShip.setLocation(input.getLocation());
-//gShip.setCog(input.get);
+        System.out.println("input  " +((TOrientedObject)input).getOrientation().getOrientationDegree());
+        gShip.setCog(((TOrientedObject)input).getOrientation().getOrientationDegree());
         return output;
     }
 
@@ -114,6 +116,6 @@ public class ShipProcessor
 
     @Override
     public Class<? extends TObject> getType() {
-        return TShip.class;
+        return OShip.class;
     }
 }

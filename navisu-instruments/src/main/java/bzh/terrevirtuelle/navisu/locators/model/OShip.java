@@ -1,7 +1,6 @@
 package bzh.terrevirtuelle.navisu.locators.model;
 
-import bzh.terrevirtuelle.navisu.core.model.tobject.OObject;
-import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;
 import bzh.terrevirtuelle.navisu.ship.Ship;
@@ -12,13 +11,13 @@ import bzh.terrevirtuelle.navisu.ship.Ship;
  * @author tibus
  * @date 19/02/2014 19:19
  */
-public class MShip
+public class OShip
         extends Ship
-        implements TObject, OObject {
+        implements TOrientedObject {
     
     protected final int id;
     
-    public MShip(int id) {
+    public OShip(int id) {
         this.id = id;
     }
     
@@ -40,18 +39,19 @@ public class MShip
     
     @Override
     public Orientation getOrientation() {
-        return Orientation.factory.newOrientation(this.getHeading());
+      //  System.out.println("this.getHeading() " + this.getCog());
+        return Orientation.factory.newOrientation(this.getCog()/10);
     }
     
     @Override
     public void setOrientation(Orientation orientation) {
-        this.setHeading((float) orientation.getOrientationDegree());
+        this.setCog((float) orientation.getOrientationDegree());
     }
     
     @Override
     public Object getClone() {
         
-        MShip clone = new MShip(this.id);
+        OShip clone = new OShip(this.id);
         clone.setLocation(this.getLocation());
         clone.setOrientation(this.getOrientation());
         return clone;
