@@ -4,7 +4,6 @@
  */
 package bzh.terrevirtuelle.navisu.core.model.tobject;
 
-import bzh.terrevirtuelle.navisu.core.util.ICloneable;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;
 
@@ -13,16 +12,16 @@ import bzh.terrevirtuelle.navisu.geodesy.Orientation;
  * @author Thibault Pensec <thibault.pensec at gmail.com>
  * @author Jordan Mens <jordan.mens at gmail.com>
  */
-public interface OObject extends TObject {
+public interface TOrientedObject extends TObject {
 
     Orientation getOrientation();
 
     void setOrientation(Orientation orientation);
 
-    public static OObject newBasicOObject(final int id,
+    public static TOrientedObject newBasicOObject(final int id,
             final double lat, final double lon,
             final double orientation) {
-        return new OObject() {
+        return new TOrientedObject() {
             
             Location loc = Location.factory.newLocation(lat, lon);
             Orientation angle = Orientation.factory.newOrientation(orientation);
@@ -54,7 +53,7 @@ public interface OObject extends TObject {
 
             @Override
             public Object getClone() {
-                return OObject.newBasicOObject(id,
+                return TOrientedObject.newBasicOObject(id,
                         loc.getLatitudeDegree(), loc.getLongitudeDegree(),
                         angle.getOrientationDegree());
             }
