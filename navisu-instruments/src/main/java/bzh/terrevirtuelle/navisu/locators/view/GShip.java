@@ -35,7 +35,7 @@ public class GShip implements GObject {
         this.polygon = new Polygon(positions);
         this.polygon.setEnableBatchPicking(true);
         this.polygon.moveTo(location);
-        this.setCog(cog);
+        this.polygon.setRotation(-cog);
     }
 
     public GShip(int id, SurfaceCircle circle) {
