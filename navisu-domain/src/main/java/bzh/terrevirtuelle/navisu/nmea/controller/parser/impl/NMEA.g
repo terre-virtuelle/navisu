@@ -1511,7 +1511,19 @@ GPSD_WATCH
     	{
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
-    	;    	  	
+    	;    	
+PGN
+    	:	
+    	'{"timestamp":"' timestamp=(NUMBER | '-' | ':'  )* '"' SEP 
+    	'"prio":"' prio=NUMBER* '"' SEP
+    	'"src":"' src=NUMBER* '"' SEP
+    	'"dst":"' dst=NUMBER* '"' SEP
+    	'"pgn":"' png=NUMBER* '"' SEP
+    	 ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
+    	{
+	System.out.println("PGN sentence : " + getText());
+	}
+    	;   	  	
 /* $AITXT,01,01,91,FREQ,2087,2088*57 */
 TXT	: ('$') device=DEVICE 'TXT' SEP
 	('\u0021'..'\u007F' | SEP | ' ')*  

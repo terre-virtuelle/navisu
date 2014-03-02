@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Serge
  */
-@XmlRootElement(name = "PGN126992")
+@XmlRootElement(name = "pgn126992")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PGN126992
         extends N2K {
@@ -24,7 +24,7 @@ public class PGN126992
     public PGN126992() {
     }
 
-    public PGN126992(Calendar date, String sid, String description) {
+    public PGN126992(Calendar date, int sid, String description) {
         super(sid, description);
         this.date = date;
     }

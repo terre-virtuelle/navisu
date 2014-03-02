@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Serge
  */
-@XmlRootElement(name = "PGN127245")
+@XmlRootElement(name = "pgn127245")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PGN127245
         extends N2K {

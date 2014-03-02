@@ -5,15 +5,38 @@
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
+import java.util.Calendar;
+import javax.xml.bind.annotation.XmlTransient;
+
 /**
  *
  * @author Serge
  */
+@XmlTransient
 public class N2K
         extends NMEA {
 
-    private String sid;
-    private String description;
+    private int sid;
+    private String description = "";
+    private Calendar timeStamp;
+
+    /**
+     * Get the value of timeStamp
+     *
+     * @return the value of timeStamp
+     */
+    public Calendar getTimeStamp() {
+        return timeStamp;
+    }
+
+    /**
+     * Set the value of timeStamp
+     *
+     * @param timeStamp new value of timeStamp
+     */
+    public void setTimeStamp(Calendar timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
     public N2K() {
     }
@@ -22,7 +45,7 @@ public class N2K
         this.description = description;
     }
 
-    public N2K(String sid, String description) {
+    public N2K(int sid, String description) {
         this.sid = sid;
         this.description = description;
     }
@@ -50,7 +73,7 @@ public class N2K
      *
      * @return the value of sid
      */
-    public String getSid() {
+    public int getSid() {
         return sid;
     }
 
@@ -59,7 +82,7 @@ public class N2K
      *
      * @param sid new value of sid
      */
-    public void setSid(String sid) {
+    public void setSid(int sid) {
         this.sid = sid;
     }
 

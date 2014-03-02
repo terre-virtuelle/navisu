@@ -1,4 +1,4 @@
-// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-02-11 17:08:32
+// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\navisu\\navisu-domain\\src\\main\\java\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-03-02 14:17:27
 
 package bzh.terrevirtuelle. navisu.nmea.controller.parser.impl;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 @SuppressWarnings({"all", "warnings", "unchecked"})
 public class NMEAParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "AAM", "ALR", "APB", "BEC", "BOD", "BWC", "BWR", "BWW", "CHECKSUM", "DBK", "DBS", "DBT", "DEV", "DEVICE", "DPT", "EXPONENT", "GGA", "GLL", "GPSD_AIS", "GPSD_DEVICE", "GPSD_DEVICES", "GPSD_VERSION", "GPSD_WATCH", "GSA", "GSV", "HDG", "HDM", "HDT", "LETTERS", "MSK", "MTA", "MTW", "MWD", "MWV", "NAME", "NUMBER", "PRO", "RMB", "RMC", "RSD", "RTE", "SEP", "SIGN", "SIGNED", "TIME_STAMP", "TXT", "VBW", "VDM", "VHW", "VLW", "VPW", "VTG", "VWR", "VWT", "WS", "XTE", "ZDA"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "AAM", "ALR", "APB", "BEC", "BOD", "BWC", "BWR", "BWW", "CHECKSUM", "DBK", "DBS", "DBT", "DEV", "DEVICE", "DPT", "EXPONENT", "GGA", "GLL", "GPSD_AIS", "GPSD_DEVICE", "GPSD_DEVICES", "GPSD_VERSION", "GPSD_WATCH", "GSA", "GSV", "HDG", "HDM", "HDT", "LETTERS", "MSK", "MTA", "MTW", "MWD", "MWV", "NAME", "NUMBER", "PGN", "PRO", "RMB", "RMC", "RSD", "RTE", "SEP", "SIGN", "SIGNED", "TIME_STAMP", "TXT", "VBW", "VDM", "VHW", "VLW", "VPW", "VTG", "VWR", "VWT", "WS", "XTE", "ZDA"
     };
 
     public static final int EOF=-1;
@@ -53,27 +53,28 @@ public class NMEAParser extends Parser {
     public static final int MWV=37;
     public static final int NAME=38;
     public static final int NUMBER=39;
-    public static final int PRO=40;
-    public static final int RMB=41;
-    public static final int RMC=42;
-    public static final int RSD=43;
-    public static final int RTE=44;
-    public static final int SEP=45;
-    public static final int SIGN=46;
-    public static final int SIGNED=47;
-    public static final int TIME_STAMP=48;
-    public static final int TXT=49;
-    public static final int VBW=50;
-    public static final int VDM=51;
-    public static final int VHW=52;
-    public static final int VLW=53;
-    public static final int VPW=54;
-    public static final int VTG=55;
-    public static final int VWR=56;
-    public static final int VWT=57;
-    public static final int WS=58;
-    public static final int XTE=59;
-    public static final int ZDA=60;
+    public static final int PGN=40;
+    public static final int PRO=41;
+    public static final int RMB=42;
+    public static final int RMC=43;
+    public static final int RSD=44;
+    public static final int RTE=45;
+    public static final int SEP=46;
+    public static final int SIGN=47;
+    public static final int SIGNED=48;
+    public static final int TIME_STAMP=49;
+    public static final int TXT=50;
+    public static final int VBW=51;
+    public static final int VDM=52;
+    public static final int VHW=53;
+    public static final int VLW=54;
+    public static final int VPW=55;
+    public static final int VTG=56;
+    public static final int VWR=57;
+    public static final int VWT=58;
+    public static final int WS=59;
+    public static final int XTE=60;
+    public static final int ZDA=61;
 
     // delegates
     public Parser[] getDelegates() {

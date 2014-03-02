@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Serge
  */
-@XmlRootElement(name = "PGN127250")
+@XmlRootElement(name = "pgn127250")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PGN127250
         extends N2K {
@@ -26,7 +26,7 @@ public class PGN127250
     public PGN127250() {
     }
 
-    public PGN127250(float headingSensorReading, float deviation, float variation, int headingSensorReference, String sid, String description) {
+    public PGN127250(float headingSensorReading, float deviation, float variation, int headingSensorReference, int sid, String description) {
         super(sid, description);
         this.headingSensorReading = headingSensorReading;
         this.deviation = deviation;

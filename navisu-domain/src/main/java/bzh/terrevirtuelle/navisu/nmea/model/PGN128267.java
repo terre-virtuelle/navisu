@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Serge
  */
-@XmlRootElement(name = "PGN128267")
+@XmlRootElement(name = "pgn128267")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class PGN128267
         extends N2K {
@@ -24,7 +24,7 @@ public class PGN128267
     public PGN128267() {
     }
 
-    public PGN128267(float waterDepth, float offset, String sid, String description) {
+    public PGN128267(float waterDepth, float offset, int sid, String description) {
         super(sid, description);
         this.waterDepth = waterDepth;
         this.offset = offset;
