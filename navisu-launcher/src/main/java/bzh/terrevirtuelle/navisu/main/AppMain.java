@@ -30,9 +30,9 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @author Jordan Mens <jordan.mens at gmail.com>
  */
 public class AppMain extends Application {
-    
+
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
-    
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -41,7 +41,7 @@ public class AppMain extends Application {
 
         // initialize logging
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
-        
+
         final ComponentManager componentManager = ComponentManager.componentManager;
 
         // deploy components
@@ -57,21 +57,20 @@ public class AppMain extends Application {
                         Widget3DImpl.class
                 )
         );
-        
+
         GuiAgentServices guiServices = componentManager.getComponentService(GuiAgentServices.class);
         guiServices.showGui(stage, 800, 500);
-        
+
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
-       
+
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
-        
+
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(chartsServices.getDriver());
-       // chartsServices.openChart("data/101.KAP");
+        // chartsServices.openChart("data/101.KAP");
         driverServices.registerNewDriver(gribServices.getDriver());
-        
-        
+
          //------------------------------->
         // TESTS AGENT
         //
@@ -111,7 +110,7 @@ public class AppMain extends Application {
          dpAgentServices.delete(tObject);
          });
          */
-         //
+        //
         // END TESTS AGENT
         //------------------------------->
         //------------------------------->
@@ -128,9 +127,10 @@ public class AppMain extends Application {
         // Test connexion Gpsd 
         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // Test connexion fichier 
-         dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
+        dataServerServices.openFile("data/n2k/out1.json");//N2K
 
         // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
@@ -148,7 +148,7 @@ public class AppMain extends Application {
         // END TESTS SERVER
         //------------------------------->
     }
-    
+
     public static void main(String[] args) throws Exception {
         Application.launch();
     }
