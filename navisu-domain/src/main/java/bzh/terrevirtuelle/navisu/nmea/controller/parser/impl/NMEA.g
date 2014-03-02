@@ -1514,14 +1514,39 @@ GPSD_WATCH
     	;    	
 PGN
     	:	
-    	'{"timestamp":"' timestamp=(NUMBER | '-' | ':'  )* '"' SEP 
+    	'{"timestamp":' timestamp=TIME_STAMP  SEP 
     	'"prio":"' prio=NUMBER* '"' SEP
     	'"src":"' src=NUMBER* '"' SEP
     	'"dst":"' dst=NUMBER* '"' SEP
-    	'"pgn":"' png=NUMBER* '"' SEP
-    	 ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
+    	(
+    	(
+        '"pgn":"130306"' SEP  
+        '"description":"' description=LETTERS '"' SEP
+    	'"fields":{"SID":"' sid=NUMBER* '"' SEP 
+    	'"Wind Speed":"' windSpeed=NUMBER* '"' SEP
+    	'"Wind Angle":"' windDirection=NUMBER  '"' SEP
+    	'"Reference":"' reference=LETTERS '"}}'
+    	)
     	{
-	System.out.println("PGN sentence : " + getText());
+	System.out.println("PGN 130306 sentence : " + timestamp.getText() + " " +
+	prio.getText() + " " +
+	src.getText() + " " +
+	dst.getText() + " " +
+	description.getText() + " " +
+	sid.getText() + " " +
+	windSpeed.getText() + " " +
+	windDirection.getText() + " " +
+	reference.getText());
+	}
+    	|
+    	(
+    	'"pgn":"' NUMBER+ '"' SEP
+    	'"description":"' (LETTERS | ':')+ '"' SEP
+    	)
+    	 ('{' | '"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN | SEP)*
+        )
+    	{
+	//System.out.println("PGN sentence : " + getText());
 	}
     	;   	  	
 /* $AITXT,01,01,91,FREQ,2087,2088*57 */
