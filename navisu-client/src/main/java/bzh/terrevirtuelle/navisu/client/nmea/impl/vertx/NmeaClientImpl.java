@@ -125,7 +125,10 @@ public class NmeaClientImpl
     }
 
     private void response(Sentences sentences) {
+        /* With new classe in the domain, creat also new Event for diffusion */
+        /* Debug mode : cpmment notifyNMEAEvent, uncomment display */
         notifyNMEAEvent();
+        
         //  display();
     }
 

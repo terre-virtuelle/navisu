@@ -41,6 +41,8 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.MTWEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.MWDevent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.MWVEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.NMEAEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN128267Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN130306Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMBEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMTEvent;
@@ -93,6 +95,8 @@ import bzh.terrevirtuelle.navisu.nmea.model.MTW;
 import bzh.terrevirtuelle.navisu.nmea.model.MWD;
 import bzh.terrevirtuelle.navisu.nmea.model.MWV;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.nmea.model.PGN128267;
+import bzh.terrevirtuelle.navisu.nmea.model.PGN130306;
 import bzh.terrevirtuelle.navisu.nmea.model.RMB;
 import bzh.terrevirtuelle.navisu.nmea.model.RMC;
 import bzh.terrevirtuelle.navisu.nmea.model.RMT;
@@ -220,6 +224,11 @@ public class NmeaEventProducerImpl
     @ProducedEvent
     protected AIS135Event ais135Event;
 
+    @ProducedEvent
+    protected PGN130306Event pgn130306Event;
+    @ProducedEvent
+    protected PGN128267Event pgn128267Event;
+
     private Map<Class, NMEAEvent> nmeaEvents = null;
 
     public NmeaEventProducerImpl() {
@@ -285,5 +294,7 @@ public class NmeaEventProducerImpl
         nmeaEvents.put(AIS9.class, ais8Event);
         nmeaEvents.put(AIS135.class, ais135Event);
 
+        nmeaEvents.put(PGN130306.class, pgn130306Event);
+        nmeaEvents.put(PGN128267.class, pgn128267Event);
     }
 }
