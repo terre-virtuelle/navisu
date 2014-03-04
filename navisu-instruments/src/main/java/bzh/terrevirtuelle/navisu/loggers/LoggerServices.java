@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.locators;
+package bzh.terrevirtuelle.navisu.loggers;
 
 import org.capcaval.c3.component.ComponentService;
 
@@ -11,10 +11,8 @@ import org.capcaval.c3.component.ComponentService;
  *
  * @author Serge
  */
-public interface Widget3DServices
+public interface LoggerServices
         extends ComponentService {
 
-    public void createGpsLocator();
-    public void createAisLocator();
-
+    public void createPrinter();
 }
