@@ -136,7 +136,7 @@ public class DataServerImpl
         sentences = new Sentences();
         parser = new NmeaStringParser(sentences);
         sentenceQueues.get(currentReader).stream().forEach((s) -> {
-           // LOGGER.info(s);
+            //LOGGER.info(s);
             parser.parse(s);
         });
         StringWriter stringWriter = new StringWriter();
@@ -145,6 +145,7 @@ public class DataServerImpl
         } catch (JAXBException ex) {
             java.util.logging.Logger.getLogger(DataServer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // System.out.println("stringWriter.toString() : " + stringWriter.toString());
         return stringWriter.toString();
     }
 
