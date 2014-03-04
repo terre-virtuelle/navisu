@@ -33,16 +33,14 @@ public class Reader {
         try {
             inputFile = new FileInputStream(new File(fileName));
         } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
         }
-        JAXBContext jAXBContext = null;
-        Unmarshaller unmarshaller = null;
+        JAXBContext jAXBContext;
+        Unmarshaller unmarshaller;
         try {
             jAXBContext = JAXBContext.newInstance(claz);
             unmarshaller = jAXBContext.createUnmarshaller();
             object = unmarshaller.unmarshal(inputFile);
         } catch (JAXBException ex) {
-            ex.printStackTrace();
         }
         return object;
     }

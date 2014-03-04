@@ -36,17 +36,15 @@ public class Writer {
         try {
             outputFile = new FileOutputStream(new File(fileName));
         } catch (FileNotFoundException ex) {
-             ex.printStackTrace();
         }
-        JAXBContext jAXBContext = null;
-        Marshaller marshaller = null;
+        JAXBContext jAXBContext;
+        Marshaller marshaller;
 
         try {
             jAXBContext = JAXBContext.newInstance(claz);
             marshaller = jAXBContext.createMarshaller();
             marshaller.marshal(sentences, outputFile);
         } catch (JAXBException ex) {
-            ex.printStackTrace();
         }
     }
 }

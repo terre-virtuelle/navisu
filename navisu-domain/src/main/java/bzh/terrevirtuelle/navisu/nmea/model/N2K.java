@@ -16,16 +16,93 @@ import javax.xml.bind.annotation.XmlTransient;
 public class N2K
         extends NMEA {
 
-    private int sid;
-    private String description = "";
-    private Calendar timeStamp;
+    private String description;
+    private String timeStamp;
+    private int priority;
+    private int dst;
+    private int pgn;
+
+    public N2K() {
+    }
+
+    public N2K(String description, String timeStamp, int priority, int dst, int pgn) {
+        this.description = description;
+        this.timeStamp = timeStamp;
+        this.priority = priority;
+        this.dst = dst;
+        this.pgn = pgn;
+    }
+
+    public N2K(String description, String timeStamp, int priority, int dst, int pgn, String device, String sentence) {
+        super(device, sentence);
+        this.description = description;
+        this.timeStamp = timeStamp;
+        this.priority = priority;
+        this.dst = dst;
+        this.pgn = pgn;
+    }
+
+    /**
+     * Get the value of pgn
+     *
+     * @return the value of pgn
+     */
+    public int getPgn() {
+        return pgn;
+    }
+
+    /**
+     * Set the value of pgn
+     *
+     * @param pgn new value of pgn
+     */
+    public void setPgn(int pgn) {
+        this.pgn = pgn;
+    }
+
+    /**
+     * Get the value of dst
+     *
+     * @return the value of dst
+     */
+    public int getDst() {
+        return dst;
+    }
+
+    /**
+     * Set the value of dst
+     *
+     * @param dst new value of dst
+     */
+    public void setDst(int dst) {
+        this.dst = dst;
+    }
+
+
+    /**
+     * Get the value of priority
+     *
+     * @return the value of priority
+     */
+    public int getPriority() {
+        return priority;
+    }
+
+    /**
+     * Set the value of priority
+     *
+     * @param priority new value of priority
+     */
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
     /**
      * Get the value of timeStamp
      *
      * @return the value of timeStamp
      */
-    public Calendar getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
@@ -34,21 +111,10 @@ public class N2K
      *
      * @param timeStamp new value of timeStamp
      */
-    public void setTimeStamp(Calendar timeStamp) {
+    public void setTimeStamp(String timeStamp) {
         this.timeStamp = timeStamp;
     }
 
-    public N2K() {
-    }
-
-    public N2K(String description) {
-        this.description = description;
-    }
-
-    public N2K(int sid, String description) {
-        this.sid = sid;
-        this.description = description;
-    }
 
     /**
      * Get the value of description
@@ -68,28 +134,7 @@ public class N2K
         this.description = description;
     }
 
-    /**
-     * Get the value of sid
-     *
-     * @return the value of sid
-     */
-    public int getSid() {
-        return sid;
-    }
-
-    /**
-     * Set the value of sid
-     *
-     * @param sid new value of sid
-     */
-    public void setSid(int sid) {
-        this.sid = sid;
-    }
-
-    @Override
-    public String toString() {
-        return "N2K{" + "sid=" + sid + ", description=" + description + '}';
-    }
+    
 
     
 }

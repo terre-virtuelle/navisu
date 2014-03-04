@@ -46,6 +46,7 @@ import bzh.terrevirtuelle.navisu.nmea.model.VWR;
 import bzh.terrevirtuelle.navisu.nmea.model.VWT;
 import bzh.terrevirtuelle.navisu.nmea.model.XTE;
 import bzh.terrevirtuelle.navisu.nmea.model.ZDA;
+
 import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
@@ -54,6 +55,8 @@ import bzh.terrevirtuelle.navisu.nmea.model.AIS8;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS18;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS24;
 
+import bzh.terrevirtuelle.navisu.nmea.model.PGN130306;
+import bzh.terrevirtuelle.navisu.nmea.model.PGN128267;
 
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;  
 import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.impl.PrintHandler; 
@@ -123,6 +126,9 @@ import java.util.StringTokenizer;
    protected AIS18 ais18 = null;
    protected AIS24 ais24 = null;
    
+   protected PGN130306 pgn130306 = null;
+   protected PGN128267 pgn128267 = null;
+   
    protected int year;
    protected int month;
    protected int day;  
@@ -155,6 +161,8 @@ import java.util.StringTokenizer;
    protected GPSSatellite s3;
    protected GPSSatellite s4;
    protected String device;
+   
+   
    /* Default handlers */
    protected Handler handler = new PrintHandler();
    protected Handler aisHandler = new PrintHandler();
@@ -235,6 +243,25 @@ throws RecognitionException {
 RecognitionException e, BitSet follow) throws RecognitionException {
         System.out.println("recoverFromMismatchedSet");
         throw e;
+    }
+    
+    private Calendar timestampFactory(String timestamp){
+    String tmp = timestamp.replace("\"","");
+      String[] date = tmp.split("-");
+
+      int year = new Integer(date[0]);
+      int month =  new Integer(date[1]);
+      int day =  new Integer(date[2]);
+      
+      String[] time =  date[3].split(":");
+
+      int hour =  new Integer(time[0]);
+      int minute =  new Integer(time[1]);
+      
+      String[] sec = time[2].split(".");
+      int second =  new Integer(sec[0]);
+      
+      return new GregorianCalendar(year, month, day, hour, minute, second);
     }
 }		
 entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT|
@@ -1528,22 +1555,39 @@ PGN
     	'"Reference":"' reference=LETTERS '"}}'
     	)
     	{
-	System.out.println("PGN 130306 sentence : " + timestamp.getText() + " " +
-	prio.getText() + " " +
-	src.getText() + " " +
-	dst.getText() + " " +
-	description.getText() + " " +
-	sid.getText() + " " +
-	windSpeed.getText() + " " +
-	windDirection.getText() + " " +
-	reference.getText());
+	pgn130306 = new PGN130306(src.getText(), getText(), 
+	                          timestamp.getText(), new Integer(prio.getText()), new Integer(dst.getText()),
+	                          new Integer("130306"), 
+	                          new Double(windSpeed.getText()), new Double(windDirection.getText()), reference.getText(),
+	                          description.getText());
+	 //System.out.println(pgn130306);   
+	 handler.doIt(pgn130306);                      
 	}
     	|
     	(
-    	'"pgn":"' NUMBER+ '"' SEP
-    	'"description":"' (LETTERS | ':')+ '"' SEP
+    	 '"pgn":"128267"' SEP
+         '"description":"' description=LETTERS '"' SEP
+    	 '"fields":{"SID":"' sid=NUMBER* '"' SEP
+    	 '"Depth":"' depth=NUMBER* '"' SEP
+    	 '"Offset":"' offset=NUMBER* '"}}'
     	)
+    	{
+    	pgn128267 = new PGN128267(src.getText(), getText(), 
+	                          timestamp.getText(), new Integer(prio.getText()), new Integer(dst.getText()),
+	                          new Integer("128267"), 
+	                          new Float(depth.getText()), new Float(offset.getText()),
+	                          description.getText());
+	// System.out.println(pgn128267);   
+    	}
+    	|
+    	(
+    	//|
+    	//(
+    	//'"pgn":"' NUMBER+ '"' SEP
+    	//'"description":"' (LETTERS | ':' | '-' |'&' | ',' |'.' | '}')+ '"' SEP
+    	//)
     	 ('{' | '"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN | SEP)*
+        )
         )
     	{
 	//System.out.println("PGN sentence : " + getText());

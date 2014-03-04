@@ -70,7 +70,10 @@ public class Sentences {
         @XmlElement(name = "ais5", type = AIS5.class),
         @XmlElement(name = "ais135", type = AIS135.class),
         @XmlElement(name = "ais", type = AISMessage.class),
-        @XmlElement(name = "ais9", type = AIS9.class)
+        @XmlElement(name = "ais9", type = AIS9.class),
+        @XmlElement(name = "n2k", type = N2K.class),
+        @XmlElement(name = "pgn130306", type = PGN130306.class),
+        @XmlElement(name = "pgn128267", type = PGN128267.class)
     })
     List<NMEA> sentences;
 

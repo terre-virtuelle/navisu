@@ -21,16 +21,45 @@ public class PGN128267
     private float waterDepth;
     private float offset;
 
+    private int sid;
+
+    /**
+     * Get the value of sid
+     *
+     * @return the value of sid
+     */
+    public int getSid() {
+        return sid;
+    }
+
+    /**
+     * Set the value of sid
+     *
+     * @param sid new value of sid
+     */
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
+
     public PGN128267() {
     }
 
-    public PGN128267(float waterDepth, float offset, int sid, String description) {
-        super(sid, description);
+    public PGN128267(String device, String sentence,
+            String timeStamp, int priority, int dst, int pgn,
+            float waterDepth, float offset, String description) {
+        super(description, timeStamp, priority, dst, pgn, device, sentence);
         this.waterDepth = waterDepth;
         this.offset = offset;
     }
 
-   
+    public PGN128267(String device, String sentence,
+            String timeStamp, int priority, int dst, int pgn,
+            int sid, float waterDepth, float offset, String description) {
+        super(description, timeStamp, priority, dst, pgn, device, sentence);
+        this.sid = sid;
+        this.waterDepth = waterDepth;
+        this.offset = offset;
+    }
 
     /**
      * Get the value of offset
@@ -50,7 +79,6 @@ public class PGN128267
         this.offset = offset;
     }
 
-
     /**
      * Get the value of waterDepth
      *
@@ -67,6 +95,11 @@ public class PGN128267
      */
     public void setWaterDepth(float waterDepth) {
         this.waterDepth = waterDepth;
+    }
+
+    @Override
+    public String toString() {
+        return "PGN128267{" + "waterDepth=" + waterDepth + ", offset=" + offset + ", sid=" + sid + '}';
     }
 
 }

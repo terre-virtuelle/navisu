@@ -24,10 +24,17 @@ public class PGN126992
     public PGN126992() {
     }
 
-    public PGN126992(Calendar date, int sid, String description) {
-        super(sid, description);
+    public PGN126992(Calendar date, String description, String timeStamp, int priority,  int dst, int pgn) {
+        super(description, timeStamp, priority, dst, pgn);
         this.date = date;
     }
+
+    public PGN126992(Calendar date, String description, String timeStamp, int priority, int dst, int pgn, String device, String sentence) {
+        super(description, timeStamp, priority, dst, pgn, device, sentence);
+        this.date = date;
+    }
+
+    
 
     
 

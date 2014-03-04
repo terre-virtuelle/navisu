@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
+import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,13 +27,15 @@ public class PGN127245
     public PGN127245() {
     }
 
-    public PGN127245(int rudderInstance, int directionOrder, int angleOrder, int position, String description) {
-        super(description);
+    public PGN127245(int rudderInstance, int directionOrder, int angleOrder, int position, String description, String timeStamp, int priority,  int dst, int pgn) {
+        super(description, timeStamp, priority,  dst, pgn);
         this.rudderInstance = rudderInstance;
         this.directionOrder = directionOrder;
         this.angleOrder = angleOrder;
         this.position = position;
     }
+
+    
 
    
 

@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
+import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,16 +21,18 @@ public class PGN128259
 
     private float speedWaterReferenced;
     private float speedGroundReferenced;
-    private int speedWaterReferencedTYpe;
+    private int speedWaterReferencedType;
 
     public PGN128259() {
     }
 
-    public PGN128259(float speedWaterReferenced, float speedGroundReferenced, int speedWaterReferencedTYpe, int sid, String description) {
-        super(sid, description);
+    public PGN128259(String device, String sentence,
+            String timeStamp, int priority,  int dst, int pgn,
+            float speedWaterReferenced, float speedGroundReferenced, int speedWaterReferencedTYpe, String description ) {
+        super(description, timeStamp, priority,  dst, pgn, device, sentence);
         this.speedWaterReferenced = speedWaterReferenced;
         this.speedGroundReferenced = speedGroundReferenced;
-        this.speedWaterReferencedTYpe = speedWaterReferencedTYpe;
+        this.speedWaterReferencedType = speedWaterReferencedTYpe;
     }
 
     
@@ -39,17 +42,17 @@ public class PGN128259
      *
      * @return the value of speedWaterReferencedTYpe
      */
-    public int getSpeedWaterReferencedTYpe() {
-        return speedWaterReferencedTYpe;
+    public int getSpeedWaterReferencedType() {
+        return speedWaterReferencedType;
     }
 
     /**
      * Set the value of speedWaterReferencedTYpe
      *
-     * @param speedWaterReferencedTYpe new value of speedWaterReferencedTYpe
+     * @param speedWaterReferencedType new value of speedWaterReferencedTYpe
      */
-    public void setSpeedWaterReferencedTYpe(int speedWaterReferencedTYpe) {
-        this.speedWaterReferencedTYpe = speedWaterReferencedTYpe;
+    public void setSpeedWaterReferencedTYpe(int speedWaterReferencedType) {
+        this.speedWaterReferencedType = speedWaterReferencedType;
     }
 
     /**

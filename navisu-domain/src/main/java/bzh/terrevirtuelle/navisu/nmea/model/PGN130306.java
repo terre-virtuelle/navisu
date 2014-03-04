@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
+import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,12 +34,17 @@ public class PGN130306
     public PGN130306() {
     }
 
-    public PGN130306(double windSpeed, double windDirection, String windReference, int sid, String description) {
-        super(sid, description);
+    public PGN130306(String device, String sentence,
+            String timeStamp, int priority,  int dst, 
+            int pgn, 
+            double windSpeed, double windDirection, String windReference, String description ) {
+        super(description, timeStamp, priority, dst, pgn, device, sentence);
         this.windSpeed = windSpeed;
         this.windDirection = windDirection;
         this.windReference = windReference;
     }
+
+    
 
     /**
      * Get the value of windReference
@@ -110,6 +116,11 @@ public class PGN130306
      */
     public void setWindSpeed(double windSpeed) {
         this.windSpeed = windSpeed;
+    }
+
+    @Override
+    public String toString() {
+        return "PGN130306{" + "windSpeed=" + windSpeed + ", windDirection=" + windDirection + ", windReference=" + windReference + '}';
     }
 
 }
