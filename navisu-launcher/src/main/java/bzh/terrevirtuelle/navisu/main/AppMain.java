@@ -17,6 +17,8 @@ import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
 import bzh.terrevirtuelle.navisu.locators.Widget3DServices;
 import bzh.terrevirtuelle.navisu.locators.impl.Widget3DImpl;
+import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
+import bzh.terrevirtuelle.navisu.loggers.impl.LoggerImpl;
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -54,7 +56,8 @@ public class AppMain extends Application {
                         GribImpl.class,
                         DataServerImpl.class,
                         NmeaClientImpl.class,
-                        Widget3DImpl.class
+                        Widget3DImpl.class,
+                        LoggerImpl.class
                 )
         );
 
@@ -130,19 +133,23 @@ public class AppMain extends Application {
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
-        dataServerServices.openFile("data/n2k/out1.json");//N2K
+        //dataServerServices.openFile("data/n2k/out1.json");//N2K
+        dataServerServices.openFile("data/n2k/sample.json");//N2K
 
         // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8080);
-        nmeaClientServices.request(5000);
+        nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
         widgetServices.createGpsLocator();
         //widgetServices.createAisLocator();
+        
+        LoggerServices loggerServices = componentManager.getComponentService(LoggerServices.class);
+        loggerServices.createPrinter();
 
         //
         // END TESTS SERVER
