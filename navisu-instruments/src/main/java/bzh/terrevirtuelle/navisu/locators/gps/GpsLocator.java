@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.locators.gps.controller.GpsLocatorControllerWithDPAgent;
 import bzh.terrevirtuelle.navisu.locators.gps.view.GpsLayer;
+import bzh.terrevirtuelle.navisu.locators.view.PShipProcessor;
 import bzh.terrevirtuelle.navisu.locators.view.ShipProcessor;
 import gov.nasa.worldwind.layers.Layer;
 
@@ -18,8 +19,6 @@ import gov.nasa.worldwind.layers.Layer;
  * @author Serge
  */
 public class GpsLocator {
-
-    //protected GpsLocatorController aisLocatorController;
 
     protected final GeoLayer<Layer> gpsLayer;
     protected final ShipProcessor shipProcessor;
@@ -32,7 +31,7 @@ public class GpsLocator {
         this.gpsLayer = GeoLayer.factory.newWorldWindGeoLayer(new GpsLayer());
 
         // creation du processor
-        this.shipProcessor = new ShipProcessor(this.gpsLayer);
+        this.shipProcessor = new PShipProcessor(this.gpsLayer);
         geoViewServices.registerProcessor(this.shipProcessor);
 
         geoViewServices.getLayerManager().insertGeoLayer(this.shipProcessor.getLayer());

@@ -7,16 +7,20 @@ package bzh.terrevirtuelle.navisu.locators.gps.controller;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GSVEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
 import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
-import bzh.terrevirtuelle.navisu.locators.model.OShip;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.nmea.model.GGA;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.nmea.model.RMC;
 import bzh.terrevirtuelle.navisu.nmea.model.VTG;
 import gov.nasa.worldwind.layers.Layer;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -29,33 +33,48 @@ import java.util.logging.Logger;
 public class GpsLocatorControllerWithDPAgent {
 
     protected static final Logger LOGGER = Logger.getLogger(GpsLocatorControllerWithDPAgent.class.getName());
-
+    private final Properties properties;
     protected LayerManager<Layer> layerManager;
 
     ComponentManager cm = ComponentManager.componentManager;
     ComponentEventSubscribe<GGAEvent> ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
-    ComponentEventSubscribe<GSVEvent> gsvES = cm.getComponentEventSubscribe(GSVEvent.class);
     ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
     ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
 
-    protected OShip ship;
+    protected TShip ship;
 
     public GpsLocatorControllerWithDPAgent(final DpAgentServices dpAgentServices) {
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream("properties/domain.properties"));
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(GpsLocatorControllerWithDPAgent.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // creation du TObject (l'objet metier)
-        ship = new OShip(IDGenerator.newIntID());
-        // insertion dans le DPAgent
-        dpAgentServices.create(ship);
+
+        ship = new TShip(IDGenerator.newIntID(),
+                new Integer(properties.getProperty("mmsi")),
+                properties.getProperty("name"),
+                properties.getProperty("country"),
+                new Float(properties.getProperty("width")),
+                new Float(properties.getProperty("length")),
+                new Float(properties.getProperty("draught")),
+                new Integer(properties.getProperty("shipType")),
+                new Integer(properties.getProperty("navigationalStatus")),
+                new Integer(properties.getProperty("electronicPositionDevice")),
+                properties.getProperty("callSign"));
+                // insertion dans le DPAgent
+                dpAgentServices.create(ship);
 
         ggaES.subscribe(new GGAEvent() {
 
             @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
 
-                GGA gga = (GGA) data;
-                ship.setLatitude(gga.getLatitude());
-                ship.setLongitude(gga.getLongitude());
-
+                GGA data = (GGA) d;
+                ship.setLatitude(data.getLatitude());
+                ship.setLongitude(data.getLongitude());
                 // mise à jour via le DPAgent
                 dpAgentServices.update(ship);
             }
@@ -63,13 +82,26 @@ public class GpsLocatorControllerWithDPAgent {
         vtgES.subscribe(new VTGEvent() {
 
             @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                VTG vtg = (VTG) data;
-                ship.setCog(vtg.getCog());
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+                VTG data = (VTG) d;
+                ship.setCog(data.getCog());
+                ship.setSog(data.getSog());
+                // mise à jour via la DPAgent
+                dpAgentServices.update(ship);
+            }
+        });
+        rmcES.subscribe(new RMCEvent() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+                RMC data = (RMC) d;
+                ship.setLatitude(data.getLatitude());
+                ship.setLongitude(data.getLongitude());
+                ship.setCog(data.getCog());
+                ship.setSog(data.getSog());
                 // mise à jour via la DPAgent
                 dpAgentServices.update(ship);
             }
         });
     }
-
 }

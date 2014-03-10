@@ -1,0 +1,30 @@
+class GShip
+!!!136194.java!!!	GShip(in id : int, inout polygon : Polygon)
+        this.id = id;
+        this.polygon = polygon;
+!!!136322.java!!!	GShip(in id : int, inout positions : List<Position>, inout location : Position, in cog : double)
+        this.id = id;
+        this.polygon = new Polygon(positions);
+        this.polygon.setEnableBatchPicking(true);
+        this.polygon.moveTo(location);
+        this.polygon.setRotation(-cog);
+!!!136450.java!!!	GShip(in id : int, inout circle : SurfaceCircle)
+        this.id = id;
+        this.circle = circle;
+!!!136578.java!!!	getID() : int
+        return this.id;
+!!!136706.java!!!	setLocation(inout location : Location) : void
+        this.polygon.moveTo(Position.fromDegrees(location.getLatitudeDegree(),
+                location.getLongitudeDegree(), 100));
+!!!136834.java!!!	getRenderables() : Renderable
+        return new Renderable[]{
+            this.polygon};
+!!!136962.java!!!	setCog(in cog : double) : void
+        this.polygon.setRotation(-cog);
+!!!137090.java!!!	setPathAttrs(inout pathAttrs : ShapeAttributes) : void
+        this.polygon.setAttributes(pathAttrs);
+!!!137218.java!!!	getClone() : Object
+
+        GShip clone = new GShip(this.id, this.polygon);
+
+        return clone;

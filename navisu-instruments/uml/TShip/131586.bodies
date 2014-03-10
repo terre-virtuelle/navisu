@@ -1,0 +1,12 @@
+class ShipTypeShape
+!!!138754.java!!!	toString() : String
+        StringBuilder buffer = new StringBuilder();
+        Set<Map.Entry<Integer, Class<? extends Renderable>>> entries = ShipTypeShape.VIEW.entrySet();
+        buffer.append("[");
+        entries.stream().forEach((e) -> {
+            buffer.append("[").append(e.getKey()).append(", ").append(e.getValue()).append("]");
+        });
+        buffer.append("]");
+        return buffer.toString();
+!!!138882.java!!!	main(inout args : String) : void
+        System.out.println(new ShipTypeShape());

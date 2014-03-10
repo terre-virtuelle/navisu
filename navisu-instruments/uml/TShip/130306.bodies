@@ -1,0 +1,21 @@
+class TShip
+!!!135298.java!!!	TShip(in id : int)
+        this.id = id;
+!!!135426.java!!!	getID() : int
+        return this.id;
+!!!135554.java!!!	getLocation() : Location
+        return Location.factory.newLocation(this.getLatitude(), this.getLongitude());
+!!!135682.java!!!	setLocation(inout location : Location) : void
+        this.setLatitude(location.getLatitudeDegree());
+        this.setLongitude(location.getLongitudeDegree());
+!!!135810.java!!!	getOrientation() : Orientation
+ 
+        return Orientation.factory.newOrientation(this.getCog());
+!!!135938.java!!!	setOrientation(inout orientation : Orientation) : void
+        this.setCog((float) orientation.getOrientationDegree());
+!!!136066.java!!!	getClone() : Object
+        
+        TShip clone = new TShip(this.id);
+        clone.setLocation(this.getLocation());
+        clone.setOrientation(this.getOrientation());
+        return clone;

@@ -2,13 +2,8 @@ package bzh.terrevirtuelle.navisu.locators.view;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.render.Polygon;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfaceCircle;
-
-import java.util.List;
 
 /**
  * NaVisu
@@ -16,31 +11,15 @@ import java.util.List;
  * @author tibus
  * @date 19/02/2014 18:49
  */
-public class GShip implements GObject {
+public abstract  class GShip implements GObject {
 
     protected final int id;
-
-    protected Polygon polygon;
-    protected SurfaceCircle circle;
+    protected TShip ship;
     protected Renderable[] renderables;
-    protected int type;
 
-    public GShip(int id, Polygon polygon) {
+    public GShip(int id, TShip ship) {
         this.id = id;
-        this.polygon = polygon;
-    }
-
-    public GShip(int id, List<Position> positions, Position location, double cog) {
-        this.id = id;
-        this.polygon = new Polygon(positions);
-        this.polygon.setEnableBatchPicking(true);
-        this.polygon.moveTo(location);
-        this.polygon.setRotation(-cog);
-    }
-
-    public GShip(int id, SurfaceCircle circle) {
-        this.id = id;
-        this.circle = circle;
+        this.ship = ship;
     }
 
     @Override
@@ -48,31 +27,35 @@ public class GShip implements GObject {
         return this.id;
     }
 
-    @Override
-    public void setLocation(Location location) {
-        this.polygon.moveTo(Position.fromDegrees(location.getLatitudeDegree(),
-                location.getLongitudeDegree(), 100));
+    /**
+     * Get the value of ship
+     *
+     * @return the value of ship
+     */
+    public TShip getShip() {
+        return ship;
     }
 
+    /**
+     * Set the value of ship
+     *
+     * @param ship new value of ship
+     */
+    public void setShip(TShip ship) {
+        this.ship = ship;
+    }
+
+    @Override
+    public abstract void setLocation(Location location);
+        
     @Override
     public Renderable[] getRenderables() {
-        return new Renderable[]{
-            this.polygon,};
+        return renderables;
     }
 
-    public void setCog(double cog) {
-        this.polygon.setRotation(-cog);
-    }
-
-    public void setPathAttrs(ShapeAttributes pathAttrs) {
-        this.polygon.setAttributes(pathAttrs);
-    }
+    public abstract void setCog(double cog);
 
     @Override
-    public Object getClone() {
-
-        GShip clone = new GShip(this.id, this.polygon);
-
-        return clone;
-    }
+    public abstract Object getClone();
+      
 }

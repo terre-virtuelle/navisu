@@ -1,0 +1,68 @@
+class ShipProcessor
+!!!137346.java!!!	ShipProcessor(inout layer : GeoLayer<Layer>)
+        this.layer = layer;
+!!!137474.java!!!	processCreated(in id : int, inout input : TObject) : GObject
+
+        TShip tShip = (TShip) input;
+
+        double lat = tShip.getLatitude();
+        double lon = tShip.getLongitude();
+
+        Position position = Position.fromDegrees(lat, lon);
+        List<Position> positions = this.makePositionList(this.initTriangleShape(lat, lon));
+
+        GShip gShip = new GShip(id, positions, position, tShip.getCog());
+        gShip.setPathAttrs(this.makeAttributes());
+
+        return gShip;
+!!!137602.java!!!	processUpdated(in id : int, inout input : TObject, inout output : GObject) : GObject
+
+        GShip gShip = (GShip) output;
+
+        gShip.setLocation(input.getLocation());
+        gShip.setCog(((TOrientedObject)input).getOrientation().getOrientationDegree());
+        return output;
+!!!137730.java!!!	processDeleted(in id : int, inout input : TObject, inout output : GObject) : GObject
+        // Nothing to do here
+        return output;
+!!!137858.java!!!	makeAttributes() : ShapeAttributes
+        final ShapeAttributes pathAttrs = new BasicShapeAttributes();
+        pathAttrs.setOutlineMaterial(Material.BLACK);
+        pathAttrs.setOutlineOpacity(0.8);
+        pathAttrs.setOutlineWidth(1);
+        pathAttrs.setInteriorMaterial(Material.GREEN);
+        pathAttrs.setDrawInterior(true);
+        pathAttrs.setInteriorOpacity(1.0);
+        return pathAttrs;
+!!!137986.java!!!	initTriangleShape(in latitude : double, in longitude : double) : double
+        double[] shipShape = new double[6];
+        shipShape[0] = longitude;
+        shipShape[1] = latitude + 0.0015;
+        shipShape[2] = longitude + .001;
+        shipShape[3] = latitude - .0015;
+        shipShape[4] = longitude - .001;
+        shipShape[5] = latitude - .0015;
+        return shipShape;
+!!!138114.java!!!	initShape(in latitude : double, in longitude : double) : double
+        double[] shipShape = new double[6];
+        shipShape[0] = longitude;
+        shipShape[1] = latitude + 0.0015;
+        shipShape[2] = longitude + .001;
+        shipShape[3] = latitude - .0015;
+        shipShape[4] = longitude - .001;
+        shipShape[5] = latitude - .0015;
+        return shipShape;
+!!!138242.java!!!	makePositionList(inout src : double) : List<Position>
+        int numCoords = src.length / 2;
+        Position[] array = new Position[numCoords];
+
+        for (int i = 0; i < numCoords; i++) {
+            double lonDegrees = src[2 * i];
+            double latDegrees = src[2 * i + 1];
+            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 100);
+        }
+        return Arrays.asList(array);
+!!!138370.java!!!	getLayer() : GeoLayer<Layer>
+        return this.layer;
+!!!138498.java!!!	getType() : Class<? extends TObject>
+        return TShip.class;

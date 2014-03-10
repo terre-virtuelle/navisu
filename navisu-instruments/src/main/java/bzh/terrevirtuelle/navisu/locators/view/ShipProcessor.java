@@ -5,7 +5,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcesso
 import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import bzh.terrevirtuelle.navisu.locators.model.OShip;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -21,30 +21,14 @@ import java.util.List;
  * @author tibus
  * @date 19/02/2014 19:13
  */
-public class ShipProcessor
+public abstract class ShipProcessor
         implements GObjectCUDProcessor {
 
     protected final GeoLayer<Layer> layer;
+    TShip tShip;
 
     public ShipProcessor(GeoLayer<Layer> layer) {
         this.layer = layer;
-    }
-
-    @Override
-    public GObject processCreated(int id, TObject input) {
-
-        OShip tShip = (OShip) input;
-
-        double lat = tShip.getLatitude();
-        double lon = tShip.getLongitude();
-
-        Position position = Position.fromDegrees(lat, lon);
-        List<Position> positions = this.makePositionList(this.initTriangleShape(lat, lon));
-
-        GShip gShip = new GShip(id, positions, position, tShip.getCog());
-        gShip.setPathAttrs(this.makeAttributes());
-
-        return gShip;
     }
 
     @Override
@@ -53,7 +37,7 @@ public class ShipProcessor
         GShip gShip = (GShip) output;
 
         gShip.setLocation(input.getLocation());
-        gShip.setCog(((TOrientedObject)input).getOrientation().getOrientationDegree());
+        gShip.setCog(((TOrientedObject) input).getOrientation().getOrientationDegree());
         return output;
     }
 
@@ -63,50 +47,20 @@ public class ShipProcessor
         return output;
     }
 
-    private ShapeAttributes makeAttributes() {
+    protected ShapeAttributes makeAttributes() {
         final ShapeAttributes pathAttrs = new BasicShapeAttributes();
         pathAttrs.setOutlineMaterial(Material.BLACK);
         pathAttrs.setOutlineOpacity(0.8);
         pathAttrs.setOutlineWidth(1);
-        pathAttrs.setInteriorMaterial(Material.GREEN);
+        pathAttrs.setInteriorMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
         pathAttrs.setDrawInterior(true);
         pathAttrs.setInteriorOpacity(1.0);
         return pathAttrs;
     }
 
-    private double[] initTriangleShape(double latitude, double longitude) {
-        double[] shipShape = new double[6];
-        shipShape[0] = longitude;
-        shipShape[1] = latitude + 0.0015;
-        shipShape[2] = longitude + .001;
-        shipShape[3] = latitude - .0015;
-        shipShape[4] = longitude - .001;
-        shipShape[5] = latitude - .0015;
-        return shipShape;
-    }
+    
 
-    private double[] initShape(double latitude, double longitude) {
-        double[] shipShape = new double[6];
-        shipShape[0] = longitude;
-        shipShape[1] = latitude + 0.0015;
-        shipShape[2] = longitude + .001;
-        shipShape[3] = latitude - .0015;
-        shipShape[4] = longitude - .001;
-        shipShape[5] = latitude - .0015;
-        return shipShape;
-    }
-
-    protected final List<Position> makePositionList(double[] src) {
-        int numCoords = src.length / 2;
-        Position[] array = new Position[numCoords];
-
-        for (int i = 0; i < numCoords; i++) {
-            double lonDegrees = src[2 * i];
-            double latDegrees = src[2 * i + 1];
-            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 100);
-        }
-        return Arrays.asList(array);
-    }
+    
 
     @Override
     public GeoLayer<Layer> getLayer() {
@@ -115,6 +69,6 @@ public class ShipProcessor
 
     @Override
     public Class<? extends TObject> getType() {
-        return OShip.class;
+        return TShip.class;
     }
 }
