@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import  bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import java.util.logging.Level;
 
 /**
  * NaVisu
@@ -65,7 +66,7 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
             this.menuBar.getMenus().add(menu);
         }
         else {
-            LOGGER.warning("Menu with key \"" + menuKey + "\" already exists.");
+            LOGGER.log(Level.WARNING, "Menu with key \"{0}\" already exists.", menuKey);
         }
     }
 
@@ -73,7 +74,7 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
     public void addMenuItem(String menuKey, String menuName, MenuItem item) {
 
         if(!this.menuMap.containsKey(menuKey)) {
-            LOGGER.info("Menu with key \"" + menuKey + "\" does not exists. It will be created.");
+            LOGGER.log(Level.INFO, "Menu with key \"{0}\" does not exists. It will be created.", menuKey);
             this.createMenu(menuKey, menuName);
         }
 
