@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.charts.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.charts.impl.ChartsManagerImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -19,6 +20,7 @@ import bzh.terrevirtuelle.navisu.locators.Widget3DServices;
 import bzh.terrevirtuelle.navisu.locators.impl.Widget3DImpl;
 import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.loggers.impl.LoggerImpl;
+import gov.nasa.worldwind.geom.Position;
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -119,13 +121,17 @@ public class AppMain extends Application {
         //------------------------------->
         // TESTS SERVER
         //
+        // Hack pendant le dev 
+        GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.45, -4.4853, 10000));
+        
+        
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
         // Test avec choix des parametres de comm
         dataServerServices.init("localhost", 8080);
 
          // Test connexion GPS 
-        //dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
+        dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         //dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // Test connexion Gpsd 
         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
@@ -134,7 +140,7 @@ public class AppMain extends Application {
         // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
-        dataServerServices.openFile("data/n2k/sample.json");//N2K
+        //dataServerServices.openFile("data/n2k/sample.json");//N2K
 
         // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
