@@ -183,7 +183,21 @@ public class RMC
     public void setTrack(float track) {
         this.track = track;
     }
+/**
+     *
+     * @return
+     */
+    public float getCog() {
+        return track;
+    }
 
+    /**
+     *
+     * @param track
+     */
+    public void setCog(float track) {
+        this.track = track;
+    }
     /**
      *
      * @return

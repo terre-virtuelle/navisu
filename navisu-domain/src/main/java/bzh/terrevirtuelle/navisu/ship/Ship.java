@@ -31,12 +31,12 @@ public class Ship implements Serializable {
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available = default
      */
-    private String name = "....";
+    private String name;
     /**
      * Country of the ship
      *
      */
-    private String country = "....";
+    private String country;
     ;
     private DoubleProperty latitude;
     private DoubleProperty longitude;
@@ -81,6 +81,7 @@ public class Ship implements Serializable {
      */
     private float draught;
     /**
+     * http://gpsd.berlios.de/AIVDM.html#_type_5_static_and_voyage_related_data
      * Type of ship and cargo ship 0 = not available or no ship = default 1-99 =
      * as defined below 100-199 = reserved, for regional use 200-255 = reserved,
      * for future use 50 Pilot vessel 51 Search and rescue vessels 52 Tugs 53
@@ -113,7 +114,7 @@ public class Ship implements Serializable {
     /**
      * 7 = 6 bit ASCII characters, @@@@@@@ = not available = default
      */
-    private String callSign = "....";
+    private String callSign;
     /**
      * Estimated time of arrival; MMDDHHMM UTC Bits 19-16: month; 1-12; 0 = not
      * available = default Bits 15-11: day; 1-31; 0 = not available = default
@@ -125,7 +126,7 @@ public class Ship implements Serializable {
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available
      */
-    private String destination = "....";
+    private String destination;
     /**
      * year, month, day of ETA
      */
@@ -145,6 +146,27 @@ public class Ship implements Serializable {
         this.cog = new SimpleDoubleProperty(3600);
         this.sog = new SimpleDoubleProperty(1023);
     }
+
+    public Ship(int mmsi, String name, String country, float width, float length, float draught, 
+            int shipType, int navigationalStatus, int electronicPositionDevice, String callSign) {
+        this.mmsi = mmsi;
+        this.name = name;
+        this.country = country;
+        this.width = width;
+        this.length = length;
+        this.draught = draught;
+        this.shipType = new SimpleIntegerProperty(shipType);
+        this.navigationalStatus = new SimpleIntegerProperty(navigationalStatus);
+        this.electronicPositionDevice = electronicPositionDevice;
+        this.callSign = callSign;
+        this.latitude = new SimpleDoubleProperty(0);
+        this.longitude = new SimpleDoubleProperty(0);
+        this.heading = new SimpleDoubleProperty(0);
+        this.cog = new SimpleDoubleProperty(3600);
+        this.sog = new SimpleDoubleProperty(1023);
+    }
+
+   
 
     /**
      * Creates a new instance of Ship
