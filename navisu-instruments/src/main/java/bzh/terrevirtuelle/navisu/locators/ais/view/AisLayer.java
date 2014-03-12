@@ -5,8 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.locators.ais.view;
 
-import bzh.terrevirtuelle.navisu.locators.ais.view.impl.ShipDefaultViewImpl;
-import bzh.terrevirtuelle.navisu.locators.ais.view.impl.ShipViewImpl;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.logging.Logger;
 
@@ -21,18 +19,6 @@ public class AisLayer
 
     public AisLayer() {
         setName("AIS Layer");
-    }
-
-    public void add(ShipViewImpl shipView) {
-        addRenderable(shipView);
-    }
-
-    public void add(ShipDefaultViewImpl shipView) {
-        addRenderable(shipView);
-    }
-
-    public void remove(ShipView shipView) {
-        remove(shipView);
     }
 
 }

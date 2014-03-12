@@ -1,3 +1,0 @@
-class AisLocator
-!!!128258.java!!!	AisLocator(inout geoViewServices : GeoViewServices)
-        aisLocatorController = new AisLocatorController(geoViewServices);

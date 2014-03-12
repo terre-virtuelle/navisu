@@ -1,0 +1,13 @@
+window_sizes 1280 962 300 900 682 82
+diagrams
+  active  classdiagram_ref 128130 // Instruments
+    974 804 100 4 0 0
+end
+show_stereotypes
+selected class_ref 130306 // CShipProcessor
+open
+  classview_ref 128514 // view
+  classview_ref 128770 // model
+  classview_ref 130050 // Instruments
+end
+end

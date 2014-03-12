@@ -1,5 +1,3 @@
-class Widget3DImpl
-!!!139650.java!!!	createGpsLocator() : void
-        GpsLocator locator = new GpsLocator(geoViewServices, dpAgentServices);
-!!!139778.java!!!	createAisLocator() : void
-       AisLocator locator = new AisLocator(geoViewServices);
+class LoggerImpl
+!!!135810.java!!!	createPrinter() : void
+        loggerController = new LoggerController();

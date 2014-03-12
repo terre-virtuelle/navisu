@@ -1,0 +1,11 @@
+class CShipProcessor
+!!!131586.java!!!	CShipProcessor(inout layer : GeoLayer<Layer>)
+        super(layer);
+!!!131714.java!!!	processCreated(in id : int, inout input : TObject) : GObject
+
+        tShip = (TShip) input;
+      
+        GCShip gShip = new GCShip(id, tShip, 100);
+        gShip.setPathAttrs(this.makeAttributes());
+
+        return gShip;

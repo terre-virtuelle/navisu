@@ -1,39 +1,20 @@
-class ShipViewFactory
-!!!138626.java!!!	ShipViewFactory(inout ship : Ship)
-        this.latitude = ship.getLatitude();
-        this.longitude = ship.getLongitude();
-        this.cog = ship.getCog();
-!!!138754.java!!!	build() : ShipView
-        initShape();
-        makeAttributes();
-        ShipView shipView = new ShipView(makePositionList(shipShape), latitude, longitude, cog);
-        shipView.setAttributes(pathAttrs);
-        shipView.setEnableBatchPicking(true);
-        return shipView;
-!!!138882.java!!!	initShape() : void
-        shipShape = new double[6];
-        shipShape[0] = longitude;
-        shipShape[1] = latitude + 0.0015;
-        shipShape[2] = longitude + .001;
-        shipShape[3] = latitude - .0015;
-        shipShape[4] = longitude - .001;
-        shipShape[5] = latitude - .0015;
-!!!139010.java!!!	makeAttributes() : void
-        pathAttrs = new BasicShapeAttributes();
-        pathAttrs.setOutlineMaterial(Material.BLACK);
-        pathAttrs.setOutlineOpacity(0.8);
-        pathAttrs.setOutlineWidth(1);
-        pathAttrs.setInteriorMaterial(Material.GREEN);
-        pathAttrs.setDrawInterior(true);
-        pathAttrs.setInteriorOpacity(1.0);
-        
-!!!139138.java!!!	makePositionList(inout src : double) : List<Position>
-        int numCoords = src.length / 2;
-        Position[] array = new Position[numCoords];
+class LoggerController
+!!!135298.java!!!	LoggerController()
+        pgn130306ES.subscribe(new PGN130306Event() {
 
-        for (int i = 0; i < numCoords; i++) {
-            double lonDegrees = src[2 * i];
-            double latDegrees = src[2 * i + 1];
-            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 100);
-        }
-        return Arrays.asList(array);
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+
+                PGN130306 d = (PGN130306) data;
+                Printer.getPrinter().display(d);
+            }
+        });
+        pgn128267ES.subscribe(new PGN128267Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+
+                PGN128267 d = (PGN128267) data;
+                Printer.getPrinter().display(d);
+            }
+        });

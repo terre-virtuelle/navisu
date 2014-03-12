@@ -4,6 +4,7 @@ import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;
 import bzh.terrevirtuelle.navisu.ship.Ship;
+import java.util.Calendar;
 
 /**
  * NaVisu
@@ -26,8 +27,16 @@ public class TShip
         this.id = id;
     }
 
-    
-    
+    public TShip(int id, int mmsi, int imo, String name, 
+            float heading, float cog, float sog, float rot, 
+            float latitude, float longitude, 
+            float width, float length, float draught, 
+            int type, int navigationalStatus, int electronicPositionDevice, String callSign, 
+            Calendar ETA, String destination, String country) {
+        super(mmsi, imo, name, heading, cog, sog, rot, latitude, longitude, width, length, draught, type, navigationalStatus, electronicPositionDevice, callSign, ETA, destination, country);
+        this.id = id;
+    }
+
     @Override
     public int getID() {
         return this.id;

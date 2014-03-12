@@ -1,0 +1,32 @@
+class PShipProcessor
+!!!134658.java!!!	PShipProcessor(inout layer : GeoLayer<Layer>)
+        super(layer);
+!!!134786.java!!!	processCreated(in id : int, inout input : TObject) : GObject
+
+        tShip = (TShip) input;
+
+        List<Position> bounds = this.makePositionList(this.initShape(tShip.getLatitude(), tShip.getLongitude()));
+
+        gShip = new GPShip(id, tShip, bounds);
+        gShip.setPathAttrs(this.makeAttributes());
+
+        return gShip;
+!!!134914.java!!!	initShape(in latitude : double, in longitude : double) : double
+        double[] shipShape = new double[6];
+        shipShape[0] = longitude;
+        shipShape[1] = latitude + 0.0015;
+        shipShape[2] = longitude + .001;
+        shipShape[3] = latitude - .0015;
+        shipShape[4] = longitude - .001;
+        shipShape[5] = latitude - .0015;
+        return shipShape;
+!!!135042.java!!!	makePositionList(inout src : double) : List<Position>
+        int numCoords = src.length / 2;
+        Position[] array = new Position[numCoords];
+
+        for (int i = 0; i < numCoords; i++) {
+            double lonDegrees = src[2 * i];
+            double latDegrees = src[2 * i + 1];
+            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 100);
+        }
+        return Arrays.asList(array);

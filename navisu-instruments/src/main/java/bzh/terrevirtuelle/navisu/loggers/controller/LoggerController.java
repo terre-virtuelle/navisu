@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.loggers.controller;
 
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.NMEAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN128267Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN130306Event;
 import bzh.terrevirtuelle.navisu.loggers.view.Printer;
@@ -18,9 +19,10 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  *
  * @author Serge
  */
-public class LoggerController {
+public class LoggerController<T extends NMEA> {
 
     ComponentManager cm = ComponentManager.componentManager;
+    ComponentEventSubscribe<NMEAEvent> nmeaES = cm.getComponentEventSubscribe(NMEAEvent.class);
     ComponentEventSubscribe<PGN130306Event> pgn130306ES = cm.getComponentEventSubscribe(PGN130306Event.class);
     ComponentEventSubscribe<PGN128267Event> pgn128267ES = cm.getComponentEventSubscribe(PGN128267Event.class);
 
@@ -45,4 +47,16 @@ public class LoggerController {
         });
     }
 
+    public LoggerController(T nmea) {
+        nmeaES.subscribe(new NMEAEvent() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+
+                NMEA d = (NMEA) data;
+                Printer.getPrinter().display(d);
+            }
+        });
+    }
+//TODO faire un Logger generique
 }

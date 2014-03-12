@@ -1,5 +1,5 @@
 format 76
-"model" // bzh::terrevirtuelle::navisu::world::gps::locator::model
+"loggers" // bzh::terrevirtuelle::navisu::loggers
   revision 1
   modified_by 2 "Serge"
   // class settings
@@ -26,9 +26,9 @@ format 76
   package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
   show_infonote default drawing_language default show_stereotype_properties default
   
-  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/world/gps/locator/model/"
-  java_package "bzh.terrevirtuelle.navisu.world.gps.locator.model"
-  classview 129154 "model"
+  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/loggers/"
+  java_package "bzh.terrevirtuelle.navisu.loggers"
+  classview 129410 "loggers"
     //class diagram settings
     draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
@@ -44,10 +44,10 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    class 130434 "TShip"
-      visibility public 
+    class 131202 "Logger"
+      visibility public stereotype "interface"
       cpp_decl ""
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
 ${members}}
 "
       php_decl ""
@@ -55,100 +55,44 @@ ${members}}
       idl_decl ""
       explicit_switch_type ""
       
-      comment "NaVisu
-
-@author tibus
-@date 19/02/2014 19:19"
-      classrelation 129794 // <generalisation>
-	relation 129794 ---|>
+      comment "
+@author Serge"
+      classrelation 131458 // <generalisation>
+	relation 131458 ---|>
 	  a public
 	    java "${type}"
-	    classrelation_ref 129794 // <generalisation>
-	  b parent class_ref 130562 // Ship
+	    classrelation_ref 131458 // <generalisation>
+	  b parent class_ref 128130 // Component
       end
+    end
 
-      classrelation 129922 // <realization>
-	relation 129922 -_-|>
+    class 131330 "LoggerServices"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 131586 // <generalisation>
+	relation 131586 ---|>
 	  a public
 	    java "${type}"
-	    classrelation_ref 129922 // <realization>
-	  b parent class_ref 130690 // TObject
+	    classrelation_ref 131586 // <generalisation>
+	  b parent class_ref 128386 // ComponentService
       end
 
-      attribute 133762 "id"
-	const_attribute protected explicit_type "int"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      operation 134658 "TShip"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "id" explicit_type "int"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 134786 "getID"
-	public explicit_return_type "int"
-	nparams 0
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 134914 "getLocation"
-	public explicit_return_type "Location"
-	nparams 0
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 135042 "setLocation"
+      operation 135170 "createPrinter"
 	public explicit_return_type "void"
-	nparams 1
-	  param inout name "location" explicit_type "Location"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 135170 "getClone"
-	public explicit_return_type "Object"
 	nparams 0
 	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
   ${body}}
-"
-	java_annotation "@Override
 "
 	
 	
@@ -157,22 +101,44 @@ ${members}}
     end
   end
 
-  deploymentview 128898 "model"
+  deploymentview 129282 "loggers"
     //deployment diagram settings
     package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
     draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 129666 "TShip"
+    artifact 130178 "Logger"
       stereotype "source"
       java_src "${comment}
 ${package}
 ${imports}
-import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
-import bzh.terrevirtuelle.navisu.geodesy.Location;
-import bzh.terrevirtuelle.navisu.ship.Ship;
+import org.capcaval.c3.component.Component;
 ${definition}"
       associated_classes
-	class_ref 130434 // TShip
+	class_ref 131202 // Logger
       end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 130306 "LoggerServices"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import org.capcaval.c3.component.ComponentService;
+${definition}"
+      associated_classes
+	class_ref 131330 // LoggerServices
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
     end
   end
+
+  package_ref 129922 // controller
+
+  package_ref 130050 // impl
+
+  package_ref 130178 // view
 end

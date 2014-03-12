@@ -1,20 +1,33 @@
-class ShipView
-!!!137858.java!!!	ShipView(inout positions : List<Position>, in latitude : double, in longitude : double, in cog : double)
-        super(positions);
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.cog = cog;
-!!!137986.java!!!	setCog(in cog : double) : void
-        setRotation(cog - 90);
-!!!138114.java!!!	setLatitude(in latitude : double) : void
-        this.latitude = latitude;
-        moveTo(Position.fromDegrees(latitude, longitude, 100));
-!!!138242.java!!!	setLongitude(in longitude : double) : void
-        this.longitude = longitude;
-        moveTo(Position.fromDegrees(latitude, longitude, 100));
-!!!138370.java!!!	setLatLon(in latitude : double, in longitude : double) : void
-        this.latitude = latitude;
-        this.longitude = longitude;
+class PShipProcessor
+!!!134530.java!!!	PShipProcessor(inout layer : GeoLayer<Layer>)
+        super(layer);
+!!!134658.java!!!	processCreated(in id : int, inout input : TObject) : GObject
 
-!!!138498.java!!!	setPathAttrs(inout pathAttrs : ShapeAttributes) : void
-        setAttributes(pathAttrs);
+        tShip = (TShip) input;
+      
+        List<Position> bounds = this.makePositionList(this.initShape(tShip.getLatitude()
+                , tShip.getLongitude()));
+
+        GPShip gShip = new GPShip(id, tShip, bounds);
+        gShip.setPathAttrs(this.makeAttributes());
+
+        return gShip;
+!!!134786.java!!!	initShape(in latitude : double, in longitude : double) : double
+        double[] shipShape = new double[6];
+        shipShape[0] = longitude;
+        shipShape[1] = latitude + 0.0015;
+        shipShape[2] = longitude + .001;
+        shipShape[3] = latitude - .0015;
+        shipShape[4] = longitude - .001;
+        shipShape[5] = latitude - .0015;
+        return shipShape;
+!!!134914.java!!!	makePositionList(inout src : double) : List<Position>
+        int numCoords = src.length / 2;
+        Position[] array = new Position[numCoords];
+
+        for (int i = 0; i < numCoords; i++) {
+            double lonDegrees = src[2 * i];
+            double latDegrees = src[2 * i + 1];
+            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 100);
+        }
+        return Arrays.asList(array);

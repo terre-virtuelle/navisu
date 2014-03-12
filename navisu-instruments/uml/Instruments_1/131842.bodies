@@ -1,0 +1,8 @@
+class Printer
+!!!136194.java!!!	getPrinter() : Printer
+        if (instance == null) {
+            instance = new Printer();
+        }
+        return instance;
+!!!136322.java!!!	display(inout t : T) : void
+        System.out.println(t);

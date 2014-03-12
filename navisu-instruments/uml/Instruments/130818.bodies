@@ -1,8 +1,27 @@
-class GpsLayer
-!!!135298.java!!!	GpsLayer()
-  
-        setName("GPS Layer");
-!!!135426.java!!!	add(inout shipView : ShipView) : void
-        addRenderable(shipView);
-!!!135554.java!!!	remove(inout shipView : ShipView) : void
-        remove(shipView);
+class GPShip
+!!!133634.java!!!	GPShip(in id : int, inout ship : TShip, inout polygon : Polygon)
+        super(id, ship);
+        this.polygon = polygon;
+!!!133762.java!!!	GPShip(in id : int, inout ship : TShip, inout positions : List<Position>)
+        super(id, ship);
+        this.polygon = new Polygon(positions);
+        this.polygon.setEnableBatchPicking(true);
+        this.polygon.moveTo(new Position(Angle.fromDegrees(ship.getLatitude()),
+                Angle.fromDegrees(ship.getLongitude()),
+                1000.0));
+        this.polygon.setRotation(-ship.getCog());
+!!!133890.java!!!	setLocation(inout location : Location) : void
+        this.polygon.moveTo(Position.fromDegrees(location.getLatitudeDegree(),
+                location.getLongitudeDegree(), 100));
+!!!134018.java!!!	getRenderables() : Renderable
+        return new Renderable[]{
+            this.polygon};
+!!!134146.java!!!	setCog(in cog : double) : void
+        this.polygon.setRotation(-cog);
+!!!134274.java!!!	setPathAttrs(inout pathAttrs : ShapeAttributes) : void
+        this.polygon.setAttributes(pathAttrs);
+!!!134402.java!!!	getClone() : Object
+
+        GPShip clone = new GPShip(this.id, this.ship, this.polygon);
+
+        return clone;

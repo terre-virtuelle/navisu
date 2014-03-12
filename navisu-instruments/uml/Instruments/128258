@@ -28,5 +28,7 @@ format 76
   
   java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/"
   java_package "bzh.terrevirtuelle.navisu"
-  package_ref 128386 // world
+  package_ref 128386 // locators
+
+  package_ref 129794 // loggers
 end

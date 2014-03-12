@@ -1,18 +1,14 @@
-class ShipDefaultViewImpl
-!!!132610.java!!!	ShipDefaultViewImpl(inout latLon : LatLon, in radius : double)
-        super(latLon, radius);
-        this.latitude = latLon.getLatitude().degrees;
-        this.longitude = latLon.getLongitude().degrees;
-!!!132738.java!!!	setLatitude(in latitude : double) : void
-        this.latitude = latitude;
-        moveTo(Position.fromDegrees(latitude, longitude, 100));
-!!!132866.java!!!	setLongitude(in longitude : double) : void
-        this.longitude = longitude;
-        moveTo(Position.fromDegrees(latitude, longitude, 100));
-!!!132994.java!!!	setLatLon(in latitude : double, in longitude : double) : void
-        this.latitude = latitude;
-        this.longitude = longitude;
+class GpsLocator
+!!!128642.java!!!	GpsLocator(inout geoViewServices : GeoViewServices, inout dpAgentServices : DpAgentServices)
 
-!!!133122.java!!!	setType(in type : int) : void
-        getAttributes().setInteriorMaterial(CategoryView.VIEW.get(type));
+        // creation de la layer
+        this.gpsLayer = GeoLayer.factory.newWorldWindGeoLayer(new GpsLayer());
 
+        // creation du processor
+        this.shipProcessor = new PShipProcessor(this.gpsLayer);
+        geoViewServices.registerProcessor(this.shipProcessor);
+
+        geoViewServices.getLayerManager().insertGeoLayer(this.shipProcessor.getLayer());
+
+        // creation du controller
+        this.gpsLocatorController = new GpsLocatorControllerWithDPAgent(dpAgentServices);

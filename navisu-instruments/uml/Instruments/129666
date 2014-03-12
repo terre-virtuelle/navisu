@@ -1,5 +1,5 @@
 format 76
-"controller" // bzh::terrevirtuelle::navisu::world::gps::locator::controller
+"impl" // bzh::terrevirtuelle::navisu::locators::impl
   revision 1
   modified_by 2 "Serge"
   // class settings
@@ -26,9 +26,9 @@ format 76
   package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
   show_infonote default drawing_language default show_stereotype_properties default
   
-  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/world/gps/locator/controller/"
-  java_package "bzh.terrevirtuelle.navisu.world.gps.locator.controller"
-  classview 129026 "controller"
+  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/locators/impl/"
+  java_package "bzh.terrevirtuelle.navisu.locators.impl"
+  classview 129282 "impl"
     //class diagram settings
     draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
@@ -44,7 +44,7 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    class 130306 "GpsLocatorControllerWithDPAgent"
+    class 129666 "Widget3DImpl"
       visibility public 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -57,103 +57,118 @@ ${members}}
       
       comment "
 @author Serge"
-      attribute 132866 "LOGGER"
-	class_attribute const_attribute protected explicit_type "Logger"
-	init_value " Logger.getLogger(GpsLocatorControllerWithDPAgent.class.getName())"
+      classrelation 129282 // <realization>
+	relation 129282 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129282 // <realization>
+	  b parent class_ref 128002 // Widget3D
+      end
+
+      classrelation 129410 // <realization>
+	relation 129410 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129410 // <realization>
+	  b parent class_ref 128258 // Widget3DServices
+      end
+
+      classrelation 129538 // <realization>
+	relation 129538 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 129538 // <realization>
+	  b parent class_ref 129794 // ComponentState
+      end
+
+      attribute 130434 "geoViewServices"
+	package explicit_type "GeoViewServices"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 132994 "layerManager"
-	protected explicit_type "Layer"
-	stereotype "LayerManager"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+	java_annotation "@UsedService
 "
 	php_decl ""
 	python_decl ""
 	idl_decl ""
       end
 
-      attribute 133122 "cm"
-	package explicit_type "ComponentManager"
-	init_value " ComponentManager.componentManager"
+      attribute 130562 "dpAgentServices"
+	package explicit_type "DpAgentServices"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 133250 "ggaES"
-	package explicit_type "GGAEvent"
-	init_value " cm.getComponentEventSubscribe(GGAEvent.class)"
-	stereotype "ComponentEventSubscribe"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+	java_annotation "@UsedService
 "
 	php_decl ""
 	python_decl ""
 	idl_decl ""
       end
 
-      attribute 133378 "gsvES"
-	package explicit_type "GSVEvent"
-	init_value " cm.getComponentEventSubscribe(GSVEvent.class)"
-	stereotype "ComponentEventSubscribe"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 133506 "rmcES"
-	package explicit_type "RMCEvent"
-	init_value " cm.getComponentEventSubscribe(RMCEvent.class)"
-	stereotype "ComponentEventSubscribe"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 133634 "vtgES"
-	package explicit_type "VTGEvent"
-	init_value " cm.getComponentEventSubscribe(VTGEvent.class)"
-	stereotype "ComponentEventSubscribe"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      classrelation 129666 // tShip (<unidirectional association>)
-	relation 129666 --->
-	  a role_name "tShip" protected
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	    classrelation_ref 129666 // tShip (<unidirectional association>)
-	  b parent class_ref 130434 // TShip
-      end
-
-      operation 134530 "GpsLocatorControllerWithDPAgent"
-	public explicit_return_type ""
-	nparams 1
-	  param in name "dpAgentServices" explicit_type "DpAgentServices"
+      operation 129026 "componentInitiated"
+	public explicit_return_type "void"
+	nparams 0
 	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}final ${t0} ${p0}${)}${throws}${staticnl}{
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
   ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 129154 "componentStarted"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 129282 "componentStopped"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 129410 "createGpsLocator"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 129538 "createAisLocator"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
 "
 	
 	
@@ -162,33 +177,26 @@ ${members}}
     end
   end
 
-  deploymentview 128770 "controller"
+  deploymentview 128898 "impl"
     //deployment diagram settings
     package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
     draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 129538 "GpsLocatorControllerWithDPAgent"
+    artifact 129026 "Widget3DImpl"
       stereotype "source"
       java_src "${comment}
 ${package}
 ${imports}
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GSVEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
-import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
-import bzh.terrevirtuelle.navisu.nmea.model.GGA;
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.nmea.model.VTG;
-import bzh.terrevirtuelle.navisu.world.gps.locator.model.TShip;
-import gov.nasa.worldwind.layers.Layer;
-import org.capcaval.c3.component.ComponentEventSubscribe;
-import org.capcaval.c3.componentmanager.ComponentManager;
-import java.util.logging.Logger;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.locators.Widget3D;
+import bzh.terrevirtuelle.navisu.locators.Widget3DServices;
+import bzh.terrevirtuelle.navisu.locators.ais.AisLocator;
+import bzh.terrevirtuelle.navisu.locators.gps.GpsLocator;
+import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
 ${definition}"
       associated_classes
-	class_ref 130306 // GpsLocatorControllerWithDPAgent
+	class_ref 129666 // Widget3DImpl
       end
       comment "To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates

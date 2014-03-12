@@ -1,0 +1,3 @@
+class AisLayer
+!!!128642.java!!!	AisLayer()
+        setName("AIS Layer");

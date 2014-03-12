@@ -18,7 +18,8 @@ import org.capcaval.c3.component.annotation.UsedService;
  *
  * @author Serge
  */
-public class Widget3DImpl implements Widget3D, Widget3DServices, ComponentState {
+public class Widget3DImpl
+        implements Widget3D, Widget3DServices, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -45,6 +46,6 @@ public class Widget3DImpl implements Widget3D, Widget3DServices, ComponentState 
 
     @Override
     public void createAisLocator() {
-       AisLocator locator = new AisLocator(geoViewServices);
+        AisLocator locator = new AisLocator(geoViewServices, dpAgentServices);
     }
 }

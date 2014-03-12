@@ -1,0 +1,4 @@
+class GpsLayer
+!!!129026.java!!!	GpsLayer()
+  
+        setName("GPS Layer");

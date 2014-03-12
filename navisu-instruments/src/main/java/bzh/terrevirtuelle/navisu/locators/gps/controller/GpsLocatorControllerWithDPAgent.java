@@ -10,13 +10,11 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
 import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.nmea.model.GGA;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.nmea.model.RMC;
 import bzh.terrevirtuelle.navisu.nmea.model.VTG;
-import gov.nasa.worldwind.layers.Layer;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -34,7 +32,7 @@ public class GpsLocatorControllerWithDPAgent {
 
     protected static final Logger LOGGER = Logger.getLogger(GpsLocatorControllerWithDPAgent.class.getName());
     private final Properties properties;
-    protected LayerManager<Layer> layerManager;
+    protected DpAgentServices dpAgentServices;
 
     ComponentManager cm = ComponentManager.componentManager;
     ComponentEventSubscribe<GGAEvent> ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -44,15 +42,15 @@ public class GpsLocatorControllerWithDPAgent {
     protected TShip ship;
 
     public GpsLocatorControllerWithDPAgent(final DpAgentServices dpAgentServices) {
+        this.dpAgentServices = dpAgentServices;
         properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/domain.properties"));
         } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(GpsLocatorControllerWithDPAgent.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
 
         // creation du TObject (l'objet metier)
-
         ship = new TShip(IDGenerator.newIntID(),
                 new Integer(properties.getProperty("mmsi")),
                 properties.getProperty("name"),
@@ -64,9 +62,15 @@ public class GpsLocatorControllerWithDPAgent {
                 new Integer(properties.getProperty("navigationalStatus")),
                 new Integer(properties.getProperty("electronicPositionDevice")),
                 properties.getProperty("callSign"));
-                // insertion dans le DPAgent
-                dpAgentServices.create(ship);
 
+        // insertion dans le DPAgent
+        dpAgentServices.create(ship);
+        
+        subscribe();
+    }
+
+    private void subscribe() {
+        // souscription aux événements
         ggaES.subscribe(new GGAEvent() {
 
             @Override

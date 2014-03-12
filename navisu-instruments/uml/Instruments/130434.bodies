@@ -1,16 +1,25 @@
-class TShip
-!!!134658.java!!!	TShip(in id : int)
-        this.id = id;
-!!!134786.java!!!	getID() : int
-        return this.id;
-!!!134914.java!!!	getLocation() : Location
-        return Location.factory.newLocation(this.getLatitude(), this.getLongitude());
-!!!135042.java!!!	setLocation(inout location : Location) : void
-        this.setLatitude(location.getLatitudeDegree());
-        this.setLongitude(location.getLongitudeDegree());
-!!!135170.java!!!	getClone() : Object
-
-        TShip clone = new TShip(this.id);
-        clone.setLocation(this.getLocation());
-
+class GCShip
+!!!132738.java!!!	GCShip(in id : int, inout ship : TShip, inout circle : SurfaceCircle)
+        super(id, ship);
+        this.circle = circle;
+!!!132866.java!!!	GCShip(in id : int, inout ship : TShip, in radius : double)
+        super(id, ship);
+        circle = new SurfaceCircle(new LatLon(Angle.fromDegrees(ship.getLatitude()),
+                Angle.fromDegrees(ship.getLongitude())), radius);
+        this.circle.setEnableBatchPicking(true);
+        this.circle.moveTo(new Position(Angle.fromDegrees(ship.getLatitude()),
+                Angle.fromDegrees(ship.getLongitude()),
+                1000.0));
+!!!132994.java!!!	setLocation(inout location : Location) : void
+        this.circle.moveTo(Position.fromDegrees(location.getLatitudeDegree(),
+                location.getLongitudeDegree(), 100));
+!!!133122.java!!!	getRenderables() : Renderable
+        return new Renderable[]{
+            this.circle};
+!!!133250.java!!!	setCog(in cog : double) : void
+        //nothing to do
+!!!133378.java!!!	setPathAttrs(inout pathAttrs : ShapeAttributes) : void
+        this.circle.setAttributes(pathAttrs);
+!!!133506.java!!!	getClone() : Object
+        GCShip clone = new GCShip(this.id, this.ship, this.circle);
         return clone;

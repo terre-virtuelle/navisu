@@ -24,17 +24,15 @@ public class GpsLocator {
     protected final ShipProcessor shipProcessor;
     protected final GpsLocatorControllerWithDPAgent gpsLocatorController;
 
-
     public GpsLocator(GeoViewServices geoViewServices, DpAgentServices dpAgentServices) {
 
         // creation de la layer
         this.gpsLayer = GeoLayer.factory.newWorldWindGeoLayer(new GpsLayer());
-
+        geoViewServices.getLayerManager().insertGeoLayer(this.gpsLayer);
+        
         // creation du processor
         this.shipProcessor = new PShipProcessor(this.gpsLayer);
         geoViewServices.registerProcessor(this.shipProcessor);
-
-        geoViewServices.getLayerManager().insertGeoLayer(this.shipProcessor.getLayer());
 
         // creation du controller
         this.gpsLocatorController = new GpsLocatorControllerWithDPAgent(dpAgentServices);

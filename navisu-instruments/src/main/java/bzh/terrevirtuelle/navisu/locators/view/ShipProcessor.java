@@ -6,14 +6,11 @@ import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * NaVisu
@@ -25,10 +22,15 @@ public abstract class ShipProcessor
         implements GObjectCUDProcessor {
 
     protected final GeoLayer<Layer> layer;
-    TShip tShip;
+    protected TShip tShip;
 
     public ShipProcessor(GeoLayer<Layer> layer) {
         this.layer = layer;
+    }
+
+    public ShipProcessor(GeoLayer<Layer> layer, TShip tShip) {
+        this.layer = layer;
+        this.tShip = tShip;
     }
 
     @Override
@@ -57,10 +59,6 @@ public abstract class ShipProcessor
         pathAttrs.setInteriorOpacity(1.0);
         return pathAttrs;
     }
-
-    
-
-    
 
     @Override
     public GeoLayer<Layer> getLayer() {

@@ -1,0 +1,26 @@
+class TShip
+!!!129666.java!!!	TShip(in id : int)
+        this.id = id;
+!!!129794.java!!!	TShip(in id : int, in mmsi : int, in name : String, in country : String, in width : float, in length : float, in draught : float, in shipType : int, in navigationalStatus : int, in electronicPositionDevice : int, in callSign : String)
+        super(mmsi, name, country, width, length, draught, shipType, navigationalStatus, electronicPositionDevice, callSign);
+        this.id = id;
+!!!129922.java!!!	getID() : int
+        return this.id;
+!!!130050.java!!!	getLocation() : Location
+        return Location.factory.newLocation(this.getLatitude(), this.getLongitude());
+!!!130178.java!!!	setLocation(inout location : Location) : void
+        this.setLatitude(location.getLatitudeDegree());
+        this.setLongitude(location.getLongitudeDegree());
+!!!130306.java!!!	getOrientation() : Orientation
+ 
+        return Orientation.factory.newOrientation(this.getCog());
+!!!130434.java!!!	setOrientation(inout orientation : Orientation) : void
+        this.setCog((float) orientation.getOrientationDegree());
+!!!130562.java!!!	getClone() : Object
+        
+        TShip clone = new TShip(this.id);
+        clone.setLocation(this.getLocation());
+        clone.setOrientation(this.getOrientation());
+        // TODO à completer 
+        // return clone avec constructeur complet
+        return this;

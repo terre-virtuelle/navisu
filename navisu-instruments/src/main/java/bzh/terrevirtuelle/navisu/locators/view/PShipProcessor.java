@@ -18,23 +18,27 @@ import java.util.List;
  * @date 19/02/2014 19:13
  */
 public class PShipProcessor
-extends ShipProcessor
+        extends ShipProcessor
         implements GObjectCUDProcessor {
 
-    
+    GPShip gShip;
+
     public PShipProcessor(GeoLayer<Layer> layer) {
         super(layer);
+    }
+
+    public PShipProcessor(GeoLayer<Layer> layer, TShip tShip) {
+        super(layer, tShip);
     }
 
     @Override
     public GObject processCreated(int id, TObject input) {
 
         tShip = (TShip) input;
-      
-        List<Position> bounds = this.makePositionList(this.initShape(tShip.getLatitude()
-                , tShip.getLongitude()));
 
-        GPShip gShip = new GPShip(id, tShip, bounds);
+        List<Position> bounds = this.makePositionList(this.initShape(tShip.getLatitude(), tShip.getLongitude()));
+
+        gShip = new GPShip(id, tShip, bounds);
         gShip.setPathAttrs(this.makeAttributes());
 
         return gShip;
@@ -50,7 +54,8 @@ extends ShipProcessor
         shipShape[5] = latitude - .0015;
         return shipShape;
     }
-    protected  List<Position> makePositionList(double[] src) {
+
+    protected List<Position> makePositionList(double[] src) {
         int numCoords = src.length / 2;
         Position[] array = new Position[numCoords];
 

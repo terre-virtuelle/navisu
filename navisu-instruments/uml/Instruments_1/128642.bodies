@@ -1,0 +1,14 @@
+class AisLocator
+!!!128386.java!!!	AisLocator(inout geoViewServices : GeoViewServices, inout dpAgentServices : DpAgentServices)
+
+        // creation de la layer
+        this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new GpsLayer());
+
+        // creation du processor
+        // this.shipProcessor = new PShipProcessor(this.gpsLayer);
+        geoViewServices.registerProcessor(this.shipProcessor);
+
+        geoViewServices.getLayerManager().insertGeoLayer(this.shipProcessor.getLayer());
+
+        // creation du controller
+        this.aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices);

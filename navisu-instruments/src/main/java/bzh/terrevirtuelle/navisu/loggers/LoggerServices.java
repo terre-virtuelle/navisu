@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.loggers;
 
+import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -15,4 +16,5 @@ public interface LoggerServices
         extends ComponentService {
 
     public void createPrinter();
+    public void createPrinter(NMEA nmea);
 }

@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.loggers.impl;
 import bzh.terrevirtuelle.navisu.loggers.Logger;
 import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.loggers.controller.LoggerController;
+import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -35,5 +36,10 @@ public class LoggerImpl
     public void createPrinter() {
         loggerController = new LoggerController();
     }
+
+    @Override
+    public void createPrinter(NMEA nmea) {
+        loggerController = new LoggerController(nmea);
+          }
 
 }

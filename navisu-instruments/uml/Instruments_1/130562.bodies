@@ -1,0 +1,25 @@
+class GCShip
+!!!132866.java!!!	GCShip(in id : int, inout ship : TShip, inout circle : SurfaceCircle)
+        super(id, ship);
+        this.circle = circle;
+!!!132994.java!!!	GCShip(in id : int, inout ship : TShip, in radius : double)
+        super(id, ship);
+        circle = new SurfaceCircle(new LatLon(Angle.fromDegrees(ship.getLatitude()),
+                Angle.fromDegrees(ship.getLongitude())), radius);
+        this.circle.setEnableBatchPicking(true);
+        this.circle.moveTo(new Position(Angle.fromDegrees(ship.getLatitude()),
+                Angle.fromDegrees(ship.getLongitude()),
+                1000.0));
+!!!133122.java!!!	setLocation(inout location : Location) : void
+        this.circle.moveTo(Position.fromDegrees(location.getLatitudeDegree(),
+                location.getLongitudeDegree(), 100));
+!!!133250.java!!!	getRenderables() : Renderable
+        return new Renderable[]{
+            this.circle};
+!!!133378.java!!!	setCog(in cog : double) : void
+        //nothing to do
+!!!133506.java!!!	setPathAttrs(inout pathAttrs : ShapeAttributes) : void
+        this.circle.setAttributes(pathAttrs);
+!!!133634.java!!!	getClone() : Object
+        GCShip clone = new GCShip(this.id, this.ship, this.circle);
+        return clone;

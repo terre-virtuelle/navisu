@@ -1,5 +1,5 @@
 format 76
-"impl" // bzh::terrevirtuelle::navisu::world::ais::locator::view::impl
+"view" // bzh::terrevirtuelle::navisu::locators::ais::view
   revision 1
   modified_by 2 "Serge"
   // class settings
@@ -26,9 +26,9 @@ format 76
   package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
   show_infonote default drawing_language default show_stereotype_properties default
   
-  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/world/ais/locator/view/impl/"
-  java_package "bzh.terrevirtuelle.navisu.world.ais.locator.view.impl"
-  classview 128642 "impl"
+  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/locators/ais/view/"
+  java_package "bzh.terrevirtuelle.navisu.locators.ais.view"
+  classview 128770 "view"
     //class diagram settings
     draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
@@ -44,7 +44,7 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    class 129154 "ShipViewImpl"
+    class 129026 "AisLayer"
       visibility public 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -57,24 +57,17 @@ ${members}}
       
       comment "
 @author Serge"
-      classrelation 129154 // <generalisation>
-	relation 129154 ---|>
+      classrelation 128642 // <generalisation>
+	relation 128642 ---|>
 	  a public
 	    java "${type}"
-	    classrelation_ref 129154 // <generalisation>
-	  b parent class_ref 129922 // Polygon
+	    classrelation_ref 128642 // <generalisation>
+	  b parent class_ref 129154 // RenderableLayer
       end
 
-      classrelation 129282 // <realization>
-	relation 129282 -_-|>
-	  a public
-	    java "${type}"
-	    classrelation_ref 129282 // <realization>
-	  b parent class_ref 128898 // ShipView
-      end
-
-      attribute 132098 "latitude"
-	private explicit_type "double"
+      attribute 129154 "LOGGUER"
+	class_attribute const_attribute protected explicit_type "Logger"
+	init_value " Logger.getLogger(AisLayer.class.getName())"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
@@ -83,311 +76,12 @@ ${members}}
 	idl_decl ""
       end
 
-      attribute 132226 "longitude"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 132354 "heading"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 132482 "ALTITUDE"
-	const_attribute private explicit_type "int"
-	init_value " 100"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 132610 "wwd"
-	const_attribute private explicit_type "WorldWindow"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      operation 133506 "ShipViewImpl"
+      operation 128514 "AisLayer"
 	public explicit_return_type ""
-	nparams 4
-	  param inout name "positions" explicit_type "Iterable<? extends Position>"
-	  param in name "latitude" explicit_type "double"
-	  param in name "longitude" explicit_type "double"
-	  param in name "heading" explicit_type "double"
+	nparams 0
 	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
   ${body}}
-"
-	
-	
-	
-      end
-
-      operation 133634 "setLatitude"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "latitude" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 133762 "setLongitude"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "longitude" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 133890 "setLatLon"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "latitude" explicit_type "double"
-	  param in name "longitude" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 134018 "setType"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "type" explicit_type "int"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 134146 "setHeading"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "angle" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 134274 "setCog"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "angle" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-    end
-
-    class 129282 "ShipDefaultViewImpl"
-      visibility public 
-      cpp_decl ""
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
-${members}}
-"
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-      comment "
-@author Serge"
-      classrelation 128898 // <generalisation>
-	relation 128898 ---|>
-	  a public
-	    java "${type}"
-	    classrelation_ref 128898 // <generalisation>
-	  b parent class_ref 129666 // SurfaceCircle
-      end
-
-      classrelation 129026 // <realization>
-	relation 129026 -_-|>
-	  a public
-	    java "${type}"
-	    classrelation_ref 129026 // <realization>
-	  b parent class_ref 128898 // ShipView
-      end
-
-      attribute 131714 "latitude"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 131842 "longitude"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 131970 "cog"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      operation 132610 "ShipDefaultViewImpl"
-	public explicit_return_type ""
-	nparams 2
-	  param inout name "latLon" explicit_type "LatLon"
-	  param in name "radius" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 132738 "setLatitude"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "latitude" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 132866 "setLongitude"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "longitude" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 132994 "setLatLon"
-	public explicit_return_type "void"
-	nparams 2
-	  param in name "latitude" explicit_type "double"
-	  param in name "longitude" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 133122 "setType"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "type" explicit_type "int"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 133250 "setCog"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "cog" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
-"
-	
-	
-	
-      end
-
-      operation 133378 "setHeading"
-	public explicit_return_type "void"
-	nparams 1
-	  param in name "angle" explicit_type "double"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	java_annotation "@Override
 "
 	
 	
@@ -396,42 +90,20 @@ ${members}}
     end
   end
 
-  deploymentview 128514 "impl"
+  deploymentview 128386 "view"
     //deployment diagram settings
     package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
     draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 129154 "ShipDefaultViewImpl"
+    artifact 128514 "AisLayer"
       stereotype "source"
       java_src "${comment}
 ${package}
 ${imports}
-import bzh.terrevirtuelle.navisu.world.ais.locator.view.*;
-import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfaceCircle;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import java.util.logging.Logger;
 ${definition}"
       associated_classes
-	class_ref 129282 // ShipDefaultViewImpl
-      end
-      comment "To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor."
-    end
-
-    artifact 129282 "ShipViewImpl"
-      stereotype "source"
-      java_src "${comment}
-${package}
-${imports}
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.world.ais.locator.view.*;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.render.Polygon;
-${definition}"
-      associated_classes
-	class_ref 129154 // ShipViewImpl
+	class_ref 129026 // AisLayer
       end
       comment "To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates

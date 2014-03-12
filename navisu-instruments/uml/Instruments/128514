@@ -69,7 +69,7 @@ ${members}}
       
     end
 
-    class 129026 "RenderableLayer"
+    class 129154 "RenderableLayer"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -82,7 +82,7 @@ ${members}}
       
     end
 
-    class 129666 "SurfaceCircle"
+    class 129794 "ComponentState"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -95,7 +95,7 @@ ${members}}
       
     end
 
-    class 129922 "Polygon"
+    class 129922 "Ship"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -108,7 +108,7 @@ ${members}}
       
     end
 
-    class 130562 "Ship"
+    class 130050 "TOrientedObject"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -121,7 +121,7 @@ ${members}}
       
     end
 
-    class 130690 "TObject"
+    class 130306 "GObjectCUDProcessor"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -134,33 +134,7 @@ ${members}}
       
     end
 
-    class 131202 "GObject"
-      visibility package 
-      cpp_decl ""
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
-${members}}
-"
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-    end
-
-    class 131330 "GObjectCUDProcessor"
-      visibility package 
-      cpp_decl ""
-      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
-${members}}
-"
-      php_decl ""
-      python_2_2 python_decl ""
-      idl_decl ""
-      explicit_switch_type ""
-      
-    end
-
-    class 131714 "ComponentState"
+    class 130690 "GObject"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {

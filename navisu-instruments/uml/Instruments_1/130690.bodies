@@ -1,0 +1,12 @@
+class GShip
+!!!131842.java!!!	GShip(in id : int, inout ship : TShip)
+        this.id = id;
+        this.ship = ship;
+!!!131970.java!!!	getID() : int
+        return this.id;
+!!!132098.java!!!	getShip() : TShip
+        return ship;
+!!!132226.java!!!	setShip(inout ship : TShip) : void
+        this.ship = ship;
+!!!132482.java!!!	getRenderables() : Renderable
+        return renderables;

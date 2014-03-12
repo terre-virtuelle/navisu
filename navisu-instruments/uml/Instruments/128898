@@ -1,5 +1,5 @@
 format 76
-"controller" // bzh::terrevirtuelle::navisu::world::ais::locator::controller
+"controller" // bzh::terrevirtuelle::navisu::locators::ais::controller
   revision 1
   modified_by 2 "Serge"
   // class settings
@@ -26,9 +26,9 @@ format 76
   package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
   show_infonote default drawing_language default show_stereotype_properties default
   
-  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/world/ais/locator/controller/"
-  java_package "bzh.terrevirtuelle.navisu.world.ais.locator.controller"
-  classview 128386 "controller"
+  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/locators/ais/controller/"
+  java_package "bzh.terrevirtuelle.navisu.locators.ais.controller"
+  classview 128514 "controller"
     //class diagram settings
     draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
@@ -44,7 +44,7 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    class 128642 "AisLocatorController"
+    class 128770 "AisLocatorControllerWithDPAgent"
       visibility public 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -57,9 +57,9 @@ ${members}}
       
       comment "
 @author Serge"
-      attribute 128002 "LOGGER"
+      attribute 128130 "LOGGER"
 	class_attribute const_attribute protected explicit_type "Logger"
-	init_value " Logger.getLogger(AisLocatorController.class.getName())"
+	init_value " Logger.getLogger(AisLocatorControllerWithDPAgent.class.getName())"
 	cpp_decl ""
 	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
@@ -68,7 +68,7 @@ ${members}}
 	idl_decl ""
       end
 
-      attribute 128130 "layerManager"
+      attribute 128258 "layerManager"
 	protected explicit_type "Layer"
 	stereotype "LayerManager"
 	cpp_decl ""
@@ -79,7 +79,7 @@ ${members}}
 	idl_decl ""
       end
 
-      attribute 128258 "cm"
+      attribute 128386 "cm"
 	package explicit_type "ComponentManager"
 	init_value " ComponentManager.componentManager"
 	cpp_decl ""
@@ -90,7 +90,7 @@ ${members}}
 	idl_decl ""
       end
 
-      attribute 128386 "ais1ES"
+      attribute 128514 "ais1ES"
 	package explicit_type "AIS1Event"
 	init_value " cm.getComponentEventSubscribe(AIS1Event.class)"
 	stereotype "ComponentEventSubscribe"
@@ -102,7 +102,7 @@ ${members}}
 	idl_decl ""
       end
 
-      attribute 128514 "ais2ES"
+      attribute 128642 "ais2ES"
 	package explicit_type "AIS2Event"
 	init_value " cm.getComponentEventSubscribe(AIS2Event.class)"
 	stereotype "ComponentEventSubscribe"
@@ -114,7 +114,7 @@ ${members}}
 	idl_decl ""
       end
 
-      attribute 128642 "ais3ES"
+      attribute 128770 "ais3ES"
 	package explicit_type "AIS3Event"
 	init_value " cm.getComponentEventSubscribe(AIS3Event.class)"
 	stereotype "ComponentEventSubscribe"
@@ -126,7 +126,7 @@ ${members}}
 	idl_decl ""
       end
 
-      attribute 128770 "ais4ES"
+      attribute 128898 "ais4ES"
 	package explicit_type "AIS4Event"
 	init_value " cm.getComponentEventSubscribe(AIS4Event.class)"
 	stereotype "ComponentEventSubscribe"
@@ -138,7 +138,7 @@ ${members}}
 	idl_decl ""
       end
 
-      attribute 128898 "ais5ES"
+      attribute 129026 "ais5ES"
 	package explicit_type "AIS5Event"
 	init_value " cm.getComponentEventSubscribe(AIS5Event.class)"
 	stereotype "ComponentEventSubscribe"
@@ -150,190 +150,21 @@ ${members}}
 	idl_decl ""
       end
 
-      classrelation 128386 // aisLayer (<unidirectional association>)
-	relation 128386 --->
-	  a role_name "aisLayer" protected
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	    classrelation_ref 128386 // aisLayer (<unidirectional association>)
-	  b parent class_ref 128770 // AisLayer
-      end
-
-      attribute 129026 "latitude"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 129154 "longitude"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 129282 "cog"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 129410 "heading"
-	private explicit_type "double"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 129538 "type"
-	private explicit_type "int"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 129666 "wwd"
-	const_attribute private explicit_type "WorldWindow"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 129794 "ships"
-	private explicit_type "Integer, Ship"
-	stereotype "Map"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      attribute 129922 "ship"
-	private explicit_type "Ship"
-	cpp_decl ""
-	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	php_decl ""
-	python_decl ""
-	idl_decl ""
-      end
-
-      classrelation 128514 // shipView (<unidirectional association>)
+      classrelation 128514 // ship (<unidirectional association>)
 	relation 128514 --->
-	  a role_name "shipView" private
+	  a role_name "ship" protected
 	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
-	    classrelation_ref 128514 // shipView (<unidirectional association>)
-	  b parent class_ref 128898 // ShipView
+	    classrelation_ref 128514 // ship (<unidirectional association>)
+	  b parent class_ref 128898 // TShip
       end
 
-      operation 128386 "AisLocatorController"
+      operation 128386 "AisLocatorControllerWithDPAgent"
 	public explicit_return_type ""
 	nparams 1
-	  param inout name "geoViewServices" explicit_type "GeoViewServices"
+	  param in name "dpAgentServices" explicit_type "DpAgentServices"
 	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 128514 "shipUpdate"
-	private explicit_return_type "void"
-	nparams 1
-	  param inout name "ais" explicit_type "AIS135"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 128642 "shipUpdate5"
-	private explicit_return_type "void"
-	nparams 1
-	  param inout name "ais" explicit_type "AIS135"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 128770 "shipBuild4"
-	private explicit_return_type "void"
-	nparams 1
-	  param inout name "ais" explicit_type "AIS4"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 128898 "shipBuildDefault"
-	private explicit_return_type "void"
-	nparams 2
-	  param inout name "ais" explicit_type "AIS135"
-	  param in name "aisType" explicit_type "int"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 129026 "shipBuild"
-	private explicit_return_type "void"
-	nparams 2
-	  param inout name "ais" explicit_type "AIS135"
-	  param in name "aisType" explicit_type "int"
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-      end
-
-      operation 129154 "subscribe"
-	private explicit_return_type "void"
-	nparams 0
-	
-	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}final ${t0} ${p0}${)}${throws}${staticnl}{
   ${body}}
 "
 	
@@ -347,46 +178,26 @@ ${members}}
     //deployment diagram settings
     package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
     draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
-    artifact 128386 "AisLocatorController"
+    artifact 128386 "AisLocatorControllerWithDPAgent"
       stereotype "source"
       java_src "${comment}
 ${package}
 ${imports}
-import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
-import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS135;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS2;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.ship.Ship;
-import bzh.terrevirtuelle.navisu.world.ais.locator.view.AisLayer;
-import bzh.terrevirtuelle.navisu.world.ais.locator.view.ShipView;
-import bzh.terrevirtuelle.navisu.world.ais.locator.view.ShipViewFactory;
-import bzh.terrevirtuelle.navisu.world.ais.locator.view.impl.ShipDefaultViewImpl;
-import bzh.terrevirtuelle.navisu.world.ais.locator.view.impl.ShipViewImpl;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.geom.Position;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import gov.nasa.worldwind.layers.Layer;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
-import javafx.beans.value.ObservableValue;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 ${definition}"
       associated_classes
-	class_ref 128642 // AisLocatorController
+	class_ref 128770 // AisLocatorControllerWithDPAgent
       end
       comment "To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
