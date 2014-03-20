@@ -53,6 +53,7 @@ public class NmeaClientImpl
         properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/client.properties"));
+            xml = Boolean.valueOf(properties.getProperty("xml"));
             unmarshaller = JAXBContext.newInstance(Sentences.class).createUnmarshaller();
         } catch (IOException | JAXBException ex) {
             java.util.logging.Logger.getLogger(NmeaClientImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -125,11 +126,11 @@ public class NmeaClientImpl
     }
 
     private void response(Sentences sentences) {
-        /* With new classe in the domain, creat also new Event for diffusion */
-        /* Debug mode : cpmment notifyNMEAEvent, uncomment display */
+        /* With new classe in the domain, create also new Event for diffusion */
+        /* Debug mode : comment notifyNMEAEvent, uncomment display */
         notifyNMEAEvent();
         
-        //  display();
+        // display();
     }
 
     public void display() {
