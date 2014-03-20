@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.locators.view;
+package bzh.terrevirtuelle.navisu.locators.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
@@ -6,6 +6,8 @@ import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.view.GShip;
+import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -37,7 +39,6 @@ public abstract class ShipProcessor
     public GObject processUpdated(int id, TObject input, GObject output) {
 
         GShip gShip = (GShip) output;
-
         gShip.setLocation(input.getLocation());
         gShip.setCog(((TOrientedObject) input).getOrientation().getOrientationDegree());
         return output;

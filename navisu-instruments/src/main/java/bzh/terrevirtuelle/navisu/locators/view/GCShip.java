@@ -20,7 +20,7 @@ public class GCShip extends GShip
         implements GObject {
 
     protected SurfaceCircle circle;
-
+    
     public GCShip(int id, TShip ship, SurfaceCircle circle) {
         super(id, ship);
         this.circle = circle;
@@ -33,13 +33,15 @@ public class GCShip extends GShip
         this.circle.setEnableBatchPicking(true);
         this.circle.moveTo(new Position(Angle.fromDegrees(ship.getLatitude()),
                 Angle.fromDegrees(ship.getLongitude()),
-                1000.0));
+                100.0));
     }
 
     @Override
     public void setLocation(Location location) {
-        this.circle.moveTo(Position.fromDegrees(location.getLatitudeDegree(),
-                location.getLongitudeDegree(), 100));
+        this.circle.moveTo(new Position(Angle.fromDegrees(location.getLatitudeDegree()),
+                Angle.fromDegrees(location.getLongitudeDegree()), 100));
+      //  System.out.println(getID()+"  " + location.getLatitudeDegree()
+      //  + "  " + location.getLongitudeDegree());
     }
 
     @Override

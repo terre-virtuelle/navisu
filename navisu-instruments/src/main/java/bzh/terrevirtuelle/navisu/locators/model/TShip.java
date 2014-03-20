@@ -65,7 +65,6 @@ public class TShip
     
     @Override
     public Object getClone() {
-        
         TShip clone = new TShip(this.id);
         clone.setLocation(this.getLocation());
         clone.setOrientation(this.getOrientation());

@@ -1,10 +1,12 @@
-package bzh.terrevirtuelle.navisu.locators.view;
+package bzh.terrevirtuelle.navisu.locators.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.view.GCShip;
+import bzh.terrevirtuelle.navisu.locators.view.GPShip;
 import gov.nasa.worldwind.layers.Layer;
 
 /**
@@ -16,6 +18,8 @@ import gov.nasa.worldwind.layers.Layer;
 public class CShipProcessor
         extends ShipProcessor
         implements GObjectCUDProcessor {
+
+    GCShip gShip;
 
     public CShipProcessor(GeoLayer<Layer> layer) {
         super(layer);
@@ -30,7 +34,7 @@ public class CShipProcessor
 
         tShip = (TShip) input;
 
-        GCShip gShip = new GCShip(id, tShip, 20);
+        gShip = new GCShip(id, tShip, 20);
         gShip.setPathAttrs(this.makeAttributes());
 
         return gShip;
