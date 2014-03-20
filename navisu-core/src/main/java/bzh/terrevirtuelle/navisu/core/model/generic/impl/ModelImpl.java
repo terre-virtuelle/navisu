@@ -98,6 +98,7 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
         for(ModelEvents<T> observer : this.observerList) {
             observer.notifyDataUpdated(id, (T) data.getClone());
         }
+        
     }
 
     @Override
