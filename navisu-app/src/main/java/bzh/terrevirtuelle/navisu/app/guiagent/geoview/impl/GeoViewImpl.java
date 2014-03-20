@@ -36,11 +36,13 @@ import java.util.logging.Logger;
 public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoViewServices {
 
     private static final Logger LOGGER = Logger.getLogger(GeoViewImpl.class.getName());
+
     static {
         LOGGER.setLevel(Level.ALL);
     }
 
-    @UsedService LayerTreeServices layerTreeServices;
+    @UsedService
+    LayerTreeServices layerTreeServices;
 
     protected GeoWorldWindView geoView;
     protected LayerManager<Layer> layerManager;
@@ -58,8 +60,9 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
         this.layerManager.getGroups().forEach((groupName, geoLayerList) -> {
 
-            if(geoLayerList.size() > 0)
+            if (geoLayerList.size() > 0) {
                 layerTreeServices.createGroup(groupName, geoLayerList.toArray(new GeoLayer[geoLayerList.size()]));
+            }
         });
 
         this.model = Model.factory.newModel(GObject.class);
@@ -74,7 +77,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         //TODO /!\ C'est pas top de faire
         final RenderableLayer layer = (RenderableLayer) processor.getLayer().getDisplayLayer();
 
-        for(Renderable renderable : newGObject.getRenderables()) {
+        for (Renderable renderable : newGObject.getRenderables()) {
             layer.addRenderable(renderable);
         }
 
@@ -100,7 +103,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         this.geoView.getWorldWindow().redraw();
     }
 
-    protected void deleteGObject(GObjectCUDProcessor  processor, TObject tObject) {
+    protected void deleteGObject(GObjectCUDProcessor processor, TObject tObject) {
 
         // Retrieve the GObject in the model
         final GObject gObject = this.model.getReadDataServices().read(tObject.getID());
@@ -111,7 +114,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         //TODO /!\ C'est pas top de faire
         final RenderableLayer layer = (RenderableLayer) processor.getLayer().getDisplayLayer();
 
-        for(Renderable renderable : deletedGObject.getRenderables()) {
+        for (Renderable renderable : deletedGObject.getRenderables()) {
             layer.removeRenderable(renderable);
         }
 
@@ -128,11 +131,11 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
             @Override
             public void notifyCreated(TObject tObject) {
-            //    LOGGER.info("notifyCreated(" + tObject.getID() + ")");
+               // LOGGER.info("notifyCreated(" + tObject.getID() + ")");
 
                 GObjectCUDProcessor processor = findProcessor(tObject);
 
-                if(processor == null) {
+                if (processor == null) {
                     LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
                     return;
                 }
@@ -142,11 +145,10 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
             @Override
             public void notifyUpdated(TObject tObject) {
-             //   LOGGER.info("notifyUpdated(" + tObject.getID() + ")");
+                // LOGGER.info("notifyUpdated(" + tObject.getID() + ")");
 
                 GObjectCUDProcessor processor = findProcessor(tObject);
-
-                if(processor == null) {
+                if (processor == null) {
                     LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
                     return;
                 }
@@ -156,11 +158,11 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
             @Override
             public void notifyDeleted(TObject tObject) {
-            //    LOGGER.info("notifyDeleted(" + tObject.getID() + ")");
+                //    LOGGER.info("notifyDeleted(" + tObject.getID() + ")");
 
                 GObjectCUDProcessor processor = findProcessor(tObject);
 
-                if(processor == null) {
+                if (processor == null) {
                     LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
                     return;
                 }
@@ -184,9 +186,8 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
         GObjectCUDProcessor processor = null;
 
-        for(GObjectCUDProcessor proc : this.processors) {
-
-            if(proc.getType().isAssignableFrom(tObject.getClass())) {
+        for (GObjectCUDProcessor proc : this.processors) {
+            if (proc.getType().isAssignableFrom(tObject.getClass())) {
                 processor = proc;
                 break;
             }
@@ -200,7 +201,6 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         layerManager.createGroup("On-earth layers",
                 WorldWindLayers.Stars.newInstance(),
                 WorldWindLayers.SkyGradient.newInstance(),
-
                 WorldWindLayers.BlueMarbleImage.newInstance(),
                 WorldWindLayers.Fog.newInstance(),
                 WorldWindLayers.BlueMarbleWMS.newInstance(),
@@ -208,10 +208,8 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
                 WorldWindLayers.BingImagery.newInstance(),
                 WorldWindLayers.EarthAtNight.newInstance(),
                 WorldWindLayers.OpenStreetMap.newInstance(),
-
                 WorldWindLayers.CountryBoundaries.newInstance(),
                 WorldWindLayers.PlaceName.newInstance(),
-
                 WorldWindLayers.LatLonGraticule.newInstance()
         );
 

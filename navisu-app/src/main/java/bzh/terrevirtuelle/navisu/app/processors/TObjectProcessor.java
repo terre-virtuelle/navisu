@@ -47,7 +47,6 @@ public class TObjectProcessor implements GObjectCUDProcessor {
     public GObject processDeleted(int id, TObject input, GObject output) {
 
         // Nothing to do...
-
         return output;
     }
 
