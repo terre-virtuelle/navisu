@@ -149,7 +149,7 @@ public class AppMain extends Application {
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8080);
         nmeaClientServices.request(500);
-
+        
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
        // widgetServices.createGpsLocator();
