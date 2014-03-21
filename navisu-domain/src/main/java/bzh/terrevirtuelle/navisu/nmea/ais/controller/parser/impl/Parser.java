@@ -24,6 +24,6 @@ public abstract class Parser {
      *
      * @param message
      */
-    public abstract void parse(String message);
+    public  abstract void parse(String message);
 
 }
