@@ -130,7 +130,7 @@ public class NmeaClientImpl
         /* Debug mode : comment notifyNMEAEvent, uncomment display */
         notifyNMEAEvent();
         
-        // display();
+       //  display();
     }
 
     public void display() {
