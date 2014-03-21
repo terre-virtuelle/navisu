@@ -56,13 +56,13 @@ public class NmeaStringParser {
          || source.startsWith("$") // NMEA0183
          || source.startsWith("PGN")) { // N2K
          */
-
+        System.out.println(source);
         input = new ANTLRStringStream(source);
         handler = new NmeaHandler(sentences);
         aisHandler = new NmeaHandler(sentences);
         lexer = new NMEALexer(input);
         lexer.setHandler(handler);
-        lexer.setAISHandler(aisHandler);
+       // lexer.setAISHandler(aisHandler);
         parser = new NMEAParser(new CommonTokenStream(lexer));
         try {
             parser.entry();
