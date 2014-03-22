@@ -1,4 +1,4 @@
-// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-03-21 11:03:06
+// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-03-21 12:07:03
 
 package bzh.terrevirtuelle. navisu.nmea.controller.parser.impl;
 

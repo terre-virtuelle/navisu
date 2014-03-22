@@ -1,4 +1,4 @@
-// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-03-21 11:03:06
+// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-03-21 12:07:03
 
 package bzh.terrevirtuelle.navisu.nmea.controller.parser.impl;
 
@@ -11661,9 +11661,9 @@ public class NMEALexer extends Lexer {
 
 
             	//System.out.println("VDM : " + getText());
-            	String s[] = getText().split(":@:");
-            	//aisParser.parse(s[0]);
-            	AISParser.parse(s[0]);
+            	//String s[] = getText().split("*");
+            	//AISParser.parse(s[0]);
+            	AISParser.parse(getText());
             	
 
             }
@@ -13203,7 +13203,9 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            System.out.println(getText());
+
+                     // System.out.println(getText());
+                      
 
             }
 
@@ -13219,8 +13221,8 @@ public class NMEALexer extends Lexer {
     // $ANTLR start "EXPONENT"
     public final void mEXPONENT() throws RecognitionException {
         try {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1290:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1290:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1292:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1292:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -13232,7 +13234,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1290:22: ( '+' | '-' )?
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1292:22: ( '+' | '-' )?
             int alt243=2;
             int LA243_0 = input.LA(1);
 
@@ -13259,7 +13261,7 @@ public class NMEALexer extends Lexer {
             }
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1290:33: ( '0' .. '9' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1292:33: ( '0' .. '9' )+
             int cnt244=0;
             loop244:
             do {

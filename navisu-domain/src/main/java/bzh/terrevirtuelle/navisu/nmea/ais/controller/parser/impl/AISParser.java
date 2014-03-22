@@ -90,7 +90,7 @@ public class AISParser {
      * @param ligne
      */
     public static void parse(String ligne) {
-        System.out.println("ligne : " + ligne);
+      //  System.out.println("ligne : " + ligne);
         int whatType = -1;
         try {
             if (ligne.startsWith("!AIVDM")) {
@@ -161,7 +161,7 @@ public class AISParser {
                      * d�codage de la deux�me partie d'une trame 5, une telle
                      * trame n'a pas d'identifiant
                      */
-                    System.out.println("message5 : " + message5);
+                    
 
                     String patternStr = ",";
                     String[] champs = ligne.split(patternStr);
@@ -171,12 +171,13 @@ public class AISParser {
                     message5.ConcatAisBinary(ligne);
                     message5.checksumPadding(champs[6]);
                     message5.decodeFrame();
+                    //System.out.println("message5 : " + message5 + "partie 2");
                     handler.doIt(message5);
 
                     isFirstFrame = true;
                 }
             }
-            //  System.out.println("(AISPARSER) Message of Type " + whatType + " Detected");
+             //System.out.println("(AISPARSER) Message of Type " + whatType + " Detected");
         } catch (Exception e) {
             // System.err.println("(AISPARSER) Trame " + ligne + " invalide !!! Type : " + whatType);
             //e.printStackTrace();
