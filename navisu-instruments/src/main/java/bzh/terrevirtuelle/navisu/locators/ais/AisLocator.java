@@ -132,6 +132,7 @@ public class AisLocator {
                             ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
                             ais.getETA(), ais.getDestination(), "");
                     dpAgentServices.create(ship);
+                    
                     aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
                     tShipProcessors.put(mmsi, shipProcessor);
                 }
@@ -154,18 +155,7 @@ public class AisLocator {
          //  }
          }
          });
-         ais5ES.subscribe(new AIS5Event() {
-
-         @Override
-         public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-         AIS5 ais = (AIS5) data;
-         int mmsi = ais.getMMSI();
-         if (ships.containsKey(mmsi)) {
-         ship = ships.get(mmsi);
-         //   shipUpdate5(ais);
-         }
-         }
-         });
+         
 
          }
          */

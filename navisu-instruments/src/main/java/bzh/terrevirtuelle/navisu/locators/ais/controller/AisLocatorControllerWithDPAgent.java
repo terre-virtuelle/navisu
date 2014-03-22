@@ -59,15 +59,15 @@ public class AisLocatorControllerWithDPAgent {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS1 data = (AIS1) d;
-                System.out.println(data);
+               // System.out.println(data);
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
                     ship.setLatitude(lat);
                     ship.setLongitude(lon);
                     ship.setCog(data.getCog());
-                  
                     ship.setHeading(data.getHeading());
+                    ship.setRot(data.getRot());
                     // mise à jour via le DPAgent
                     dpAgentServices.update(ship);
                 }
@@ -79,7 +79,7 @@ public class AisLocatorControllerWithDPAgent {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS2 data = (AIS2) d;
-                 System.out.println(data);
+               // System.out.println(data);
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
@@ -98,7 +98,7 @@ public class AisLocatorControllerWithDPAgent {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS3 data = (AIS3) d;
-                 System.out.println(data);
+               // System.out.println(data);
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
@@ -134,14 +134,14 @@ public class AisLocatorControllerWithDPAgent {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS5 data = (AIS5) d;
-                 System.out.println(data);
-                double lat = data.getLatitude();
-                double lon = data.getLongitude();
-                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
-                    ship.setLatitude(lat);
-                    ship.setLongitude(lon);
-                    ship.setCog(data.getCog());
-                    ship.setHeading(data.getHeading());
+                if (data.getMMSI() == ship.getMmsi()) {
+                    ship.setName(data.getShipname());
+                    ship.setLength(data.getLength());
+                    ship.setWidth(data.getWidth());
+                    ship.setDraught(data.getDraught());
+                    ship.setETA(data.getETA());
+                    ship.setDestination(data.getDestination());
+                    ship.setType(data.getShipType());
                     // mise à jour via le DPAgent
                     dpAgentServices.update(ship);
                 }

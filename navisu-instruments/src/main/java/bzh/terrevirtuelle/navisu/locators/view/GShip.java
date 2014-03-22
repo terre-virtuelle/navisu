@@ -4,6 +4,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
 
 /**
  * NaVisu
@@ -11,7 +12,7 @@ import gov.nasa.worldwind.render.Renderable;
  * @author tibus
  * @date 19/02/2014 18:49
  */
-public abstract  class GShip implements GObject {
+public abstract class GShip implements GObject {
 
     protected final int id;
     protected TShip ship;
@@ -47,7 +48,9 @@ public abstract  class GShip implements GObject {
 
     @Override
     public abstract void setLocation(Location location);
-        
+
+    public abstract ShapeAttributes getAttributes();
+
     @Override
     public Renderable[] getRenderables() {
         return renderables;
@@ -57,5 +60,5 @@ public abstract  class GShip implements GObject {
 
     @Override
     public abstract Object getClone();
-      
+
 }

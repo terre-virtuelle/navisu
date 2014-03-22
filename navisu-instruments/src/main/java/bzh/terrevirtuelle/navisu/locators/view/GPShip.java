@@ -38,8 +38,6 @@ public class GPShip extends GShip
         this.polygon.setRotation(-ship.getCog());
     }
 
-    
-
     @Override
     public void setLocation(Location location) {
         this.polygon.moveTo(Position.fromDegrees(location.getLatitudeDegree(),
@@ -53,12 +51,16 @@ public class GPShip extends GShip
     }
 
     @Override
-    public void setCog(double cog) {
+    public void setCog(double cog) { 
         this.polygon.setRotation(-cog);
     }
 
     public void setPathAttrs(ShapeAttributes pathAttrs) {
         this.polygon.setAttributes(pathAttrs);
+    }
+
+    public ShapeAttributes getAttributes() {
+        return this.polygon.getAttributes();
     }
 
     @Override

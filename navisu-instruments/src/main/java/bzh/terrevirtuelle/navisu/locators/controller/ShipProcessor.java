@@ -13,7 +13,6 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 
-
 /**
  * NaVisu
  *
@@ -37,10 +36,11 @@ public abstract class ShipProcessor
 
     @Override
     public GObject processUpdated(int id, TObject input, GObject output) {
-
+        TShip ship = (TShip) input;
         GShip gShip = (GShip) output;
         gShip.setLocation(input.getLocation());
         gShip.setCog(((TOrientedObject) input).getOrientation().getOrientationDegree());
+        gShip.getAttributes().setInteriorMaterial(ShipTypeColor.VIEW.get(ship.getType()));
         return output;
     }
 
