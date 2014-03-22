@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
 
 /**
  *
@@ -27,7 +28,7 @@ public class NmeaStringParser {
     private NMEALexer lexer;
     private ANTLRStringStream input;
     private Handler handler;
-    private Handler aisHandler;
+  //  private Handler aisHandler;
     private CommonTokenStream tokens;
     private Sentences sentences;
     protected static final Logger LOGGER = Logger.getLogger(NmeaStringParser.class.getName());
@@ -56,17 +57,17 @@ public class NmeaStringParser {
          || source.startsWith("$") // NMEA0183
          || source.startsWith("PGN")) { // N2K
          */
-        System.out.println(source);
+       // System.out.println(source);
         input = new ANTLRStringStream(source);
         handler = new NmeaHandler(sentences);
-        aisHandler = new NmeaHandler(sentences);
+       // aisHandler = new NmeaHandler(sentences);
         lexer = new NMEALexer(input);
         lexer.setHandler(handler);
        // lexer.setAISHandler(aisHandler);
         parser = new NMEAParser(new CommonTokenStream(lexer));
         try {
             parser.entry();
-        } catch (Exception ex) {
+        } catch (RecognitionException ex) {
             //  LOGGER.log(Level.SEVERE, ex.getMessage());
         }
         //  }
