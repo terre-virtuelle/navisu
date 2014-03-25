@@ -1,4 +1,4 @@
-// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-03-21 12:07:03
+// $ANTLR 3.4 I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g 2014-03-24 14:51:35
 
 package bzh.terrevirtuelle.navisu.nmea.controller.parser.impl;
 
@@ -11446,8 +11446,8 @@ public class NMEALexer extends Lexer {
             CommonToken device=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1216:6: ( '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1216:8: '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1216:6: ( '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM ( ' :@: ' ( LETTERS | NUMBER | ':' )* )* )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1216:8: '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM ( ' :@: ' ( LETTERS | NUMBER | ':' )* )*
             {
             match('!'); 
 
@@ -11659,11 +11659,174 @@ public class NMEALexer extends Lexer {
             checksum.setCharPositionInLine(checksumStartCharPos5907);
 
 
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1224:5: ( ' :@: ' ( LETTERS | NUMBER | ':' )* )*
+            loop229:
+            do {
+                int alt229=2;
+                int LA229_0 = input.LA(1);
+
+                if ( (LA229_0==' ') ) {
+                    alt229=1;
+                }
+
+
+                switch (alt229) {
+            	case 1 :
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1224:6: ' :@: ' ( LETTERS | NUMBER | ':' )*
+            	    {
+            	    match(" :@: "); 
+
+
+
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1224:14: ( LETTERS | NUMBER | ':' )*
+            	    loop228:
+            	    do {
+            	        int alt228=4;
+            	        switch ( input.LA(1) ) {
+            	        case ' ':
+            	            {
+            	            int LA228_2 = input.LA(2);
+
+            	            if ( (LA228_2==':') ) {
+            	                int LA228_6 = input.LA(3);
+
+
+
+            	                alt228=1; 
+
+            	            }
+
+            	            else {
+            	                alt228=1;
+            	            }
+
+
+            	            }
+            	            break;
+            	        case 'A':
+            	        case 'B':
+            	        case 'C':
+            	        case 'D':
+            	        case 'E':
+            	        case 'F':
+            	        case 'G':
+            	        case 'H':
+            	        case 'I':
+            	        case 'J':
+            	        case 'K':
+            	        case 'L':
+            	        case 'M':
+            	        case 'N':
+            	        case 'O':
+            	        case 'P':
+            	        case 'Q':
+            	        case 'R':
+            	        case 'S':
+            	        case 'T':
+            	        case 'U':
+            	        case 'V':
+            	        case 'W':
+            	        case 'X':
+            	        case 'Y':
+            	        case 'Z':
+            	        case 'a':
+            	        case 'b':
+            	        case 'c':
+            	        case 'd':
+            	        case 'e':
+            	        case 'f':
+            	        case 'g':
+            	        case 'h':
+            	        case 'i':
+            	        case 'j':
+            	        case 'k':
+            	        case 'l':
+            	        case 'm':
+            	        case 'n':
+            	        case 'o':
+            	        case 'p':
+            	        case 'q':
+            	        case 'r':
+            	        case 's':
+            	        case 't':
+            	        case 'u':
+            	        case 'v':
+            	        case 'w':
+            	        case 'x':
+            	        case 'y':
+            	        case 'z':
+            	            {
+            	            alt228=1;
+            	            }
+            	            break;
+            	        case '.':
+            	        case '0':
+            	        case '1':
+            	        case '2':
+            	        case '3':
+            	        case '4':
+            	        case '5':
+            	        case '6':
+            	        case '7':
+            	        case '8':
+            	        case '9':
+            	            {
+            	            alt228=2;
+            	            }
+            	            break;
+            	        case ':':
+            	            {
+            	            alt228=3;
+            	            }
+            	            break;
+
+            	        }
+
+            	        switch (alt228) {
+            	    	case 1 :
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1224:15: LETTERS
+            	    	    {
+            	    	    mLETTERS(); 
+
+
+            	    	    }
+            	    	    break;
+            	    	case 2 :
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1224:25: NUMBER
+            	    	    {
+            	    	    mNUMBER(); 
+
+
+            	    	    }
+            	    	    break;
+            	    	case 3 :
+            	    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1224:34: ':'
+            	    	    {
+            	    	    match(':'); 
+
+            	    	    }
+            	    	    break;
+
+            	    	default :
+            	    	    break loop228;
+            	        }
+            	    } while (true);
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop229;
+                }
+            } while (true);
+
+
 
             	//System.out.println("VDM : " + getText());
-            	//String s[] = getText().split("*");
-            	//AISParser.parse(s[0]);
-            	AISParser.parse(getText());
+            	String s[] = getText().split(":@:");
+            	AISParser.parse(s[0]);
+            	//AISParser.parse(getText());
             	
 
             }
@@ -11685,18 +11848,18 @@ public class NMEALexer extends Lexer {
             CommonToken device=null;
             CommonToken checksum=null;
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1233:5: ( '$' device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1233:7: '$' device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1234:5: ( '$' device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1234:7: '$' device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
             {
             match('$'); 
 
-            int deviceStart5927 = getCharIndex();
-            int deviceStartLine5927 = getLine();
-            int deviceStartCharPos5927 = getCharPositionInLine();
+            int deviceStart5951 = getCharIndex();
+            int deviceStartLine5951 = getLine();
+            int deviceStartCharPos5951 = getCharPositionInLine();
             mDEVICE(); 
-            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5927, getCharIndex()-1);
-            device.setLine(deviceStartLine5927);
-            device.setCharPositionInLine(deviceStartCharPos5927);
+            device = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, deviceStart5951, getCharIndex()-1);
+            device.setLine(deviceStartLine5951);
+            device.setCharPositionInLine(deviceStartCharPos5951);
 
 
             match("TXT"); 
@@ -11706,148 +11869,7 @@ public class NMEALexer extends Lexer {
             mSEP(); 
 
 
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1234:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
-            loop228:
-            do {
-                int alt228=2;
-                alt228 = dfa228.predict(input);
-                switch (alt228) {
-            	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
-            	    {
-            	    if ( (input.LA(1) >= ' ' && input.LA(1) <= '\u007F') ) {
-            	        input.consume();
-            	    }
-            	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        recover(mse);
-            	        throw mse;
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop228;
-                }
-            } while (true);
-
-
-            int checksumStart5954 = getCharIndex();
-            int checksumStartLine5954 = getLine();
-            int checksumStartCharPos5954 = getCharPositionInLine();
-            mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5954, getCharIndex()-1);
-            checksum.setLine(checksumStartLine5954);
-            checksum.setCharPositionInLine(checksumStartCharPos5954);
-
-
-
-            	
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        	// do for sure before leaving
-        }
-    }
-    // $ANTLR end "TXT"
-
-    // $ANTLR start "PRO"
-    public final void mPRO() throws RecognitionException {
-        try {
-            int _type = PRO;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            CommonToken checksum=null;
-
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1245:5: ( ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1245:7: ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
-            {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1245:7: ( '$PR' | '$PG' | '$PS' )
-            int alt229=3;
-            int LA229_0 = input.LA(1);
-
-            if ( (LA229_0=='$') ) {
-                int LA229_1 = input.LA(2);
-
-                if ( (LA229_1=='P') ) {
-                    switch ( input.LA(3) ) {
-                    case 'R':
-                        {
-                        alt229=1;
-                        }
-                        break;
-                    case 'G':
-                        {
-                        alt229=2;
-                        }
-                        break;
-                    case 'S':
-                        {
-                        alt229=3;
-                        }
-                        break;
-                    default:
-                        NoViableAltException nvae =
-                            new NoViableAltException("", 229, 2, input);
-
-                        throw nvae;
-
-                    }
-
-                }
-                else {
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 229, 1, input);
-
-                    throw nvae;
-
-                }
-            }
-            else {
-                NoViableAltException nvae =
-                    new NoViableAltException("", 229, 0, input);
-
-                throw nvae;
-
-            }
-            switch (alt229) {
-                case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1245:8: '$PR'
-                    {
-                    match("$PR"); 
-
-
-
-                    }
-                    break;
-                case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1245:15: '$PG'
-                    {
-                    match("$PG"); 
-
-
-
-                    }
-                    break;
-                case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1245:22: '$PS'
-                    {
-                    match("$PS"); 
-
-
-
-                    }
-                    break;
-
-            }
-
-
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1245:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1235:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
             loop230:
             do {
                 int alt230=2;
@@ -11875,13 +11897,154 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
-            int checksumStart6000 = getCharIndex();
-            int checksumStartLine6000 = getLine();
-            int checksumStartCharPos6000 = getCharPositionInLine();
+            int checksumStart5978 = getCharIndex();
+            int checksumStartLine5978 = getLine();
+            int checksumStartCharPos5978 = getCharPositionInLine();
             mCHECKSUM(); 
-            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart6000, getCharIndex()-1);
-            checksum.setLine(checksumStartLine6000);
-            checksum.setCharPositionInLine(checksumStartCharPos6000);
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart5978, getCharIndex()-1);
+            checksum.setLine(checksumStartLine5978);
+            checksum.setCharPositionInLine(checksumStartCharPos5978);
+
+
+
+            	
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "TXT"
+
+    // $ANTLR start "PRO"
+    public final void mPRO() throws RecognitionException {
+        try {
+            int _type = PRO;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            CommonToken checksum=null;
+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1246:5: ( ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1246:7: ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
+            {
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1246:7: ( '$PR' | '$PG' | '$PS' )
+            int alt231=3;
+            int LA231_0 = input.LA(1);
+
+            if ( (LA231_0=='$') ) {
+                int LA231_1 = input.LA(2);
+
+                if ( (LA231_1=='P') ) {
+                    switch ( input.LA(3) ) {
+                    case 'R':
+                        {
+                        alt231=1;
+                        }
+                        break;
+                    case 'G':
+                        {
+                        alt231=2;
+                        }
+                        break;
+                    case 'S':
+                        {
+                        alt231=3;
+                        }
+                        break;
+                    default:
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 231, 2, input);
+
+                        throw nvae;
+
+                    }
+
+                }
+                else {
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 231, 1, input);
+
+                    throw nvae;
+
+                }
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 231, 0, input);
+
+                throw nvae;
+
+            }
+            switch (alt231) {
+                case 1 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1246:8: '$PR'
+                    {
+                    match("$PR"); 
+
+
+
+                    }
+                    break;
+                case 2 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1246:15: '$PG'
+                    {
+                    match("$PG"); 
+
+
+
+                    }
+                    break;
+                case 3 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1246:22: '$PS'
+                    {
+                    match("$PS"); 
+
+
+
+                    }
+                    break;
+
+            }
+
+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1246:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
+            loop232:
+            do {
+                int alt232=2;
+                alt232 = dfa232.predict(input);
+                switch (alt232) {
+            	case 1 :
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
+            	    {
+            	    if ( (input.LA(1) >= ' ' && input.LA(1) <= '\u007F') ) {
+            	        input.consume();
+            	    }
+            	    else {
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop232;
+                }
+            } while (true);
+
+
+            int checksumStart6024 = getCharIndex();
+            int checksumStartLine6024 = getLine();
+            int checksumStartCharPos6024 = getCharPositionInLine();
+            mCHECKSUM(); 
+            checksum = new CommonToken(input, Token.INVALID_TOKEN_TYPE, Token.DEFAULT_CHANNEL, checksumStart6024, getCharIndex()-1);
+            checksum.setLine(checksumStartLine6024);
+            checksum.setCharPositionInLine(checksumStartCharPos6024);
 
 
 
@@ -11904,30 +12067,30 @@ public class NMEALexer extends Lexer {
         try {
             int _type = DEVICE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1249:9: ( ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:9: ( ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
-            int alt231=35;
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
+            int alt233=35;
             switch ( input.LA(1) ) {
             case 'G':
                 {
-                alt231=1;
+                alt233=1;
                 }
                 break;
             case 'I':
                 {
-                int LA231_2 = input.LA(2);
+                int LA233_2 = input.LA(2);
 
-                if ( (LA231_2=='I') ) {
-                    alt231=2;
+                if ( (LA233_2=='I') ) {
+                    alt233=2;
                 }
-                else if ( (LA231_2=='N') ) {
-                    alt231=19;
+                else if ( (LA233_2=='N') ) {
+                    alt233=19;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 2, input);
+                        new NoViableAltException("", 233, 2, input);
 
                     throw nvae;
 
@@ -11939,22 +12102,22 @@ public class NMEALexer extends Lexer {
                 switch ( input.LA(2) ) {
                 case 'G':
                     {
-                    alt231=3;
+                    alt233=3;
                     }
                     break;
                 case 'I':
                     {
-                    alt231=4;
+                    alt233=4;
                     }
                     break;
                 case 'P':
                     {
-                    alt231=5;
+                    alt233=5;
                     }
                     break;
                 default:
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 3, input);
+                        new NoViableAltException("", 233, 3, input);
 
                     throw nvae;
 
@@ -11967,37 +12130,37 @@ public class NMEALexer extends Lexer {
                 switch ( input.LA(2) ) {
                 case 'C':
                     {
-                    alt231=6;
+                    alt233=6;
                     }
                     break;
                 case 'D':
                     {
-                    alt231=7;
+                    alt233=7;
                     }
                     break;
                 case 'S':
                     {
-                    alt231=8;
+                    alt233=8;
                     }
                     break;
                 case 'T':
                     {
-                    alt231=9;
+                    alt233=9;
                     }
                     break;
                 case 'V':
                     {
-                    alt231=10;
+                    alt233=10;
                     }
                     break;
                 case 'X':
                     {
-                    alt231=11;
+                    alt233=11;
                     }
                     break;
                 default:
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 4, input);
+                        new NoViableAltException("", 233, 4, input);
 
                     throw nvae;
 
@@ -12007,17 +12170,17 @@ public class NMEALexer extends Lexer {
                 break;
             case 'D':
                 {
-                int LA231_5 = input.LA(2);
+                int LA233_5 = input.LA(2);
 
-                if ( (LA231_5=='F') ) {
-                    alt231=12;
+                if ( (LA233_5=='F') ) {
+                    alt233=12;
                 }
-                else if ( (LA231_5=='M') ) {
-                    alt231=28;
+                else if ( (LA233_5=='M') ) {
+                    alt233=28;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 5, input);
+                        new NoViableAltException("", 233, 5, input);
 
                     throw nvae;
 
@@ -12029,22 +12192,22 @@ public class NMEALexer extends Lexer {
                 switch ( input.LA(2) ) {
                 case 'C':
                     {
-                    alt231=13;
+                    alt233=13;
                     }
                     break;
                 case 'P':
                     {
-                    alt231=14;
+                    alt233=14;
                     }
                     break;
                 case 'R':
                     {
-                    alt231=15;
+                    alt233=15;
                     }
                     break;
                 default:
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 6, input);
+                        new NoViableAltException("", 233, 6, input);
 
                     throw nvae;
 
@@ -12057,22 +12220,22 @@ public class NMEALexer extends Lexer {
                 switch ( input.LA(2) ) {
                 case 'C':
                     {
-                    alt231=16;
+                    alt233=16;
                     }
                     break;
                 case 'E':
                     {
-                    alt231=17;
+                    alt233=17;
                     }
                     break;
                 case 'N':
                     {
-                    alt231=18;
+                    alt233=18;
                     }
                     break;
                 default:
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 7, input);
+                        new NoViableAltException("", 233, 7, input);
 
                     throw nvae;
 
@@ -12082,7 +12245,7 @@ public class NMEALexer extends Lexer {
                 break;
             case 'R':
                 {
-                alt231=20;
+                alt233=20;
                 }
                 break;
             case 'S':
@@ -12090,27 +12253,27 @@ public class NMEALexer extends Lexer {
                 switch ( input.LA(2) ) {
                 case 'D':
                     {
-                    alt231=21;
+                    alt233=21;
                     }
                     break;
                 case 'M':
                     {
-                    alt231=22;
+                    alt233=22;
                     }
                     break;
                 case 'N':
                     {
-                    alt231=23;
+                    alt233=23;
                     }
                     break;
                 case 'S':
                     {
-                    alt231=24;
+                    alt233=24;
                     }
                     break;
                 default:
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 9, input);
+                        new NoViableAltException("", 233, 9, input);
 
                     throw nvae;
 
@@ -12120,17 +12283,17 @@ public class NMEALexer extends Lexer {
                 break;
             case 'T':
                 {
-                int LA231_10 = input.LA(2);
+                int LA233_10 = input.LA(2);
 
-                if ( (LA231_10=='I') ) {
-                    alt231=25;
+                if ( (LA233_10=='I') ) {
+                    alt233=25;
                 }
-                else if ( (LA231_10=='R') ) {
-                    alt231=26;
+                else if ( (LA233_10=='R') ) {
+                    alt233=26;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 10, input);
+                        new NoViableAltException("", 233, 10, input);
 
                     throw nvae;
 
@@ -12139,17 +12302,17 @@ public class NMEALexer extends Lexer {
                 break;
             case 'V':
                 {
-                int LA231_11 = input.LA(2);
+                int LA233_11 = input.LA(2);
 
-                if ( (LA231_11=='D') ) {
-                    alt231=27;
+                if ( (LA233_11=='D') ) {
+                    alt233=27;
                 }
-                else if ( (LA231_11=='W') ) {
-                    alt231=29;
+                else if ( (LA233_11=='W') ) {
+                    alt233=29;
                 }
                 else {
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 11, input);
+                        new NoViableAltException("", 233, 11, input);
 
                     throw nvae;
 
@@ -12158,12 +12321,12 @@ public class NMEALexer extends Lexer {
                 break;
             case 'W':
                 {
-                alt231=30;
+                alt233=30;
                 }
                 break;
             case 'Y':
                 {
-                alt231=31;
+                alt233=31;
                 }
                 break;
             case 'Z':
@@ -12171,27 +12334,27 @@ public class NMEALexer extends Lexer {
                 switch ( input.LA(2) ) {
                 case 'A':
                     {
-                    alt231=32;
+                    alt233=32;
                     }
                     break;
                 case 'C':
                     {
-                    alt231=33;
+                    alt233=33;
                     }
                     break;
                 case 'Q':
                     {
-                    alt231=34;
+                    alt233=34;
                     }
                     break;
                 case 'V':
                     {
-                    alt231=35;
+                    alt233=35;
                     }
                     break;
                 default:
                     NoViableAltException nvae =
-                        new NoViableAltException("", 231, 14, input);
+                        new NoViableAltException("", 233, 14, input);
 
                     throw nvae;
 
@@ -12201,15 +12364,15 @@ public class NMEALexer extends Lexer {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("", 231, 0, input);
+                    new NoViableAltException("", 233, 0, input);
 
                 throw nvae;
 
             }
 
-            switch (alt231) {
+            switch (alt233) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:5: 'GP'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:5: 'GP'
                     {
                     match("GP"); 
 
@@ -12218,7 +12381,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:10: 'II'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:10: 'II'
                     {
                     match("II"); 
 
@@ -12227,7 +12390,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:15: 'AG'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:15: 'AG'
                     {
                     match("AG"); 
 
@@ -12236,7 +12399,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:20: 'AI'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:20: 'AI'
                     {
                     match("AI"); 
 
@@ -12245,7 +12408,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:25: 'AP'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:25: 'AP'
                     {
                     match("AP"); 
 
@@ -12254,7 +12417,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:30: 'CC'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:30: 'CC'
                     {
                     match("CC"); 
 
@@ -12263,7 +12426,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 7 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:35: 'CD'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:35: 'CD'
                     {
                     match("CD"); 
 
@@ -12272,7 +12435,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 8 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:40: 'CS'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:40: 'CS'
                     {
                     match("CS"); 
 
@@ -12281,7 +12444,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 9 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:45: 'CT'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:45: 'CT'
                     {
                     match("CT"); 
 
@@ -12290,7 +12453,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 10 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:50: 'CV'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:50: 'CV'
                     {
                     match("CV"); 
 
@@ -12299,7 +12462,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 11 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:55: 'CX'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:55: 'CX'
                     {
                     match("CX"); 
 
@@ -12308,7 +12471,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 12 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:60: 'DF'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:60: 'DF'
                     {
                     match("DF"); 
 
@@ -12317,7 +12480,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 13 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:65: 'EC'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:65: 'EC'
                     {
                     match("EC"); 
 
@@ -12326,7 +12489,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 14 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:70: 'EP'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:70: 'EP'
                     {
                     match("EP"); 
 
@@ -12335,7 +12498,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 15 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:75: 'ER'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:75: 'ER'
                     {
                     match("ER"); 
 
@@ -12344,7 +12507,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 16 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:80: 'HC'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:80: 'HC'
                     {
                     match("HC"); 
 
@@ -12353,7 +12516,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 17 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:85: 'HE'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:85: 'HE'
                     {
                     match("HE"); 
 
@@ -12362,7 +12525,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 18 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:90: 'HN'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:90: 'HN'
                     {
                     match("HN"); 
 
@@ -12371,7 +12534,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 19 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:95: 'IN'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:95: 'IN'
                     {
                     match("IN"); 
 
@@ -12380,7 +12543,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 20 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:100: 'RA'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:100: 'RA'
                     {
                     match("RA"); 
 
@@ -12389,7 +12552,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 21 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:105: 'SD'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:105: 'SD'
                     {
                     match("SD"); 
 
@@ -12398,7 +12561,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 22 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:110: 'SM'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:110: 'SM'
                     {
                     match("SM"); 
 
@@ -12407,7 +12570,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 23 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:115: 'SN'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:115: 'SN'
                     {
                     match("SN"); 
 
@@ -12416,7 +12579,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 24 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:120: 'SS'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:120: 'SS'
                     {
                     match("SS"); 
 
@@ -12425,7 +12588,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 25 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:125: 'TI'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:125: 'TI'
                     {
                     match("TI"); 
 
@@ -12434,7 +12597,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 26 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:130: 'TR'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:130: 'TR'
                     {
                     match("TR"); 
 
@@ -12443,7 +12606,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 27 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:135: 'VD'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:135: 'VD'
                     {
                     match("VD"); 
 
@@ -12452,7 +12615,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 28 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:140: 'DM'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:140: 'DM'
                     {
                     match("DM"); 
 
@@ -12461,7 +12624,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 29 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:145: 'VW'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:145: 'VW'
                     {
                     match("VW"); 
 
@@ -12470,7 +12633,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 30 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:150: 'WI'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:150: 'WI'
                     {
                     match("WI"); 
 
@@ -12479,7 +12642,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 31 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:155: 'YX'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:155: 'YX'
                     {
                     match("YX"); 
 
@@ -12488,7 +12651,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 32 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:160: 'ZA'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:160: 'ZA'
                     {
                     match("ZA"); 
 
@@ -12497,7 +12660,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 33 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:165: 'ZC'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:165: 'ZC'
                     {
                     match("ZC"); 
 
@@ -12506,7 +12669,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 34 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:170: 'ZQ'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:170: 'ZQ'
                     {
                     match("ZQ"); 
 
@@ -12515,7 +12678,7 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 35 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1250:175: 'ZV'
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1251:175: 'ZV'
                     {
                     match("ZV"); 
 
@@ -12547,99 +12710,15 @@ public class NMEALexer extends Lexer {
         try {
             int _type = NUMBER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1256:5: ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
-            int alt239=4;
-            alt239 = dfa239.predict(input);
-            switch (alt239) {
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1257:5: ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
+            int alt241=4;
+            alt241 = dfa241.predict(input);
+            switch (alt241) {
                 case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1257:5: ( '0' .. '9' )+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1258:5: ( '0' .. '9' )+
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1257:5: ( '0' .. '9' )+
-                    int cnt232=0;
-                    loop232:
-                    do {
-                        int alt232=2;
-                        int LA232_0 = input.LA(1);
-
-                        if ( ((LA232_0 >= '0' && LA232_0 <= '9')) ) {
-                            alt232=1;
-                        }
-
-
-                        switch (alt232) {
-                    	case 1 :
-                    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
-                    	    {
-                    	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-                    	        input.consume();
-                    	    }
-                    	    else {
-                    	        MismatchedSetException mse = new MismatchedSetException(null,input);
-                    	        recover(mse);
-                    	        throw mse;
-                    	    }
-
-
-                    	    }
-                    	    break;
-
-                    	default :
-                    	    if ( cnt232 >= 1 ) break loop232;
-                                EarlyExitException eee =
-                                    new EarlyExitException(232, input);
-                                throw eee;
-                        }
-                        cnt232++;
-                    } while (true);
-
-
-                    }
-                    break;
-                case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:5: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
-                    {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:5: ( '0' .. '9' )+
-                    int cnt233=0;
-                    loop233:
-                    do {
-                        int alt233=2;
-                        int LA233_0 = input.LA(1);
-
-                        if ( ((LA233_0 >= '0' && LA233_0 <= '9')) ) {
-                            alt233=1;
-                        }
-
-
-                        switch (alt233) {
-                    	case 1 :
-                    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
-                    	    {
-                    	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-                    	        input.consume();
-                    	    }
-                    	    else {
-                    	        MismatchedSetException mse = new MismatchedSetException(null,input);
-                    	        recover(mse);
-                    	        throw mse;
-                    	    }
-
-
-                    	    }
-                    	    break;
-
-                    	default :
-                    	    if ( cnt233 >= 1 ) break loop233;
-                                EarlyExitException eee =
-                                    new EarlyExitException(233, input);
-                                throw eee;
-                        }
-                        cnt233++;
-                    } while (true);
-
-
-                    match('.'); 
-
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:21: ( '0' .. '9' )*
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1258:5: ( '0' .. '9' )+
+                    int cnt234=0;
                     loop234:
                     do {
                         int alt234=2;
@@ -12668,40 +12747,62 @@ public class NMEALexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    break loop234;
+                    	    if ( cnt234 >= 1 ) break loop234;
+                                EarlyExitException eee =
+                                    new EarlyExitException(234, input);
+                                throw eee;
                         }
+                        cnt234++;
                     } while (true);
-
-
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:33: ( EXPONENT )?
-                    int alt235=2;
-                    int LA235_0 = input.LA(1);
-
-                    if ( (LA235_0=='E'||LA235_0=='e') ) {
-                        alt235=1;
-                    }
-                    switch (alt235) {
-                        case 1 :
-                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1259:33: EXPONENT
-                            {
-                            mEXPONENT(); 
-
-
-                            }
-                            break;
-
-                    }
 
 
                     }
                     break;
-                case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:9: '.' ( '0' .. '9' )+ ( EXPONENT )?
+                case 2 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:5: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
                     {
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:5: ( '0' .. '9' )+
+                    int cnt235=0;
+                    loop235:
+                    do {
+                        int alt235=2;
+                        int LA235_0 = input.LA(1);
+
+                        if ( ((LA235_0 >= '0' && LA235_0 <= '9')) ) {
+                            alt235=1;
+                        }
+
+
+                        switch (alt235) {
+                    	case 1 :
+                    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
+                    	    {
+                    	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+                    	        input.consume();
+                    	    }
+                    	    else {
+                    	        MismatchedSetException mse = new MismatchedSetException(null,input);
+                    	        recover(mse);
+                    	        throw mse;
+                    	    }
+
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    if ( cnt235 >= 1 ) break loop235;
+                                EarlyExitException eee =
+                                    new EarlyExitException(235, input);
+                                throw eee;
+                        }
+                        cnt235++;
+                    } while (true);
+
+
                     match('.'); 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:13: ( '0' .. '9' )+
-                    int cnt236=0;
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:21: ( '0' .. '9' )*
                     loop236:
                     do {
                         int alt236=2;
@@ -12730,16 +12831,12 @@ public class NMEALexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    if ( cnt236 >= 1 ) break loop236;
-                                EarlyExitException eee =
-                                    new EarlyExitException(236, input);
-                                throw eee;
+                    	    break loop236;
                         }
-                        cnt236++;
                     } while (true);
 
 
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:25: ( EXPONENT )?
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:33: ( EXPONENT )?
                     int alt237=2;
                     int LA237_0 = input.LA(1);
 
@@ -12748,7 +12845,7 @@ public class NMEALexer extends Lexer {
                     }
                     switch (alt237) {
                         case 1 :
-                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:25: EXPONENT
+                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1260:33: EXPONENT
                             {
                             mEXPONENT(); 
 
@@ -12761,10 +12858,12 @@ public class NMEALexer extends Lexer {
 
                     }
                     break;
-                case 4 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1261:9: ( '0' .. '9' )+ EXPONENT
+                case 3 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1261:9: '.' ( '0' .. '9' )+ ( EXPONENT )?
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1261:9: ( '0' .. '9' )+
+                    match('.'); 
+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1261:13: ( '0' .. '9' )+
                     int cnt238=0;
                     loop238:
                     do {
@@ -12803,276 +12902,22 @@ public class NMEALexer extends Lexer {
                     } while (true);
 
 
-                    mEXPONENT(); 
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1261:25: ( EXPONENT )?
+                    int alt239=2;
+                    int LA239_0 = input.LA(1);
 
-
+                    if ( (LA239_0=='E'||LA239_0=='e') ) {
+                        alt239=1;
                     }
-                    break;
-
-            }
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        	// do for sure before leaving
-        }
-    }
-    // $ANTLR end "NUMBER"
-
-    // $ANTLR start "WS"
-    public final void mWS() throws RecognitionException {
-        try {
-            int _type = WS;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1264:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1264:9: ( ' ' | '\\t' | '\\r' | '\\n' )
-            {
-            if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
-                input.consume();
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;
-            }
+                    switch (alt239) {
+                        case 1 :
+                            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1261:25: EXPONENT
+                            {
+                            mEXPONENT(); 
 
 
-            _channel=HIDDEN;
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        	// do for sure before leaving
-        }
-    }
-    // $ANTLR end "WS"
-
-    // $ANTLR start "SEP"
-    public final void mSEP() throws RecognitionException {
-        try {
-            int _type = SEP;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1271:5: ( ( ',' ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1271:7: ( ',' )
-            {
-            if ( input.LA(1)==',' ) {
-                input.consume();
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;
-            }
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        	// do for sure before leaving
-        }
-    }
-    // $ANTLR end "SEP"
-
-    // $ANTLR start "SIGN"
-    public final void mSIGN() throws RecognitionException {
-        try {
-            int _type = SIGN;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1275:6: ( ( '+' | '-' ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
-            {
-            if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
-                input.consume();
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;
-            }
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        	// do for sure before leaving
-        }
-    }
-    // $ANTLR end "SIGN"
-
-    // $ANTLR start "CHECKSUM"
-    public final void mCHECKSUM() throws RecognitionException {
-        try {
-            int _type = CHECKSUM;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1278:10: ( ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) ) )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1278:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
-            {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1278:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
-            int alt241=4;
-            int LA241_0 = input.LA(1);
-
-            if ( (LA241_0=='*') ) {
-                int LA241_1 = input.LA(2);
-
-                if ( ((LA241_1 >= '0' && LA241_1 <= '9')) ) {
-                    int LA241_2 = input.LA(3);
-
-                    if ( ((LA241_2 >= '0' && LA241_2 <= '9')) ) {
-                        int LA241_4 = input.LA(4);
-
-                        if ( ((LA241_4 >= '0' && LA241_4 <= '9')||(LA241_4 >= 'A' && LA241_4 <= 'F')) ) {
-                            alt241=4;
-                        }
-                        else {
-                            alt241=1;
-                        }
-                    }
-                    else if ( ((LA241_2 >= 'A' && LA241_2 <= 'F')) ) {
-                        alt241=4;
-                    }
-                    else {
-                        NoViableAltException nvae =
-                            new NoViableAltException("", 241, 2, input);
-
-                        throw nvae;
-
-                    }
-                }
-                else if ( ((LA241_1 >= 'A' && LA241_1 <= 'F')) ) {
-                    int LA241_3 = input.LA(3);
-
-                    if ( ((LA241_3 >= '0' && LA241_3 <= '9')) ) {
-                        alt241=2;
-                    }
-                    else if ( ((LA241_3 >= 'A' && LA241_3 <= 'F')) ) {
-                        alt241=3;
-                    }
-                    else {
-                        NoViableAltException nvae =
-                            new NoViableAltException("", 241, 3, input);
-
-                        throw nvae;
-
-                    }
-                }
-                else {
-                    NoViableAltException nvae =
-                        new NoViableAltException("", 241, 1, input);
-
-                    throw nvae;
-
-                }
-            }
-            else {
-                NoViableAltException nvae =
-                    new NoViableAltException("", 241, 0, input);
-
-                throw nvae;
-
-            }
-            switch (alt241) {
-                case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1278:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
-                    {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1278:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1278:14: '*' ( '0' .. '9' ) ( '0' .. '9' )
-                    {
-                    match('*'); 
-
-                    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-                        input.consume();
-                    }
-                    else {
-                        MismatchedSetException mse = new MismatchedSetException(null,input);
-                        recover(mse);
-                        throw mse;
-                    }
-
-
-                    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-                        input.consume();
-                    }
-                    else {
-                        MismatchedSetException mse = new MismatchedSetException(null,input);
-                        recover(mse);
-                        throw mse;
-                    }
-
-
-                    }
-
-
-                    }
-                    break;
-                case 2 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
-                    {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:14: '*' ( 'A' .. 'F' ) ( '0' .. '9' )
-                    {
-                    match('*'); 
-
-                    if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
-                        input.consume();
-                    }
-                    else {
-                        MismatchedSetException mse = new MismatchedSetException(null,input);
-                        recover(mse);
-                        throw mse;
-                    }
-
-
-                    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
-                        input.consume();
-                    }
-                    else {
-                        MismatchedSetException mse = new MismatchedSetException(null,input);
-                        recover(mse);
-                        throw mse;
-                    }
-
-
-                    }
-
-
-                    }
-                    break;
-                case 3 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1280:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
-                    {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1280:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1280:14: '*' ( 'A' .. 'F' ) ( 'A' .. 'F' )
-                    {
-                    match('*'); 
-
-                    if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
-                        input.consume();
-                    }
-                    else {
-                        MismatchedSetException mse = new MismatchedSetException(null,input);
-                        recover(mse);
-                        throw mse;
-                    }
-
-
-                    if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
-                        input.consume();
-                    }
-                    else {
-                        MismatchedSetException mse = new MismatchedSetException(null,input);
-                        recover(mse);
-                        throw mse;
-                    }
-
+                            }
+                            break;
 
                     }
 
@@ -13080,14 +12925,9 @@ public class NMEALexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1262:9: ( '0' .. '9' )+ EXPONENT
                     {
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:14: '*' ( '0' .. '9' )+ ( 'A' .. 'F' )
-                    {
-                    match('*'); 
-
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:17: ( '0' .. '9' )+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1262:9: ( '0' .. '9' )+
                     int cnt240=0;
                     loop240:
                     do {
@@ -13126,6 +12966,329 @@ public class NMEALexer extends Lexer {
                     } while (true);
 
 
+                    mEXPONENT(); 
+
+
+                    }
+                    break;
+
+            }
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "NUMBER"
+
+    // $ANTLR start "WS"
+    public final void mWS() throws RecognitionException {
+        try {
+            int _type = WS;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1265:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1265:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+            {
+            if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
+                input.consume();
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;
+            }
+
+
+            _channel=HIDDEN;
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "WS"
+
+    // $ANTLR start "SEP"
+    public final void mSEP() throws RecognitionException {
+        try {
+            int _type = SEP;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1272:5: ( ( ',' ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1272:7: ( ',' )
+            {
+            if ( input.LA(1)==',' ) {
+                input.consume();
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "SEP"
+
+    // $ANTLR start "SIGN"
+    public final void mSIGN() throws RecognitionException {
+        try {
+            int _type = SIGN;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1276:6: ( ( '+' | '-' ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
+            {
+            if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
+                input.consume();
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;
+            }
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "SIGN"
+
+    // $ANTLR start "CHECKSUM"
+    public final void mCHECKSUM() throws RecognitionException {
+        try {
+            int _type = CHECKSUM;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:10: ( ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) ) )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
+            {
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
+            int alt243=4;
+            int LA243_0 = input.LA(1);
+
+            if ( (LA243_0=='*') ) {
+                int LA243_1 = input.LA(2);
+
+                if ( ((LA243_1 >= '0' && LA243_1 <= '9')) ) {
+                    int LA243_2 = input.LA(3);
+
+                    if ( ((LA243_2 >= '0' && LA243_2 <= '9')) ) {
+                        int LA243_4 = input.LA(4);
+
+                        if ( ((LA243_4 >= '0' && LA243_4 <= '9')||(LA243_4 >= 'A' && LA243_4 <= 'F')) ) {
+                            alt243=4;
+                        }
+                        else {
+                            alt243=1;
+                        }
+                    }
+                    else if ( ((LA243_2 >= 'A' && LA243_2 <= 'F')) ) {
+                        alt243=4;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 243, 2, input);
+
+                        throw nvae;
+
+                    }
+                }
+                else if ( ((LA243_1 >= 'A' && LA243_1 <= 'F')) ) {
+                    int LA243_3 = input.LA(3);
+
+                    if ( ((LA243_3 >= '0' && LA243_3 <= '9')) ) {
+                        alt243=2;
+                    }
+                    else if ( ((LA243_3 >= 'A' && LA243_3 <= 'F')) ) {
+                        alt243=3;
+                    }
+                    else {
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 243, 3, input);
+
+                        throw nvae;
+
+                    }
+                }
+                else {
+                    NoViableAltException nvae =
+                        new NoViableAltException("", 243, 1, input);
+
+                    throw nvae;
+
+                }
+            }
+            else {
+                NoViableAltException nvae =
+                    new NoViableAltException("", 243, 0, input);
+
+                throw nvae;
+
+            }
+            switch (alt243) {
+                case 1 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
+                    {
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1279:14: '*' ( '0' .. '9' ) ( '0' .. '9' )
+                    {
+                    match('*'); 
+
+                    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+                        input.consume();
+                    }
+                    else {
+                        MismatchedSetException mse = new MismatchedSetException(null,input);
+                        recover(mse);
+                        throw mse;
+                    }
+
+
+                    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+                        input.consume();
+                    }
+                    else {
+                        MismatchedSetException mse = new MismatchedSetException(null,input);
+                        recover(mse);
+                        throw mse;
+                    }
+
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1280:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
+                    {
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1280:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1280:14: '*' ( 'A' .. 'F' ) ( '0' .. '9' )
+                    {
+                    match('*'); 
+
+                    if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
+                        input.consume();
+                    }
+                    else {
+                        MismatchedSetException mse = new MismatchedSetException(null,input);
+                        recover(mse);
+                        throw mse;
+                    }
+
+
+                    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+                        input.consume();
+                    }
+                    else {
+                        MismatchedSetException mse = new MismatchedSetException(null,input);
+                        recover(mse);
+                        throw mse;
+                    }
+
+
+                    }
+
+
+                    }
+                    break;
+                case 3 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
+                    {
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1281:14: '*' ( 'A' .. 'F' ) ( 'A' .. 'F' )
+                    {
+                    match('*'); 
+
+                    if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
+                        input.consume();
+                    }
+                    else {
+                        MismatchedSetException mse = new MismatchedSetException(null,input);
+                        recover(mse);
+                        throw mse;
+                    }
+
+
+                    if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
+                        input.consume();
+                    }
+                    else {
+                        MismatchedSetException mse = new MismatchedSetException(null,input);
+                        recover(mse);
+                        throw mse;
+                    }
+
+
+                    }
+
+
+                    }
+                    break;
+                case 4 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1282:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
+                    {
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1282:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1282:14: '*' ( '0' .. '9' )+ ( 'A' .. 'F' )
+                    {
+                    match('*'); 
+
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1282:17: ( '0' .. '9' )+
+                    int cnt242=0;
+                    loop242:
+                    do {
+                        int alt242=2;
+                        int LA242_0 = input.LA(1);
+
+                        if ( ((LA242_0 >= '0' && LA242_0 <= '9')) ) {
+                            alt242=1;
+                        }
+
+
+                        switch (alt242) {
+                    	case 1 :
+                    	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
+                    	    {
+                    	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+                    	        input.consume();
+                    	    }
+                    	    else {
+                    	        MismatchedSetException mse = new MismatchedSetException(null,input);
+                    	        recover(mse);
+                    	        throw mse;
+                    	    }
+
+
+                    	    }
+                    	    break;
+
+                    	default :
+                    	    if ( cnt242 >= 1 ) break loop242;
+                                EarlyExitException eee =
+                                    new EarlyExitException(242, input);
+                                throw eee;
+                        }
+                        cnt242++;
+                    } while (true);
+
+
                     if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
                         input.consume();
                     }
@@ -13161,114 +13324,17 @@ public class NMEALexer extends Lexer {
         try {
             int _type = LETTERS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1284:9: ( ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+ )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1284:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1285:9: ( ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+ )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1285:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
             {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1284:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
-            int cnt242=0;
-            loop242:
-            do {
-                int alt242=2;
-                int LA242_0 = input.LA(1);
-
-                if ( (LA242_0==' '||(LA242_0 >= 'A' && LA242_0 <= 'Z')||(LA242_0 >= 'a' && LA242_0 <= 'z')) ) {
-                    alt242=1;
-                }
-
-
-                switch (alt242) {
-            	case 1 :
-            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
-            	    {
-            	    if ( input.LA(1)==' '||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
-            	        input.consume();
-            	    }
-            	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        recover(mse);
-            	        throw mse;
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    if ( cnt242 >= 1 ) break loop242;
-                        EarlyExitException eee =
-                            new EarlyExitException(242, input);
-                        throw eee;
-                }
-                cnt242++;
-            } while (true);
-
-
-
-                     // System.out.println(getText());
-                      
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        	// do for sure before leaving
-        }
-    }
-    // $ANTLR end "LETTERS"
-
-    // $ANTLR start "EXPONENT"
-    public final void mEXPONENT() throws RecognitionException {
-        try {
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1292:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1292:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
-            {
-            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
-                input.consume();
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;
-            }
-
-
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1292:22: ( '+' | '-' )?
-            int alt243=2;
-            int LA243_0 = input.LA(1);
-
-            if ( (LA243_0=='+'||LA243_0=='-') ) {
-                alt243=1;
-            }
-            switch (alt243) {
-                case 1 :
-                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
-                    {
-                    if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
-                        input.consume();
-                    }
-                    else {
-                        MismatchedSetException mse = new MismatchedSetException(null,input);
-                        recover(mse);
-                        throw mse;
-                    }
-
-
-                    }
-                    break;
-
-            }
-
-
-            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1292:33: ( '0' .. '9' )+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1285:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
             int cnt244=0;
             loop244:
             do {
                 int alt244=2;
                 int LA244_0 = input.LA(1);
 
-                if ( ((LA244_0 >= '0' && LA244_0 <= '9')) ) {
+                if ( (LA244_0==' '||(LA244_0 >= 'A' && LA244_0 <= 'Z')||(LA244_0 >= 'a' && LA244_0 <= 'z')) ) {
                     alt244=1;
                 }
 
@@ -13277,7 +13343,7 @@ public class NMEALexer extends Lexer {
             	case 1 :
             	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
             	    {
-            	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+            	    if ( input.LA(1)==' '||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
             	        input.consume();
             	    }
             	    else {
@@ -13300,6 +13366,103 @@ public class NMEALexer extends Lexer {
             } while (true);
 
 
+
+                     // System.out.println(getText());
+                      
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        	// do for sure before leaving
+        }
+    }
+    // $ANTLR end "LETTERS"
+
+    // $ANTLR start "EXPONENT"
+    public final void mEXPONENT() throws RecognitionException {
+        try {
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1293:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1293:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+            {
+            if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
+                input.consume();
+            }
+            else {
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;
+            }
+
+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1293:22: ( '+' | '-' )?
+            int alt245=2;
+            int LA245_0 = input.LA(1);
+
+            if ( (LA245_0=='+'||LA245_0=='-') ) {
+                alt245=1;
+            }
+            switch (alt245) {
+                case 1 :
+                    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
+                    {
+                    if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
+                        input.consume();
+                    }
+                    else {
+                        MismatchedSetException mse = new MismatchedSetException(null,input);
+                        recover(mse);
+                        throw mse;
+                    }
+
+
+                    }
+                    break;
+
+            }
+
+
+            // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1293:33: ( '0' .. '9' )+
+            int cnt246=0;
+            loop246:
+            do {
+                int alt246=2;
+                int LA246_0 = input.LA(1);
+
+                if ( ((LA246_0 >= '0' && LA246_0 <= '9')) ) {
+                    alt246=1;
+                }
+
+
+                switch (alt246) {
+            	case 1 :
+            	    // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:
+            	    {
+            	    if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
+            	        input.consume();
+            	    }
+            	    else {
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    if ( cnt246 >= 1 ) break loop246;
+                        EarlyExitException eee =
+                            new EarlyExitException(246, input);
+                        throw eee;
+                }
+                cnt246++;
+            } while (true);
+
+
             }
 
 
@@ -13312,9 +13475,9 @@ public class NMEALexer extends Lexer {
 
     public void mTokens() throws RecognitionException {
         // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1:8: ( AAM | APB | BEC | BOD | BWC | BWR | BWW | DBT | DBK | DBS | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RSD | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | ALR | VDM | TXT | PRO | DEVICE | NUMBER | WS | SEP | SIGN | CHECKSUM | LETTERS )
-        int alt245=47;
-        alt245 = dfa245.predict(input);
-        switch (alt245) {
+        int alt247=47;
+        alt247 = dfa247.predict(input);
+        switch (alt247) {
             case 1 :
                 // I:\\developpement\\projetNaVisu\\navisu\\trunk\\api\\nmea\\NMEA_2.0\\src\\bzh\\terrevirtuelle\\navisu\\nmea\\controller\\parser\\impl\\NMEA.g:1:10: AAM
                 {
@@ -13706,10 +13869,10 @@ public class NMEALexer extends Lexer {
     protected DFA215 dfa215 = new DFA215(this);
     protected DFA220 dfa220 = new DFA220(this);
     protected DFA226 dfa226 = new DFA226(this);
-    protected DFA228 dfa228 = new DFA228(this);
     protected DFA230 dfa230 = new DFA230(this);
-    protected DFA239 dfa239 = new DFA239(this);
-    protected DFA245 dfa245 = new DFA245(this);
+    protected DFA232 dfa232 = new DFA232(this);
+    protected DFA241 dfa241 = new DFA241(this);
+    protected DFA247 dfa247 = new DFA247(this);
     static final String DFA67_eotS =
         "\1\uffff\1\3\3\uffff\1\3\1\uffff\2\3\2\uffff\1\3\2\uffff\1\3\1\uffff"+
         "\1\3";
@@ -14368,65 +14531,6 @@ public class NMEALexer extends Lexer {
             return "()+ loopback of 1221:4: ( '\\u0021' .. '\\u007F' )+";
         }
     }
-    static final String DFA228_eotS =
-        "\5\uffff\4\11\2\uffff";
-    static final String DFA228_eofS =
-        "\13\uffff";
-    static final String DFA228_minS =
-        "\2\40\1\uffff\6\40\1\uffff\1\40";
-    static final String DFA228_maxS =
-        "\2\177\1\uffff\6\177\1\uffff\1\177";
-    static final String DFA228_acceptS =
-        "\2\uffff\1\1\6\uffff\1\2\1\uffff";
-    static final String DFA228_specialS =
-        "\13\uffff}>";
-    static final String[] DFA228_transitionS = {
-            "\12\2\1\1\125\2",
-            "\20\2\12\3\7\2\6\4\71\2",
-            "",
-            "\20\2\12\5\7\2\6\6\71\2",
-            "\20\2\12\7\7\2\6\10\71\2",
-            "\20\2\12\12\7\2\6\6\71\2",
-            "\140\2",
-            "\140\2",
-            "\140\2",
-            "",
-            "\20\2\12\12\7\2\6\6\71\2"
-    };
-
-    static final short[] DFA228_eot = DFA.unpackEncodedString(DFA228_eotS);
-    static final short[] DFA228_eof = DFA.unpackEncodedString(DFA228_eofS);
-    static final char[] DFA228_min = DFA.unpackEncodedStringToUnsignedChars(DFA228_minS);
-    static final char[] DFA228_max = DFA.unpackEncodedStringToUnsignedChars(DFA228_maxS);
-    static final short[] DFA228_accept = DFA.unpackEncodedString(DFA228_acceptS);
-    static final short[] DFA228_special = DFA.unpackEncodedString(DFA228_specialS);
-    static final short[][] DFA228_transition;
-
-    static {
-        int numStates = DFA228_transitionS.length;
-        DFA228_transition = new short[numStates][];
-        for (int i=0; i<numStates; i++) {
-            DFA228_transition[i] = DFA.unpackEncodedString(DFA228_transitionS[i]);
-        }
-    }
-
-    class DFA228 extends DFA {
-
-        public DFA228(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 228;
-            this.eot = DFA228_eot;
-            this.eof = DFA228_eof;
-            this.min = DFA228_min;
-            this.max = DFA228_max;
-            this.accept = DFA228_accept;
-            this.special = DFA228_special;
-            this.transition = DFA228_transition;
-        }
-        public String getDescription() {
-            return "()* loopback of 1234:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
-        }
-    }
     static final String DFA230_eotS =
         "\5\uffff\4\11\2\uffff";
     static final String DFA230_eofS =
@@ -14483,22 +14587,81 @@ public class NMEALexer extends Lexer {
             this.transition = DFA230_transition;
         }
         public String getDescription() {
-            return "()* loopback of 1245:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
+            return "()* loopback of 1235:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
         }
     }
-    static final String DFA239_eotS =
+    static final String DFA232_eotS =
+        "\5\uffff\4\11\2\uffff";
+    static final String DFA232_eofS =
+        "\13\uffff";
+    static final String DFA232_minS =
+        "\2\40\1\uffff\6\40\1\uffff\1\40";
+    static final String DFA232_maxS =
+        "\2\177\1\uffff\6\177\1\uffff\1\177";
+    static final String DFA232_acceptS =
+        "\2\uffff\1\1\6\uffff\1\2\1\uffff";
+    static final String DFA232_specialS =
+        "\13\uffff}>";
+    static final String[] DFA232_transitionS = {
+            "\12\2\1\1\125\2",
+            "\20\2\12\3\7\2\6\4\71\2",
+            "",
+            "\20\2\12\5\7\2\6\6\71\2",
+            "\20\2\12\7\7\2\6\10\71\2",
+            "\20\2\12\12\7\2\6\6\71\2",
+            "\140\2",
+            "\140\2",
+            "\140\2",
+            "",
+            "\20\2\12\12\7\2\6\6\71\2"
+    };
+
+    static final short[] DFA232_eot = DFA.unpackEncodedString(DFA232_eotS);
+    static final short[] DFA232_eof = DFA.unpackEncodedString(DFA232_eofS);
+    static final char[] DFA232_min = DFA.unpackEncodedStringToUnsignedChars(DFA232_minS);
+    static final char[] DFA232_max = DFA.unpackEncodedStringToUnsignedChars(DFA232_maxS);
+    static final short[] DFA232_accept = DFA.unpackEncodedString(DFA232_acceptS);
+    static final short[] DFA232_special = DFA.unpackEncodedString(DFA232_specialS);
+    static final short[][] DFA232_transition;
+
+    static {
+        int numStates = DFA232_transitionS.length;
+        DFA232_transition = new short[numStates][];
+        for (int i=0; i<numStates; i++) {
+            DFA232_transition[i] = DFA.unpackEncodedString(DFA232_transitionS[i]);
+        }
+    }
+
+    class DFA232 extends DFA {
+
+        public DFA232(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 232;
+            this.eot = DFA232_eot;
+            this.eof = DFA232_eof;
+            this.min = DFA232_min;
+            this.max = DFA232_max;
+            this.accept = DFA232_accept;
+            this.special = DFA232_special;
+            this.transition = DFA232_transition;
+        }
+        public String getDescription() {
+            return "()* loopback of 1246:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
+        }
+    }
+    static final String DFA241_eotS =
         "\1\uffff\1\3\4\uffff";
-    static final String DFA239_eofS =
+    static final String DFA241_eofS =
         "\6\uffff";
-    static final String DFA239_minS =
+    static final String DFA241_minS =
         "\2\56\4\uffff";
-    static final String DFA239_maxS =
+    static final String DFA241_maxS =
         "\1\71\1\145\4\uffff";
-    static final String DFA239_acceptS =
+    static final String DFA241_acceptS =
         "\2\uffff\1\3\1\1\1\2\1\4";
-    static final String DFA239_specialS =
+    static final String DFA241_specialS =
         "\6\uffff}>";
-    static final String[] DFA239_transitionS = {
+    static final String[] DFA241_transitionS = {
             "\1\2\1\uffff\12\1",
             "\1\4\1\uffff\12\1\13\uffff\1\5\37\uffff\1\5",
             "",
@@ -14507,66 +14670,66 @@ public class NMEALexer extends Lexer {
             ""
     };
 
-    static final short[] DFA239_eot = DFA.unpackEncodedString(DFA239_eotS);
-    static final short[] DFA239_eof = DFA.unpackEncodedString(DFA239_eofS);
-    static final char[] DFA239_min = DFA.unpackEncodedStringToUnsignedChars(DFA239_minS);
-    static final char[] DFA239_max = DFA.unpackEncodedStringToUnsignedChars(DFA239_maxS);
-    static final short[] DFA239_accept = DFA.unpackEncodedString(DFA239_acceptS);
-    static final short[] DFA239_special = DFA.unpackEncodedString(DFA239_specialS);
-    static final short[][] DFA239_transition;
+    static final short[] DFA241_eot = DFA.unpackEncodedString(DFA241_eotS);
+    static final short[] DFA241_eof = DFA.unpackEncodedString(DFA241_eofS);
+    static final char[] DFA241_min = DFA.unpackEncodedStringToUnsignedChars(DFA241_minS);
+    static final char[] DFA241_max = DFA.unpackEncodedStringToUnsignedChars(DFA241_maxS);
+    static final short[] DFA241_accept = DFA.unpackEncodedString(DFA241_acceptS);
+    static final short[] DFA241_special = DFA.unpackEncodedString(DFA241_specialS);
+    static final short[][] DFA241_transition;
 
     static {
-        int numStates = DFA239_transitionS.length;
-        DFA239_transition = new short[numStates][];
+        int numStates = DFA241_transitionS.length;
+        DFA241_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA239_transition[i] = DFA.unpackEncodedString(DFA239_transitionS[i]);
+            DFA241_transition[i] = DFA.unpackEncodedString(DFA241_transitionS[i]);
         }
     }
 
-    class DFA239 extends DFA {
+    class DFA241 extends DFA {
 
-        public DFA239(BaseRecognizer recognizer) {
+        public DFA241(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 239;
-            this.eot = DFA239_eot;
-            this.eof = DFA239_eof;
-            this.min = DFA239_min;
-            this.max = DFA239_max;
-            this.accept = DFA239_accept;
-            this.special = DFA239_special;
-            this.transition = DFA239_transition;
+            this.decisionNumber = 241;
+            this.eot = DFA241_eot;
+            this.eof = DFA241_eof;
+            this.min = DFA241_min;
+            this.max = DFA241_max;
+            this.accept = DFA241_accept;
+            this.special = DFA241_special;
+            this.transition = DFA241_transition;
         }
         public String getDescription() {
-            return "1255:1: NUMBER : ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
+            return "1256:1: NUMBER : ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )+ ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
         }
     }
-    static final String DFA245_eotS =
+    static final String DFA247_eotS =
         "\3\uffff\16\27\1\uffff\1\26\24\uffff\43\155\132\uffff";
-    static final String DFA245_eofS =
+    static final String DFA247_eofS =
         "\u00a4\uffff";
-    static final String DFA245_minS =
+    static final String DFA247_minS =
         "\1\11\1\101\1\uffff\1\120\1\111\1\107\1\103\1\106\2\103\1\101\1"+
         "\104\1\111\1\104\1\111\1\130\1\101\1\uffff\1\40\6\uffff\1\120\1"+
         "\111\1\107\1\103\1\106\2\103\1\101\1\104\1\111\1\104\1\111\1\130"+
         "\1\101\43\40\43\101\1\uffff\1\101\1\105\1\102\1\107\1\104\1\123"+
         "\1\115\1\102\10\uffff\1\103\1\113\3\uffff\1\101\1\107\1\uffff\1"+
         "\101\1\104\1\102\7\uffff\1\122\23\uffff";
-    static final String DFA245_maxS =
+    static final String DFA247_maxS =
         "\1\172\1\132\1\uffff\1\120\1\116\1\120\1\130\1\115\1\122\1\116\1"+
         "\101\1\123\1\122\1\127\1\111\1\130\1\126\1\uffff\1\172\6\uffff\1"+
         "\120\1\116\1\120\1\130\1\115\1\122\1\116\1\101\1\123\1\122\1\127"+
         "\1\111\1\130\1\126\43\172\43\132\1\uffff\1\120\1\127\1\120\1\123"+
         "\1\104\1\127\1\124\1\127\10\uffff\1\127\1\124\3\uffff\1\126\1\124"+
         "\1\uffff\1\127\1\126\1\103\7\uffff\1\124\23\uffff";
-    static final String DFA245_acceptS =
+    static final String DFA247_acceptS =
         "\2\uffff\1\46\16\uffff\1\52\1\uffff\1\54\1\55\1\56\1\53\1\57\1\50"+
         "\124\uffff\1\51\10\uffff\1\43\1\44\1\47\1\1\1\2\1\45\1\3\1\4\2\uffff"+
         "\1\13\1\14\1\15\2\uffff\1\23\3\uffff\1\32\1\33\1\34\1\35\1\36\1"+
         "\37\1\40\1\uffff\1\5\1\6\1\7\1\10\1\11\1\12\1\16\1\17\1\20\1\21"+
         "\1\22\1\24\1\25\1\26\1\27\1\30\1\31\1\41\1\42";
-    static final String DFA245_specialS =
+    static final String DFA247_specialS =
         "\u00a4\uffff}>";
-    static final String[] DFA245_transitionS = {
+    static final String[] DFA247_transitionS = {
             "\2\26\2\uffff\1\26\22\uffff\1\22\1\2\2\uffff\1\1\5\uffff\1\25"+
             "\1\24\1\23\1\24\1\21\1\uffff\12\21\7\uffff\1\5\1\27\1\6\1\7"+
             "\1\10\1\27\1\3\1\11\1\4\10\27\1\12\1\13\1\14\1\27\1\15\1\16"+
@@ -14809,34 +14972,34 @@ public class NMEALexer extends Lexer {
             ""
     };
 
-    static final short[] DFA245_eot = DFA.unpackEncodedString(DFA245_eotS);
-    static final short[] DFA245_eof = DFA.unpackEncodedString(DFA245_eofS);
-    static final char[] DFA245_min = DFA.unpackEncodedStringToUnsignedChars(DFA245_minS);
-    static final char[] DFA245_max = DFA.unpackEncodedStringToUnsignedChars(DFA245_maxS);
-    static final short[] DFA245_accept = DFA.unpackEncodedString(DFA245_acceptS);
-    static final short[] DFA245_special = DFA.unpackEncodedString(DFA245_specialS);
-    static final short[][] DFA245_transition;
+    static final short[] DFA247_eot = DFA.unpackEncodedString(DFA247_eotS);
+    static final short[] DFA247_eof = DFA.unpackEncodedString(DFA247_eofS);
+    static final char[] DFA247_min = DFA.unpackEncodedStringToUnsignedChars(DFA247_minS);
+    static final char[] DFA247_max = DFA.unpackEncodedStringToUnsignedChars(DFA247_maxS);
+    static final short[] DFA247_accept = DFA.unpackEncodedString(DFA247_acceptS);
+    static final short[] DFA247_special = DFA.unpackEncodedString(DFA247_specialS);
+    static final short[][] DFA247_transition;
 
     static {
-        int numStates = DFA245_transitionS.length;
-        DFA245_transition = new short[numStates][];
+        int numStates = DFA247_transitionS.length;
+        DFA247_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA245_transition[i] = DFA.unpackEncodedString(DFA245_transitionS[i]);
+            DFA247_transition[i] = DFA.unpackEncodedString(DFA247_transitionS[i]);
         }
     }
 
-    class DFA245 extends DFA {
+    class DFA247 extends DFA {
 
-        public DFA245(BaseRecognizer recognizer) {
+        public DFA247(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 245;
-            this.eot = DFA245_eot;
-            this.eof = DFA245_eof;
-            this.min = DFA245_min;
-            this.max = DFA245_max;
-            this.accept = DFA245_accept;
-            this.special = DFA245_special;
-            this.transition = DFA245_transition;
+            this.decisionNumber = 247;
+            this.eot = DFA247_eot;
+            this.eof = DFA247_eof;
+            this.min = DFA247_min;
+            this.max = DFA247_max;
+            this.accept = DFA247_accept;
+            this.special = DFA247_special;
+            this.transition = DFA247_transition;
         }
         public String getDescription() {
             return "1:1: Tokens : ( AAM | APB | BEC | BOD | BWC | BWR | BWW | DBT | DBK | DBS | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RSD | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | ALR | VDM | TXT | PRO | DEVICE | NUMBER | WS | SEP | SIGN | CHECKSUM | LETTERS );";
