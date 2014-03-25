@@ -49,18 +49,12 @@ public class ShipProcessor
 
     @Override
     public GObject processUpdated(int id, TObject input, GObject output) {
-        tShip = (TShip) input;
+         tShip = (TShip) input;
         gShip = (GShip) output;
-      
-        if (tShip.getShapeId() == 0) {  
-            Shape shape = new Shape_0(makeAttributes(),
-                    makePositionList(initShape(tShip.getLatitude(), tShip.getLongitude())));
-            gShip.setShape(shape);
-        }     
+        
         gShip.setLocation(tShip.getLocation());
         gShip.setCog(tShip.getOrientation().getOrientationDegree());
         gShip.getAttributes().setInteriorMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
-        
         return output;
     }
 
@@ -94,11 +88,11 @@ public class ShipProcessor
     private double[] initShape(double latitude, double longitude) {
         double[] shipShape = new double[6];
         shipShape[0] = longitude;
-        shipShape[1] = latitude + 0.0015;
-        shipShape[2] = longitude + .001;
-        shipShape[3] = latitude - .0015;
-        shipShape[4] = longitude - .001;
-        shipShape[5] = latitude - .0015;
+        shipShape[1] = latitude + 0.00075;
+        shipShape[2] = longitude + .0005;
+        shipShape[3] = latitude - .00075;
+        shipShape[4] = longitude - .0005;
+        shipShape[5] = latitude - .00075;
         return shipShape;
     }
 

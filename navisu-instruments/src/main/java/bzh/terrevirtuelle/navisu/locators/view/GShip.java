@@ -31,9 +31,14 @@ public class GShip
     public GShip(int id, TShip ship) {
         this.id = id;
         this.tShip = ship;
-        shape = new Shape_1(makeAttributes(),
-                new LatLon(Angle.fromDegrees(tShip.getLatitude()), Angle.fromDegrees(tShip.getLongitude())),
-                20.0);
+        if (tShip.getShapeId() == 0) {
+            shape = new Shape_0(makeAttributes(),
+                    makePositionList(initShape(tShip.getLatitude(), tShip.getLongitude())));
+        } else {
+            shape = new Shape_1(makeAttributes(),
+                    new LatLon(Angle.fromDegrees(tShip.getLatitude()), Angle.fromDegrees(tShip.getLongitude())),
+                    40.0);
+        }
     }
 
     @Override
@@ -99,11 +104,11 @@ public class GShip
     private double[] initShape(double latitude, double longitude) {
         double[] shipShape = new double[6];
         shipShape[0] = longitude;
-        shipShape[1] = latitude + 0.0015;
-        shipShape[2] = longitude + .001;
-        shipShape[3] = latitude - .0015;
-        shipShape[4] = longitude - .001;
-        shipShape[5] = latitude - .0015;
+        shipShape[1] = latitude + 0.00075;
+        shipShape[2] = longitude + 0.0005;
+        shipShape[3] = latitude - 0.00075;
+        shipShape[4] = longitude - 0.0005;
+        shipShape[5] = latitude - 0.00075;
         return shipShape;
     }
 
@@ -124,4 +129,8 @@ public class GShip
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "GShip{" + "id=" + id + ", tShip=" + tShip + ", shape=" + shape + '}';
+    }
 }

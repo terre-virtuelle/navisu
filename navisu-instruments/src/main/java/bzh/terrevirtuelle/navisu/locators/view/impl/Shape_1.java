@@ -21,8 +21,6 @@ import gov.nasa.worldwind.render.SurfaceCircle;
 public class Shape_1 extends SurfaceCircle
         implements Shape {
 
-
-
     public Shape_1(ShapeAttributes sa, LatLon latlon, double d) {
         super(sa, latlon, d);
     }
@@ -43,4 +41,8 @@ public class Shape_1 extends SurfaceCircle
         return new Renderable[]{this};
     }
 
+    @Override
+    public String toString() {
+        return "Shape_1{" + super.toString() + '}';
+    }
 }

@@ -28,6 +28,8 @@ import java.util.logging.Logger;
  *
  * @author Serge
  */
+
+
 public class GpsLocatorControllerWithDPAgent {
 
     protected static final Logger LOGGER = Logger.getLogger(GpsLocatorControllerWithDPAgent.class.getName());
@@ -62,10 +64,10 @@ public class GpsLocatorControllerWithDPAgent {
                 new Integer(properties.getProperty("navigationalStatus")),
                 new Integer(properties.getProperty("electronicPositionDevice")),
                 properties.getProperty("callSign"));
-
+        ship.setShapeId(0);
         // insertion dans le DPAgent
         dpAgentServices.create(ship);
-        
+
         subscribe();
     }
 
@@ -90,7 +92,7 @@ public class GpsLocatorControllerWithDPAgent {
                 VTG data = (VTG) d;
                 ship.setCog(data.getCog());
                 ship.setSog(data.getSog());
-                if(ship.getSog() > 0.1){
+                if (ship.getSog() > 0.1) {
                     ship.setShapeId(0);
                 }
                 // mise à jour via la DPAgent
@@ -106,7 +108,7 @@ public class GpsLocatorControllerWithDPAgent {
                 ship.setLongitude(data.getLongitude());
                 ship.setCog(data.getCog());
                 ship.setSog(data.getSog());
-                if(ship.getSog() > 0.1){
+                if (ship.getSog() > 0.1) {
                     ship.setShapeId(0);
                 }
                 // mise à jour via la DPAgent

@@ -42,7 +42,12 @@ public class Shape_0 extends Polygon
 
     @Override
     public void setRotation(double cog) {
-       super.setRotation(cog);
+       super.setRotation(90+cog);
+    }
+    
+    @Override
+    public String toString() {
+        return "Shape_0{" + super.toString() + '}';
     }
 }
 

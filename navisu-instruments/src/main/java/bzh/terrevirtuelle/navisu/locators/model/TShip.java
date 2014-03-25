@@ -36,7 +36,7 @@ public class TShip
             int type, int navigationalStatus, int electronicPositionDevice, String callSign,
             Calendar ETA, String destination, String country) {
         super(mmsi, imo, name, heading, cog, sog, rot, latitude, longitude, width, length, draught, type, navigationalStatus, electronicPositionDevice, callSign, ETA, destination, country);
-        if (sog > 1.1) {
+        if (sog > 0.1) {
             shapeId = 0;
         }
         this.id = id;
@@ -94,5 +94,10 @@ public class TShip
         // TODO à completer 
         // return clone avec constructeur complet
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "TShip{" + "id=" + id + ", shapeId=" + shapeId + super.toString() + '}';
     }
 }
