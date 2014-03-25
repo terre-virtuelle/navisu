@@ -90,6 +90,9 @@ public class GpsLocatorControllerWithDPAgent {
                 VTG data = (VTG) d;
                 ship.setCog(data.getCog());
                 ship.setSog(data.getSog());
+                if(ship.getSog() > 0.1){
+                    ship.setShapeId(0);
+                }
                 // mise à jour via la DPAgent
                 dpAgentServices.update(ship);
             }
@@ -103,6 +106,9 @@ public class GpsLocatorControllerWithDPAgent {
                 ship.setLongitude(data.getLongitude());
                 ship.setCog(data.getCog());
                 ship.setSog(data.getSog());
+                if(ship.getSog() > 0.1){
+                    ship.setShapeId(0);
+                }
                 // mise à jour via la DPAgent
                 dpAgentServices.update(ship);
             }

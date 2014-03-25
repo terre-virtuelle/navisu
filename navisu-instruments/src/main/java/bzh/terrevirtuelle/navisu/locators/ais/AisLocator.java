@@ -16,8 +16,6 @@ import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.locators.ais.controller.AisLocatorControllerWithDPAgent;
 import bzh.terrevirtuelle.navisu.locators.ais.view.AisLayer;
-import bzh.terrevirtuelle.navisu.locators.controller.CShipProcessor;
-import bzh.terrevirtuelle.navisu.locators.controller.PShipProcessor;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.controller.ShipProcessor;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
@@ -71,7 +69,7 @@ public class AisLocator {
                 AIS1 ais = (AIS1) data;
                 int mmsi = ais.getMMSI();
                 if (!tShipProcessors.containsKey(mmsi)) {
-                    ShipProcessor shipProcessor = new CShipProcessor(AisLocator.this.aisLayer);
+                    ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
                     geoViewServices.registerProcessor(shipProcessor);
                     
                     ship = new TShip(IDGenerator.newIntID(),
@@ -97,7 +95,7 @@ public class AisLocator {
                 AIS2 ais = (AIS2) data;
                 int mmsi = ais.getMMSI();
                 if (!tShipProcessors.containsKey(mmsi)) {
-                    ShipProcessor shipProcessor = new CShipProcessor(AisLocator.this.aisLayer);
+                    ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
                     geoViewServices.registerProcessor(shipProcessor);
 
                     ship = new TShip(IDGenerator.newIntID(),
@@ -121,7 +119,7 @@ public class AisLocator {
          AIS3 ais = (AIS3) data;
          int mmsi = ais.getMMSI();
                 if (!tShipProcessors.containsKey(mmsi)) {
-                    ShipProcessor shipProcessor = new CShipProcessor(AisLocator.this.aisLayer);
+                    ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
                     geoViewServices.registerProcessor(shipProcessor);
 
                     ship = new TShip(IDGenerator.newIntID(),

@@ -3,8 +3,17 @@ package bzh.terrevirtuelle.navisu.locators.view;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_0;
+import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_1;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * NaVisu
@@ -12,20 +21,32 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  * @author tibus
  * @date 19/02/2014 18:49
  */
-public abstract class GShip implements GObject {
+public class GShip
+        implements GObject {
 
     protected final int id;
-    protected TShip ship;
-    protected Renderable[] renderables;
+    protected TShip tShip;
+    protected Shape shape;
 
     public GShip(int id, TShip ship) {
         this.id = id;
-        this.ship = ship;
+        this.tShip = ship;
+        shape = new Shape_1(makeAttributes(),
+                new LatLon(Angle.fromDegrees(tShip.getLatitude()), Angle.fromDegrees(tShip.getLongitude())),
+                20.0);
     }
 
     @Override
     public int getID() {
         return this.id;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public void setShape(Shape shape) {
+        this.shape = shape;
     }
 
     /**
@@ -34,7 +55,7 @@ public abstract class GShip implements GObject {
      * @return the value of ship
      */
     public TShip getShip() {
-        return ship;
+        return tShip;
     }
 
     /**
@@ -43,22 +64,64 @@ public abstract class GShip implements GObject {
      * @param ship new value of ship
      */
     public void setShip(TShip ship) {
-        this.ship = ship;
+        this.tShip = ship;
     }
 
     @Override
-    public abstract void setLocation(Location location);
+    public void setLocation(Location location) {
+        shape.setLocation(location);
+    }
 
-    public abstract ShapeAttributes getAttributes();
+    public ShapeAttributes getAttributes() {
+        return shape.getAttributes();
+    }
 
     @Override
     public Renderable[] getRenderables() {
-        return renderables;
+        return shape.getRenderables();
     }
 
-    public abstract void setCog(double cog);
+    public void setCog(double cog) {
+        shape.setRotation(cog);
+    }
+
+    protected final ShapeAttributes makeAttributes() {
+        final ShapeAttributes pathAttrs = new BasicShapeAttributes();
+        pathAttrs.setOutlineMaterial(Material.BLACK);
+        pathAttrs.setOutlineOpacity(0.8);
+        pathAttrs.setOutlineWidth(1);
+        pathAttrs.setInteriorMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
+        pathAttrs.setDrawInterior(true);
+        pathAttrs.setInteriorOpacity(1.0);
+        return pathAttrs;
+    }
+
+    private double[] initShape(double latitude, double longitude) {
+        double[] shipShape = new double[6];
+        shipShape[0] = longitude;
+        shipShape[1] = latitude + 0.0015;
+        shipShape[2] = longitude + .001;
+        shipShape[3] = latitude - .0015;
+        shipShape[4] = longitude - .001;
+        shipShape[5] = latitude - .0015;
+        return shipShape;
+    }
+
+    protected final List<Position> makePositionList(double[] src) {
+        int numCoords = src.length / 2;
+        Position[] array = new Position[numCoords];
+
+        for (int i = 0; i < numCoords; i++) {
+            double lonDegrees = src[2 * i];
+            double latDegrees = src[2 * i + 1];
+            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 100);
+        }
+        return Arrays.asList(array);
+    }
 
     @Override
-    public abstract Object getClone();
+    public Object getClone() {
+        return this;
+    }
 
 }

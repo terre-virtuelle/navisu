@@ -13,17 +13,12 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS135;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.ship.Ship;
 
 import java.util.logging.Logger;
-import javafx.beans.value.ObservableValue;
-import static jdk.nashorn.internal.objects.NativeJava.type;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -59,7 +54,6 @@ public class AisLocatorControllerWithDPAgent {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS1 data = (AIS1) d;
-               // System.out.println(data);
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
@@ -79,7 +73,6 @@ public class AisLocatorControllerWithDPAgent {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS2 data = (AIS2) d;
-               // System.out.println(data);
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
@@ -98,7 +91,6 @@ public class AisLocatorControllerWithDPAgent {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS3 data = (AIS3) d;
-               // System.out.println(data);
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
