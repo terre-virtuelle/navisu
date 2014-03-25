@@ -131,12 +131,12 @@ public class AppMain extends Application {
         dataServerServices.init("localhost", 8080);
 
          // Test connexion GPS 
-        dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
+     // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         //dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // Test connexion Gpsd 
         // dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // Test connexion fichier 
-        // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
          //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
@@ -151,7 +151,7 @@ public class AppMain extends Application {
         
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
-       // widgetServices.createGpsLocator();
+        widgetServices.createGpsLocator();
         widgetServices.createAisLocator();
         
         LoggerServices loggerServices = componentManager.getComponentService(LoggerServices.class);
