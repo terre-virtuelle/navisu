@@ -1,17 +1,23 @@
 package bzh.terrevirtuelle.navisu.main;
 
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.app.processors.TObjectProcessor;
 import bzh.terrevirtuelle.navisu.charts.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.charts.impl.ChartsManagerImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -73,48 +79,48 @@ public class AppMain extends Application {
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(chartsServices.getDriver());
-        // chartsServices.openChart("data/101.KAP");
+       //  chartsServices.openChart("data/101.KAP");
         driverServices.registerNewDriver(gribServices.getDriver());
 
          //------------------------------->
         // TESTS AGENT
         //
-        /*
-         GObjectCUDProcessor proc = new TObjectProcessor();
+  /*      
+        GObjectCUDProcessor proc = new TObjectProcessor();
+  
+        GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
+        geoViewServices.registerProcessor(proc);
+        geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
 
-         GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
-         geoViewServices.registerProcessor(proc);
-         geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
+        DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
 
-         DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
+        guiServices.getJobsManager().newJob("Test job", pHandler -> {
 
-         guiServices.getJobsManager().newJob("Test job", pHandler -> {
+            double lat = 48.390834d;
+            double lon = -4.485556d;
 
-         double lat = 48.390834d;
-         double lon = -4.485556d;
+            TObject tObject = TObject.newBasicTObject(1, lat, lon);
+            dpAgentServices.create(tObject);
 
-         TObject tObject = TObject.newBasicTObject(1, lat, lon);
-         dpAgentServices.create(tObject);
+            pHandler.start(100);
 
-         pHandler.start(100);
+            for (int i = 0; i < 100; i++) {
 
-         for (int i = 0; i < 100; i++) {
+                lon += i / 1000.;
+                tObject.setLocation(Location.factory.newLocation(lat, lon));
+                dpAgentServices.update(tObject);
 
-         lon += i / 1000.;
-         tObject.setLocation(Location.factory.newLocation(lat, lon));
-         dpAgentServices.update(tObject);
+                pHandler.progress("Moving TObject...", i);
 
-         pHandler.progress("Moving TObject...", i);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
+            }
 
-         try {
-         Thread.sleep(500);
-         } catch (InterruptedException e) {
-         }
-         }
-
-         dpAgentServices.delete(tObject);
-         });
-         */
+            dpAgentServices.delete(tObject);
+        });
+*/
         //
         // END TESTS AGENT
         //------------------------------->
@@ -123,22 +129,21 @@ public class AppMain extends Application {
         //
         // Hack pendant le dev 
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
-        
-        
+
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
         // Test avec choix des parametres de comm
         dataServerServices.init("localhost", 8080);
 
-         // Test connexion GPS 
-     // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
+        // Test connexion GPS 
+       // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         //dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // Test connexion Gpsd 
         // dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // Test connexion fichier 
-        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
-         //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
+        // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
 
@@ -148,12 +153,12 @@ public class AppMain extends Application {
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8080);
         nmeaClientServices.request(500);
-        
+
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
         widgetServices.createGpsLocator();
         widgetServices.createAisLocator();
-        
+
         LoggerServices loggerServices = componentManager.getComponentService(LoggerServices.class);
        // loggerServices.createPrinter(new NMEA());
 
