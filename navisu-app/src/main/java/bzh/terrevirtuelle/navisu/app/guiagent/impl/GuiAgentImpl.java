@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
@@ -38,29 +37,39 @@ import java.util.logging.Logger;
  * @author tibus
  * @date 02/11/2013 11:54
  */
-public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
+public class GuiAgentImpl
+        implements GuiAgent, GuiAgentServices {
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
-    @SubComponent OptionsManagerImpl optionsManager;
-    @UsedService OptionsManagerServices optionsManagerServices;
+    @SubComponent
+    OptionsManagerImpl optionsManager;
+    @UsedService
+    OptionsManagerServices optionsManagerServices;
 
+    @SubComponent
+    MenuManagerImpl menu;
+    @UsedService
+    MenuManagerServices menuServices;
 
-    @SubComponent MenuManagerImpl menu;
-    @UsedService MenuManagerServices menuServices;
+    @SubComponent
+    LayerCheckTreeImpl layerTree;
+    @UsedService
+    LayerTreeServices layerTreeServices;
 
-    @SubComponent LayerCheckTreeImpl layerTree;
-    @UsedService LayerTreeServices layerTreeServices;
-
-    @SubComponent GeoViewImpl geoView;
-    @UsedService  GeoViewServices geoViewServices;
+    @SubComponent
+    GeoViewImpl geoView;
+    @UsedService
+    GeoViewServices geoViewServices;
 
     protected JobsManager jobsManager;
 
     protected int width;
     protected int height;
-    
+
     protected Stage stage;
+    protected StackPane root;
+    static GuiAgentController ctrl = null;
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -72,9 +81,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
         this.jobsManager = JobsManager.create();
 
-        StackPane root = null;
         final FXMLLoader loader = new FXMLLoader();
-        GuiAgentController ctrl = null;
 
         try {
             root = loader.load(GuiAgentImpl.class.getResourceAsStream("GuiAgent.fxml"));
@@ -88,8 +95,7 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
 
         // Place scene components
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
-        ctrl.centerBorderPane.setCenter(geoViewServices.getDisplayService().getDisplayable());
-
+        ctrl.centerBorderPane.getChildren().add(geoViewServices.getDisplayService().getDisplayable());
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
 
         // Initialize menu
@@ -136,5 +142,10 @@ public class GuiAgentImpl implements GuiAgent, GuiAgentServices {
     @Override
     public void setFullScreen(boolean fullScreen) {
         this.stage.setFullScreen(true);
+    }
+
+    @Override
+    public StackPane getRoot() {
+        return ctrl.centerBorderPane;
     }
 }
