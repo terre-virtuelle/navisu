@@ -8,12 +8,14 @@ package bzh.terrevirtuelle.navisu.buoys;
 import java.io.Serializable;
 import java.util.Calendar;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 
 /**
  *
  * @author Serge
  */
-public class BaseStation implements Serializable {
+public class BaseStation
+        implements Serializable {
 
     /**
      * MMSI number :1-999999999; 0 = not available = default
@@ -23,28 +25,27 @@ public class BaseStation implements Serializable {
     private DoubleProperty longitude;
     private Calendar date;
     /**
-     * Electronic Position Fixing Device 
-     * 0 Undefined (default) 
-     * 1 GPS 
-     * 2 GLONASS 
-     * 3 Combined GPS/GLONASS 
-     * 4 Loran-C 
-     * 5 Chayka 
-     * 6 Integrated navigation system 
-     * 7 Surveyed 
-     * 8 Galileo
+     * Electronic Position Fixing Device 0 Undefined (default) 1 GPS 2 GLONASS 3
+     * Combined GPS/GLONASS 4 Loran-C 5 Chayka 6 Integrated navigation system 7
+     * Surveyed 8 Galileo
      */
     private int epfd;
 
     public BaseStation() {
     }
 
-    public BaseStation(int mmsi, DoubleProperty latitude, DoubleProperty longitude, Calendar date, int epfd) {
+    public BaseStation(int mmsi, double latitude, double longitude, Calendar date, int epfd) {
         this.mmsi = mmsi;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.latitude = new SimpleDoubleProperty(latitude);
+        this.longitude = new SimpleDoubleProperty(longitude);
         this.date = date;
         this.epfd = epfd;
+    }
+
+    public BaseStation(int mmsi, double latitude, double longitude) {
+        this.mmsi = mmsi;
+        this.latitude = new SimpleDoubleProperty(latitude);
+        this.longitude = new SimpleDoubleProperty(longitude);
     }
 
     public int getMmsi() {
@@ -55,20 +56,45 @@ public class BaseStation implements Serializable {
         this.mmsi = mmsi;
     }
 
-    public DoubleProperty getLatitude() {
-        return latitude;
+    public DoubleProperty latitudeProperty() {
+        return this.latitude;
     }
 
-    public void setLatitude(DoubleProperty latitude) {
-        this.latitude = latitude;
+    /**
+     *
+     * @return
+     */
+    public double getLatitude() {
+        return this.latitudeProperty().get();
     }
 
-    public DoubleProperty getLongitude() {
-        return longitude;
+    /**
+     *
+     * @param latitude
+     */
+    public void setLatitude(double latitude) {
+        this.latitudeProperty().set(latitude);
     }
 
-    public void setLongitude(DoubleProperty longitude) {
-        this.longitude = longitude;
+    public DoubleProperty longitudeProperty() {
+        return this.longitude;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getLongitude() {
+        return longitudeProperty().get();
+    }
+
+    /**
+     *
+     * @param longitude
+     */
+    public void setLongitude(double longitude) {
+
+        this.longitudeProperty().set(longitude);
     }
 
     public Calendar getDate() {
@@ -86,5 +112,5 @@ public class BaseStation implements Serializable {
     public void setEpfd(int epfd) {
         this.epfd = epfd;
     }
-    
+
 }
