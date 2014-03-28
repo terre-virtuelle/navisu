@@ -24,6 +24,8 @@ import java.util.List;
 public class GShip
         implements GObject {
 
+   
+    
     protected final int id;
     protected TShip tShip;
     protected Shape shape;

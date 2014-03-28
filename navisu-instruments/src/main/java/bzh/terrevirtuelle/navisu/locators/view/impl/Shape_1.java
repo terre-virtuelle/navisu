@@ -5,14 +5,20 @@
  */
 package bzh.terrevirtuelle.navisu.locators.view.impl;
 
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.locators.view.Shape;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceCircle;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 
 /**
  *
@@ -21,8 +27,13 @@ import gov.nasa.worldwind.render.SurfaceCircle;
 public class Shape_1 extends SurfaceCircle
         implements Shape {
 
+    Button button;
+    WorldWindow wwd;
+    boolean first = true;
+
     public Shape_1(ShapeAttributes sa, LatLon latlon, double d) {
         super(sa, latlon, d);
+        wwd = GeoWorldWindViewImpl.getWW();
     }
 
     @Override
@@ -44,5 +55,31 @@ public class Shape_1 extends SurfaceCircle
     @Override
     public String toString() {
         return "Shape_1{" + super.toString() + '}';
+    }
+
+    private void pick() {
+        wwd.addSelectListener((SelectEvent event) -> {
+            if (event.getEventAction().equals(SelectEvent.HOVER) && event.getObjects() != null) {
+                if (first == true) {
+                    first = false;
+                    if (button == null) {
+                        button = new Button();
+                    }
+                    button.setText("       Quit        ");
+                    button.setOnAction((ActionEvent evt) -> {
+                        System.exit(0);
+                    });
+                    /*
+                    offset = wwd.getView().project(
+                            wwd.getModel().getGlobe().computePointFromLocation(
+                                    new LatLon(Angle.fromDegrees(lat), Angle.fromDegrees(lon))));
+                    Platform.runLater(() -> {
+                        pane.getChildren().add(button);
+                        wwd.addPositionListener(Ship.this);
+                    });
+                            */
+                }
+            }
+        });
     }
 }

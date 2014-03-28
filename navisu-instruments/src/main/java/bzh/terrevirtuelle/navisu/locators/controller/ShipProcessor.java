@@ -6,16 +6,8 @@ import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.view.GShip;
-import bzh.terrevirtuelle.navisu.locators.view.Shape;
 import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
-import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_0;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * NaVisu
@@ -49,9 +41,9 @@ public class ShipProcessor
 
     @Override
     public GObject processUpdated(int id, TObject input, GObject output) {
-         tShip = (TShip) input;
+        tShip = (TShip) input;
         gShip = (GShip) output;
-        
+
         gShip.setLocation(tShip.getLocation());
         gShip.setCog(tShip.getOrientation().getOrientationDegree());
         gShip.getAttributes().setInteriorMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
@@ -73,7 +65,7 @@ public class ShipProcessor
     public Class<? extends TObject> getType() {
         return TShip.class;
     }
-
+/*
     protected final ShapeAttributes makeAttributes() {
         final ShapeAttributes pathAttrs = new BasicShapeAttributes();
         pathAttrs.setOutlineMaterial(Material.BLACK);
@@ -107,4 +99,5 @@ public class ShipProcessor
         }
         return Arrays.asList(array);
     }
+    */
 }

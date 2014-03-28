@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.locators.impl;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.locators.Widget3D;
 import bzh.terrevirtuelle.navisu.locators.Widget3DServices;
@@ -26,6 +27,9 @@ public class Widget3DImpl
 
     @UsedService
     DpAgentServices dpAgentServices;
+    
+    @UsedService
+    GuiAgentServices guiAgentServices;
 
     @Override
     public void componentInitiated() {
@@ -46,6 +50,6 @@ public class Widget3DImpl
 
     @Override
     public void createAisLocator() {
-        AisLocator locator = new AisLocator(geoViewServices, dpAgentServices);
+        AisLocator locator = new AisLocator(geoViewServices, dpAgentServices, guiAgentServices);
     }
 }
