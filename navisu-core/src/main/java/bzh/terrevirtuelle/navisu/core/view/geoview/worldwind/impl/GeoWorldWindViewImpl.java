@@ -34,7 +34,9 @@ import java.awt.*;
  * @author Thibault Pensec <thibault.pensec at gmail.com>
  * @author Jordan Mens <jordan.mens at gmail.com>
  */
-public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorldWindView {
+public class GeoWorldWindViewImpl
+        extends JFXAbstractDisplay
+        implements GeoWorldWindView {
 
     protected final WorldWindLayerManager layerManager;
     protected final static WorldWindow wwd = new WorldWindowGLJPanel();
@@ -43,7 +45,7 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
 
     protected Projection currentProjection = Projection.mercator;
 
-    protected final SwingNode swingNode;
+     protected final SwingNode swingNode;
 
     public GeoWorldWindViewImpl() {
 
@@ -64,8 +66,8 @@ public class GeoWorldWindViewImpl extends JFXAbstractDisplay implements GeoWorld
 
         // Create the JavaFX display node
         this.swingNode = this.createSwingDisplayNode(this.wwd);
-        
-         // Register a select listener to print the class names of the items under the cursor. // Register a select listener to print the class names of the items under the cursor.
+
+        // Register a select listener to print the class names of the items under the cursor. // Register a select listener to print the class names of the items under the cursor.
         wwd.getSceneController().setDeepPickEnabled(true);
         // Add controllers to manage highlighting and tool tips.
         HotSpotController hotSpotController = new HotSpotController(wwd);
