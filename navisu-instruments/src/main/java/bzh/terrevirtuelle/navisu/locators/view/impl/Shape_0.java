@@ -17,15 +17,14 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  *
  * @author Serge
  */
-public class Shape_0 extends Polygon
+public class Shape_0
+        extends Polygon
         implements Shape {
 
     public Shape_0(ShapeAttributes sa, Iterable<? extends Position> itrbl) {
         super(itrbl);
         setAttributes(sa);
     }
-
-   
 
     @Override
     public void setLocation(Location location) {
@@ -38,16 +37,13 @@ public class Shape_0 extends Polygon
         return new Renderable[]{this};
     }
 
-    
-
     @Override
     public void setRotation(double cog) {
-       super.setRotation(90+cog);
+        super.setRotation(90 + cog);
     }
-    
+
     @Override
     public String toString() {
         return "Shape_0{" + super.toString() + '}';
     }
 }
-

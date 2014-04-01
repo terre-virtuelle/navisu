@@ -24,6 +24,11 @@ public class TShip
         this.id = id;
     }
 
+    public TShip(int id, int mmsi, float latitude, float longitude) {
+        super(mmsi, latitude, longitude);
+        this.id = id;
+    }
+
     public TShip(int id, int mmsi, String name, String country, float width, float length, float draught, int shipType, int navigationalStatus, int electronicPositionDevice, String callSign) {
         super(mmsi, name, country, width, length, draught, shipType, navigationalStatus, electronicPositionDevice, callSign);
         this.id = id;

@@ -15,6 +15,7 @@ import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 
@@ -103,24 +104,24 @@ public class AisLocatorControllerWithDPAgent {
                 }
             }
         });
-        /*
+        
          ais4ES.subscribe(new AIS4Event() {
 
          @Override
-         public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-         AIS4 ais = (AIS4) data;
-         System.out.println("type : 4");
-         int mmsi = ais.getMMSI();
-         //   if (ships.containsKey(mmsi)) {
-         //       tShip = ships.get(mmsi);
-         //shipUpdate(ais);
-         //   } else {
-         // shipBuild4(ais); // faire un buildDefault pour les stations fixes
-         ships.put(mmsi, ship);
-         //  }
+         public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+         AIS4 data = (AIS4) d;
+         double lat = data.getLatitude();
+                double lon = data.getLongitude();
+                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
+                    ship.setLatitude(lat);
+                    ship.setLongitude(lon);
+                 
+                    // mise à jour via le DPAgent
+                    dpAgentServices.update(ship);
+                }
          }
          });
-         */
+         
         ais5ES.subscribe(new AIS5Event() {
 
             @Override

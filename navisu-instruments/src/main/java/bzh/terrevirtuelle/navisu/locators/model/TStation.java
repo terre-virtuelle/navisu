@@ -1,35 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package bzh.terrevirtuelle.navisu.locators.model;
 
-import bzh.terrevirtuelle.navisu.buoys.BaseStation;
+import bzh.terrevirtuelle.navisu.station.Station;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import java.util.Calendar;
-import javafx.beans.property.DoubleProperty;
 
 /**
- * NaVisu
  *
- * @author tibus
- * @date 19/02/2014 19:19
+ * @author Serge
  */
-public class TBaseStation
-        extends BaseStation
+public class TStation
+        extends Station
         implements TObject {
 
     protected final int id;
 
-    private int shapeId = 1;
-
-    public TBaseStation(int id) {
+    public TStation(int id) {
         this.id = id;
     }
 
-    public TBaseStation(int id, int mmsi, double latitude, double longitude) {
+    public TStation(int id, int mmsi, double latitude, double longitude) {
         super(mmsi, latitude, longitude);
         this.id = id;
     }
 
-    public TBaseStation(int id, int mmsi, double latitude, double longitude, Calendar date, int epfd) {
+    public TStation(int id, int mmsi, double latitude, double longitude, Calendar date, int epfd) {
         super(mmsi, latitude, longitude, date, epfd);
         this.id = id;
     }
@@ -50,35 +50,13 @@ public class TBaseStation
         this.setLongitude(location.getLongitudeDegree());
     }
 
-    /**
-     * Get the value of shapeId
-     *
-     * @return the value of shapeId
-     */
-    public int getShapeId() {
-        return shapeId;
-    }
-
-    /**
-     * Set the value of shapeId
-     *
-     * @param shapeId new value of shapeId
-     */
-    public void setShapeId(int shapeId) {
-        this.shapeId = shapeId;
-    }
-
     @Override
     public Object getClone() {
-        TBaseStation clone = new TBaseStation(this.id);
+        TStation clone = new TStation(this.id);
         clone.setLocation(this.getLocation());
         // TODO à completer 
         // return clone avec constructeur complet
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "TBaseStation{" + "id=" + id + ", shapeId=" + shapeId + "BaseStation : "  +super.toString() +  '}';
-    }
 }
