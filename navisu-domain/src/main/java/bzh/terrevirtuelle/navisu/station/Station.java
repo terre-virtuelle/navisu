@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.buoys;
+package bzh.terrevirtuelle.navisu.station;
 
+import bzh.terrevirtuelle.navisu.ship.Ship;
 import java.io.Serializable;
 import java.util.Calendar;
 import javafx.beans.property.DoubleProperty;
@@ -14,7 +15,7 @@ import javafx.beans.property.SimpleDoubleProperty;
  *
  * @author Serge
  */
-public class BaseStation
+public class Station 
         implements Serializable {
 
     /**
@@ -31,10 +32,10 @@ public class BaseStation
      */
     private int epfd;
 
-    public BaseStation() {
+    public Station(){
     }
 
-    public BaseStation(int mmsi, double latitude, double longitude, Calendar date, int epfd) {
+    public Station(int mmsi, double latitude, double longitude, Calendar date, int epfd) {
         this.mmsi = mmsi;
         this.latitude = new SimpleDoubleProperty(latitude);
         this.longitude = new SimpleDoubleProperty(longitude);
@@ -42,7 +43,7 @@ public class BaseStation
         this.epfd = epfd;
     }
 
-    public BaseStation(int mmsi, double latitude, double longitude) {
+    public Station(int mmsi, double latitude, double longitude) {
         this.mmsi = mmsi;
         this.latitude = new SimpleDoubleProperty(latitude);
         this.longitude = new SimpleDoubleProperty(longitude);

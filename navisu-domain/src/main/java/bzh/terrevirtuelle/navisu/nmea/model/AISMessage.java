@@ -1,14 +1,6 @@
 /**
- * ****************************************************************************
- * (c) Copyright 2007, IRENav. All rights reserved. Property of ECOLE NAVALE
- *
- * For Unrestricted Internal Use Only Unauthorized reproduction and/or
- * distribution is strictly prohibited. This product is protected under
- * copyright law and trade secret law as an unpublished Work.
- *
- * Modified in 03/2007.
- *
- * Original Designers : RAY, STROH, ALESSIO Modified : Serge Morvan Enib
+ * Original Designers : RAY, STROH, ALESSIO 
+ * Modified : Serge Morvan Enib
  *
  *****************************************************************************
  */

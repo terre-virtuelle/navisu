@@ -1,6 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ *
+ * @author Morvan
  */
 package bzh.terrevirtuelle.navisu.nmea.model;
 
@@ -12,10 +12,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author Morvan
- */
+
 @XmlRootElement(name = "ais135")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AIS135 extends AISMessage {
