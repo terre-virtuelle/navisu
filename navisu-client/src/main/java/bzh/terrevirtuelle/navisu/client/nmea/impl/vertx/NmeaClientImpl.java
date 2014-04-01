@@ -13,6 +13,9 @@ import bzh.terrevirtuelle.navisu.nmea.model.Sentences;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -116,6 +119,7 @@ public class NmeaClientImpl
         vertx.setPeriodic(period, (Long timerID) -> {
             ws.writeTextFrame("request");
         });
+
     }
 
     @Override
@@ -128,23 +132,33 @@ public class NmeaClientImpl
     private void response(Sentences sentences) {
         /* With new classe in the domain, create also new Event for diffusion */
         /* Debug mode : comment notifyNMEAEvent, uncomment display */
-        notifyNMEAEvent();
-        
+        try {
+            notifyNMEAEvent();
+        } catch (Exception e) {
+            System.out.println("e " + e);
+        }
         // display();
     }
 
     public void display() {
+
         list = sentences.getSentences();
         list.stream().forEach((n) -> {
             System.out.println(n);
         });
+
     }
 
     private void notifyNMEAEvent() {
+
         list = sentences.getSentences();
-        list.stream().forEach((n) -> {
-            eventProducer.notifyNMEAEvent(n);
-        });
+        try {
+            list.stream().forEach((n) -> {
+                eventProducer.notifyNMEAEvent(n);
+            });
+        } catch (ConcurrentModificationException e) {
+           // Noting todo
+        }
     }
 
     private void response(StringBuilder stringBuilder) {
