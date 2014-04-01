@@ -14,7 +14,7 @@
                 <SplitPane dividerPositions="0.2010033444816054" focusTraversable="true" prefHeight="362.0" prefWidth="600.0">
                     <items>
                         <BorderPane fx:id="leftBorderPane" prefHeight="200.0" prefWidth="100.0" />
-                        <StackPane fx:id="centerBorderPane" prefHeight="200.0" prefWidth="500.0" />
+                        <StackPane fx:id="centerStackPane" prefHeight="200.0" prefWidth="500.0" />
                     </items>
                 </SplitPane>
             </center>

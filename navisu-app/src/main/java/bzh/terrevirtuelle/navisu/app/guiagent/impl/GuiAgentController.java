@@ -21,7 +21,7 @@ public class GuiAgentController {
 
     @FXML public BorderPane leftBorderPane;
 
-    @FXML public StackPane centerBorderPane;
+    @FXML public StackPane centerStackPane;
     
     @FXML public BorderPane statusBorderPane;
 

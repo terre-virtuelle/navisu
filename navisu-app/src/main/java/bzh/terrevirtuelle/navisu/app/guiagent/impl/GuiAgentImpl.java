@@ -95,7 +95,7 @@ public class GuiAgentImpl
 
         // Place scene components
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
-        ctrl.centerBorderPane.getChildren().add(geoViewServices.getDisplayService().getDisplayable());
+        ctrl.centerStackPane.getChildren().add(geoViewServices.getDisplayService().getDisplayable());
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
 
         // Initialize menu
@@ -126,7 +126,7 @@ public class GuiAgentImpl
         preferenceMenuItem.setOnAction(e -> {
             optionsManagerServices.show();
         });
-        menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);;
+        menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);
     }
 
     @Override
@@ -146,6 +146,6 @@ public class GuiAgentImpl
 
     @Override
     public StackPane getRoot() {
-        return ctrl.centerBorderPane;
+        return ctrl.centerStackPane;
     }
 }

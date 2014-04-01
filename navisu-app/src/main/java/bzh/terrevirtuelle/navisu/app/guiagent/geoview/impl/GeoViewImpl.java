@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl;
+ package bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentEvents;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoView;
@@ -229,4 +229,5 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
     public LayerManager<Layer> getLayerManager() {
         return this.layerManager;
     }
+
 }
