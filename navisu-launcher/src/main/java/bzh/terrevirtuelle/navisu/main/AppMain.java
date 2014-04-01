@@ -31,6 +31,7 @@ import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -69,8 +70,8 @@ public class AppMain extends Application {
                 )
         );
 
-        GuiAgentServices guiServices = componentManager.getComponentService(GuiAgentServices.class);
-        guiServices.showGui(stage, 800, 500);
+        GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
+        guiAgentServices.showGui(stage, 800, 500);
 
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
 
@@ -165,6 +166,7 @@ public class AppMain extends Application {
         //
         // END TESTS SERVER
         //------------------------------->
+       
     }
 
     public static void main(String[] args) throws Exception {
