@@ -129,7 +129,8 @@ public class GeoWorldWindViewImpl
         if (pt == null) {
             return null;
         }
-
+        System.out.println(latLon.getLatitudeDegree()+"  " + latLon.getLongitudeDegree());
+        System.out.println(pt.x + "  " + pt.y);
         return Point.factory.newPoint((int) pt.x, (int) pt.y);
     }
 
