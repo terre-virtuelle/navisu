@@ -49,6 +49,13 @@ public class Station
         this.longitude = new SimpleDoubleProperty(longitude);
     }
 
+    public Station(int mmsi, double latitude, double longitude, Calendar date) {
+        this.mmsi = mmsi;
+         this.latitude = new SimpleDoubleProperty(latitude);
+        this.longitude = new SimpleDoubleProperty(longitude);
+        this.date = date;
+    }
+
     public int getMmsi() {
         return mmsi;
     }
@@ -112,6 +119,11 @@ public class Station
 
     public void setEpfd(int epfd) {
         this.epfd = epfd;
+    }
+
+    @Override
+    public String toString() {
+        return "Station{" + "mmsi=" + mmsi + ", latitude=" + latitude + ", longitude=" + longitude + ", date=" + date + ", epfd=" + epfd + '}';
     }
 
 }
