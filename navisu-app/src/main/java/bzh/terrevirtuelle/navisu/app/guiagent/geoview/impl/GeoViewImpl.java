@@ -70,10 +70,8 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
     }
 
     protected void createGObject(GObjectCUDProcessor processor, TObject tObject) {
-
         // Create the GObject
         final GObject newGObject = processor.processCreated(tObject.getID(), tObject);
-
         //TODO /!\ C'est pas top de faire
         final RenderableLayer layer = (RenderableLayer) processor.getLayer().getDisplayLayer();
 
@@ -131,7 +129,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
             @Override
             public void notifyCreated(TObject tObject) {
-               // LOGGER.info("notifyCreated(" + tObject.getID() + ")");
+                //LOGGER.info("notifyCreated(" + tObject.getID() + ")");
 
                 GObjectCUDProcessor processor = findProcessor(tObject);
 

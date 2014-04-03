@@ -55,7 +55,11 @@ public class DpAgentImpl extends ComponentStateAdaptor implements DpAgent, DpAge
 
     @Override
     public void create(final TObject tObject) {
-        this.model.getWriteDataServices().create(tObject.getID(), tObject);
+        try {
+            this.model.getWriteDataServices().create(tObject.getID(), tObject);
+        } catch (Exception e) {
+            System.out.println("e " + e);
+        }
     }
 
     @Override
