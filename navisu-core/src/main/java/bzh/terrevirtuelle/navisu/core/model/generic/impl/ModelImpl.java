@@ -60,23 +60,22 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
 
     @Override
     public void create(int id, T data) {
-
         checkId(id);
-
         if(data == null) {
             throw new NullPointerException("data is null");
         }
-
         if(this.dataMap.containsKey(id)) {
            throw new RuntimeException("id " + id + " already added to the tObjectModel");
         }
-
+        
+       
         final ICloneable clone = (ICloneable) data.getClone();
-        this.dataMap.put(id, (T) clone);
+        
+        this.dataMap.put(id, (T) clone);//pb
 
         for(ModelEvents<T> observer : this.observerList) {
             observer.notifyDataCreated(id, (T) data.getClone());
-        }
+        } 
     }
 
     @Override

@@ -23,6 +23,7 @@ import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.EarthFlat;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.HotSpotController;
+import gov.nasa.worldwindx.examples.util.ToolTipController;
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Node;
 
@@ -72,6 +73,7 @@ public class GeoWorldWindViewImpl
         // Add controllers to manage highlighting and tool tips.
         HotSpotController hotSpotController = new HotSpotController(wwd);
         HighlightController highlightController = new HighlightController(this.wwd, SelectEvent.ROLLOVER);
+        ToolTipController toolTipController = new ToolTipController(this.wwd, AVKey.DISPLAY_NAME, null);
     }
 
     protected SwingNode createSwingDisplayNode(WorldWindow wwd) {
