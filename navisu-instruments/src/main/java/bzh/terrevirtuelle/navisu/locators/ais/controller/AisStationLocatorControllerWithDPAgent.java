@@ -1,0 +1,77 @@
+  /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bzh.terrevirtuelle.navisu.locators.ais.controller;
+
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.model.TStation;
+import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
+import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import gov.nasa.worldwind.avlist.AVKey;
+
+import java.util.logging.Logger;
+import org.capcaval.c3.component.ComponentEventSubscribe;
+import org.capcaval.c3.componentmanager.ComponentManager;
+
+/**
+ *
+ * @author Serge
+ */
+public class AisStationLocatorControllerWithDPAgent {
+
+    protected static final Logger LOGGER = Logger.getLogger(AisStationLocatorControllerWithDPAgent.class.getName());
+    protected DpAgentServices dpAgentServices;
+    boolean update = false;
+    ComponentManager cm = ComponentManager.componentManager;
+
+    ComponentEventSubscribe<AIS4Event> ais4ES = cm.getComponentEventSubscribe(AIS4Event.class);
+
+    protected TStation station;
+
+    public AisStationLocatorControllerWithDPAgent(final DpAgentServices dpAgentServices, final TStation station) {
+        this.station = station;
+        this.dpAgentServices = dpAgentServices;
+
+        subscribe();
+    }
+
+    private void subscribe() {
+
+        ais4ES.subscribe(new AIS4Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+                AIS4 data = (AIS4) d;
+                String mmsi = "Unknow";
+                double lat = data.getLatitude();
+                double lon = data.getLongitude();
+                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == station.getMmsi()) {
+                    station.setLatitude(lat);
+                    station.setLongitude(lon);
+                    if (update == false) {
+                        station.getGStation().getShape().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_0.png");
+                        update = true;
+                    } else {
+                        station.getGStation().getShape().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_1.png");
+                        update = false;
+                    }
+                    if (station.getMmsi() != 0) {
+                        mmsi = Integer.toString(station.getMmsi());
+                    }
+                     station.getGStation().getShape().setValue(AVKey.DISPLAY_NAME,mmsi);
+                    // mise à jour via le DPAgent
+                    dpAgentServices.update(station);
+                }
+            }
+        });
+
+    }
+
+    private void update() {
+
+    }
+}

@@ -13,14 +13,12 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  *
  * @author Serge
  */
-public interface Shape {
+public interface StationShape {
 
-    void setLocation(Location location);
+    public void setLocation(Location location);
 
-    void setRotation(double cog);
+    public void setRotation(double cog);
 
-    Renderable[] getRenderables();
-
-    ShapeAttributes getAttributes();
+    public Renderable[] getRenderables();
 
 }

@@ -8,20 +8,17 @@ package bzh.terrevirtuelle.navisu.locators.ais;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
-import bzh.terrevirtuelle.navisu.app.processors.TObjectProcessor;
-import bzh.terrevirtuelle.navisu.station.Station;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
-import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.locators.ais.controller.AisLocatorControllerWithDPAgent;
+import bzh.terrevirtuelle.navisu.locators.ais.controller.AisStationLocatorControllerWithDPAgent;
 import bzh.terrevirtuelle.navisu.locators.ais.view.AisLayer;
 import bzh.terrevirtuelle.navisu.locators.controller.StationProcessor;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
@@ -49,10 +46,12 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 public class AisLocator {
 
     protected GeoLayer<Layer> aisLayer;
+    protected GeoLayer<Layer> aisStationLayer;
     protected IconLayer baseStationLayer;
     protected AisLocatorControllerWithDPAgent aisLocatorController;
+    protected AisStationLocatorControllerWithDPAgent aisStationLocatorControllerWithDPAgent;
     protected Map<Integer, ShipProcessor> tShipProcessors;
-    protected Map<Integer, StationProcessor> tBaseStationsProcessors;
+    protected Map<Integer, StationProcessor> tStationsProcessors;
     protected GeoViewServices geoViewServices;
     protected DpAgentServices dpAgentServices;
     protected GuiAgentServices guiAgentServices;
@@ -69,7 +68,7 @@ public class AisLocator {
     ComponentEventSubscribe<AIS5Event> ais5ES = cm.getComponentEventSubscribe(AIS5Event.class);
     boolean first = true;
     boolean firstBt = true;
-    StackPane pane;
+  //  StackPane pane;
 
     WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
@@ -78,7 +77,7 @@ public class AisLocator {
             GuiAgentServices guiAgentServices) {
 
         tShipProcessors = new HashMap<>();
-        tBaseStationsProcessors = new HashMap<>();
+        tStationsProcessors = new HashMap<>();
         this.geoViewServices = geoViewServices;
         this.dpAgentServices = dpAgentServices;
         this.guiAgentServices = guiAgentServices;
@@ -89,7 +88,12 @@ public class AisLocator {
         // creation de la layer
         this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
         geoViewServices.getLayerManager().insertGeoLayer(this.aisLayer);
-        pane = guiAgentServices.getRoot();
+        
+        this.aisStationLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
+        geoViewServices.getLayerManager().insertGeoLayer(this.aisStationLayer);
+        
+        
+      //  pane = guiAgentServices.getRoot();
 
         subscribe();
 
@@ -181,22 +185,23 @@ public class AisLocator {
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 AIS4 ais = (AIS4) data;
                 int mmsi = ais.getMMSI();
-                /*
-               if (!tBaseStationsProcessors.containsKey(mmsi)) {
-                        StationProcessor baseStationProcessor = new StationProcessor(AisLocator.this.aisLayer);
-                        geoViewServices.registerProcessor(baseStationProcessor);
+                
+               if (!tStationsProcessors.containsKey(mmsi)) {
+                        StationProcessor stationProcessor = new StationProcessor(AisLocator.this.aisStationLayer);
+                        geoViewServices.registerProcessor(stationProcessor);
 
-                        baseStation = new TStation(IDGenerator.newIntID(),
+                        station = new TStation(IDGenerator.newIntID(),
                                 ais.getMMSI(), 
-                                ais.getLatitude(), ais.getLongitude());
-                                
-                        dpAgentServices.create(baseStation);
+                                ais.getLatitude(), ais.getLongitude(),ais.getDate());
+       
+                        dpAgentServices.create(station);
 
-                        aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, baseStation);
+                        aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
 
-                        tBaseStationsProcessors.put(mmsi, baseStationProcessor);
-                    }
-                        */
+                        tStationsProcessors.put(mmsi, stationProcessor);
+        
+                    }  
+                       
             }
         });
     }

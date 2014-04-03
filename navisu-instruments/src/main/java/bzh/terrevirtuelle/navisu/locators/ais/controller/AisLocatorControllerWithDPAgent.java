@@ -104,24 +104,6 @@ public class AisLocatorControllerWithDPAgent {
                 }
             }
         });
-        
-         ais4ES.subscribe(new AIS4Event() {
-
-         @Override
-         public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-         AIS4 data = (AIS4) d;
-         double lat = data.getLatitude();
-                double lon = data.getLongitude();
-                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
-                    ship.setLatitude(lat);
-                    ship.setLongitude(lon);
-                 
-                    // mise à jour via le DPAgent
-                    dpAgentServices.update(ship);
-                }
-         }
-         });
-         
         ais5ES.subscribe(new AIS5Event() {
 
             @Override

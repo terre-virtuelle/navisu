@@ -103,6 +103,6 @@ public class TShip
 
     @Override
     public String toString() {
-        return "TShip{" + "id=" + id + ", shapeId=" + shapeId + super.toString() + '}';
+        return "TShip{" + "id=" + id + ", shapeId=" + shapeId + " "+  super.toString() + '}';
     }
 }

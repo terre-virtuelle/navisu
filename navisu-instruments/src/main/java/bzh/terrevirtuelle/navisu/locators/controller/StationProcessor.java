@@ -32,7 +32,6 @@ public class StationProcessor
 
     @Override
     public GObject processCreated(int id, TObject input) {
-
         tStation = (TStation) input;
         gStation = new GStation(id, tStation);
         return gStation;
