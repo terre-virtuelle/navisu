@@ -8,6 +8,10 @@ package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.dock.Dock;
+import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockItem;
+import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockItemFactory;
+import static bzh.terrevirtuelle.navisu.app.guiagent.dock.Main.ICONS;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -18,6 +22,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.tibus.javafx.tools.AnimationFactory;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -30,6 +36,13 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import javafx.animation.Animation;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * NaVisu
@@ -66,10 +79,21 @@ public class GuiAgentImpl
 
     protected int width;
     protected int height;
-
+    protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected Stage stage;
     protected StackPane root;
     static GuiAgentController ctrl = null;
+    final ImageView basedock
+            = new ImageView(ICON_PATH + "dock3.png");
+    final Dock dock = new Dock(ICONS);
+    final Group groupDock = new Group();
+
+    public static final DockItem[] ICONS = new DockItem[]{
+        DockItemFactory.newImageItem("AIS", ICON_PATH + "AIS.png", (e) -> System.out.println("AIS")),
+        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPS.png", (e) -> System.out.println("GPS")),
+        DockItemFactory.newImageItem("Compass", ICON_PATH + "compass.png", (e) -> System.out.println("Compass")),
+        DockItemFactory.newImageItem("Sounder", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder"))
+    };
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -92,6 +116,24 @@ public class GuiAgentImpl
         }
 
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
+        
+        groupDock.getChildren().add(basedock);
+        groupDock.getChildren().add(dock);
+        root.getChildren().add(groupDock);
+        dock.setLayoutX(85.0);
+        dock.setLayoutY(35.0);
+        dock.setOrientation(Orientation.HORIZONTAL);
+        StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
+        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300);
+        Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0);
+        scene.setOnKeyPressed((KeyEvent ke) -> {
+            if (ke.getCode() == KeyCode.DOWN) {
+                downAnimation.play();
+            }
+            if (ke.getCode() == KeyCode.UP) {
+                upAnimation.play();
+            }
+        });
 
         // Place scene components
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
