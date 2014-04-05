@@ -95,7 +95,7 @@ public class AisLocator {
         wwd.addSelectListener((SelectEvent event) -> {
             if (event.isLeftClick()
                     && event.getTopObject().getClass().getInterfaces()[0].equals(Shape.class)) {
-                System.out.println(((Shape) event.getTopObject()).getShip().getCog());
+               // System.out.println(((Shape) event.getTopObject()).getShip().getCog());
             }
         });
 
