@@ -10,3 +10,7 @@
 #statusBorderPane {
     -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
 }
+
+#radialitem {
+    -fx-fill: linear-gradient(#00ADF7  , #0776D1);
+}

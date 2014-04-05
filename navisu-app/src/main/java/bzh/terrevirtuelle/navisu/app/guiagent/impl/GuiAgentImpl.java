@@ -5,6 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
+import bzh.jojal.widget.radialmenu.RadialMenu;
+import bzh.jojal.widget.radialmenu.RadialMenuItem;
+import bzh.jojal.widget.radialmenu.RadialMenuRootItem;
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -29,6 +32,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -119,24 +123,11 @@ public class GuiAgentImpl
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
 
-        Group groupDock = new Group();
-        groupDock.getChildren().add(basedock);
-        groupDock.getChildren().add(dock);
-        root.getChildren().add(groupDock);
-        dock.setLayoutX(85.0);
-        dock.setLayoutY(35.0);
-        dock.setOrientation(Orientation.HORIZONTAL);
-        StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
-        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300);
-        Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0);
-        scene.setOnKeyPressed((KeyEvent ke) -> {
-            if (ke.getCode() == KeyCode.DOWN) {
-                downAnimation.play();
-            }
-            if (ke.getCode() == KeyCode.UP) {
-                upAnimation.play();
-            }
-        });
+        // Create Dock Widget
+        createDockWidget(scene);
+
+        // Create Radial Widget
+        createRadialWidget();
 
         // Place scene components
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
@@ -156,6 +147,50 @@ public class GuiAgentImpl
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
+    }
+
+    private void createRadialWidget() {
+
+        ImageView l1i1Img = new ImageView(new Image(getClass().getResourceAsStream("zoom-in.png")));
+        ImageView l1i2Img = new ImageView(new Image(getClass().getResourceAsStream("zoom-out.png")));
+
+        RadialMenuRootItem rootItem = new RadialMenuRootItem();
+
+        RadialMenuItem level1Item1 = new RadialMenuItem(l1i1Img);
+        RadialMenuItem level1Item2 = new RadialMenuItem(l1i2Img);
+
+        rootItem.addItem(level1Item1);
+        rootItem.addItem(level1Item2);
+
+        RadialMenu radialMenu = new RadialMenu(rootItem);
+        radialMenu.setFullMenuAnge(90);
+        radialMenu.setStartRotationAngle(180);
+
+        root.getChildren().add(radialMenu);
+        StackPane.setAlignment(radialMenu, Pos.TOP_RIGHT);
+
+        radialMenu.show(this.width, -5);
+    }
+
+    private void createDockWidget(Scene scene) {
+        Group groupDock = new Group();
+        groupDock.getChildren().add(basedock);
+        groupDock.getChildren().add(dock);
+        root.getChildren().add(groupDock);
+        dock.setLayoutX(85.0);
+        dock.setLayoutY(35.0);
+        dock.setOrientation(Orientation.HORIZONTAL);
+        StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
+        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300);
+        Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0);
+        scene.setOnKeyPressed((KeyEvent ke) -> {
+            if (ke.getCode() == KeyCode.DOWN) {
+                downAnimation.play();
+            }
+            if (ke.getCode() == KeyCode.UP) {
+                upAnimation.play();
+            }
+        });
     }
 
     private void loadCss(Scene scene) {
