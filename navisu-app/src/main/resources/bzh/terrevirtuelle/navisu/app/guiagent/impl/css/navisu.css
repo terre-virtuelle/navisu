@@ -1,0 +1,12 @@
+.tree-view {
+    -fx-background-color: #252525;
+}
+
+.tree-cell {
+    -fx-text-fill: white;
+    -fx-background-color: transparent;
+}
+
+#statusBorderPane {
+    -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
+}

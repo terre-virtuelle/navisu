@@ -53,6 +53,8 @@ public class GuiAgentImpl
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
+    private static final String NAVISU_LOOKANDFEEL_PATH = "css/navisu.css";
+
     @SubComponent
     OptionsManagerImpl optionsManager;
     @UsedService
@@ -108,13 +110,16 @@ public class GuiAgentImpl
         try {
             root = loader.load(GuiAgentImpl.class.getResourceAsStream("GuiAgent.fxml"));
             ctrl = loader.getController();
+
         } catch (IOException e) {
             LOGGER.severe("Cannot load GuiAgent.fxml !");
             System.exit(0);
         }
 
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
-        
+        this.loadCss(scene);
+
+
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
@@ -149,7 +154,12 @@ public class GuiAgentImpl
             System.exit(0);
         });
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
+    }
+
+    private void loadCss(Scene scene) {
+        scene.getStylesheets().add(getClass().getResource(NAVISU_LOOKANDFEEL_PATH).toExternalForm());
     }
 
     protected void initializeMenuItems(final MenuManagerServices menuServices) {
