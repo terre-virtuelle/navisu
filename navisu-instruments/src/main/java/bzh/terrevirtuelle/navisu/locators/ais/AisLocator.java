@@ -24,6 +24,7 @@ import bzh.terrevirtuelle.navisu.locators.controller.StationProcessor;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.controller.ShipProcessor;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
+import bzh.terrevirtuelle.navisu.locators.view.Shape;
 
 import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS2;
@@ -31,6 +32,7 @@ import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.layers.IconLayer;
 import gov.nasa.worldwind.layers.Layer;
 import java.util.HashMap;
@@ -56,7 +58,6 @@ public class AisLocator {
     protected DpAgentServices dpAgentServices;
     protected GuiAgentServices guiAgentServices;
     protected GeoWorldWindView geoView;
-   // TObject tObject;
     TShip ship;
     TStation station;
     //   Station baseStation;
@@ -68,7 +69,7 @@ public class AisLocator {
     ComponentEventSubscribe<AIS5Event> ais5ES = cm.getComponentEventSubscribe(AIS5Event.class);
     boolean first = true;
     boolean firstBt = true;
-  //  StackPane pane;
+    StackPane pane;
 
     WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
@@ -81,19 +82,22 @@ public class AisLocator {
         this.geoViewServices = geoViewServices;
         this.dpAgentServices = dpAgentServices;
         this.guiAgentServices = guiAgentServices;
-        
-        
-        //guiAgentServices.setFullScreen(true);
+  
+        pane = guiAgentServices.getRoot();
         
         // creation de la layer
         this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
         geoViewServices.getLayerManager().insertGeoLayer(this.aisLayer);
-        
+
         this.aisStationLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
         geoViewServices.getLayerManager().insertGeoLayer(this.aisStationLayer);
-        
-        
-      //  pane = guiAgentServices.getRoot();
+
+        wwd.addSelectListener((SelectEvent event) -> {
+            if (event.isLeftClick()
+                    && event.getTopObject().getClass().getInterfaces()[0].equals(Shape.class)) {
+                System.out.println(((Shape) event.getTopObject()).getShip());
+            }
+        });
 
         subscribe();
 
@@ -185,23 +189,23 @@ public class AisLocator {
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 AIS4 ais = (AIS4) data;
                 int mmsi = ais.getMMSI();
-                
-               if (!tStationsProcessors.containsKey(mmsi)) {
-                        StationProcessor stationProcessor = new StationProcessor(AisLocator.this.aisStationLayer);
-                        geoViewServices.registerProcessor(stationProcessor);
 
-                        station = new TStation(IDGenerator.newIntID(),
-                                ais.getMMSI(), 
-                                ais.getLatitude(), ais.getLongitude(),ais.getDate());
-       
-                        dpAgentServices.create(station);
+                if (!tStationsProcessors.containsKey(mmsi)) {
+                    StationProcessor stationProcessor = new StationProcessor(AisLocator.this.aisStationLayer);
+                    geoViewServices.registerProcessor(stationProcessor);
 
-                        aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
+                    station = new TStation(IDGenerator.newIntID(),
+                            ais.getMMSI(),
+                            ais.getLatitude(), ais.getLongitude(), ais.getDate());
 
-                        tStationsProcessors.put(mmsi, stationProcessor);
-        
-                    }  
-                       
+                    dpAgentServices.create(station);
+
+                    aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
+
+                    tStationsProcessors.put(mmsi, stationProcessor);
+
+                }
+
             }
         });
     }
