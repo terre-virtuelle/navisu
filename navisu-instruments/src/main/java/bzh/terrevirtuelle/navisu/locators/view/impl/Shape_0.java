@@ -34,7 +34,7 @@ public class Shape_0
     @Override
     public void setLocation(Location location) {
         moveTo(new Position(Angle.fromDegrees(location.getLatitudeDegree()),
-                Angle.fromDegrees(location.getLongitudeDegree()), 100));
+                Angle.fromDegrees(location.getLongitudeDegree()), 10));
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Shape_0
 
     @Override
     public void setRotation(double cog) {
-        super.setRotation(90 + cog);
+        super.setRotation(-cog);
     }
 
     @Override
