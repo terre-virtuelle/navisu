@@ -1,4 +1,5 @@
-package bzh.tibus.javafx.tools;
+package bzh.terrevirtuelle.navisu.app.guiagent.tools;
+
 
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;

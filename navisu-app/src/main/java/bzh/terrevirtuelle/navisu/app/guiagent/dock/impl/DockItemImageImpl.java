@@ -2,11 +2,13 @@ package bzh.terrevirtuelle.navisu.app.guiagent.dock.impl;
 
 
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockItem;
-import bzh.tibus.javafx.tools.AnimationFactory;
-import javafx.animation.*;
+import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
+import javafx.animation.Animation;
+import javafx.animation.ParallelTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.effect.*;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.Reflection;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
