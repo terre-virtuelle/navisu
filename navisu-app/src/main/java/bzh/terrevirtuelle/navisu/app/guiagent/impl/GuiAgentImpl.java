@@ -154,19 +154,20 @@ public class GuiAgentImpl
 
     private void createRadialWidget() {
 
-        ImageView l1i1Img = new ImageView(new Image(getClass().getResourceAsStream("zoom-in.png")));
-        ImageView l1i2Img = new ImageView(new Image(getClass().getResourceAsStream("zoom-out.png")));
+        //TODO Refactor All of this code
+        ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-in.png")));
+        ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-out.png")));
 
         RadialMenuRootItem rootItem = new RadialMenuRootItem();
 
-        RadialMenuItem level1Item1 = new RadialMenuItem(l1i1Img);
-        RadialMenuItem level1Item2 = new RadialMenuItem(l1i2Img);
+        RadialMenuItem zoomInItem = new RadialMenuItem(zoomInImg);
+        RadialMenuItem zoomOutItem = new RadialMenuItem(zoomOutImg);
 
-        rootItem.addItem(level1Item1);
-        rootItem.addItem(level1Item2);
+        rootItem.addItem(zoomInItem);
+        rootItem.addItem(zoomOutItem);
 
         RadialMenu radialMenu = new RadialMenu(rootItem);
-        radialMenu.setFullMenuAnge(90);
+        radialMenu.setFullMenuAnge(90);  //FIXME setFullMenuAnge -> setFullMenuAngle
         radialMenu.setStartRotationAngle(180);
 
         root.getChildren().add(radialMenu);
