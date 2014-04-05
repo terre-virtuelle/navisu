@@ -53,7 +53,7 @@ public class GuiAgentImpl
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
-    private static final String NAVISU_LOOKANDFEEL_PATH = "css/navisu.css";
+    private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
 
     @SubComponent
     OptionsManagerImpl optionsManager;
@@ -86,7 +86,7 @@ public class GuiAgentImpl
     final ImageView basedock
             = new ImageView(ICON_PATH + "dock3.png");
     final Dock dock = new Dock(ICONS);
-    final Group groupDock = new Group();
+
 
     public static final DockItem[] ICONS = new DockItem[]{
         DockItemFactory.newImageItem("AIS", ICON_PATH + "AIS.png", (e) -> System.out.println("AIS")),
@@ -119,7 +119,7 @@ public class GuiAgentImpl
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
 
-
+        Group groupDock = new Group();
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
@@ -159,7 +159,7 @@ public class GuiAgentImpl
     }
 
     private void loadCss(Scene scene) {
-        scene.getStylesheets().add(getClass().getResource(NAVISU_LOOKANDFEEL_PATH).toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(NAVISU_LOOK_AND_FEEL_PATH).toExternalForm());
     }
 
     protected void initializeMenuItems(final MenuManagerServices menuServices) {
@@ -173,9 +173,8 @@ public class GuiAgentImpl
         menuServices.addMenuItem(DefaultMenuEnum.FILE, fileMenuItem);
 
         MenuItem preferenceMenuItem = new MenuItem(Translator.tr("menu.edit.preferences"));
-        preferenceMenuItem.setOnAction(e -> {
-            optionsManagerServices.show();
-        });
+        preferenceMenuItem.setOnAction(e -> optionsManagerServices.show());
+
         menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);
     }
 
