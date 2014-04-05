@@ -24,8 +24,6 @@ import java.util.List;
 public class GShip
         implements GObject {
 
-   
-    
     protected final int id;
     protected TShip tShip;
     protected Shape shape;
@@ -34,10 +32,10 @@ public class GShip
         this.id = id;
         this.tShip = ship;
         if (tShip.getShapeId() == 0) {
-            shape = new Shape_0(makeAttributes(),
+            shape = new Shape_0(tShip,makeAttributes(),
                     makePositionList(initShape(tShip.getLatitude(), tShip.getLongitude())));
         } else {
-            shape = new Shape_1(makeAttributes(),
+            shape = new Shape_1(tShip, makeAttributes(),
                     new LatLon(Angle.fromDegrees(tShip.getLatitude()), Angle.fromDegrees(tShip.getLongitude())),
                     40.0);
         }

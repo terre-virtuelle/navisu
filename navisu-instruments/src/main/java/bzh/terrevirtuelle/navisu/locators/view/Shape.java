@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.locators.view;
 
 import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 
@@ -22,5 +23,7 @@ public interface Shape {
     Renderable[] getRenderables();
 
     ShapeAttributes getAttributes();
+    
+    TShip getShip();
 
 }

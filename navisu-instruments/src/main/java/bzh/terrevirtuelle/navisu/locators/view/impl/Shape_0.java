@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.locators.view.impl;
 
 import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.view.Shape;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
@@ -21,15 +22,19 @@ public class Shape_0
         extends Polygon
         implements Shape {
 
-    public Shape_0(ShapeAttributes sa, Iterable<? extends Position> itrbl) {
+    TShip tShip;
+
+    public Shape_0(TShip tShip, ShapeAttributes sa, Iterable<? extends Position> itrbl) {
         super(itrbl);
+        this.tShip = tShip;
         setAttributes(sa);
+
     }
 
     @Override
     public void setLocation(Location location) {
         moveTo(new Position(Angle.fromDegrees(location.getLatitudeDegree()),
-                Angle.fromDegrees(location.getLongitudeDegree()), 100));
+                Angle.fromDegrees(location.getLongitudeDegree()), 10));
     }
 
     @Override
@@ -39,11 +44,16 @@ public class Shape_0
 
     @Override
     public void setRotation(double cog) {
-        super.setRotation(90 + cog);
+        super.setRotation(-cog);
     }
 
     @Override
     public String toString() {
         return "Shape_0{" + super.toString() + '}';
     }
+
+    @Override
+    public TShip getShip() {
+        return tShip;
+         }
 }

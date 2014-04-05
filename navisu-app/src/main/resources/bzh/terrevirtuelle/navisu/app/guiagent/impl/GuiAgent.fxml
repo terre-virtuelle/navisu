@@ -9,10 +9,10 @@
                 <BorderPane id="bo" fx:id="statusBorderPane" prefHeight="24.0" prefWidth="600.0" />
             </bottom>
             <center>
-                <SplitPane id="" dividerPositions="0.05" focusTraversable="true" prefHeight="362.0" prefWidth="600.0">
+                <SplitPane dividerPositions="0.0" focusTraversable="true" prefHeight="362.0" prefWidth="600.0">
                     <items>
-                        <BorderPane fx:id="leftBorderPane" prefHeight="200.0" prefWidth="100.0" />
-                        <StackPane fx:id="centerStackPane" prefHeight="200.0" prefWidth="500.0" />
+                        <BorderPane fx:id="leftBorderPane" prefHeight="200.0" prefWidth="0.0" />
+                        <StackPane fx:id="centerStackPane" prefHeight="200.0" prefWidth="600.0" />
                     </items>
                 </SplitPane>
             </center>

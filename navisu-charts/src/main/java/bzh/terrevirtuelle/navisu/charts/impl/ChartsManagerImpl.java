@@ -64,7 +64,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String file) {
-        LOGGER.log(Level.INFO, "Opening " + file + " ...");
+        LOGGER.log(Level.INFO, "Opening {0} ...", file);
 
         Path inputFile = Paths.get(file);
         final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/gdal_translate";

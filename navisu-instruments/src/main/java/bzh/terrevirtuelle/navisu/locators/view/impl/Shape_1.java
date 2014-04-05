@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.locators.view.impl;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.view.Shape;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -23,16 +24,20 @@ import javafx.scene.control.Button;
  *
  * @author Serge
  */
-public class Shape_1 extends SurfaceCircle
+public class Shape_1
+        extends SurfaceCircle
         implements Shape {
 
     Button button;
     WorldWindow wwd;
+    TShip tShip;
     boolean first = true;
 
-    public Shape_1(ShapeAttributes sa, LatLon latlon, double d) {
+    public Shape_1(TShip tShip, ShapeAttributes sa, LatLon latlon, double d) {
         super(sa, latlon, d);
+        this.tShip = tShip;
         wwd = GeoWorldWindViewImpl.getWW();
+        // pick();
     }
 
     @Override
@@ -48,6 +53,7 @@ public class Shape_1 extends SurfaceCircle
 
     @Override
     public Renderable[] getRenderables() {
+
         return new Renderable[]{this};
     }
 
@@ -69,16 +75,21 @@ public class Shape_1 extends SurfaceCircle
                         System.exit(0);
                     });
                     /*
-                    offset = wwd.getView().project(
-                            wwd.getModel().getGlobe().computePointFromLocation(
-                                    new LatLon(Angle.fromDegrees(lat), Angle.fromDegrees(lon))));
-                    Platform.runLater(() -> {
-                        pane.getChildren().add(button);
-                        wwd.addPositionListener(Ship.this);
-                    });
-                            */
+                     offset = wwd.getView().project(
+                     wwd.getModel().getGlobe().computePointFromLocation(
+                     new LatLon(Angle.fromDegrees(lat), Angle.fromDegrees(lon))));
+                     Platform.runLater(() -> {
+                     pane.getChildren().add(button);
+                     wwd.addPositionListener(Ship.this);
+                     });
+                     */
                 }
             }
         });
+    }
+
+    @Override
+    public TShip getShip() {
+        return tShip;
     }
 }

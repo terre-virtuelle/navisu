@@ -80,7 +80,7 @@ public class DockItemImageImpl implements DockItem {
                 AnimationFactory.newFadeAnimation(this.nameText, 300, 0, 1),
                 AnimationFactory.newFadeAnimation(this.nameTextBack, 300, 0, 0.25)
         );
- System.out.println("iconPath " + iconPath);
+
         // init. icon
         this.icon = new ImageView(iconPath);
        

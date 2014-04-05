@@ -5,9 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
-import bzh.jojal.widget.radialmenu.RadialMenu;
-import bzh.jojal.widget.radialmenu.RadialMenuItem;
-import bzh.jojal.widget.radialmenu.RadialMenuRootItem;
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -32,7 +29,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
