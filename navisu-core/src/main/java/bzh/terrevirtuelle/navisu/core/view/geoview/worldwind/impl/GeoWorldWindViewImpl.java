@@ -68,12 +68,14 @@ public class GeoWorldWindViewImpl
         // Create the JavaFX display node
         this.swingNode = this.createSwingDisplayNode(this.wwd);
 
-        // Register a select listener to print the class names of the items under the cursor. // Register a select listener to print the class names of the items under the cursor.
+        // Register a select listener to print the class names of the items under the cursor. 
         wwd.getSceneController().setDeepPickEnabled(true);
+        
         // Add controllers to manage highlighting and tool tips.
         HotSpotController hotSpotController = new HotSpotController(wwd);
         HighlightController highlightController = new HighlightController(this.wwd, SelectEvent.ROLLOVER);
         ToolTipController toolTipController = new ToolTipController(this.wwd, AVKey.DISPLAY_NAME, null);
+   
     }
 
     protected SwingNode createSwingDisplayNode(WorldWindow wwd) {
