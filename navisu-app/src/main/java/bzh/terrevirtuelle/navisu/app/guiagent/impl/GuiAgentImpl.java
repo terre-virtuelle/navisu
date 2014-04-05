@@ -155,7 +155,7 @@ public class GuiAgentImpl
             System.exit(0);
         });
         
-      //  setFullScreen(true);
+       // setFullScreen(true);
         
         stage.setScene(scene);
         stage.setMaximized(true);
