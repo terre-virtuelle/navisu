@@ -126,6 +126,7 @@ public class GuiAgentImpl
         StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
         Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300);
         Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0);
+        downAnimation.play();
         scene.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode() == KeyCode.DOWN) {
                 downAnimation.play();
@@ -150,6 +151,9 @@ public class GuiAgentImpl
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
+        
+      //  setFullScreen(true);
+        
         stage.setScene(scene);
         stage.show();
     }
