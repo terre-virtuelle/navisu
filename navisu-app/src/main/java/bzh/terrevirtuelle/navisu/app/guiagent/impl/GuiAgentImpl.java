@@ -11,7 +11,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.Dock;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockItem;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockItemFactory;
-import static bzh.terrevirtuelle.navisu.app.guiagent.dock.Main.ICONS;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -21,12 +20,18 @@ import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.tibus.javafx.tools.AnimationFactory;
-
+import javafx.animation.Animation;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -36,13 +41,6 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-import javafx.animation.Animation;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 /**
  * NaVisu
@@ -54,6 +52,8 @@ public class GuiAgentImpl
         implements GuiAgent, GuiAgentServices {
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
+
+    private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
 
     @SubComponent
     OptionsManagerImpl optionsManager;
@@ -86,7 +86,7 @@ public class GuiAgentImpl
     final ImageView basedock
             = new ImageView(ICON_PATH + "dock3.png");
     final Dock dock = new Dock(ICONS);
-    final Group groupDock = new Group();
+
 
     public static final DockItem[] ICONS = new DockItem[]{
         DockItemFactory.newImageItem("AIS", ICON_PATH + "AIS.png", (e) -> System.out.println("AIS")),
@@ -110,13 +110,16 @@ public class GuiAgentImpl
         try {
             root = loader.load(GuiAgentImpl.class.getResourceAsStream("GuiAgent.fxml"));
             ctrl = loader.getController();
+
         } catch (IOException e) {
             LOGGER.severe("Cannot load GuiAgent.fxml !");
             System.exit(0);
         }
 
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
-        
+        this.loadCss(scene);
+
+        Group groupDock = new Group();
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
@@ -155,7 +158,12 @@ public class GuiAgentImpl
       //  setFullScreen(true);
         
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
+    }
+
+    private void loadCss(Scene scene) {
+        scene.getStylesheets().add(getClass().getResource(NAVISU_LOOK_AND_FEEL_PATH).toExternalForm());
     }
 
     protected void initializeMenuItems(final MenuManagerServices menuServices) {
@@ -169,9 +177,8 @@ public class GuiAgentImpl
         menuServices.addMenuItem(DefaultMenuEnum.FILE, fileMenuItem);
 
         MenuItem preferenceMenuItem = new MenuItem(Translator.tr("menu.edit.preferences"));
-        preferenceMenuItem.setOnAction(e -> {
-            optionsManagerServices.show();
-        });
+        preferenceMenuItem.setOnAction(e -> optionsManagerServices.show());
+
         menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);
     }
 
