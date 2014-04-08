@@ -51,7 +51,7 @@ public class Dock extends Group {
             item = this.itemList.get(i);
 
             if (this.orientation == Orientation.HORIZONTAL) {
-                item.getDisplayNode().setTranslateY(0);
+                item.getDisplayNode().setTranslateY(20);
                 item.getDisplayNode().setTranslateX(i * item.getSize() + DEFAULT_PADDING);
                 
             } else {
