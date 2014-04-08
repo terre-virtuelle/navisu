@@ -185,8 +185,7 @@ public class GuiAgentImpl
         dock.setLayoutY(30.0);
         dock.setOrientation(Orientation.HORIZONTAL);
         StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
-        //Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300);
-        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 280);
+        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300);
         Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0);
         scene.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode() == KeyCode.DOWN) {
