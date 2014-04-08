@@ -71,7 +71,7 @@ public class AppMain extends Application {
         );
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
-        guiAgentServices.showGui(stage, 800, 500);
+        guiAgentServices.showGui(stage, 1280, 800);
 
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
 
