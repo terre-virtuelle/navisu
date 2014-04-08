@@ -33,8 +33,6 @@ public class Dock extends Group {
     public Dock(DockItem... items) {
 
         this.itemList.addAll(Arrays.asList(items));
-      //  basedock = new ImageView("dock3.png");
-      //  getChildren().add(basedock);
         this.updateDock();
     }
 

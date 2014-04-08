@@ -1,3 +1,17 @@
+* {
+    -fx-base: black;
+    -fx-background: -fx-base;
+    -fx-control-inner-background: -fx-base;
+    -fx-control-inner-background-alt: -fx-base;
+    -fx-faint-focus-color: -fx-accent;
+    -fx-hover-base: lightgrey;
+    -fx-pressed-base: derive(-fx-hover-base, -15%);
+    -fx-box-border: -fx-hover-base;
+    -fx-text-box-border: -fx-hover-base;
+    -fx-shadow-highlight-color: -fx-base;
+    -fx-outer-border: -fx-hover-base;
+}
+
 .tree-view {
     -fx-background-color: #252525;
 }
@@ -12,5 +26,5 @@
 }
 
 #radialitem {
-    -fx-fill: linear-gradient(#00ADF7  , #0776D1);
+    -fx-fill: linear-gradient(-fx-pressed-base, -fx-base);
 }

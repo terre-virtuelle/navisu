@@ -88,7 +88,7 @@ public class GuiAgentImpl
     protected StackPane root;
     static GuiAgentController ctrl = null;
     final ImageView basedock
-            = new ImageView(ICON_PATH + "dock3.png");
+            = new ImageView(ICON_PATH + "dock.png");
     final Dock dock = new Dock(ICONS);
 
 
