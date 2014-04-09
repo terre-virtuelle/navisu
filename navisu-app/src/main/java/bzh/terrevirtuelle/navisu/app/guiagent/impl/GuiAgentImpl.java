@@ -45,6 +45,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import javafx.geometry.Insets;
 
 /**
  * NaVisu
@@ -106,10 +107,13 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Guide", ICON_PATH + "guide.png", (e) -> System.out.println("Guide")),
         DockItemFactory.newImageItem("livreblanc", ICON_PATH + "guideblanc.png", (e) -> System.out.println("Livre blanc")),};
     public static final DockItem[] ICONS0 = new DockItem[]{
-        DockItemFactory.newImageItem("AIS", ICON_PATH + "AIS.png", (e) -> System.out.println("AIS")),
-        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPS.png", (e) -> System.out.println("GPS")),
-        DockItemFactory.newImageItem("Compass", ICON_PATH + "compass.png", (e) -> System.out.println("Compass")),
-        DockItemFactory.newImageItem("Sounder", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder"))
+        DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
+        DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
+        DockItemFactory.newImageItem("AIS", ICON_PATH + "AISvertical.png", (e) -> System.out.println("AIS")),
+        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> System.out.println("GPS")),
+        DockItemFactory.newImageItem("Compass", ICON_PATH + "compassvertical.png", (e) -> System.out.println("Compass")),
+        DockItemFactory.newImageItem("Sounder", ICON_PATH + "soundervertical.png", (e) -> System.out.println("Sounder")),
+        DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),
     };
 
     @Override
@@ -209,7 +213,10 @@ public class GuiAgentImpl
         });
         root.getChildren().add(dock0);
         dock0.setOrientation(Orientation.VERTICAL);
+        //dock0.setLayoutX(0.0);
+        //dock0.setLayoutY(300.0);
         StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
+
     }
 
     private void loadCss(Scene scene) {

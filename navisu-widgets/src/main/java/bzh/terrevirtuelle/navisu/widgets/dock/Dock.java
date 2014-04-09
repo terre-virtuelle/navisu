@@ -19,7 +19,7 @@ public class Dock extends Group {
     public static final Orientation DEFAULT_ORIENTATION = Orientation.HORIZONTAL;
 
     public static final double DEFAULT_PADDING = 10.;
-
+    public static final double defpadvertical = 30.;
     protected List<DockItem> itemList;
     protected Orientation orientation;
    // protected ImageView basedock;
@@ -56,7 +56,7 @@ public class Dock extends Group {
                 
             } else {
                 item.getDisplayNode().setTranslateX(0);
-                item.getDisplayNode().setTranslateY(i * item.getSize());
+                item.getDisplayNode().setTranslateY(i * item.getSize() + defpadvertical);
             }
 
             this.getChildren().add(item.getDisplayNode());
