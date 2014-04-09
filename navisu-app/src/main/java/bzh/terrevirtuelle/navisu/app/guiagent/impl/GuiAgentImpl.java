@@ -90,7 +90,7 @@ public class GuiAgentImpl
     final ImageView basedock
             = new ImageView(ICON_PATH + "dock.png");
     final Dock dock = new Dock(ICONS);
-
+    final Dock dock0 = new Dock(ICONS0);
 
     public static final DockItem[] ICONS = new DockItem[]{
         DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
@@ -104,7 +104,12 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Wind", ICON_PATH + "wind.png", (e) -> System.out.println("Wind")),
         DockItemFactory.newImageItem("Book", ICON_PATH + "book.png", (e) -> System.out.println("Book")),
         DockItemFactory.newImageItem("Guide", ICON_PATH + "guide.png", (e) -> System.out.println("Guide")),
-        DockItemFactory.newImageItem("livreblanc", ICON_PATH + "guideblanc.png", (e) -> System.out.println("Livre blanc")),
+        DockItemFactory.newImageItem("livreblanc", ICON_PATH + "guideblanc.png", (e) -> System.out.println("Livre blanc")),};
+    public static final DockItem[] ICONS0 = new DockItem[]{
+        DockItemFactory.newImageItem("AIS", ICON_PATH + "AIS.png", (e) -> System.out.println("AIS")),
+        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPS.png", (e) -> System.out.println("GPS")),
+        DockItemFactory.newImageItem("Compass", ICON_PATH + "compass.png", (e) -> System.out.println("Compass")),
+        DockItemFactory.newImageItem("Sounder", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder"))
     };
 
     @Override
@@ -152,9 +157,8 @@ public class GuiAgentImpl
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
-        
+
        // setFullScreen(true);
-        
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
@@ -203,6 +207,9 @@ public class GuiAgentImpl
                 upAnimation.play();
             }
         });
+        root.getChildren().add(dock0);
+        dock0.setOrientation(Orientation.VERTICAL);
+        StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
     }
 
     private void loadCss(Scene scene) {
