@@ -93,10 +93,18 @@ public class GuiAgentImpl
 
 
     public static final DockItem[] ICONS = new DockItem[]{
+        DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
+        DockItemFactory.newImageItem("tools", ICON_PATH + "tools.png", (e) -> System.out.println("TOOLS1")),
+        DockItemFactory.newImageItem("Tools2", ICON_PATH + "tools1.png", (e) -> System.out.println("TOOLS2")),
         DockItemFactory.newImageItem("AIS", ICON_PATH + "AIS.png", (e) -> System.out.println("AIS")),
         DockItemFactory.newImageItem("GPS", ICON_PATH + "GPS.png", (e) -> System.out.println("GPS")),
+        DockItemFactory.newImageItem("GPS2", ICON_PATH + "GPS2.png", (e) -> System.out.println("GPS2")),
         DockItemFactory.newImageItem("Compass", ICON_PATH + "compass.png", (e) -> System.out.println("Compass")),
-        DockItemFactory.newImageItem("Sounder", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder"))
+        DockItemFactory.newImageItem("Sounder", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder")),
+        DockItemFactory.newImageItem("Wind", ICON_PATH + "wind.png", (e) -> System.out.println("Wind")),
+        DockItemFactory.newImageItem("Book", ICON_PATH + "book.png", (e) -> System.out.println("Book")),
+        DockItemFactory.newImageItem("Guide", ICON_PATH + "guide.png", (e) -> System.out.println("Guide")),
+        DockItemFactory.newImageItem("livreblanc", ICON_PATH + "guideblanc.png", (e) -> System.out.println("Livre blanc")),
     };
 
     @Override
