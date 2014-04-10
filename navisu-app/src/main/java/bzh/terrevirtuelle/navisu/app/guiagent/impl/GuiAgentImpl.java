@@ -53,6 +53,7 @@ import javafx.geometry.Insets;
  * @author tibus
  * @date 02/11/2013 11:54
  */
+
 public class GuiAgentImpl
         implements GuiAgent, GuiAgentServices {
 
@@ -107,8 +108,9 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Guide", ICON_PATH + "guide.png", (e) -> System.out.println("Guide")),
         DockItemFactory.newImageItem("livreblanc", ICON_PATH + "guideblanc.png", (e) -> System.out.println("Livre blanc")),};
     public static final DockItem[] ICONS0 = new DockItem[]{
-        DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
-        DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
+        /* Invisible icons just for testing margins */
+        //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
+        //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
         DockItemFactory.newImageItem("AIS", ICON_PATH + "AISvertical.png", (e) -> System.out.println("AIS")),
         DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> System.out.println("GPS")),
         DockItemFactory.newImageItem("Compass", ICON_PATH + "compassvertical.png", (e) -> System.out.println("Compass")),
@@ -197,9 +199,11 @@ public class GuiAgentImpl
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
-        dock.setLayoutX(85.0);
+        dock.setLayoutX(95.0);
         dock.setLayoutY(30.0);
         dock.setOrientation(Orientation.HORIZONTAL);
+        /* margins if necessity to adjust position of whole group */
+        //StackPane.setMargin(groupdock,(new Insets(0, 0, 0, 0)));
         StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
         Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300);
         Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0);
@@ -213,8 +217,8 @@ public class GuiAgentImpl
         });
         root.getChildren().add(dock0);
         dock0.setOrientation(Orientation.VERTICAL);
-        //dock0.setLayoutX(0.0);
-        //dock0.setLayoutY(300.0);
+       /* adding margins for vertical dock */
+        StackPane.setMargin(dock0,(new Insets(150, 10, 0, 0)));
         StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
 
     }
