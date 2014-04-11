@@ -1,23 +1,17 @@
 package bzh.terrevirtuelle.navisu.main;
 
-import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.app.processors.TObjectProcessor;
 import bzh.terrevirtuelle.navisu.charts.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.charts.impl.ChartsManagerImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
-import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -27,11 +21,12 @@ import bzh.terrevirtuelle.navisu.locators.impl.Widget3DImpl;
 import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.loggers.impl.LoggerImpl;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.globes.ElevationModel;
+import gov.nasa.worldwind.terrain.BathymetryFilterElevationModel;
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -137,7 +132,7 @@ public class AppMain extends Application {
         dataServerServices.init("localhost", 8080);
 
         // Test connexion GPS 
-       // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
+        //dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         //dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // Test connexion Gpsd 
         // dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
@@ -166,7 +161,7 @@ public class AppMain extends Application {
         //
         // END TESTS SERVER
         //------------------------------->
-       
+        
     }
 
     public static void main(String[] args) throws Exception {
