@@ -49,30 +49,6 @@ public class GpsLocator {
 
         // creation du controller
         this.gpsLocatorController = new GpsLocatorControllerWithDPAgent(dpAgentServices);
-/*
-        ColladaRoot shipCollada = null;
-        try {
-            shipCollada = ColladaRoot.createAndParse(new File("data/collada/lithops.dae"));
-            shipCollada.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            shipCollada.setHeading(Angle.fromDegrees(-124.0));
-            shipCollada.setPosition(Position.fromDegrees(48.35, -4.497602, -43));
-            shipCollada.setPitch(Angle.fromDegrees(4.0));
-            shipCollada.setRoll(Angle.fromDegrees(-20.0));
-            shipCollada.setModelScale(new Vec4(10.0));
-        } catch (IOException | XMLStreamException ex) {
-            Logger.getLogger(GpsLocator.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        // Create a KMLController to adapt the KMLRoot to the World Wind renderable interface.
-        final ColladaController colladaController = new ColladaController(shipCollada);
 
-        // Adds a new layer containing the KMLRoot to the end of the WorldWindow's layer list. This
-        // retrieves the layer name from the KMLRoot's DISPLAY_NAME field.
-        final RenderableLayer layer = new RenderableLayer();
-        layer.setName("Lithops");
-        layer.addRenderable(colladaController);
-        GeoWorldWindViewImpl.getWW().getModel().getLayers().add(layer);
-        GeoWorldWindViewImpl.getWW().redrawNow();
-        */
     }
 }

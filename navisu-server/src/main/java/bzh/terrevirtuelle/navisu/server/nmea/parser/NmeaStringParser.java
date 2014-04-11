@@ -5,10 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.server.nmea.parser;
 
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.impl.NMEALexer;
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.impl.NMEAParser;
-import bzh.terrevirtuelle.navisu.nmea.model.Sentences;
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl.NMEALexer;
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl.NMEAParser;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;

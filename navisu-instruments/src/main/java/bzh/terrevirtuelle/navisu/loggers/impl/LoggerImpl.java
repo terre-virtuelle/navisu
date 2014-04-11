@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.loggers.impl;
 import bzh.terrevirtuelle.navisu.loggers.Logger;
 import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.loggers.controller.LoggerController;
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import org.capcaval.c3.component.ComponentState;
 
 /**

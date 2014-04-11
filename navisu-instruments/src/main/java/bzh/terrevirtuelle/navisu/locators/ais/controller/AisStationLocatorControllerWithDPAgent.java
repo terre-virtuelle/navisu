@@ -9,8 +9,8 @@ import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import gov.nasa.worldwind.avlist.AVKey;
 
 import java.util.logging.Logger;

@@ -6,9 +6,9 @@
 
 package bzh.terrevirtuelle.navisu.server.nmea.parser;
 
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.nmea.model.Sentences;
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 
 /**
  *
