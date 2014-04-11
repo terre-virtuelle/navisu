@@ -95,7 +95,7 @@ public class GuiAgentImpl
     final Dock dock0 = new Dock(ICONS0);
 
     public static final DockItem[] ICONS = new DockItem[]{
-        DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
+        //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
         DockItemFactory.newImageItem("tools", ICON_PATH + "tools.png", (e) -> System.out.println("TOOLS1")),
         DockItemFactory.newImageItem("Tools2", ICON_PATH + "tools1.png", (e) -> System.out.println("TOOLS2")),
         DockItemFactory.newImageItem("AIS", ICON_PATH + "AIS.png", (e) -> System.out.println("AIS")),
@@ -175,6 +175,7 @@ public class GuiAgentImpl
         //TODO Refactor All of this code
         ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-in.png")));
         ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-out.png")));
+        
 
         RadialMenuRootItem rootItem = new RadialMenuRootItem();
 
@@ -195,10 +196,14 @@ public class GuiAgentImpl
     }
 
     private void createDockWidget(Scene scene) {
+        ImageView MOBImg = new ImageView(new Image(getClass().getResourceAsStream("MOB.png")));
         Group groupDock = new Group();
+        groupDock.getChildren().add(MOBImg);
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
+        MOBImg.setLayoutX(-200.0);
+        MOBImg.setLayoutY(20.0);
         dock.setLayoutX(95.0);
         dock.setLayoutY(30.0);
         dock.setOrientation(Orientation.HORIZONTAL);
