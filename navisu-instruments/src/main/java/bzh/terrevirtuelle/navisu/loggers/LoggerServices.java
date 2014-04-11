@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.loggers;
 
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import org.capcaval.c3.component.ComponentService;
 
 /**

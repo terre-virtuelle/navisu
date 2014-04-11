@@ -9,9 +9,9 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.NMEAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN128267Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN130306Event;
 import bzh.terrevirtuelle.navisu.loggers.view.Printer;
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.nmea.model.PGN128267;
-import bzh.terrevirtuelle.navisu.nmea.model.PGN130306;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.PGN128267;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.PGN130306;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 

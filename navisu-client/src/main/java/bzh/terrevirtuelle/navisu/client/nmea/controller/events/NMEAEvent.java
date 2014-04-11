@@ -4,7 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.client.nmea.controller.events;
 
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import org.capcaval.c3.component.ComponentEvent;
 
 /**

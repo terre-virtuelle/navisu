@@ -5,6 +5,7 @@ import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_0;
 import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_1;
+import bzh.terrevirtuelle.navisu.locators.view.impl.Shape3D_0;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -32,10 +33,16 @@ public class GShip
         this.id = id;
         this.tShip = ship;
         if (tShip.getShapeId() == 0) {
-            shape = new Shape_0(tShip,makeAttributes(),
+            shape = new Shape_0(tShip, makeAttributes(),
                     makePositionList(initShape(tShip.getLatitude(), tShip.getLongitude())));
-        } else {
+        }
+        if (tShip.getShapeId() == 1) {
             shape = new Shape_1(tShip, makeAttributes(),
+                    new LatLon(Angle.fromDegrees(tShip.getLatitude()), Angle.fromDegrees(tShip.getLongitude())),
+                    40.0);
+        }
+        if (tShip.getShapeId() == 36) {
+            shape = new Shape3D_0(tShip, "data/collada/sail01.dae",
                     new LatLon(Angle.fromDegrees(tShip.getLatitude()), Angle.fromDegrees(tShip.getLongitude())),
                     40.0);
         }

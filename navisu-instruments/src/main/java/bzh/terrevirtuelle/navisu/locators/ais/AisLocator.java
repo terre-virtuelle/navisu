@@ -26,11 +26,11 @@ import bzh.terrevirtuelle.navisu.locators.controller.ShipProcessor;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import bzh.terrevirtuelle.navisu.locators.view.Shape;
 
-import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS2;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.layers.IconLayer;
@@ -132,6 +132,7 @@ public class AisLocator {
                     System.out.println("e " + e);
                 }
             }
+
         });
 
         ais2ES.subscribe(new AIS2Event() {

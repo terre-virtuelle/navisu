@@ -3,7 +3,7 @@ package bzh.terrevirtuelle.navisu.locators.model;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;
-import bzh.terrevirtuelle.navisu.ship.Ship;
+import bzh.terrevirtuelle.navisu.domain.ship.Ship;
 import java.util.Calendar;
 
 /**

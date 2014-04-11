@@ -10,11 +10,13 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
 import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
-import bzh.terrevirtuelle.navisu.nmea.model.GGA;
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.nmea.model.RMC;
-import bzh.terrevirtuelle.navisu.nmea.model.VTG;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.GGA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.RMC;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.VTG;
+import gov.nasa.worldwind.WorldWindow;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -28,8 +30,6 @@ import java.util.logging.Logger;
  *
  * @author Serge
  */
-
-
 public class GpsLocatorControllerWithDPAgent {
 
     protected static final Logger LOGGER = Logger.getLogger(GpsLocatorControllerWithDPAgent.class.getName());
@@ -40,7 +40,6 @@ public class GpsLocatorControllerWithDPAgent {
     ComponentEventSubscribe<GGAEvent> ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
     ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
     ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
-
     protected TShip ship;
 
     public GpsLocatorControllerWithDPAgent(final DpAgentServices dpAgentServices) {
@@ -64,9 +63,11 @@ public class GpsLocatorControllerWithDPAgent {
                 new Integer(properties.getProperty("navigationalStatus")),
                 new Integer(properties.getProperty("electronicPositionDevice")),
                 properties.getProperty("callSign"));
-        ship.setShapeId(0);
+        ship.setShapeId(100);
         // insertion dans le DPAgent
         dpAgentServices.create(ship);
+
+        
 
         subscribe();
     }
@@ -81,6 +82,7 @@ public class GpsLocatorControllerWithDPAgent {
                 GGA data = (GGA) d;
                 ship.setLatitude(data.getLatitude());
                 ship.setLongitude(data.getLongitude());
+              
                 // mise à jour via le DPAgent
                 dpAgentServices.update(ship);
             }
