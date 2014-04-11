@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.view.Shape;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
@@ -28,7 +29,7 @@ import javax.xml.stream.XMLStreamException;
  *
  * @author Serge
  */
-public class Shape_C
+public class Shape3D_0
         implements Shape {
 
     TShip tShip;
@@ -36,16 +37,16 @@ public class Shape_C
     ColladaController colladaController = null;
     String fileName;//"data/collada/lithops.dae"
 
-    public Shape_C(TShip tShip, String fileName) {
+    public Shape3D_0(TShip tShip, String fileName, LatLon latlon, double d) {
         this.tShip = tShip;
         this.fileName = fileName;
         try {
             colladaRoot = ColladaRoot.createAndParse(new File(fileName));
             colladaRoot.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            colladaRoot.setHeading(Angle.fromDegrees(-124.0));
-            colladaRoot.setPosition(Position.fromDegrees(48.35, -4.497602, -43));
-            colladaRoot.setPitch(Angle.fromDegrees(4.0));
-            colladaRoot.setRoll(Angle.fromDegrees(-20.0));
+            colladaRoot.setHeading(Angle.fromDegrees(0.0));
+            colladaRoot.setPosition(Position.fromDegrees(48.35, -4.497602, 0));
+            colladaRoot.setPitch(Angle.fromDegrees(0.0));
+            colladaRoot.setRoll(Angle.fromDegrees(0.0));
             colladaRoot.setModelScale(new Vec4(10.0));
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(GpsLocator.class.getName()).log(Level.SEVERE, null, ex);
