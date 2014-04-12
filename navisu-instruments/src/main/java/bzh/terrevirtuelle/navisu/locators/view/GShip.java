@@ -42,7 +42,7 @@ public class GShip
                     40.0);
         }
         if (tShip.getShapeId() == 36) {
-            shape = new Shape3D_0(tShip, "data/collada/sail01.dae",
+            shape = new Shape3D_0(tShip, "data/collada/fish01L.dae",
                     new LatLon(Angle.fromDegrees(tShip.getLatitude()), Angle.fromDegrees(tShip.getLongitude())),
                     40.0);
         }

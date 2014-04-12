@@ -63,11 +63,9 @@ public class GpsLocatorControllerWithDPAgent {
                 new Integer(properties.getProperty("navigationalStatus")),
                 new Integer(properties.getProperty("electronicPositionDevice")),
                 properties.getProperty("callSign"));
-        ship.setShapeId(100);
+        ship.setShapeId(36);
         // insertion dans le DPAgent
         dpAgentServices.create(ship);
-
-        
 
         subscribe();
     }

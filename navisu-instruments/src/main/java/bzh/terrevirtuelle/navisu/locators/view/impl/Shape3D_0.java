@@ -47,7 +47,7 @@ public class Shape3D_0
             colladaRoot.setPosition(Position.fromDegrees(48.35, -4.497602, 0));
             colladaRoot.setPitch(Angle.fromDegrees(0.0));
             colladaRoot.setRoll(Angle.fromDegrees(0.0));
-            colladaRoot.setModelScale(new Vec4(10.0));
+            colladaRoot.setModelScale(new Vec4(100.0));
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(GpsLocator.class.getName()).log(Level.SEVERE, null, ex);
         }
