@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class DockItemImageImpl implements DockItem {
 
-    public static final double DEFAULT_SIZE = 90.0;
+    public static final double DEFAULT_SIZE = 60.0;
 
     protected StackPane container;
 

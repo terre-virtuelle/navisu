@@ -95,18 +95,18 @@ public class GuiAgentImpl
     final Dock dock0 = new Dock(ICONS0);
 
     public static final DockItem[] ICONS = new DockItem[]{
-        DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
-        DockItemFactory.newImageItem("tools", ICON_PATH + "tools.png", (e) -> System.out.println("TOOLS1")),
-        DockItemFactory.newImageItem("Tools2", ICON_PATH + "tools1.png", (e) -> System.out.println("TOOLS2")),
-        DockItemFactory.newImageItem("AIS", ICON_PATH + "AIS.png", (e) -> System.out.println("AIS")),
-        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPS.png", (e) -> System.out.println("GPS")),
-        DockItemFactory.newImageItem("GPS2", ICON_PATH + "GPS2.png", (e) -> System.out.println("GPS2")),
-        DockItemFactory.newImageItem("Compass", ICON_PATH + "compass.png", (e) -> System.out.println("Compass")),
+        //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
+        DockItemFactory.newImageItem("config", ICON_PATH + "config.png", (e) -> System.out.println("Config")),
+        DockItemFactory.newImageItem("tools", ICON_PATH + "tools.png", (e) -> System.out.println("tools")),
+        DockItemFactory.newImageItem("charts", ICON_PATH + "charts.png", (e) -> System.out.println("Charts")),
+        DockItemFactory.newImageItem("Tides", ICON_PATH + "tides.png", (e) -> System.out.println("Tides & streams")),
+        DockItemFactory.newImageItem("Meteo", ICON_PATH + "meteo.png", (e) -> System.out.println("Meteo")),
+        DockItemFactory.newImageItem("", ICON_PATH + "flou.png", (e) -> System.out.println("A venir 0")),
         DockItemFactory.newImageItem("Sounder", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder")),
-        DockItemFactory.newImageItem("Wind", ICON_PATH + "wind.png", (e) -> System.out.println("Wind")),
-        DockItemFactory.newImageItem("Book", ICON_PATH + "book.png", (e) -> System.out.println("Book")),
+        DockItemFactory.newImageItem("", ICON_PATH + "vide.png", (e) -> System.out.println("A venir 1")),
+        DockItemFactory.newImageItem("Book", ICON_PATH + "book.png", (e) -> System.out.println("Diary")),
         DockItemFactory.newImageItem("Guide", ICON_PATH + "guide.png", (e) -> System.out.println("Guide")),
-        DockItemFactory.newImageItem("livreblanc", ICON_PATH + "guideblanc.png", (e) -> System.out.println("Livre blanc")),};
+        DockItemFactory.newImageItem("livreblanc", ICON_PATH + "whitebook.png", (e) -> System.out.println("White Book")),};
     public static final DockItem[] ICONS0 = new DockItem[]{
         /* Invisible icons just for testing margins */
         //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
@@ -166,7 +166,7 @@ public class GuiAgentImpl
 
        // setFullScreen(true);
         stage.setScene(scene);
-        stage.setMaximized(true);
+      //stage.setMaximized(true);
         stage.show();
     }
 
@@ -175,6 +175,7 @@ public class GuiAgentImpl
         //TODO Refactor All of this code
         ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-in.png")));
         ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-out.png")));
+        
 
         RadialMenuRootItem rootItem = new RadialMenuRootItem();
 
@@ -195,12 +196,18 @@ public class GuiAgentImpl
     }
 
     private void createDockWidget(Scene scene) {
+        ImageView MOBImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton_1.png")));
         Group groupDock = new Group();
+        groupDock.getChildren().add(MOBImg);
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
-        dock.setLayoutX(95.0);
-        dock.setLayoutY(30.0);
+        MOBImg.setLayoutX(100.0);
+        MOBImg.setLayoutY(100.0);
+        basedock.setLayoutX(200.0);
+        basedock.setLayoutY(150.0);
+        dock.setLayoutX(275.0);
+        dock.setLayoutY(90.0);
         dock.setOrientation(Orientation.HORIZONTAL);
         /* margins if necessity to adjust position of whole group */
         //StackPane.setMargin(groupdock,(new Insets(0, 0, 0, 0)));
