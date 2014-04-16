@@ -1,0 +1,13 @@
+class Shape_4
+!!!143874.java!!!	Shape_4(inout pstn : Position)
+        super(pstn);
+!!!144002.java!!!	setLocation(inout location : Location) : void
+        moveTo(new Position(Angle.fromDegrees(location.getLatitudeDegree()),
+                Angle.fromDegrees(location.getLongitudeDegree()), 100));
+!!!144130.java!!!	getRenderables() : Renderable
+ 
+        return new Renderable[]{this};
+!!!144258.java!!!	setRotation(in cog : double) : void
+
+!!!144386.java!!!	toString() : String
+        return "Shape_0{" + super.toString() + '}';

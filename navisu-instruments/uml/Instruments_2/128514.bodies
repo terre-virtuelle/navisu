@@ -1,0 +1,133 @@
+class AisLocator
+!!!128258.java!!!	AisLocator(inout geoViewServices : GeoViewServices, inout dpAgentServices : DpAgentServices, inout guiAgentServices : GuiAgentServices)
+
+        tShipProcessors = new HashMap<>();
+        tStationsProcessors = new HashMap<>();
+        this.geoViewServices = geoViewServices;
+        this.dpAgentServices = dpAgentServices;
+        this.guiAgentServices = guiAgentServices;
+  
+        pane = guiAgentServices.getRoot();
+        
+        // creation de la layer
+        this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
+        geoViewServices.getLayerManager().insertGeoLayer(this.aisLayer);
+
+        this.aisStationLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
+        geoViewServices.getLayerManager().insertGeoLayer(this.aisStationLayer);
+
+        wwd.addSelectListener((SelectEvent event) -> {
+            if (event.isLeftClick()
+                    && event.getTopObject().getClass().getInterfaces()[0].equals(Shape.class)) {
+               // System.out.println(((Shape) event.getTopObject()).getShip().getCog());
+            }
+        });
+
+        subscribe();
+
+!!!128386.java!!!	subscribe() : void
+        ais1ES.subscribe(new AIS1Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                try {
+                    AIS1 ais = (AIS1) data;
+                    int mmsi = ais.getMMSI();
+                    if (!tShipProcessors.containsKey(mmsi)) {
+                        ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
+                        geoViewServices.registerProcessor(shipProcessor);
+
+                        ship = new TShip(IDGenerator.newIntID(),
+                                ais.getMMSI(), ais.getImo(), ais.getShipname(),
+                                ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
+                                ais.getLatitude(), ais.getLongitude(),
+                                ais.getWidth(), ais.getLength(), ais.getDraught(),
+                                ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
+                                ais.getETA(), ais.getDestination(), "");
+                        dpAgentServices.create(ship);
+
+                        aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+
+                        tShipProcessors.put(mmsi, shipProcessor);
+                    }
+                } catch (Exception e) {
+                    System.out.println("e " + e);
+                }
+            }
+
+        });
+
+        ais2ES.subscribe(new AIS2Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                AIS2 ais = (AIS2) data;
+                int mmsi = ais.getMMSI();
+                if (!tShipProcessors.containsKey(mmsi)) {
+                    ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
+                    geoViewServices.registerProcessor(shipProcessor);
+
+                    ship = new TShip(IDGenerator.newIntID(),
+                            ais.getMMSI(), ais.getImo(), ais.getShipname(),
+                            ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
+                            ais.getLatitude(), ais.getLongitude(),
+                            ais.getWidth(), ais.getLength(), ais.getDraught(),
+                            ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
+                            ais.getETA(), ais.getDestination(), "");
+                    dpAgentServices.create(ship);
+                    aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+                    tShipProcessors.put(mmsi, shipProcessor);
+                }
+            }
+        });
+
+        ais3ES.subscribe(new AIS3Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                AIS3 ais = (AIS3) data;
+                int mmsi = ais.getMMSI();
+                if (!tShipProcessors.containsKey(mmsi)) {
+                    ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
+                    geoViewServices.registerProcessor(shipProcessor);
+
+                    ship = new TShip(IDGenerator.newIntID(),
+                            ais.getMMSI(), ais.getImo(), ais.getShipname(),
+                            ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
+                            ais.getLatitude(), ais.getLongitude(),
+                            ais.getWidth(), ais.getLength(), ais.getDraught(),
+                            ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
+                            ais.getETA(), ais.getDestination(), "");
+                    dpAgentServices.create(ship);
+
+                    aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+                    tShipProcessors.put(mmsi, shipProcessor);
+                }
+            }
+        });
+
+        ais4ES.subscribe(new AIS4Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                AIS4 ais = (AIS4) data;
+                int mmsi = ais.getMMSI();
+
+                if (!tStationsProcessors.containsKey(mmsi)) {
+                    StationProcessor stationProcessor = new StationProcessor(AisLocator.this.aisStationLayer);
+                    geoViewServices.registerProcessor(stationProcessor);
+
+                    station = new TStation(IDGenerator.newIntID(),
+                            ais.getMMSI(),
+                            ais.getLatitude(), ais.getLongitude(), ais.getDate());
+
+                    dpAgentServices.create(station);
+
+                    aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
+
+                    tStationsProcessors.put(mmsi, stationProcessor);
+
+                }
+
+            }
+        });

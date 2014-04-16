@@ -1,0 +1,30 @@
+class Shape3D_0
+!!!141314.java!!!	Shape3D_0(inout tShip : TShip, in fileName : String, inout latlon : LatLon, in d : double)
+        this.tShip = tShip;
+        this.fileName = fileName;
+        try {
+            colladaRoot = ColladaRoot.createAndParse(new File(fileName));
+            colladaRoot.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+            colladaRoot.setHeading(Angle.fromDegrees(30.0));
+            colladaRoot.setPosition(Position.fromDegrees(48.35, -4.497602, 0));
+            colladaRoot.setPitch(Angle.fromDegrees(0.0));
+            colladaRoot.setRoll(Angle.fromDegrees(0.0));
+            colladaRoot.setModelScale(new Vec4(20.0));
+        } catch (IOException | XMLStreamException ex) {
+            Logger.getLogger(GpsLocator.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Create a KMLController to adapt the KMLRoot to the World Wind renderable interface.
+        colladaController = new ColladaController(colladaRoot);
+!!!141442.java!!!	setLocation(inout location : Location) : void
+
+!!!141570.java!!!	getRenderables() : Renderable
+        return new Renderable[]{colladaController};
+!!!141698.java!!!	setRotation(in cog : double) : void
+        // super.setRotation(-cog);
+!!!141826.java!!!	toString() : String
+        return "Shape_0{" + super.toString() + '}';
+!!!141954.java!!!	getShip() : TShip
+        return tShip;
+!!!142082.java!!!	getAttributes() : ShapeAttributes
+        return null;

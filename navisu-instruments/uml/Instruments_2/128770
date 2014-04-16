@@ -1,0 +1,373 @@
+format 76
+"controller" // bzh::terrevirtuelle::navisu::locators::ais::controller
+  revision 1
+  modified_by 2 "Serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/locators/ais/controller/"
+  java_package "bzh.terrevirtuelle.navisu.locators.ais.controller"
+  classview 128386 "controller"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 128642 "AisLocatorControllerWithDPAgent"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      attribute 130178 "LOGGER"
+	class_attribute const_attribute protected explicit_type "Logger"
+	init_value " Logger.getLogger(AisLocatorControllerWithDPAgent.class.getName())"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130306 "dpAgentServices"
+	protected explicit_type "DpAgentServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130434 "cm"
+	package explicit_type "ComponentManager"
+	init_value " ComponentManager.componentManager"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130562 "ais1ES"
+	package explicit_type "AIS1Event"
+	init_value " cm.getComponentEventSubscribe(AIS1Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130690 "ais2ES"
+	package explicit_type "AIS2Event"
+	init_value " cm.getComponentEventSubscribe(AIS2Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130818 "ais3ES"
+	package explicit_type "AIS3Event"
+	init_value " cm.getComponentEventSubscribe(AIS3Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 130946 "ais4ES"
+	package explicit_type "AIS4Event"
+	init_value " cm.getComponentEventSubscribe(AIS4Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131074 "ais5ES"
+	package explicit_type "AIS5Event"
+	init_value " cm.getComponentEventSubscribe(AIS5Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 129026 // ship (<unidirectional association>)
+	relation 129026 --->
+	  a role_name "ship" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129026 // ship (<unidirectional association>)
+	  b parent class_ref 129154 // TShip
+      end
+
+      operation 128514 "AisLocatorControllerWithDPAgent"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "dpAgentServices" explicit_type "DpAgentServices"
+	  param in name "ship" type class_ref 129154 // TShip
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}final ${t0} ${p0}, final ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128642 "subscribe"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 128770 "update"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 128770 "AisStationLocatorControllerWithDPAgent"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      attribute 131202 "LOGGER"
+	class_attribute const_attribute protected explicit_type "Logger"
+	init_value " Logger.getLogger(AisStationLocatorControllerWithDPAgent.class.getName())"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131330 "dpAgentServices"
+	protected explicit_type "DpAgentServices"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131458 "update"
+	package explicit_type "boolean"
+	init_value " false"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131586 "cm"
+	package explicit_type "ComponentManager"
+	init_value " ComponentManager.componentManager"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 131714 "ais4ES"
+	package explicit_type "AIS4Event"
+	init_value " cm.getComponentEventSubscribe(AIS4Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 129154 // station (<unidirectional association>)
+	relation 129154 --->
+	  a role_name "station" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129154 // station (<unidirectional association>)
+	  b parent class_ref 129282 // TStation
+      end
+
+      operation 128898 "AisStationLocatorControllerWithDPAgent"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "dpAgentServices" explicit_type "DpAgentServices"
+	  param in name "station" type class_ref 129282 // TStation
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}final ${t0} ${p0}, final ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129026 "subscribe"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 129154 "update"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 128258 "controller"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 128386 "AisLocatorControllerWithDPAgent"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS5;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import java.util.logging.Logger;
+import org.capcaval.c3.component.ComponentEventSubscribe;
+import org.capcaval.c3.componentmanager.ComponentManager;
+${definition}"
+      associated_classes
+	class_ref 128642 // AisLocatorControllerWithDPAgent
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 128514 "AisStationLocatorControllerWithDPAgent"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
+import bzh.terrevirtuelle.navisu.locators.model.TStation;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import gov.nasa.worldwind.avlist.AVKey;
+import java.util.logging.Logger;
+import org.capcaval.c3.component.ComponentEventSubscribe;
+import org.capcaval.c3.componentmanager.ComponentManager;
+${definition}"
+      associated_classes
+	class_ref 128770 // AisStationLocatorControllerWithDPAgent
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+end

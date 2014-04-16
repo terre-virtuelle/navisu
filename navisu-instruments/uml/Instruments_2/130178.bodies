@@ -1,46 +1,5 @@
- /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bzh.terrevirtuelle.navisu.locators.gps.controller;
-
-import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
-import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
-import bzh.terrevirtuelle.navisu.locators.model.TShip;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.GGA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.VTG;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.logging.Level;
-import org.capcaval.c3.component.ComponentEventSubscribe;
-import org.capcaval.c3.componentmanager.ComponentManager;
-
-import java.util.logging.Logger;
-
-/**
- *
- * @author Serge
- */
-public class GpsLocatorControllerWithDPAgent {
-
-    protected static final Logger LOGGER = Logger.getLogger(GpsLocatorControllerWithDPAgent.class.getName());
-    private final Properties properties;
-    protected DpAgentServices dpAgentServices;
-
-    ComponentManager cm = ComponentManager.componentManager;
-    ComponentEventSubscribe<GGAEvent> ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
-    ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
-    ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
-    protected TShip ship;
-
-    public GpsLocatorControllerWithDPAgent(final DpAgentServices dpAgentServices) {
+class GpsLocatorControllerWithDPAgent
+!!!131330.java!!!	GpsLocatorControllerWithDPAgent(in dpAgentServices : DpAgentServices)
         this.dpAgentServices = dpAgentServices;
         properties = new Properties();
         try {
@@ -66,9 +25,7 @@ public class GpsLocatorControllerWithDPAgent {
         dpAgentServices.create(ship);
 
         subscribe();
-    }
-
-    private void subscribe() {
+!!!131458.java!!!	subscribe() : void
         // souscription aux événements
         ggaES.subscribe(new GGAEvent() {
 
@@ -113,5 +70,3 @@ public class GpsLocatorControllerWithDPAgent {
                 dpAgentServices.update(ship);
             }
         });
-    }
-}

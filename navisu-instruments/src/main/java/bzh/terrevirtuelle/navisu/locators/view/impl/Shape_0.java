@@ -28,13 +28,12 @@ public class Shape_0
         super(itrbl);
         this.tShip = tShip;
         setAttributes(sa);
-
     }
 
     @Override
     public void setLocation(Location location) {
         moveTo(new Position(Angle.fromDegrees(location.getLatitudeDegree()),
-                Angle.fromDegrees(location.getLongitudeDegree()), 10));
+                Angle.fromDegrees(location.getLongitudeDegree()), 15));
     }
 
     @Override

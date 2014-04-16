@@ -1,0 +1,23 @@
+class GStation
+!!!139266.java!!!	GStation(in id : int, inout tStation : TStation)
+        this.id = id;
+        this.tStation = tStation;
+        tStation.setGStation(this);
+        shape = new Shape_4(Position.fromDegrees(tStation.getLatitude(), tStation.getLongitude()));
+        shape.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+        PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
+        attrs.setImageOffset(new Offset(24d, 0d, AVKey.PIXELS, AVKey.PIXELS));
+        attrs.setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_1.png");
+        shape.setAttributes(attrs);
+!!!139394.java!!!	getID() : int
+        return this.id;
+!!!139522.java!!!	setLocation(inout location : Location) : void
+        shape.setLocation(location);
+!!!139650.java!!!	getRenderables() : Renderable
+        return shape.getRenderables();
+!!!139778.java!!!	getClone() : Object
+        return this;
+!!!139906.java!!!	toString() : String
+        return "GStation{" + "id=" + id + ", tStation=" + tStation + ", shape=" + shape + '}';
+!!!140034.java!!!	getShape() : Shape_4
+        return shape;

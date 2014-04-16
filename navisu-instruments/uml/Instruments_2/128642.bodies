@@ -1,53 +1,10 @@
-  /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package bzh.terrevirtuelle.navisu.locators.ais.controller;
-
-import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
-import bzh.terrevirtuelle.navisu.locators.model.TShip;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS5;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
-
-import java.util.logging.Logger;
-import org.capcaval.c3.component.ComponentEventSubscribe;
-import org.capcaval.c3.componentmanager.ComponentManager;
-
-/**
- *
- * @author Serge
- */
-public class AisLocatorControllerWithDPAgent {
-
-    protected static final Logger LOGGER = Logger.getLogger(AisLocatorControllerWithDPAgent.class.getName());
-    protected DpAgentServices dpAgentServices;
-
-    ComponentManager cm = ComponentManager.componentManager;
-    ComponentEventSubscribe<AIS1Event> ais1ES = cm.getComponentEventSubscribe(AIS1Event.class);
-    ComponentEventSubscribe<AIS2Event> ais2ES = cm.getComponentEventSubscribe(AIS2Event.class);
-    ComponentEventSubscribe<AIS3Event> ais3ES = cm.getComponentEventSubscribe(AIS3Event.class);
-    ComponentEventSubscribe<AIS4Event> ais4ES = cm.getComponentEventSubscribe(AIS4Event.class);
-    ComponentEventSubscribe<AIS5Event> ais5ES = cm.getComponentEventSubscribe(AIS5Event.class);
-
-    protected TShip ship;
-
-    public AisLocatorControllerWithDPAgent(final DpAgentServices dpAgentServices, final TShip ship) {
+class AisLocatorControllerWithDPAgent
+!!!128514.java!!!	AisLocatorControllerWithDPAgent(in dpAgentServices : DpAgentServices, in ship : TShip)
         this.ship = ship;
         this.dpAgentServices = dpAgentServices;
 
         subscribe();
-    }
-
-    private void subscribe() {
+!!!128642.java!!!	subscribe() : void
 
         ais1ES.subscribe(new AIS1Event() {
 
@@ -122,9 +79,5 @@ public class AisLocatorControllerWithDPAgent {
             }
         });
 
-    }
+!!!128770.java!!!	update() : void
 
-    private void update() {
-
-    }
-}

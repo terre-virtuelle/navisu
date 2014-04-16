@@ -1,0 +1,5 @@
+class Widget3DImpl
+!!!132098.java!!!	createGpsLocator() : void
+        GpsLocator locator = new GpsLocator(geoViewServices, dpAgentServices);
+!!!132226.java!!!	createAisLocator() : void
+        AisLocator locator = new AisLocator(geoViewServices, dpAgentServices, guiAgentServices);

@@ -1,0 +1,18 @@
+class Shape_1
+!!!142978.java!!!	Shape_1(inout tShip : TShip, inout sa : ShapeAttributes, inout latlon : LatLon, in d : double)
+        super(sa, latlon, d);
+        this.tShip = tShip;
+        //  wwd = GeoWorldWindViewImpl.getWW();
+        // pick();
+!!!143106.java!!!	setLocation(inout location : Location) : void
+        moveTo(new Position(Angle.fromDegrees(location.getLatitudeDegree()),
+                Angle.fromDegrees(location.getLongitudeDegree()), 100));
+!!!143234.java!!!	setRotation(in cog : double) : void
+        // Nothing todo
+!!!143362.java!!!	getRenderables() : Renderable
+
+        return new Renderable[]{this};
+!!!143490.java!!!	toString() : String
+        return "Shape_1{" + super.toString() + '}';
+!!!143618.java!!!	getShip() : TShip
+        return tShip;

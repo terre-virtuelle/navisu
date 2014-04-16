@@ -1,0 +1,27 @@
+class ShipProcessor
+!!!129410.java!!!	ShipProcessor(inout layer : GeoLayer<Layer>)
+        this.layer = layer;
+!!!129538.java!!!	ShipProcessor(inout layer : GeoLayer<Layer>, inout tShip : TShip)
+        this.layer = layer;
+        this.tShip = tShip;
+!!!129666.java!!!	processCreated(in id : int, inout input : TObject) : GObject
+
+        tShip = (TShip) input;
+        gShip = new GShip(id, tShip);
+        return gShip;
+!!!129794.java!!!	processUpdated(in id : int, inout input : TObject, inout output : GObject) : GObject
+        tShip = (TShip) input;
+        gShip = (GShip) output;
+
+        gShip.setLocation(tShip.getLocation());
+        gShip.setCog(tShip.getOrientation().getOrientationDegree());
+        gShip.getAttributes().setInteriorMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
+        gShip.getAttributes().setOutlineMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
+        return output;
+!!!129922.java!!!	processDeleted(in id : int, inout input : TObject, inout output : GObject) : GObject
+        // Nothing to do here
+        return output;
+!!!130050.java!!!	getLayer() : GeoLayer<Layer>
+        return this.layer;
+!!!130178.java!!!	getType() : Class<? extends TObject>
+        return TShip.class;

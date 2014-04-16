@@ -16,7 +16,6 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import gov.nasa.worldwind.ogc.collada.impl.ColladaController;
-import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.io.File;
@@ -43,11 +42,11 @@ public class Shape3D_0
         try {
             colladaRoot = ColladaRoot.createAndParse(new File(fileName));
             colladaRoot.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-            colladaRoot.setHeading(Angle.fromDegrees(0.0));
+            colladaRoot.setHeading(Angle.fromDegrees(30.0));
             colladaRoot.setPosition(Position.fromDegrees(48.35, -4.497602, 0));
             colladaRoot.setPitch(Angle.fromDegrees(0.0));
             colladaRoot.setRoll(Angle.fromDegrees(0.0));
-            colladaRoot.setModelScale(new Vec4(100.0));
+            colladaRoot.setModelScale(new Vec4(20.0));
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(GpsLocator.class.getName()).log(Level.SEVERE, null, ex);
         }

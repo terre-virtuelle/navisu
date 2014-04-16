@@ -1,34 +1,5 @@
-package bzh.terrevirtuelle.navisu.locators.view;
-
-import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
-import bzh.terrevirtuelle.navisu.geodesy.Location;
-import bzh.terrevirtuelle.navisu.locators.model.TShip;
-import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_0;
-import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_1;
-import bzh.terrevirtuelle.navisu.locators.view.impl.Shape3D_0;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import java.util.Arrays;
-import java.util.List;
-
-/**
- * NaVisu
- *
- * @author tibus
- * @date 19/02/2014 18:49
- */
-public class GShip
-        implements GObject {
-
-    protected final int id;
-    protected TShip tShip;
-    protected Shape shape;
-
-    public GShip(int id, TShip ship) {
+class GShip
+!!!137346.java!!!	GShip(in id : int, inout ship : TShip)
         this.id = id;
         this.tShip = ship;
         if (tShip.getShapeId() == 0) {
@@ -45,58 +16,25 @@ public class GShip
                     new LatLon(Angle.fromDegrees(tShip.getLatitude()), Angle.fromDegrees(tShip.getLongitude())),
                     40.0);
         }
-    }
-
-    @Override
-    public int getID() {
+!!!137474.java!!!	getID() : int
         return this.id;
-    }
-
-    public Shape getShape() {
+!!!137602.java!!!	getShape() : Shape
         return shape;
-    }
-
-    public void setShape(Shape shape) {
+!!!137730.java!!!	setShape(inout shape : Shape) : void
         this.shape = shape;
-    }
-
-    /**
-     * Get the value of ship
-     *
-     * @return the value of ship
-     */
-    public TShip getShip() {
+!!!137858.java!!!	getShip() : TShip
         return tShip;
-    }
-
-    /**
-     * Set the value of ship
-     *
-     * @param ship new value of ship
-     */
-    public void setShip(TShip ship) {
+!!!137986.java!!!	setShip(inout ship : TShip) : void
         this.tShip = ship;
-    }
-
-    @Override
-    public void setLocation(Location location) {
+!!!138114.java!!!	setLocation(inout location : Location) : void
         shape.setLocation(location);
-    }
-
-    public ShapeAttributes getAttributes() {
+!!!138242.java!!!	getAttributes() : ShapeAttributes
         return shape.getAttributes();
-    }
-
-    @Override
-    public Renderable[] getRenderables() {
+!!!138370.java!!!	getRenderables() : Renderable
         return shape.getRenderables();
-    }
-
-    public void setCog(double cog) {
+!!!138498.java!!!	setCog(in cog : double) : void
         shape.setRotation(cog);
-    }
-
-    protected final ShapeAttributes makeAttributes() {
+!!!138626.java!!!	makeAttributes() : ShapeAttributes
         final ShapeAttributes pathAttrs = new BasicShapeAttributes();
         pathAttrs.setOutlineMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
         pathAttrs.setOutlineOpacity(0.8);
@@ -105,9 +43,7 @@ public class GShip
         pathAttrs.setDrawInterior(true);
         pathAttrs.setInteriorOpacity(1.0);
         return pathAttrs;
-    }
-
-    private double[] initShape(double latitude, double longitude) {
+!!!138754.java!!!	initShape(in latitude : double, in longitude : double) : double
        
         double[] shipShape = new double[10];
         shipShape[0] = longitude;
@@ -121,9 +57,7 @@ public class GShip
         shipShape[8] = longitude;
         shipShape[9] = latitude + 0.00075;
         return shipShape;
-    }
-
-    protected final List<Position> makePositionList(double[] src) {
+!!!138882.java!!!	makePositionList(inout src : double) : List<Position>
         int numCoords = src.length / 2;
         Position[] array = new Position[numCoords];
 
@@ -133,15 +67,7 @@ public class GShip
             array[i] = Position.fromDegrees(latDegrees, lonDegrees, 15);
         }
         return Arrays.asList(array);
-    }
-
-    @Override
-    public Object getClone() {
+!!!139010.java!!!	getClone() : Object
         return this;
-    }
-
-    @Override
-    public String toString() {
+!!!139138.java!!!	toString() : String
         return "GShip{" + "id=" + id + ", tShip=" + tShip + ", shape=" + shape + '}';
-    }
-}

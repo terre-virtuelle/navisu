@@ -31,13 +31,23 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.ship.ShipType;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
-import gov.nasa.worldwind.layers.IconLayer;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.AbstractBrowserBalloon;
+import gov.nasa.worldwind.render.BalloonAttributes;
+import gov.nasa.worldwind.render.BasicBalloonAttributes;
+import gov.nasa.worldwind.render.GlobeBrowserBalloon;
+import gov.nasa.worldwind.render.Size;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import javafx.scene.layout.StackPane;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -49,18 +59,24 @@ public class AisLocator {
 
     protected GeoLayer<Layer> aisLayer;
     protected GeoLayer<Layer> aisStationLayer;
-    protected IconLayer baseStationLayer;
+    protected RenderableLayer baloonLayer;
+
     protected AisLocatorControllerWithDPAgent aisLocatorController;
     protected AisStationLocatorControllerWithDPAgent aisStationLocatorControllerWithDPAgent;
     protected Map<Integer, ShipProcessor> tShipProcessors;
+    protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, StationProcessor> tStationsProcessors;
+
     protected GeoViewServices geoViewServices;
     protected DpAgentServices dpAgentServices;
     protected GuiAgentServices guiAgentServices;
+
     protected GeoWorldWindView geoView;
+    String str = BROWSER_BALLOON_CONTENT_PATH;
+    NumberFormat nf = new DecimalFormat("0.###");
+    SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
     TShip ship;
     TStation station;
-    //   Station baseStation;
     ComponentManager cm = ComponentManager.componentManager;
     ComponentEventSubscribe<AIS1Event> ais1ES = cm.getComponentEventSubscribe(AIS1Event.class);
     ComponentEventSubscribe<AIS2Event> ais2ES = cm.getComponentEventSubscribe(AIS2Event.class);
@@ -69,7 +85,10 @@ public class AisLocator {
     ComponentEventSubscribe<AIS5Event> ais5ES = cm.getComponentEventSubscribe(AIS5Event.class);
     boolean first = true;
     boolean firstBt = true;
-    StackPane pane;
+    // StackPane pane;
+    Position balloonPosition;
+    AbstractBrowserBalloon balloon;
+    BalloonAttributes attrs;
 
     WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
@@ -79,28 +98,31 @@ public class AisLocator {
 
         tShipProcessors = new HashMap<>();
         tStationsProcessors = new HashMap<>();
+        timestamps = new HashMap<>();
+
         this.geoViewServices = geoViewServices;
         this.dpAgentServices = dpAgentServices;
         this.guiAgentServices = guiAgentServices;
-  
-        pane = guiAgentServices.getRoot();
-        
-        // creation de la layer
+
+        //      pane = guiAgentServices.getRoot();
         this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
         geoViewServices.getLayerManager().insertGeoLayer(this.aisLayer);
 
         this.aisStationLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
         geoViewServices.getLayerManager().insertGeoLayer(this.aisStationLayer);
 
+        this.baloonLayer = new RenderableLayer();
+        wwd.getModel().getLayers().add(baloonLayer);
+        attrs = new BasicBalloonAttributes();
+        attrs.setSize(new Size(Size.NATIVE_DIMENSION, 0d, null, Size.NATIVE_DIMENSION, 0d, null));
+
         wwd.addSelectListener((SelectEvent event) -> {
             if (event.isLeftClick()
                     && event.getTopObject().getClass().getInterfaces()[0].equals(Shape.class)) {
-               // System.out.println(((Shape) event.getTopObject()).getShip().getCog());
+                makeBrowserBalloon(((Shape) event.getTopObject()).getShip());
             }
         });
-
         subscribe();
-
     }
 
     private void subscribe() {
@@ -128,11 +150,11 @@ public class AisLocator {
 
                         tShipProcessors.put(mmsi, shipProcessor);
                     }
+                    timestamps.put(mmsi, Calendar.getInstance());
                 } catch (Exception e) {
-                    System.out.println("e " + e);
+                    System.out.println("ais1ES.subscribe " + e);
                 }
             }
-
         });
 
         ais2ES.subscribe(new AIS2Event() {
@@ -156,6 +178,7 @@ public class AisLocator {
                     aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
                     tShipProcessors.put(mmsi, shipProcessor);
                 }
+                timestamps.put(mmsi, Calendar.getInstance());
             }
         });
 
@@ -181,6 +204,7 @@ public class AisLocator {
                     aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
                     tShipProcessors.put(mmsi, shipProcessor);
                 }
+                timestamps.put(mmsi, Calendar.getInstance());
             }
         });
 
@@ -204,10 +228,191 @@ public class AisLocator {
                     aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
 
                     tStationsProcessors.put(mmsi, stationProcessor);
-
                 }
-
+                timestamps.put(mmsi, Calendar.getInstance());
             }
         });
     }
+
+    protected final void makeBrowserBalloon(TShip ship) {
+        String htmlString = updateHtmlString(ship);
+        this.baloonLayer.removeAllRenderables();
+
+        balloonPosition = Position.fromDegrees(ship.getLatitude(), ship.getLongitude());
+        balloon = new GlobeBrowserBalloon(htmlString, balloonPosition);
+
+        balloon.setAttributes(attrs);
+        this.baloonLayer.addRenderable(balloon);
+    }
+
+    protected String updateHtmlString(TShip ship) {
+        String tmp;
+        if (ship.getName() != null) {
+            tmp = str.replace("__shipname__", ship.getName());
+        } else {
+            tmp = str.replace("__shipname__", "");
+        }
+        if (ship.getType() != 0) {
+            tmp = tmp.replace("__shiptype__", ShipType.TYPE.get(ship.getType()));
+        } else {
+            tmp = tmp.replace("__shiptype__", "");
+        }
+        if (ship.getCallSign() != null) {
+            tmp = tmp.replace("__callsign__", ship.getCallSign());
+        } else {
+            tmp = tmp.replace("__callsign__", "");
+        }
+        if (ship.getMmsi() != 0) {
+            tmp = tmp.replace("__mmsi__", Integer.toString(ship.getMmsi()));
+            long seconds = Calendar.getInstance().getTimeInMillis()
+                    - timestamps.get(ship.getMmsi()).getTimeInMillis();
+            tmp = tmp.replace("__seconds__", Long.toString(seconds / 1000) + " s");
+        } else {
+            tmp = tmp.replace("__mmsi__", "");
+        }
+        if (ship.getImo() != 0) {
+            tmp = tmp.replace("__imo__", Integer.toString(ship.getImo()));
+        } else {
+            tmp = tmp.replace("__imo__", "");
+        }
+        if (ship.getLength() != 0) {
+            tmp = tmp.replace("__length__", Float.toString(ship.getLength()) + " m");
+        } else {
+            tmp = tmp.replace("__length__", "");
+        }
+        if (ship.getWidth() != 0) {
+            tmp = tmp.replace("__width__", Float.toString(ship.getWidth()) + " m");
+        } else {
+            tmp = tmp.replace("__width__", "");
+        }
+        if (ship.getDraught() != 0) {
+            tmp = tmp.replace("__draught__", Float.toString(ship.getDraught()) + " m");
+        } else {
+            tmp = tmp.replace("__draught__", "");
+        }
+        if (ship.getNavigationalStatus() != 0) {
+            tmp = tmp.replace("__status__", Integer.toString(ship.getNavigationalStatus()));
+        } else {
+            tmp = tmp.replace("__status__", "");
+        }
+        if (ship.getSog() != 0) {
+            tmp = tmp.replace("__sog__", nf.format(ship.getSog()) + " Kn");
+        } else {
+            tmp = tmp.replace("__sog__", "");
+        }
+        if (ship.getCog() != 0 && ship.getCog() != 511) {
+            tmp = tmp.replace("__cog__", (int) ship.getCog() + " °");
+        } else {
+            tmp = tmp.replace("__cog__", "");
+        }
+        if (ship.getDestination() != null) {
+            tmp = tmp.replace("__destination__", ship.getDestination());
+        } else {
+            tmp = tmp.replace("__destination__", "");
+        }
+        if (ship.getETA() != null) {
+            tmp = tmp.replace("__eta__", dt.format(ship.getETA().getTime()));
+        } else {
+            tmp = tmp.replace("__eta__", "");
+        }
+        if (ship.getLatitude() != 0) {
+            tmp = tmp.replace("__latitude__", nf.format(ship.getLatitude()));
+        } else {
+            tmp = tmp.replace("__latitude__", "");
+        }
+        if (ship.getLongitude() != 0) {
+            tmp = tmp.replace("__longitude__", nf.format(ship.getLongitude()));
+        } else {
+            tmp = tmp.replace("__longitude__", "");
+        }
+        if (ship.getMmsi() != 0) {
+            tmp = tmp.replace("__longitude__", nf.format(ship.getLongitude()));
+        } else {
+            tmp = tmp.replace("__longitude__", "");
+        }
+        return tmp;
+    }
+    protected static final String BROWSER_BALLOON_CONTENT_PATH = "<!--\n"
+            + "  ~ Copyright (C) 2014 Terre Virtuelle NaVisu Project.\n"
+            + "  ~ All Rights Reserved.\n"
+            + "  -->\n"
+            + "\n"
+            + "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n"
+            + "        \"http:&nbsp;//www.w3.org/TR/html4/loose.dtd\">\n"
+            + "\n"
+            + "<!-- $Id: AISTemplate.html 1171 2014-02-12 21:45:02Z Serge Morvan$ -->\n"
+            + "\n"
+            + "<html>\n"
+            + "<head></head>\n"
+            + "<body>\n"
+            + "	<center>\n"
+            + "<table border  width=\"600\" cellpadding=\"0\" cellspacing=\"0\">\n"
+            + "    <tr>\n"
+            + "    <td colspan=\"3\" align=\"left\" valign=\"top\">\n"
+            + "                 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
+            + "                    <tr> \n"
+            + "                    <td align=\"left\" valign=\"middle\"><img src=\"bzh/terrevirtuelle/navisu/locators/view/logoTV200.png\" alt=\"logo\"/></td>\n"
+            + "		    <td align=\"right\"><font color=\"#999999\"><strong>  Name :&nbsp; </strong></font></td>\n"
+            + "                    <td><font color=\"#000000\" size=\"+2\"strong>__shipname__</strong></font></td>\n"
+            + "	            </tr>\n"
+            + "                    <tr>\n"
+            + "		    <td align=\"right\"><font color=\"#999999\"><strong>  Type :&nbsp; </strong></font></td>\n"
+            + "		    <td><font color=\"#000000\"><strong> __shiptype__<strong> </font> </td>\n"
+            + "                    <td align=\"right\"><font color=\"#999999\"><strong>  Age report :&nbsp; </strong></font></td>\n"
+            + "		    <td><font color=\"#000000\"><strong> __seconds__ <strong> </font> </td>\n"
+            + "\n"
+            + "	            </tr>\n"
+            + "		 </table>\n"
+            + "</br>\n"
+            + "		 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
+            + "	            <tr>\n"
+            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  CallSign :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __callsign__<strong> </font> </td>\n"
+            + "                    <td align=\"left\"><font color=\"#999999\"><strong>  MMSI :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __mmsi__<strong> </font> </td>\n"
+            + "                    <td><font color=\"#999999\"><strong> IMO :&nbsp; </strong></font></td>\n"
+            + "		    <td><font color=\"#000000\"><strong>  __imo__<strong> </font> </td>\n"
+            + "                    </tr>\n"
+            + "\n"
+            + "                    <tr>\n"
+            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Length :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\"><font color=\"#000000\"><strong>  __length__<strong> </font> </td>\n"
+            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Width :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\"><font color=\"#000000\"><strong>  __width__<strong> </font> </td>\n"
+            + "		    <td><font color=\"#999999\"><strong> Draught :&nbsp; </strong></font></td>\n"
+            + "		    <td><font color=\"#000000\"><strong>  __draught__<strong> </font> </td>\n"
+            + "                    </tr>\n"
+            + "\n"
+            + "                    <tr>\n"
+            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Status :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\"><font color=\"#000000\"><strong>  __status__<strong> </font> </td>\n"
+            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  SOG :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\"><font color=\"#000000\"><strong>  __sog__<strong> </font> </td>\n"
+            + "		    <td><font color=\"#999999\"><strong> COG :&nbsp; </strong></font></td>\n"
+            + "		    <td><font color=\"#000000\"><strong>  __cog__<strong> </font> </td>\n"
+            + "                    </tr>\n"
+            + "                 </table>  \n"
+            + "</br> \n"
+            + "                 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
+            + "	            <tr>\n"
+            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Destination :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __destination__<strong> </font> </td>\n"
+            + "                    <td align=\"left\"><font color=\"#999999\"><strong>  ETA :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __eta__<strong> </font> </td>                \n"
+            + "                    </tr>\n"
+            + "                    <tr>\n"
+            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Latitude :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __latitude__<strong> </font> </td>\n"
+            + "                    <td align=\"left\"><font color=\"#999999\"><strong>  Longitude :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __longitude__<strong> </font> </td>             \n"
+            + "                    </tr>\n"
+            + "	    </table> \n"
+            + "</br></br>\n"
+            + "           <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
+            + "	   <tr>\n"
+            + "            </table>\n"
+            + "	</td> \n"
+            + "</center>\n"
+            + "</body>\n"
+            + "</html>\n";
 }

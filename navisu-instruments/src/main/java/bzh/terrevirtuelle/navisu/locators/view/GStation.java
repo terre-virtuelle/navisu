@@ -7,12 +7,9 @@ import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_4;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.ShapeAttributes;
 
 /**
  * NaVisu

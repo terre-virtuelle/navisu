@@ -1,0 +1,35 @@
+class TStation
+!!!134018.java!!!	TStation(in id : int)
+        this.id = id;
+!!!134146.java!!!	TStation(in id : int, in mmsi : int, in latitude : double, in longitude : double)
+        super(mmsi, latitude, longitude);
+        this.id = id;
+!!!134274.java!!!	TStation(in id : int, in mmsi : int, in latitude : double, in longitude : double, inout date : Calendar)
+        super(mmsi, latitude, longitude, date);
+        this.id = id;
+!!!134402.java!!!	TStation(in id : int, in mmsi : int, in latitude : double, in longitude : double, inout date : Calendar, in epfd : int)
+        super(mmsi, latitude, longitude, date, epfd);
+        this.id = id;
+!!!134530.java!!!	getID() : int
+        return this.id;
+!!!134658.java!!!	getLocation() : Location
+        return Location.factory.newLocation(this.getLatitude(), this.getLongitude());
+!!!134786.java!!!	setLocation(inout location : Location) : void
+        this.setLatitude(location.getLatitudeDegree());
+        this.setLongitude(location.getLongitudeDegree());
+!!!134914.java!!!	getShapeId() : int
+        return shapeId;
+!!!135042.java!!!	getClone() : Object
+        //  TStation clone = new TStation(this.id);
+        //  clone.setLocation(this.getLocation());
+        // TODO à completer 
+        // return clone avec constructeur complet
+        return this;
+!!!135170.java!!!	setGStation(inout gStation : GStation) : void
+        this.gStation = gStation;
+!!!135298.java!!!	getGStation() : GStation
+        return gStation;
+!!!135426.java!!!	getOrientation() : Orientation
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+!!!135682.java!!!	toString() : String
+        return "TStation{" + "id=" + id + ", shapeId=" + shapeId + " " + super.toString() + '}';

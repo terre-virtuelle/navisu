@@ -1,0 +1,39 @@
+class TShip
+!!!132354.java!!!	TShip(in id : int)
+        this.id = id;
+!!!132482.java!!!	TShip(in id : int, in mmsi : int, in latitude : float, in longitude : float)
+        super(mmsi, latitude, longitude);
+        this.id = id;
+!!!132610.java!!!	TShip(in id : int, in mmsi : int, in name : String, in country : String, in width : float, in length : float, in draught : float, in shipType : int, in navigationalStatus : int, in electronicPositionDevice : int, in callSign : String)
+        super(mmsi, name, country, width, length, draught, shipType, navigationalStatus, electronicPositionDevice, callSign);
+        this.id = id;
+!!!132738.java!!!	TShip(in id : int, in mmsi : int, in imo : int, in name : String, in heading : float, in cog : float, in sog : float, in rot : float, in latitude : float, in longitude : float, in width : float, in length : float, in draught : float, in type : int, in navigationalStatus : int, in electronicPositionDevice : int, in callSign : String, inout ETA : Calendar, in destination : String, in country : String)
+        super(mmsi, imo, name, heading, cog, sog, rot, latitude, longitude, width, length, draught, type, navigationalStatus, electronicPositionDevice, callSign, ETA, destination, country);
+        if (sog > 0.1) {
+            shapeId = 0;
+        }
+        this.id = id;
+!!!132866.java!!!	getID() : int
+        return this.id;
+!!!132994.java!!!	getLocation() : Location
+        return Location.factory.newLocation(this.getLatitude(), this.getLongitude());
+!!!133122.java!!!	setLocation(inout location : Location) : void
+        this.setLatitude(location.getLatitudeDegree());
+        this.setLongitude(location.getLongitudeDegree());
+!!!133250.java!!!	getOrientation() : Orientation
+        return Orientation.factory.newOrientation(this.getCog());
+!!!133378.java!!!	setOrientation(inout orientation : Orientation) : void
+        this.setCog((float) orientation.getOrientationDegree());
+!!!133506.java!!!	getShapeId() : int
+        return shapeId;
+!!!133634.java!!!	setShapeId(in shapeId : int) : void
+        this.shapeId = shapeId;
+!!!133762.java!!!	getClone() : Object
+        TShip clone = new TShip(this.id);
+        clone.setLocation(this.getLocation());
+        clone.setOrientation(this.getOrientation());
+        // TODO à completer 
+        // return clone avec constructeur complet
+        return this;
+!!!133890.java!!!	toString() : String
+        return "TShip{" + "id=" + id + ", shapeId=" + shapeId + " "+  super.toString() + '}';
