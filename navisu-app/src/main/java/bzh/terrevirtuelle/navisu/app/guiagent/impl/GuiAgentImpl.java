@@ -196,18 +196,19 @@ public class GuiAgentImpl
     }
 
     private void createDockWidget(Scene scene) {
-        ImageView MOBImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton_1.png")));
+        ImageView MOBImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton_2.png")));
         Group groupDock = new Group();
-        groupDock.getChildren().add(MOBImg);
+        
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
+        groupDock.getChildren().add(MOBImg);
         root.getChildren().add(groupDock);
-        MOBImg.setLayoutX(100.0);
-        MOBImg.setLayoutY(100.0);
+        MOBImg.setLayoutX(1300.0);
+       // MOBImg.setLayoutY(100.0);
         basedock.setLayoutX(200.0);
-        basedock.setLayoutY(150.0);
+        basedock.setLayoutY(100.0);
         dock.setLayoutX(275.0);
-        dock.setLayoutY(90.0);
+        dock.setLayoutY(40.0);
         dock.setOrientation(Orientation.HORIZONTAL);
         /* margins if necessity to adjust position of whole group */
         //StackPane.setMargin(groupdock,(new Insets(0, 0, 0, 0)));
