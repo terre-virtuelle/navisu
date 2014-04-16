@@ -21,6 +21,7 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.EarthFlat;
+import gov.nasa.worldwindx.examples.util.BalloonController;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.HotSpotController;
 import gov.nasa.worldwindx.examples.util.ToolTipController;
@@ -46,7 +47,7 @@ public class GeoWorldWindViewImpl
 
     protected Projection currentProjection = Projection.mercator;
 
-     protected final SwingNode swingNode;
+    protected final SwingNode swingNode;
 
     public GeoWorldWindViewImpl() {
 
@@ -70,12 +71,12 @@ public class GeoWorldWindViewImpl
 
         // Register a select listener to print the class names of the items under the cursor. 
         wwd.getSceneController().setDeepPickEnabled(true);
-        
+
         // Add controllers to manage highlighting and tool tips.
         HotSpotController hotSpotController = new HotSpotController(wwd);
         HighlightController highlightController = new HighlightController(this.wwd, SelectEvent.ROLLOVER);
         ToolTipController toolTipController = new ToolTipController(this.wwd, AVKey.DISPLAY_NAME, null);
-   
+        BalloonController balloonController = new BalloonController(wwd);
     }
 
     protected SwingNode createSwingDisplayNode(WorldWindow wwd) {
