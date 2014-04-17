@@ -33,6 +33,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.ship.ShipType;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
@@ -40,8 +41,10 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.AbstractBrowserBalloon;
 import gov.nasa.worldwind.render.BalloonAttributes;
 import gov.nasa.worldwind.render.BasicBalloonAttributes;
+import gov.nasa.worldwind.render.GlobeAnnotation;
 import gov.nasa.worldwind.render.GlobeBrowserBalloon;
 import gov.nasa.worldwind.render.Size;
+import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -73,6 +76,8 @@ public class AisLocator {
 
     protected GeoWorldWindView geoView;
     String str = BROWSER_BALLOON_CONTENT_PATH;
+    private final static PowerOfTwoPaddedImage IMAGE_EARTH
+            = PowerOfTwoPaddedImage.fromPath("logoTV200.png");
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
     TShip ship;
@@ -114,7 +119,7 @@ public class AisLocator {
         this.baloonLayer = new RenderableLayer();
         wwd.getModel().getLayers().add(baloonLayer);
         attrs = new BasicBalloonAttributes();
-        attrs.setSize(new Size(Size.NATIVE_DIMENSION, 0d, null, Size.NATIVE_DIMENSION, 0d, null));
+        attrs.setSize(Size.fromPixels(650, 300));
 
         wwd.addSelectListener((SelectEvent event) -> {
             if (event.isLeftClick()
@@ -242,6 +247,11 @@ public class AisLocator {
         balloon = new GlobeBrowserBalloon(htmlString, balloonPosition);
 
         balloon.setAttributes(attrs);
+        balloon.getAttributes().setImageSource(IMAGE_EARTH.getPowerOfTwoImage());
+        balloon.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
+     //   balloon.getAttributes().setImageScale(7);
+      //  balloon.getAttributes().setImageOffset(new Point(7, 7));
+
         this.baloonLayer.addRenderable(balloon);
     }
 
@@ -326,9 +336,7 @@ public class AisLocator {
             tmp = tmp.replace("__longitude__", "");
         }
         if (ship.getMmsi() != 0) {
-            tmp = tmp.replace("__longitude__", nf.format(ship.getLongitude()));
-        } else {
-            tmp = tmp.replace("__longitude__", "");
+            tmp = tmp.replace("photo_keywords:", "photo_keywords:" + ship.getMmsi());
         }
         return tmp;
     }
@@ -351,7 +359,7 @@ public class AisLocator {
             + "    <td colspan=\"3\" align=\"left\" valign=\"top\">\n"
             + "                 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
             + "                    <tr> \n"
-            + "                    <td align=\"left\" valign=\"middle\"><img src=\"bzh/terrevirtuelle/navisu/locators/view/logoTV200.png\" alt=\"logo\"/></td>\n"
+            + "                 <!--   <td align=\"left\" valign=\"middle\"><img src=\"logoTV200.png\" alt=\"logo\"/></td>-->\n"
             + "		    <td align=\"right\"><font color=\"#999999\"><strong>  Name :&nbsp; </strong></font></td>\n"
             + "                    <td><font color=\"#000000\" size=\"+2\"strong>__shipname__</strong></font></td>\n"
             + "	            </tr>\n"
@@ -408,9 +416,15 @@ public class AisLocator {
             + "                    </tr>\n"
             + "	    </table> \n"
             + "</br></br>\n"
-            + "           <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
+            + "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
             + "	   <tr>\n"
-            + "            </table>\n"
+            + "<!--	   <td >\n"
+            + "	   <a href=\"http://www.marinetraffic.com/fr/photos/of/ships/photo_keywords:\"><strong>\n"
+            + "				   <font color=\"#CC3333\">Marine Traffic informations</font></strong></a>\n"
+            + "	   </td>\n"
+            + "-->"
+            + " </tr>\n"
+            + " </table>"
             + "	</td> \n"
             + "</center>\n"
             + "</body>\n"
