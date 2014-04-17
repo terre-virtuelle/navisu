@@ -28,7 +28,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -60,18 +59,7 @@ public class DataServerImpl
     private int queueSize;
 
     protected static final Logger LOGGER = Logger.getLogger(DataServerImpl.class.getName());
-    protected static FileHandler fileHandler = null;
-
-    static {
-        try {
-            fileHandler = new FileHandler("sentences.log");
-            fileHandler.setFormatter(new MyFormatter());
-        } catch (IOException | SecurityException ex) {
-            Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        LOGGER.addHandler(fileHandler);
-    }
-
+    
     @Override
     public void componentInitiated() {
         properties = new Properties();
@@ -128,7 +116,7 @@ public class DataServerImpl
         if (serialPortReader != null) {
             serialPortReader.closePort();
         }
-       fileHandler.close();
+      // fileHandler.close();
     }
 
     @Override
