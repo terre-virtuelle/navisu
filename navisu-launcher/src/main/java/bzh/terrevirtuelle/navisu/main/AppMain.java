@@ -21,8 +21,6 @@ import bzh.terrevirtuelle.navisu.locators.impl.Widget3DImpl;
 import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.loggers.impl.LoggerImpl;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.terrain.BathymetryFilterElevationModel;
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -161,7 +159,6 @@ public class AppMain extends Application {
         //
         // END TESTS SERVER
         //------------------------------->
-        
     }
 
     public static void main(String[] args) throws Exception {
