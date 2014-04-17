@@ -203,11 +203,11 @@ public class GuiAgentImpl
         groupDock.getChildren().add(dock);
         groupDock.getChildren().add(MOBImg);
         root.getChildren().add(groupDock);
-        MOBImg.setLayoutX(1300.0);
+        MOBImg.setLayoutX(1550.0);
        // MOBImg.setLayoutY(100.0);
-        basedock.setLayoutX(200.0);
+        basedock.setLayoutX(450.0);
         basedock.setLayoutY(100.0);
-        dock.setLayoutX(275.0);
+        dock.setLayoutX(525.0);
         dock.setLayoutY(40.0);
         dock.setOrientation(Orientation.HORIZONTAL);
         /* margins if necessity to adjust position of whole group */
