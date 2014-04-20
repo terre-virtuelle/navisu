@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.locators.view.StationShape;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
 
 /**
@@ -42,7 +43,7 @@ public class Shape_4
 
     @Override
     public String toString() {
-        return "Shape_0{" + super.toString() + '}';
+        return "Shape_4{" + super.toString() + '}';
     }
   
 }

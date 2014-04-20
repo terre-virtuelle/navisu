@@ -80,7 +80,6 @@ public class Shape3D_0
         return tShip;
     }
 
-    @Override
     public ShapeAttributes getAttributes() {
         return null;
     }

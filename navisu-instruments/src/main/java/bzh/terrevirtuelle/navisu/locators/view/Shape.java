@@ -18,12 +18,12 @@ public interface Shape {
 
     void setLocation(Location location);
 
-    void setRotation(double cog);
+    default void setRotation(double cog) {
+    }
 
     Renderable[] getRenderables();
 
-    ShapeAttributes getAttributes();
-    
     TShip getShip();
 
+    public ShapeAttributes getAttributes();
 }

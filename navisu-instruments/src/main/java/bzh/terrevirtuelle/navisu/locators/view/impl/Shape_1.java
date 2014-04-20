@@ -5,19 +5,15 @@
  */
 package bzh.terrevirtuelle.navisu.locators.view.impl;
 
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.view.Shape;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceCircle;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
 /**

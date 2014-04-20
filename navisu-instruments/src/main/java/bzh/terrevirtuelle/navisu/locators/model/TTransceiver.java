@@ -5,41 +5,40 @@
  */
 package bzh.terrevirtuelle.navisu.locators.model;
 
-import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
-import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.domain.devices.Transceiver;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;
-import bzh.terrevirtuelle.navisu.locators.view.GStation;
+import bzh.terrevirtuelle.navisu.locators.view.GTransceiver;
 import java.util.Calendar;
 
 /**
  *
  * @author Serge
  */
-public class TStation
+public class TTransceiver
         extends Transceiver
         implements TOrientedObject {
 
     protected final int id;
-    private final int shapeId = 4;
-    private GStation gStation;
+    private final int shapeId = 1;
+    private GTransceiver gTransceiver;
 
-    public TStation(int id) {
+    public TTransceiver(int id) {
         this.id = id;
     }
 
-    public TStation(int id, int mmsi, double latitude, double longitude) {
+    public TTransceiver(int id, int mmsi, double latitude, double longitude) {
         super(mmsi, latitude, longitude);
         this.id = id;
     }
 
-    public TStation(int id, int mmsi, double latitude, double longitude, Calendar date) {
+    public TTransceiver(int id, int mmsi, double latitude, double longitude, Calendar date) {
         super(mmsi, latitude, longitude, date);
         this.id = id;
     }
 
-    public TStation(int id, int mmsi, double latitude, double longitude, Calendar date, int epfd) {
+    public TTransceiver(int id, int mmsi, double latitude, double longitude, Calendar date, int epfd) {
         super(mmsi, latitude, longitude, date, epfd);
         this.id = id;
     }
@@ -49,12 +48,12 @@ public class TStation
         return this.id;
     }
 
-    public GStation getGStation() {
-        return gStation;
+    public GTransceiver getGTransceiver() {
+        return gTransceiver;
     }
 
-    public void setGStation(GStation gStation) {
-        this.gStation = gStation;
+    public void setGTransceiver(GTransceiver gTransceiver) {
+        this.gTransceiver = gTransceiver;
     }
 
     @Override
@@ -79,11 +78,12 @@ public class TStation
 
     @Override
     public Orientation getOrientation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override
     public void setOrientation(Orientation orientation) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
 }

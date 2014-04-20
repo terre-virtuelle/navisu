@@ -7,9 +7,10 @@ package bzh.terrevirtuelle.navisu.locators.ais.controller;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
-import bzh.terrevirtuelle.navisu.locators.model.TStation;
+import bzh.terrevirtuelle.navisu.locators.model.TTransceiver;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import gov.nasa.worldwind.avlist.AVKey;
 
 import java.util.logging.Logger;
@@ -46,22 +47,24 @@ public class AisStationLocatorControllerWithDPAgent {
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS4 data = (AIS4) d;
                 String mmsi = "Unknow";
+
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == station.getMmsi()) {
                     station.setLatitude(lat);
                     station.setLongitude(lon);
                     if (update == false) {
-                        station.getGStation().getShape().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_0.png");
+                        station.getGStation().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_0.png");
                         update = true;
+
                     } else {
-                        station.getGStation().getShape().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_1.png");
+                        station.getGStation().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_1.png");
                         update = false;
                     }
                     if (station.getMmsi() != 0) {
                         mmsi = Integer.toString(station.getMmsi());
                     }
-                     station.getGStation().getShape().setValue(AVKey.DISPLAY_NAME,mmsi);
+                    station.getGStation().getShape().setValue(AVKey.DISPLAY_NAME, mmsi);
                     // mise à jour via le DPAgent
                     dpAgentServices.update(station);
                 }

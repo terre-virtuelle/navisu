@@ -6,8 +6,8 @@
 package bzh.terrevirtuelle.navisu.locators.view;
 
 import bzh.terrevirtuelle.navisu.geodesy.Location;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.ShapeAttributes;
 
 /**
  *
@@ -20,5 +20,7 @@ public interface StationShape {
     public void setRotation(double cog);
 
     public Renderable[] getRenderables();
+
+    public PointPlacemarkAttributes getAttributes();
 
 }

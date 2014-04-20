@@ -5,7 +5,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcesso
 import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
+import bzh.terrevirtuelle.navisu.locators.model.TTransceiver;
 import bzh.terrevirtuelle.navisu.locators.view.GStation;
+import bzh.terrevirtuelle.navisu.locators.view.GTransceiver;
 import gov.nasa.worldwind.layers.Layer;
 
 /**
