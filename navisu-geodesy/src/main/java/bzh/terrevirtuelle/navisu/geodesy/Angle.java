@@ -11,10 +11,10 @@ public interface Angle {
    static final double PiOver180 = Math.PI / 180.0;
 
    /**
-    * Convert degrees to radians.
     * @param degrees
-    * @return
+    * @return 
     */
+   
    static public double toRadians(double degrees) {
       return degrees * PiOver180;
    }

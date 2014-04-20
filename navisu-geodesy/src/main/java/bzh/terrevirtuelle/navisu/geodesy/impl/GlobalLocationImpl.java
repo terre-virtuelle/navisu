@@ -4,8 +4,8 @@ import bzh.terrevirtuelle.navisu.geodesy.GlobalLocation;
 
 /**
  *
- * @author Jordan Mens <jordan.mens at gmail.com>
- * @author Thibault Pensec <thibault.pensec at gmail.com>
+ * @author Jordan Mens jordan.mens at gmail.com
+ * @author Thibault Pensec thibault.pensec at gmail.com
  */
 public class GlobalLocationImpl extends LocationImpl implements GlobalLocation {
 

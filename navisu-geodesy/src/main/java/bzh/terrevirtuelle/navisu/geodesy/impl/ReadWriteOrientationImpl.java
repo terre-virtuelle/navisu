@@ -5,8 +5,8 @@ import bzh.terrevirtuelle.navisu.geodesy.ReadWriteOrientation;
 
 /**
  *
- * @author Thibault Pensec <thibault.pensec at gmail.com>
- * @author Jordan Mens <jordan.mens at gmail.com>
+ * @author Thibault Pensec thibault.pensec at gmail.com
+ * @author Jordan Mens jordan.mens at gmail.com
  */
 public class ReadWriteOrientationImpl
         extends OrientationImpl
