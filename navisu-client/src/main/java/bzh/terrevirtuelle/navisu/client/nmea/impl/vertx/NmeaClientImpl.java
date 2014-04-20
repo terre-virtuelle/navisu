@@ -135,7 +135,7 @@ public class NmeaClientImpl
         try {
             notifyNMEAEvent();
         } catch (Exception e) {
-            System.out.println("e " + e);
+            
         }
         // display();
     }
@@ -157,7 +157,7 @@ public class NmeaClientImpl
                 eventProducer.notifyNMEAEvent(n);
             });
         } catch (ConcurrentModificationException e) {
-           // Noting todo
+           //System.out.println("NmeaClientImpl " + e);
         }
     }
 
