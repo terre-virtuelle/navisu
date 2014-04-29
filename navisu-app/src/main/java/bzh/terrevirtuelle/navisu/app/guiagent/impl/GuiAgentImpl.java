@@ -170,7 +170,8 @@ public class GuiAgentImpl
         stage.show();
     }
 
-    private void createRadialWidget() {
+    
+    /*private void createRadialWidget() {
 
         //TODO Refactor All of this code
         ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-in.png")));
@@ -191,6 +192,37 @@ public class GuiAgentImpl
 
         root.getChildren().add(radialMenu);
         StackPane.setAlignment(radialMenu, Pos.TOP_RIGHT);
+
+        radialMenu.show(this.width, -5);
+    }*/
+    private void createRadialWidget() {
+
+        //TODO Refactor All of this code
+        ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-in.png")));
+        ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-out.png")));
+        ImageView GPSComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSComPane.png")));
+        ImageView GPSprecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSprecision.png")));
+        ImageView GPSlocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSlocation.png")));
+        RadialMenuRootItem rootItem = new RadialMenuRootItem();
+
+        RadialMenuItem zoomInItem = new RadialMenuItem(zoomInImg);
+        RadialMenuItem zoomOutItem = new RadialMenuItem(zoomOutImg);
+        RadialMenuItem test1Item = new RadialMenuItem(GPSComImg);
+        RadialMenuItem test2Item = new RadialMenuItem(GPSprecImg);
+        RadialMenuItem test3Item = new RadialMenuItem(GPSlocImg);
+
+        rootItem.addItem(zoomInItem);
+        rootItem.addItem(zoomOutItem);
+        rootItem.addItem(test1Item);
+        rootItem.addItem(test2Item);
+        rootItem.addItem(test3Item);
+
+        RadialMenu radialMenu = new RadialMenu(rootItem);
+        radialMenu.setFullMenuAnge(360);  //FIXME setFullMenuAnge -> setFullMenuAngle
+        radialMenu.setStartRotationAngle(180);
+
+        root.getChildren().add(radialMenu);
+        StackPane.setAlignment(radialMenu, Pos.CENTER);
 
         radialMenu.show(this.width, -5);
     }
