@@ -63,18 +63,20 @@ public class DockItemImageImpl implements DockItem {
         this.nameText.setFill(Color.WHITESMOKE);
         this.nameText.setStroke(Color.BLACK);
         this.nameText.setStrokeWidth(0.2);
-        this.nameText.setTranslateX(-10);
-        this.nameText.setTranslateY(-60);
+        this.nameText.setTranslateX(-5);
+        this.nameText.setTranslateY(0);
         this.nameText.setOpacity(0);
+        this.nameText.setMouseTransparent(true);
         this.nameText.snapshot(null, null);
 
         // init. name text background
         this.nameTextBack = new Rectangle(this.nameText.getLayoutBounds().getWidth() + 10, 20, Color.BLACK);
         this.nameTextBack.setOpacity(0);
-        this.nameTextBack.setTranslateX(-10);
-        this.nameTextBack.setTranslateY(-60);
+        this.nameTextBack.setTranslateX(-5);
+        this.nameTextBack.setTranslateY(0);
         this.nameTextBack.setArcHeight(15);
         this.nameTextBack.setArcWidth(15);
+        this.nameTextBack.setMouseTransparent(true);
 
         this.nameAnimation = new ParallelTransition(
                 AnimationFactory.newFadeAnimation(this.nameText, 300, 0, 1),
