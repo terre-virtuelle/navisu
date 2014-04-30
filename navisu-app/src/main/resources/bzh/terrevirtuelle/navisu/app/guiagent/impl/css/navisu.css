@@ -29,3 +29,8 @@
 #radialitem {
     -fx-fill: linear-gradient(-fx-light-gradient, -fx-base);
 }
+#separator {
+    -fx-fill: #120D43;
+    -fx-stroke: #120D43;
+    -fx-stroke-width: 2;
+}
