@@ -203,6 +203,7 @@ public class GuiAgentImpl
         ImageView GPSComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSComPane.png")));
         ImageView GPSprecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSprecision.png")));
         ImageView GPSlocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSlocation.png")));
+        ImageView CenterImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/Instruments150.png")));
         RadialMenuRootItem rootItem = new RadialMenuRootItem();
 
         RadialMenuItem zoomInItem = new RadialMenuItem(zoomInImg);
@@ -220,22 +221,25 @@ public class GuiAgentImpl
         RadialMenu radialMenu = new RadialMenu(rootItem);
         radialMenu.setFullMenuAnge(360);  //FIXME setFullMenuAnge -> setFullMenuAngle
         radialMenu.setStartRotationAngle(180);
-
+        
+        root.getChildren().add(CenterImg);
+        StackPane.setAlignment(CenterImg, Pos.CENTER);
+        
         root.getChildren().add(radialMenu);
         StackPane.setAlignment(radialMenu, Pos.CENTER);
-
+        
         radialMenu.show(this.width, -5);
     }
 
     private void createDockWidget(Scene scene) {
-        ImageView MOBImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton_2.png")));
+        ImageView MOBImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton3.png")));
         Group groupDock = new Group();
         
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         groupDock.getChildren().add(MOBImg);
         root.getChildren().add(groupDock);
-        MOBImg.setLayoutX(1550.0);
+        MOBImg.setLayoutX(1560.0);
        // MOBImg.setLayoutY(100.0);
         basedock.setLayoutX(450.0);
         basedock.setLayoutY(100.0);
