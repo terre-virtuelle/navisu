@@ -1,10 +1,10 @@
-window_sizes 1280 962 355 919 682 82
+window_sizes 1280 962 406 868 682 82
 diagrams
   active  classdiagram_ref 128002 // Locators
     919 804 100 4 0 0
 end
 show_stereotypes
-selected class_ref 130178 // GpsLocatorControllerWithDPAgent
+selected class_ref 129154 // TShip
 open
   classview_ref 128258 // ais
   classview_ref 128386 // controller

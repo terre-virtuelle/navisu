@@ -23,7 +23,6 @@ import bzh.terrevirtuelle.navisu.locators.ais.view.AisLayer;
 import bzh.terrevirtuelle.navisu.locators.controller.StationProcessor;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.controller.ShipProcessor;
-import bzh.terrevirtuelle.navisu.locators.model.TTransceiver;
 import bzh.terrevirtuelle.navisu.locators.view.Shape;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
@@ -111,11 +110,12 @@ public class AisLocator {
 
         //      pane = guiAgentServices.getRoot();
         this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
+        aisLayer.setName("AIS Layer");
         geoViewServices.getLayerManager().insertGeoLayer(this.aisLayer);
 
         this.aisStationLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
+        aisStationLayer.setName("AIS Station Layer");
         geoViewServices.getLayerManager().insertGeoLayer(this.aisStationLayer);
-
         this.baloonLayer = new RenderableLayer();
         wwd.getModel().getLayers().add(baloonLayer);
         attrs = new BasicBalloonAttributes();

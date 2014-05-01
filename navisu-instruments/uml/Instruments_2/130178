@@ -1,6 +1,6 @@
 format 76
 "controller" // bzh::terrevirtuelle::navisu::loggers::controller
-  revision 1
+  revision 2
   modified_by 2 "Serge"
   // class settings
   //class diagram settings
@@ -46,7 +46,9 @@ format 76
     show_infonote default drawing_language default show_stereotype_properties default
     class 132994 "LoggerController"
       visibility public 
-      nformals 1
+      nformals 2
+      formal name "T" type "" explicit_default_value ""
+        explicit_extends ""
       formal name "T" type "" explicit_default_value ""
         explicit_extends ""
       cpp_decl ""

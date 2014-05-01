@@ -1,6 +1,6 @@
 format 76
 "unknown" // unknown
-  revision 1
+  revision 2
   modified_by 2 "Serge"
   // class settings
   //class diagram settings
@@ -187,6 +187,19 @@ ${members}}
     end
 
     class 132610 "PointPlacemark"
+      visibility package 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+    end
+
+    class 139906 "Transceiver"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {

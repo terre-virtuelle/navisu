@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.domain.devices.Transceiver;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;
-import bzh.terrevirtuelle.navisu.locators.view.GTransceiver;
+import bzh.terrevirtuelle.navisu.locators.view.GShip;
 import java.util.Calendar;
 
 /**
@@ -22,7 +22,7 @@ public class TTransceiver
 
     protected final int id;
     private final int shapeId = 1;
-    private GTransceiver gTransceiver;
+    private GShip gShip;
 
     public TTransceiver(int id) {
         this.id = id;
@@ -46,14 +46,6 @@ public class TTransceiver
     @Override
     public int getID() {
         return this.id;
-    }
-
-    public GTransceiver getGTransceiver() {
-        return gTransceiver;
-    }
-
-    public void setGTransceiver(GTransceiver gTransceiver) {
-        this.gTransceiver = gTransceiver;
     }
 
     @Override
@@ -83,6 +75,14 @@ public class TTransceiver
 
     @Override
     public void setOrientation(Orientation orientation) {
+    }
+
+    public GShip getgShip() {
+        return gShip;
+    }
+
+    public void setgShip(GShip gShip) {
+        this.gShip = gShip;
     }
 
    
