@@ -100,6 +100,6 @@ public class LayerCheckTreeImpl implements LayerTree, LayerTreeServices, Compone
 
     @Override
     public Display<Node> getDisplayService() {
-        return Display.factory.newDisplayNode(treeView);
+       return Display.factory.newDisplayNode(treeView);
     }
 }

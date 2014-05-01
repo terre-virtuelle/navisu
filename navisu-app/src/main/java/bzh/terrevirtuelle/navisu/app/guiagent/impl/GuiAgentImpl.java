@@ -53,7 +53,6 @@ import javafx.geometry.Insets;
  * @author tibus
  * @date 02/11/2013 11:54
  */
-
 public class GuiAgentImpl
         implements GuiAgent, GuiAgentServices {
 
@@ -91,10 +90,9 @@ public class GuiAgentImpl
     static GuiAgentController ctrl = null;
     final ImageView basedock
             = new ImageView(ICON_PATH + "dock.png");
-    final Dock dock = new Dock(ICONS);
-    final Dock dock0 = new Dock(ICONS0);
+    static boolean firstInstruments = true;
 
-    public static final DockItem[] ICONS = new DockItem[]{
+    public final DockItem[] ICONS = new DockItem[]{
         //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
         DockItemFactory.newImageItem("config", ICON_PATH + "config.png", (e) -> System.out.println("Config")),
         DockItemFactory.newImageItem("tools", ICON_PATH + "tools.png", (e) -> System.out.println("tools")),
@@ -102,7 +100,7 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Tides", ICON_PATH + "tides.png", (e) -> System.out.println("Tides & streams")),
         DockItemFactory.newImageItem("Meteo", ICON_PATH + "meteo.png", (e) -> System.out.println("Meteo")),
         DockItemFactory.newImageItem("", ICON_PATH + "flou.png", (e) -> System.out.println("A venir 0")),
-        DockItemFactory.newImageItem("Sounder", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder")),
+        DockItemFactory.newImageItem("Sounder", ICON_PATH + "sounder.png", (e) -> showInstruments()),
         DockItemFactory.newImageItem("", ICON_PATH + "vide.png", (e) -> System.out.println("A venir 1")),
         DockItemFactory.newImageItem("Book", ICON_PATH + "book.png", (e) -> System.out.println("Diary")),
         DockItemFactory.newImageItem("Guide", ICON_PATH + "guide.png", (e) -> System.out.println("Guide")),
@@ -115,8 +113,9 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> System.out.println("GPS")),
         DockItemFactory.newImageItem("Compass", ICON_PATH + "compassvertical.png", (e) -> System.out.println("Compass")),
         DockItemFactory.newImageItem("Sounder", ICON_PATH + "soundervertical.png", (e) -> System.out.println("Sounder")),
-        DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),
-    };
+        DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
+    final Dock dock = new Dock(ICONS);
+    final Dock dock0 = new Dock(ICONS0);
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -164,10 +163,21 @@ public class GuiAgentImpl
             System.exit(0);
         });
 
-       // setFullScreen(true);
+        // setFullScreen(true);
         stage.setScene(scene);
-      //stage.setMaximized(true);
+        //stage.setMaximized(true);
         stage.show();
+    }
+
+    private void showInstruments() {
+        if (firstInstruments == true) {
+            root.getChildren().add(dock0);
+            dock0.setOrientation(Orientation.VERTICAL);
+
+            StackPane.setMargin(dock0, (new Insets(150, 10, 0, 0)));
+            StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
+            firstInstruments = false;
+        }
     }
 
     private void createRadialWidget() {
@@ -175,7 +185,6 @@ public class GuiAgentImpl
         //TODO Refactor All of this code
         ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-in.png")));
         ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("zoom-out.png")));
-        
 
         RadialMenuRootItem rootItem = new RadialMenuRootItem();
 
@@ -198,13 +207,13 @@ public class GuiAgentImpl
     private void createDockWidget(Scene scene) {
         ImageView MOBImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton_2.png")));
         Group groupDock = new Group();
-        
+
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         groupDock.getChildren().add(MOBImg);
         root.getChildren().add(groupDock);
         MOBImg.setLayoutX(1550.0);
-       // MOBImg.setLayoutY(100.0);
+        // MOBImg.setLayoutY(100.0);
         basedock.setLayoutX(450.0);
         basedock.setLayoutY(100.0);
         dock.setLayoutX(525.0);
@@ -223,12 +232,13 @@ public class GuiAgentImpl
                 upAnimation.play();
             }
         });
-        root.getChildren().add(dock0);
-        dock0.setOrientation(Orientation.VERTICAL);
-       /* adding margins for vertical dock */
-        StackPane.setMargin(dock0,(new Insets(150, 10, 0, 0)));
-        StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
-
+        /*
+         root.getChildren().add(dock0);
+         dock0.setOrientation(Orientation.VERTICAL);
+   
+         StackPane.setMargin(dock0, (new Insets(150, 10, 0, 0)));
+         StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
+         */
     }
 
     private void loadCss(Scene scene) {
