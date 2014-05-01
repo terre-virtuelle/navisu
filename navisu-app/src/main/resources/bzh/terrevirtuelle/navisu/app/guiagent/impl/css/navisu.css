@@ -1,5 +1,6 @@
 * {
     -fx-base: black;
+    -fx-light-gradient: white;
     -fx-background: -fx-base;
     -fx-control-inner-background: -fx-base;
     -fx-control-inner-background-alt: -fx-base;
@@ -26,5 +27,7 @@
 }
 
 #radialitem {
-    -fx-fill: linear-gradient(-fx-pressed-base, -fx-base);
+    -fx-fill: linear-gradient(-fx-light-gradient, -fx-base);
+    -fx-stroke: #120D43;
+    -fx-stroke-width: 2;
 }
