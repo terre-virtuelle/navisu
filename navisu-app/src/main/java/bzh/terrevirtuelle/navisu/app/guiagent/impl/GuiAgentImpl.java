@@ -88,10 +88,12 @@ public class GuiAgentImpl
     protected Stage stage;
     protected StackPane root;
     static GuiAgentController ctrl = null;
-    final ImageView basedock
+    protected final ImageView basedock
             = new ImageView(ICON_PATH + "dock.png");
-    static boolean firstInstruments = true;
-
+    boolean firstInstruments = true;
+    protected RadialMenu gpsRadialMenu;
+    boolean firstGpsRadialMenu = false;
+    protected ImageView centerImg;
     public final DockItem[] ICONS = new DockItem[]{
         //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
         DockItemFactory.newImageItem("Config", ICON_PATH + "config.png", (e) -> System.out.println("Config")),
@@ -100,17 +102,18 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Tides", ICON_PATH + "tides.png", (e) -> System.out.println("Tides & streams")),
         DockItemFactory.newImageItem("Meteo", ICON_PATH + "meteo.png", (e) -> System.out.println("Meteo")),
         DockItemFactory.newImageItem("Simulations", ICON_PATH + "flou.png", (e) -> System.out.println("A venir 0")),
-        DockItemFactory.newImageItem("Instruments", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder")),
+        //  DockItemFactory.newImageItem("Instruments", ICON_PATH + "sounder.png", (e) -> System.out.println("Sounder")),
+        DockItemFactory.newImageItem("Instruments", ICON_PATH + "sounder.png", (e) -> showInstruments()),
         DockItemFactory.newImageItem("Engine", ICON_PATH + "vide.png", (e) -> System.out.println("A venir 1")),
         DockItemFactory.newImageItem("Logbook", ICON_PATH + "book.png", (e) -> System.out.println("Diary")),
         DockItemFactory.newImageItem("Maintenance", ICON_PATH + "guide.png", (e) -> System.out.println("Guide")),
         DockItemFactory.newImageItem("Whitebook", ICON_PATH + "whitebook.png", (e) -> System.out.println("White Book")),};
-    public static final DockItem[] ICONS0 = new DockItem[]{
+    public final DockItem[] ICONS0 = new DockItem[]{
         /* Invisible icons just for testing margins */
         //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
         //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
         DockItemFactory.newImageItem("AIS", ICON_PATH + "AISvertical.png", (e) -> System.out.println("AIS")),
-        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> System.out.println("GPS")),
+        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> showGPSMenu()),
         DockItemFactory.newImageItem("Compass", ICON_PATH + "compassvertical.png", (e) -> System.out.println("Compass")),
         DockItemFactory.newImageItem("Sounder", ICON_PATH + "soundervertical.png", (e) -> System.out.println("Sounder")),
         DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
@@ -180,26 +183,66 @@ public class GuiAgentImpl
         }
     }
 
+    private void showGPSMenu() {
+        firstGpsRadialMenu = firstGpsRadialMenu != true;
+        gpsRadialMenu.setVisible(firstGpsRadialMenu);
+        centerImg.setVisible(firstGpsRadialMenu);
+    }
     //------------------ Option top right corner
     /*
+     private void createRadialWidget() {
+        
+        
+     //TODO Refactor All of this code
+     ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-in.png")));
+     ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-out.png")));
+     ImageView GPSComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSComPane.png")));
+     ImageView GPSprecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSprecision.png")));
+     ImageView GPSlocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSlocation.png")));
+        
+
+     RadialMenuRootItem rootItem = new RadialMenuRootItem();
+
+     RadialMenuItem zoomInItem = new RadialMenuItem(zoomInImg);
+     RadialMenuItem zoomOutItem = new RadialMenuItem(zoomOutImg);
+     RadialMenuItem test1Item = new RadialMenuItem(GPSComImg);
+     RadialMenuItem test2Item = new RadialMenuItem(GPSprecImg);
+     RadialMenuItem test3Item = new RadialMenuItem(GPSlocImg);
+
+     rootItem.addItem(zoomInItem);
+     rootItem.addItem(zoomOutItem);
+     rootItem.addItem(test1Item);
+     rootItem.addItem(test2Item);
+     rootItem.addItem(test3Item);
+
+     RadialMenu radialMenu = new RadialMenu(rootItem);
+     radialMenu.setFullMenuAnge(90);  //FIXME setFullMenuAnge -> setFullMenuAngle
+     radialMenu.setStartRotationAngle(180);
+
+     root.getChildren().add(radialMenu);
+     StackPane.setAlignment(radialMenu, Pos.TOP_RIGHT);
+
+     radialMenu.show(this.width, -5);
+     }
+     */
+
+    //------------------ Option center 
     private void createRadialWidget() {
-        
-        
+
         //TODO Refactor All of this code
         ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-in.png")));
         ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-out.png")));
-        ImageView GPSComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSComPane.png")));
-        ImageView GPSprecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSprecision.png")));
-        ImageView GPSlocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSlocation.png")));
-        
-
+        ImageView gpsComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSComPane.png")));
+        ImageView gpsPrecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSprecision.png")));
+        ImageView gpslocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSlocation.png")));
+        centerImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/Instruments150.png")));
         RadialMenuRootItem rootItem = new RadialMenuRootItem();
 
         RadialMenuItem zoomInItem = new RadialMenuItem(zoomInImg);
         RadialMenuItem zoomOutItem = new RadialMenuItem(zoomOutImg);
-        RadialMenuItem test1Item = new RadialMenuItem(GPSComImg);
-        RadialMenuItem test2Item = new RadialMenuItem(GPSprecImg);
-        RadialMenuItem test3Item = new RadialMenuItem(GPSlocImg);
+        RadialMenuItem test1Item = new RadialMenuItem(gpsComImg);
+        RadialMenuItem test2Item = new RadialMenuItem(gpsPrecImg);
+        RadialMenuItem test3Item = new RadialMenuItem(gpslocImg);
 
         rootItem.addItem(zoomInItem);
         rootItem.addItem(zoomOutItem);
@@ -207,63 +250,29 @@ public class GuiAgentImpl
         rootItem.addItem(test2Item);
         rootItem.addItem(test3Item);
 
-        RadialMenu radialMenu = new RadialMenu(rootItem);
-        radialMenu.setFullMenuAnge(90);  //FIXME setFullMenuAnge -> setFullMenuAngle
-        radialMenu.setStartRotationAngle(180);
+        gpsRadialMenu = new RadialMenu(rootItem);
+        gpsRadialMenu.setFullMenuAnge(360);  //FIXME setFullMenuAnge -> setFullMenuAngle
+        gpsRadialMenu.setStartRotationAngle(180);
 
-        root.getChildren().add(radialMenu);
-        StackPane.setAlignment(radialMenu, Pos.TOP_RIGHT);
-
-        radialMenu.show(this.width, -5);
-    }
-    */
-   //------------------ Option center 
-    private void createRadialWidget() {
-
-        //TODO Refactor All of this code
-        ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-in.png")));
-        ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-out.png")));
-        ImageView GPSComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSComPane.png")));
-        ImageView GPSprecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSprecision.png")));
-        ImageView GPSlocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSlocation.png")));
-        ImageView CenterImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/Instruments150.png")));
-        RadialMenuRootItem rootItem = new RadialMenuRootItem();
-
-        RadialMenuItem zoomInItem = new RadialMenuItem(zoomInImg);
-        RadialMenuItem zoomOutItem = new RadialMenuItem(zoomOutImg);
-        RadialMenuItem test1Item = new RadialMenuItem(GPSComImg);
-        RadialMenuItem test2Item = new RadialMenuItem(GPSprecImg);
-        RadialMenuItem test3Item = new RadialMenuItem(GPSlocImg);
-
-        rootItem.addItem(zoomInItem);
-        rootItem.addItem(zoomOutItem);
-        rootItem.addItem(test1Item);
-        rootItem.addItem(test2Item);
-        rootItem.addItem(test3Item);
-
-        RadialMenu radialMenu = new RadialMenu(rootItem);
-        radialMenu.setFullMenuAnge(360);  //FIXME setFullMenuAnge -> setFullMenuAngle
-        radialMenu.setStartRotationAngle(180);
-        
-        root.getChildren().add(CenterImg);
-        StackPane.setAlignment(CenterImg, Pos.CENTER);
-        
-        root.getChildren().add(radialMenu);
-        StackPane.setAlignment(radialMenu, Pos.CENTER);
-        
-        radialMenu.show(this.width, -5);
+        root.getChildren().add(centerImg);
+        StackPane.setAlignment(centerImg, Pos.CENTER);
+        centerImg.setVisible(false);
+        root.getChildren().add(gpsRadialMenu);
+        StackPane.setAlignment(gpsRadialMenu, Pos.CENTER);
+        gpsRadialMenu.setVisible(false);
+        gpsRadialMenu.show(this.width, -5);
     }
 
     private void createDockWidget(Scene scene) {
-        ImageView MOBImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton3.png")));
+        ImageView mobImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton3.png")));
         Group groupDock = new Group();
 
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
-        groupDock.getChildren().add(MOBImg);
+        groupDock.getChildren().add(mobImg);
         root.getChildren().add(groupDock);
-        MOBImg.setLayoutX(1560.0);
-       // MOBImg.setLayoutY(100.0);
+        mobImg.setLayoutX(1560.0);
+        // MOBImg.setLayoutY(100.0);
         basedock.setLayoutX(450.0);
         basedock.setLayoutY(100.0);
         dock.setLayoutX(525.0);
