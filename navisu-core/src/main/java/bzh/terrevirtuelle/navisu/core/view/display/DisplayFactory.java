@@ -13,7 +13,7 @@ public interface DisplayFactory {
 
     public static final DisplayFactory impl = new DisplayFactoryImpl();
 
-    Display<Node> newDisplayNode(final Node node);
+    public Display<Node> newDisplayNode(final Node node);
 
     static class DisplayFactoryImpl implements DisplayFactory {
 
