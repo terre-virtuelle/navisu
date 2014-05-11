@@ -1,0 +1,10 @@
+// $ANTLR 2.7.5 (20050128): S57.g -> S57ParserTokenTypes.txt$
+S57Parser    // output token vocab name
+FIELD=4
+INT=5
+SEP=6
+SPACE=7
+D=8
+ZDATA=9
+ALPHA=10
+DATA=11
