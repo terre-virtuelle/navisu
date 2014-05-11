@@ -38,13 +38,13 @@ public class DataSetGeographicReference extends S57Object {
 
     public DataSetGeographicReference decodDSPM(byte[] fieldValue) {
         try {
-            //COMF: Octets de 16 à 19
+            //COMF: Octets de 16 a 19
             comf = (fieldValue[19] & 0xFF);
             comf = comf * 256 + (fieldValue[18] & 0xFF);
             comf = comf * 256 + (fieldValue[17] & 0xFF);
             comf = comf * 256 + (fieldValue[16] & 0xFF);
 
-            //SOMF: Octets de 20 à 23
+            //SOMF: Octets de 20 a 23
             somf = (fieldValue[23] & 0xFF);
             somf = somf * 256 + (fieldValue[22] & 0xFF);
             somf = somf * 256 + (fieldValue[21] & 0xFF);

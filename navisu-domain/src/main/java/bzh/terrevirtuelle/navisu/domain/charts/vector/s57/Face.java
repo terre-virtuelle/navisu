@@ -8,13 +8,13 @@ import java.util.Iterator;
 public class Face extends VectorRecord {
 
     /**
-     * Enregistrements spatiaux associés à l'objet repérés par leurs
+     * Enregistrements spatiaux associes a l'objet reperes par leurs
      * identifiants
      */
     protected HashMap<Long, VectorUsage> spatialRecordById = new HashMap<>();
 
     /**
-     * Enregistrements spatiaux associés à l'objet
+     * Enregistrements spatiaux associes a l'objet
      */
     protected HashMap<Spatial, VectorUsage> spatialRecord = new HashMap<>();
 

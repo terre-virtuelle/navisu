@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 
 /**
- * Récupération des objets de données
+ * Recuperation des objets de donnees
  *
  * @author PFE
  */
@@ -28,30 +28,30 @@ public class Feature
         this.feature = true;
     }
     /**
-     * Table des méthodes de l'objet en cours
+     * Table des mï¿½thodes de l'objet en cours
      */
     protected HashMap<String, Method> methods;
 
     /**
-     * Primitive géométrique de l'objet (1->Point, 2->Ligne, 3->Aire 255->Rien)
+     * Primitive geometrique de l'objet (1->Point, 2->Ligne, 3->Aire 255->Rien)
      */
     protected int prim;
 
     /**
-     * Enregistrements spatiaux associés à l'objet repérés par leurs
+     * Enregistrements spatiaux associes a l'objet reperes par leurs
      * identifiants
      */
     protected HashMap<Long, VectorUsage> spatialRecordById;
 
     /**
-     * Enregistrements spatiaux associés à l'objet
+     * Enregistrements spatiaux associes a l'objet
      */
     protected HashMap<Spatial, VectorUsage> spatialRecord;
 
     protected int innerBoundaryIndex = 0;
 
     /**
-     * Retourne l'indice de la première frontière intérieure
+     * Retourne l'indice de la premiere frontiere interieure
      *
      * @return
      */
@@ -60,7 +60,7 @@ public class Feature
     }
 
     /**
-     * Récupère les données pertinentes à partir des champs de l'objet
+     * Recupere les donnees pertinentes a partir des champs de l'objet
      *
      * @return
      */
@@ -114,7 +114,7 @@ public class Feature
     }
 
     /**
-     * Récupère les données du champ des attributs de l'objet de donnée
+     * Recupere les donnees du champ des attributs de l'objet de donnee
      *
      * @param fieldValue Le tableau d'octets contenus dans le champ
      */
@@ -136,46 +136,46 @@ public class Feature
     }
 
     /**
-     * Non traité actuellement
+     * Non traite actuellement
      * @param fieldValue
      */
     protected void decodNATF(byte[] fieldValue) {
     }
 
     /**
-     * Non traité actuellement
+     * Non traite actuellement
      * @param fieldValue
      */
     /*
-     * TODO Récupère les données du champs de contrôle des champs de pointeurs
-     * sur objets de données (pour mise à jour)
+     * TODO Recupere les donnees du champs de contrele des champs de pointeurs
+     * sur objets de donnees (pour mise a jour)
      */
     protected void decodFFPC(byte[] fieldValue) {
     }
 
     /**
-     * Non traité actuellement
+     * Non traite actuellement
      */
     /*
-     * TODO Récupère les données des champs de pointeurs sur objets de données 
+     * TODO Recupere les donnees des champs de pointeurs sur objets de donnees 
      */
     protected void decodFFPT(byte[] fieldValue) {
     }
 
     /**
-     * Non traité actuellement
+     * Non traite actuellement
      *
      * @param fieldValue
      */
     /*
-     * TODO Récupère les données du champs de contrôle des champs de pointeurs
-     *  sur objets spatiaux (pour mise à jour)
+     * TODO Recupere les donnees du champs de controle des champs de pointeurs
+     *  sur objets spatiaux (pour mise a jour)
      */
     protected void decodFSPC(byte[] fieldValue) {
     }
 
     /**
-     * Récupère les données des champs de pointeurs sur objets spatiaux
+     * Recupere les donnees des champs de pointeurs sur objets spatiaux
      *
      * @param fieldValue
      */
@@ -196,15 +196,15 @@ public class Feature
     }
 
     /**
-     * Non traité actuellement
+     * Non traite actuellement
      * @param fieldValue
      */
     protected void decodFOID(byte[] fieldValue) {
     }
 
     /**
-     * Récupère les données du champ d'identification de l'objet et instancie un
-     * objet de donnée correspondant
+     * Recupere les donnees du champ d'identification de l'objet et instancie un
+     * objet de donnee correspondant
      *
      * @param fieldValue Le tableau d'octets contenus dans le champ
      * @return le nouvel objet
@@ -223,12 +223,12 @@ public class Feature
         try {
             String objName = DataSet.getObjectsValue(objectCode);
 
-            //Objet non traité
+            //Objet non traite
             if (objName == null) {
                 return null;
             }
 
-            Class classObject = Class.forName("bzh.terrevirtuelle.charts.vector.s57.geo." + objName);
+            Class classObject = Class.forName("bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo." + objName);
             // System.out.println("\nClasse: " + classObject.getSimpleName());
 
             Feature obj = (Feature) classObject
@@ -239,7 +239,7 @@ public class Feature
             //  System.out.println("obj : " + obj);
             return obj;
         } catch (ClassNotFoundException e) {
-            //objet non trouvé
+            //objet non trouve
             System.err.println("Feature" + e);
             return null;
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -250,7 +250,7 @@ public class Feature
     }
 
     /**
-     * Enregistre l'attribut dans les propriétés de l'objet en cours
+     * Enregistre l'attribut dans les proprietes de l'objet en cours
      *
      * @param code Le code de l'attribut
      * @param value La valeur de l'attribut
@@ -290,7 +290,7 @@ public class Feature
     }
 
     /**
-     * Récupère les accesseurs de l'objet en cours
+     * Recupere les accesseurs de l'objet en cours
      */
     protected void fillMethods() {
         Method[] m = this.getClass().getMethods();

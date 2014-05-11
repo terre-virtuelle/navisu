@@ -1,10 +1,8 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.app;
 
 /*
- * Créé le 21 sept. 2005
- * Classe principale de l'application HandiNav
- * Voir README à la racine du document
- * Cyril Avonde, Loïc HERVE
+ * Cree le 21 sept. 2005
+ * Cyril Avonde, Loic HERVE, Serge Morvan
  * CERV 2006
  */
 import antlr.RecognitionException;
@@ -30,7 +28,7 @@ import java.util.logging.Logger;
 
 /**
  * Application NaVisu<br>
- * Récupération des données de cartes marines S57<br>
+ * Recuperation des donnees de cartes marines S57<br>
  * Affichage texte des cartes marines
  *
  * @author Serge MORVAN
@@ -52,7 +50,7 @@ public class Main {
         /* Results */
         System.out.println("File " + CHART_NAME + " loaded");
         System.out.println("Nombre d'objets spatiaux:" + DataSet.getSpatialObjects().size());
-        System.out.println("Nombre d'objets de données:" + DataSet.getFeatureObjects().size());
+        System.out.println("Nombre d'objets de donnï¿½es:" + DataSet.getFeatureObjects().size());
         setBounds();
         /* 
          DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
@@ -195,7 +193,7 @@ public class Main {
     }
 
     /**
-     * Détermine les limites de la carte. Les enregistre sous la forme des
+     * Determine les limites de la carte. Les enregistre sous la forme des
      * limites de cadre SVG
      */
     public final void setBounds() {

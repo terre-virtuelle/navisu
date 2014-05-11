@@ -8,12 +8,12 @@ import java.util.Iterator;
 public class IsolatedNode extends Node {
 
     /**
-     * Enregistrements spatiaux associés à l'objet repérés par leurs
+     * Enregistrements spatiaux associes a l'objet reperes par leurs
      * identifiants
      */
     protected HashMap<Long, VectorUsage> spatialRecordById;
     /**
-     * Enregistrements spatiaux associés à l'objet
+     * Enregistrements spatiaux associes a l'objet
      */
     protected HashMap<Spatial, VectorUsage> spatialRecord;
 
@@ -33,7 +33,7 @@ public class IsolatedNode extends Node {
     }
 
     /**
-     * Récupère les noeuds de début et de fin, les faces de droite et de gauche
+     * Recupere les noeuds de debut et de fin, les faces de droite et de gauche
      */
     @Override
     public void decodVRPT(byte[] fieldValue) {

@@ -26,20 +26,20 @@ import java.util.logging.Logger;
 public class DataSet {
 
     /**
-     * Table des enregistrements de données indéxés par leur identifiant
+     * Table des enregistrements de donnees indexes par leur identifiant
      */
     private static HashMap<Long, Feature> featureObjects = new HashMap<>();
     /**
-     * Table des enregistrements spatiaux indéxés par leur identifiant
+     * Table des enregistrements spatiaux indexes par leur identifiant
      */
     private static HashMap<Long, Spatial> spatialObjects = new HashMap<>();
     ;
     /**
-     * Table associant le code de l'attribut à son nom
+     * Table associant le code de l'attribut a son nom
      */
     private static final HashMap attributes = new HashMap();
     /**
-     * Table associant le code d'un objet S57 à son nom
+     * Table associant le code d'un objet S57 a son nom
      */
     private static final HashMap objects = new HashMap();
     /**
@@ -47,7 +47,7 @@ public class DataSet {
      */
     private static HashSet<Feature> _features;
     /**
-     * Objet contenant des informations sur la carte traitée
+     * Objet contenant des informations sur la carte traitï¿½e
      */
     private static DataSetGeographicReference _dataSet;
 
@@ -84,10 +84,10 @@ public class DataSet {
     }
 
     /**
-     * Enregistre l'objet de donnée associé à son identifiant
+     * Enregistre l'objet de donnee associe a son identifiant
      *
      * @param key l'identifiant
-     * @param value l'objet de donnée
+     * @param value l'objet de donnee
      */
     public static void putFeatureObject(Long key, Feature value) {
         featureObjects.put(key, value);
@@ -95,7 +95,7 @@ public class DataSet {
     }
 
     /**
-     * Enregistre l'objet spatial associé à son identifiant
+     * Enregistre l'objet spatial associe a son identifiant
      *
      * @param key l'identifiant
      * @param value l'objet spatial
@@ -106,10 +106,10 @@ public class DataSet {
     }
 
     /**
-     * Retourne l'objet de donnée associé à l'identifiant
+     * Retourne l'objet de donnee associe a l'identifiant
      *
      * @param key l'identifiant
-     * @return l'objet de donnée
+     * @return l'objet de donnee
      */
     public static Feature getFeatureObject(Long key) {
         return featureObjects.get(key);
@@ -120,7 +120,7 @@ public class DataSet {
     }
 
     /**
-     * Retourne l'objet spatial associé à l'identifiant
+     * Retourne l'objet spatial associe a l'identifiant
      *
      * @param key l'identifiant
      * @return l'objet de spatial
@@ -138,7 +138,7 @@ public class DataSet {
     }
 
     /**
-     * Renvoie le nom de l'attribut associé au code
+     * Renvoie le nom de l'attribut associe au code
      *
      * @param key le code de l'attribut
      * @return nom de l'attribut
@@ -148,7 +148,7 @@ public class DataSet {
     }
 
     /**
-     * Renvoie le nom de l'objet associé au code
+     * Renvoie le nom de l'objet associï¿½ au code
      *
      * @param key le code de l'objet
      * @return nom de l'objet
@@ -158,7 +158,7 @@ public class DataSet {
     }
 
     /**
-     * Crée les liens entre les objets à partir des identifiants
+     * Cree les liens entre les objets a partir des identifiants
      *
      */
     public static void linkObjects() {
@@ -175,16 +175,16 @@ public class DataSet {
     }
 
     /**
-     * Renvoie le coefficient multiplicateur des données de sonde
+     * Renvoie le coefficient multiplicateur des donnï¿½es de sonde
      *
-     * @return le coefficient multiplicateur des données de sonde
+     * @return le coefficient multiplicateur des donnï¿½es de sonde
      */
     public static int getSOMF() {
         return _dataSet.getSomf();
     }
 
     /**
-     * Enregistre le coefficient multiplicateur des données de sonde
+     * Enregistre le coefficient multiplicateur des donnï¿½es de sonde
      *
      * @param somf
      */
@@ -196,16 +196,16 @@ public class DataSet {
     }
 
     /**
-     * Renvoie le coefficient multiplicateur des coordonnées 2D
+     * Renvoie le coefficient multiplicateur des coordonnï¿½es 2D
      *
-     * @return le coefficient multiplicateur des coordonnées 2D
+     * @return le coefficient multiplicateur des coordonnï¿½es 2D
      */
     public static int getCOMF() {
         return _dataSet.getComf();
     }
 
     /**
-     * Enregistre le coefficient multiplicateur des coordonnées 2D
+     * Enregistre le coefficient multiplicateur des coordonnï¿½es 2D
      *
      * @param comf
      */

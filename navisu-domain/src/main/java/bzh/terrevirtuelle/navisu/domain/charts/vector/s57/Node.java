@@ -8,7 +8,7 @@ public class Node extends VectorRecord {
     protected Point point;
 
     /**
-     * Récupère les coordonnées 2D du point
+     * Recupere les coordonnees 2D du point
      * @param fieldValue
      */
     @Override
@@ -26,7 +26,7 @@ public class Node extends VectorRecord {
     }
 
     /**
-     * Récupère les coordonnées 3D du point
+     * Recupere les coordonnees 3D du point
      * @param fieldValue
      */
     @Override

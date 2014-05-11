@@ -17,9 +17,9 @@ options{k=4;defaultErrorHandler=false;}
 }
 
 /**
- * Récupère la valeur d'un champs de l'enregistrement en cours.
+ * Recupere la valeur d'un champs de l'enregistrement en cours.
  * @param fieldStart
- * 		La position de début du champs
+ * 		La position de debut du champs
  * @param fieldLength
  * 		La longueur du champs
  */
@@ -31,18 +31,18 @@ getFieldArea[int fieldStart, int fieldLength] :
 	{
 		Vector<Byte> fieldValue = new Vector<Byte>();
 		/*
-		 * La variable k permet de gérer la différence entre le nombre de
-		 * caractère et le nombre de Token
+		 * La variable k permet de gï¿½rer la diffï¿½rence entre le nombre de
+		 * caractï¿½re et le nombre de Token
 		 */
 		int k = 0;
 		int start;
 
-		/* Positionne au séparateur à la fin de l'enregistrement */
+		/* Positionne au separateur a la fin de l'enregistrement */
 		int fieldArea = 0;
 		while (LA(++fieldArea) != SEP);
 
 		/*
-		 * on se décale du nombre d'octet nécessaire pour aller au début du
+		 * on se decale du nombre d'octet necessaire pour aller au dï¿½but du
 		 * champ
 		 */
 		for (start = fieldArea; start + k < fieldArea + fieldStart; start++)
@@ -59,11 +59,11 @@ getFieldArea[int fieldStart, int fieldLength] :
 			byte[] b;
 			String text=LT(i).getText();
 			/*
-			 * Les valeurs de 0x0080 à 0x009f sont transformées en 0x003F
-			 * lorsqu'elles sont converties en String dans les propriété
-			 * d'un objet Token... Pour éviter ça, leur valeur binaire est
-			 * enregistrée en chaine de caractère dans le lexer puis
-			 * récupérées et retransformées en octet dans le parser
+			 * Les valeurs de 0x0080 ï¿½ 0x009f sont transformï¿½es en 0x003F
+			 * lorsqu'elles sont converties en String dans les propriï¿½tï¿½
+			 * d'un objet Token... Pour ï¿½viter ï¿½a, leur valeur binaire est
+			 * enregistrï¿½e en chaine de caractï¿½re dans le lexer puis
+			 * rï¿½cupï¿½rï¿½es et retransformï¿½es en octet dans le parser
 			 */
 			if (LA(i) == ZDATA)
 			{
@@ -77,7 +77,7 @@ getFieldArea[int fieldStart, int fieldLength] :
 
 			/*
 			 * cette boucle permet de traiter les tokens de plus de 1
-			 * caractère (ex: les entiers de plus de 1 chiffre)
+			 * caractï¿½re (ex: les entiers de plus de 1 chiffre)
 			 */
 			for (int j = 0; j < java.lang.reflect.Array.getLength(b); j++)
 			{
@@ -108,15 +108,15 @@ getFieldArea[int fieldStart, int fieldLength] :
 });
 
 /**
- * Récupère le nom du champs, la longueur du champs, la position du champs. 
- * Fonctionne de manière récursive jusqu'à l'indicateur de fin d'enregistrement. 
+ * Rï¿½cupï¿½re le nom du champs, la longueur du champs, la position du champs. 
+ * Fonctionne de maniï¿½re rï¿½cursive jusqu'ï¿½ l'indicateur de fin d'enregistrement. 
  * A la fin de l'enregistrement, 
- * enregistre l'objet récupéré dans la liste des objets de l'application.
+ * enregistre l'objet rï¿½cupï¿½rï¿½ dans la liste des objets de l'application.
  * 
  * @param recLength
  * 			La longueur de l'enregistrement
  * @param recStart
- * 			Le début de l'enregistrement
+ * 			Le dï¿½but de l'enregistrement
  * @param sizeOfFieldLength
  * 			La taille du champs "longueur du champs"
  * @param sizeOfFieldPos
@@ -164,11 +164,11 @@ fields[int recStart,
 )exception catch[Exception e] { System.err.println(e);};
 
 /**
- * Récupère la taille des champs "longueur du champs" et "position du champs"
+ * Rï¿½cupï¿½re la taille des champs "longueur du champs" et "position du champs"
  * @param recLength
  * 			La longueur de l'enregistrement
  * @param recStart
- * 			Le début de l'enregistrement
+ * 			Le dï¿½but de l'enregistrement
  */
 entryMap[int recStart, int recLength] : 
 (
@@ -176,8 +176,8 @@ entryMap[int recStart, int recLength] :
 );
 
 /**
- * Teste si la phrase correspond à un entête d'enregistrement
- * et récupère le début l'enregistrement le cas échéant
+ * Teste si la phrase correspond ï¿½ un entï¿½te d'enregistrement
+ * et rï¿½cupï¿½re le dï¿½but l'enregistrement le cas ï¿½chï¿½ant
  * @param recLength
  * 			La longueur de l'enregistrement (si c'en est un)
  */
@@ -192,8 +192,8 @@ leaderID[int recLength] :
 );
 
 /** 
- * Teste si la phrase correspond à un début d'enregistrement 
- * et récupère la longueur de l'enregistrement le cas échéant
+ * Teste si la phrase correspond ï¿½ un dï¿½but d'enregistrement 
+ * et rï¿½cupï¿½re la longueur de l'enregistrement le cas ï¿½chï¿½ant
  */
 parse : {data = new DataSet();
             data.init();}
@@ -264,7 +264,7 @@ SEP : '\u001E';
 
 
 /*
- * On récupère la valeur de l'octet et on la transforme en entier pour
+ * On rï¿½cupï¿½re la valeur de l'octet et on la transforme en entier pour
  * l'enregistrer dans une String
  */
 ZDATA : ('\u0080'..'\u009F')

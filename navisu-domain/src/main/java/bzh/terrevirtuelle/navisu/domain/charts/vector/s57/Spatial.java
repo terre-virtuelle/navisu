@@ -11,7 +11,7 @@ public class Spatial
     }
 
     /**
-     * Récupère les données pertinentes à partir des champs de l'objet
+     * Recupere les donnees pertinentes a partir des champs de l'objet
      *
      * @return
      */
@@ -42,7 +42,7 @@ public class Spatial
     }
 
     /**
-     * Récupère les données du champ d'identification de l'objet et instancie un
+     * Recupere les donnees du champ d'identification de l'objet et instancie un
      * objet spatial correspondant
      *
      * @param fieldValue Le tableau d'octets contenus dans le champ
@@ -79,19 +79,19 @@ public class Spatial
     }
 
     /**
-     * Non traité actuellement
+     * Non traitï¿½ actuellement
      *
      * @param fieldValue
      */
     /*
-     * TODO Récupère les attributs spatiaux
+     * TODO Rï¿½cupï¿½re les attributs spatiaux
      */
     public void decodATTV(byte[] fieldValue) {
 
     }
 
     /**
-     * Non traité actuellement
+     * Non traitï¿½ actuellement
      *
      * @param fieldValue
      */
@@ -99,7 +99,7 @@ public class Spatial
     }
 
     /**
-     * Récupère les objets spatiaux associés à cet objet Traité dans Edge, Face
+     * Rï¿½cupï¿½re les objets spatiaux associï¿½s ï¿½ cet objet Traitï¿½ dans Edge, Face
      * et IsolatedNode
      *
      * @param fieldValue
@@ -108,7 +108,7 @@ public class Spatial
     }
 
     /**
-     * Traité dans les classes héritant de Spatial
+     * Traitï¿½ dans les classes hï¿½ritant de Spatial
      *
      * @param fieldValue
      */
@@ -116,7 +116,7 @@ public class Spatial
     }
 
     /**
-     * Non traité actuellement
+     * Non traitï¿½ actuellement
      *
      * @param fieldValue
      */
@@ -124,13 +124,13 @@ public class Spatial
     }
 
     /**
-     * Non traité actuellement
+     * Non traitï¿½ actuellement
      */
     public void decodSGCC(byte[] fieldValue) {
     }
 
     /**
-     * Non traité actuellement
+     * Non traitï¿½ actuellement
      *
      * @param fieldValue
      */

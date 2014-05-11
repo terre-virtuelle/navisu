@@ -17,7 +17,7 @@ public class S57Object implements Serializable {
     }
 
     /**
-     * Récupère les données pertinentes à partir des champs de l'objet
+     * Recupere les donnees pertinentes a partir des champs de l'objet
      *
      * @param fieldName
      * @param fieldValue
@@ -47,7 +47,7 @@ public class S57Object implements Serializable {
     }
 
     /**
-     * @return vrai si objet de donnée
+     * @return vrai si objet de donnï¿½e
      */
     public boolean isFeatureObject() {
         return feature;

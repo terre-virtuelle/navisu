@@ -12,13 +12,13 @@ import java.util.List;
 public class Edge extends VectorRecord {
 
     /**
-     * Enregistrements spatiaux associés à l'objet repérés par leurs
+     * Enregistrements spatiaux associes a l'objet reperes par leurs
      * identifiants
      */
     protected HashMap<Long, VectorUsage> spatialRecordById = new HashMap<>(2);
 
     /**
-     * Enregistrements spatiaux associés à l'objet
+     * Enregistrements spatiaux associes a l'objet
      */
     protected HashMap<Spatial, VectorUsage> spatialRecord = new HashMap<>();
 
@@ -37,7 +37,7 @@ public class Edge extends VectorRecord {
     }
 
     /**
-     * Récupère les noeuds de début et de fin, les faces de droite et de gauche
+     * Recupere les noeuds de debut et de fin, les faces de droite et de gauche
      */
     @Override
     public void decodVRPT(byte[] fieldValue) {
@@ -55,7 +55,7 @@ public class Edge extends VectorRecord {
     }
 
     /**
-     * Récupère les points définissant la ligne
+     * Recupere les points definissant la ligne
      *
      * @param fieldValue
      */
@@ -101,7 +101,7 @@ public class Edge extends VectorRecord {
                     vuExtremite = vu;
                 }
             }
-            /* Cas où les noeuds de début et de fin sont les même */
+            /* Cas ou les noeuds de debut et de fin sont les meme */
             if (bNode != null && eNode == null) {
                 spatialRecord.put(bNode.clone(), new VectorUsage(vuExtremite.getOrnt(), vuExtremite.getUsag(), 2, vuExtremite.getMask(), 2));
             }
