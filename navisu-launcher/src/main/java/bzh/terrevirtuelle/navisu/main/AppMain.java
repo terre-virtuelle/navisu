@@ -9,6 +9,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.ChartsManagerServices;
 import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.ChartsManagerImpl;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.ChartS57Services;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.ChartS57Impl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -56,6 +58,7 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         ChartsManagerImpl.class,
                         GribImpl.class,
+                        ChartS57Impl.class,
                         DataServerImpl.class,
                         NmeaClientImpl.class,
                         Widget3DImpl.class,
@@ -67,54 +70,55 @@ public class AppMain extends Application {
         guiAgentServices.showGui(stage, 1280, 800);
 
         ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
-
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
+        ChartS57Services chartS57Services = componentManager.getComponentService(ChartS57Services.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
+        
         driverServices.registerNewDriver(chartsServices.getDriver());
-       //  chartsServices.openChart("data/101.KAP");
         driverServices.registerNewDriver(gribServices.getDriver());
-
+        driverServices.registerNewDriver(chartS57Services.getDriver());
+        
          //------------------------------->
         // TESTS AGENT
         //
   /*      
-        GObjectCUDProcessor proc = new TObjectProcessor();
+         GObjectCUDProcessor proc = new TObjectProcessor();
   
-        GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
-        geoViewServices.registerProcessor(proc);
-        geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
+         GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
+         geoViewServices.registerProcessor(proc);
+         geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
 
-        DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
+         DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
 
-        guiServices.getJobsManager().newJob("Test job", pHandler -> {
+         guiServices.getJobsManager().newJob("Test job", pHandler -> {
 
-            double lat = 48.390834d;
-            double lon = -4.485556d;
+         double lat = 48.390834d;
+         double lon = -4.485556d;
 
-            TObject tObject = TObject.newBasicTObject(1, lat, lon);
-            dpAgentServices.create(tObject);
+         TObject tObject = TObject.newBasicTObject(1, lat, lon);
+         dpAgentServices.create(tObject);
 
-            pHandler.start(100);
+         pHandler.start(100);
 
-            for (int i = 0; i < 100; i++) {
+         for (int i = 0; i < 100; i++) {
 
-                lon += i / 1000.;
-                tObject.setLocation(Location.factory.newLocation(lat, lon));
-                dpAgentServices.update(tObject);
+         lon += i / 1000.;
+         tObject.setLocation(Location.factory.newLocation(lat, lon));
+         dpAgentServices.update(tObject);
 
-                pHandler.progress("Moving TObject...", i);
+         pHandler.progress("Moving TObject...", i);
 
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                }
-            }
+         try {
+         Thread.sleep(500);
+         } catch (InterruptedException e) {
+         }
+         }
 
-            dpAgentServices.delete(tObject);
-        });
-*/
+         dpAgentServices.delete(tObject);
+         });
+         */
         //
         // END TESTS AGENT
         //------------------------------->
@@ -135,7 +139,7 @@ public class AppMain extends Application {
         // Test connexion Gpsd 
         // dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // Test connexion fichier 
-       // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
