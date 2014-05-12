@@ -5,7 +5,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Point2D;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.VectorUsage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Model;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;

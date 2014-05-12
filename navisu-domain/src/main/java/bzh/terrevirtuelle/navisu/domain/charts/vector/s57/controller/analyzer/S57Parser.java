@@ -1,6 +1,7 @@
 // $ANTLR 2.7.5 (20050128): "S57.g" -> "S57Parser.java"$
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Model;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
@@ -23,7 +24,7 @@ import antlr.collections.impl.BitSet;
 public class S57Parser extends antlr.LLkParser implements S57ParserTokenTypes {
 
     private S57Object obj;
-    private DataSet data;
+    private S57Model data;
 
     protected S57Parser(TokenBuffer tokenBuf, int k) {
         super(tokenBuf, k);
@@ -181,14 +182,14 @@ public class S57Parser extends antlr.LLkParser implements S57ParserTokenTypes {
                         if (obj != null) {
                             if (obj.isFeatureObject()) {
                                 //System.out.print((Feature)obj);
-                                DataSet.putFeatureObject(new Long(obj.getId()), (Feature) obj);
+                                S57Model.putFeatureObject(new Long(obj.getId()), (Feature) obj);
                             } else if (obj.isSpatialObject()) {
 				//System.out.print((Spatial)obj);
 
-                                DataSet.putSpatialObject(new Long(obj.getId()), (Spatial) obj);
+                                S57Model.putSpatialObject(new Long(obj.getId()), (Spatial) obj);
                             } else if (obj.isDataSet()) {
                                 //System.out.println((DataSetGeographicReference)obj);
-                                DataSet.setDataSet((DataSetGeographicReference) obj);
+                                S57Model.setDataSet((DataSetGeographicReference) obj);
                             }
                         }
 
@@ -272,7 +273,7 @@ public class S57Parser extends antlr.LLkParser implements S57ParserTokenTypes {
 
         Token recLength = null;
 
-        data = new DataSet();
+        data = new S57Model();
         data.init();
         {
             _loop11:
@@ -293,8 +294,8 @@ public class S57Parser extends antlr.LLkParser implements S57ParserTokenTypes {
             } while (true);
         }
 
-        DataSet.setFeatures(new HashSet<>(DataSet.getFeatureObjects().values()));
-        DataSet.linkObjects();
+        S57Model.setFeatures(new HashSet<>(S57Model.getFeatureObjects().values()));
+        S57Model.linkObjects();
 
     }
 

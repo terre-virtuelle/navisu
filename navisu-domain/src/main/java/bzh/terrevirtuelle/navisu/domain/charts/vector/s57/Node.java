@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
 import java.nio.ByteOrder;
 
 public class Node extends VectorRecord {
@@ -20,8 +19,8 @@ public class Node extends VectorRecord {
         double y = (double) bb.getInt(0);
         double x = (double) bb.getInt(4);
         Point2D pt = new Point2D();
-        pt.setX(x / DataSet.getCOMF());
-        pt.setY(y / DataSet.getCOMF());
+        pt.setX(x / S57Model.getCOMF());
+        pt.setY(y / S57Model.getCOMF());
         setPoint(pt);
     }
 
@@ -39,9 +38,9 @@ public class Node extends VectorRecord {
         double x = (double) bb.getInt(4);
         double z = (double) bb.getInt(8);
         Point3D pt = new Point3D();
-        pt.setX(x / DataSet.getCOMF());
-        pt.setY(y / DataSet.getCOMF());
-        pt.setZ(z / DataSet.getSOMF());
+        pt.setX(x / S57Model.getCOMF());
+        pt.setY(y / S57Model.getCOMF());
+        pt.setZ(z / S57Model.getSOMF());
         setPoint(pt);
     }
 

@@ -7,7 +7,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Point2D;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.VectorUsage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Lexer;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Parser;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Coastline;
@@ -44,16 +44,16 @@ public class Main {
 
         /* Results */
         System.out.println("File " + CHART_NAME + " loaded");
-        System.out.println("Nombre d'objets spatiaux:" + DataSet.getSpatialObjects().size());
-        System.out.println("Nombre d'objets de donnees:" + DataSet.getFeatureObjects().size());
+        System.out.println("Nombre d'objets spatiaux:" + S57Model.getSpatialObjects().size());
+        System.out.println("Nombre d'objets de donnees:" + S57Model.getFeatureObjects().size());
         setBounds();
         /* 
-         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
          System.out.println(obj + "\n");
          });
          */
         /*
-         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
          if (obj.getClass().getSimpleName().equals("DepthArea")) {
          System.out.println("DepthArea Id : " + obj.getId());
          DepthArea depthArea = (DepthArea) obj;
@@ -73,7 +73,7 @@ public class Main {
          });
          */
 /*
-        DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+        S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
             if (obj.getClass().getSimpleName().equals("Coastline")) {
                 System.out.println("Coastline Id : " + obj.getId());
                 Coastline c = (Coastline) obj;
@@ -93,13 +93,12 @@ public class Main {
             }
         });
 */
-        DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+        S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
             if (obj.getClass().getSimpleName().equals("Coastline")) {
                 System.out.println("Coastline Id : " + obj.getId());
                 Coastline c = (Coastline) obj;
                 System.out.print("  categoryOfCoastline : " + c.getCategoryOfCoastline());
                 System.out.print("  colour : " + c.getColour());
-
                 c.getEdges().stream().forEach((e) -> {
                     List<Point2D> lp = e.getPoints();
                     System.out.println("  Size : " + e.getPoints().size());
@@ -111,7 +110,7 @@ public class Main {
             }
         });
         /*
-         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
          if (obj.getClass().getSimpleName().equals("SurveyReliability")) {
          System.out.println("SurveyReliability : " + obj.getClass().getName());
          SurveyReliability o = (SurveyReliability) obj;
@@ -127,7 +126,7 @@ public class Main {
          });
          */
         /*
-         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
 
          if (obj.getClass().getSimpleName().equals("BeaconCardinal")) {
          //  System.out.println(obj.getSpatialRecord());
@@ -147,7 +146,7 @@ public class Main {
          //  System.out.println(obj + "\n");
          }
          });
-         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
 
          if (obj.getClass().getSimpleName().equals("BeaconLateral")) {
          HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
@@ -164,7 +163,7 @@ public class Main {
          });
          }
          });
-         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
 
          if (obj.getClass().getSimpleName().equals("BeaconIsolatedDanger")) {
          HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
@@ -180,7 +179,7 @@ public class Main {
          });
          }
          });
-         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
 
          if (obj.getClass().getSimpleName().equals("BuoyCardinal")) {
          HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
@@ -197,7 +196,7 @@ public class Main {
          });
          }
          });
-         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
 
          if (obj.getClass().getSimpleName().equals("BuoyLateral")) {
          HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
@@ -227,7 +226,7 @@ public class Main {
      */
     public final void setBounds() {
         double minX = 180, minY = 180, maxX = -180, maxY = -180;
-        HashSet<Spatial> sp = new HashSet<>(DataSet.getSpatialObjects().values());
+        HashSet<Spatial> sp = new HashSet<>(S57Model.getSpatialObjects().values());
         Iterator<Spatial> itSp = sp.iterator();
         while (itSp.hasNext()) {
             Spatial spObj = itSp.next();

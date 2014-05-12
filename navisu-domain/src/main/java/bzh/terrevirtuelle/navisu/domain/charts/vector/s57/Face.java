@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -58,7 +57,7 @@ public class Face extends VectorRecord {
             Iterator<Long> it = spatials.iterator();
             while (it.hasNext()) {
                 Long id0 = it.next();
-                spatialRecord.put(DataSet.getSpatialObject(id0), this.spatialRecordById.get(id0));
+                spatialRecord.put(S57Model.getSpatialObject(id0), this.spatialRecordById.get(id0));
             }
         }
     }

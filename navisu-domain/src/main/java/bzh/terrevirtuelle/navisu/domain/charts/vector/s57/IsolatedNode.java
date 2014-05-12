@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -56,7 +55,7 @@ public class IsolatedNode extends Node {
             Iterator<Long> it = spatials.iterator();
             while (it.hasNext()) {
                 Long id = it.next();
-                spatialRecord.put(DataSet.getSpatialObject(id), this.spatialRecordById.get(id));
+                spatialRecord.put(S57Model.getSpatialObject(id), this.spatialRecordById.get(id));
             }
         }
     }

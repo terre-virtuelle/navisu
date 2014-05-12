@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,8 +67,8 @@ public class Edge extends VectorRecord {
             double y = (double) bb.getInt(i);
             double x = (double) bb.getInt(i + 4);
             Point2D pt = new Point2D();
-            pt.setX(x / DataSet.getCOMF());
-            pt.setY(y / DataSet.getCOMF());
+            pt.setX(x / S57Model.getCOMF());
+            pt.setY(y / S57Model.getCOMF());
             points.add(pt);
         }
     }
@@ -91,7 +90,7 @@ public class Edge extends VectorRecord {
             while (it.hasNext()) {
                 Long id = it.next();
                 VectorUsage vu = this.spatialRecordById.get(id);
-                Spatial spObj = DataSet.getSpatialObject(id);
+                Spatial spObj = S57Model.getSpatialObject(id);
                 spatialRecord.put(spObj, vu);
                 if (vu.getTopi() == 1) {
                     bNode = (ConnectedNode) spObj;

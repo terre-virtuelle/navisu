@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer;
+package bzh.terrevirtuelle.navisu.domain.charts.vector.s57;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.DataSetGeographicReference;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Feature;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author Serge
  */
-public class DataSet {
+public class S57Model {
 
     /**
      * Table des enregistrements de donnees indexes par leur identifiant

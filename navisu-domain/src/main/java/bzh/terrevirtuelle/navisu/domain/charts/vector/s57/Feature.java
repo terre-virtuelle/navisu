@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
 import java.io.Serializable;
 import java.util.*;
 import java.lang.reflect.*;
@@ -221,7 +220,7 @@ public class Feature
 
         int objectCode = (fieldValue[7] & 0xFF) + 256 * (fieldValue[8] & 0xFF);
         try {
-            String objName = DataSet.getObjectsValue(objectCode);
+            String objName = S57Model.getObjectsValue(objectCode);
 
             //Objet non traite
             if (objName == null) {
@@ -257,7 +256,7 @@ public class Feature
      */
     protected void setAttribute(int code, String value) {
 
-        String acronym = DataSet.getAttributesValue(code);
+        String acronym = S57Model.getAttributesValue(code);
         try {
             Method setMethod = (Method) methods.get(("set" + acronym));
             Class[] params = setMethod.getParameterTypes();
@@ -315,7 +314,7 @@ public class Feature
             Iterator<Long> it = spatials.iterator();
             while (it.hasNext()) {
                 Long id0 = it.next();
-                spatialRecord.put(DataSet.getSpatialObject(id0), this.spatialRecordById.get(id0));
+                spatialRecord.put(S57Model.getSpatialObject(id0), this.spatialRecordById.get(id0));
             }
         }
     }
