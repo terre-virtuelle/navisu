@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * NaVisu. If not, see <http://www.gnu.org/licenses/>.
  */
-package bzh.terrevirtuelle.navisu.charts.impl.imageryinstaller;
+package bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.imageryinstaller;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import gov.nasa.worldwind.layers.Layer;

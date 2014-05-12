@@ -1,11 +1,11 @@
-package bzh.terrevirtuelle.navisu.charts.impl;
+package bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
-import bzh.terrevirtuelle.navisu.charts.ChartsManager;
-import bzh.terrevirtuelle.navisu.charts.ChartsManagerServices;
-import bzh.terrevirtuelle.navisu.charts.impl.imageryinstaller.ImageryInstaller;
+import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.ChartsManager;
+import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.ChartsManagerServices;
+import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.imageryinstaller.ImageryInstaller;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;

@@ -13,17 +13,19 @@
  * You should have received a copy of the GNU General Public License along with
  * NaVisu. If not, see <http://www.gnu.org/licenses/>.
  */
-package bzh.terrevirtuelle.navisu.charts.impl.imageryinstaller;
+package bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.imageryinstaller.impl;
 
-import bzh.terrevirtuelle.navisu.charts.impl.imageryinstaller.impl.ImageryInstallerFactoryImpl;
+import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.imageryinstaller.ImageryInstaller;
+import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.imageryinstaller.ImageryInstallerFactory;
 
 /**
  *
  * @author Thibault
  */
-public interface ImageryInstallerFactory {
-    
-    ImageryInstaller newImageryInstaller();
-    
-    public static final ImageryInstallerFactory impl = new ImageryInstallerFactoryImpl();
+public class ImageryInstallerFactoryImpl implements ImageryInstallerFactory {
+
+    @Override
+    public ImageryInstaller newImageryInstaller() {
+        return new ImageryInstallerImpl();
+    }
 }

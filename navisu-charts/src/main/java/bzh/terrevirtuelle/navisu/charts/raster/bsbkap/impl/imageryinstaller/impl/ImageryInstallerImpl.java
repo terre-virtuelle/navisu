@@ -13,7 +13,7 @@
  * You should have received a copy of the GNU General Public License along with
  * NaVisu. If not, see <http://www.gnu.org/licenses/>.
  */
-package bzh.terrevirtuelle.navisu.charts.impl.imageryinstaller.impl;
+package bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.imageryinstaller.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
@@ -29,7 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.*;
 import java.util.logging.Level;
-import bzh.terrevirtuelle.navisu.charts.impl.imageryinstaller.ImageryInstaller;
+import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.imageryinstaller.ImageryInstaller;
 
 /**
  * @author Thibault
