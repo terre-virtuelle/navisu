@@ -15,7 +15,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Edge;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Point2D;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.VectorUsage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Coastline;
 import gov.nasa.worldwind.layers.Layer;
 import java.util.HashMap;
@@ -111,7 +111,7 @@ public class ChartS57Impl implements ChartS57, ChartS57Services, ComponentState 
     @Override
     public Set<Coastline> getCoastlines() {
         Set<Coastline> coastlines = new HashSet<>();
-        DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+        S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
             if (obj.getClass().getSimpleName().equals("Coastline")) {
                 Coastline c = (Coastline) obj;
                 coastlines.add(c);
