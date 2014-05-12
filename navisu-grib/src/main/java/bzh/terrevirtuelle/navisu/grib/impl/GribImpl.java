@@ -84,7 +84,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
         LOGGER.info(this.gribController.getModel().toString());
 
         LOGGER.info("######################################## CREATE LAYER #############################################");
-        //this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
+       // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
         this.layerLayerManager = (LayerManager<Layer>) ((GeoView)this.geoViewServices.getDisplayService()).getLayerManager();
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));
     }
