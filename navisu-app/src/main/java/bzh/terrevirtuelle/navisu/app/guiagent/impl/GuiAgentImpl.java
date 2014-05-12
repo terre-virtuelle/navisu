@@ -230,8 +230,8 @@ public class GuiAgentImpl
     private void createRadialWidget() {
 
         //TODO Refactor All of this code
-        ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-in.png")));
-        ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-out.png")));
+        ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/sounderradialombre.png")));
+        ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/windradialombre.png")));
         ImageView gpsComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSComPane.png")));
         ImageView gpsPrecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSprecision.png")));
         ImageView gpslocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSlocation.png")));
