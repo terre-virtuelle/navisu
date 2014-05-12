@@ -14,8 +14,7 @@ public class ChartS57Layer extends RenderableLayer {
 
     protected ChartS57Model model;
 
-    public ChartS57Layer(ChartS57Model model) {
-        this.model = model;
+    public ChartS57Layer() {
         this.init();
     }
 

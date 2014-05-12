@@ -1,5 +1,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl;
 
+import antlr.RecognitionException;
+import antlr.TokenStreamException;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 
@@ -12,14 +14,22 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Edge;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Point2D;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.VectorUsage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Model;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.app.Main;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Lexer;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Parser;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Coastline;
 import gov.nasa.worldwind.layers.Layer;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -93,11 +103,12 @@ public class ChartS57Impl implements ChartS57, ChartS57Services, ComponentState 
 
     @Override
     public void loadFile(String path) {
+       
         this.chartS57Controller = new ChartS57Controller(path);
 
-        LOGGER.info(this.chartS57Controller.getModel().toString());
+       // LOGGER.info(this.chartS57Controller.getModel().toString());
 
-        LOGGER.info("######################################## CREATE LAYER #############################################");
+       // LOGGER.info("######################################## CREATE LAYER #############################################");
         // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
         this.layerLayerManager = (LayerManager<Layer>) ((GeoView) this.geoViewServices.getDisplayService()).getLayerManager();
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.chartS57Controller.getChartS57Layer()));
@@ -108,6 +119,7 @@ public class ChartS57Impl implements ChartS57, ChartS57Services, ComponentState 
         return this.chartS57Controller.getChartS57Layer();
     }
 
+   
     @Override
     public Set<Coastline> getCoastlines() {
         Set<Coastline> coastlines = new HashSet<>();
