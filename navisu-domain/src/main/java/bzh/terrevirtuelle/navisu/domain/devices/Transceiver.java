@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.devices;
 
-import bzh.terrevirtuelle.navisu.domain.ship.Ship;
 import java.io.Serializable;
 import java.util.Calendar;
 import javafx.beans.property.DoubleProperty;

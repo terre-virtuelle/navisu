@@ -1,10 +1,5 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.app;
 
-/*
- * Cree le 21 sept. 2005
- * Cyril Avonde, Loic HERVE, Serge Morvan
- * CERV 2006
- */
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Edge;
@@ -12,9 +7,9 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Point2D;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.VectorUsage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controler.analyzer.DataSet;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controler.analyzer.S57Lexer;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controler.analyzer.S57Parser;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Lexer;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Parser;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Coastline;
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,7 +45,7 @@ public class Main {
         /* Results */
         System.out.println("File " + CHART_NAME + " loaded");
         System.out.println("Nombre d'objets spatiaux:" + DataSet.getSpatialObjects().size());
-        System.out.println("Nombre d'objets de donn�es:" + DataSet.getFeatureObjects().size());
+        System.out.println("Nombre d'objets de donnees:" + DataSet.getFeatureObjects().size());
         setBounds();
         /* 
          DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
@@ -77,14 +72,15 @@ public class Main {
          }
          });
          */
-
+/*
         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
             if (obj.getClass().getSimpleName().equals("Coastline")) {
                 System.out.println("Coastline Id : " + obj.getId());
                 Coastline c = (Coastline) obj;
                 System.out.print("  categoryOfCoastline : " + c.getCategoryOfCoastline());
                 System.out.print("  colour : " + c.getColour());
-                HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
+               // HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
+                HashMap<Spatial, VectorUsage> spatialRecord = c.getSpatialRecord();
                 spatialRecord.keySet().stream().forEach((s) -> {
                     Edge n = (Edge) s;
                     List<Point2D> lp = n.getPoints();
@@ -96,7 +92,40 @@ public class Main {
                 System.out.println();
             }
         });
+*/
+        DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+            if (obj.getClass().getSimpleName().equals("Coastline")) {
+                System.out.println("Coastline Id : " + obj.getId());
+                Coastline c = (Coastline) obj;
+                System.out.print("  categoryOfCoastline : " + c.getCategoryOfCoastline());
+                System.out.print("  colour : " + c.getColour());
 
+                c.getEdges().stream().forEach((e) -> {
+                    List<Point2D> lp = e.getPoints();
+                    System.out.println("  Size : " + e.getPoints().size());
+                    lp.stream().forEach((p) -> {
+                        System.out.println(p.getY() + "  " + p.getX());
+                    });
+                });
+                System.out.println();
+            }
+        });
+        /*
+         DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
+         if (obj.getClass().getSimpleName().equals("SurveyReliability")) {
+         System.out.println("SurveyReliability : " + obj.getClass().getName());
+         SurveyReliability o = (SurveyReliability) obj;
+         System.out.println("  surveyAuthority : " + o.getSurveyAuthority());
+         System.out.println("  surveyDateStart : " + o.getSurveyDateStart());
+         System.out.println("  surveyDateEnd : " + o.getSurveyDateEnd());
+         System.out.println("  surveyType : " + o.getSurveyType());
+         System.out.println("  scaleMinimum : " + o.getScaleMinimum());
+         System.out.println("  scaleValueOne : " + o.getScaleValueOne());
+         System.out.println("  scaleValueTwo : " + o.getScaleValueTwo());
+         System.out.println();
+         }
+         });
+         */
         /*
          DataSet.getFeatureObjects().values().stream().forEach((obj) -> {
 

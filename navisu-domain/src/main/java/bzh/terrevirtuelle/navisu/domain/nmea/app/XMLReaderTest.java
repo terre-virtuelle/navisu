@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.domain.app;
+package bzh.terrevirtuelle.navisu.domain.nmea.app;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.xml.Reader;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;

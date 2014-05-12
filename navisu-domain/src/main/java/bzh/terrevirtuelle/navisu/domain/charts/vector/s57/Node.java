@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controler.analyzer.DataSet;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.DataSet;
 import java.nio.ByteOrder;
 
 public class Node extends VectorRecord {

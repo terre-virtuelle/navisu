@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><sentences><pgn130306><device>1</device><sentence>{"timestamp":"2014-02-26-10:24:59.523","prio":"2","src":"1","dst":"255","pgn":"130306","description":"Wind Data","fields":{"SID":"0","Wind Speed":"0.00","Wind Angle":"306.4","Reference":"Apparent"}}</sentence><description>Wind Data</description><timeStamp>2014-02-26-10:24:59.523</timeStamp><priority>2</priority><dst>255</dst><pgn>130306</pgn><windSpeed>10.3</windSpeed><windDirection>306.4</windDirection><windReference>Apparent</windReference></pgn130306></sentences>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><sentences>
+    <pgn130306>
+        <device>1</device>
+        <sentence>{"timestamp":"2014-02-26-10:24:59.523","prio":"2","src":"1","dst":"255","pgn":"130306","description":"Wind Data","fields":{"SID":"0","Wind Speed":"0.00","Wind Angle":"306.4","Reference":"Apparent"}}</sentence>
+        <description>Wind Data</description>
+        <timeStamp>2014-02-26-10:24:59.523</timeStamp>
+        <priority>2</priority>
+        <dst>255</dst>
+        <pgn>130306</pgn>
+        <windSpeed>10.3</windSpeed>
+        <windDirection>306.4</windDirection>
+        <windReference>Apparent</windReference>
+    </pgn130306>
+</sentences>

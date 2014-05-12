@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controler.analyzer;
+package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.DataSetGeographicReference;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Feature;
@@ -28,11 +28,11 @@ public class DataSet {
     /**
      * Table des enregistrements de donnees indexes par leur identifiant
      */
-    private static HashMap<Long, Feature> featureObjects = new HashMap<>();
+    private static final HashMap<Long, Feature> featureObjects = new HashMap<>();
     /**
      * Table des enregistrements spatiaux indexes par leur identifiant
      */
-    private static HashMap<Long, Spatial> spatialObjects = new HashMap<>();
+    private static final HashMap<Long, Spatial> spatialObjects = new HashMap<>();
     ;
     /**
      * Table associant le code de l'attribut a son nom

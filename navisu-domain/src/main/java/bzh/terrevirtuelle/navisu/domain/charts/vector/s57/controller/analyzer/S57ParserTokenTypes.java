@@ -1,6 +1,6 @@
 // $ANTLR 2.7.5 (20050128): "S57.g" -> "S57Parser.java"$
 
-	package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controler.analyzer;
+	package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer;
 	import java.util.HashMap;
         import java.util.HashSet;	
 	import java.util.Vector;
