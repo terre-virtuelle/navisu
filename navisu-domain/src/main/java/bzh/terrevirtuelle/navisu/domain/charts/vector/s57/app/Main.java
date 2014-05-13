@@ -11,6 +11,8 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Lexer;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Parser;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Coastline;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.DepthArea;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.DepthContour;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -52,18 +54,36 @@ public class Main {
          System.out.println(obj + "\n");
          });
          */
+
+        S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
+            if (obj.getClass().getSimpleName().equals("DepthArea")) {
+                System.out.println("DepthArea Id : " + obj.getId());
+                DepthArea depthArea = (DepthArea) obj;
+                System.out.println("DepthRangeValue1 " + depthArea.getDepthRangeValue1());
+                System.out.println("DepthRangeValue2 " + depthArea.getDepthRangeValue2());
+                HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
+                spatialRecord.keySet().stream().forEach((s) -> {
+                    Edge n = (Edge) s;
+                    List<Point2D> lp = n.getPoints();
+                    lp.stream().forEach((p) -> {
+                        System.out.println(p.getY() + "  " + p.getX());
+                    });
+                });
+                System.out.println();
+            }
+        });
+
+
         /*
          S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
-         if (obj.getClass().getSimpleName().equals("DepthArea")) {
-         System.out.println("DepthArea Id : " + obj.getId());
-         DepthArea depthArea = (DepthArea) obj;
-         System.out.println("DepthRangeValue1 " + depthArea.getDepthRangeValue1());
-         System.out.println("DepthRangeValue2 " + depthArea.getDepthRangeValue2());
-         HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
-         spatialRecord.keySet().stream().forEach((s) -> {
-         Edge n = (Edge) s;
-         List<Point2D> lp = n.getPoints();
-         System.out.println("  Size : " + n.getPoints().size());
+         if (obj.getClass().getSimpleName().equals("Coastline")) {
+         System.out.println("Coastline Id : " + obj.getId());
+         Coastline c = (Coastline) obj;
+         System.out.print("  categoryOfCoastline : " + c.getCategoryOfCoastline());
+         System.out.print("  colour : " + c.getColour());
+         c.getEdges().stream().forEach((e) -> {
+         List<Point2D> lp = e.getPoints();
+         System.out.println("  Size : " + e.getPoints().size());
          lp.stream().forEach((p) -> {
          System.out.println(p.getY() + "  " + p.getX());
          });
@@ -72,44 +92,7 @@ public class Main {
          }
          });
          */
-/*
-        S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
-            if (obj.getClass().getSimpleName().equals("Coastline")) {
-                System.out.println("Coastline Id : " + obj.getId());
-                Coastline c = (Coastline) obj;
-                System.out.print("  categoryOfCoastline : " + c.getCategoryOfCoastline());
-                System.out.print("  colour : " + c.getColour());
-               // HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
-                HashMap<Spatial, VectorUsage> spatialRecord = c.getSpatialRecord();
-                spatialRecord.keySet().stream().forEach((s) -> {
-                    Edge n = (Edge) s;
-                    List<Point2D> lp = n.getPoints();
-                    System.out.println("  Size : " + n.getPoints().size());
-                    lp.stream().forEach((p) -> {
-                        System.out.println(p.getY() + "  " + p.getX());
-                    });
-                });
-                System.out.println();
-            }
-        });
-*/
-       
-        S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
-            if (obj.getClass().getSimpleName().equals("Coastline")) {
-                System.out.println("Coastline Id : " + obj.getId());
-                Coastline c = (Coastline) obj;
-                System.out.print("  categoryOfCoastline : " + c.getCategoryOfCoastline());
-                System.out.print("  colour : " + c.getColour());
-                c.getEdges().stream().forEach((e) -> {
-                    List<Point2D> lp = e.getPoints();
-                    System.out.println("  Size : " + e.getPoints().size());
-                    lp.stream().forEach((p) -> {
-                        System.out.println(p.getY() + "  " + p.getX());
-                    });
-                });
-                System.out.println();
-            }
-        });
+        
         /*
          S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
          if (obj.getClass().getSimpleName().equals("SurveyReliability")) {
