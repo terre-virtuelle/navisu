@@ -2,8 +2,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57;
 
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.view.ChartS57Layer;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Coastline;
-import java.util.Set;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -21,5 +19,11 @@ public interface ChartS57Services
 
     void loadFile(String path);
 
-    Set<Coastline> getCoastlines();
+    void addCoastlines();
+
+    void removeCoastlines();
+
+    void addDepthAreas();
+
+    void addDepthContours();
 }

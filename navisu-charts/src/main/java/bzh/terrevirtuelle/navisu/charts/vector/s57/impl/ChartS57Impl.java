@@ -1,7 +1,5 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl;
 
-import antlr.RecognitionException;
-import antlr.TokenStreamException;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 
@@ -13,24 +11,11 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.view.ChartS57Layer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Edge;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Node;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Point2D;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Spatial;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.VectorUsage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Model;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.app.Main;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Lexer;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Parser;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Coastline;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.DepthArea;
 import gov.nasa.worldwind.layers.Layer;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
@@ -42,7 +27,8 @@ import java.util.logging.Logger;
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class ChartS57Impl implements ChartS57, ChartS57Services, ComponentState {
+public class ChartS57Impl
+        implements ChartS57, ChartS57Services, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -73,6 +59,8 @@ public class ChartS57Impl implements ChartS57, ChartS57Services, ComponentState 
                 for (String file : files) {
                     LOGGER.log(Level.INFO, "Opening {0} ...", file);
                     loadFile(file); //Todo Make stuff for all files
+                    addCoastlines();
+                    addDepthAreas();
                 }
             }
 
@@ -103,12 +91,9 @@ public class ChartS57Impl implements ChartS57, ChartS57Services, ComponentState 
 
     @Override
     public void loadFile(String path) {
-       
+
         this.chartS57Controller = new ChartS57Controller(path);
-
-       // LOGGER.info(this.chartS57Controller.getModel().toString());
-
-       // LOGGER.info("######################################## CREATE LAYER #############################################");
+        System.out.println("chartLayer " + chartS57Controller.getChartS57Layer().getName());
         // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
         this.layerLayerManager = (LayerManager<Layer>) ((GeoView) this.geoViewServices.getDisplayService()).getLayerManager();
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.chartS57Controller.getChartS57Layer()));
@@ -119,16 +104,37 @@ public class ChartS57Impl implements ChartS57, ChartS57Services, ComponentState 
         return this.chartS57Controller.getChartS57Layer();
     }
 
-   
     @Override
-    public Set<Coastline> getCoastlines() {
-        Set<Coastline> coastlines = new HashSet<>();
+    public void addCoastlines() {
+        Set<Coastline> objects = new HashSet<>();
         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
             if (obj.getClass().getSimpleName().equals("Coastline")) {
                 Coastline c = (Coastline) obj;
-                coastlines.add(c);
+                objects.add(c);
             }
         });
-        return coastlines;
+        chartS57Controller.addCoastlines(objects);
+    }
+
+    @Override
+    public void removeCoastlines() {
+        chartS57Controller.removeCoastlines();
+    }
+
+    @Override
+    public void addDepthAreas() {
+        Set<DepthArea> objects = new HashSet<>();
+        S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
+            if (obj.getClass().getSimpleName().equals("DepthArea")) {
+                DepthArea c = (DepthArea) obj;
+                objects.add(c);
+            }
+        });
+        chartS57Controller.addDepthAreas(objects);
+    }
+
+    @Override
+    public void addDepthContours() {
+
     }
 }
