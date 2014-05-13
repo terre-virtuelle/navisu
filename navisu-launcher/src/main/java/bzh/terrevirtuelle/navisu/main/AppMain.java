@@ -163,6 +163,14 @@ public class AppMain extends Application {
         //
         // END TESTS SERVER
         //------------------------------->
+        
+        //
+        // TEST S57 Charts
+        //
+        //chartS57Services.addCoastlines();
+        //
+        // END TEST S57 Charts
+        //
     }
 
     public static void main(String[] args) throws Exception {
