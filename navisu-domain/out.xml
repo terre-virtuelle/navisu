@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<sentences>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><sentences>
     <pgn130306>
         <device>1</device>
         <sentence>{"timestamp":"2014-02-26-10:24:59.523","prio":"2","src":"1","dst":"255","pgn":"130306","description":"Wind Data","fields":{"SID":"0","Wind Speed":"0.00","Wind Angle":"306.4","Reference":"Apparent"}}</sentence>

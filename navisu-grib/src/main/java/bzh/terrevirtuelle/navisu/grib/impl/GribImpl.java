@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import gov.nasa.worldwind.layers.Layer;
+import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -48,7 +49,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
             @Override
             public void open(ProgressHandle pHandle, String... files) {
                 for(String file : files) {
-                    LOGGER.info("Opening " + file + " ...");
+                    LOGGER.log(Level.INFO, "Opening {0} ...", file);
                     loadFile(file); //Todo Make stuff for all files
                 }
             }
@@ -83,7 +84,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
         LOGGER.info(this.gribController.getModel().toString());
 
         LOGGER.info("######################################## CREATE LAYER #############################################");
-        //this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
+       // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
         this.layerLayerManager = (LayerManager<Layer>) ((GeoView)this.geoViewServices.getDisplayService()).getLayerManager();
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));
     }
