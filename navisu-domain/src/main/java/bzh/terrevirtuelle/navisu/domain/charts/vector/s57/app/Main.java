@@ -2,6 +2,7 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.app;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.ConnectedNode;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Edge;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Point2D;
@@ -57,17 +58,35 @@ public class Main {
 
         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
             if (obj.getClass().getSimpleName().equals("DepthArea")) {
-                System.out.println("DepthArea Id : " + obj.getId());
-                DepthArea depthArea = (DepthArea) obj;
-                System.out.println("DepthRangeValue1 " + depthArea.getDepthRangeValue1());
-                System.out.println("DepthRangeValue2 " + depthArea.getDepthRangeValue2());
-                HashMap<Spatial, VectorUsage> spatialRecord = obj.getSpatialRecord();
-                spatialRecord.keySet().stream().forEach((s) -> {
-                    Edge n = (Edge) s;
-                    List<Point2D> lp = n.getPoints();
-                    lp.stream().forEach((p) -> {
-                        System.out.println(p.getY() + "  " + p.getX());
+                DepthArea da = (DepthArea) obj;
+                System.out.println("DepthArea Id : " + da.getId()
+                        + " prim=" + da.getPrim()
+                        + " inner=" + da.getInnerBoundaryIndex()
+                        + " epthRangeValue1=" + da.getDepthRangeValue1()
+                        + " epthRangeValue2=" + da.getDepthRangeValue2()
+                        + " qualityOfSoundingMeasurement" + da.getQualityOfSoundingMeasurement()
+                        + " erticaldatum=" + da.getVerticaldatum()
+                        + " scaleMinimum=" + da.getScaleMinimum()
+                        + " scaleMaximum=" + da.getScaleMaximum());
+                HashMap<Spatial, VectorUsage> daSpatialRecord = da.getSpatialRecord();
+                daSpatialRecord.keySet().stream().forEach((s) -> {
+                    Edge e = (Edge) s;
+                    System.out.println("Edge Id : " + e.getId());
+                    HashMap<Spatial, VectorUsage> eSpatialRecord = e.getSpatialRecord();
+                    eSpatialRecord.keySet().stream().forEach((ss) -> {
+                        // System.out.println((ConnectedNode)ss);
+                        System.out.println(ss.getClass().getSimpleName()
+                                + " id=" + ss.getId()
+                                + "  " + ((ConnectedNode) ss).getPoint()
+                                + "  " + eSpatialRecord.get(ss));
                     });
+
+                    List<Point2D> lp = e.getPoints();
+                    System.out.println("Points size : " + lp.size());
+                    lp.stream().forEach((p) -> {
+                        System.out.print(p.getY() + "  " + p.getX() +"; ");
+                    });
+                    System.out.println("");
                 });
                 System.out.println();
             }
@@ -92,7 +111,6 @@ public class Main {
          }
          });
          */
-        
         /*
          S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
          if (obj.getClass().getSimpleName().equals("SurveyReliability")) {
