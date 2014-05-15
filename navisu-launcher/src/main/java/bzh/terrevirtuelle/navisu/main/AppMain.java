@@ -167,7 +167,9 @@ public class AppMain extends Application {
         //
         // TEST S57 Charts
         //
-        //chartS57Services.addCoastlines();
+        chartS57Services.loadFile("I:\\cartes\\SHOM_OpenData\\S57_OPENDATA_IROISEE\\S57_OPENDATA_IROISEE\\FR571220\\FR571220.000");
+        chartS57Services.addCoastlines();
+        chartS57Services.addDepthAreas();
         //
         // END TEST S57 Charts
         //
