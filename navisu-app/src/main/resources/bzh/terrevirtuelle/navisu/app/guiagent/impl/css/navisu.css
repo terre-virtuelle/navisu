@@ -39,7 +39,7 @@
  *                                                                             *
  ******************************************************************************/
 .split-pane-divider {
-   -fx-background-color: linear-gradient(to bottom, #FAFAFA, #303030);
+   -fx-background-color: linear-gradient(to left, #FAFAFA, #303030);
    //-fx-background-color: lightgrey;
    -fx-background-image: url("layer_diviser_icon.png");
    -fx-background-position: center;
