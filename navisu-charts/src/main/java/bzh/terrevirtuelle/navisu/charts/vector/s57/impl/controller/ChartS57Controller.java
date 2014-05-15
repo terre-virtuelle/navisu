@@ -22,10 +22,14 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.DepthArea;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.Polyline;
+import gov.nasa.worldwind.render.ScreenAnnotation;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwindx.examples.util.LabeledPath;
 import java.awt.Color;
+import java.awt.Point;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,12 +47,11 @@ import java.util.logging.Logger;
  * @date 11/05/2014 12:49
  */
 public class ChartS57Controller {
-
+    
     protected String path;
     protected Set<Polyline> coastlinePolylineSet;
-
     private ChartS57Layer chartLayer;
-
+    
     public ChartS57Controller(String path) {
         this.path = path;
         /* Parser.parse() */
@@ -128,7 +131,7 @@ public class ChartS57Controller {
         }
         System.out.println(minY + " " + minX + " " + maxY + " " + maxX);
     }
-
+    
     public void addCoastlines(Set<Coastline> coastlines) {
         coastlinePolylineSet = new HashSet<>();
         coastlines.stream().forEach((c) -> {
@@ -147,56 +150,49 @@ public class ChartS57Controller {
             });
         });
     }
-
+    
     public void removeCoastlines() {
         coastlinePolylineSet.stream().forEach((c) -> {
             chartLayer.removeRenderable(c);
         });
     }
-
+    
     public void addDepthAreas(Set<DepthArea> depthAreas) {
         //  depthAreaPolylineSet = new HashSet<>();
+        List<Polyline> polylines = new ArrayList<>();
+        List<Path> paths = new ArrayList<>();
+       // ArrayList<Position> positions = new ArrayList<>();
         depthAreas.stream().forEach((d) -> {
             float v1 = new Float(d.getDepthRangeValue1());
             float v2 = new Float(d.getDepthRangeValue2());
-            System.out.println("v1 : " + v1 + "  v2 : " + v2);
-            ArrayList<Position> positions = new ArrayList<>();
-
+            //  ArrayList<Position> positions = new ArrayList<>();
             HashMap<Spatial, VectorUsage> spatialRecord = d.getSpatialRecord();
-
+            
             spatialRecord.keySet().stream().forEach((s) -> {
                 Edge n = (Edge) s;
                 List<Point2D> lp = n.getPoints();
+                ArrayList<Position> positions = new ArrayList<>();
+                
                 lp.stream().forEach((p) -> {
-                    positions.add(Position.fromDegrees(p.getY(), p.getX()));
+                    positions.add(Position.fromDegrees(p.getY(), p.getX(),1));
                 });
+                /*
+                 Polyline pl = new Polyline(positions);
+                 pl.setFollowTerrain(true);
+                 pl.setColor(Color.YELLOW);
+                 // chartLayer.addRenderable(pl);
+                 polylines.add(pl);
+                 positions.clear();
+                 */
+                
+                Path pl = new Path(positions);
+              //  pl.setFollowTerrain(true);
+                ShapeAttributes attrs = new BasicShapeAttributes();
+                attrs.setOutlineMaterial(new Material(Color.yellow));
+                pl.setAttributes(attrs);
+                
+                chartLayer.addRenderable(pl);        
             });
-            System.out.println("positions " + positions.size());
-            if (positions.size() > 2) {
-                Color color = Color.PINK;
-                if (v1 >= 0 && v2 <= 3) {
-                    color = new Color(129, 195, 233);
-                }
-                if (v1 >= 3 && v2 <= 5) {
-                    color = new Color(129, 195, 233);
-                }
-                if (v1 >= 5 && v2 <= 10) {
-                    color = new Color(167, 224, 233);
-                }
-                if (v1 >= 10 && v2 <= 20) {
-                    color = new Color(182, 235, 219);
-                }
-                if (v1 >= 20 && v2 <= 50) {
-                    color = new Color(216, 244, 225);
-                }
-
-                //  list.addAll(lp);
-                Polygon pl = new Polygon(positions);
-                ShapeAttributes normalAttributes = new BasicShapeAttributes();
-                normalAttributes.setInteriorMaterial(new Material(color));
-                pl.setAttributes(normalAttributes);
-                chartLayer.addRenderable(pl);
-            }
-        });
+        });  
     }
 }
