@@ -11,6 +11,7 @@
     -fx-text-box-border: -fx-hover-base;
     -fx-shadow-highlight-color: -fx-base;
     -fx-outer-border: -fx-hover-base;
+    -fx-inner-border: -fx-hover-base;
 }
 
 .tree-view {
@@ -31,3 +32,27 @@
     -fx-stroke: #120D43;
     -fx-stroke-width: 2;
 }
+
+/*******************************************************************************
+ *                                                                             *
+ * SplitPane                                                                   *
+ *                                                                             *
+ ******************************************************************************/
+.split-pane-divider {
+   -fx-background-color: linear-gradient(to left, #FAFAFA, #303030);
+   //-fx-background-color: lightgrey;
+   -fx-background-image: url("layer_diviser_icon.png");
+   -fx-background-position: center;
+   -fx-background-repeat: no-repeat;
+   -fx-padding: /*0 0.25em 0 0.25em;*/ 0 8 0 8;
+}
+/* horizontal the two nodes are placed to the left/right of each other. 
+.split-pane:horizontal > .split-pane-divider {
+   -fx-background-color: -fx-box-border, -fx-inner-border-horizontal;
+   -fx-background-insets: 0, 0 1 0 1;
+}*/
+/* vertical the two nodes are placed on top of each other. 
+.split-pane:vertical > .split-pane-divider {
+   -fx-background-color: -fx-box-border, -fx-inner-border;
+   -fx-background-insets: 0, 1 0 1 0;
+}*/
