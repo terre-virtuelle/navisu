@@ -230,12 +230,12 @@ public class GuiAgentImpl
     private void createRadialWidget() {
 
         //TODO Refactor All of this code
-        ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/sounderradialombre2.png")));
-        ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/windradialombre2.png")));
-        ImageView gpsComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/compassradialombre2.png")));
-        ImageView gpsPrecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSradialombre2.png")));
-        ImageView gpslocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/AISradialombre2.png")));
-        centerImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/Instruments150.png")));
+        ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/sounderradialombre.png")));
+        ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/windradialombre.png")));
+        ImageView gpsComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/compassradialombre.png")));
+        ImageView gpsPrecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSradialombre.png")));
+        ImageView gpslocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/AISradialombre.png")));
+        centerImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPS150.png")));
         RadialMenuRootItem rootItem = new RadialMenuRootItem();
 
         RadialMenuItem zoomInItem = new RadialMenuItem(zoomInImg);
