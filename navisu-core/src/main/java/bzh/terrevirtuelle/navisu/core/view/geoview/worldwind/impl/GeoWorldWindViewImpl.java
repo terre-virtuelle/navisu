@@ -21,6 +21,8 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.EarthFlat;
+import gov.nasa.worldwind.globes.ElevationModel;
+import gov.nasa.worldwind.terrain.BathymetryFilterElevationModel;
 import gov.nasa.worldwindx.examples.util.BalloonController;
 import gov.nasa.worldwindx.examples.util.HighlightController;
 import gov.nasa.worldwindx.examples.util.HotSpotController;
@@ -61,6 +63,9 @@ public class GeoWorldWindViewImpl
 
         // Create a new empty Model
         final Model model = new BasicModel(this.globe, null);
+
+        
+
         this.wwd.setModel(model);
 
         // Create the LayerManager
@@ -77,6 +82,14 @@ public class GeoWorldWindViewImpl
         HighlightController highlightController = new HighlightController(this.wwd, SelectEvent.ROLLOVER);
         ToolTipController toolTipController = new ToolTipController(this.wwd, AVKey.DISPLAY_NAME, null);
         BalloonController balloonController = new BalloonController(wwd);
+        
+        // Removal bathymetry
+        // Get the current elevation model.
+        ElevationModel currentElevationModel = this.wwd.getModel().getGlobe().getElevationModel();
+        // Wrap it with the no-bathymetry elevation model.
+        BathymetryFilterElevationModel noDepthModel = new BathymetryFilterElevationModel(currentElevationModel);
+        // Have the globe use the no-bathymetry elevation model.
+        wwd.getModel().getGlobe().setElevationModel(noDepthModel);
     }
 
     protected SwingNode createSwingDisplayNode(WorldWindow wwd) {
