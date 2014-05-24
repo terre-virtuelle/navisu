@@ -5,15 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
-import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
-import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
-//import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
-import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
-import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -25,8 +19,15 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
+import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
+import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
+import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
+import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
+import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
 import javafx.animation.Animation;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -45,7 +46,8 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-import javafx.geometry.Insets;
+
+//import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 
 /**
  * NaVisu
@@ -193,36 +195,65 @@ public class GuiAgentImpl
     //------------------ Option center 
     private void createRadialWidget() {
 
-        //TODO Refactor All of this code
-        ImageView sounderImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/sounderradialombre.png")));
-        ImageView windImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/windradialombre.png")));
-        ImageView compassImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/compassradialombre.png")));
-        ImageView gpsImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSradialombre.png")));
-        ImageView aisImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/AISradialombre.png")));
         centerImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/centreinstruments150.png")));
-        centerImg.setLayoutX(-75);
-        centerImg.setLayoutY(-75);
 
-        RadialMenuContainer rootItem = new RadialMenuContainer();
+        //First Stage Item 1
         RadialMenuContainer zoomInItem = new RadialMenuContainer();
+        ImageView sounderImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/sounderradialombre.png")));
+        zoomInItem.setImage(sounderImg);
+
+        //First Stage Item 2
         RadialMenuContainer zoomOutItem = new RadialMenuContainer();
+        ImageView windImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/windradialombre.png")));
+        zoomOutItem.setImage(windImg);
+
+        //First Stage Item 3
         RadialMenuContainer test1Item = new RadialMenuContainer();
+        ImageView compassImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/compassradialombre.png")));
+        test1Item.setImage(compassImg);
+
+        //First Stage Item 4
         RadialMenuContainer test2Item = new RadialMenuContainer();
+        ImageView gpsImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSradialombre.png")));
+        test2Item.setImage(gpsImg);
+
+        //First Stage Item 5
         RadialMenuContainer test3Item = new RadialMenuContainer();
+        ImageView aisImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/AISradialombre.png")));
+        test3Item.setImage(aisImg);
 
-        rootItem.addItem(zoomInItem);
-        rootItem.addItem(zoomOutItem);
-        rootItem.addItem(test1Item);
-        rootItem.addItem(test2Item);
-        rootItem.addItem(test3Item);
+        //---------------------------------------------------
+        //Stage 2 item 1
+        RadialMenuItem stageTwoItem1 = new RadialMenuItem();
+        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSradialombre.png")));
+        stageTwoItem1.setImage(gpsImg2);
 
-        instrumentsRadialMenu = new RadialMenu(70, 90, 360, 5);
-        instrumentsRadialMenu.getChildren().add(centerImg);
-        instrumentsRadialMenu.addRootItem(rootItem);
+        //Stage 2 item 2
+        RadialMenuItem stageTwoItem2 = new RadialMenuItem();
+        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/compassradialombre.png")));
+        stageTwoItem2.setImage(compassImg2);
+
+        zoomInItem.addItem(stageTwoItem1);
+        zoomInItem.addItem(stageTwoItem2);
+
+        instrumentsRadialMenu = new RadialMenu(70, 130, 360, 5);
+
+        instrumentsRadialMenu.addRootItem(zoomInItem);
+        instrumentsRadialMenu.addRootItem(zoomOutItem);
+        instrumentsRadialMenu.addRootItem(test1Item);
+        instrumentsRadialMenu.addRootItem(test2Item);
+        instrumentsRadialMenu.addRootItem(test3Item);
+
+
+        //Use setManaged(false) to not let the parent's layout resize our component !
+        instrumentsRadialMenu.setManaged(false);
 
         root.getChildren().add(instrumentsRadialMenu);
-        instrumentsRadialMenu.setLayoutX(400);
-        instrumentsRadialMenu.setLayoutY(300);
+        instrumentsRadialMenu.getChildren().add(centerImg);
+        centerImg.setLayoutX(-centerImg.getImage().getWidth() / 2);
+        centerImg.setLayoutY(-centerImg.getImage().getHeight() / 2);
+        instrumentsRadialMenu.setLayoutX(width / 2);
+        instrumentsRadialMenu.setLayoutY(height / 2);
         instrumentsRadialMenu.setVisible(false);
     }
 

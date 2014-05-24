@@ -27,7 +27,7 @@
     -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
 }
 
-#radialitem {
+#radialItem {
     -fx-fill: linear-gradient(-fx-light-gradient, -fx-base);
     -fx-stroke: #120D43;
     -fx-stroke-width: 2;

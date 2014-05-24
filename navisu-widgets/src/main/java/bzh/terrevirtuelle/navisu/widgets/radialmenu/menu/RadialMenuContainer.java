@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.widgets.radialmenu.menu;
 
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -8,10 +9,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseEvent;
 
+
+/**
+ * NaVisu
+ *
+ * @author jordan
+ */
+
 public class RadialMenuContainer extends RadialMenuItem {
 
     private ObservableList<RadialMenuItem> items = FXCollections.observableArrayList();
     private BooleanProperty isChildrenVisible;
+
 
     public RadialMenuContainer() {
 
@@ -31,14 +40,13 @@ public class RadialMenuContainer extends RadialMenuItem {
         });
     }
 
+
     protected void updateChildren() {
-        if (items.size() == 0) {
-            return;
-        }
+        if(items.size() == 0) return;
         //TODO Add root menu length to compute the radial item length
         double radialItemLenght = 360 / items.size();
 
-        for (int i = 0; i < items.size(); i++) {
+        for(int i = 0; i < items.size(); i++) {
 
             RadialMenuItem radialMenuItem = items.get(i);
 
@@ -75,19 +83,18 @@ public class RadialMenuContainer extends RadialMenuItem {
         getChildren().add(item);
     }
 
+
     public ObservableList<RadialMenuItem> getItems() {
         return items;
     }
 
-    /**
-     * *********************************************************
-     */
+    /************************************************************/
     public final BooleanProperty isChildrenVisibleProperty() {
         if (isChildrenVisible == null) {
             isChildrenVisible = new SimpleBooleanProperty(this, "isChildrenVisible") {
                 @Override
                 protected void invalidated() {
-                    for (RadialMenuItem item : items) {
+                    for(RadialMenuItem item : items) {
                         item.setVisible(get());
                     }
                 }

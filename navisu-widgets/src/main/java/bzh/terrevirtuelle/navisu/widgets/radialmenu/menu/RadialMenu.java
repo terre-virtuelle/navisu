@@ -8,6 +8,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 
+
+/**
+ * NaVisu
+ *
+ * @author jordan
+ */
 public class RadialMenu extends Group {
 
 	private DoubleProperty gap;

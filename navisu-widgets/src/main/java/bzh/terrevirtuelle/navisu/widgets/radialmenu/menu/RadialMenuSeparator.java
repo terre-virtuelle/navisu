@@ -2,8 +2,9 @@ package bzh.terrevirtuelle.navisu.widgets.radialmenu.menu;
 
 
 /**
- * User: jordan
- * Date: 01/04/2014
+ * NaVisu
+ *
+ * @author jordan
  */
 public class RadialMenuSeparator extends RadialMenuItem {
 
