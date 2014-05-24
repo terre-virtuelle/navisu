@@ -136,8 +136,11 @@ public class AppMain extends Application {
         // Test connexion GPS 
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
+        
         // Test connexion Gpsd 
         // dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+        // dataServerServices.openGpsd("hd-sf.com", 9009);
+        
         // Test connexion fichier 
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
