@@ -33,11 +33,13 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
     protected static final String EXTENSION = ".kap";
     protected static final String GROUP = "BSB/KAP Charts";
-    
-    @UsedService GeoViewServices geoViewServices;
 
-    @UsedService LayerTreeServices layerTreeServices;
-    
+    @UsedService
+    GeoViewServices geoViewServices;
+
+    @UsedService
+    LayerTreeServices layerTreeServices;
+
     @Override
     public void componentInitiated() {
         layerTreeServices.createGroup(GROUP);
@@ -48,7 +50,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
         boolean canOpen = false;
 
-        if(file.toLowerCase().endsWith(EXTENSION)) {
+        if (file.toLowerCase().endsWith(EXTENSION)) {
             canOpen = true;
         }
 
@@ -58,7 +60,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     @Override
     public void open(ProgressHandle pHandle, String... files) {
 
-        for(String file : files) {
+        for (String file : files) {
             this.handleOpenFile(pHandle, file);
         }
     }
@@ -75,6 +77,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
             Proc.builder.create()
                     .setCmd(cmd)
+                    .addArg("-ot Int64 ")
                     .addArg("-of GTiff")
                     .addArg("-expand rgb")
                     .addArg(file)
@@ -92,12 +95,12 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
         installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
 
         Layer layer = installer.installSurfaceImage(inputFile, pHandle);
-        if(layer != null) {
+        if (layer != null) {
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
 
-        if(inputFile.toString().endsWith(".tif")) {
+        if (inputFile.toString().endsWith(".tif")) {
             try {
                 Files.delete(inputFile);
             } catch (IOException e) {
@@ -113,7 +116,7 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
     @Override
     public String[] getExtensions() {
-        return new String[] { "*" + EXTENSION };
+        return new String[]{"*" + EXTENSION};
     }
 
     @Override

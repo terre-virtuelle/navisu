@@ -235,7 +235,6 @@ public class ImageryInstallerImpl implements ImageryInstaller
         {
             throw new IllegalArgumentException("Image source must be a java.nio.Path or a java.io.File or a java.lang.String. Founnd : " + imageSource.getClass());
         }
-        
         if(imageSource instanceof Path) 
         {
             return ((Path) imageSource).toFile();

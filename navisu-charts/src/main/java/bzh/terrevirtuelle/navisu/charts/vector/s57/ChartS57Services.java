@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.charts.vector.s57;
+ package bzh.terrevirtuelle.navisu.charts.vector.s57;
 
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.view.ChartS57Layer;
