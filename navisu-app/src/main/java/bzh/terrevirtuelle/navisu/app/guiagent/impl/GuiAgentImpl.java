@@ -5,9 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
-import bzh.jojal.widget.radialmenu.RadialMenu;
-import bzh.jojal.widget.radialmenu.RadialMenuItem;
-import bzh.jojal.widget.radialmenu.RadialMenuRootItem;
+import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
+import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
+//import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -92,7 +92,7 @@ public class GuiAgentImpl
             = new ImageView(ICON_PATH + "dock.png");
     boolean firstInstruments = true;
     protected RadialMenu instrumentsRadialMenu;
-    boolean firstGpsRadialMenu = false;
+    boolean firstInstrumentsRadialMenu = false;
     protected ImageView centerImg;
     public final DockItem[] ICONS = new DockItem[]{
         //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
@@ -102,7 +102,7 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("tides", ICON_PATH + "tides.png", (e) -> System.out.println("tides & streams")),
         DockItemFactory.newImageItem("meteo", ICON_PATH + "meteo.png", (e) -> System.out.println("meteo")),
         //DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showInstruments()),
-        DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showGPSMenu()),
+        DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
         DockItemFactory.newImageItem("simulations", ICON_PATH + "flou.png", (e) -> System.out.println("a venir 0")),
         DockItemFactory.newImageItem("engine", ICON_PATH + "vide.png", (e) -> System.out.println("a venir 1")),
         DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> System.out.println("diary")),
@@ -113,7 +113,7 @@ public class GuiAgentImpl
         //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
         //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
         DockItemFactory.newImageItem("AIS", ICON_PATH + "AISvertical.png", (e) -> System.out.println("AIS")),
-        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> showGPSMenu()),
+        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> showInstrumentsMenu()),
         DockItemFactory.newImageItem("Compass", ICON_PATH + "compassvertical.png", (e) -> System.out.println("Compass")),
         DockItemFactory.newImageItem("Sounder", ICON_PATH + "soundervertical.png", (e) -> System.out.println("Sounder")),
         DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
@@ -183,48 +183,12 @@ public class GuiAgentImpl
         }
     }
 
-    private void showGPSMenu() {
-        firstGpsRadialMenu = firstGpsRadialMenu != true;
-        instrumentsRadialMenu.setVisible(firstGpsRadialMenu);
-        centerImg.setVisible(firstGpsRadialMenu);
+    private void showInstrumentsMenu() {
+        System.out.println("showInstrumentsMenu");
+        firstInstrumentsRadialMenu = firstInstrumentsRadialMenu != true;
+        instrumentsRadialMenu.setVisible(firstInstrumentsRadialMenu);
+        // centerImg.setVisible(firstInstrumentsRadialMenu);
     }
-    //------------------ Option top right corner
-    /*
-     private void createRadialWidget() {
-        
-        
-     //TODO Refactor All of this code
-     ImageView zoomInImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-in.png")));
-     ImageView zoomOutImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/zoom-out.png")));
-     ImageView GPSComImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSComPane.png")));
-     ImageView GPSprecImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSprecision.png")));
-     ImageView GPSlocImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSlocation.png")));
-        
-
-     RadialMenuRootItem rootItem = new RadialMenuRootItem();
-
-     RadialMenuItem zoomInItem = new RadialMenuItem(zoomInImg);
-     RadialMenuItem zoomOutItem = new RadialMenuItem(zoomOutImg);
-     RadialMenuItem test1Item = new RadialMenuItem(GPSComImg);
-     RadialMenuItem test2Item = new RadialMenuItem(GPSprecImg);
-     RadialMenuItem test3Item = new RadialMenuItem(GPSlocImg);
-
-     rootItem.addItem(zoomInItem);
-     rootItem.addItem(zoomOutItem);
-     rootItem.addItem(test1Item);
-     rootItem.addItem(test2Item);
-     rootItem.addItem(test3Item);
-
-     RadialMenu radialMenu = new RadialMenu(rootItem);
-     radialMenu.setFullMenuAnge(90);  //FIXME setFullMenuAnge -> setFullMenuAngle
-     radialMenu.setStartRotationAngle(180);
-
-     root.getChildren().add(radialMenu);
-     StackPane.setAlignment(radialMenu, Pos.TOP_RIGHT);
-
-     radialMenu.show(this.width, -5);
-     }
-     */
 
     //------------------ Option center 
     private void createRadialWidget() {
@@ -236,13 +200,15 @@ public class GuiAgentImpl
         ImageView gpsImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/GPSradialombre.png")));
         ImageView aisImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/AISradialombre.png")));
         centerImg = new ImageView(new Image(getClass().getResourceAsStream("radialmenu/centreinstruments150.png")));
-        RadialMenuRootItem rootItem = new RadialMenuRootItem();
+        centerImg.setLayoutX(-75);
+        centerImg.setLayoutY(-75);
 
-        RadialMenuItem zoomInItem = new RadialMenuItem(sounderImg);
-        RadialMenuItem zoomOutItem = new RadialMenuItem(windImg);
-        RadialMenuItem test1Item = new RadialMenuItem(compassImg);
-        RadialMenuItem test2Item = new RadialMenuItem(gpsImg);
-        RadialMenuItem test3Item = new RadialMenuItem(aisImg);
+        RadialMenuContainer rootItem = new RadialMenuContainer();
+        RadialMenuContainer zoomInItem = new RadialMenuContainer();
+        RadialMenuContainer zoomOutItem = new RadialMenuContainer();
+        RadialMenuContainer test1Item = new RadialMenuContainer();
+        RadialMenuContainer test2Item = new RadialMenuContainer();
+        RadialMenuContainer test3Item = new RadialMenuContainer();
 
         rootItem.addItem(zoomInItem);
         rootItem.addItem(zoomOutItem);
@@ -250,17 +216,14 @@ public class GuiAgentImpl
         rootItem.addItem(test2Item);
         rootItem.addItem(test3Item);
 
-        instrumentsRadialMenu = new RadialMenu(rootItem);
-        instrumentsRadialMenu.setFullMenuAnge(360);  //FIXME setFullMenuAnge -> setFullMenuAngle
-        instrumentsRadialMenu.setStartRotationAngle(180);
+        instrumentsRadialMenu = new RadialMenu(70, 90, 360, 5);
+        instrumentsRadialMenu.getChildren().add(centerImg);
+        instrumentsRadialMenu.addRootItem(rootItem);
 
-        root.getChildren().add(centerImg);
-        StackPane.setAlignment(centerImg, Pos.CENTER);
-        centerImg.setVisible(false);
         root.getChildren().add(instrumentsRadialMenu);
-        StackPane.setAlignment(instrumentsRadialMenu, Pos.CENTER);
+        instrumentsRadialMenu.setLayoutX(400);
+        instrumentsRadialMenu.setLayoutY(300);
         instrumentsRadialMenu.setVisible(false);
-        instrumentsRadialMenu.show(this.width, -5);
     }
 
     private void createDockWidget(Scene scene) {
@@ -272,7 +235,6 @@ public class GuiAgentImpl
         groupDock.getChildren().add(mobImg);
         root.getChildren().add(groupDock);
         mobImg.setLayoutX(1560.0);
-        // MOBImg.setLayoutY(100.0);
         basedock.setLayoutX(450.0);
         basedock.setLayoutY(100.0);
         dock.setLayoutX(525.0);
