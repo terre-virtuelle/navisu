@@ -55,7 +55,7 @@ public class Main {
          System.out.println(obj + "\n");
          });
          */
-
+/*
         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
             if (obj.getClass().getSimpleName().equals("DepthArea")) {
                 DepthArea da = (DepthArea) obj;
@@ -91,7 +91,7 @@ public class Main {
                 System.out.println();
             }
         });
-
+*/
 
         /*
          S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
