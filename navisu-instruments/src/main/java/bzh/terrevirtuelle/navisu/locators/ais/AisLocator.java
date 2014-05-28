@@ -44,12 +44,20 @@ import gov.nasa.worldwind.render.BasicBalloonAttributes;
 import gov.nasa.worldwind.render.GlobeBrowserBalloon;
 import gov.nasa.worldwind.render.Size;
 import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -68,6 +76,7 @@ public class AisLocator {
     protected Map<Integer, ShipProcessor> tShipProcessors;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, StationProcessor> tStationsProcessors;
+    protected Map<Integer, String> midMap;
 
     protected GeoViewServices geoViewServices;
     protected DpAgentServices dpAgentServices;
@@ -100,13 +109,13 @@ public class AisLocator {
             DpAgentServices dpAgentServices,
             GuiAgentServices guiAgentServices) {
 
-        tShipProcessors = new HashMap<>();
-        tStationsProcessors = new HashMap<>();
-        timestamps = new HashMap<>();
-
         this.geoViewServices = geoViewServices;
         this.dpAgentServices = dpAgentServices;
         this.guiAgentServices = guiAgentServices;
+
+        tShipProcessors = new HashMap<>();
+        tStationsProcessors = new HashMap<>();
+        timestamps = new HashMap<>();
 
         //      pane = guiAgentServices.getRoot();
         this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
@@ -119,7 +128,22 @@ public class AisLocator {
         this.baloonLayer = new RenderableLayer();
         wwd.getModel().getLayers().add(baloonLayer);
         attrs = new BasicBalloonAttributes();
-        attrs.setSize(Size.fromPixels(650, 300));
+        attrs.setSize(Size.fromPixels(600, 320));
+        midMap = new HashMap<>();
+        String[] midEntries;
+        try {
+            try (BufferedReader br = new BufferedReader(new FileReader("data/ais/mmsi.txt"))) {
+                String s;
+                while ((s = br.readLine()) != null) {
+                    if (!s.isEmpty()) {
+                        midEntries = s.split(",");
+                        midMap.put(new Integer(midEntries[0].trim()), midEntries[1].trim());
+                    }
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(AisLocator.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         wwd.addSelectListener((SelectEvent event) -> {
             if (event.isLeftClick()
@@ -249,8 +273,8 @@ public class AisLocator {
         balloon.setAttributes(attrs);
         balloon.getAttributes().setImageSource(IMAGE_EARTH.getPowerOfTwoImage());
         balloon.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
-     //   balloon.getAttributes().setImageScale(7);
-      //  balloon.getAttributes().setImageOffset(new Point(7, 7));
+        //   balloon.getAttributes().setImageScale(7);
+        //  balloon.getAttributes().setImageOffset(new Point(7, 7));
 
         this.baloonLayer.addRenderable(balloon);
     }
@@ -336,6 +360,13 @@ public class AisLocator {
             tmp = tmp.replace("__longitude__", "");
         }
         if (ship.getMmsi() != 0) {
+            String mmsiStr = Integer.toString(ship.getMmsi());
+            String mid = mmsiStr.substring(0, 3);
+            tmp = tmp.replace("__country__", midMap.get(new Integer(mid)));
+        } else {
+            tmp = tmp.replace("__country__", "");
+        }
+        if (ship.getMmsi() != 0) {
             tmp = tmp.replace("photo_keywords:", "photo_keywords:" + ship.getMmsi());
         }
         return tmp;
@@ -354,7 +385,7 @@ public class AisLocator {
             + "<head></head>\n"
             + "<body>\n"
             + "	<center>\n"
-            + "<table border  width=\"600\" cellpadding=\"0\" cellspacing=\"0\">\n"
+            + "<table border  width=\"500\" cellpadding=\"0\" cellspacing=\"0\">\n"
             + "    <tr>\n"
             + "    <td colspan=\"3\" align=\"left\" valign=\"top\">\n"
             + "                 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
@@ -414,6 +445,8 @@ public class AisLocator {
             + "                    <td align=\"left\"><font color=\"#999999\"><strong>  Longitude :&nbsp; </strong></font></td>\n"
             + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __longitude__<strong> </font> </td>             \n"
             + "                    </tr>\n"
+            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Country :&nbsp; </strong></font></td>\n"
+            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __country__<strong> </font> </td>\n"
             + "	    </table> \n"
             + "</br></br>\n"
             + "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
