@@ -130,7 +130,7 @@ public class AppMain extends Application {
 
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
-        // Test avec choix des parametres de comm
+        // Initialisation des paramtètres de diffusion des data.
         dataServerServices.init("localhost", 8080);
 
         // Test connexion GPS 
