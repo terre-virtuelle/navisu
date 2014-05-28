@@ -1,8 +1,8 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.tools;
 
-
 import javafx.animation.*;
 import javafx.beans.property.DoubleProperty;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
@@ -64,17 +64,18 @@ public interface AnimationFactory {
 
         FadeTransition fade = new FadeTransition(Duration.millis(millis));
         fade.setFromValue(from);
-        fade.setToValue(to);
+        fade.setToValue(to); 
         fade.setNode(target);
 
         return fade;
     }
 
-    public static Animation newTranslateAnimation(Node target, double millis, double to) {
+    public static Animation newTranslateAnimation(Node target, double millis, double to, boolean autoReverse) {
         TranslateTransition tt = new TranslateTransition(Duration.millis(millis), target);
         tt.setToY(to);
-        tt.setAutoReverse(true);
+        tt.setAutoReverse(autoReverse);
         return tt;
     }
 
+     
 }

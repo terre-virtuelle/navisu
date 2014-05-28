@@ -48,7 +48,6 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 //import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
-
 /**
  * NaVisu
  *
@@ -244,7 +243,6 @@ public class GuiAgentImpl
         instrumentsRadialMenu.addRootItem(test2Item);
         instrumentsRadialMenu.addRootItem(test3Item);
 
-
         //Use setManaged(false) to not let the parent's layout resize our component !
         instrumentsRadialMenu.setManaged(false);
 
@@ -274,8 +272,8 @@ public class GuiAgentImpl
         /* margins if necessity to adjust position of whole group */
         //StackPane.setMargin(groupdock,(new Insets(0, 0, 0, 0)));
         StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
-        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300);
-        Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0);
+        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300, true);
+        Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0, true);
         scene.setOnKeyPressed((KeyEvent ke) -> {
             if (ke.getCode() == KeyCode.DOWN) {
                 downAnimation.play();
