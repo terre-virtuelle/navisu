@@ -77,9 +77,10 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
 
             Proc.builder.create()
                     .setCmd(cmd)
-                    .addArg("-ot Int64 ")
-                    .addArg("-of GTiff")
-                    .addArg("-expand rgb")
+                   // .addArg("-ot Int64 ")
+                    .addArg("-of GTiff ")
+                    .addArg("-expand rgb ")
+                    .addArg("-co compress=lzw ")
                     .addArg(file)
                     .addArg(tmpTif.toString())
                     .setOut(System.out)
