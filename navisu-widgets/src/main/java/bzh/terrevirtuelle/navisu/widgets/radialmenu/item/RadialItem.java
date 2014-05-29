@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcTo;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -16,8 +15,9 @@ import javafx.scene.shape.Path;
 /**
  * NaVisu
  *
- * @author jordan
+ * @author Jordan
  */
+
 public class RadialItem extends Group {
 
     protected static final int ANGLE_TO_START_AT_ZERO_DEGREE = -90;
@@ -48,9 +48,6 @@ public class RadialItem extends Group {
         this.path.getElements().add(arcToInner);
 
         getChildren().add(this.path);
-
-        path.setFill(Color.ALICEBLUE);
-        path.setStroke(Color.BLACK);
     }
 
 
@@ -85,7 +82,7 @@ public class RadialItem extends Group {
         arcTo.setRadiusX(getOuterRadius());
         arcTo.setRadiusY(getOuterRadius());
         arcTo.setSweepFlag(true);
-        arcTo.setLargeArcFlag(getLength() > 180 ? true : false);
+        arcTo.setLargeArcFlag(getLength() > 180);
 
         lineTo2.setX(getInnerRadius() * Math.cos(startAngleInRadians+arcAngleLengthInRadians - Math.asin(getGap() / getInnerRadius())));
         lineTo2.setY(getInnerRadius() * Math.sin(startAngleInRadians+arcAngleLengthInRadians - Math.asin(getGap() / getInnerRadius())));
@@ -95,7 +92,7 @@ public class RadialItem extends Group {
         arcToInner.setRadiusX(getInnerRadius());
         arcToInner.setRadiusY(getInnerRadius());
         arcToInner.setSweepFlag(false);
-        arcToInner.setLargeArcFlag(getLength() > 180 ? true : false);
+        arcToInner.setLargeArcFlag(getLength() > 180);
 
         double centerRadius = (getOuterRadius() + getInnerRadius()) / 2;
         Point2D centerOfPath = new Point2D(centerRadius*Math.cos(startAngleInRadians + arcAngleLengthInRadians/2),
@@ -218,7 +215,7 @@ public class RadialItem extends Group {
             image = new SimpleObjectProperty<ImageView>(this, "image") {
                 @Override
                 protected void invalidated() {
-
+                    System.out.println("Set Image");
                     if(getChildren().contains(get())) {
                         getChildren().remove(get());
                     }
