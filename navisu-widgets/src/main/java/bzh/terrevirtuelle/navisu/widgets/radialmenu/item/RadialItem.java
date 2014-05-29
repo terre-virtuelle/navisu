@@ -215,7 +215,6 @@ public class RadialItem extends Group {
             image = new SimpleObjectProperty<ImageView>(this, "image") {
                 @Override
                 protected void invalidated() {
-                    System.out.println("Set Image");
                     if(getChildren().contains(get())) {
                         getChildren().remove(get());
                     }
