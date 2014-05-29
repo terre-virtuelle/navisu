@@ -5,6 +5,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 
+/**
+ * NaVisu
+ *
+ * @author Jordan Mens
+ */
 public class RadialMenuItem extends RadialItem {
 
     private ObjectProperty<RadialItem> parentItem;

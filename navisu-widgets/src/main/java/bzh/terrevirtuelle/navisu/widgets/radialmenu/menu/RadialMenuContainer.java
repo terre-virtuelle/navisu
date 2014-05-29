@@ -8,6 +8,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseEvent;
 
+
+/**
+ * NaVisu
+ *
+ * @author Jordan Mens
+ */
 public class RadialMenuContainer extends RadialMenuItem {
 
     private ObservableList<RadialMenuItem> items = FXCollections.observableArrayList();

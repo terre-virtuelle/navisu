@@ -9,6 +9,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 
+
+/**
+ * NaVisu
+ *
+ * @author Jordan Mens
+ */
 public class RadialMenu extends Group {
 
     private DoubleProperty gap;

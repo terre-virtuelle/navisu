@@ -15,7 +15,7 @@ import javafx.scene.shape.Path;
 /**
  * NaVisu
  *
- * @author Jordan
+ * @author Jordan Mens
  */
 
 public class RadialItem extends Group {

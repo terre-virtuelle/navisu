@@ -33,6 +33,12 @@
     -fx-stroke-width: 2;
 }
 
+#radialItem:pressed {
+    -fx-fill: linear-gradient(-fx-base, -fx-light-gradient);
+    -fx-stroke: #120D43;
+    -fx-stroke-width: 2;
+}
+
 /*******************************************************************************
  *                                                                             *
  * SplitPane                                                                   *

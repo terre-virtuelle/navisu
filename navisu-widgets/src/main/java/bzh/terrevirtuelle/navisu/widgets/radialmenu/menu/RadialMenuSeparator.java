@@ -4,7 +4,7 @@ package bzh.terrevirtuelle.navisu.widgets.radialmenu.menu;
 /**
  * NaVisu
  *
- * @author jordan
+ * @author Jordan Mens
  */
 public class RadialMenuSeparator extends RadialMenuItem {
 
