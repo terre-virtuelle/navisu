@@ -25,14 +25,20 @@ public class Proc {
 
     protected OutputStream out;
     protected OutputStream err;
+    protected OutputStream errors;
 
     protected int returnCode;
 
     public Proc() {
         this.args = new LinkedList<>();
-        
+
         this.out = System.out;
         this.err = System.err;
+        try {
+            errors = new FileOutputStream("errors.txt");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Proc.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     protected void exec() throws IOException, InterruptedException {
@@ -43,12 +49,11 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-
         final Process process = Runtime.getRuntime().exec(sb.toString());
-        
+
         redirectSreamAsync(process.getInputStream(), out);
-        redirectSreamAsync(process.getErrorStream(), err);
-        
+        redirectSreamAsync(process.getErrorStream(), errors);
+
         this.returnCode = process.waitFor();
     }
 
@@ -59,7 +64,7 @@ public class Proc {
             String line;
 
             try {
-                while((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) != null) {
                     outStream.println(line);
                 }
             } catch (IOException ex) {
@@ -67,14 +72,19 @@ public class Proc {
             }
         });
     }
-    
+
     public interface Builder {
 
         Builder create();
+
         Builder setCmd(String cmd);
+
         Builder addArg(String... args);
+
         Builder setOut(OutputStream out);
+
         Builder setErr(OutputStream err);
+
         Proc exec() throws IOException, InterruptedException;
     }
 
