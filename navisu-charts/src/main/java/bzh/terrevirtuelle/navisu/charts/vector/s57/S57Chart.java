@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.charts.raster.bsbkap;
+package bzh.terrevirtuelle.navisu.charts.vector.s57;
 
 import org.capcaval.c3.component.Component;
 
@@ -8,5 +8,5 @@ import org.capcaval.c3.component.Component;
  * @author tibus
  * @date 11/11/2013 12:49
  */
-public interface ChartsManager extends Component {
+public interface S57Chart extends Component {
 }

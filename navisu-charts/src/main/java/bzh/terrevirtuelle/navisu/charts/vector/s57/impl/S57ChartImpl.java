@@ -1,44 +1,42 @@
-package bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
-import bzh.terrevirtuelle.navisu.core.util.OS;
-import bzh.terrevirtuelle.navisu.core.util.Proc;
-import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.ChartsManager;
-import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.ChartsManagerServices;
-import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.imageryinstaller.ImageryInstaller;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
+
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import gov.nasa.worldwind.layers.Layer;
-import org.capcaval.c3.component.ComponentState;
-import org.capcaval.c3.component.annotation.UsedService;
-
+import bzh.terrevirtuelle.navisu.charts.vector.s57.S57Chart;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Controller;
+import bzh.terrevirtuelle.navisu.core.util.OS;
+import bzh.terrevirtuelle.navisu.core.util.Proc;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
+import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
+
 import java.util.logging.Logger;
 
 /**
- * NaVisu
- *
- * @author tibus
- * @date 11/11/2013 12:51
+ * @author Serge Morvan
+ * @date 11/05/2014 12:49
  */
-public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, Driver, ComponentState {
-
-    protected final Logger LOGGER = Logger.getLogger(ChartsManagerImpl.class.getName());
-
-    protected static final String EXTENSION = ".kap";
-    protected static final String GROUP = "BSB/KAP Charts";
+public class S57ChartImpl
+        implements S57Chart, S57ChartServices, Driver, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
-
     @UsedService
     LayerTreeServices layerTreeServices;
+
+    private static final String NAME = "S57";
+    private static final String EXTENSION = ".000";
+    protected static final String GROUP = "S57Charts";
+
+    protected ChartS57Controller chartS57Controller;
+    protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
 
     @Override
     public void componentInitiated() {
@@ -65,33 +63,28 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
         }
     }
 
-    protected void handleOpenFile(ProgressHandle pHandle, String file) {
-        LOGGER.log(Level.INFO, "Opening {0} ...", file);
+    protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
+        LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
 
-        Path inputFile = Paths.get(file);
-        final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/gdal_translate";
+        Path inputFile = Paths.get(fileName);
+        final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
 
         try {
-
-            Path tmpTif = Paths.get(inputFile.toString() + ".tif");
+            Path tmp = Paths.get(inputFile.toString());
 
             Proc.builder.create()
                     .setCmd(cmd)
-                   // .addArg("-ot Int64 ")
-                    .addArg("-of GTiff ")
-                    .addArg("-expand rgb ")
-                    .addArg("-co compress=lzw ")
-                    .addArg(file)
-                    .addArg(tmpTif.toString())
+                    .addArg("-skipfailures ")
+                    .addArg("data/shp/out.shp ")
+                    .addArg(tmp.toString())
                     .setOut(System.out)
                     .setErr(System.err)
                     .exec();
-
-            inputFile = tmpTif;
-        } catch (IOException | InterruptedException e) {
+            inputFile = tmp;
+        }catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);
         }
-
+/*
         ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();
         installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
 
@@ -101,18 +94,19 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
 
-        if (inputFile.toString().endsWith(".tif")) {
+        if (inputFile.toString().endsWith(EXTENSION)) {
             try {
                 Files.delete(inputFile);
             } catch (IOException e) {
                 LOGGER.log(Level.WARNING, null, e);
             }
         }
+        */
     }
-
+    
     @Override
     public String getName() {
-        return "BSB/KAP";
+        return NAME;
     }
 
     @Override
@@ -134,5 +128,6 @@ public class ChartsManagerImpl implements ChartsManager, ChartsManagerServices, 
     public void componentStarted() { /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() { /* Nothing to do here */ } 
+
 }
