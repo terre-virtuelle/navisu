@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -81,29 +82,32 @@ public class S57ChartImpl
                     .setErr(System.err)
                     .exec();
             inputFile = tmp;
-        }catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);
         }
-/*
-        ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();
-        installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
+        /*
+         ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();
+         installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
 
-        Layer layer = installer.installSurfaceImage(inputFile, pHandle);
-        if (layer != null) {
-            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
-            layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
-        }
+         Layer layer = installer.installSurfaceImage(inputFile, pHandle);
+         if (layer != null) {
+         geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
+         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+         }
+         */
+        File index = new File("data/shp");
 
-        if (inputFile.toString().endsWith(EXTENSION)) {
-            try {
-                Files.delete(inputFile);
-            } catch (IOException e) {
-                LOGGER.log(Level.WARNING, null, e);
-            }
+        String[] entries = index.list();
+        System.out.println("entries " + entries);
+        /*
+        for (String s : entries) {
+            File currentFile = new File(index.getPath(), s);
+            currentFile.delete();
         }
         */
+
     }
-    
+
     @Override
     public String getName() {
         return NAME;
@@ -128,6 +132,6 @@ public class S57ChartImpl
     public void componentStarted() { /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ } 
+    public void componentStopped() { /* Nothing to do here */ }
 
 }
