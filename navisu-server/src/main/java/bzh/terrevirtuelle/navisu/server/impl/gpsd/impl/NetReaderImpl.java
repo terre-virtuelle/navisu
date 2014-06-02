@@ -32,9 +32,12 @@ public class NetReaderImpl
                                 || source.startsWith("!") // AIS
                                 || source.startsWith("$") // NMEA0183
                                 || source.startsWith("PGN")) { // N2K
-                            vertx.eventBus().send("comm-address" + index, source);
+                            if (!source.contains("class")) {
+                                vertx.eventBus().send("comm-address" + index, source);
+                            }
                         }
                     });
+
                     socket.write(new Buffer("?WATCH={\"enable\":true,\"json\":true};"));
                 }
             }
