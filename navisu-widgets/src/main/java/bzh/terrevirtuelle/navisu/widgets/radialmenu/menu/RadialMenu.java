@@ -1,12 +1,12 @@
 package bzh.terrevirtuelle.navisu.widgets.radialmenu.menu;
 
 
+import bzh.terrevirtuelle.navisu.widgets.Widget;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 
 
@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Jordan Mens
  */
-public class RadialMenu extends Group {
+public class RadialMenu extends Widget {
 
     private DoubleProperty gap;
 
