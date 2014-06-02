@@ -7,10 +7,10 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.ChartsManagerServices;
-import bzh.terrevirtuelle.navisu.charts.raster.bsbkap.impl.ChartsManagerImpl;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.ChartS57Services;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.ChartS57Impl;
+import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
+import bzh.terrevirtuelle.navisu.charts.raster.kap.impl.KapChartImpl;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.S57ChartImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -56,9 +56,9 @@ public class AppMain extends Application {
                         DpAgentImpl.class,
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
-                        ChartsManagerImpl.class,
+                        KapChartImpl.class,
                         GribImpl.class,
-                        ChartS57Impl.class,
+                        S57ChartImpl.class,
                         DataServerImpl.class,
                         NmeaClientImpl.class,
                         Widget3DImpl.class,
@@ -69,9 +69,9 @@ public class AppMain extends Application {
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1280, 800);
 
-        ChartsManagerServices chartsServices = componentManager.getComponentService(ChartsManagerServices.class);
+        KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
-        ChartS57Services chartS57Services = componentManager.getComponentService(ChartS57Services.class);
+        S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
