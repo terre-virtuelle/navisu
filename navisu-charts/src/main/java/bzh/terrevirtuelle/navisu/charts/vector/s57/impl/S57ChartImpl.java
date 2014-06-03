@@ -98,7 +98,9 @@ public class S57ChartImpl
         File index = new File("data/shp");
 
         String[] entries = index.list();
-        System.out.println("entries " + entries);
+      //  System.out.println("entries " + entries);
+         chartS57Controller = new ChartS57Controller("data/shp");
+        chartS57Controller.read();
         /*
         for (String s : entries) {
             File currentFile = new File(index.getPath(), s);

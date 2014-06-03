@@ -77,10 +77,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
             Proc.builder.create()
                     .setCmd(cmd)
-                   // .addArg("-ot Int64 ")
-                    .addArg("-of GTiff ")
-                    .addArg("-expand rgb ")
-                    .addArg("-co compress=lzw ")
+                    .addArg("-b 1")
                     .addArg(file)
                     .addArg(tmpTif.toString())
                     .setOut(System.out)
