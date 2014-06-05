@@ -1,276 +1,14 @@
-Warning 1: An update to RCNM=100,RCID=5280 failed.
+ERROR 6: Can't create fields of type StringList on shapefile layers.
 
-Warning 1: Can't find RCNM=100,RCID=5279 for delete.
+ERROR 6: Can't create fields of type IntegerList on shapefile layers.
 
-Warning 1: Can't find RCNM=100,RCID=5171 for delete.
+ERROR 6: Can't create fields of type StringList on shapefile layers.
 
-Warning 1: Can't find RCNM=100,RCID=5172 for delete.
+ERROR 6: Can't create fields of type IntegerList on shapefile layers.
 
-Warning 1: Can't find RCNM=100,RCID=226 for delete.
+ERROR 6: Can't create fields of type StringList on shapefile layers.
 
-Warning 1: An update to RCNM=100,RCID=5108 failed.
-
-Warning 1: Can't find RCNM=130,RCID=3424 for delete.
-
-Warning 1: Can't find RCNM=130,RCID=3517 for delete.
-
-Warning 1: Can't find RCNM=130,RCID=5152 for delete.
-
-Warning 1: An update to RCNM=130,RCID=4247 failed.
-
-Warning 1: An update to RCNM=130,RCID=2628 failed.
-
-Warning 1: An update to RCNM=130,RCID=2628 failed.
-
-Warning 1: Can't find RCNM=100,RCID=16 for delete.
-
-Warning 1: An update to RCNM=100,RCID=17 failed.
-
-Warning 1: An update to RCNM=100,RCID=17 failed.
-
-Warning 1: An update to RCNM=100,RCID=17 failed.
-
-Warning 1: An update to RCNM=100,RCID=17 failed.
-
-Warning 1: An update to RCNM=100,RCID=17 failed.
-
-Warning 1: An update to RCNM=100,RCID=17 failed.
-
-Warning 1: An update to RCNM=100,RCID=14 failed.
-
-Warning 1: An update to RCNM=100,RCID=14 failed.
-
-Warning 1: An update to RCNM=100,RCID=14 failed.
-
-Warning 1: An update to RCNM=100,RCID=14 failed.
-
-Warning 1: An update to RCNM=100,RCID=3 failed.
-
-Warning 1: An update to RCNM=100,RCID=3 failed.
-
-Warning 1: An update to RCNM=100,RCID=3 failed.
-
-Warning 1: An update to RCNM=100,RCID=3 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=1000 failed.
-
-Warning 1: An update to RCNM=100,RCID=1000 failed.
-
-Warning 1: An update to RCNM=100,RCID=1308 failed.
-
-Warning 1: An update to RCNM=100,RCID=1308 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=4984 failed.
-
-Warning 1: An update to RCNM=100,RCID=5135 failed.
-
-Warning 1: An update to RCNM=100,RCID=4983 failed.
-
-Warning 1: An update to RCNM=100,RCID=577 failed.
-
-Warning 1: An update to RCNM=100,RCID=1749 failed.
-
-Warning 1: An update to RCNM=100,RCID=1749 failed.
-
-Warning 1: An update to RCNM=100,RCID=375 failed.
-
-Warning 1: An update to RCNM=100,RCID=375 failed.
-
-Warning 1: An update to RCNM=100,RCID=786 failed.
-
-Warning 1: An update to RCNM=100,RCID=786 failed.
-
-Warning 1: An update to RCNM=100,RCID=1431 failed.
-
-Warning 1: An update to RCNM=100,RCID=1431 failed.
-
-Warning 1: An update to RCNM=100,RCID=153 failed.
-
-Warning 1: Can't find RCNM=100,RCID=5235 for delete.
-
-Warning 1: Can't find RCNM=100,RCID=5293 for update.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: Can't find RCNM=100,RCID=5127 for delete.
-
-Warning 1: An update to RCNM=100,RCID=5005 failed.
-
-Warning 1: An update to RCNM=100,RCID=5005 failed.
-
-Warning 1: An update to RCNM=100,RCID=359 failed.
-
-Warning 1: An update to RCNM=100,RCID=153 failed.
-
-Warning 1: An update to RCNM=100,RCID=5161 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=130,RCID=5664 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=360 failed.
-
-Warning 1: An update to RCNM=100,RCID=5197 failed.
-
-Warning 1: An update to RCNM=100,RCID=5185 failed.
-
-Warning 1: An update to RCNM=100,RCID=5184 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=130,RCID=5374 failed.
-
-Warning 1: An update to RCNM=130,RCID=5374 failed.
-
-Warning 1: An update to RCNM=130,RCID=1877 failed.
-
-Warning 1: An update to RCNM=130,RCID=1877 failed.
-
-Warning 1: An update to RCNM=130,RCID=1857 failed.
-
-Warning 1: An update to RCNM=130,RCID=1857 failed.
-
-Warning 1: An update to RCNM=100,RCID=359 failed.
-
-Warning 1: An update to RCNM=100,RCID=359 failed.
-
-Warning 1: An update to RCNM=100,RCID=5005 failed.
-
-Warning 1: An update to RCNM=100,RCID=5005 failed.
-
-Warning 1: Can't find RCNM=110,RCID=14819 for delete.
-
-Warning 1: Can't find RCNM=100,RCID=5234 for delete.
-
-Warning 1: Can't find RCNM=100,RCID=5293 for delete.
-
-Warning 1: Can't find RCNM=110,RCID=319 for delete.
-
-Warning 1: Can't find RCNM=110,RCID=1599 for delete.
-
-Warning 1: Can't find RCNM=100,RCID=5256 for delete.
-
-Warning 1: Can't find RCNM=100,RCID=5166 for delete.
-
-Warning 1: Can't find RCNM=100,RCID=5282 for delete.
-
-Warning 1: Can't find RCNM=100,RCID=5193 for delete.
-
-Warning 1: An update to RCNM=110,RCID=563 failed.
-
-Warning 1: An update to RCNM=100,RCID=5149 failed.
-
-Warning 1: Can't find RCNM=100,RCID=5137 for delete.
-
-Warning 1: An update to RCNM=100,RCID=5286 failed.
-
-Warning 1: Can't find RCNM=100,RCID=5190 for delete.
-
-Warning 1: An update to RCNM=100,RCID=5248 failed.
-
-Warning 1: Can't find RCNM=100,RCID=5143 for delete.
-
-Warning 1: An update to RCNM=100,RCID=5245 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=110,RCID=15035 failed.
-
-Warning 1: An update to RCNM=130,RCID=5374 failed.
-
-Warning 1: An update to RCNM=130,RCID=5374 failed.
-
-Warning 1: An update to RCNM=130,RCID=5374 failed.
-
-Warning 1: An update to RCNM=130,RCID=5374 failed.
-
-Warning 1: An update to RCNM=100,RCID=5005 failed.
-
-Warning 1: An update to RCNM=100,RCID=5005 failed.
-
-Warning 1: Can't find RCNM=130,RCID=5232 for delete.
-
-Warning 1: Can't find RCNM=130,RCID=5233 for delete.
-
-Warning 1: An update to RCNM=100,RCID=2 failed.
-
-Warning 1: An update to RCNM=100,RCID=2 failed.
-
-Warning 1: An update to RCNM=100,RCID=13 failed.
-
-Warning 1: An update to RCNM=100,RCID=13 failed.
-
-Warning 1: An update to RCNM=100,RCID=17 failed.
-
-Warning 1: An update to RCNM=100,RCID=17 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=18 failed.
-
-Warning 1: An update to RCNM=100,RCID=5108 failed.
-
-Warning 1: An update to RCNM=100,RCID=5108 failed.
-
-Warning 1: An update to RCNM=100,RCID=5129 failed.
-
-Warning 1: An update to RCNM=100,RCID=5129 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=5136 failed.
-
-Warning 1: An update to RCNM=100,RCID=5736 failed.
-
-Warning 1: An update to RCNM=100,RCID=5736 failed.
+ERROR 6: Can't create fields of type IntegerList on shapefile layers.
 
 ERROR 6: Can't create fields of type StringList on shapefile layers.
 
@@ -301,11 +39,38 @@ ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 6: Can't create fields of type StringList on shapefile layers.
 
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
 
-ERROR 1: Attempt to write non-polygon (POINT) geometry to  type shapefile.
+ERROR 6: Can't create fields of type StringList on shapefile layers.
+
+ERROR 6: Can't create fields of type IntegerList on shapefile layers.
+
+ERROR 6: Can't create fields of type StringList on shapefile layers.
+
+ERROR 6: Can't create fields of type IntegerList on shapefile layers.
+
+ERROR 6: Can't create fields of type StringList on shapefile layers.
+
+ERROR 6: Can't create fields of type IntegerList on shapefile layers.
+
+ERROR 6: Can't create fields of type StringList on shapefile layers.
+
+ERROR 6: Can't create fields of type IntegerList on shapefile layers.
+
+ERROR 6: Can't create fields of type StringList on shapefile layers.
+
+ERROR 6: Can't create fields of type IntegerList on shapefile layers.
+
 ERROR 1: Attempt to write non-polygon (POINT) geometry to  type shapefile.
 ERROR 6: Can't create fields of type StringList on shapefile layers.
 
@@ -319,6 +84,656 @@ ERROR 6: Can't create fields of type StringList on shapefile layers.
 
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
 
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
+ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
 ERROR 6: Can't create fields of type StringList on shapefile layers.
 
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
@@ -335,442 +750,11 @@ ERROR 6: Can't create fields of type StringList on shapefile layers.
 
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
 
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (LINESTRING) geometry to  type shapefile.
 ERROR 6: Can't create fields of type StringList on shapefile layers.
 
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
 
-ERROR 6: Can't create fields of type StringList on shapefile layers.
-
-ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
-ERROR 6: Can't create fields of type StringList on shapefile layers.
-
-ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
-ERROR 6: Can't create fields of type StringList on shapefile layers.
-
-ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
-ERROR 6: Can't create fields of type StringList on shapefile layers.
-
-ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
+ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 6: Can't create fields of type StringList on shapefile layers.
 
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
@@ -871,12 +855,7 @@ ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (POLYGON) geometry to point shapefile.
@@ -1073,114 +1052,4 @@ ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 1: Attempt to write non-point (LINESTRING) geometry to point shapefile.
-ERROR 6: Can't create fields of type StringList on shapefile layers.
-
-ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
-ERROR 1: Attempt to write non-polygon (POINT) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (POINT) geometry to  type shapefile.
-ERROR 1: Attempt to write non-polygon (POINT) geometry to  type shapefile.
 More than 1000 errors or warnings have been reported. No more will be reported from now.
