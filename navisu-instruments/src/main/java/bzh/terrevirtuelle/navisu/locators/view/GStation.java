@@ -6,6 +6,7 @@ import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_4;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -32,7 +33,8 @@ public class GStation
         shape.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
         attrs.setImageOffset(new Offset(24d, 0d, AVKey.PIXELS, AVKey.PIXELS));
-        attrs.setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_1.png");
+        shape.setClipToHorizon(true);
+        attrs.setImageAddress("img/emetteur_1.png");
         shape.setAttributes(attrs);
     }
 
