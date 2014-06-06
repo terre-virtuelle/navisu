@@ -6,12 +6,15 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
+import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,27 +24,72 @@ import java.util.logging.Logger;
  */
 public class ChartS57Controller {
 
+    private static final ChartS57Controller INSTANCE;
     protected String path;
-    private Map<String, Map<Long, S57Object>> filePathList;
+    private File file;
+    private File fileDepare;
+    private Map<String, String> acronyms;
+    private Map<String, Map<Long, S57Object>> geos;
+    private List<Layer> layers;
 
-    public ChartS57Controller(String path) {
-        this.path = path;
-        // this.filePathList = new ArrayList<>();
-        read();
+    static {
+        INSTANCE = new ChartS57Controller();
     }
 
-    public List<String> read() {
-        File file = new File(path);
+    public ChartS57Controller() {
+    }
+
+    public static ChartS57Controller getInstance() {
+        return INSTANCE;
+    }
+
+    public final void init(String path) {
+        this.path = path;
+        file = new File(path);
+        fileDepare = new File(path + "/DEPARE.shp");
+        initAcronymsMap();
+        initGeosMap();
+
+    }
+
+    private void initAcronymsMap() {
+        acronyms = new HashMap<>();
+        String tmp;
+        String[] tmpTab;
+        try {
+            BufferedReader input = new BufferedReader(
+                    new FileReader("properties/s57AcronymClasses.txt"));
+            while ((tmp = input.readLine()) != null) {
+                tmpTab = tmp.split(",");
+                acronyms.put(tmpTab[0], tmpTab[1]);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ChartS57Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void initGeosMap() {
+        geos = new HashMap<>();
+
         File[] listOfFiles;
+
         if (file.isDirectory()) {
             listOfFiles = file.listFiles();
             for (File f : listOfFiles) {
                 String s = f.getName();
                 if (s.contains(".shp")) {
-                    System.out.println(s.replace(".shp", ""));
+                    geos.put(s.replace(".shp", ""), new HashMap<>());
                 }
             }
         }
-        return null;
+        //  System.out.println(geos);
     }
+
+    public List<Layer> makeShapefileLayers() {
+
+        ShapefileLoader loader = new DEPARE_ShapefileLoader();
+
+        return loader.createLayersFromSource(this.fileDepare);
+    }
+
 }

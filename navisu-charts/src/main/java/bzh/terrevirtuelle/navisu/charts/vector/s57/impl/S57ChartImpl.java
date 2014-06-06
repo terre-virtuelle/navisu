@@ -10,10 +10,13 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import gov.nasa.worldwind.layers.Layer;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -85,29 +88,28 @@ public class S57ChartImpl
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);
         }
-        /*
-         ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();
-         installer.setImageFormat(ImageryInstaller.ImageFormatEnum.PNG);
 
-         Layer layer = installer.installSurfaceImage(inputFile, pHandle);
-         if (layer != null) {
-         geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
-         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
-         }
-         */
+        chartS57Controller = ChartS57Controller.getInstance();
+        chartS57Controller.init("data/shp");
+
+        List<Layer> layers = chartS57Controller.makeShapefileLayers();
+        layers.stream().filter((l) -> (l != null)).map((l) -> {
+            l.setPickEnabled(false);
+            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
+            return l;
+        }).forEach((l) -> {
+            layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
+        });
         File index = new File("data/shp");
-
         String[] entries = index.list();
-      //  System.out.println("entries " + entries);
-         chartS57Controller = new ChartS57Controller("data/shp");
-        chartS57Controller.read();
-        /*
+        for(String s : entries){
+            System.out.println(s); 
+        }
+
         for (String s : entries) {
             File currentFile = new File(index.getPath(), s);
             currentFile.delete();
         }
-        */
-
     }
 
     @Override

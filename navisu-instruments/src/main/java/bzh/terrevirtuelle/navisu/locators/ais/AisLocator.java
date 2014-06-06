@@ -34,6 +34,7 @@ import bzh.terrevirtuelle.navisu.domain.ship.ShipType;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
@@ -255,7 +256,11 @@ public class AisLocator {
                     dpAgentServices.create(station);
 
                     aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
-
+                  /*
+                    wwd.addPositionListener((PositionEvent event) -> {
+                        System.out.println((int) wwd.getView().getCurrentEyePosition().getElevation());
+                    });
+                          */
                     tStationsProcessors.put(mmsi, stationProcessor);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());

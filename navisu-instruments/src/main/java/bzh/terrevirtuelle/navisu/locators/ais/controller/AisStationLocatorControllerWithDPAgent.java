@@ -54,11 +54,11 @@ public class AisStationLocatorControllerWithDPAgent {
                     station.setLatitude(lat);
                     station.setLongitude(lon);
                     if (update == false) {
-                        station.getGStation().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_0.png");
+                      //  station.getGStation().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_1.png");
                         update = true;
 
                     } else {
-                        station.getGStation().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_1.png");
+                      //  station.getGStation().getAttributes().setImageAddress("bzh/terrevirtuelle/navisu/locators/view/emetteur_1.png");
                         update = false;
                     }
                     if (station.getMmsi() != 0) {
