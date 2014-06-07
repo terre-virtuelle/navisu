@@ -37,19 +37,7 @@ public class ChartS57Controller {
     }
 
     public ChartS57Controller() {
-    }
-
-    public static ChartS57Controller getInstance() {
-        return INSTANCE;
-    }
-
-    public final void init(String path) {
-        this.path = path;
-        file = new File(path);
-        fileDepare = new File(path + "/DEPARE.shp");
         initAcronymsMap();
-        initGeosMap();
-
     }
 
     private void initAcronymsMap() {
@@ -68,6 +56,17 @@ public class ChartS57Controller {
         }
     }
 
+    public static ChartS57Controller getInstance() {
+        return INSTANCE;
+    }
+
+    public final void init(String path) {
+        this.path = path;
+        file = new File(path);
+        //  fileDepare = new File(path + "/DEPARE.shp");
+        initGeosMap();
+    }
+
     private void initGeosMap() {
         geos = new HashMap<>();
 
@@ -77,19 +76,27 @@ public class ChartS57Controller {
             listOfFiles = file.listFiles();
             for (File f : listOfFiles) {
                 String s = f.getName();
+                if (s.equals("DEPARE.shp")) {
+                    fileDepare = f;
+                    System.out.println("s : " + s);
+                }
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
                 }
             }
         }
-        //  System.out.println(geos);
     }
 
     public List<Layer> makeShapefileLayers() {
 
         ShapefileLoader loader = new DEPARE_ShapefileLoader();
 
-        return loader.createLayersFromSource(this.fileDepare);
+        List<Layer> l =  loader.createLayersFromSource(this.fileDepare);
+//        loader = null;
+//        fileDepare = null;
+ //       File index = new File("data/shp");
+//        for(File f: index.listFiles()) f.delete();
+        return l;
     }
 
 }

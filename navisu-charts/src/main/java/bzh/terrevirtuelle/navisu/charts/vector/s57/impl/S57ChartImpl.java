@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -38,8 +39,9 @@ public class S57ChartImpl
     private static final String NAME = "S57";
     private static final String EXTENSION = ".000";
     protected static final String GROUP = "S57Charts";
-
+    static private int i = 0;
     protected ChartS57Controller chartS57Controller;
+    protected List<Layer> layers;
     protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
 
     @Override
@@ -68,6 +70,7 @@ public class S57ChartImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
+        new File("data/shp_" + i ).mkdir();
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
 
         Path inputFile = Paths.get(fileName);
@@ -79,7 +82,7 @@ public class S57ChartImpl
             Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ")
-                    .addArg("data/shp/out.shp ")
+                    .addArg("data/shp_" + i + "/out.shp ")
                     .addArg(tmp.toString())
                     .setOut(System.out)
                     .setErr(System.err)
@@ -90,9 +93,10 @@ public class S57ChartImpl
         }
 
         chartS57Controller = ChartS57Controller.getInstance();
-        chartS57Controller.init("data/shp");
+        chartS57Controller.init("data/shp_" + i++);
 
-        List<Layer> layers = chartS57Controller.makeShapefileLayers();
+        layers = chartS57Controller.makeShapefileLayers();
+
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             l.setPickEnabled(false);
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
@@ -100,16 +104,11 @@ public class S57ChartImpl
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
-        File index = new File("data/shp");
-        String[] entries = index.list();
-        for(String s : entries){
-            System.out.println(s); 
-        }
 
-        for (String s : entries) {
-            File currentFile = new File(index.getPath(), s);
-            currentFile.delete();
-        }
+        /*
+         File index = new File("data/shp");
+         for(File file: index.listFiles()) file.delete();
+         */
     }
 
     @Override

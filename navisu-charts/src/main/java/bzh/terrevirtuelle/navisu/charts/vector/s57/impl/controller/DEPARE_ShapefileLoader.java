@@ -19,20 +19,17 @@ import java.awt.Color;
  */
 public class DEPARE_ShapefileLoader
         extends ShapefileLoader {
-    
+
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
 
         Float val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());
         Float val2 = new Float(record.getAttributes().getValue("DRVAL2").toString());
-     //   System.out.println("DRVAL1 : " + val1);
-     //   System.out.println("DRVAL2 : " + val2);
-        Color color = Color.GRAY; 
+
+        Color color = Color.GRAY;
 
         if (val1 == -9.0 && val2 <= 0.0) {
             color = new Color(150, 198, 0);
-            //color = new Color(195, 243, 55);
-            //color = new Color(54, 110, 96);
         }
         if (val1 == 0.0 && val2 <= 5.0) {
             color = new Color(91, 175, 247);
@@ -48,7 +45,6 @@ public class DEPARE_ShapefileLoader
         }
         if (val1 == 10.0 && val2 <= 20.0) {
             color = new Color(247, 247, 247);
-            //  color = new Color(187, 228, 251);
         }
         if (val1 == 20.0 && val2 <= 50.0) {
             color = new Color(247, 247, 247);
@@ -59,10 +55,12 @@ public class DEPARE_ShapefileLoader
         if (val1 == 50.0 && val2 <= 5000.0) {
             color = new Color(247, 247, 247);
         }
-
+        if (val1 >= 50.0 && val2 <= 5000.0) {
+            color = new Color(247, 247, 247);
+        }
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
-       
+
         return normalAttributes;
     }
 }
