@@ -14,6 +14,7 @@
     -fx-pressed-base: derive(-fx-hover-base, -15%);
     -fx-box-border: -fx-hover-base;
     -fx-text-box-border: -fx-hover-base;
+    -fx-text-base-color: white;
     -fx-shadow-highlight-color: -fx-base;
     -fx-outer-border: -fx-hover-base;
     -fx-inner-border: -fx-hover-base;
@@ -75,3 +76,32 @@
    -fx-background-color: -fx-box-border, -fx-inner-border;
    -fx-background-insets: 0, 1 0 1 0;
 }*/
+
+/*******************************************************************************
+ *                                                                             *
+ * MenuItem                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 0.333333em 0.41777em 0.333333em 0.41777em;  /* 4 5 4 5 */
+}
+.menu-item > .left-container {
+    -fx-padding: 0.458em 0.791em 0.458em 0.458em;
+}
+.menu-item > .graphic-container {
+    -fx-padding: 0em 0.333em 0em 0em;
+}
+.menu-item >.label {
+    -fx-padding: 0em 0.5em 0em 0em;
+    -fx-text-fill: -fx-text-base-color;
+}
+.menu-item:focused {
+     -fx-background: -fx-selection-bar;
+     -fx-background-color: -fx-background;
+     -fx-text-fill:  -fx-text-base-color;
+}
+.menu-item:focused > .label {
+    -fx-text-fill: white;
+}
