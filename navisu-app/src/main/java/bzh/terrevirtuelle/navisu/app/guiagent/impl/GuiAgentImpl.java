@@ -100,20 +100,27 @@ public class GuiAgentImpl
     boolean firstToolsRadialMenu = false;
     protected ImageView centerImg;
     
+    protected final ImageView mobOffImg
+            = new ImageView(ICON_PATH + "MOB_Off.png");
+    protected final ImageView mobOnImg
+            = new ImageView(ICON_PATH + "MOB_On.png");
+    
     public final DockItem[] ICONS = new DockItem[]{
-        //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
-        //DockItemFactory.newImageItem("config", ICON_PATH + "config.png", (e) -> System.out.println("config")),
+        
         DockItemFactory.newImageItem("user tools", ICON_PATH + "tools.png", (e) -> showToolsMenu()),
         DockItemFactory.newImageItem("charts", ICON_PATH + "charts.png", (e) -> System.out.println("charts")),
         DockItemFactory.newImageItem("tides", ICON_PATH + "tides.png", (e) -> System.out.println("tides & streams")),
         DockItemFactory.newImageItem("meteo", ICON_PATH + "meteo.png", (e) -> showMeteoMenu()),
-        //DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showInstruments()),
-        DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
-        DockItemFactory.newImageItem("simulations", ICON_PATH + "flou.png", (e) -> System.out.println("a venir 0")),
-        DockItemFactory.newImageItem("engine", ICON_PATH + "vide.png", (e) -> System.out.println("a venir 1")),
+        DockItemFactory.newImageItem("instrum.", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
         DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> System.out.println("diary")),
-        DockItemFactory.newImageItem("maintenance", ICON_PATH + "guide.png", (e) -> System.out.println("guide")),
-        DockItemFactory.newImageItem("whitebook", ICON_PATH + "whitebook.png", (e) -> System.out.println("white book")),};
+        //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
+        //DockItemFactory.newImageItem("config", ICON_PATH + "config.png", (e) -> System.out.println("config")),
+        //DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showInstruments()),
+        //DockItemFactory.newImageItem("simulations", ICON_PATH + "flou.png", (e) -> System.out.println("a venir 0")),
+        //DockItemFactory.newImageItem("engine", ICON_PATH + "vide.png", (e) -> System.out.println("a venir 1")),
+        //DockItemFactory.newImageItem("maintenance", ICON_PATH + "guide.png", (e) -> System.out.println("guide")),
+        //DockItemFactory.newImageItem("whitebook", ICON_PATH + "whitebook.png", (e) -> System.out.println("white book")),
+    };
     public final DockItem[] ICONS0 = new DockItem[]{
         /* Invisible icons just for testing margins */
         //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
@@ -124,7 +131,7 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Sounder", ICON_PATH + "soundervertical.png", (e) -> System.out.println("Sounder")),
         DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
     final Dock dock = new Dock(ICONS);
-    final Dock dock0 = new Dock(ICONS0);
+    //final Dock dock0 = new Dock(ICONS0);
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -187,7 +194,7 @@ public class GuiAgentImpl
         stage.show();
     }
 
-    private void showInstruments() {
+    /*private void showInstruments() {
         if (firstInstruments == true) {
             root.getChildren().add(dock0);
             dock0.setOrientation(Orientation.VERTICAL);
@@ -196,7 +203,7 @@ public class GuiAgentImpl
             StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
             firstInstruments = false;
         }
-    }
+    }*/
 
     private void showInstrumentsMenu() {
         System.out.println("showInstrumentsMenu");
@@ -350,12 +357,12 @@ public class GuiAgentImpl
 
         //First Stage Item 1
         RadialMenuContainer zoomInItem = new RadialMenuContainer();
-        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/zoom-in.png")));
+        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/configradial.png")));
         zoomInItem.setImage(zoominImg);
 
         //First Stage Item 2
         RadialMenuContainer zoomOutItem = new RadialMenuContainer();
-        ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/zoom-out.png")));
+        ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/toolsradial.png")));
         zoomOutItem.setImage(zoomoutImg);
 
         toolsRadialMenu = new RadialMenu(70, 130, 360, 5);
@@ -375,25 +382,31 @@ public class GuiAgentImpl
         toolsRadialMenu.setLayoutY(height / 2);
         toolsRadialMenu.setVisible(false);
     }
+    
+    /*********************************************
+     * MOB - Man Off Board
+     ****************************************************/
+    
     private void createMOBWidget(Scene scene) {
-        ImageView mobImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton_0.png")));
-        Group MOBDock = new Group();
-        MOBDock.getChildren().add(mobImg);
-        root.getChildren().add(MOBDock);
-        StackPane.setAlignment(MOBDock, Pos.BOTTOM_RIGHT);
+        
+        Group MOBdock = new Group();
+        MOBdock.getChildren().add(mobOffImg);
+        //MOBdock.getChildren().add(mobOnImg);
+        root.getChildren().add(MOBdock);
+        MOBdock.setTranslateX(400.0);
+        MOBdock.setTranslateY(-30.0);
+        StackPane.setAlignment(MOBdock, Pos.BOTTOM_CENTER);
 }
     private void createDockWidget(Scene scene) {
-        //ImageView mobImg = new ImageView(new Image(getClass().getResourceAsStream("MOBbouton_0.png")));
+        
         Group groupDock = new Group();
 
         groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
-        //groupDock.getChildren().add(mobImg);
         root.getChildren().add(groupDock);
-        //mobImg.setLayoutX(1560.0);
         basedock.setLayoutX(450.0);
         basedock.setLayoutY(100.0);
-        dock.setLayoutX(525.0);
+        dock.setLayoutX(475.0);
         dock.setLayoutY(40.0);
         dock.setOrientation(Orientation.HORIZONTAL);
         /* margins if necessity to adjust position of whole group */
