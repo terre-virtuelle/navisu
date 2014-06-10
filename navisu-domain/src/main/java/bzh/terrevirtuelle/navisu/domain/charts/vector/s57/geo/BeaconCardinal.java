@@ -1,13 +1,36 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Geo;
 import java.io.Serializable;
 
 
-public class BeaconCardinal extends Geo
+public class BeaconCardinal extends Location
 implements Serializable
 {
-
+private String beaconShape;
+private String categoryOfcardinalMark;
+private String colour;
+private String colourPattern;
+private String condition;
+private String conspicuousRadar;
+private String conspicuousVisually;
+private String dateEnd;
+private String dateStart;
+private String elevation;
+private String height;
+private String marksNavigationalSystemof;
+private String natureOfConstruction;
+private String objectName;
+private String periodicDateStart;
+private String periodicDateEnd;
+private String pictorialRepresentation;
+private String recordIngdate;
+private String scaleMaximum;
+private String verticalAccuracy;
+private String recordingIndication;
+private String verticaldatum;
+private String verticalLength;
+private String objectNameInNationalLanguage;
+private String status;
 	public BeaconCardinal(Long id)
 	{
 		this.id=id;
@@ -15,7 +38,7 @@ implements Serializable
 
 	public BeaconCardinal(){}
 
-	private String beaconShape;
+	
 
 	public String getBeaconShape()
 	{
@@ -27,7 +50,7 @@ implements Serializable
 		this.beaconShape= value;
 	}
 
-	private String categoryOfcardinalMark;
+	
 
 	public String getCategoryOfCardinalMark()
 	{
@@ -39,7 +62,7 @@ implements Serializable
 		this.categoryOfcardinalMark= value;
 	}
 
-	private String colour;
+	
 
 	public String getColour()
 	{
@@ -51,7 +74,7 @@ implements Serializable
 		this.colour= value;
 	}
 
-	private String colourPattern;
+	
 
 	public String getColourPattern()
 	{
@@ -63,7 +86,7 @@ implements Serializable
 		this.colourPattern= value;
 	}
 
-	private String condition;
+	
 
 	public String getCondition()
 	{
@@ -75,8 +98,7 @@ implements Serializable
 		this.condition= value;
 	}
 
-	private String conspicuousRadar;
-
+	
 	public String getConspicuousRadar()
 	{
 		return conspicuousRadar;
@@ -87,8 +109,7 @@ implements Serializable
 		this.conspicuousRadar= value;
 	}
 
-	private String conspicuousVisually;
-
+	
 	public String getConspicuousVisually()
 	{
 		return conspicuousVisually;
@@ -99,7 +120,7 @@ implements Serializable
 		this.conspicuousVisually= value;
 	}
 
-	private String dateEnd;
+	
 
 	public String getDateEnd()
 	{
@@ -111,7 +132,7 @@ implements Serializable
 		this.dateEnd= value;
 	}
 
-	private String dateStart;
+	
 
 	public String getDateStart()
 	{
@@ -123,7 +144,7 @@ implements Serializable
 		this.dateStart= value;
 	}
 
-	private String elevation;
+	
 
 	public String getElevation()
 	{
@@ -135,7 +156,7 @@ implements Serializable
 		this.elevation= value;
 	}
 
-	private String height;
+	
 
 	public String getHeight()
 	{
@@ -147,7 +168,7 @@ implements Serializable
 		this.height= value;
 	}
 
-	private String marksNavigationalSystemof;
+	
 
 	public String getMarksNavigationalSystemof()
 	{
@@ -159,7 +180,7 @@ implements Serializable
 		this.marksNavigationalSystemof= value;
 	}
 
-	private String natureOfConstruction;
+	
 
 	public String getNatureOfConstruction()
 	{
@@ -171,7 +192,7 @@ implements Serializable
 		this.natureOfConstruction= value;
 	}
 
-	private String objectName;
+	
 
 	public String getObjectName()
 	{
@@ -183,7 +204,7 @@ implements Serializable
 		this.objectName= value;
 	}
 
-	private String periodicDateEnd;
+	
 
 	public String getPeriodicDateEnd()
 	{
@@ -195,8 +216,7 @@ implements Serializable
 		this.periodicDateEnd= value;
 	}
 
-	private String periodicDateStart;
-
+	
 	public String getPeriodicDateStart()
 	{
 		return periodicDateStart;
@@ -207,7 +227,7 @@ implements Serializable
 		this.periodicDateStart= value;
 	}
 
-	private String pictorialRepresentation;
+	
 
 	public String getPictorialRepresentation()
 	{
@@ -219,7 +239,7 @@ implements Serializable
 		this.pictorialRepresentation= value;
 	}
 
-	private String recordIngdate;
+	
 
 	public String getRecordIngdate()
 	{
@@ -231,8 +251,7 @@ implements Serializable
 		this.recordIngdate= value;
 	}
 
-	private String recordingIndication;
-
+	
 	public String getRecordingIndication()
 	{
 		return recordingIndication;
@@ -243,8 +262,7 @@ implements Serializable
 		this.recordingIndication= value;
 	}
 
-	private String scaleMaximum;
-
+	
 	public String getScaleMaximum()
 	{
 		return scaleMaximum;
@@ -255,7 +273,7 @@ implements Serializable
 		this.scaleMaximum= value;
 	}
 
-	private String status;
+	
 
 	public String getStatus()
 	{
@@ -267,7 +285,7 @@ implements Serializable
 		this.status= value;
 	}
 
-	private String verticalAccuracy;
+	
 
 	public String getVerticalAccuracy()
 	{
@@ -279,7 +297,7 @@ implements Serializable
 		this.verticalAccuracy= value;
 	}
 
-	private String verticaldatum;
+	
 
 	public String getVerticaldatum()
 	{
@@ -291,7 +309,7 @@ implements Serializable
 		this.verticaldatum= value;
 	}
 
-	private String verticalLength;
+	
 
 	public String getVerticalLength()
 	{
@@ -303,7 +321,7 @@ implements Serializable
 		this.verticalLength= value;
 	}
 
-	private String objectNameInNationalLanguage;
+	
 
 	public String getObjectNameInNationalLanguage()
 	{
@@ -314,6 +332,11 @@ implements Serializable
 	{
 		this.objectNameInNationalLanguage= value;
 	}
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nBeaconCardinal{" + "beaconShape=" + beaconShape + ", categoryOfcardinalMark=" + categoryOfcardinalMark + ", colour=" + colour + ", colourPattern=" + colourPattern + ", condition=" + condition + ", conspicuousRadar=" + conspicuousRadar + ", conspicuousVisually=" + conspicuousVisually + ", dateEnd=" + dateEnd + ", dateStart=" + dateStart + ", elevation=" + elevation + ", height=" + height + ", marksNavigationalSystemof=" + marksNavigationalSystemof + ", natureOfConstruction=" + natureOfConstruction + ", objectName=" + objectName + ", periodicDateStart=" + periodicDateStart + ", periodicDateEnd=" + periodicDateEnd + ", pictorialRepresentation=" + pictorialRepresentation + ", recordIngdate=" + recordIngdate + ", scaleMaximum=" + scaleMaximum + ", verticalAccuracy=" + verticalAccuracy + ", recordingIndication=" + recordingIndication + ", verticaldatum=" + verticaldatum + ", verticalLength=" + verticalLength + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage + ", status=" + status + '}';
+    }
 
 
 }

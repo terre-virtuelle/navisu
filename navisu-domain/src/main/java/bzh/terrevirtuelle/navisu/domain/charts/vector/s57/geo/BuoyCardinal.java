@@ -3,257 +3,195 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Geo;
 import java.io.Serializable;
 
-
 public class BuoyCardinal extends Geo
-implements Serializable
-{
+        implements Serializable {
 
-	public BuoyCardinal(Long id)
-	{
-		this.id=id;
-	}
+    private String buoyShape;
+    private String categoryOfcardinalMark;
+    private String colour;
+    private String colourPattern;
+    private String conspicuousRadar;
+    private String dateEnd;
+    private String dateStart;
+    private String marksNavigationalSystemof;
+    private String natureOfConstruction;
+    private String objectName;
+    private String periodicDateEnd;
+    private String periodicDateStart;
+    private String pictorialRepresentation;
+    private String recordIngdate;
+    private String recordingIndication;
+    private String scaleMaximum;
+    private String status;
+    private String verticalAccuracy;
+    private String verticalLength;
+    private String objectNameInNationalLanguage;
 
-	public BuoyCardinal(){}
+    public BuoyCardinal(Long id) {
+        this.id = id;
+    }
 
-	private String buoyShape;
+    public BuoyCardinal() {
+    }
 
-	public String getBuoyShape()
-	{
-		return buoyShape;
-	}
+    public String getBuoyShape() {
+        return buoyShape;
+    }
 
-	public void setBuoyShape(String value)
-	{
-		this.buoyShape= value;
-	}
+    public void setBuoyShape(String value) {
+        this.buoyShape = value;
+    }
 
-	private String categoryOfcardinalMark;
+    public String getCategoryOfCardinalMark() {
+        return categoryOfcardinalMark;
+    }
 
-	public String getCategoryOfCardinalMark()
-	{
-		return categoryOfcardinalMark;
-	}
+    public void setCategoryOfCardinalMark(String value) {
+        this.categoryOfcardinalMark = value;
+    }
 
-	public void setCategoryOfCardinalMark(String value)
-	{
-		this.categoryOfcardinalMark= value;
-	}
+    public String getColour() {
+        return colour;
+    }
 
-	private String colour;
+    public void setColour(String value) {
+        this.colour = value;
+    }
 
-	public String getColour()
-	{
-		return colour;
-	}
+    public String getColourPattern() {
+        return colourPattern;
+    }
 
-	public void setColour(String value)
-	{
-		this.colour= value;
-	}
+    public void setColourPattern(String value) {
+        this.colourPattern = value;
+    }
 
-	private String colourPattern;
+    public String getConspicuousRadar() {
+        return conspicuousRadar;
+    }
 
-	public String getColourPattern()
-	{
-		return colourPattern;
-	}
+    public void setConspicuousRadar(String value) {
+        this.conspicuousRadar = value;
+    }
 
-	public void setColourPattern(String value)
-	{
-		this.colourPattern= value;
-	}
+    public String getDateEnd() {
+        return dateEnd;
+    }
 
-	private String conspicuousRadar;
+    public void setDateEnd(String value) {
+        this.dateEnd = value;
+    }
 
-	public String getConspicuousRadar()
-	{
-		return conspicuousRadar;
-	}
+    public String getDateStart() {
+        return dateStart;
+    }
 
-	public void setConspicuousRadar(String value)
-	{
-		this.conspicuousRadar= value;
-	}
+    public void setDateStart(String value) {
+        this.dateStart = value;
+    }
 
-	private String dateEnd;
+    public String getMarksNavigationalSystemof() {
+        return marksNavigationalSystemof;
+    }
 
-	public String getDateEnd()
-	{
-		return dateEnd;
-	}
+    public void setMarksNavigationalSystemof(String value) {
+        this.marksNavigationalSystemof = value;
+    }
 
-	public void setDateEnd(String value)
-	{
-		this.dateEnd= value;
-	}
+    public String getNatureOfConstruction() {
+        return natureOfConstruction;
+    }
 
-	private String dateStart;
+    public void setNatureOfConstruction(String value) {
+        this.natureOfConstruction = value;
+    }
 
-	public String getDateStart()
-	{
-		return dateStart;
-	}
+    public String getObjectName() {
+        return objectName;
+    }
 
-	public void setDateStart(String value)
-	{
-		this.dateStart= value;
-	}
+    public void setObjectName(String value) {
+        this.objectName = value;
+    }
 
-	private String marksNavigationalSystemof;
+    public String getPeriodicDateEnd() {
+        return periodicDateEnd;
+    }
 
-	public String getMarksNavigationalSystemof()
-	{
-		return marksNavigationalSystemof;
-	}
+    public void setPeriodicDateEnd(String value) {
+        this.periodicDateEnd = value;
+    }
 
-	public void setMarksNavigationalSystemof(String value)
-	{
-		this.marksNavigationalSystemof= value;
-	}
+    public String getPeriodicDateStart() {
+        return periodicDateStart;
+    }
 
-	private String natureOfConstruction;
+    public void setPeriodicDateStart(String value) {
+        this.periodicDateStart = value;
+    }
 
-	public String getNatureOfConstruction()
-	{
-		return natureOfConstruction;
-	}
+    public String getPictorialRepresentation() {
+        return pictorialRepresentation;
+    }
 
-	public void setNatureOfConstruction(String value)
-	{
-		this.natureOfConstruction= value;
-	}
+    public void setPictorialRepresentation(String value) {
+        this.pictorialRepresentation = value;
+    }
 
-	private String objectName;
+    public String getRecordIngdate() {
+        return recordIngdate;
+    }
 
-	public String getObjectName()
-	{
-		return objectName;
-	}
+    public void setRecordIngdate(String value) {
+        this.recordIngdate = value;
+    }
 
-	public void setObjectName(String value)
-	{
-		this.objectName= value;
-	}
+    public String getRecordingIndication() {
+        return recordingIndication;
+    }
 
-	private String periodicDateEnd;
+    public void setRecordingIndication(String value) {
+        this.recordingIndication = value;
+    }
 
-	public String getPeriodicDateEnd()
-	{
-		return periodicDateEnd;
-	}
+    public String getScaleMaximum() {
+        return scaleMaximum;
+    }
 
-	public void setPeriodicDateEnd(String value)
-	{
-		this.periodicDateEnd= value;
-	}
+    public void setScaleMaximum(String value) {
+        this.scaleMaximum = value;
+    }
 
-	private String periodicDateStart;
+    public String getStatus() {
+        return status;
+    }
 
-	public String getPeriodicDateStart()
-	{
-		return periodicDateStart;
-	}
+    public void setStatus(String value) {
+        this.status = value;
+    }
 
-	public void setPeriodicDateStart(String value)
-	{
-		this.periodicDateStart= value;
-	}
+    public String getVerticalAccuracy() {
+        return verticalAccuracy;
+    }
 
-	private String pictorialRepresentation;
+    public void setVerticalAccuracy(String value) {
+        this.verticalAccuracy = value;
+    }
 
-	public String getPictorialRepresentation()
-	{
-		return pictorialRepresentation;
-	}
+    public String getVerticalLength() {
+        return verticalLength;
+    }
 
-	public void setPictorialRepresentation(String value)
-	{
-		this.pictorialRepresentation= value;
-	}
+    public void setVerticalLength(String value) {
+        this.verticalLength = value;
+    }
 
-	private String recordIngdate;
+    public String getObjectNameInNationalLanguage() {
+        return objectNameInNationalLanguage;
+    }
 
-	public String getRecordIngdate()
-	{
-		return recordIngdate;
-	}
-
-	public void setRecordIngdate(String value)
-	{
-		this.recordIngdate= value;
-	}
-
-	private String recordingIndication;
-
-	public String getRecordingIndication()
-	{
-		return recordingIndication;
-	}
-
-	public void setRecordingIndication(String value)
-	{
-		this.recordingIndication= value;
-	}
-
-	private String scaleMaximum;
-
-	public String getScaleMaximum()
-	{
-		return scaleMaximum;
-	}
-
-	public void setScaleMaximum(String value)
-	{
-		this.scaleMaximum= value;
-	}
-
-	private String status;
-
-	public String getStatus()
-	{
-		return status;
-	}
-
-	public void setStatus(String value)
-	{
-		this.status= value;
-	}
-
-	private String verticalAccuracy;
-
-	public String getVerticalAccuracy()
-	{
-		return verticalAccuracy;
-	}
-
-	public void setVerticalAccuracy(String value)
-	{
-		this.verticalAccuracy= value;
-	}
-
-	private String verticalLength;
-
-	public String getVerticalLength()
-	{
-		return verticalLength;
-	}
-
-	public void setVerticalLength(String value)
-	{
-		this.verticalLength= value;
-	}
-
-	private String objectNameInNationalLanguage;
-
-	public String getObjectNameInNationalLanguage()
-	{
-		return objectNameInNationalLanguage;
-	}
-
-	public void setObjectNameInNationalLanguage(String value)
-	{
-		this.objectNameInNationalLanguage= value;
-	}
-
+    public void setObjectNameInNationalLanguage(String value) {
+        this.objectNameInNationalLanguage = value;
+    }
 
 }
