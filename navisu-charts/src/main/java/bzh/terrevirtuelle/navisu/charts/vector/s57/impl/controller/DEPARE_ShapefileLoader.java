@@ -18,11 +18,14 @@ import java.awt.Color;
  * @date 4 juin 2014 NaVisu project
  */
 public class DEPARE_ShapefileLoader
-        extends ShapefileLoader {
+        extends ShapefileLoader 
+        implements S57ShapeFileLoader{
+
+    ShapefileRecord record;
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-
+        this.record = record;
         Float val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());
         Float val2 = new Float(record.getAttributes().getValue("DRVAL2").toString());
 
@@ -60,7 +63,13 @@ public class DEPARE_ShapefileLoader
         }
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
-
+        normalAttributes.setDrawOutline(false);
         return normalAttributes;
     }
+
+    @Override
+    public ShapefileRecord getRecord() {
+        return record;
+    }
+    
 }

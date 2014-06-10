@@ -1,175 +1,145 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Geo;
 import java.io.Serializable;
 
+public class Topmark extends Location
+        implements Serializable {
 
-public class Topmark extends Geo
-implements Serializable
-{
+    public Topmark(Long id) {
+        this.id = id;
+    }
 
-	public Topmark(Long id)
-	{
-		this.id=id;
-	}
+    public Topmark() {
+    }
 
-	public Topmark(){}
+    private String colour;
 
-	private String colour;
+    public String getColour() {
+        return colour;
+    }
 
-	public String getColour()
-	{
-		return colour;
-	}
+    public void setColour(String value) {
+        this.colour = value;
+    }
 
-	public void setColour(String value)
-	{
-		this.colour= value;
-	}
+    private String colourPattern;
 
-	private String colourPattern;
+    public String getColourPattern() {
+        return colourPattern;
+    }
 
-	public String getColourPattern()
-	{
-		return colourPattern;
-	}
+    public void setColourPattern(String value) {
+        this.colourPattern = value;
+    }
 
-	public void setColourPattern(String value)
-	{
-		this.colourPattern= value;
-	}
+    private String height;
 
-	private String height;
+    public String getHeight() {
+        return height;
+    }
 
-	public String getHeight()
-	{
-		return height;
-	}
+    public void setHeight(String value) {
+        this.height = value;
+    }
 
-	public void setHeight(String value)
-	{
-		this.height= value;
-	}
+    private String marksNavigationalSystemof;
 
-	private String marksNavigationalSystemof;
+    public String getMarksNavigationalSystemof() {
+        return marksNavigationalSystemof;
+    }
 
-	public String getMarksNavigationalSystemof()
-	{
-		return marksNavigationalSystemof;
-	}
+    public void setMarksNavigationalSystemof(String value) {
+        this.marksNavigationalSystemof = value;
+    }
 
-	public void setMarksNavigationalSystemof(String value)
-	{
-		this.marksNavigationalSystemof= value;
-	}
+    private String pictorialRepresentation;
 
-	private String pictorialRepresentation;
+    public String getPictorialRepresentation() {
+        return pictorialRepresentation;
+    }
 
-	public String getPictorialRepresentation()
-	{
-		return pictorialRepresentation;
-	}
+    public void setPictorialRepresentation(String value) {
+        this.pictorialRepresentation = value;
+    }
 
-	public void setPictorialRepresentation(String value)
-	{
-		this.pictorialRepresentation= value;
-	}
+    private String recordIngdate;
 
-	private String recordIngdate;
+    public String getRecordIngdate() {
+        return recordIngdate;
+    }
 
-	public String getRecordIngdate()
-	{
-		return recordIngdate;
-	}
+    public void setRecordIngdate(String value) {
+        this.recordIngdate = value;
+    }
 
-	public void setRecordIngdate(String value)
-	{
-		this.recordIngdate= value;
-	}
+    private String recordingIndication;
 
-	private String recordingIndication;
+    public String getRecordingIndication() {
+        return recordingIndication;
+    }
 
-	public String getRecordingIndication()
-	{
-		return recordingIndication;
-	}
+    public void setRecordingIndication(String value) {
+        this.recordingIndication = value;
+    }
 
-	public void setRecordingIndication(String value)
-	{
-		this.recordingIndication= value;
-	}
+    private String scaleMaximum;
 
-	private String scaleMaximum;
+    public String getScaleMaximum() {
+        return scaleMaximum;
+    }
 
-	public String getScaleMaximum()
-	{
-		return scaleMaximum;
-	}
+    public void setScaleMaximum(String value) {
+        this.scaleMaximum = value;
+    }
 
-	public void setScaleMaximum(String value)
-	{
-		this.scaleMaximum= value;
-	}
+    private String status;
 
-	private String status;
+    public String getStatus() {
+        return status;
+    }
 
-	public String getStatus()
-	{
-		return status;
-	}
+    public void setStatus(String value) {
+        this.status = value;
+    }
 
-	public void setStatus(String value)
-	{
-		this.status= value;
-	}
+    private String topMark_daymarkshape;
 
-	private String topMark_daymarkshape;
+    public String getTopMark_daymarkshape() {
+        return topMark_daymarkshape;
+    }
 
-	public String getTopMark_daymarkshape()
-	{
-		return topMark_daymarkshape;
-	}
+    public void setTopMark_daymarkshape(String value) {
+        this.topMark_daymarkshape = value;
+    }
 
-	public void setTopMark_daymarkshape(String value)
-	{
-		this.topMark_daymarkshape= value;
-	}
+    private String verticalAccuracy;
 
-	private String verticalAccuracy;
+    public String getVerticalAccuracy() {
+        return verticalAccuracy;
+    }
 
-	public String getVerticalAccuracy()
-	{
-		return verticalAccuracy;
-	}
+    public void setVerticalAccuracy(String value) {
+        this.verticalAccuracy = value;
+    }
 
-	public void setVerticalAccuracy(String value)
-	{
-		this.verticalAccuracy= value;
-	}
+    private String verticaldatum;
 
-	private String verticaldatum;
+    public String getVerticaldatum() {
+        return verticaldatum;
+    }
 
-	public String getVerticaldatum()
-	{
-		return verticaldatum;
-	}
+    public void setVerticaldatum(String value) {
+        this.verticaldatum = value;
+    }
 
-	public void setVerticaldatum(String value)
-	{
-		this.verticaldatum= value;
-	}
+    private String verticalLength;
 
-	private String verticalLength;
+    public String getVerticalLength() {
+        return verticalLength;
+    }
 
-	public String getVerticalLength()
-	{
-		return verticalLength;
-	}
-
-	public void setVerticalLength(String value)
-	{
-		this.verticalLength= value;
-	}
-
+    public void setVerticalLength(String value) {
+        this.verticalLength = value;
+    }
 
 }

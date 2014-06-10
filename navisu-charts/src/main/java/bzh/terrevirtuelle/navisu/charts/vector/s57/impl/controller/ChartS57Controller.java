@@ -6,15 +6,21 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Topmark;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,10 +33,11 @@ public class ChartS57Controller {
     private static final ChartS57Controller INSTANCE;
     protected String path;
     private File file;
-    private File fileDepare;
+    //  private File fileDepare;
     private Map<String, String> acronyms;
     private Map<String, Map<Long, S57Object>> geos;
-    private List<Layer> layers;
+    private final List<Layer> layers;
+    private ShapefileLoader loader;
 
     static {
         INSTANCE = new ChartS57Controller();
@@ -38,6 +45,7 @@ public class ChartS57Controller {
 
     public ChartS57Controller() {
         initAcronymsMap();
+        layers = new ArrayList<>();
     }
 
     private void initAcronymsMap() {
@@ -60,43 +68,82 @@ public class ChartS57Controller {
         return INSTANCE;
     }
 
-    public final void init(String path) {
+    public final List<Layer> init(String path) {
         this.path = path;
         file = new File(path);
         //  fileDepare = new File(path + "/DEPARE.shp");
         initGeosMap();
+        return layers;
     }
 
     private void initGeosMap() {
         geos = new HashMap<>();
 
         File[] listOfFiles;
-
+        File tmp;
+        ShapefileRecord record;
+        Set<Entry<String, Object>> entries;
         if (file.isDirectory()) {
             listOfFiles = file.listFiles();
             for (File f : listOfFiles) {
                 String s = f.getName();
                 if (s.equals("DEPARE.shp")) {
-                    fileDepare = f;
-                    System.out.println("s : " + s);
+                    loader = new DEPARE_ShapefileLoader();
+                    tmp = new File(path + "/DEPARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("DEPARE");
+                    });
+                    layers.addAll(la);
+                    /*
+                     record = ((DEPARE_ShapefileLoader)loader).getRecord();
+                     entries = record.getAttributes().getEntries();
+                     System.out.println("DEPARE");
+                     for(Entry e : entries){
+                     System.out.println(e.getKey() + " " + e.getValue());
+                     }
+                     // Rien d'intéressant à part DRVAL1 et DRVAL2 traites dans le Loader
+                     */
+                }
+                if (s.equals("DEPCNT.shp")) {
+                    loader = new DEPCNT_ShapefileLoader();
+                    tmp = new File(path + "/DEPCNT.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("DEPCNT");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("BCNCAR.shp")) {
+                    loader = new BCNCAR_ShapefileLoader();
+                    tmp = new File(path + "/BCNCAR.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BCNCAR");
+                    });
+                    layers.addAll(la);
+
+                    List<BeaconCardinal> beacons = ((BCNCAR_ShapefileLoader) loader).getBeacons();
+                    beacons.stream().forEach((b) -> {
+                       // System.out.println("b : " + b);
+                    });
+
                 }
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
                 }
+
             }
         }
     }
 
-    public List<Layer> makeShapefileLayers() {
+    public List<Layer> makeShapefileLayers(File f) {
 
-        ShapefileLoader loader = new DEPARE_ShapefileLoader();
-
-        List<Layer> l =  loader.createLayersFromSource(this.fileDepare);
 //        loader = null;
 //        fileDepare = null;
- //       File index = new File("data/shp");
+        //       File index = new File("data/shp");
 //        for(File f: index.listFiles()) f.delete();
-        return l;
+        return null;
     }
 
 }

@@ -70,7 +70,7 @@ public class S57ChartImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        new File("data/shp_" + i ).mkdir();
+        new File("data/shp_ " + i ).mkdir();
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
 
         Path inputFile = Paths.get(fileName);
@@ -93,9 +93,7 @@ public class S57ChartImpl
         }
 
         chartS57Controller = ChartS57Controller.getInstance();
-        chartS57Controller.init("data/shp_" + i++);
-
-        layers = chartS57Controller.makeShapefileLayers();
+        layers = chartS57Controller.init("data/shp_" + i++);
 
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             l.setPickEnabled(false);
