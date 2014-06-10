@@ -95,9 +95,11 @@ public class GuiAgentImpl
     protected RadialMenu instrumentsRadialMenu;
     protected RadialMenu meteoRadialMenu;
     protected RadialMenu toolsRadialMenu;
+    protected RadialMenu tidesRadialMenu;
     boolean firstInstrumentsRadialMenu = false;
     boolean firstMeteoRadialMenu = false;
     boolean firstToolsRadialMenu = false;
+    boolean firstTidesRadialMenu = false;
     protected ImageView centerImg;
     
     protected final ImageView mobOffImg
@@ -109,9 +111,9 @@ public class GuiAgentImpl
         
         DockItemFactory.newImageItem("user tools", ICON_PATH + "tools.png", (e) -> showToolsMenu()),
         DockItemFactory.newImageItem("charts", ICON_PATH + "charts.png", (e) -> System.out.println("charts")),
-        DockItemFactory.newImageItem("tides", ICON_PATH + "tides.png", (e) -> System.out.println("tides & streams")),
+        DockItemFactory.newImageItem("tides", ICON_PATH + "tides.png", (e) -> showTidesMenu()),
         DockItemFactory.newImageItem("meteo", ICON_PATH + "meteo.png", (e) -> showMeteoMenu()),
-        DockItemFactory.newImageItem("instrum.", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
+        DockItemFactory.newImageItem("instrum.", ICON_PATH + "instruments3D.png", (e) -> showInstrumentsMenu()),
         DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> System.out.println("diary")),
         //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
         //DockItemFactory.newImageItem("config", ICON_PATH + "config.png", (e) -> System.out.println("config")),
@@ -172,6 +174,9 @@ public class GuiAgentImpl
         // Create Tools Radial Widget
         createToolsRadialWidget();
         
+        // Create Tides Radial Widget
+        createTidesRadialWidget();
+        
         // Place scene components
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
         ctrl.centerStackPane.getChildren().add(geoViewServices.getDisplayService().getDisplayable());
@@ -224,7 +229,14 @@ public class GuiAgentImpl
         toolsRadialMenu.setVisible(firstToolsRadialMenu); 
     }
     
+    private void showTidesMenu() {
+        System.out.println("showTidesMenu");
+        firstTidesRadialMenu = firstTidesRadialMenu != true;
+        tidesRadialMenu.setVisible(firstTidesRadialMenu); 
+    }
     //------------------ Option center 
+    
+    //--------------INSTRUMENTS------------------
     private void createRadialWidget() {
 
         centerImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/centreradialmenu150.png")));
@@ -257,12 +269,12 @@ public class GuiAgentImpl
         //---------------------------------------------------
         //Stage 2 item 1
         RadialMenuItem stageTwoItem1 = new RadialMenuItem();
-        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/GPSradialombre.png")));
+        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/vide.png")));
         stageTwoItem1.setImage(gpsImg2);
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/compassradialombre.png")));
+        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/vide.png")));
         stageTwoItem2.setImage(compassImg2);
 
         zoomInItem.addItem(stageTwoItem1);
@@ -288,18 +300,19 @@ public class GuiAgentImpl
         instrumentsRadialMenu.setVisible(false);
     }
     
+    //--------------METEO------------------
     private void createMeteoRadialWidget() {
 
         centerImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/centreradialmenu150.png")));
 
         //First Stage Item 1
         RadialMenuContainer zoomInItem = new RadialMenuContainer();
-        ImageView sounderImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/sounderradialombre.png")));
+        ImageView sounderImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/videbleu.png")));
         zoomInItem.setImage(sounderImg);
 
         //First Stage Item 2
         RadialMenuContainer zoomOutItem = new RadialMenuContainer();
-        ImageView windImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/windradialombre.png")));
+        ImageView windImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/videvert.png")));
         zoomOutItem.setImage(windImg);
 
         //First Stage Item 3
@@ -320,16 +333,16 @@ public class GuiAgentImpl
         //---------------------------------------------------
         //Stage 2 item 1
         RadialMenuItem stageTwoItem1 = new RadialMenuItem();
-        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/GPSradialombre.png")));
+        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/videbleu.png")));
         stageTwoItem1.setImage(gpsImg2);
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/compassradialombre.png")));
+        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/videvert.png")));
         stageTwoItem2.setImage(compassImg2);
 
-        //zoomInItem.addItem(stageTwoItem1);
-        //zoomInItem.addItem(stageTwoItem2);
+        test1Item.addItem(stageTwoItem1);
+        test2Item.addItem(stageTwoItem2);
 
         meteoRadialMenu = new RadialMenu(70, 130, 360, 5);
 
@@ -351,6 +364,7 @@ public class GuiAgentImpl
         meteoRadialMenu.setVisible(false);
     }
     
+    //--------------TOOLS------------------
     private void createToolsRadialWidget() {
 
         centerImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/centreradialmenu150.png")));
@@ -364,7 +378,29 @@ public class GuiAgentImpl
         RadialMenuContainer zoomOutItem = new RadialMenuContainer();
         ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/toolsradial.png")));
         zoomOutItem.setImage(zoomoutImg);
+//---------------------------------------------------
+        //Stage 2 item 1
+        RadialMenuItem stageTwoItem1 = new RadialMenuItem();
+        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/videbleu.png")));
+        stageTwoItem1.setImage(gpsImg2);
 
+        //Stage 2 item 2
+        RadialMenuItem stageTwoItem2 = new RadialMenuItem();
+        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/videvert.png")));
+        stageTwoItem2.setImage(compassImg2);
+
+        //Stage 2 item 2
+        RadialMenuItem stageTwoItem3 = new RadialMenuItem();
+        ImageView compassImg3 = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/vide.png")));
+        stageTwoItem2.setImage(compassImg3);
+        
+        zoomInItem.addItem(stageTwoItem1);
+        zoomInItem.addItem(stageTwoItem2);
+        zoomInItem.addItem(stageTwoItem3);
+        
+
+        
+        
         toolsRadialMenu = new RadialMenu(70, 130, 360, 5);
 
         toolsRadialMenu.addRootItem(zoomInItem);
@@ -383,6 +419,60 @@ public class GuiAgentImpl
         toolsRadialMenu.setVisible(false);
     }
     
+    //--------------TIDES------------------
+    private void createTidesRadialWidget() {
+
+        centerImg = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/centreradialmenu150.png")));
+
+        //First Stage Item 1
+        RadialMenuContainer zoomInItem = new RadialMenuContainer();
+        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/videvert.png")));
+        zoomInItem.setImage(zoominImg);
+
+        //First Stage Item 2
+        RadialMenuContainer zoomOutItem = new RadialMenuContainer();
+        ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/vide.png")));
+        zoomOutItem.setImage(zoomoutImg);
+//---------------------------------------------------
+        //Stage 2 item 1
+        RadialMenuItem stageTwoItem1 = new RadialMenuItem();
+        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/videbleu.png")));
+        stageTwoItem1.setImage(gpsImg2);
+
+        //Stage 2 item 2
+        RadialMenuItem stageTwoItem2 = new RadialMenuItem();
+        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/videvert.png")));
+        stageTwoItem2.setImage(compassImg2);
+
+        //Stage 2 item 2
+        RadialMenuItem stageTwoItem3 = new RadialMenuItem();
+        ImageView compassImg3 = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/vide.png")));
+        stageTwoItem2.setImage(compassImg3);
+        
+        zoomInItem.addItem(stageTwoItem1);
+        zoomInItem.addItem(stageTwoItem2);
+        zoomInItem.addItem(stageTwoItem3);
+        
+
+        
+        
+        tidesRadialMenu = new RadialMenu(70, 130, 360, 5);
+
+        tidesRadialMenu.addRootItem(zoomInItem);
+        tidesRadialMenu.addRootItem(zoomOutItem);
+        
+
+        //Use setManaged(false) to not let the parent's layout resize our component !
+        tidesRadialMenu.setManaged(false);
+
+        root.getChildren().add(tidesRadialMenu);
+        tidesRadialMenu.getChildren().add(centerImg);
+        centerImg.setLayoutX(-centerImg.getImage().getWidth() / 2);
+        centerImg.setLayoutY(-centerImg.getImage().getHeight() / 2);
+        tidesRadialMenu.setLayoutX(width / 2);
+        tidesRadialMenu.setLayoutY(height / 2);
+        tidesRadialMenu.setVisible(false);
+    }
     /*********************************************
      * MOB - Man Off Board
      ****************************************************/
