@@ -46,10 +46,7 @@ import gov.nasa.worldwind.render.GlobeBrowserBalloon;
 import gov.nasa.worldwind.render.Size;
 import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -120,11 +117,21 @@ public class AisLocator {
 
         //      pane = guiAgentServices.getRoot();
         this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
+
         aisLayer.setName("AIS Layer");
         geoViewServices.getLayerManager().insertGeoLayer(this.aisLayer);
 
+        wwd.addPositionListener((PositionEvent event) -> {
+            float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
+            if (altitude >= 30000) {
+                clip();
+            } else {
+                unClip();
+            }
+        });
+
         this.aisStationLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
-        aisStationLayer.setName("AIS Station Layer");
+        aisStationLayer.setName("AIS_Station_Layer");
         geoViewServices.getLayerManager().insertGeoLayer(this.aisStationLayer);
         this.baloonLayer = new RenderableLayer();
         wwd.getModel().getLayers().add(baloonLayer);
@@ -256,11 +263,11 @@ public class AisLocator {
                     dpAgentServices.create(station);
 
                     aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
-                  /*
-                    wwd.addPositionListener((PositionEvent event) -> {
-                        System.out.println((int) wwd.getView().getCurrentEyePosition().getElevation());
-                    });
-                          */
+                    /*
+                     wwd.addPositionListener((PositionEvent event) -> {
+                     System.out.println((int) wwd.getView().getCurrentEyePosition().getElevation());
+                     });
+                     */
                     tStationsProcessors.put(mmsi, stationProcessor);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -376,6 +383,15 @@ public class AisLocator {
         }
         return tmp;
     }
+
+    private void clip() {
+        aisStationLayer.getDisplayLayer().setEnabled(false);
+    }
+
+    private void unClip() {
+        aisStationLayer.getDisplayLayer().setEnabled(true);
+    }
+
     protected static final String BROWSER_BALLOON_CONTENT_PATH = "<!--\n"
             + "  ~ Copyright (C) 2014 Terre Virtuelle NaVisu Project.\n"
             + "  ~ All Rights Reserved.\n"
