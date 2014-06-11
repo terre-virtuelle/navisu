@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Topmark;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
@@ -81,8 +80,6 @@ public class ChartS57Controller {
 
         File[] listOfFiles;
         File tmp;
-        ShapefileRecord record;
-        Set<Entry<String, Object>> entries;
         if (file.isDirectory()) {
             listOfFiles = file.listFiles();
             for (File f : listOfFiles) {
@@ -95,15 +92,6 @@ public class ChartS57Controller {
                         l.setName("DEPARE");
                     });
                     layers.addAll(la);
-                    /*
-                     record = ((DEPARE_ShapefileLoader)loader).getRecord();
-                     entries = record.getAttributes().getEntries();
-                     System.out.println("DEPARE");
-                     for(Entry e : entries){
-                     System.out.println(e.getKey() + " " + e.getValue());
-                     }
-                     // Rien d'intéressant à part DRVAL1 et DRVAL2 traites dans le Loader
-                     */
                 }
                 if (s.equals("DEPCNT.shp")) {
                     loader = new DEPCNT_ShapefileLoader();

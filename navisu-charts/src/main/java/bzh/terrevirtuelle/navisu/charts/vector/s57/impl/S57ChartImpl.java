@@ -14,7 +14,6 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -70,7 +69,7 @@ public class S57ChartImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        new File("data/shp_ " + i ).mkdir();
+        new File("data/shp_ " + i).mkdir();
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
 
         Path inputFile = Paths.get(fileName);
@@ -96,7 +95,11 @@ public class S57ChartImpl
         layers = chartS57Controller.init("data/shp_" + i++);
 
         layers.stream().filter((l) -> (l != null)).map((l) -> {
-            l.setPickEnabled(false);
+            if (l.getName().contains("BCNCAR")) {
+                l.setPickEnabled(true);
+            } else {
+                l.setPickEnabled(false);
+            }
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {

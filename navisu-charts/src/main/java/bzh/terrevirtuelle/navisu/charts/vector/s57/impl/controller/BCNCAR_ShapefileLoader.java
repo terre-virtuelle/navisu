@@ -5,11 +5,15 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CategoryOfCardinalMark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BuoyCardinal;
 import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
@@ -37,6 +41,21 @@ public class BCNCAR_ShapefileLoader
     }
 
     @Override
+    protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
+
+        while (shp.hasNext()) {
+            ShapefileRecord record = shp.nextRecord();
+
+            if (!Shapefile.isPointType(record.getShapeType())) {
+                continue;
+            }
+            attrs = this.createPointAttributes(record);
+            double[] point = ((ShapefileRecordPoint) record).getPoint();
+            layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
+        }
+    }
+
+    @Override
     protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
         PointPlacemarkAttributes normalAttributes = new PointPlacemarkAttributes();
         return normalAttributes;
@@ -45,7 +64,7 @@ public class BCNCAR_ShapefileLoader
     @Override
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
-     //   attrs = new PointPlacemarkAttributes();
+        //   attrs = new PointPlacemarkAttributes();
         beacons.add(beacon);
         beacon = new BeaconCardinal();
         entries = record.getAttributes().getEntries();
@@ -97,7 +116,11 @@ public class BCNCAR_ShapefileLoader
 
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-
+        placemark.setLabelText(beacon.getObjectName());
+        String label = "Beacon, cardinal " + CategoryOfCardinalMark.ATT.get(beacon.getCategoryOfCardinalMark()) + "\n"
+                + "Lat : " + new Float(beacon.getLat()).toString() + "\n "
+                + "Lon : " + new Float(beacon.getLon()).toString();
+        placemark.setValue(AVKey.DISPLAY_NAME, label);
         if (beacon.getCategoryOfCardinalMark().equals("1")) {
             attrs.setImageAddress("img/beacon/cardinalPillarNorth.png");
         } else {
@@ -105,7 +128,7 @@ public class BCNCAR_ShapefileLoader
                 attrs.setImageAddress("img/beacon/cardinalPillarEast.png");
             } else {
                 if (beacon.getCategoryOfCardinalMark().equals("3")) {
-                    attrs.setImageAddress("img/beacon/cardinalPillarSouth.png");
+                    attrs.setImageAddress("img/beacon/cardinalSparSouth.png");
                 } else {
                     if (beacon.getCategoryOfCardinalMark().equals("4")) {
                         attrs.setImageAddress("img/beacon/cardinalPillarWest.png");
@@ -113,6 +136,7 @@ public class BCNCAR_ShapefileLoader
                 }
             }
         }
+
         attrs.setScale(1.0);
 
         placemark.setAttributes(attrs);
