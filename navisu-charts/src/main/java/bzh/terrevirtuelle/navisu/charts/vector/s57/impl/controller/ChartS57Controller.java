@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
-import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.BufferedReader;
@@ -18,8 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -115,6 +112,17 @@ public class ChartS57Controller {
                     beacons.stream().forEach((b) -> {
                        // System.out.println("b : " + b);
                     });
+
+                }
+                if (s.equals("BCNLAT.shp")) {
+                    loader = new BCNLAT_ShapefileLoader();
+                    tmp = new File(path + "/BCNLAT.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BCNLAT");
+                    });
+                    layers.addAll(la);
+
 
                 }
                 if (s.contains(".shp")) {

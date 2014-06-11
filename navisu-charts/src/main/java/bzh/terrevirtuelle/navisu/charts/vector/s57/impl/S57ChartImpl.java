@@ -11,6 +11,9 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Contr
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.File;
 import java.io.IOException;
@@ -42,10 +45,20 @@ public class S57ChartImpl
     protected ChartS57Controller chartS57Controller;
     protected List<Layer> layers;
     protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
+    protected WorldWindow wwd;
 
     @Override
     public void componentInitiated() {
         layerTreeServices.createGroup(GROUP);
+        wwd = GeoWorldWindViewImpl.getWW();
+        wwd.addPositionListener((PositionEvent event) -> {
+            float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
+            if (altitude >= 30000) {
+                clip();
+            } else {
+                unClip();
+            }
+        });
     }
 
     @Override
@@ -95,7 +108,9 @@ public class S57ChartImpl
         layers = chartS57Controller.init("data/shp_" + i++);
 
         layers.stream().filter((l) -> (l != null)).map((l) -> {
-            if (l.getName().contains("BCNCAR")) {
+            String name = l.getName();
+            if (name.contains("BCNCAR")
+                    || name.contains("BCNLAT")) {
                 l.setPickEnabled(true);
             } else {
                 l.setPickEnabled(false);
@@ -110,6 +125,24 @@ public class S57ChartImpl
          File index = new File("data/shp");
          for(File file: index.listFiles()) file.delete();
          */
+    }
+
+    private void clip() {
+        if (layers != null) {
+            layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
+                          System.out.println("name " + l.getName());
+                l.setEnabled(false);
+            });
+        }
+    }
+
+    private void unClip() {
+        if (layers != null) {
+            layers.stream().filter((l) -> (l.getName().contains("BCN")
+                    || l.getName().contains("AIS_Station_Layer"))).forEach((l) -> {
+                l.setEnabled(true);
+            });
+        }
     }
 
     @Override

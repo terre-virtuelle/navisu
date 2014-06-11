@@ -46,11 +46,14 @@ public class DEPARE_ShapefileLoader
         if (val1 == 5.0 && val2 <= 10.0) {
             color = new Color(159, 215, 247);
         }
+        if (val1 >= 5.0 && val2 <= 20.0) {
+            color = new Color(159, 215, 247);
+        }
         if (val1 == 10.0 && val2 <= 20.0) {
             color = new Color(247, 247, 247);
         }
-        if (val1 == 20.0 && val2 <= 50.0) {
-            color = new Color(247, 247, 247);
+        if (val1 >= 15.0 && val2 <= 50.0) {
+            color = new Color(129, 195, 226);
         }
         if (val1 == 30.0 && val2 <= 50.0) {
             color = new Color(247, 247, 247);
@@ -58,7 +61,10 @@ public class DEPARE_ShapefileLoader
         if (val1 == 50.0 && val2 <= 5000.0) {
             color = new Color(247, 247, 247);
         }
-        if (val1 >= 50.0 && val2 <= 5000.0) {
+        if (val1 >= 20.0 && val2 <= 5000.0) {
+            color = new Color(247, 247, 247);
+        }
+        if (val2 >=100.0 ) {
             color = new Color(247, 247, 247);
         }
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
