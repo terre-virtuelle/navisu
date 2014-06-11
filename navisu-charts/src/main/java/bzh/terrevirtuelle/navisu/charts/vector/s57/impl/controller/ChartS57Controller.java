@@ -125,6 +125,18 @@ public class ChartS57Controller {
 
 
                 }
+                /*if (s.equals("M_NSYS.shp")) {
+                    loader = new ShapefileLoader();
+                    tmp = new File(path + "/M_NSYS.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("M_NSYS");
+                    });
+                    layers.addAll(la);
+
+
+                }
+                        */
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
                 }

@@ -53,10 +53,15 @@ public class S57ChartImpl
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
             float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
-            if (altitude >= 30000) {
+            if (altitude >= 3000) {
                 clip();
             } else {
                 unClip();
+            }
+            if (altitude >= 48000) {
+                clip1();
+            } else {
+                unClip1();unClip();
             }
         });
     }
@@ -130,16 +135,31 @@ public class S57ChartImpl
     private void clip() {
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
-                          System.out.println("name " + l.getName());
-                l.setEnabled(false);
-            });
+                        System.out.println("name " + l.getName());
+                        l.setEnabled(false);
+                    });
         }
     }
 
     private void unClip() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BCN")
-                    || l.getName().contains("AIS_Station_Layer"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
+                        l.setEnabled(true);
+                    });
+        }
+    }
+
+    private void clip1() {
+        if (layers != null) {
+            layers.stream().filter((l) -> (l.getName().contains("DEPCNT"))).forEach((l) -> {
+                l.setEnabled(false);
+            });
+        }
+    }
+
+    private void unClip1() {
+        if (layers != null) {
+            layers.stream().filter((l) -> (l.getName().contains("DEPCNT"))).forEach((l) -> {
                 l.setEnabled(true);
             });
         }
