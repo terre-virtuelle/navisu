@@ -261,16 +261,16 @@ public class GuiAgentImpl
     //--------------BOOKS------------------
     private void createBooksRadialWidget() {
 
-        centerImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/centreradialmenu150.png")));
+        centerImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/centreradialmenu60.png")));
 
         //First Stage Item 1
         RadialMenuContainer zoomInItem = new RadialMenuContainer();
-        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/configradial.png")));
+        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
         zoomInItem.setImage(zoominImg);
 
         //First Stage Item 2
         RadialMenuContainer zoomOutItem = new RadialMenuContainer();
-        ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/toolsradial.png")));
+        ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
         zoomOutItem.setImage(zoomoutImg);
 //---------------------------------------------------
         //Stage 2 item 1
@@ -305,9 +305,9 @@ public class GuiAgentImpl
         booksRadialMenu.setManaged(false);
 
         root.getChildren().add(booksRadialMenu);
-        //booksRadialMenu.getChildren().add(centerImg);
-        //centerImg.setLayoutX(-centerImg.getImage().getWidth() / 2);
-        //centerImg.setLayoutY(-centerImg.getImage().getHeight() / 2);
+        booksRadialMenu.getChildren().add(centerImg);
+        centerImg.setLayoutX(-centerImg.getImage().getWidth() / 2);
+        centerImg.setLayoutY(-centerImg.getImage().getHeight() / 2);
         booksRadialMenu.setLayoutX(width / 2);
         booksRadialMenu.setLayoutY(height / 2);
         booksRadialMenu.setVisible(false);
