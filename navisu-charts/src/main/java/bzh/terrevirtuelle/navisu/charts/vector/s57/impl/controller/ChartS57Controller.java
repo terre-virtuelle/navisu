@@ -5,6 +5,12 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.DEPARE_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.DEPCNT_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNCAR_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNLAT_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
 import gov.nasa.worldwind.layers.Layer;
@@ -67,7 +73,6 @@ public class ChartS57Controller {
     public final List<Layer> init(String path) {
         this.path = path;
         file = new File(path);
-        //  fileDepare = new File(path + "/DEPARE.shp");
         initGeosMap();
         return layers;
     }
@@ -125,18 +130,25 @@ public class ChartS57Controller {
 
 
                 }
-                /*if (s.equals("M_NSYS.shp")) {
-                    loader = new ShapefileLoader();
+                if (s.equals("M_NSYS.shp")) {
+                    loader = new M_NSYS_ShapefileLoader();
                     tmp = new File(path + "/M_NSYS.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("M_NSYS");
                     });
-                    layers.addAll(la);
-
-
+                   // layers.addAll(la);
                 }
-                        */
+                if (s.equals("WRECKS.shp")) {
+                    loader = new WRECKS_ShapefileLoader();
+                    tmp = new File(path + "/WRECKS.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("WRECKS");
+                    });
+                   // layers.addAll(la);
+                }
+                        
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
                 }

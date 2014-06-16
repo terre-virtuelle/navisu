@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CategoryOfLateralMark;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CategoryOfCardinalMark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
@@ -28,15 +28,15 @@ import java.util.Set;
  * @author Serge Morvan
  * @date 4 juin 2014 NaVisu project
  */
-public class BCNLAT_ShapefileLoader
+public class BCNCAR_ShapefileLoader
         extends ShapefileLoader {
 
-    private final List<BeaconLateral> beacons;
+    private final List<BeaconCardinal> beacons;
     PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
-    private BeaconLateral beacon;
+    private BeaconCardinal beacon;
 
-    public BCNLAT_ShapefileLoader() {
+    public BCNCAR_ShapefileLoader() {
         beacons = new ArrayList<>();
     }
 
@@ -66,9 +66,9 @@ public class BCNLAT_ShapefileLoader
             PointPlacemarkAttributes attrs) {
         //   attrs = new PointPlacemarkAttributes();
         beacons.add(beacon);
-        beacon = new BeaconLateral();
+        beacon = new BeaconCardinal();
         entries = record.getAttributes().getEntries();
-        System.out.println("entries " + entries);
+
         beacon.setLat(latDegrees);
         beacon.setLon(lonDegrees);
         entries.stream().forEach((e) -> {
@@ -76,12 +76,10 @@ public class BCNLAT_ShapefileLoader
                 beacon.setId((Long) e.getValue());
             } else {
                 if (e.getKey().equals("BCNSHP")) {
-                    if (e.getValue() != null) {
-                        beacon.setBeaconShape(((Long) e.getValue()).toString());
-                    }
+                    beacon.setBeaconShape(((Long) e.getValue()).toString());
                 } else {
-                    if (e.getKey().equals("CATLAM")) {
-                        beacon.setCategoryOfLateralMark(((Long) e.getValue()).toString());
+                    if (e.getKey().equals("CATCAM")) {
+                        beacon.setCategoryOfCardinalMark(((Long) e.getValue()).toString());
                     } else {
                         if (e.getKey().equals("OBJNAM")) {
                             beacon.setObjectName((String) e.getValue());
@@ -103,13 +101,6 @@ public class BCNLAT_ShapefileLoader
                                             } else {
                                                 if (e.getKey().equals("DATSTA")) {
                                                     beacon.setDateStart((String) e.getValue());
-                                                } else {
-                                                    if (e.getKey().equals("MARSYS")) {
-                                                        if (e.getValue() != null) {
-                                                            beacon.setMarksNavigationalSystemof(((Long) e.getValue()).toString());
-                                                            System.out.println("MARSYS " + e.getValue());
-                                                        }
-                                                    }
                                                 }
                                             }
                                         }
@@ -126,21 +117,21 @@ public class BCNLAT_ShapefileLoader
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setLabelText(beacon.getObjectName());
-        String label = "Beacon, lateral " + CategoryOfLateralMark.ATT.get(beacon.getCategoryOfLateralMark()) + "\n"
+        String label = "Beacon, cardinal " + CategoryOfCardinalMark.ATT.get(beacon.getCategoryOfCardinalMark()) + "\n"
                 + "Lat : " + new Float(beacon.getLat()).toString() + "\n "
                 + "Lon : " + new Float(beacon.getLon()).toString();
         placemark.setValue(AVKey.DISPLAY_NAME, label);
-        if (beacon.getCategoryOfLateralMark().equals("1")) {
-            attrs.setImageAddress("img/beacon/Beacon_Red_CylindricalTM.png");
+        if (beacon.getCategoryOfCardinalMark().equals("1")) {
+            attrs.setImageAddress("img/beacon/cardinalPillarNorth.png");
         } else {
-            if (beacon.getCategoryOfLateralMark().equals("2")) {
-                attrs.setImageAddress("img/beacon/TowerBeacon_Green_ConicalTM.png");
+            if (beacon.getCategoryOfCardinalMark().equals("2")) {
+                attrs.setImageAddress("img/beacon/cardinalPillarEast.png");
             } else {
-                if (beacon.getCategoryOfLateralMark().equals("3")) {
-                    attrs.setImageAddress("img/beacon/Beacon_Red_CylindricalTM.png");
+                if (beacon.getCategoryOfCardinalMark().equals("3")) {
+                    attrs.setImageAddress("img/beacon/cardinalSparSouth.png");
                 } else {
-                    if (beacon.getCategoryOfLateralMark().equals("4")) {
-                        attrs.setImageAddress("img/beacon/TowerBeacon_Red_CylindricalTM.png");
+                    if (beacon.getCategoryOfCardinalMark().equals("4")) {
+                        attrs.setImageAddress("img/beacon/cardinalPillarWest.png");
                     }
                 }
             }
@@ -152,7 +143,7 @@ public class BCNLAT_ShapefileLoader
         return placemark;
     }
 
-    protected List<BeaconLateral> getBeacons() {
+    public List<BeaconCardinal> getBeacons() {
         return beacons;
     }
 

@@ -135,7 +135,6 @@ public class S57ChartImpl
     private void clip() {
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
-                        System.out.println("name " + l.getName());
                         l.setEnabled(false);
                     });
         }

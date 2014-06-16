@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Topmark;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
@@ -73,7 +72,7 @@ public class TOPMAR_ShapefileLoader
         return placemark;
     }
 
-    protected List<Topmark> getTopmarks() {
+    public List<Topmark> getTopmarks() {
         return dataList;
     }
 
