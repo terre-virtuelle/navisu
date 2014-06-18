@@ -85,11 +85,11 @@ public class GeoWorldWindViewImpl
 
         // Removal bathymetry
         // Get the current elevation model.
-        ElevationModel currentElevationModel = this.wwd.getModel().getGlobe().getElevationModel();
+      //  ElevationModel currentElevationModel = this.wwd.getModel().getGlobe().getElevationModel();
         // Wrap it with the no-bathymetry elevation model.
-        BathymetryFilterElevationModel noDepthModel = new BathymetryFilterElevationModel(currentElevationModel);
+       // BathymetryFilterElevationModel noDepthModel = new BathymetryFilterElevationModel(currentElevationModel);
         // Have the globe use the no-bathymetry elevation model.
-        wwd.getModel().getGlobe().setElevationModel(noDepthModel);
+       // wwd.getModel().getGlobe().setElevationModel(noDepthModel);
     }
 
     protected SwingNode createSwingDisplayNode(WorldWindow wwd) {
