@@ -32,6 +32,7 @@ public class GStation
         shape = new Shape_4(Position.fromDegrees(tStation.getLatitude(), tStation.getLongitude()));
         shape.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
+        shape.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         attrs.setImageOffset(new Offset(24d, 0d, AVKey.PIXELS, AVKey.PIXELS));
         shape.setClipToHorizon(true);
         attrs.setImageAddress("img/emetteur_1.png");
