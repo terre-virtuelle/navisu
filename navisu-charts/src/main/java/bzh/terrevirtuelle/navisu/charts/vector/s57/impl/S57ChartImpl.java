@@ -99,6 +99,7 @@ public class S57ChartImpl
             Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ")
+                    .addArg("RECODE_BY_DSSI=ON")
                     .addArg("data/shp_" + i + "/out.shp ")
                     .addArg(tmp.toString())
                     .setOut(System.out)
@@ -115,7 +116,9 @@ public class S57ChartImpl
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();
             if (name.contains("BCNCAR")
-                    || name.contains("BCNLAT")) {
+                    || name.contains("BCNLAT")
+                    || name.contains("BCNISD")
+                    || name.contains("WRECKS")) {
                 l.setPickEnabled(true);
             } else {
                 l.setPickEnabled(false);

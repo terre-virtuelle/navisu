@@ -27,17 +27,16 @@ import javax.imageio.ImageIO;
  * @author Serge Morvan
  * @date 4 juin 2014 NaVisu project
  */
-public class WRECKS_ShapefileLoader
+public class OBSTRN_ShapefileLoader
         extends ShapefileLoader {
 
     ShapefileRecord record;
     private final List<Wreck> wrecks;
     private Set<Map.Entry<String, Object>> entries;
     private Wreck wreck;
-    // String imgStr = "img/wrecks/Wreck_Depth_Dangerous.png";
     String imgStr = "img/wrecks/Wreck.png";
 
-    public WRECKS_ShapefileLoader() {
+    public OBSTRN_ShapefileLoader() {
         wrecks = new ArrayList<>();
     }
 
@@ -48,7 +47,7 @@ public class WRECKS_ShapefileLoader
         SurfaceIcon surfaceIcon = null;
         this.record = record;
         entries = record.getAttributes().getEntries();
-        //   System.out.println("entries : " + entries);
+     //   System.out.println("entries : " + entries);
         wreck = new Wreck();
         entries.stream().forEach((e) -> {
             if (e.getValue() != null) {
@@ -68,20 +67,16 @@ public class WRECKS_ShapefileLoader
                             }
                         }
                     }
-                }
-                if (e.getKey().equals("WATLEV")) {
-                    String str = e.getValue().toString();
-                    if (str != null && wreck.getCategoryOfWreck() != null) {
-                        System.out.println("str : " + str + " " + wreck.getCategoryOfWreck());
-                        if (str.contains("3") && wreck.getCategoryOfWreck().contains("2")) {
-                            imgStr = "img/wrecks/logo.png";
+                } else {
+                    if (e.getKey().equals("WATLEV")) {
+                        String str = e.getValue().toString();
+                        if ((str.equals("3") || str.equals("5")&&wreck.getCategoryOfWreck().contains("2"))) {
+                            imgStr = "img/wrecks/ISODGR51.png";
                             wreck.setWaterLevelEffect(((Long) e.getValue()).toString());
-                            
                         }
                     }
 
                 }
-
             }
 
         });
@@ -89,9 +84,9 @@ public class WRECKS_ShapefileLoader
             surfaceIcon = new SurfaceIcon(ImageIO.read(new File(imgStr)), new LatLon(LatLon.fromDegrees(latDegrees, lonDegrees)));
             surfaceIcon.setMaxSize(100.0);
         } catch (IOException ex) {
-            Logger.getLogger(WRECKS_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OBSTRN_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //  System.out.println("WRECKS " + record.getAttributes().getEntries());
+        System.out.println("WRECKS " + record.getAttributes().getEntries());
         return surfaceIcon;
     }
 

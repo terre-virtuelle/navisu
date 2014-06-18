@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.UnderwaterAwashRock;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Wreck;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
@@ -25,20 +26,20 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author Serge Morvan
- * @date 4 juin 2014 NaVisu project
+ * @date 17  juin 2014 NaVisu project
  */
-public class WRECKS_ShapefileLoader
+public class UWTROC_ShapefileLoader
         extends ShapefileLoader {
 
     ShapefileRecord record;
-    private final List<Wreck> wrecks;
+    private final List<UnderwaterAwashRock> underwaterAwashRocks;
     private Set<Map.Entry<String, Object>> entries;
-    private Wreck wreck;
+    private UnderwaterAwashRock underwaterAwashRock;
     // String imgStr = "img/wrecks/Wreck_Depth_Dangerous.png";
-    String imgStr = "img/wrecks/Wreck.png";
+    String imgStr = "img/wrecks/Rock_Awash.png";
 
-    public WRECKS_ShapefileLoader() {
-        wrecks = new ArrayList<>();
+    public UWTROC_ShapefileLoader() {
+        underwaterAwashRocks = new ArrayList<>();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
@@ -48,40 +49,29 @@ public class WRECKS_ShapefileLoader
         SurfaceIcon surfaceIcon = null;
         this.record = record;
         entries = record.getAttributes().getEntries();
-        //   System.out.println("entries : " + entries);
-        wreck = new Wreck();
+     //   System.out.println("entries : " + entries);
+        underwaterAwashRock = new UnderwaterAwashRock();
         entries.stream().forEach((e) -> {
             if (e.getValue() != null) {
-                if (e.getKey().equals("CATWRK")) {
+                if (e.getKey().equals("NATSUR")) {
                     String str = e.getValue().toString();
                     if (str != null) {
-                        wreck.setCategoryOfWreck(str);
-                        if (str.equals("1")) {
-                            imgStr = "img/wrecks/Wreck_Depth_NonDangerous.png";
-                        } else {
-                            if (str.equals("2") || str.equals("3")) {
-                                imgStr = "img/wrecks/Wreck_Depth_Dangerous.png";
-                            } else {
-                                if (str.equals("4") || str.equals("5")) {
-                                    imgStr = "img/wrecks/Wreck.png";
-                                }
-                            }
-                        }
+                        underwaterAwashRock.setNatureOfSurface(str);
+                        if (str.equals("9")) {
+                            imgStr = "img/wrecks/Rock_Awash.png";
+                        } 
                     }
-                }
-                if (e.getKey().equals("WATLEV")) {
-                    String str = e.getValue().toString();
-                    if (str != null && wreck.getCategoryOfWreck() != null) {
-                        System.out.println("str : " + str + " " + wreck.getCategoryOfWreck());
-                        if (str.contains("3") && wreck.getCategoryOfWreck().contains("2")) {
-                            imgStr = "img/wrecks/logo.png";
+                } 
+                /*else {
+                    if (e.getKey().equals("WATLEV")) {
+                        String str = e.getValue().toString();
+                        if ((str.equals("3") || str.equals("5")&&wreck.getCategoryOfWreck().contains("2"))) {
+                            imgStr = "img/wrecks/ISODGR51.png";
                             wreck.setWaterLevelEffect(((Long) e.getValue()).toString());
-                            
                         }
                     }
-
                 }
-
+                        */
             }
 
         });
@@ -89,14 +79,13 @@ public class WRECKS_ShapefileLoader
             surfaceIcon = new SurfaceIcon(ImageIO.read(new File(imgStr)), new LatLon(LatLon.fromDegrees(latDegrees, lonDegrees)));
             surfaceIcon.setMaxSize(100.0);
         } catch (IOException ex) {
-            Logger.getLogger(WRECKS_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UWTROC_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //  System.out.println("WRECKS " + record.getAttributes().getEntries());
         return surfaceIcon;
     }
 
-    public List<Wreck> getWrecks() {
-        return wrecks;
+    public List<UnderwaterAwashRock> getUnderwaterAwashRocks() {
+        return underwaterAwashRocks;
     }
 
 }

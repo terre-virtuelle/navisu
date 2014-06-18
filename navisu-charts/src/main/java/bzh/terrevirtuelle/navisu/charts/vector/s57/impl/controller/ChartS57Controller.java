@@ -8,8 +8,10 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.DEPARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.DEPCNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNCAR_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNISD_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNLAT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.UWTROC_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
@@ -130,6 +132,15 @@ public class ChartS57Controller {
 
 
                 }
+                if (s.equals("BCNISD.shp")) {
+                    loader = new BCNISD_ShapefileLoader();
+                    tmp = new File(path + "/BCNISD.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BCNISD");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("M_NSYS.shp")) {
                     loader = new M_NSYS_ShapefileLoader();
                     tmp = new File(path + "/M_NSYS.shp");
@@ -146,9 +157,17 @@ public class ChartS57Controller {
                     la.stream().forEach((l) -> {
                         l.setName("WRECKS");
                     });
-                   // layers.addAll(la);
+                    layers.addAll(la);
                 }
-                        
+                 if (s.equals("UWTROC.shp")) {
+                    loader = new UWTROC_ShapefileLoader();
+                    tmp = new File(path + "/UWTROC.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("UWTROC");
+                    });
+                    layers.addAll(la);
+                }       
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
                 }
