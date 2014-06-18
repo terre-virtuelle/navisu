@@ -1,10 +1,9 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Geo;
 import java.io.Serializable;
 
 
-public class BeaconIsolatedDanger extends Geo
+public class BeaconIsolatedDanger extends Location
 implements Serializable
 {
 
