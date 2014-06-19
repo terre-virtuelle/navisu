@@ -16,6 +16,8 @@ import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
+import bzh.terrevirtuelle.navisu.kml.misc.KmlObjectServices;
+import bzh.terrevirtuelle.navisu.kml.misc.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
 import bzh.terrevirtuelle.navisu.locators.Widget3DServices;
@@ -59,6 +61,7 @@ public class AppMain extends Application {
                         KapChartImpl.class,
                         GribImpl.class,
                         S57ChartImpl.class,
+                        KmlObjectImpl.class,
                         DataServerImpl.class,
                         NmeaClientImpl.class,
                         Widget3DImpl.class,
@@ -72,6 +75,7 @@ public class AppMain extends Application {
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
+        KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
@@ -79,6 +83,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
+        driverServices.registerNewDriver(kmlObjectServices.getDriver());
         
          //------------------------------->
         // TESTS AGENT
