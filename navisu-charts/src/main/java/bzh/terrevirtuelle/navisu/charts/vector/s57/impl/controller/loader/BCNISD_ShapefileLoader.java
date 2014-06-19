@@ -5,9 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CategoryOfLateralMark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconIsolatedDanger;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconLateral;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
@@ -15,6 +13,7 @@ import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
@@ -129,6 +128,7 @@ public class BCNISD_ShapefileLoader
         placemark.setValue(AVKey.DISPLAY_NAME, label);
       //  if (beacon.getCategoryOfLateralMark().equals("1")) {
             attrs.setImageAddress("img/beacon/beacon_pole_isoled_danger.png");
+            attrs.setImageOffset(Offset.BOTTOM_CENTER);
       //  } 
         
 
