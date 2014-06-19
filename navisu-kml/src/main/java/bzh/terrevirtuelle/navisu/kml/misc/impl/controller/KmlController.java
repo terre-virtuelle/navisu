@@ -7,25 +7,18 @@ package bzh.terrevirtuelle.navisu.kml.misc.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.kml.KMLRoot;
 import gov.nasa.worldwind.ogc.kml.impl.KMLController;
-import gov.nasa.worldwind.util.layertree.KMLLayerTreeNode;
-import gov.nasa.worldwind.util.layertree.KMLNetworkLinkTreeNode;
 import gov.nasa.worldwindx.examples.kml.KMLApplicationController;
-import gov.nasa.worldwindx.examples.kml.KMLViewer;
 import gov.nasa.worldwindx.examples.util.BalloonController;
 import gov.nasa.worldwindx.examples.util.HotSpotController;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.SwingUtilities;
 import javax.xml.stream.XMLStreamException;
 
 /**
@@ -65,11 +58,9 @@ public class KmlController {
               //  addKMLLayer(document);
             }
         };
-
         // Give the KML app controller a reference to the BalloonController so that the app controller can open
         // KML feature balloons when feature's are selected in the on-screen layer tree.
         this.kmlAppController.setBalloonController(balloonController);
-
     }
 
     public static KmlController getInstance() {
@@ -79,12 +70,10 @@ public class KmlController {
     public final List<Layer> init(String path) {
         this.path = path;
         try {
-
-            KMLController kmlController = new KMLController(KMLRoot.createAndParse(path));
-
+            KMLRoot document = KMLRoot.createAndParse(path);
+            KMLController kmlController = new KMLController(document);
             RenderableLayer layer = new RenderableLayer();
             layer.addRenderable(kmlController);
-            // this.getWwd().getModel().getLayers().add(layer);
             layers.add(layer);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(KmlController.class.getName()).log(Level.SEVERE, null, ex);
