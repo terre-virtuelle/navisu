@@ -48,12 +48,13 @@ public class WRECKS_ShapefileLoader
         SurfaceIcon surfaceIcon = null;
         this.record = record;
         entries = record.getAttributes().getEntries();
-        //   System.out.println("entries : " + entries);
+           System.out.println("entries : " + entries);
         wreck = new Wreck();
         entries.stream().forEach((e) -> {
             if (e.getValue() != null) {
                 if (e.getKey().equals("CATWRK")) {
                     String str = e.getValue().toString();
+                 //   System.out.print("CATWRK " + str);
                     if (str != null) {
                         wreck.setCategoryOfWreck(str);
                         if (str.equals("1")) {
@@ -70,16 +71,20 @@ public class WRECKS_ShapefileLoader
                     }
                 }
                 if (e.getKey().equals("WATLEV")) {
+
                     String str = e.getValue().toString();
+                  //  System.out.print(" WATLEV " + str);
                     if (str != null && wreck.getCategoryOfWreck() != null) {
-                        System.out.println("str : " + str + " " + wreck.getCategoryOfWreck());
+                       // System.out.println("str : " + str + " " + wreck.getCategoryOfWreck());
                         if (str.contains("3") && wreck.getCategoryOfWreck().contains("2")) {
                             imgStr = "img/wrecks/logo.png";
                             wreck.setWaterLevelEffect(((Long) e.getValue()).toString());
-                            
+
                         }
                     }
 
+                }
+                if (e.getKey().equals("WATLEV")) {
                 }
 
             }

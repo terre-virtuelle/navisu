@@ -10,9 +10,9 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.DEPCNT
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNCAR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNISD_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNLAT_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PointTemplate_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.UWTROC_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
 import gov.nasa.worldwind.layers.Layer;
@@ -106,6 +106,17 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                /*
+                if (s.equals("M_COVR.shp")) {
+                    loader = new M_COVR_ShapefileLoader();
+                    tmp = new File(path + "/M_COVR.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("M_COVR");
+                    });
+                    layers.addAll(la);
+                }
+                        */
                 if (s.equals("BCNCAR.shp")) {
                     loader = new BCNCAR_ShapefileLoader();
                     tmp = new File(path + "/BCNCAR.shp");
@@ -151,6 +162,16 @@ public class ChartS57Controller {
                    // layers.addAll(la);
                 }
                 if (s.equals("WRECKS.shp")) {
+                    loader = new PointTemplate_ShapefileLoader();
+                    tmp = new File(path + "/WRECKS.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("WRECKS");
+                    });
+                    layers.addAll(la);
+                }
+                /*
+                if (s.equals("WRECKS.shp")) {
                     loader = new WRECKS_ShapefileLoader();
                     tmp = new File(path + "/WRECKS.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
@@ -159,6 +180,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                        */
                  if (s.equals("UWTROC.shp")) {
                     loader = new UWTROC_ShapefileLoader();
                     tmp = new File(path + "/UWTROC.shp");
