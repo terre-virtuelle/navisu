@@ -35,9 +35,16 @@ public class PointTemplate_ShapefileLoader
     List<PointPlacemark> placemarks;
     PointPlacemarkAttributes attrs;
     StringBuilder label;
+    String objName;
+    String imgStr = "img/wrecks/danger02.png";
     private Set<Entry<String, Object>> entries;
 
     public PointTemplate_ShapefileLoader() {
+        placemarks = new ArrayList<>();
+    }
+
+    public PointTemplate_ShapefileLoader(String objName) {
+        this.objName = objName;
         placemarks = new ArrayList<>();
     }
 
@@ -65,11 +72,13 @@ public class PointTemplate_ShapefileLoader
     @Override
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
-        
+
         entries = record.getAttributes().getEntries();
         label = new StringBuilder();
-        label.append("Lat : ").append(new Float(lonDegrees)).append("\n");
+        label.append(objName).append("\n");
+        label.append("Lat : ").append(new Float(latDegrees)).append("\n");
         label.append("Lon : ").append(new Float(lonDegrees)).append("\n");
+        System.out.println("entries " + entries);
         entries.stream().forEach((e) -> {
             placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
             placemarks.add(placemark);

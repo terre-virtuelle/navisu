@@ -118,7 +118,8 @@ public class S57ChartImpl
             if (name.contains("BCNCAR")
                     || name.contains("BCNLAT")
                     || name.contains("BCNISD")
-                    || name.contains("WRECKS")) {
+                    || name.contains("OBSTRN")
+                    || name.contains("WRECK")) {
                 l.setPickEnabled(true);
             } else {
                 l.setPickEnabled(false);

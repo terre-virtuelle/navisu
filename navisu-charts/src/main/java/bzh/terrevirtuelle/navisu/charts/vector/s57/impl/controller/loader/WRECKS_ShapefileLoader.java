@@ -6,21 +6,18 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Wreck;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
-import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.SurfaceIcon;
+import gov.nasa.worldwind.render.SurfaceText;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
-import java.io.File;
-import java.io.IOException;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -34,8 +31,6 @@ public class WRECKS_ShapefileLoader
     private final List<Wreck> wrecks;
     private Set<Map.Entry<String, Object>> entries;
     private Wreck wreck;
-    // String imgStr = "img/wrecks/Wreck_Depth_Dangerous.png";
-    String imgStr = "img/wrecks/Wreck.png";
 
     public WRECKS_ShapefileLoader() {
         wrecks = new ArrayList<>();
@@ -45,59 +40,70 @@ public class WRECKS_ShapefileLoader
     @Override
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
-        SurfaceIcon surfaceIcon = null;
+        SurfaceText surfaceText = null;
         this.record = record;
         entries = record.getAttributes().getEntries();
-           System.out.println("entries : " + entries);
         wreck = new Wreck();
+        wreck.setLat(latDegrees);
+        wreck.setLon(lonDegrees);
         entries.stream().forEach((e) -> {
             if (e.getValue() != null) {
                 if (e.getKey().equals("CATWRK")) {
-                    String str = e.getValue().toString();
-                 //   System.out.print("CATWRK " + str);
-                    if (str != null) {
-                        wreck.setCategoryOfWreck(str);
-                        if (str.equals("1")) {
-                            imgStr = "img/wrecks/Wreck_Depth_NonDangerous.png";
-                        } else {
-                            if (str.equals("2") || str.equals("3")) {
-                                imgStr = "img/wrecks/Wreck_Depth_Dangerous.png";
-                            } else {
-                                if (str.equals("4") || str.equals("5")) {
-                                    imgStr = "img/wrecks/Wreck.png";
-                                }
-                            }
-                        }
-                    }
+                    wreck.setCategoryOfWreck(e.getValue().toString());
+                }
+                if (e.getKey().equals("EXPSOU")) {
+                    wreck.setExpositionOfSounding(e.getValue().toString());
+                }
+                if (e.getKey().equals("QUASOU")) {
+                    wreck.setQualityOfSoundingMeasurement(e.getValue().toString());
+                }
+                if (e.getKey().equals("TECSOU")) {
+                    wreck.setTechniqueOfSoundingMeasurement(e.getValue().toString());
+                }
+                if (e.getKey().equals("VALSOU")) {
+                    wreck.setValueOfSounding(e.getValue().toString());
                 }
                 if (e.getKey().equals("WATLEV")) {
-
-                    String str = e.getValue().toString();
-                  //  System.out.print(" WATLEV " + str);
-                    if (str != null && wreck.getCategoryOfWreck() != null) {
-                       // System.out.println("str : " + str + " " + wreck.getCategoryOfWreck());
-                        if (str.contains("3") && wreck.getCategoryOfWreck().contains("2")) {
-                            imgStr = "img/wrecks/logo.png";
-                            wreck.setWaterLevelEffect(((Long) e.getValue()).toString());
-
-                        }
-                    }
-
+                    wreck.setWaterLevelEffect(((Long) e.getValue()).toString());
                 }
-                if (e.getKey().equals("WATLEV")) {
+                if (e.getKey().equals("QUALTY")) {
+                    wreck.setQualityOfSoundingMeasurement(((Long) e.getValue()).toString());
                 }
-
             }
-
-        });
-        try {
-            surfaceIcon = new SurfaceIcon(ImageIO.read(new File(imgStr)), new LatLon(LatLon.fromDegrees(latDegrees, lonDegrees)));
-            surfaceIcon.setMaxSize(100.0);
-        } catch (IOException ex) {
-            Logger.getLogger(WRECKS_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //  System.out.println("WRECKS " + record.getAttributes().getEntries());
-        return surfaceIcon;
+        );
+        if (wreck.getValueOfSounding() != null) {
+            surfaceText = new SurfaceText(wreck.getValueOfSounding(), Position.fromDegrees(latDegrees, lonDegrees, 0));
+        } else {
+            surfaceText = new SurfaceText("", Position.fromDegrees(latDegrees, lonDegrees, 0));
+        }
+        surfaceText.setColor(Color.black);
+        surfaceText.setTextSize(20.0);
+        String tecsou = wreck.getTechniqueOfSoundingMeasurement();
+        String label;
+        if (tecsou == null) {
+            label = "WRECK \n"
+                    + "Lat : " + new Float(wreck.getLat()).toString() + "\n "
+                    + "Lon : " + new Float(wreck.getLon()).toString() + "\n"
+                    + "CATWRK : " + wreck.getQualityOfSoundingMeasurement() + "\n"
+                    + "EXPSOU : " + wreck.getExpositionOfSounding() + "\n"
+                    + "QUASOU : " + wreck.getQualityOfSoundingMeasurement() + "\n"
+                    + "VALSOU : " + wreck.getValueOfSounding() + " m \n"
+                    + "WATLEV : " + wreck.getWaterLevelEffect() + "\n";
+        } else {
+            label = "WRECK \n"
+                    + "Lat : " + new Float(wreck.getLat()).toString() + "\n "
+                    + "Lon : " + new Float(wreck.getLon()).toString() + "\n"
+                    + "CATWRK : " + wreck.getQualityOfSoundingMeasurement() + "\n"
+                    + "EXPSOU : " + wreck.getExpositionOfSounding() + "\n"
+                    + "QUASOU : " + wreck.getQualityOfSoundingMeasurement() + "\n"
+                    + "TECSOU : " + wreck.getTechniqueOfSoundingMeasurement() + "\n"
+                    + "VALSOU : " + wreck.getValueOfSounding() + " m \n"
+                    + "WATLEV : " + wreck.getWaterLevelEffect() + "\n";
+        }
+        surfaceText.setValue(AVKey.DISPLAY_NAME, label);
+
+        return surfaceText;
     }
 
     public List<Wreck> getWrecks() {
