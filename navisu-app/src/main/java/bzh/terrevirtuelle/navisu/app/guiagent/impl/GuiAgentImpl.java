@@ -275,12 +275,12 @@ public class GuiAgentImpl
         
         //First Stage Item 3
         RadialMenuContainer stage1Item3 = new RadialMenuContainer();
-        ImageView stage1Item3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
+        ImageView stage1Item3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/viderouge.png")));
         stage1Item3.setImage(stage1Item3Img);
         
         //First Stage Item 4
         RadialMenuContainer stage1Item4 = new RadialMenuContainer();
-        ImageView stage1Item4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
+        ImageView stage1Item4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
         stage1Item4.setImage(stage1Item4Img);        
         
 //---------------------------------------------------
@@ -291,39 +291,32 @@ public class GuiAgentImpl
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView stageTwoItem2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
+        ImageView stageTwoItem2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/viderouge.png")));
         stageTwoItem2.setImage(stageTwoItem2Img);
 
         //Stage 2 item 3
         RadialMenuItem stageTwoItem3 = new RadialMenuItem();
-        ImageView stageTwoItem3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
+        ImageView stageTwoItem3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videmagenta.png")));
         stageTwoItem2.setImage(stageTwoItem3Img);
         
         //Stage 2 item 4
         RadialMenuItem stageTwoItem4 = new RadialMenuItem();
-        ImageView stageTwoItem4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
+        ImageView stageTwoItem4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
         stageTwoItem2.setImage(stageTwoItem4Img);
 
-//---------------------------------------------------
-        //Stage 3 item 1
-        RadialMenuItem stageThreeItem1 = new RadialMenuItem();
-        ImageView stageThreeItem1Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
-        stageThreeItem1.setImage(stageThreeItem1Img);
+        //Stage 2 item 5
+        RadialMenuItem stageTwoItem5 = new RadialMenuItem();
+        ImageView stageTwoItem5Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
+        stageTwoItem5.setImage(stageTwoItem5Img);
+                 
 
-        //Stage 3 item 2
-        RadialMenuItem stageThreeItem2 = new RadialMenuItem();
-        ImageView stageThreeItem2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
-        stageThreeItem2.setImage(stageThreeItem2Img);          
-        
+//---------------Stage2 to Stage1 ------------------------       
         stage1Item1.addItem(stageTwoItem1);
         stage1Item1.addItem(stageTwoItem2);
-        stage1Item1.addItem(stageThreeItem2);
+        stage1Item1.addItem(stageTwoItem3);
         stage1Item1.addItem(stageTwoItem4);
+        stage1Item1.addItem(stageTwoItem5);
         
-        //stageTwoItem1.addItem(stageThreeItem1);
-        //stageTwoItem1.addItem(stageThreeItem2);
-        //stageTwoItem1.addItem(stageThreeItem2);
-        //stageTwoItem1.addItem(stageThreeItem1);
         
         
         booksRadialMenu = new RadialMenu(30, 60, 360, 2);
