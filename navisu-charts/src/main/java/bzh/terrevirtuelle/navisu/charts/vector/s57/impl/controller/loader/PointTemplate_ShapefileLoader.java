@@ -5,8 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CategoryOfCardinalMark;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
@@ -78,18 +76,17 @@ public class PointTemplate_ShapefileLoader
         label.append(objName).append("\n");
         label.append("Lat : ").append(new Float(latDegrees)).append("\n");
         label.append("Lon : ").append(new Float(lonDegrees)).append("\n");
-        System.out.println("entries " + entries);
+        placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
+        placemarks.add(placemark);
+        placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         entries.stream().forEach((e) -> {
-            placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
-            placemarks.add(placemark);
-            placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
             if (e.getKey() != null && e.getValue() != null) {
                 label.append(e.getKey()).append("=").append(e.getValue()).append("\n");
             }
-            placemark.setValue(AVKey.DISPLAY_NAME, label.toString());
-            attrs.setScale(1.0);
-            placemark.setAttributes(attrs);
         });
+        placemark.setValue(AVKey.DISPLAY_NAME, label.toString());
+        attrs.setScale(1.0);
+        placemark.setAttributes(attrs);
         return placemark;
     }
 

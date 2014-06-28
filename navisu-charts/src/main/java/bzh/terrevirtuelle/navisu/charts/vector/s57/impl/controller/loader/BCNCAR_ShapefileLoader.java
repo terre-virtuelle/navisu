@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CategoryOfCardinalMark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -31,13 +31,13 @@ import java.util.Set;
 public class BCNCAR_ShapefileLoader
         extends ShapefileLoader {
 
-    private final List<BeaconCardinal> beacons;
+    private final List<BeaconCardinal> objects;
     PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
     private BeaconCardinal beacon;
 
     public BCNCAR_ShapefileLoader() {
-        beacons = new ArrayList<>();
+        objects = new ArrayList<>();
     }
 
     @Override
@@ -65,7 +65,7 @@ public class BCNCAR_ShapefileLoader
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
         //   attrs = new PointPlacemarkAttributes();
-        beacons.add(beacon);
+        objects.add(beacon);
         beacon = new BeaconCardinal();
         entries = record.getAttributes().getEntries();
 
@@ -117,7 +117,7 @@ public class BCNCAR_ShapefileLoader
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setLabelText(beacon.getObjectName());
-        String label = "Beacon, cardinal " + CategoryOfCardinalMark.ATT.get(beacon.getCategoryOfCardinalMark()) + "\n"
+        String label = "Beacon, cardinal " + CATCAM.ATT.get(beacon.getCategoryOfCardinalMark()) + "\n"
                 + "Lat : " + new Float(beacon.getLat()).toString() + "\n "
                 + "Lon : " + new Float(beacon.getLon()).toString();
         placemark.setValue(AVKey.DISPLAY_NAME, label);
@@ -144,7 +144,7 @@ public class BCNCAR_ShapefileLoader
     }
 
     public List<BeaconCardinal> getBeacons() {
-        return beacons;
+        return objects;
     }
 
 }

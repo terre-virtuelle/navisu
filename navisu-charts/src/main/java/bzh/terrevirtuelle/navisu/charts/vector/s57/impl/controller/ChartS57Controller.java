@@ -10,14 +10,20 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.DEPCNT
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNCAR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNISD_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNLAT_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.LIGHTS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.UWTROC_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.view.Lights;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.BufferedReader;
@@ -25,6 +31,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,15 +51,19 @@ public class ChartS57Controller {
     private Map<String, String> acronyms;
     private Map<String, Map<Long, S57Object>> geos;
     private final List<Layer> layers;
+    private final List<AirspaceLayer> airspaceLayers;
     private ShapefileLoader loader;
+    protected WorldWindow wwd;
 
     static {
         INSTANCE = new ChartS57Controller();
     }
 
-    public ChartS57Controller() {
+    public ChartS57Controller() { wwd = GeoWorldWindViewImpl.getWW();
+        
         initAcronymsMap();
         layers = new ArrayList<>();
+        airspaceLayers = new ArrayList<>();
     }
 
     private void initAcronymsMap() {
@@ -75,10 +86,17 @@ public class ChartS57Controller {
         return INSTANCE;
     }
 
-    public final List<Layer> init(String path) {
+    public final void init(String path) {
         this.path = path;
         file = new File(path);
         initGeosMap();
+    }
+
+    public List<AirspaceLayer> getAirspaceLayers() {
+        return airspaceLayers;
+    }
+
+    public List<Layer> getLayers() {
         return layers;
     }
 
@@ -161,19 +179,9 @@ public class ChartS57Controller {
                     la.stream().forEach((l) -> {
                         l.setName("M_NSYS");
                     });
-                    // layers.addAll(la);
+                    //layers.addAll(la);
+                    // M_NSYS est utile pour la définition du systeme de ref.
                 }
-                /*
-                 if (s.equals("WRECKS.shp")) {
-                 loader = new PointTemplate_ShapefileLoader("WRECKS");
-                 tmp = new File(path + "/WRECKS.shp");
-                 List<Layer> la = loader.createLayersFromSource(tmp);
-                 la.stream().forEach((l) -> {
-                 l.setName("WRECKS");
-                 });
-                 layers.addAll(la);
-                 }
-                 */
                 if (s.equals("WRECKS.shp")) {
                     loader = new WRECKS_CNT_ShapefileLoader();
                     tmp = new File(path + "/WRECKS.shp");
@@ -198,7 +206,7 @@ public class ChartS57Controller {
                         l.setName("OBSTRN");
                     });
                     layers.addAll(la);
-                    
+
                     loader = new OBSTRN_ShapefileLoader();
                     tmp = new File(path + "/OBSTRN.shp");
                     la = loader.createLayersFromSource(tmp);
@@ -215,6 +223,31 @@ public class ChartS57Controller {
                         l.setName("UWTROC");
                     });
                     layers.addAll(la);
+                }
+                if (s.equals("LIGHTS.shp")) {
+
+                    loader = new LIGHTS_ShapefileLoader();
+                    tmp = new File(path + "/LIGHTS.shp");
+                    loader.createLayersFromSource(tmp);
+                    AirspaceLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
+                    la.setName("LIGHTS");
+                    airspaceLayers.add(la);
+
+                    /*
+                     loader = new PointTemplate_ShapefileLoader();
+                     tmp = new File(path + "/LIGHTS.shp");
+                     List<Layer> la = loader.createLayersFromSource(tmp);
+                     la.stream().forEach((l) -> {
+                     l.setName("LIGHTS");
+                     });
+                     layers.addAll(la);
+                     */
+                    wwd.addSelectListener((SelectEvent event) -> {
+                        if (event.isLeftClick()
+                                && event.getTopObject().getClass().getInterfaces()[0].equals(Lights.class)) {
+                            System.out.println(Arrays.toString(((Lights)event.getTopObject()).getRadii()));
+                        }
+                    });
                 }
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());

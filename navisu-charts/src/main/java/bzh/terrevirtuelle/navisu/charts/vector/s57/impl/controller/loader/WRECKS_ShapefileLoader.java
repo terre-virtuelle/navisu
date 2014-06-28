@@ -5,6 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CATWRK;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.EXPSOU;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.QUASOU;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.TECSOU;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.WATLEV;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Wreck;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
@@ -75,31 +80,76 @@ public class WRECKS_ShapefileLoader
         if (wreck.getValueOfSounding() != null) {
             surfaceText = new SurfaceText(wreck.getValueOfSounding(), Position.fromDegrees(latDegrees, lonDegrees, 0));
         } else {
-            surfaceText = new SurfaceText("", Position.fromDegrees(latDegrees, lonDegrees, 0));
+            surfaceText = new SurfaceText("     ", Position.fromDegrees(latDegrees, lonDegrees, 0));
         }
         surfaceText.setColor(Color.black);
         surfaceText.setTextSize(20.0);
         String tecsou = wreck.getTechniqueOfSoundingMeasurement();
-        String label;
+        String label = null;
+        // String s = String.format("%-12.5f%.20f", 12.23429837482, 9.10212023134);
+        /*
+         if (tecsou == null) {
+         label = "WRECK \n"
+         + "Lat : " + new Float(wreck.getLat()).toString() + "\n "
+         + "Lon : " + new Float(wreck.getLon()).toString() + "\n"
+         + "CATWRK : " + CATWRK.ATT.get(wreck.getCategoryOfWreck()) + "\n"
+         + "EXPSOU : " + EXPSOU.ATT.get(wreck.getExpositionOfSounding()) + "\n"
+         + "QUASOU : " + QUASOU.ATT.get(wreck.getQualityOfSoundingMeasurement()) + "\n"
+         + "VALSOU : " + wreck.getValueOfSounding() + " m \n"
+         + "WATLEV : " + WATLEV.ATT.get(wreck.getWaterLevelEffect()) + "\n";
+         } else {
+         label = "WRECK \n"
+         + "Lat : " + new Float(wreck.getLat()).toString() + "\n "
+         + "Lon : " + new Float(wreck.getLon()).toString() + "\n"
+         + "CATWRK : " + CATWRK.ATT.get(wreck.getCategoryOfWreck()) + "\n"
+         + "EXPSOU : " + EXPSOU.ATT.get(wreck.getExpositionOfSounding()) + "\n"
+         + "QUASOU : " + QUASOU.ATT.get(wreck.getQualityOfSoundingMeasurement()) + "\n"
+         + "TECSOU : " + TECSOU.ATT.get(wreck.getTechniqueOfSoundingMeasurement()) + "\n"
+         + "VALSOU : " + wreck.getValueOfSounding() + " m \n"
+         + "WATLEV : " + WATLEV.ATT.get(wreck.getWaterLevelEffect()) + "\n";
+         }
+         */
+
         if (tecsou == null) {
-            label = "WRECK \n"
-                    + "Lat : " + new Float(wreck.getLat()).toString() + "\n "
-                    + "Lon : " + new Float(wreck.getLon()).toString() + "\n"
-                    + "CATWRK : " + wreck.getQualityOfSoundingMeasurement() + "\n"
-                    + "EXPSOU : " + wreck.getExpositionOfSounding() + "\n"
-                    + "QUASOU : " + wreck.getQualityOfSoundingMeasurement() + "\n"
-                    + "VALSOU : " + wreck.getValueOfSounding() + " m \n"
-                    + "WATLEV : " + wreck.getWaterLevelEffect() + "\n";
-        } else {
-            label = "WRECK \n"
-                    + "Lat : " + new Float(wreck.getLat()).toString() + "\n "
-                    + "Lon : " + new Float(wreck.getLon()).toString() + "\n"
-                    + "CATWRK : " + wreck.getQualityOfSoundingMeasurement() + "\n"
-                    + "EXPSOU : " + wreck.getExpositionOfSounding() + "\n"
-                    + "QUASOU : " + wreck.getQualityOfSoundingMeasurement() + "\n"
-                    + "TECSOU : " + wreck.getTechniqueOfSoundingMeasurement() + "\n"
-                    + "VALSOU : " + wreck.getValueOfSounding() + " m \n"
-                    + "WATLEV : " + wreck.getWaterLevelEffect() + "\n";
+            tecsou = "";
+            label = String.format("%-29s\n"
+                    + "%-29s"
+                    + "%-29s"
+                    + "%-29s"
+                    + "%-29s"
+                    + "%-29s"
+                    + "%-29s",
+                    "WRECK",
+                    "Lat : " + wreck.getLat() + "\n",
+                    "Lon : " + wreck.getLon() + "\n",
+                    "CATWRK : " + CATWRK.ATT.get(wreck.getCategoryOfWreck()) + "\n",
+                    "EXPSOU : " + EXPSOU.ATT.get(wreck.getExpositionOfSounding()) + "\n",
+                    "QUASOU : " + QUASOU.ATT.get(wreck.getQualityOfSoundingMeasurement()) + "\n",
+                    "VALSOU : " + wreck.getValueOfSounding()
+            );
+           // System.out.println(label);
+            //   "CATWRK : ", CATWRK.ATT.get(wreck.getCategoryOfWreck()),
+            //   "EXPSOU : ", EXPSOU.ATT.get(wreck.getExpositionOfSounding()),
+            //   "QUASOU : ", QUASOU.ATT.get(wreck.getQualityOfSoundingMeasurement()),
+            //   "VALSOU : ", wreck.getValueOfSounding());
+            /*
+            
+             + "CATWRK : " + CATWRK.ATT.get(wreck.getCategoryOfWreck()) + "\n"
+             + "EXPSOU : " + EXPSOU.ATT.get(wreck.getExpositionOfSounding()) + "\n"
+             + "QUASOU : " + QUASOU.ATT.get(wreck.getQualityOfSoundingMeasurement()) + "\n"
+             + "VALSOU : " + wreck.getValueOfSounding() + " m \n"
+             + "WATLEV : " + WATLEV.ATT.get(wreck.getWaterLevelEffect()) + "\n";
+             } else {
+             label = "WRECK \n"
+             + "Lat : " + new Float(wreck.getLat()).toString() + "\n "
+             + "Lon : " + new Float(wreck.getLon()).toString() + "\n"
+             + "CATWRK : " + CATWRK.ATT.get(wreck.getCategoryOfWreck()) + "\n"
+             + "EXPSOU : " + EXPSOU.ATT.get(wreck.getExpositionOfSounding()) + "\n"
+             + "QUASOU : " + QUASOU.ATT.get(wreck.getQualityOfSoundingMeasurement()) + "\n"
+             + "TECSOU : " + TECSOU.ATT.get(wreck.getTechniqueOfSoundingMeasurement()) + "\n"
+             + "VALSOU : " + wreck.getValueOfSounding() + " m \n"
+             + "WATLEV : " + WATLEV.ATT.get(wreck.getWaterLevelEffect()) + "\n";
+             */
         }
         surfaceText.setValue(AVKey.DISPLAY_NAME, label);
 

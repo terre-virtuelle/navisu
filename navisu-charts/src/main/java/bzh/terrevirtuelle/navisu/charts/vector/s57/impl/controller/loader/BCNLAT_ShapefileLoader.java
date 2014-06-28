@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CategoryOfLateralMark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CATLAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconLateral;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -125,7 +125,7 @@ public class BCNLAT_ShapefileLoader
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setLabelText(beacon.getObjectName());
-        String label = "Beacon, lateral " + CategoryOfLateralMark.ATT.get(beacon.getCategoryOfLateralMark()) + "\n"
+        String label = "Beacon, lateral " + CATLAM.ATT.get(beacon.getCategoryOfLateralMark()) + "\n"
                 + "Lat : " + new Float(beacon.getLat()).toString() + "\n "
                 + "Lon : " + new Float(beacon.getLon()).toString();
         placemark.setValue(AVKey.DISPLAY_NAME, label);

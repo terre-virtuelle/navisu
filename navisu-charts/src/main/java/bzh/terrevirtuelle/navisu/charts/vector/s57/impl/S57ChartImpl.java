@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
+import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class S57ChartImpl
     static private int i = 0;
     protected ChartS57Controller chartS57Controller;
     protected List<Layer> layers;
+    protected List<AirspaceLayer> airspaceLayers;
     protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
     protected WorldWindow wwd;
 
@@ -61,7 +63,8 @@ public class S57ChartImpl
             if (altitude >= 48000) {
                 clip1();
             } else {
-                unClip1();unClip();
+                unClip1();
+                unClip();
             }
         });
     }
@@ -111,7 +114,8 @@ public class S57ChartImpl
         }
 
         chartS57Controller = ChartS57Controller.getInstance();
-        layers = chartS57Controller.init("data/shp_" + i++);
+        chartS57Controller.init("data/shp_" + i++);
+        layers = chartS57Controller.getLayers();
 
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();
@@ -119,6 +123,7 @@ public class S57ChartImpl
                     || name.contains("BCNLAT")
                     || name.contains("BCNISD")
                     || name.contains("OBSTRN")
+                    || name.contains("LIGHTS")
                     || name.contains("WRECK")) {
                 l.setPickEnabled(true);
             } else {
@@ -129,26 +134,34 @@ public class S57ChartImpl
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
-
-        /*
-         File index = new File("data/shp");
-         for(File file: index.listFiles()) file.delete();
-         */
+        airspaceLayers = chartS57Controller.getAirspaceLayers();
+        airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
+            String name = l.getName();
+            if (name.contains("LIGHTS")) {
+                l.setPickEnabled(true);
+            } else {
+                l.setPickEnabled(false);
+            }
+            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
+            return l;
+        }).forEach((l) -> {
+            layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
+        });
     }
 
     private void clip() {
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
-                        l.setEnabled(false);
-                    });
+                l.setEnabled(false);
+            });
         }
     }
 
     private void unClip() {
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
-                        l.setEnabled(true);
-                    });
+                l.setEnabled(true);
+            });
         }
     }
 
