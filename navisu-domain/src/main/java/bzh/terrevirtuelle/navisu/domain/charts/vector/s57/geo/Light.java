@@ -1,10 +1,9 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Geo;
 import java.io.Serializable;
 
 
-public class Light extends Geo
+public class Light extends Location
 implements Serializable
 {
 
