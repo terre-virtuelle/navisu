@@ -130,9 +130,12 @@ public class AppMain extends Application {
         //------------------------------->
         // TESTS SERVER
         //
-        // Hack pendant le dev 
-        GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
-
+        // Hack pendant le dev
+        /*----Brest---*/
+        //GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
+        /*----Gruissan---*/
+        GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(43.14, 3.14, 5000));
+        
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
         // Initialisation des paramtètres de diffusion des data.

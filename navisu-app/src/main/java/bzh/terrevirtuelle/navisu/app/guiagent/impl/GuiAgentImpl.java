@@ -264,41 +264,67 @@ public class GuiAgentImpl
         centerImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/centreradialmenu60.png")));
 
         //First Stage Item 1
-        RadialMenuContainer zoomInItem = new RadialMenuContainer();
-        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
-        zoomInItem.setImage(zoominImg);
+        RadialMenuContainer stage1Item1 = new RadialMenuContainer();
+        ImageView stage1Item1Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
+        stage1Item1.setImage(stage1Item1Img);
 
         //First Stage Item 2
-        RadialMenuContainer zoomOutItem = new RadialMenuContainer();
-        ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
-        zoomOutItem.setImage(zoomoutImg);
+        RadialMenuContainer stage1Item2 = new RadialMenuContainer();
+        ImageView stage1Item2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
+        stage1Item2.setImage(stage1Item2Img);
+        
+        //First Stage Item 3
+        RadialMenuContainer stage1Item3 = new RadialMenuContainer();
+        ImageView stage1Item3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/viderouge.png")));
+        stage1Item3.setImage(stage1Item3Img);
+        
+        //First Stage Item 4
+        RadialMenuContainer stage1Item4 = new RadialMenuContainer();
+        ImageView stage1Item4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
+        stage1Item4.setImage(stage1Item4Img);        
+        
 //---------------------------------------------------
         //Stage 2 item 1
         RadialMenuItem stageTwoItem1 = new RadialMenuItem();
-        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
-        stageTwoItem1.setImage(gpsImg2);
+        ImageView stageTwoItem1Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
+        stageTwoItem1.setImage(stageTwoItem1Img);
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
-        stageTwoItem2.setImage(compassImg2);
+        ImageView stageTwoItem2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/viderouge.png")));
+        stageTwoItem2.setImage(stageTwoItem2Img);
 
-        //Stage 2 item 2
+        //Stage 2 item 3
         RadialMenuItem stageTwoItem3 = new RadialMenuItem();
-        ImageView compassImg3 = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
-        stageTwoItem2.setImage(compassImg3);
+        ImageView stageTwoItem3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videmagenta.png")));
+        stageTwoItem2.setImage(stageTwoItem3Img);
         
-        zoomInItem.addItem(stageTwoItem1);
-        zoomInItem.addItem(stageTwoItem2);
-        zoomInItem.addItem(stageTwoItem3);
-        
+        //Stage 2 item 4
+        RadialMenuItem stageTwoItem4 = new RadialMenuItem();
+        ImageView stageTwoItem4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
+        stageTwoItem2.setImage(stageTwoItem4Img);
 
+        //Stage 2 item 5
+        RadialMenuItem stageTwoItem5 = new RadialMenuItem();
+        ImageView stageTwoItem5Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
+        stageTwoItem5.setImage(stageTwoItem5Img);
+                 
+
+//---------------Stage2 to Stage1 ------------------------       
+        stage1Item1.addItem(stageTwoItem1);
+        stage1Item1.addItem(stageTwoItem2);
+        stage1Item1.addItem(stageTwoItem3);
+        stage1Item1.addItem(stageTwoItem4);
+        stage1Item1.addItem(stageTwoItem5);
+        
         
         
         booksRadialMenu = new RadialMenu(30, 60, 360, 2);
 
-        booksRadialMenu.addRootItem(zoomInItem);
-        booksRadialMenu.addRootItem(zoomOutItem);
+        booksRadialMenu.addRootItem(stage1Item1);
+        booksRadialMenu.addRootItem(stage1Item2);
+        booksRadialMenu.addRootItem(stage1Item3);
+        booksRadialMenu.addRootItem(stage1Item4);
         
 
         //Use setManaged(false) to not let the parent's layout resize our component !
