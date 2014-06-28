@@ -101,7 +101,7 @@ public class LIGHTS_ShapefileLoader
         float range = 1;
         if (data.getValueOfNominalRange() != null) {
             range = new Float(data.getValueOfNominalRange());
-            range *= 0.1;
+            range *= 0.3;
         }
         if (data.getSectorLimitOne() != null && data.getSectorLimitTwo() != null) {
             partCyl.setCenter(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)));
