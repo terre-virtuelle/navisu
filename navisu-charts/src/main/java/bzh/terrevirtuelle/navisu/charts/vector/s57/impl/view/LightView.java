@@ -17,11 +17,37 @@ public class LightView
         extends PartialCappedCylinder
         implements Lights {
 
-    private final Light light;
+    private Light light;
+
+    private boolean tmp = false;
+
+    /**
+     * Get the value of tmp
+     *
+     * @return the value of tmp
+     */
+    public boolean isTmp() {
+        return tmp;
+    }
+
+    /**
+     * Set the value of tmp
+     *
+     * @param tmp new value of tmp
+     */
+    public void setTmp(boolean tmp) {
+        this.tmp = tmp;
+    }
 
     public LightView(Light light) {
         this.light = light;
     }
 
-  
+    public LightView() {
+    }
+
+    public Light getLight() {
+        return light;
+    }
+
 }

@@ -17,21 +17,30 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.UWTROC_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.view.Lights;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLOUR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Light;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import static java.util.EnumSet.range;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,15 +61,19 @@ public class ChartS57Controller {
     private Map<String, Map<Long, S57Object>> geos;
     private final List<Layer> layers;
     private final List<AirspaceLayer> airspaceLayers;
+    private AirspaceLayer airspaceTmpLayer;
     private ShapefileLoader loader;
     protected WorldWindow wwd;
+    protected Globe globe;
+    private boolean isDisplay = false;
 
     static {
         INSTANCE = new ChartS57Controller();
     }
 
-    public ChartS57Controller() { wwd = GeoWorldWindViewImpl.getWW();
-        
+    public ChartS57Controller() {
+        wwd = GeoWorldWindViewImpl.getWW();
+        globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         initAcronymsMap();
         layers = new ArrayList<>();
         airspaceLayers = new ArrayList<>();
@@ -231,23 +244,69 @@ public class ChartS57Controller {
                     loader.createLayersFromSource(tmp);
                     AirspaceLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
                     la.setName("LIGHTS");
+                    airspaceTmpLayer = new AirspaceLayer();
+                    airspaceTmpLayer.setName("LIGHTS_TMP");
                     airspaceLayers.add(la);
-
-                    /*
-                     loader = new PointTemplate_ShapefileLoader();
-                     tmp = new File(path + "/LIGHTS.shp");
-                     List<Layer> la = loader.createLayersFromSource(tmp);
-                     la.stream().forEach((l) -> {
-                     l.setName("LIGHTS");
-                     });
-                     layers.addAll(la);
-                     */
+                    airspaceLayers.add(airspaceTmpLayer);
                     wwd.addSelectListener((SelectEvent event) -> {
+                        LightView lightView;
                         if (event.isLeftClick()
+                                && event.getTopObject() != null
+                                && event.getTopObject().getClass().getInterfaces() != null
                                 && event.getTopObject().getClass().getInterfaces()[0].equals(Lights.class)) {
-                            System.out.println(Arrays.toString(((Lights)event.getTopObject()).getRadii()));
+                            lightView = ((LightView) event.getTopObject());
+                            if (lightView.isTmp() == true) {
+                                airspaceTmpLayer.removeAllAirspaces();
+                                isDisplay = false;
+                            } else {
+                                if (isDisplay == false) {
+                                    isDisplay = true;
+                                    airspaceTmpLayer.removeAllAirspaces();
+                                    Light data = lightView.getLight();
+                                    if (data.getSectorLimitOne() != null && data.getSectorLimitTwo() != null) {
+                                        lightView = new LightView();
+                                        lightView.setTmp(true);
+                                        double lat = data.getLat();
+                                        double lon = data.getLon();
+                                        lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
+                                                Angle.fromDegrees(lon)));
+                                        double range = new Double(data.getValueOfNominalRange());
+                                        lightView.setRadii(0.0, range * 1852);
+                                        lightView.getAttributes().setOpacity(0.2);
+                                        lightView.getAttributes().setOutlineOpacity(0.2);
+                                        lightView.setAltitude(300);
+                                        lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
+                                                Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
+                                        String label = "Light \n"
+                                                + "Lat : " + Double.toString(lat) + "\n"
+                                                + "Lon : " + Double.toString(lon) + "\n"
+                                                + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
+                                                + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
+                                                + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
+                                                + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
+                                                + "Sect1 : " + data.getSectorLimitOne() + "\n"
+                                                + "Sect2 : " + data.getSectorLimitTwo() + "\n";
+                                        lightView.setValue(AVKey.DISPLAY_NAME, label);
+                                        lightView.getAttributes().setDrawOutline(true);
+                                        // Si la couleur est blanche, la vue est jaune
+                                        if (data.getColour().contains("1")) {
+                                            lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
+                                            lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                                        } else {
+                                            lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                                            lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                                        }
+                                        airspaceTmpLayer.addAirspace(lightView);
+                                    }
+                                } else {
+                                    airspaceTmpLayer.removeAllAirspaces();
+                                    isDisplay = false;
+                                }
+                            }
                         }
+
                     });
+
                 }
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
@@ -255,6 +314,10 @@ public class ChartS57Controller {
 
             }
         }
+    }
+
+    private void lightsDisplay() {
+
     }
 
     public List<Layer> makeShapefileLayers(File f) {
