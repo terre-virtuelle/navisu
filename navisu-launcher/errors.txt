@@ -1,25 +1,3 @@
-FAILURE:
-Unable to open datasource `data/shp_0/out.shp' with the following drivers.
-  -> ESRI Shapefile
-  -> MapInfo File
-  -> UK .NTF
-  -> SDTS
-  -> TIGER
-  -> S57
-  -> DGN
-  -> VRT
-  -> REC
-  -> Memory
-  -> BNA
-  -> CSV
-  -> GML
-  -> GPX
-  -> KML
-  -> GeoJSON
-  -> GMT
-  -> ODBC
-  -> PGeo
-  -> XPlane
-  -> AVCBin
-  -> AVCE00
-  -> Geoconcept
+ERROR 1: data/shp_0/soundg/SOUNDG.shp is not a directory.
+
+ESRI Shapefile driver failed to create data/shp_0/soundg/SOUNDG.shp
