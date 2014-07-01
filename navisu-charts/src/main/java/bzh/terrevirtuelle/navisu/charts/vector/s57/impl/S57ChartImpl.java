@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -90,24 +92,51 @@ public class S57ChartImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        new File("data/shp_ " + i).mkdir();
+        new File("data/shp_" + i).mkdir();
+        new File("data/shp_" + i + "/soundg").mkdir();
+
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
 
         Path inputFile = Paths.get(fileName);
-        final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
+        String options
+                = //  + "\"RECODE_BY_DSSI=ON,"
+                "\"RETURN_PRIMITIVES=ON,"
+                + "RETURN_LINKAGES=ON,"
+                + "LNAM_REFS=ON,"
+                + "SPLIT_MULTIPOINT=ON,"
+                + "ADD_SOUNDG_DEPTH=ON\" \n";
+        String cmd;
 
+        cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         try {
             Path tmp = Paths.get(inputFile.toString());
-
             Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ")
-                    .addArg("RECODE_BY_DSSI=ON")
                     .addArg("data/shp_" + i + "/out.shp ")
                     .addArg(tmp.toString())
                     .setOut(System.out)
                     .setErr(System.err)
                     .exec();
+            inputFile = tmp;
+        } catch (IOException | InterruptedException e) {
+            LOGGER.log(Level.SEVERE, null, e);
+        }
+
+        Map<String, String> environment = new HashMap<>(System.getenv());
+        environment.put("OGR_S57_OPTIONS", options);
+        cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr -nlt POINT25D";
+        try {
+            Path tmp = Paths.get(inputFile.toString());
+            Proc.builder.create()
+                    .setCmd(cmd)
+                    .addArg("-skipfailures ")
+                    .addArg("data/shp_" + i + "/soundg/SOUNDG.shp")
+                    .addArg(tmp.toString())
+                    .addArg("SOUNDG")
+                    .setOut(System.out)
+                    .setErr(System.err)
+                    .exec(environment);
             inputFile = tmp;
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);
@@ -124,6 +153,7 @@ public class S57ChartImpl
                     || name.contains("BCNISD")
                     || name.contains("OBSTRN")
                     || name.contains("LIGHTS")
+                    || name.contains("SOUNDG")
                     || name.contains("WRECK")) {
                 l.setPickEnabled(true);
             } else {

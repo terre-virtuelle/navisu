@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -50,6 +50,7 @@ public class PointTemplate_ShapefileLoader
     protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
 
         while (shp.hasNext()) {
+          
             ShapefileRecord record = shp.nextRecord();
 
             if (!Shapefile.isPointType(record.getShapeType())) {
@@ -57,6 +58,7 @@ public class PointTemplate_ShapefileLoader
             }
             attrs = this.createPointAttributes(record);
             double[] point = ((ShapefileRecordPoint) record).getPoint();
+            System.out.println("point " + point.length);
             layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
         }
     }
@@ -72,8 +74,9 @@ public class PointTemplate_ShapefileLoader
             PointPlacemarkAttributes attrs) {
 
         entries = record.getAttributes().getEntries();
+        System.out.println("entries " + entries);
         label = new StringBuilder();
-        label.append(objName).append("\n");
+        label.append("SOUNDG").append("\n");
         label.append("Lat : ").append(new Float(latDegrees)).append("\n");
         label.append("Lon : ").append(new Float(lonDegrees)).append("\n");
         placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));

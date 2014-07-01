@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.LIGHTS
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PointTemplate_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.UWTROC_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_ShapefileLoader;
@@ -40,7 +41,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import static java.util.EnumSet.range;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -234,6 +234,15 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("UWTROC");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("SOUNDG.shp")) {
+                    loader = new PointTemplate_ShapefileLoader();
+                    tmp = new File(path + "/soundg/SOUNDG.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("SOUNDG");
                     });
                     layers.addAll(la);
                 }
