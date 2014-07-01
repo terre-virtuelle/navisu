@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +50,31 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
+         System.out.println("sb : " + sb);
         final Process process = Runtime.getRuntime().exec(sb.toString());
+
+        redirectSreamAsync(process.getInputStream(), out);
+        redirectSreamAsync(process.getErrorStream(), errors);
+
+        this.returnCode = process.waitFor();
+    }
+
+    protected void exec(Map<String, String> environment) throws IOException, InterruptedException {
+
+        Checker.notNull(cmd, "Command is null.");
+
+        StringBuilder sb = new StringBuilder(cmd + SPACE);
+        args.stream().forEach((arg) -> {
+            sb.append(arg).append(SPACE);
+        });
+        // System.out.println("sb : " + sb);
+        String[] envp = new String[environment.size()];
+        int count = 0;
+        for (Map.Entry<String, String> entry : environment.entrySet()) {
+            envp[count++] = entry.getKey() + "=" + entry.getValue();
+        }
+
+        final Process process = Runtime.getRuntime().exec(sb.toString(), envp);
 
         redirectSreamAsync(process.getInputStream(), out);
         redirectSreamAsync(process.getErrorStream(), errors);
@@ -86,6 +111,8 @@ public class Proc {
         Builder setErr(OutputStream err);
 
         Proc exec() throws IOException, InterruptedException;
+
+        Proc exec(Map<String, String> env) throws IOException, InterruptedException;
     }
 
     protected static class BuilderImpl implements Builder {
@@ -125,6 +152,12 @@ public class Proc {
         @Override
         public Proc exec() throws IOException, InterruptedException {
             this.proc.exec();
+            return this.proc;
+        }
+
+        @Override
+        public Proc exec(Map<String, String> env) throws IOException, InterruptedException {
+            this.proc.exec(env);
             return this.proc;
         }
     }
