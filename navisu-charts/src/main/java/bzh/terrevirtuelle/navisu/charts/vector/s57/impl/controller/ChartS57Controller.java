@@ -14,7 +14,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.LIGHTS
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PointTemplate_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.UWTROC_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_ShapefileLoader;
@@ -238,7 +238,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 if (s.equals("SOUNDG.shp")) {
-                    loader = new PointTemplate_ShapefileLoader();
+                    loader = new SOUNDG_ShapefileLoader();
                     tmp = new File(path + "/soundg/SOUNDG.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -277,13 +277,14 @@ public class ChartS57Controller {
                                         lightView.setTmp(true);
                                         double lat = data.getLat();
                                         double lon = data.getLon();
+                                        double elevation = globe.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
                                         lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
                                                 Angle.fromDegrees(lon)));
                                         double range = new Double(data.getValueOfNominalRange());
                                         lightView.setRadii(0.0, range * 1852);
                                         lightView.getAttributes().setOpacity(0.2);
                                         lightView.getAttributes().setOutlineOpacity(0.2);
-                                        lightView.setAltitude(300);
+                                        lightView.setAltitude(elevation + 35);
                                         lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
                                                 Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
                                         String label = "Light \n"
