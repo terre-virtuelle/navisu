@@ -9,7 +9,7 @@ public class EXPSOU {
 
     public static final Map<String, String> ATT = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
-            put("1", "within the range of depth of the surrounding depth are");
+            put("1", "within the range of depth of the surrounding depth area");
             put("2", "shoaler than the range of depth of the surrounding depth area");
             put("3", "deeper than the range of depth of the surrounding depth area");
         }

@@ -1,151 +1,134 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.Geo;
 import java.io.Serializable;
 
+public class Sounding extends Location
+        implements Serializable {
 
-public class Sounding extends Geo
-implements Serializable
-{
+    private String expositionOfSounding;
+    private String objectName;
+    private String qualityOfSoundingMeasurement;
+    private String recordIngdate;
+    private String recordingIndication;
+    private String scaleMaximum;
+    private String soundingAccuracy;
+    private String status;
+    private String techniqueOfSoundingMeasurement;
+    private String objectNameInNationalLanguage;
+    private String verticaldatum;
+    private double depth;
 
-	public Sounding(Long id)
-	{
-		this.id=id;
-	}
+    public Sounding(Long id) {
+        this.id = id;
+    }
 
-	public Sounding(){}
+    public Sounding() {
+    }
 
-	private String expositionOfSounding;
+    /**
+     * Get the value of depth
+     *
+     * @return the value of depth
+     */
+    public double getDepth() {
+        return depth;
+    }
 
-	public String getExpositionOfSounding()
-	{
-		return expositionOfSounding;
-	}
+    /**
+     * Set the value of depth
+     *
+     * @param depth new value of depth
+     */
+    public void setDepth(double depth) {
+        this.depth = depth;
+    }
 
-	public void setExpositionOfSounding(String value)
-	{
-		this.expositionOfSounding= value;
-	}
+    public String getExpositionOfSounding() {
+        return expositionOfSounding;
+    }
 
-	private String objectName;
+    public void setExpositionOfSounding(String value) {
+        this.expositionOfSounding = value;
+    }
 
-	public String getObjectName()
-	{
-		return objectName;
-	}
+    public String getObjectName() {
+        return objectName;
+    }
 
-	public void setObjectName(String value)
-	{
-		this.objectName= value;
-	}
+    public void setObjectName(String value) {
+        this.objectName = value;
+    }
 
-	private String qualityOfSoundingMeasurement;
+    public String getQualityOfSoundingMeasurement() {
+        return qualityOfSoundingMeasurement;
+    }
 
-	public String getQualityOfSoundingMeasurement()
-	{
-		return qualityOfSoundingMeasurement;
-	}
+    public void setQualityOfSoundingMeasurement(String value) {
+        this.qualityOfSoundingMeasurement = value;
+    }
 
-	public void setQualityOfSoundingMeasurement(String value)
-	{
-		this.qualityOfSoundingMeasurement= value;
-	}
+    public String getRecordIngdate() {
+        return recordIngdate;
+    }
 
-	private String recordIngdate;
+    public void setRecordIngdate(String value) {
+        this.recordIngdate = value;
+    }
 
-	public String getRecordIngdate()
-	{
-		return recordIngdate;
-	}
+    public String getRecordingIndication() {
+        return recordingIndication;
+    }
 
-	public void setRecordIngdate(String value)
-	{
-		this.recordIngdate= value;
-	}
+    public void setRecordingIndication(String value) {
+        this.recordingIndication = value;
+    }
 
-	private String recordingIndication;
+    public String getScaleMaximum() {
+        return scaleMaximum;
+    }
 
-	public String getRecordingIndication()
-	{
-		return recordingIndication;
-	}
+    public void setScaleMaximum(String value) {
+        this.scaleMaximum = value;
+    }
 
-	public void setRecordingIndication(String value)
-	{
-		this.recordingIndication= value;
-	}
+    public String getSoundingAccuracy() {
+        return soundingAccuracy;
+    }
 
-	private String scaleMaximum;
+    public void setSoundingAccuracy(String value) {
+        this.soundingAccuracy = value;
+    }
 
-	public String getScaleMaximum()
-	{
-		return scaleMaximum;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setScaleMaximum(String value)
-	{
-		this.scaleMaximum= value;
-	}
+    public void setStatus(String value) {
+        this.status = value;
+    }
 
-	private String soundingAccuracy;
+    public String getTechniqueOfSoundingMeasurement() {
+        return techniqueOfSoundingMeasurement;
+    }
 
-	public String getSoundingAccuracy()
-	{
-		return soundingAccuracy;
-	}
+    public void setTechniqueOfSoundingMeasurement(String value) {
+        this.techniqueOfSoundingMeasurement = value;
+    }
 
-	public void setSoundingAccuracy(String value)
-	{
-		this.soundingAccuracy= value;
-	}
+    public String getVerticaldatum() {
+        return verticaldatum;
+    }
 
-	private String status;
+    public void setVerticaldatum(String value) {
+        this.verticaldatum = value;
+    }
 
-	public String getStatus()
-	{
-		return status;
-	}
+    public String getObjectNameInNationalLanguage() {
+        return objectNameInNationalLanguage;
+    }
 
-	public void setStatus(String value)
-	{
-		this.status= value;
-	}
-
-	private String techniqueOfSoundingMeasurement;
-
-	public String getTechniqueOfSoundingMeasurement()
-	{
-		return techniqueOfSoundingMeasurement;
-	}
-
-	public void setTechniqueOfSoundingMeasurement(String value)
-	{
-		this.techniqueOfSoundingMeasurement= value;
-	}
-
-	private String verticaldatum;
-
-	public String getVerticaldatum()
-	{
-		return verticaldatum;
-	}
-
-	public void setVerticaldatum(String value)
-	{
-		this.verticaldatum= value;
-	}
-
-	private String objectNameInNationalLanguage;
-
-	public String getObjectNameInNationalLanguage()
-	{
-		return objectNameInNationalLanguage;
-	}
-
-	public void setObjectNameInNationalLanguage(String value)
-	{
-		this.objectNameInNationalLanguage= value;
-	}
-
+    public void setObjectNameInNationalLanguage(String value) {
+        this.objectNameInNationalLanguage = value;
+    }
 
 }
