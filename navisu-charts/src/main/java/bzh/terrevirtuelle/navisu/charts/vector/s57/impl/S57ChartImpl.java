@@ -18,8 +18,12 @@ import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,8 +96,9 @@ public class S57ChartImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        new File("data/shp_" + i).mkdir();
-        new File("data/shp_" + i + "/soundg").mkdir();
+        new File("data/shp").mkdir();
+        new File("data/shp/shp_" + i).mkdir();
+        new File("data/shp/shp_" + i + "/soundg").mkdir();
 
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
 
@@ -113,7 +118,7 @@ public class S57ChartImpl
             Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ")
-                    .addArg("data/shp_" + i + "/out.shp ")
+                    .addArg("data/shp/shp_" + i + "/out.shp ")
                     .addArg(tmp.toString())
                     .setOut(System.out)
                     .setErr(System.err)
@@ -131,7 +136,7 @@ public class S57ChartImpl
             Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ")
-                    .addArg("data/shp_" + i + "/soundg/SOUNDG.shp")
+                    .addArg("data/shp/shp_" + i + "/soundg/SOUNDG.shp")
                     .addArg(tmp.toString())
                     .addArg("SOUNDG")
                     .setOut(System.out)
@@ -143,7 +148,7 @@ public class S57ChartImpl
         }
 
         chartS57Controller = ChartS57Controller.getInstance();
-        chartS57Controller.init("data/shp_" + i++);
+        chartS57Controller.init("data/shp/shp_" + i++);
         layers = chartS57Controller.getLayers();
 
         layers.stream().filter((l) -> (l != null)).map((l) -> {
@@ -232,9 +237,30 @@ public class S57ChartImpl
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        try {
+            Path directory = Paths.get("data/shp");
+            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(S57ChartImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
 
+    }
 }
