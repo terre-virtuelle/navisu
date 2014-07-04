@@ -73,6 +73,7 @@ public class SerialPortReaderImpl
                 }
             } while (!s.equals("\n"));
             sentence = buffer.toString();
+           // System.out.println("sentence " + sentence);
         } catch (SerialPortException ex) {
             java.util.logging.Logger.getLogger(SerialPortReader.class.getName()).log(Level.SEVERE, null, ex);
         }
