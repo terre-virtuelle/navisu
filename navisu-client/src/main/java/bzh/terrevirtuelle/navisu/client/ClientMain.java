@@ -7,9 +7,7 @@ package bzh.terrevirtuelle.navisu.client;
 
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
-import java.io.FileInputStream;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;

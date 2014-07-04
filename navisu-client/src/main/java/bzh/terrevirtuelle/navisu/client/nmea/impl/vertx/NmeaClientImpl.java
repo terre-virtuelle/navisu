@@ -13,8 +13,6 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Properties;
@@ -135,7 +133,7 @@ public class NmeaClientImpl
         try {
             notifyNMEAEvent();
         } catch (Exception e) {
-            
+
         }
         // display();
     }
@@ -157,7 +155,7 @@ public class NmeaClientImpl
                 eventProducer.notifyNMEAEvent(n);
             });
         } catch (ConcurrentModificationException e) {
-           //System.out.println("NmeaClientImpl " + e);
+            //System.out.println("NmeaClientImpl " + e);
         }
     }
 
