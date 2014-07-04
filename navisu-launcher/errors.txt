@@ -1,3 +1,0 @@
-ERROR 1: data/shp_0/soundg/SOUNDG.shp is not a directory.
-
-ESRI Shapefile driver failed to create data/shp_0/soundg/SOUNDG.shp
