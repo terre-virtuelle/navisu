@@ -68,7 +68,7 @@ public class BCNCAR_ShapefileLoader
         objects.add(beacon);
         beacon = new BeaconCardinal();
         entries = record.getAttributes().getEntries();
-
+        System.out.println("entries " + entries);
         beacon.setLat(latDegrees);
         beacon.setLon(lonDegrees);
         entries.stream().forEach((e) -> {
