@@ -142,7 +142,7 @@ public class AppMain extends Application {
         dataServerServices.init("localhost", 8080);
 
         // Test connexion GPS 
-         dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
+        // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         
         // Test connexion Gpsd 
