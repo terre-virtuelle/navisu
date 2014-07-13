@@ -24,6 +24,14 @@ public class Pivot {
     @XmlAttribute
     private String y;
 
+    public Pivot() {
+    }
+
+    public Pivot(String x, String y) {
+        this.x = x;
+        this.y = y;
+    }
+
     /**
      * Get the value of y
      *
@@ -59,4 +67,10 @@ public class Pivot {
     public void setX(String x) {
         this.x = x;
     }
+
+    @Override
+    public String toString() {
+        return "Pivot{" + "x=" + x + ", y=" + y + '}';
+    }
+    
 }

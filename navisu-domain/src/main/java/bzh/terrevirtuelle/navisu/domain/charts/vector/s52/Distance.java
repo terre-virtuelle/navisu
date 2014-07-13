@@ -24,6 +24,14 @@ public class Distance {
     @XmlAttribute
     private String max;
 
+    public Distance() {
+    }
+
+    public Distance(String min, String max) {
+        this.min = min;
+        this.max = max;
+    }
+
     /**
      * Get the value of max
      *
@@ -58,6 +66,11 @@ public class Distance {
      */
     public void setMin(String min) {
         this.min = min;
+    }
+
+    @Override
+    public String toString() {
+        return "Distance{" + "min=" + min + ", max=" + max + '}';
     }
 
 }

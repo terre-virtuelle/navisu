@@ -24,6 +24,14 @@ public class Origin {
     @XmlAttribute
     private String y;
 
+    public Origin() {
+    }
+
+    public Origin(String x, String y) {
+        this.x = x;
+        this.y = y;
+    }
+
     /**
      * Get the value of y
      *
@@ -59,4 +67,10 @@ public class Origin {
     public void setX(String x) {
         this.x = x;
     }
+
+    @Override
+    public String toString() {
+        return "Origin{" + "x=" + x + ", y=" + y + '}';
+    }
+    
 }

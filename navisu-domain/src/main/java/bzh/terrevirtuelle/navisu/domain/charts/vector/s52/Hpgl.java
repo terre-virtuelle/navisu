@@ -22,6 +22,13 @@ public class Hpgl {
 
     private String instructions;
 
+    public Hpgl() {
+    }
+
+    public Hpgl(String instructions) {
+        this.instructions = instructions;
+    }
+
     /**
      * Get the value of instructions
      *
@@ -38,6 +45,11 @@ public class Hpgl {
      */
     public void setInstructions(String instructions) {
         this.instructions = instructions;
+    }
+
+    @Override
+    public String toString() {
+        return "Hpgl{" + "instructions=" + instructions + '}';
     }
  
 }

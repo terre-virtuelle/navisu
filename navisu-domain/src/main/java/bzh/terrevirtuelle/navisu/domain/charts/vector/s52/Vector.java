@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s52;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -15,49 +16,51 @@ import javax.xml.bind.annotation.XmlType;
  * @author Serge Morvan
  * @date 11 juil. 2014 NaVisu project
  */
-@XmlType(name = "bitmap")
+@XmlType(name = "vector")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Bitmap {
+public class Vector {
 
     @XmlAttribute
     private String width;
     @XmlAttribute
     private String height;
-    
+
     private Distance distance;
     private Pivot pivot;
     private Origin origin;
-    private GraphicsLocation graphicsLocation;
+    @XmlElement(name = "HPGL")
+    private String hpgl;
 
-    public Bitmap() {
+    public Vector() {
     }
 
-    public Bitmap(String width, String height, Distance distance, Pivot pivot, Origin origin, GraphicsLocation graphicsLocation) {
+    public Vector(String width, String height, Distance distance, Pivot pivot, Origin origin, String hpgl) {
         this.width = width;
         this.height = height;
         this.distance = distance;
         this.pivot = pivot;
         this.origin = origin;
-        this.graphicsLocation = graphicsLocation;
+        this.hpgl = hpgl;
     }
-   
-   
+
+    
+
     /**
-     * Get the value of graphicsLocation
+     * Get the value of hpgl
      *
-     * @return the value of graphicsLocation
+     * @return the value of hpgl
      */
-    public GraphicsLocation getGraphicsLocation() {
-        return graphicsLocation;
+    public String getHpgl() {
+        return hpgl;
     }
 
     /**
-     * Set the value of graphicsLocation
+     * Set the value of hpgl
      *
-     * @param graphicsLocation new value of graphicsLocation
+     * @param hpgl new value of hpgl
      */
-    public void setGraphicsLocation(GraphicsLocation graphicsLocation) {
-        this.graphicsLocation = graphicsLocation;
+    public void setHpgl(String hpgl) {
+        this.hpgl = hpgl;
     }
 
     /**
@@ -152,7 +155,7 @@ public class Bitmap {
 
     @Override
     public String toString() {
-        return "Bitmap{" + "width=" + width + ", height=" + height + ", distance=" + distance + ", pivot=" + pivot + ", origin=" + origin + ", graphicsLocation=" + graphicsLocation + '}';
+        return "Vector{" + "width=" + width + ", height=" + height + ", distance=" + distance + ", pivot=" + pivot + ", origin=" + origin + ", hpgl=" + hpgl + '}';
     }
 
 }

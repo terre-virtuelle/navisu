@@ -24,6 +24,14 @@ public class GraphicsLocation {
     @XmlAttribute
     private String y;
 
+    public GraphicsLocation() {
+    }
+
+    public GraphicsLocation(String x, String y) {
+        this.x = x;
+        this.y = y;
+    }
+
     /**
      * Get the value of y
      *
@@ -59,4 +67,10 @@ public class GraphicsLocation {
     public void setX(String x) {
         this.x = x;
     }
+
+    @Override
+    public String toString() {
+        return "GraphicsLocation{" + "x=" + x + ", y=" + y + '}';
+    }
+    
 }
