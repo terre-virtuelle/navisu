@@ -54,6 +54,7 @@ public class ClientMain extends Application {
         stage.setTitle("ClientMain test");
         stage.setScene(scene);
         stage.show();
+        
     }
 
     public static void main(String[] args) throws Exception {
