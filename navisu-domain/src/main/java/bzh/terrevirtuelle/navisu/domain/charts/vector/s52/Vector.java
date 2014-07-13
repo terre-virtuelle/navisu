@@ -43,7 +43,13 @@ public class Vector {
         this.hpgl = hpgl;
     }
 
-    
+    public Vector(String width, String height, Distance distance, Pivot pivot, Origin origin) {
+        this.width = width;
+        this.height = height;
+        this.distance = distance;
+        this.pivot = pivot;
+        this.origin = origin;
+    }
 
     /**
      * Get the value of hpgl

@@ -6,7 +6,7 @@
 
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s52.app;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.Symbols;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.ChartSymbols;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.controller.xml.Reader;
 
 /**
@@ -16,9 +16,9 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.controller.xml.Reader;
 public class XMLReaderTest {
 
     public XMLReaderTest() {
-        Reader reader = new Reader(Symbols.class);
-        Symbols symbols = (Symbols)reader.read("out.xml");
-        System.out.println(symbols);
+        Reader reader = new Reader(ChartSymbols.class);
+        ChartSymbols data = (ChartSymbols)reader.read("out.xml");
+        System.out.println(data);
     }
     public static void main(String[] args) {
         new XMLReaderTest();

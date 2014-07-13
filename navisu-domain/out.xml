@@ -1,1 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><sentences><pgn130306><device>1</device><sentence>{"timestamp":"2014-02-26-10:24:59.523","prio":"2","src":"1","dst":"255","pgn":"130306","description":"Wind Data","fields":{"SID":"0","Wind Speed":"0.00","Wind Angle":"306.4","Reference":"Apparent"}}</sentence><description>Wind Data</description><timeStamp>2014-02-26-10:24:59.523</timeStamp><priority>2</priority><dst>255</dst><pgn>130306</pgn><windSpeed>10.3</windSpeed><windDirection>306.4</windDirection><windReference>Apparent</windReference></pgn130306></sentences>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><chartsymbols>
+    <patterns>
+        <pattern RCID="2000">
+            <name>AIRARE02</name>
+            <definition>V</definition>
+            <filltype>S</filltype>
+            <spacing>C</spacing>
+            <vector width="402" height="505">
+                <distance min="0" max="0"/>
+                <pivot x="1267" y="1052"/>
+                <origin x="1061" y="769"/>
+            </vector>
+            <description>pattern</description>
+            <color-ref>ACHMGD</color-ref>
+            <HPGL>SPA;SW1</HPGL>
+        </pattern>
+    </patterns>
+    <symbols>
+        <symbol RCID="2035">
+            <name>ACHARE02</name>
+            <description>anchorage</description>
+            <bitmap width="13" height="16">
+                <distance min="0" max="0"/>
+                <pivot x="6" y="8"/>
+                <origin x="0" y="0"/>
+                <graphicsLocation x="10" y="10"/>
+            </bitmap>
+            <color-ref>ACHMGD</color-ref>
+            <vector width="402" height="505">
+                <distance min="0" max="0"/>
+                <pivot x="1267" y="1052"/>
+                <origin x="1061" y="769"/>
+                <HPGL>SPA</HPGL>
+            </vector>
+            <definition>V</definition>
+        </symbol>
+    </symbols>
+</chartsymbols>

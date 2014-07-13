@@ -4,7 +4,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s52.controller.xml;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.Symbols;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.ChartSymbols;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.Patterns;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,16 +21,16 @@ import javax.xml.bind.Marshaller;
 public class Writer {
 
     FileOutputStream outputFile = null;
-    Symbols symbols;
+    ChartSymbols data;
     Class claz;
 
     public Writer() {
 
     }
 
-    public Writer(Symbols symbols) {
-        this.symbols = symbols;
-        this.claz = symbols.getClass();
+    public Writer(ChartSymbols data) {
+        this.data = data;
+        this.claz = data.getClass();
     }
 
     public void write(String fileName) {
@@ -43,7 +44,7 @@ public class Writer {
         try {
             jAXBContext = JAXBContext.newInstance(claz);
             marshaller = jAXBContext.createMarshaller();
-            marshaller.marshal(symbols, outputFile);
+            marshaller.marshal(data, outputFile);
         } catch (JAXBException ex) {
         }
     }
