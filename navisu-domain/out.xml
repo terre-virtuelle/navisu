@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?><chartsymbols>
+    <colorTables>
+        <color-table name="DAY_BRIGHT">
+            <graphics-file name="rastersymbols"/>
+            <color name="NODTA" r="163" g="180" b="183"/>
+            <color name="CURSR" r="235" g="125" b="183"/>
+        </color-table>
+        <color-table name="DAY_BRIGHT">
+            <graphics-file name="rastersymbols"/>
+            <color name="NODTA" r="163" g="180" b="183"/>
+            <color name="CURSR" r="235" g="125" b="183"/>
+        </color-table>
+    </colorTables>
+    <lineStyles>
+        <line-style RCID="3346">
+            <name>ACHARES51</name>
+            <vector width="3036" height="505">
+                <distance min="0" max="0"/>
+                <pivot x="105" y="520"/>
+                <origin x="206" y="568"/>
+            </vector>
+            <description>lineStyle</description>
+            <HPGL>SPA;SW1</HPGL>
+            <color-ref>ACHMGD</color-ref>
+        </line-style>
+    </lineStyles>
     <patterns>
         <pattern RCID="2000">
             <name>AIRARE02</name>
@@ -35,4 +60,16 @@
             <definition>V</definition>
         </symbol>
     </symbols>
+    <lookups>
+        <lookup id="2" RCID="32088" name="ACHARE">
+            <type>Area</type>
+            <disp-prio>Area 2</disp-prio>
+            <radar-prio>Suppressed</radar-prio>
+            <table-name>plain</table-name>
+            <attribCode index="0"/>
+            <instruction>SY(ACHAR02);LS</instruction>
+            <display-cat>Standard</display-cat>
+            <comment>26220</comment>
+        </lookup>
+    </lookups>
 </chartsymbols>

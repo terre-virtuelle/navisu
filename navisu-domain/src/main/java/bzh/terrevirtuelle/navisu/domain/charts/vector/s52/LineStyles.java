@@ -18,29 +18,32 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Serge Morvan
  * @date 13 juil. 2014 NaVisu project
  */
-@XmlRootElement(name = "patterns")
+@XmlRootElement(name = "line-styles")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Patterns {
+public class LineStyles {
 
     @XmlElements({
-        @XmlElement(name = "pattern", type = Pattern.class)
+        @XmlElement(name = "line-style", type = LineStyle.class)
     })
-    List<Pattern> patterns;
+    List<LineStyle> lineStyles;
 
-    public Patterns() {
-        patterns = new ArrayList<>();
+    public LineStyles() {
+        lineStyles = new ArrayList<>();
     }
 
-    public void add(Pattern data) {
-        patterns.add(data);
+    public void add(LineStyle data) {
+        lineStyles.add(data);
     }
 
-    public List<Pattern> getPatterns() {
-        return patterns;
+    public List<LineStyle> getLineStyles() {
+        return lineStyles;
     }
 
+   
     @Override
     public String toString() {
-        return "Patterns{" + "patterns=" + patterns + '}';
-    } 
+        return "LineStyles{" + "lineStyles=" + lineStyles + '}';
+    }
+
+    
 }

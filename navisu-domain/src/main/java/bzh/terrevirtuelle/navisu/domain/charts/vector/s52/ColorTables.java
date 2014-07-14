@@ -18,29 +18,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Serge Morvan
  * @date 13 juil. 2014 NaVisu project
  */
-@XmlRootElement(name = "patterns")
+@XmlRootElement(name = "color-tables")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Patterns {
+public class ColorTables {
 
     @XmlElements({
-        @XmlElement(name = "pattern", type = Pattern.class)
+        @XmlElement(name = "color-table", type = ColorTable.class)
     })
-    List<Pattern> patterns;
+    List<ColorTable> colorTables;
 
-    public Patterns() {
-        patterns = new ArrayList<>();
+    public ColorTables() {
+        colorTables = new ArrayList<>();
     }
 
-    public void add(Pattern data) {
-        patterns.add(data);
+    public void add(ColorTable data) {
+        colorTables.add(data);
     }
 
-    public List<Pattern> getPatterns() {
-        return patterns;
+    public List<ColorTable> getColorTables() {
+        return colorTables;
     }
 
     @Override
     public String toString() {
-        return "Patterns{" + "patterns=" + patterns + '}';
-    } 
+        return "ColorTables{" + "colorTables=" + colorTables + '}';
+    }
+
 }

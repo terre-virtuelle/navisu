@@ -18,29 +18,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Serge Morvan
  * @date 13 juil. 2014 NaVisu project
  */
-@XmlRootElement(name = "patterns")
+@XmlRootElement(name = "lookups")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Patterns {
+public class Lookups {
 
     @XmlElements({
-        @XmlElement(name = "pattern", type = Pattern.class)
+        @XmlElement(name = "lookup", type = Lookup.class)
     })
-    List<Pattern> patterns;
+    List<Lookup> lookups;
 
-    public Patterns() {
-        patterns = new ArrayList<>();
+    public Lookups() {
+        lookups = new ArrayList<>();
     }
 
-    public void add(Pattern data) {
-        patterns.add(data);
+    public void add(Lookup data) {
+        lookups.add(data);
     }
 
-    public List<Pattern> getPatterns() {
-        return patterns;
+    public List<Lookup> getLookups() {
+        return lookups;
     }
 
     @Override
     public String toString() {
-        return "Patterns{" + "patterns=" + patterns + '}';
-    } 
+        return "Lookups{" + "lookups=" + lookups + '}';
+    }
+
 }
