@@ -5,6 +5,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerCheckTreeImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;

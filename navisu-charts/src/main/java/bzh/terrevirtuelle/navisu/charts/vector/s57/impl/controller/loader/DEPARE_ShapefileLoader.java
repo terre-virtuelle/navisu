@@ -32,8 +32,8 @@ public class DEPARE_ShapefileLoader
         Color color = Color.GRAY;
 
         if (val1 == -9.0 && val2 <= 0.0) {
-           // color = new Color(150, 198, 0);
-            color = new Color(131, 178, 149);
+          //  color = new Color(131, 178, 149);
+            color = new Color(151, 199, 0);
         }
         if (val1 >= 0.0 && val2 <= 12.0) {
             color = new Color(91, 175, 247);
@@ -65,6 +65,8 @@ public class DEPARE_ShapefileLoader
         if (val2 >=100.0 ) {
             color = new Color(247, 247, 247);
         }
+        
+       
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
         normalAttributes.setDrawOutline(false);

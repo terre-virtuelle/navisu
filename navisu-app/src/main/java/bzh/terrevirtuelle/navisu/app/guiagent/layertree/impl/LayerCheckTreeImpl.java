@@ -44,7 +44,7 @@ public class LayerCheckTreeImpl implements LayerTree, LayerTreeServices, Compone
             public ObservableValue<Boolean> call(TreeItem<GeoLayer> objectTreeItem) {
                 return new SimpleBooleanProperty(objectTreeItem.getValue().isVisible());
             }
-        } , new StringConverter<TreeItem<GeoLayer>>() {
+        }, new StringConverter<TreeItem<GeoLayer>>() {
             @Override
             public String toString(TreeItem<GeoLayer> geoLayerTreeItem) {
                 return geoLayerTreeItem.getValue().getName();
@@ -69,10 +69,8 @@ public class LayerCheckTreeImpl implements LayerTree, LayerTreeServices, Compone
 
     @Override
     public void createGroup(String groupName, GeoLayer<?>... layers) {
-
         final Image layerIcon = new Image(LayerCheckTreeImpl.class.getResourceAsStream("layer_icon.png"));
-
-        for(GeoLayer geoLayer : layers) {
+        for (GeoLayer geoLayer : layers) {
 
             final ImageView icon = new ImageView(layerIcon);
 
@@ -84,8 +82,8 @@ public class LayerCheckTreeImpl implements LayerTree, LayerTreeServices, Compone
                 public void changed(ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) {
                     geoLayer.setVisible(newValue);
 
-                    if(geoLayer instanceof Layer) {
-                        ((Layer)geoLayer.getDisplayLayer()).setEnabled(newValue);
+                    if (geoLayer instanceof Layer) {
+                        ((Layer) geoLayer.getDisplayLayer()).setEnabled(newValue);
                     }
                 }
             });
@@ -95,11 +93,11 @@ public class LayerCheckTreeImpl implements LayerTree, LayerTreeServices, Compone
 
     @Override
     public void addGeoLayer(String groupName, GeoLayer<?>... layers) {
-
+        createGroup(groupName, layers);
     }
 
     @Override
     public Display<Node> getDisplayService() {
-       return Display.factory.newDisplayNode(treeView);
+        return Display.factory.newDisplayNode(treeView);
     }
 }

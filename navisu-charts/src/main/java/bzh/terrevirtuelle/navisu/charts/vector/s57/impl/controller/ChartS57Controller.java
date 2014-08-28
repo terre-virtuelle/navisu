@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNISD
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNLAT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.LIGHTS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.NAVLNE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SOUNDG_ShapefileLoader;
@@ -59,8 +60,8 @@ public class ChartS57Controller {
     //  private File fileDepare;
     private Map<String, String> acronyms;
     private Map<String, Map<Long, S57Object>> geos;
-    private final List<Layer> layers;
-    private final List<AirspaceLayer> airspaceLayers;
+    private static final List<Layer> layers = new ArrayList<>();
+    private final List<AirspaceLayer> airspaceLayers = new ArrayList<>();
     private AirspaceLayer airspaceTmpLayer;
     private ShapefileLoader loader;
     protected WorldWindow wwd;
@@ -75,8 +76,6 @@ public class ChartS57Controller {
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         initAcronymsMap();
-        layers = new ArrayList<>();
-        airspaceLayers = new ArrayList<>();
     }
 
     private void initAcronymsMap() {
@@ -93,6 +92,16 @@ public class ChartS57Controller {
         } catch (IOException ex) {
             Logger.getLogger(ChartS57Controller.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Layer getLayer(String name) {
+        Layer layer = null;
+        for (Layer l : layers) {
+            if (l.getName().equals(name)) {
+                layer = l;
+            }
+        }
+        return layer;
     }
 
     public static ChartS57Controller getInstance() {
@@ -140,6 +149,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                // Contour de la carte
                 /*
                  if (s.equals("M_COVR.shp")) {
                  loader = new M_COVR_ShapefileLoader();
@@ -194,6 +204,15 @@ public class ChartS57Controller {
                     });
                     //layers.addAll(la);
                     // M_NSYS est utile pour la définition du systeme de ref.
+                }
+                if (s.equals("NAVLNE.shp")) {
+                    loader = new NAVLNE_ShapefileLoader();
+                    tmp = new File(path + "/NAVLNE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("NAVLNE");
+                    });
+                    layers.addAll(la);
                 }
                 if (s.equals("WRECKS.shp")) {
                     loader = new WRECKS_CNT_ShapefileLoader();
@@ -253,6 +272,7 @@ public class ChartS57Controller {
                     loader.createLayersFromSource(tmp);
                     AirspaceLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
                     la.setName("LIGHTS");
+                    layers.add(la);
                     airspaceTmpLayer = new AirspaceLayer();
                     airspaceTmpLayer.setName("LIGHTS_TMP");
                     airspaceLayers.add(la);
@@ -316,7 +336,6 @@ public class ChartS57Controller {
                         }
 
                     });
-
                 }
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
@@ -324,6 +343,7 @@ public class ChartS57Controller {
 
             }
         }
+
     }
 
     private void lightsDisplay() {

@@ -74,7 +74,7 @@ public class PointTemplate_ShapefileLoader
             PointPlacemarkAttributes attrs) {
 
         entries = record.getAttributes().getEntries();
-        System.out.println("entries " + entries);
+     //   System.out.println("entries " + entries);
         label = new StringBuilder();
         label.append("SOUNDG").append("\n");
         label.append("Lat : ").append(new Float(latDegrees)).append("\n");

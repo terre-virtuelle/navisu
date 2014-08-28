@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLOUR;
@@ -15,12 +16,17 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.layers.AirspaceLayer;
+import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,14 +45,19 @@ public class LIGHTS_ShapefileLoader
     private Set<Map.Entry<String, Object>> entries;
     private Light data;
     private final AirspaceLayer airspaceLayer;
+    RenderableLayer layer = new RenderableLayer();
     protected WorldWindow wwd;
     protected Globe globe;
     private double elevation;
+    ChartS57Controller chartS57Controller;
 
     public LIGHTS_ShapefileLoader() {
         dataList = new ArrayList<>();
         airspaceLayer = new AirspaceLayer();
+        chartS57Controller = ChartS57Controller.getInstance();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
+        chartS57Controller.getLayers().add(layer);
+        layer.setName("LIGHTS_SECTORS");
     }
 
     @Override
@@ -122,6 +133,26 @@ public class LIGHTS_ShapefileLoader
                 lightView.setAltitude(elevation + 35.0);
             }
 
+            ArrayList<Position> pathPositions = new ArrayList<>();
+            pathPositions.add(Position.fromDegrees(latDegrees, lonDegrees, elevation + 35.0));
+            LatLon latLon = Position.greatCircleEndPosition(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)),
+                    Angle.fromDegrees(new Double(data.getSectorLimitOne()) - 180),
+                    Angle.fromDegrees(.0015 * range));
+            pathPositions.add(new Position(latLon.getLatitude(), latLon.getLongitude(), elevation + 35.0));
+            Polyline line = new Polyline(pathPositions);
+            line.setColor(Color.BLACK);
+            layer.addRenderable(line);
+            
+            pathPositions.clear();
+            pathPositions.add(Position.fromDegrees(latDegrees, lonDegrees, elevation + 35.0));
+            latLon = Position.greatCircleEndPosition(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)),
+                    Angle.fromDegrees(new Double(data.getSectorLimitTwo()) - 180),
+                    Angle.fromDegrees(.0015 * range));
+            pathPositions.add(new Position(latLon.getLatitude(), latLon.getLongitude(), elevation + 35.0));
+            line = new Polyline(pathPositions);
+            line.setColor(Color.BLACK);
+            layer.addRenderable(line);
+
             lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
                     Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
             String label = "Light \n"
@@ -143,6 +174,7 @@ public class LIGHTS_ShapefileLoader
                 lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
                 lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
             }
+
             airspaceLayer.addAirspace(lightView);
         } else {
             lightView.setCenter(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)));

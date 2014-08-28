@@ -161,6 +161,9 @@ public class S57ChartImpl
                     || name.contains("SOUNDG")
                     || name.contains("WRECK")) {
                 l.setPickEnabled(true);
+            }
+            if (name.contains("NAVLNE")) {
+                l.setPickEnabled(false);
             } else {
                 l.setPickEnabled(false);
             }
