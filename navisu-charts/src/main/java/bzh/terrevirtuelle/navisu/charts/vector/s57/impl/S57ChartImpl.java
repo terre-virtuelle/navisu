@@ -163,7 +163,7 @@ public class S57ChartImpl
                 l.setPickEnabled(true);
             }
             if (name.contains("NAVLNE")) {
-                l.setPickEnabled(false);
+                l.setPickEnabled(true);
             } else {
                 l.setPickEnabled(false);
             }

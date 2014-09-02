@@ -27,6 +27,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLOUR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconCardinal;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Light;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.NavigationLine;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -213,6 +214,16 @@ public class ChartS57Controller {
                         l.setName("NAVLNE");
                     });
                     layers.addAll(la);
+                   wwd.addSelectListener((SelectEvent event) -> {
+                       NavigationLine navigationLine;
+                        if (event.isLeftClick()
+                                && event.getTopObject() != null
+                                && event.getTopObject().getClass()!= null){
+                            //    && event.getTopObject().getClass().equals(Lights.class)) {
+                           // navigationLine = ((NavigationLine) event.getTopObject());
+                            System.out.println(event.getTopObject().getClass().getCanonicalName());
+                        }
+                    });
                 }
                 if (s.equals("WRECKS.shp")) {
                     loader = new WRECKS_CNT_ShapefileLoader();
