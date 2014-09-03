@@ -18,20 +18,16 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
-import gov.nasa.worldwind.render.PointPlacemark;
-import gov.nasa.worldwind.render.PointPlacemarkAttributes;
-import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolylines;
-import gov.nasa.worldwind.util.CompoundVecBuffer;
-import gov.nasa.worldwindx.examples.util.DirectedPath;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -48,7 +44,7 @@ public class NAVLNE_ShapefileLoader
     private ShapefileRecord record;
     private NavigationLine navigationLine;
     private final List<NavigationLine> navigationLines;
-    private Set<Map.Entry<String, Object>> entries;
+ //   private Set<Map.Entry<String, Object>> entries;
     RenderableLayer layer;
     List< List<LatLon>> coords;
     List<LatLon> latLonList;
@@ -123,6 +119,10 @@ public class NAVLNE_ShapefileLoader
         List<Integer> numberOfPoints = new ArrayList<>();
         while (shp.hasNext()) {
             record = shp.nextRecord();
+            //record.getAttributes().getEntries().stream().forEach((e) -> {
+            //    System.out.print(e.getKey()+ "="+e.getValue()+" ");
+            //});
+            //System.out.println("");
             numberOfPoints.add(record.getNumberOfPoints());
         }//OK
         SurfacePolylines shape = new SurfacePolylines(Sector.fromDegrees(shp.getBoundingRectangle()),
@@ -134,7 +134,7 @@ public class NAVLNE_ShapefileLoader
         }
         List<LatLon> tmpList;
         int kk = 0;
-        for (Integer i : numberOfPoints) {
+        for (int i : numberOfPoints) {
             tmpList = new ArrayList<>();
             for (int j = 0; j < i; j++) {
                 tmpList.add(latLonList.get(kk));
@@ -162,6 +162,7 @@ public class NAVLNE_ShapefileLoader
             path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
             path.setPathType(AVKey.GREAT_CIRCLE);
             path.setAttributes(shapeAttributes0);
+            path.setValue("E", l);
             layer.addRenderable(path);
         }
 

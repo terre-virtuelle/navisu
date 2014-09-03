@@ -31,13 +31,20 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.NavigationLine;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.GlobeAnnotation;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwindx.examples.FlatWorldEarthquakes;
 import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -68,6 +75,7 @@ public class ChartS57Controller {
     protected WorldWindow wwd;
     protected Globe globe;
     private boolean isDisplay = false;
+    private GlobeAnnotation tooltipAnnotation;
 
     static {
         INSTANCE = new ChartS57Controller();
@@ -77,6 +85,23 @@ public class ChartS57Controller {
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         initAcronymsMap();
+        // Init tooltip annotation
+        this.tooltipAnnotation = new GlobeAnnotation("", Position.fromDegrees(48.35, -4.54, 0));
+        Font font = Font.decode("Arial-Plain-16");
+        this.tooltipAnnotation.getAttributes().setFont(font);
+        this.tooltipAnnotation.getAttributes().setSize(new Dimension(270, 0));
+        this.tooltipAnnotation.getAttributes().setDistanceMinScale(1);
+        this.tooltipAnnotation.getAttributes().setDistanceMaxScale(1);
+        this.tooltipAnnotation.getAttributes().setVisible(false);
+        this.tooltipAnnotation.setAlwaysOnTop(true);
+        this.tooltipAnnotation.setText("aaaaaaaa");
+        // Add select listener for earthquake picking
+        wwd.addSelectListener((SelectEvent event) -> {
+            if (event.getEventAction().equals(SelectEvent.ROLLOVER)) {
+                highlight(event.getTopObject());
+            }
+        });
+
     }
 
     private void initAcronymsMap() {
@@ -212,15 +237,16 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("NAVLNE");
+                        ((RenderableLayer)l).addRenderable(tooltipAnnotation);
                     });
                     layers.addAll(la);
-                   wwd.addSelectListener((SelectEvent event) -> {
-                       NavigationLine navigationLine;
+                    wwd.addSelectListener((SelectEvent event) -> {
+                        NavigationLine navigationLine;
                         if (event.isLeftClick()
                                 && event.getTopObject() != null
-                                && event.getTopObject().getClass()!= null){
+                                && event.getTopObject().getClass() != null) {
                             //    && event.getTopObject().getClass().equals(Lights.class)) {
-                           // navigationLine = ((NavigationLine) event.getTopObject());
+                            // navigationLine = ((NavigationLine) event.getTopObject());
                             System.out.println(event.getTopObject().getClass().getCanonicalName());
                         }
                     });
@@ -355,6 +381,19 @@ public class ChartS57Controller {
             }
         }
 
+    }
+
+    private void highlight(Object o) {
+        System.out.println("highlight"+o);
+        this.tooltipAnnotation.getAttributes().setVisible(true);
+        /*
+         this.mouseEq = (FlatWorldEarthquakes.AppFrame.EqAnnotation) o;
+         this.mouseEq.getAttributes().setHighlighted(true);
+         this.tooltipAnnotation.setText("<p><b>" + this.mouseEq.earthquake.title + "</b></p>" + composeElapsedString(this.mouseEq) + "<br />" + this.mouseEq.earthquake.summary);
+         this.tooltipAnnotation.setPosition(this.mouseEq.earthquake.position);
+         this.tooltipAnnotation.getAttributes().setVisible(true);
+         this.getWwd().redraw();
+         */
     }
 
     private void lightsDisplay() {
