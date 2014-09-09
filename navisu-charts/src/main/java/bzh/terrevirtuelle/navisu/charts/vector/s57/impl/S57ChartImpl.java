@@ -105,7 +105,7 @@ public class S57ChartImpl
         Path inputFile = Paths.get(fileName);
         String options
                 =    "\"RECODE_BY_DSSI=ON," 
-                + "ENCODING=LATIN1,"
+                + "ENCODING=iso-8859-1,"
                 +"RETURN_PRIMITIVES=ON,"
                 + "RETURN_LINKAGES=ON,"
                 + "LNAM_REFS=ON,"

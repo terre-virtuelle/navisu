@@ -47,7 +47,7 @@ public class NavigationLineController {
         navigationLines = new ArrayList<>();
         this.tooltipAnnotation = new GlobeAnnotation("", Position.fromDegrees(0, 0, 0));
         // this.tooltipAnnotation.getAttributes().setFont(Font.decode("Arial-Plain-12"));
-        this.tooltipAnnotation.getAttributes().setSize(new Dimension(300, 250));
+        this.tooltipAnnotation.getAttributes().setSize(new Dimension(320, 180));
         this.tooltipAnnotation.getAttributes().setDistanceMinScale(1);
         this.tooltipAnnotation.getAttributes().setDistanceMaxScale(1);
         this.tooltipAnnotation.getAttributes().setVisible(false);
@@ -58,6 +58,15 @@ public class NavigationLineController {
                 if (o != null) {
                     if (o.getClass() == Path.class) {
                         highlight((Path) o);
+                    } else {
+                        TimerTask task = new TimerTask() {
+                            @Override
+                            public void run() {
+                                tooltipAnnotation.getAttributes().setVisible(false);
+                            }
+                        };
+                        Timer timer = new Timer();
+                        timer.schedule(task, 1000);
                     }
                 }
             }
@@ -110,7 +119,12 @@ public class NavigationLineController {
                 }
                 if (e.getKey().equals("INFORM")) {
                     if (e.getValue() != null) {
-                        navigationLine.setInformation(e.getValue().toString());
+                        String tmp = e.getValue().toString();
+                        if (tmp.contains("at")) {
+                            navigationLine.setInformation(tmp.substring(0, tmp.length() - 1) + "°");
+                        } else {
+                            navigationLine.setInformation(tmp);
+                        }
                     }
                 }
                 if (e.getKey().equals("CATNAV")) {
@@ -120,7 +134,7 @@ public class NavigationLineController {
                 }
                 if (e.getKey().equals("ORIENT")) {
                     if (e.getValue() != null) {
-                        navigationLine.setOrientation(e.getValue().toString());
+                        navigationLine.setOrientation(e.getValue().toString() + "°");
                     }
                 }
             });
@@ -143,13 +157,11 @@ public class NavigationLineController {
             pathPositions.add(new Position(l.get(0), 2.0));
             pathPositions.add(new Position(l.get(1), 2.0));
             path = new Path(pathPositions);
-
             path.setVisible(true);
             path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
             path.setPathType(AVKey.GREAT_CIRCLE);
             path.setAttributes(shapeAttributes1);
             path.setValue("NAVLNE", navigationLines.get(i));
-
             layer.addRenderable(path);
             i++;
         }
@@ -157,23 +169,15 @@ public class NavigationLineController {
 
     private void highlight(Path path) {
         navigationLine = (NavigationLine) path.getValue("NAVLNE");
-        String str = "Navigation line (NAVLNE)\n\n"
+        // ogr ne semble pas bien gérer les accents, seulle la version anglaise est affichée
+        String str = "NAVIGATION LINE (NAVLNE)\n\n"
                 + "CATNAV : " + navigationLine.getCategoryOfNavigationLine() + "\n"
                 + "ORIENT : " + navigationLine.getOrientation() + "\n"
-                + "INFORM : " + navigationLine.getInformation() + "\n"
-                + "NINFOM : " + navigationLine.getInformationInNationalLanguage();
+                + "INFORM : " + navigationLine.getInformation();// + "\n"
+        // + "NINFOM : " + navigationLine.getInformationInNationalLanguage();
         this.tooltipAnnotation.setText(str);
         List<Position> pos = (List<Position>) path.getPositions();
         tooltipAnnotation.setPosition(Position.interpolate(0.5, pos.get(0), pos.get(1)));
         this.tooltipAnnotation.getAttributes().setVisible(true);
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                tooltipAnnotation.getAttributes().setVisible(false);
-            }
-        };
-        Timer timer = new Timer();
-        timer.schedule(task, 10000);
     }
-
 }
