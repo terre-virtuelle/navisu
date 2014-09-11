@@ -104,9 +104,9 @@ public class S57ChartImpl
 
         Path inputFile = Paths.get(fileName);
         String options
-                =    "\"RECODE_BY_DSSI=ON," 
+                = "\"RECODE_BY_DSSI=ON,"
                 + "ENCODING=iso-8859-1,"
-                +"RETURN_PRIMITIVES=ON,"
+                + "RETURN_PRIMITIVES=ON,"
                 + "RETURN_LINKAGES=ON,"
                 + "LNAM_REFS=ON,"
                 + "SPLIT_MULTIPOINT=ON,"
@@ -119,7 +119,7 @@ public class S57ChartImpl
             Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ")
-                    .addArg("data/shp/shp_" + i + "/out.shp ")
+                    .addArg("data/shp/shp_" + i)// + "/out.shp ")
                     .addArg(tmp.toString())
                     .setOut(System.out)
                     .setErr(System.err)
@@ -157,6 +157,7 @@ public class S57ChartImpl
             if (name.contains("BCNCAR")
                     || name.contains("BCNLAT")
                     || name.contains("BCNISD")
+                    || name.contains("TOPMAR")
                     || name.contains("OBSTRN")
                     || name.contains("LIGHTS")
                     || name.contains("SOUNDG")

@@ -15,6 +15,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.NAVLNE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PointTemplate_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PolylineTemplate_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.UWTROC_ShapefileLoader;
@@ -198,6 +199,15 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                if (s.equals("TOPMAR.shp")) {
+                    loader = new PointTemplate_ShapefileLoader();
+                    tmp = new File(path + "/TOPMAR.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("TOPMAR");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("M_NSYS.shp")) {
                     loader = new M_NSYS_ShapefileLoader();
                     tmp = new File(path + "/M_NSYS.shp");
@@ -219,6 +229,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
 
                 }
+                /*
                 if (s.equals("RESARE.shp")) {
                     loader = new PolylineTemplate_ShapefileLoader();
                     tmp = new File(path + "/RESARE.shp");
@@ -228,6 +239,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                        */
                 if (s.equals("WRECKS.shp")) {
                     loader = new WRECKS_CNT_ShapefileLoader();
                     tmp = new File(path + "/WRECKS.shp");

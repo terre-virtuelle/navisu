@@ -58,7 +58,7 @@ public class PointTemplate_ShapefileLoader
             }
             attrs = this.createPointAttributes(record);
             double[] point = ((ShapefileRecordPoint) record).getPoint();
-            System.out.println("point " + point.length);
+           // System.out.println("point " + point.length);
             layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
         }
     }
@@ -74,9 +74,9 @@ public class PointTemplate_ShapefileLoader
             PointPlacemarkAttributes attrs) {
 
         entries = record.getAttributes().getEntries();
-     //   System.out.println("entries " + entries);
+        System.out.println("entries Point " + entries);
         label = new StringBuilder();
-        label.append("SOUNDG").append("\n");
+        label.append("Point").append("\n");
         label.append("Lat : ").append(new Float(latDegrees)).append("\n");
         label.append("Lon : ").append(new Float(lonDegrees)).append("\n");
         placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
