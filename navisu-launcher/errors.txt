@@ -1,14 +1,51 @@
+Warning 1: An update to RCNM=100,RCID=4112 failed.
+
+Warning 1: Can't find RCNM=100,RCID=4125 for delete.
+
+Warning 1: Can't find RCNM=100,RCID=4190 for delete.
+
+Warning 1: Can't find RCNM=110,RCID=512 for delete.
+
+Warning 1: Can't find RCNM=100,RCID=4177 for delete.
+
+Warning 1: Can't find RCNM=100,RCID=4122 for delete.
+
+Warning 1: Can't find RCNM=100,RCID=4123 for delete.
+
+Warning 1: An update to RCNM=100,RCID=4172 failed.
+
+Warning 1: An update to RCNM=100,RCID=60 failed.
+
+Warning 1: An update to RCNM=100,RCID=60 failed.
+
+Warning 1: Can't find RCNM=110,RCID=11970 for delete.
+
+Warning 1: Can't find RCNM=100,RCID=4086 for delete.
+
+Warning 1: An update to RCNM=100,RCID=4172 failed.
+
+Warning 1: Can't find RCNM=100,RCID=4138 for delete.
+
+Warning 1: An update to RCNM=100,RCID=4187 failed.
+
+Warning 1: An update to RCNM=100,RCID=4110 failed.
+
+Warning 1: Can't find RCNM=100,RCID=4143 for delete.
+
+Warning 1: An update to RCNM=100,RCID=4188 failed.
+
+Warning 1: An update to RCNM=100,RCID=4175 failed.
+
+Warning 1: Can't find RCNM=100,RCID=4149 for delete.
+
+Warning 1: Can't find RCNM=100,RCID=4130 for delete.
+
+Warning 1: An update to RCNM=100,RCID=4189 failed.
+
 ERROR 6: Can't create fields of type StringList on shapefile layers.
-
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
 ERROR 6: Can't create fields of type IntegerList on shapefile layers.
-
