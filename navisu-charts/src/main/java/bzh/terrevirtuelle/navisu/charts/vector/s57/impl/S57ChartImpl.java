@@ -103,22 +103,25 @@ public class S57ChartImpl
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
 
         Path inputFile = Paths.get(fileName);
+        Map<String, String> environment = new HashMap<>(System.getenv());
         String options
-                = "\"RECODE_BY_DSSI=ON,"
-                + "ENCODING=iso-8859-1,"
-                + "RETURN_PRIMITIVES=ON,"
-                + "RETURN_LINKAGES=ON,"
-                + "LNAM_REFS=ON,"
-                + "SPLIT_MULTIPOINT=ON,"
+                = "\"RECODE_BY_DSSI=ON, "
+                + "ENCODING=UTF8, "
+                + "RETURN_PRIMITIVES=ON, "
+                + "RETURN_LINKAGES=ON, "
+                + "LNAM_REFS=ON, "
+                + "SPLIT_MULTIPOINT=ON, "
                 + "ADD_SOUNDG_DEPTH=ON\" \n";
+        environment.put("OGR_S57_OPTIONS", options);
+        options = System.getProperty("user.dir") + "/bin/data";
+        environment.put("GDAL_DATA", options);
         String cmd;
-
         cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         try {
             Path tmp = Paths.get(inputFile.toString());
             Proc.builder.create()
                     .setCmd(cmd)
-                    .addArg("-skipfailures ")
+                    .addArg("-skipfailures ").addArg("-overwrite ")
                     .addArg("data/shp/shp_" + i)// + "/out.shp ")
                     .addArg(tmp.toString())
                     .setOut(System.out)
@@ -129,14 +132,12 @@ public class S57ChartImpl
             LOGGER.log(Level.SEVERE, null, e);
         }
 
-        Map<String, String> environment = new HashMap<>(System.getenv());
-        environment.put("OGR_S57_OPTIONS", options);
         cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr -nlt POINT25D";
         try {
             Path tmp = Paths.get(inputFile.toString());
             Proc.builder.create()
                     .setCmd(cmd)
-                    .addArg("-skipfailures ")
+                    .addArg("-skipfailures ").addArg("-append ")
                     .addArg("data/shp/shp_" + i + "/soundg/SOUNDG.shp")
                     .addArg(tmp.toString())
                     .addArg("SOUNDG")
