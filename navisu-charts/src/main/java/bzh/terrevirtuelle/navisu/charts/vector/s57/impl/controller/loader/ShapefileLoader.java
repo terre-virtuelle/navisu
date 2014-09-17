@@ -209,20 +209,20 @@ public class ShapefileLoader {
         if (Shapefile.isPointType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();
             this.addRenderablesForPoints(shp, (RenderableLayer) layer);
-            System.out.println("isPointType");
+          //  System.out.println("isPointType");
             layers.add(layer);
         } else if (Shapefile.isMultiPointType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();
             this.addRenderablesForMultiPoints(shp, (RenderableLayer) layer);
-            System.out.println("isMultiPointType");
+         //   System.out.println("isMultiPointType");
             layers.add(layer);
         } else if (Shapefile.isPolylineType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();
             this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
-            System.out.println("isPolylineType");
+          //  System.out.println("isPolylineType");
             layers.add(layer);
         } else if (Shapefile.isPolygonType(shp.getShapeType())) {
-            System.out.println("isPolygonType");
+         //   System.out.println("isPolygonType");
             this.addRenderablesForPolygons(shp, layers);
         } else {
             Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
@@ -283,10 +283,10 @@ public class ShapefileLoader {
 
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
-           System.out.println("record " + record.getAttributes().getEntries());
+        //   System.out.println("record " + record.getAttributes().getEntries());
 
            
-            System.out.println("");
+         //   System.out.println("");
             PointPlacemarkAttributes attrs = this.createPointAttributes(record);
             if (!Shapefile.isMultiPointType(record.getShapeType())) {
                 continue;
@@ -480,21 +480,21 @@ public class ShapefileLoader {
     //**************************************************************//
     @SuppressWarnings({"UnusedDeclaration"})
     protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
-        System.out.println("createPointAttributes " + record.getAttributes().getEntries());
+       // System.out.println("createPointAttributes " + record.getAttributes().getEntries());
         return randomAttrs.nextPointAttributes();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
         if (record != null) {
-            System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
+          //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
         return randomAttrs.nextPolylineAttributes();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-        System.out.println(record.getAttributes().getEntries());
+      //  System.out.println(record.getAttributes().getEntries());
         return randomAttrs.nextPolygonAttributes();
         /*
          Float val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());

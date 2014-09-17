@@ -210,6 +210,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 */
+                /*
                 if (s.equals("SEAARE.shp")) {
                     loader = new PointTemplate_ShapefileLoader();
                     tmp = new File(path + "/SEAARE.shp");
@@ -219,6 +220,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                */
                 if (s.equals("M_NSYS.shp")) {
                     loader = new M_NSYS_ShapefileLoader();
                     tmp = new File(path + "/M_NSYS.shp");
