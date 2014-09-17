@@ -13,7 +13,7 @@ import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.util.ArrayList;
 import java.util.List;
 

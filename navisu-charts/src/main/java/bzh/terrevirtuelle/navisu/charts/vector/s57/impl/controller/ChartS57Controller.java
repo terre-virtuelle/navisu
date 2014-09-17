@@ -16,8 +16,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.NAVLNE
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PointTemplate_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PolylineTemplate_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SOUNDG_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.UWTROC_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.WRECKS_ShapefileLoader;
@@ -39,7 +39,7 @@ import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.GlobeAnnotation;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -199,12 +199,23 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                /*
                 if (s.equals("TOPMAR.shp")) {
                     loader = new PointTemplate_ShapefileLoader();
                     tmp = new File(path + "/TOPMAR.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("TOPMAR");
+                    });
+                    layers.addAll(la);
+                }
+                */
+                if (s.equals("SEAARE.shp")) {
+                    loader = new PointTemplate_ShapefileLoader();
+                    tmp = new File(path + "/SEAARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("SEAARE");
                     });
                     layers.addAll(la);
                 }

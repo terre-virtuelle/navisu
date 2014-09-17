@@ -5,18 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CATWRK;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.EXPSOU;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.QUASOU;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Sounding;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Wreck;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfaceText;
-import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;

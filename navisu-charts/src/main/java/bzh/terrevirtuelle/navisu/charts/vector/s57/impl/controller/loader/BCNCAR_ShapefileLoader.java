@@ -17,7 +17,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -68,7 +68,7 @@ public class BCNCAR_ShapefileLoader
         objects.add(beacon);
         beacon = new BeaconCardinal();
         entries = record.getAttributes().getEntries();
-        System.out.println("entries " + entries);
+       // System.out.println("entries BeaconCardinal : " + entries);
         beacon.setLat(latDegrees);
         beacon.setLon(lonDegrees);
         entries.stream().forEach((e) -> {

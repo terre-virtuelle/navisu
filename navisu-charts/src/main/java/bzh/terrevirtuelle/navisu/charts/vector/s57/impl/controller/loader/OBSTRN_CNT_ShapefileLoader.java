@@ -10,7 +10,7 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfaceIcon;
-import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
