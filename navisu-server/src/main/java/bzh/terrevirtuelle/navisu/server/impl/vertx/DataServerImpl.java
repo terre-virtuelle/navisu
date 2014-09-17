@@ -97,7 +97,7 @@ public class DataServerImpl
                     if (readers.get(currentReaderIndex).getClass().getSimpleName().equals("FileReaderImpl")) {
                         readers.get(currentReaderIndex).read();
                     }
-                    ws.writeTextFrame(response(currentReaderIndex).toString());
+                    ws.writeTextFrame(response(currentReaderIndex));
                     // rotation dans les buffers des readers
                     currentReaderIndex = (currentReaderIndex + 1) % sentenceQueues.size();
                 });
