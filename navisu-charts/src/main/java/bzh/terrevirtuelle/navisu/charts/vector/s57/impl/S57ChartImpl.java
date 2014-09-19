@@ -145,7 +145,7 @@ public class S57ChartImpl
                     .addArg("SOUNDG")
                     .setOut(System.out)
                     .setErr(System.err)
-                    .exec(environment);
+                    .exec();
             inputFile = tmp;
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);
