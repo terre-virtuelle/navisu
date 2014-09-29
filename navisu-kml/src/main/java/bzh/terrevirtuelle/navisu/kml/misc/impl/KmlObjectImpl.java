@@ -36,7 +36,7 @@ public class KmlObjectImpl
     private static final String NAME = "KML";
     private static final String EXTENSION_0 = ".kmz";
     private static final String EXTENSION_1 = ".kml";
-    protected static final String GROUP = "KmlFiles";
+    protected static final String GROUP = "KML files";
    
     protected List<Layer> layers;
     protected static final Logger LOGGER = Logger.getLogger(KmlObjectImpl.class.getName());
