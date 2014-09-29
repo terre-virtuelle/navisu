@@ -47,7 +47,7 @@ public class S57ChartImpl
 
     private static final String NAME = "S57";
     private static final String EXTENSION = ".000";
-    protected static final String GROUP = "S57Charts";
+    protected static final String GROUP = "S57 charts";
     static private int i = 0;
     protected ChartS57Controller chartS57Controller;
     protected List<Layer> layers;

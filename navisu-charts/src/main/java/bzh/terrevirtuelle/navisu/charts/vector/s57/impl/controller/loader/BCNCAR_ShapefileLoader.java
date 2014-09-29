@@ -137,8 +137,8 @@ public class BCNCAR_ShapefileLoader
             }
         }
 
-        attrs.setScale(1.0);
-
+       // attrs.setScale(1.0);
+attrs.setScale(0.8);
         placemark.setAttributes(attrs);
         return placemark;
     }
