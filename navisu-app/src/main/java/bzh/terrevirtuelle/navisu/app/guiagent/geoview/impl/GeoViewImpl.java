@@ -1,4 +1,4 @@
- package bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl;
+package bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentEvents;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoView;
@@ -56,7 +56,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         this.geoView = bzh.terrevirtuelle.navisu.core.view.geoview.GeoView.factory.newWorldWindGeo3DView();
         this.layerManager = this.geoView.getLayerManager();
 
-        this.initDefaultLayers(this.layerManager);
+       this.initDefaultLayers(this.layerManager);
 
         this.layerManager.getGroups().forEach((groupName, geoLayerList) -> {
 
@@ -196,7 +196,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
     protected void initDefaultLayers(final LayerManager<Layer> layerManager) {
 
-        layerManager.createGroup("On-earth layers",
+        layerManager.createGroup("On-earth layers", 
                 WorldWindLayers.Stars.newInstance(),
                 WorldWindLayers.SkyGradient.newInstance(),
                 WorldWindLayers.BlueMarbleImage.newInstance(),
@@ -211,7 +211,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
                 WorldWindLayers.LatLonGraticule.newInstance()
         );
 
-        layerManager.createGroup("On-screen layers",
+        layerManager.createGroup("On-screen layers", 
                 WorldWindLayers.WorldMap.newInstance(),
                 WorldWindLayers.ScaleBar.newInstance(),
                 WorldWindLayers.Compass.newInstance()
