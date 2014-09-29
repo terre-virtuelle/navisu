@@ -33,8 +33,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     }
 
     @Override
-    public void createGroup(String groupName, GeoLayer<Layer>... layers) {
-
+    public void createGroup(String groupName,  GeoLayer<Layer>... layers) {
         Checker.notNull(groupName, "Group titleText is null.");
         Checker.keyNotExistsInMap(this.groupMap, groupName, "Group " + groupName + " already exists.");
 
@@ -42,7 +41,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         List<GeoLayer<Layer>> newGroup = new LinkedList<>();
         // Add it in the group map
         this.groupMap.put(groupName, newGroup);
-
+       
         // Insert layers
         Arrays.asList(layers).forEach(layer -> {
 
