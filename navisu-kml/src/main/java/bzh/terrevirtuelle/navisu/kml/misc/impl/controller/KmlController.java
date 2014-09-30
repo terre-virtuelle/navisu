@@ -73,6 +73,7 @@ public class KmlController {
             KMLRoot document = KMLRoot.createAndParse(path);
             KMLController kmlController = new KMLController(document);
             RenderableLayer layer = new RenderableLayer();
+            layer.setName(path);
             layer.addRenderable(kmlController);
             layers.add(layer);
         } catch (IOException | XMLStreamException ex) {

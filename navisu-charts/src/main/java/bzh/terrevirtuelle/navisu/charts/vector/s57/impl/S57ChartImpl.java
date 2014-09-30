@@ -47,7 +47,7 @@ public class S57ChartImpl
 
     private static final String NAME = "S57";
     private static final String EXTENSION = ".000";
-    protected static final String GROUP = "S57Charts";
+    protected static final String GROUP = "S57 charts";
     static private int i = 0;
     protected ChartS57Controller chartS57Controller;
     protected List<Layer> layers;
@@ -115,6 +115,8 @@ public class S57ChartImpl
         environment.put("OGR_S57_OPTIONS", options);
         options = System.getProperty("user.dir") + "/bin/data";
         environment.put("GDAL_DATA", options);
+      //  System.out.println("environment " + environment);
+        
         String cmd;
         cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         try {
@@ -126,7 +128,7 @@ public class S57ChartImpl
                     .addArg(tmp.toString())
                     .setOut(System.out)
                     .setErr(System.err)
-                    .exec();
+                    .exec(environment);
             inputFile = tmp;
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);

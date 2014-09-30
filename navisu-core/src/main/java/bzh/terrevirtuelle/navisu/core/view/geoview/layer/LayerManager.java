@@ -17,7 +17,7 @@ public interface LayerManager<T> {
 
     public static final String DEFAULT_GROUP = LayerManager.class.getName() + ".DEFAULT_GROUP";
 
-    void createGroup(String groupName, GeoLayer<T>... layers);
+    void createGroup(String groupName,  GeoLayer<T>... layers);
 
     List<GeoLayer<T>> getGroup(String key);
     List<GeoLayer<T>> getDefaultGroup();

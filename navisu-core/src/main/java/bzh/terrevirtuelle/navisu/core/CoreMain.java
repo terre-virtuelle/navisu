@@ -28,13 +28,12 @@ public class CoreMain extends Application {
         Scene scene = new Scene(pane, 800, 600, Color.ALICEBLUE);
 
         final GeoWorldWindView geoView = GeoView.factory.newWorldWindGeo3DView();
-
+/*
         final WorldWindLayerManager layerManager = geoView.getLayerManager();
 
-        layerManager.createGroup("On-earth layers",
+        layerManager.createGroup("On-earth layers", "16x16-icon-earth.png",
                 WorldWindLayers.Stars.newInstance(),
                 WorldWindLayers.SkyGradient.newInstance(),
-
                 WorldWindLayers.BlueMarbleImage.newInstance(),
                 WorldWindLayers.Fog.newInstance(),
                 WorldWindLayers.BlueMarbleWMS.newInstance(),
@@ -42,19 +41,17 @@ public class CoreMain extends Application {
                 WorldWindLayers.BingImagery.newInstance(),
                 WorldWindLayers.EarthAtNight.newInstance(),
                 WorldWindLayers.OpenStreetMap.newInstance(),
-
                 WorldWindLayers.CountryBoundaries.newInstance(),
                 WorldWindLayers.PlaceName.newInstance(),
-
                 WorldWindLayers.LatLonGraticule.newInstance()
         );
 
-        layerManager.createGroup("On-screen layers",
+        layerManager.createGroup("On-screen layers", "boussole-16x16.png",
                 WorldWindLayers.WorldMap.newInstance(),
                 WorldWindLayers.ScaleBar.newInstance(),
                 WorldWindLayers.Compass.newInstance()
         );
-
+*/
         pane.getChildren().add(geoView.getDisplayable());
         stage.setScene(scene);
         stage.show();
