@@ -89,8 +89,7 @@ public class GuiAgentImpl
     protected Stage stage;
     protected StackPane root;
     static GuiAgentController ctrl = null;
-    protected final ImageView basedock
-            = new ImageView(ICON_PATH + "dock.png");
+    protected final ImageView basedock = new ImageView(ICON_PATH + "dock.png");
     boolean firstInstruments = true;
     protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;

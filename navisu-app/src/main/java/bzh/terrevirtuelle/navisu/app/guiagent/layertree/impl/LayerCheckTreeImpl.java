@@ -60,7 +60,7 @@ public class LayerCheckTreeImpl
                 return null;
             }
         }));
-        rootItems.add(createNode(rootItem0, "On-earth layers", "layer_icon.png"));
+        rootItems.add(createNode(rootItem0, "On-earth layers", "16x16-icon-earth.png"));
         rootItems.add(createNode(rootItem0, "On-screen layers", "boussole.png"));
         CheckBoxTreeItem<GeoLayer> charts = createNode(rootItem0, "Charts", "charts-16x16.png");
         rootItems.add(charts);
