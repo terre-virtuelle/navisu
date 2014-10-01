@@ -210,7 +210,7 @@ public class ImageryInstallerImpl implements ImageryInstaller
         
         // Cast the image source object to File
         File imageSourceFile = imageSourceToFile(imageSourceObj);
-        System.out.println("imageSourceObj : " + imageSourceObj);
+       // System.out.println("imageSourceObj : " + imageSourceObj);
         // Compute the image titleText, without its extension
         String imageSourceName = imageSourceFile.getName().substring(0, imageSourceFile.getName().lastIndexOf("."));
         // Return the titleText
