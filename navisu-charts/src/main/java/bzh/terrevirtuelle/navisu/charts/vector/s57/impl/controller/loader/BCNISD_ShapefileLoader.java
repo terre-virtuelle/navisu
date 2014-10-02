@@ -102,7 +102,7 @@ public class BCNISD_ShapefileLoader
                                                 } else {
                                                     if (e.getKey().equals("MARSYS")) {
                                                         if (e.getValue() != null) {
-                                                            beacon.setMarksNavigationalSystemof(((Long) e.getValue()).toString());
+                                                            beacon.setNavigationalSystemOfMarks(((Long) e.getValue()).toString());
                                                          //   System.out.println("MARSYS " + e.getValue());
                                                         }
                                                     }
