@@ -183,7 +183,6 @@ public class ChartS57Controller {
                  */
                 if (s.equals("BCNCAR.shp")) {
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR");
-                    // loader = new BCNCAR_ShapefileLoader();
                     tmp = new File(path + "/BCNCAR.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -201,10 +200,8 @@ public class ChartS57Controller {
                         l.setName("BCNLAT");
                     });
                     layers.addAll(la);
-
                 }
                 if (s.equals("BCNISD.shp")) {
-                    // loader = new BCNISD_ShapefileLoader();
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD");
                     tmp = new File(path + "/BCNISD.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);

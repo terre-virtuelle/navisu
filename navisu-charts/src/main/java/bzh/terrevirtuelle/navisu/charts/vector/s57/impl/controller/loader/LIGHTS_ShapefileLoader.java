@@ -24,7 +24,6 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.Renderable;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,8 +125,9 @@ public class LIGHTS_ShapefileLoader
             lightView.setCenter(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)));
             lightView.setRadii(140.0 * range, 150.0 * range);
             if (data.getHeight() != null) {
-               //lightView.setAltitude(elevation + new Double(data.getHeight()));
-                lightView.setAltitudes(100, 300);
+               lightView.setAltitude(elevation + new Double(data.getHeight()));
+               // creation du volume de la lumiere
+              //  lightView.setAltitudes(100, 300);
             } else {
                 lightView.setAltitude(elevation + 35.0);
             }
