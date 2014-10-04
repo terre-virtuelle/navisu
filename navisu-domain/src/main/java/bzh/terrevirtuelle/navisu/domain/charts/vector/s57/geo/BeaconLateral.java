@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CATLAM;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.CATLAM;
 import java.io.Serializable;
 
 public class BeaconLateral extends Beacon

@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes;
+package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters;
 
 import java.util.Collections;
 import java.util.HashMap;

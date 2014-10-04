@@ -2,14 +2,14 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 
 import java.io.Serializable;
 
-public class BuoySpecial extends Buoyage
+public class BuoySpecialPurpose extends Buoyage
         implements Serializable {
 
-    public BuoySpecial(Long id) {
+    public BuoySpecialPurpose(Long id) {
         this.id = id;
     }
 
-    public BuoySpecial() {
+    public BuoySpecialPurpose() {
     }
 
     public String getCategoryOfSpecialPurposeMark() {

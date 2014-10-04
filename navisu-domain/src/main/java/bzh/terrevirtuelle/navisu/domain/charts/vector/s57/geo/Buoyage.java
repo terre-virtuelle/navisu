@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLOUR_NAME;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLPAT;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLPAT;
 
 /**
  *

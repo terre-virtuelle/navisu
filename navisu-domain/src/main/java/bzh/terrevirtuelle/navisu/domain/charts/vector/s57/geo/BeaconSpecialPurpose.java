@@ -3,16 +3,16 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo;
 import java.io.Serializable;
 
 
-public class BeaconSpecialPurposeGeneral extends Buoyage
+public class BeaconSpecialPurpose extends Buoyage
 implements Serializable
 {
 
-	public BeaconSpecialPurposeGeneral(Long id)
+	public BeaconSpecialPurpose(Long id)
 	{
 		this.id=id;
 	}
 
-	public BeaconSpecialPurposeGeneral(){}
+	public BeaconSpecialPurpose(){}
 
 	private String beaconShape;
 
