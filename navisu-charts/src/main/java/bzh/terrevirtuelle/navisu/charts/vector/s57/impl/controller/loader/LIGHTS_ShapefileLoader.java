@@ -8,8 +8,8 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLOUR;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Light;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -124,10 +124,10 @@ public class LIGHTS_ShapefileLoader
         }
         if (data.getSectorLimitOne() != null && data.getSectorLimitTwo() != null) {
             lightView.setCenter(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)));
-
             lightView.setRadii(140.0 * range, 150.0 * range);
             if (data.getHeight() != null) {
-                lightView.setAltitude(elevation + new Double(data.getHeight()));
+               //lightView.setAltitude(elevation + new Double(data.getHeight()));
+                lightView.setAltitudes(100, 300);
             } else {
                 lightView.setAltitude(elevation + 35.0);
             }

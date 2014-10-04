@@ -1,21 +1,23 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Topmark;
-import gov.nasa.worldwind.WorldWind;
+import bzh.terrevirtuelle.navisu.util.Pair;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -26,13 +28,45 @@ import java.util.Set;
 public class TOPMAR_ShapefileLoader
         extends ShapefileLoader {
 
-    private final List<Topmark> dataList;
-
-    private Set<Map.Entry<String, Object>> entries;
-    private Topmark data;
+    PointPlacemark placemark;
+    List<PointPlacemark> placemarks;
+    PointPlacemarkAttributes attrs;
+    StringBuilder label;
+    String objName;
+    private Set<Entry<String, Object>> entries;
+    private Map<Pair, String> topMarks;
 
     public TOPMAR_ShapefileLoader() {
-        dataList = new ArrayList<>();
+        placemarks = new ArrayList<>();
+    }
+
+    public TOPMAR_ShapefileLoader(String objName) {
+        this.objName = objName;
+        placemarks = new ArrayList<>();
+    }
+
+    public TOPMAR_ShapefileLoader(Map<Pair, String> topMarks) {
+        placemarks = new ArrayList<>();
+        this.topMarks = topMarks;
+    }
+
+    @Override
+    protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
+
+        while (shp.hasNext()) {
+
+            ShapefileRecord record = shp.nextRecord();
+
+            if (!Shapefile.isPointType(record.getShapeType())) {
+                continue;
+            }
+            attrs = this.createPointAttributes(record);
+            double[] point = ((ShapefileRecordPoint) record).getPoint();
+            // System.out.println("point " + point.length);
+            entries = record.getAttributes().getEntries();
+
+            this.createPoint(record, point[1], point[0], attrs);
+        }
     }
 
     @Override
@@ -44,36 +78,19 @@ public class TOPMAR_ShapefileLoader
     @Override
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
-
         entries = record.getAttributes().getEntries();
-        data = new Topmark();
-
-        dataList.add(data);
-        data.setLat(latDegrees);
-        data.setLon(lonDegrees);
         entries.stream().forEach((e) -> {
-            if (e.getKey().equals("RCID")) {
-                data.setId((Long) e.getValue());
-            } else {
-                if (e.getKey().equals("COLOUR")) {
-                    data.setColour((String) e.getValue());
-                } else {
-                    if (e.getKey().equals("COLPAT")) {
-                        data.setColourPattern((String) e.getValue());
-                    } 
-                }
+            if (e.getKey().equals("TOPSHP")) {
+                topMarks.put(new Pair(latDegrees,lonDegrees),
+                        ((Long) e.getValue()).toString());
             }
         });
-
-        PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
-        placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-        placemark.setAttributes(attrs);
-
+        placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         return placemark;
     }
 
-    public List<Topmark> getTopmarks() {
-        return dataList;
+    public List<PointPlacemark> getPlacemarks() {
+        return placemarks;
     }
 
 }

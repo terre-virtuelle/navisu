@@ -115,8 +115,8 @@ public class S57ChartImpl
         environment.put("OGR_S57_OPTIONS", options);
         options = System.getProperty("user.dir") + "/bin/data";
         environment.put("GDAL_DATA", options);
-      //  System.out.println("environment " + environment);
-        
+        //  System.out.println("environment " + environment);
+
         String cmd;
         cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         try {
@@ -154,29 +154,32 @@ public class S57ChartImpl
         chartS57Controller = ChartS57Controller.getInstance();
         chartS57Controller.init("data/shp/shp_" + i++);
         layers = chartS57Controller.getLayers();
-
         layers.stream().filter((l) -> (l != null)).map((l) -> {
+            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             String name = l.getName();
             if (name.contains("BCNCAR")
                     || name.contains("BCNLAT")
                     || name.contains("BCNISD")
-                    || name.contains("TOPMAR")
-                    || name.contains("OBSTRN")
+                    || name.equals("OBSTRN")
                     || name.contains("LIGHTS")
                     || name.contains("SOUNDG")
-                    || name.contains("WRECK")) {
-                l.setPickEnabled(true);
-            }
-            if (name.contains("NAVLNE")) {
-                l.setPickEnabled(true);
-            } else {
+                    || name.contains("NAVLNE")
+                    || name.equals("WRECK")
+                    ) {
                 l.setPickEnabled(false);
             }
-            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
+            if (name.contains("DEPARE")
+                    || name.contains("DEPCNT")
+                    || name.equals("OBSTRN_CNT")
+                    || name.equals("WRECKS_CNT")
+                    || name.contains("UWTROC")) {
+                l.setPickEnabled(false);
+            }
             return l;
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
+
         airspaceLayers = chartS57Controller.getAirspaceLayers();
         airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();

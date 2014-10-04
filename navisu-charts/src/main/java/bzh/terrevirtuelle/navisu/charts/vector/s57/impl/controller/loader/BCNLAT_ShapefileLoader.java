@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CATLAM;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.CATLAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.BeaconLateral;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
