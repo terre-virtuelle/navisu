@@ -20,7 +20,6 @@ import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +42,12 @@ public class BUOYAGE_ShapefileLoader
     private Set<Entry<String, Object>> entries;
     private Class claz;
     private final String acronym;
-    private Map<Pair, String> topMarks;
+    private final Map<Pair, String> topMarks;
+    private String marsys;
 
-    public BUOYAGE_ShapefileLoader(String path,Map<Pair, String> topMarks,  String acronym ) {
+    public BUOYAGE_ShapefileLoader(String path, Map<Pair, String> topMarks, String marsys, String acronym) {
         this.topMarks = topMarks;
-        System.out.println("topMarks " + topMarks);
+        this.marsys = marsys;
         this.acronym = acronym;
         String className = BUOYAGE.ATT.get(acronym);
         try {
@@ -97,43 +97,43 @@ public class BUOYAGE_ShapefileLoader
             if (e.getKey().equals("RCID")) {
                 object.setId((Long) e.getValue());
             }
-            if (e.getKey().equals("BCNSHP") || e.getKey().equals("BOYSHP")) {
-                object.setShape(((Long) e.getValue()).toString());
-            } else {
-                if (e.getKey().equals("CATCAM")) {
-                    object.setCategoryOfMark(((Long) e.getValue()).toString());
-                } else {
-                    if (e.getKey().equals("OBJNAM")) {
-                        object.setObjectName((String) e.getValue());
-                    } else {
-                        if (e.getKey().equals("COLOUR")) {
-                            object.setColour((String) e.getValue());
-                        } else {
-                            if (e.getKey().equals("COLPAT")) {
-                                object.setColourPattern((String) e.getValue());
-                            } else {
-                                if (e.getKey().equals("STATUS")) {
-                                    object.setStatus((String) e.getValue());
-                                } else {
-                                    if (e.getKey().equals("PICREP")) {
-                                        object.setPictorialRepresentation((String) e.getValue());
-                                    } else {
-                                        if (e.getKey().equals("DATEND")) {
-                                            object.setDateEnd((String) e.getValue());
-                                        } else {
-                                            if (e.getKey().equals("DATSTA")) {
-                                                object.setDateStart((String) e.getValue());
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                        }
-                    }
+            if (e.getKey().equals("BCNSHP") || e.getKey().equals("BCNSID") || e.getKey().equals("BOYSHP")) {
+                Object obj = e.getValue();
+                String shp = "0";
+                if(obj != null){
+                    shp = ((Long) e.getValue()).toString();
                 }
+                object.setShape(shp);
             }
-
+            if (e.getKey().equals("CATCAM")) {
+                object.setCategoryOfMark(((Long) e.getValue()).toString());
+            }
+            if (e.getKey().equals("OBJNAM")) {
+                object.setObjectName((String) e.getValue());
+            }
+            if (e.getKey().equals("COLOUR")) {
+                object.setColour((String) e.getValue());
+            }
+            if (e.getKey().equals("COLPAT")) {
+                Object obj = e.getValue();
+                String colpat = "0";
+                if(obj != null){
+                    colpat = (String)e.getValue();
+                }
+                object.setColourPattern(colpat);
+            }
+            if (e.getKey().equals("STATUS")) {
+                object.setStatus((String) e.getValue());
+            }
+            if (e.getKey().equals("PICREP")) {
+                object.setPictorialRepresentation((String) e.getValue());
+            }
+            if (e.getKey().equals("DATEND")) {
+                object.setDateEnd((String) e.getValue());
+            }
+            if (e.getKey().equals("DATSTA")) {
+                object.setDateStart((String) e.getValue());
+            }
         });
 
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
@@ -146,16 +146,24 @@ public class BUOYAGE_ShapefileLoader
 
         placemark.setValue(AVKey.DISPLAY_NAME, label);
         String tm = topMarks.get(new Pair(latDegrees, lonDegrees));
-        if(tm == null){
+        if (tm == null) {
             tm = "0";
         }
-        
+        System.out.println("img/buoyage/" + acronym + "_"
+                + object.getShape() + "_"
+                + object.getCategoryOfMark() + "_"
+                + object.getColour() + "_"
+                + object.getColourPattern() + "_"
+                + tm
+                + "_" + marsys
+                + ".png");
         attrs.setImageAddress("img/buoyage/" + acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getColour() + "_"
                 + object.getColourPattern() + "_"
-                + tm 
+                + tm
+                + "_" + marsys
                 + ".png");
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.8);

@@ -14,8 +14,6 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -28,25 +26,11 @@ import java.util.Set;
 public class TOPMAR_ShapefileLoader
         extends ShapefileLoader {
 
-    PointPlacemark placemark;
-    List<PointPlacemark> placemarks;
-    PointPlacemarkAttributes attrs;
-    StringBuilder label;
-    String objName;
+    private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
-    private Map<Pair, String> topMarks;
-
-    public TOPMAR_ShapefileLoader() {
-        placemarks = new ArrayList<>();
-    }
-
-    public TOPMAR_ShapefileLoader(String objName) {
-        this.objName = objName;
-        placemarks = new ArrayList<>();
-    }
+    private final Map<Pair, String> topMarks;
 
     public TOPMAR_ShapefileLoader(Map<Pair, String> topMarks) {
-        placemarks = new ArrayList<>();
         this.topMarks = topMarks;
     }
 
@@ -54,25 +38,14 @@ public class TOPMAR_ShapefileLoader
     protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
 
         while (shp.hasNext()) {
-
             ShapefileRecord record = shp.nextRecord();
-
             if (!Shapefile.isPointType(record.getShapeType())) {
                 continue;
             }
-            attrs = this.createPointAttributes(record);
             double[] point = ((ShapefileRecordPoint) record).getPoint();
-            // System.out.println("point " + point.length);
             entries = record.getAttributes().getEntries();
-
             this.createPoint(record, point[1], point[0], attrs);
         }
-    }
-
-    @Override
-    protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
-        PointPlacemarkAttributes normalAttributes = new PointPlacemarkAttributes();
-        return normalAttributes;
     }
 
     @Override
@@ -81,16 +54,9 @@ public class TOPMAR_ShapefileLoader
         entries = record.getAttributes().getEntries();
         entries.stream().forEach((e) -> {
             if (e.getKey().equals("TOPSHP")) {
-                topMarks.put(new Pair(latDegrees,lonDegrees),
-                        ((Long) e.getValue()).toString());
+                topMarks.put(new Pair(latDegrees, lonDegrees), ((Long) e.getValue()).toString());
             }
         });
-        placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
-        return placemark;
+        return null;
     }
-
-    public List<PointPlacemark> getPlacemarks() {
-        return placemarks;
-    }
-
 }

@@ -72,7 +72,8 @@ public class ChartS57Controller {
     private boolean isDisplay = false;
     private GlobeAnnotation tooltipAnnotation;
     private final String boyagePath = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo";
-    private Map<Pair, String> topMarks;
+    private final Map<Pair, String> topMarks;
+    private String marsys;
 
     static {
         INSTANCE = new ChartS57Controller();
@@ -139,11 +140,13 @@ public class ChartS57Controller {
             for (File f : listOfFiles) {
                 String s = f.getName();
                 if (s.equals("M_NSYS.shp")) {
-                    new M_NSYS_ShapefileLoader().createLayersFromSource(new File(path + "/M_NSYS.shp"));
+                    M_NSYS_ShapefileLoader nsys = new M_NSYS_ShapefileLoader();
+                    nsys.createLayersFromSource(new File(path + "/M_NSYS.shp"));
+                    marsys = nsys.getMarsys();
                 }
+
                 if (s.equals("TOPMAR.shp")) {
                     new TOPMAR_ShapefileLoader(topMarks).createLayersFromSource(new File(path + "/TOPMAR.shp"));
-                    System.out.println("topMarks0 " + topMarks);
                 }
             }
             for (File f : listOfFiles) {
@@ -179,7 +182,7 @@ public class ChartS57Controller {
                  }
                  */
                 if (s.equals("BCNCAR.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, "BCNCAR");
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR");
                     // loader = new BCNCAR_ShapefileLoader();
                     tmp = new File(path + "/BCNCAR.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
@@ -189,9 +192,11 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 if (s.equals("BCNLAT.shp")) {
-                    loader = new BCNLAT_ShapefileLoader();
+                    // loader = new BCNLAT_ShapefileLoader();
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNLAT");
                     tmp = new File(path + "/BCNLAT.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
+
                     la.stream().forEach((l) -> {
                         l.setName("BCNLAT");
                     });
@@ -199,7 +204,8 @@ public class ChartS57Controller {
 
                 }
                 if (s.equals("BCNISD.shp")) {
-                    loader = new BCNISD_ShapefileLoader();
+                    // loader = new BCNISD_ShapefileLoader();
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD");
                     tmp = new File(path + "/BCNISD.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -207,7 +213,15 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-
+                if (s.equals("BOYCAR.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYCAR");
+                    tmp = new File(path + "/BOYCAR.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BOYCAR");
+                    });
+                    layers.addAll(la);
+                }
                 /*
                  if (s.equals("SEAARE.shp")) {
                  loader = new PointTemplate_ShapefileLoader();

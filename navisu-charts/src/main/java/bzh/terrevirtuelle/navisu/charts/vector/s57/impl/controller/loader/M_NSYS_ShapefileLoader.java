@@ -8,6 +8,8 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import java.util.Map;
+import java.util.Set;
 //import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 
 /**
@@ -19,19 +21,39 @@ public class M_NSYS_ShapefileLoader
         extends ShapefileLoader
         implements S57ShapeFileLoader {
 
-    ShapefileRecord record;
+    private ShapefileRecord record;
+    private String marsys;
+    private Set<Map.Entry<String, Object>> entries;
+    private Boolean first = true;
+
+    public M_NSYS_ShapefileLoader() {
+    }
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
         this.record = record;
-         ShapeAttributes normalAttributes = new BasicShapeAttributes();
-      
-      //  System.out.println("entries M_SYS " +record.getAttributes().getEntries());
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        entries = record.getAttributes().getEntries();
+        entries.stream().forEach((e) -> {
+            if (e.getKey().equals("MARSYS")) {
+                if (first == true) {
+                    marsys = ((Long) e.getValue()).toString();
+                    if (marsys == null || marsys.equals("9") || marsys.equals("10")) {
+                        marsys = "0";
+                    }
+                    first = false;
+                }
+            }
+        });
         return normalAttributes;
     }
 
     @Override
     public ShapefileRecord getRecord() {
         return record;
+    }
+
+    public String getMarsys() {
+        return marsys;
     }
 }

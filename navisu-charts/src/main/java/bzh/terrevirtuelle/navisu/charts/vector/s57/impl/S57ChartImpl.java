@@ -158,20 +158,30 @@ public class S57ChartImpl
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             String name = l.getName();
             if (name.contains("BCNCAR")
+                    /*
                     || name.contains("BCNLAT")
                     || name.contains("BCNISD")
-                    || name.equals("OBSTRN")
+                    || name.contains("OBSTRN")
                     || name.contains("LIGHTS")
                     || name.contains("SOUNDG")
                     || name.contains("NAVLNE")
-                    || name.equals("WRECK")
+                    || name.contains("WRECK")
+            */
                     ) {
-                l.setPickEnabled(false);
+                l.setPickEnabled(true);
             }
             if (name.contains("DEPARE")
+                    || name.contains("BCNLAT")
+                    || name.contains("BCNISD")
+                    || name.contains("OBSTRN")
+                    || name.contains("LIGHTS")
+                    || name.contains("SOUNDG")
+                    || name.contains("NAVLNE")
+                    || name.contains("WRECK")
+                    
                     || name.contains("DEPCNT")
-                    || name.equals("OBSTRN_CNT")
-                    || name.equals("WRECKS_CNT")
+                    || name.contains("OBSTRN_CNT")
+                    || name.contains("WRECKS_CNT")
                     || name.contains("UWTROC")) {
                 l.setPickEnabled(false);
             }
