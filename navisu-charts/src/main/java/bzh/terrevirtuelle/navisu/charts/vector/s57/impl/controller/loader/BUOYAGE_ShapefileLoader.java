@@ -173,7 +173,7 @@ public class BUOYAGE_ShapefileLoader
                 + object.getColourPattern() + "_"
                 + tm
                 + "_" + marsys
-                + ".png");
+                + ".png  "   + object.getObjectName() );
         attrs.setImageAddress("img/buoyage/" + acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"

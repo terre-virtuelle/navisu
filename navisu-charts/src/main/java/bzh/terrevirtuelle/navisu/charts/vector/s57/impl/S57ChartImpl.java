@@ -115,7 +115,6 @@ public class S57ChartImpl
         environment.put("OGR_S57_OPTIONS", options);
         options = System.getProperty("user.dir") + "/bin/data";
         environment.put("GDAL_DATA", options);
-        //  System.out.println("environment " + environment);
 
         String cmd;
         cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";

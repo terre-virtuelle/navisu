@@ -7,14 +7,13 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.DEPARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.DEPCNT_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNISD_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BCNLAT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BUOYAGE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.LIGHTS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.NAVLNE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.RESARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.TOPMAR_ShapefileLoader;
@@ -201,12 +200,30 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                if (s.equals("BCNSPP.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSPP");
+                    tmp = new File(path + "/BCNSPP.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BCNSPP");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("BCNISD.shp")) {
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD");
                     tmp = new File(path + "/BCNISD.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNISD");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("BCNSAW.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSAW");
+                    tmp = new File(path + "/BCNSAW.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BCNSAW");
                     });
                     layers.addAll(la);
                 }
@@ -219,7 +236,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-                 if (s.equals("BOYLAT.shp")) {
+                if (s.equals("BOYLAT.shp")) {
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT");
                     tmp = new File(path + "/BOYLAT.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
@@ -229,6 +246,27 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                if (s.equals("BOYISD.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYISD");
+                    tmp = new File(path + "/BOYISD.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+
+                    la.stream().forEach((l) -> {
+                        l.setName("BOYISD");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("BOYSAW.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSAW");
+                    tmp = new File(path + "/BOYSAW.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+
+                    la.stream().forEach((l) -> {
+                        l.setName("BOYSAW");
+                    });
+                    layers.addAll(la);
+                }
+
                 /*
                  if (s.equals("SEAARE.shp")) {
                  loader = new PointTemplate_ShapefileLoader();
@@ -240,6 +278,15 @@ public class ChartS57Controller {
                  layers.addAll(la);
                  }
                  */
+                if (s.equals("RESARE.shp")) {
+                    loader = new RESARE_ShapefileLoader();
+                    tmp = new File(path + "/RESARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("RESARE");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("NAVLNE.shp")) {
                     loader = new NAVLNE_ShapefileLoader();
                     tmp = new File(path + "/NAVLNE.shp");
