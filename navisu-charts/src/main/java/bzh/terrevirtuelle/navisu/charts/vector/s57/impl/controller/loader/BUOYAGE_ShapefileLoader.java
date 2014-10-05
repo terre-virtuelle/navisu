@@ -8,6 +8,8 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.BUOYAGE;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.CATLAM;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.CATSPM;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -93,6 +95,7 @@ public class BUOYAGE_ShapefileLoader
 
         object.setLat(latDegrees);
         object.setLon(lonDegrees);
+        String mark = null;
         entries.stream().forEach((e) -> {
             if (e.getKey().equals("RCID")) {
                 object.setId((Long) e.getValue());
@@ -100,12 +103,12 @@ public class BUOYAGE_ShapefileLoader
             if (e.getKey().equals("BCNSHP") || e.getKey().equals("BCNSID") || e.getKey().equals("BOYSHP")) {
                 Object obj = e.getValue();
                 String shp = "0";
-                if(obj != null){
+                if (obj != null) {
                     shp = ((Long) e.getValue()).toString();
                 }
                 object.setShape(shp);
             }
-            if (e.getKey().equals("CATCAM")) {
+            if (e.getKey().equals("CATCAM") || e.getKey().equals("CATLAM")) {
                 object.setCategoryOfMark(((Long) e.getValue()).toString());
             }
             if (e.getKey().equals("OBJNAM")) {
@@ -117,8 +120,8 @@ public class BUOYAGE_ShapefileLoader
             if (e.getKey().equals("COLPAT")) {
                 Object obj = e.getValue();
                 String colpat = "0";
-                if(obj != null){
-                    colpat = (String)e.getValue();
+                if (obj != null) {
+                    colpat = (String) e.getValue();
                 }
                 object.setColourPattern(colpat);
             }
@@ -139,7 +142,21 @@ public class BUOYAGE_ShapefileLoader
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setLabelText(object.getObjectName());
-        String label = claz.getSimpleName() + " " + CATCAM.ATT.get(object.getCategoryOfMark()) + "\n"
+
+        String catMark = "";
+        if (acronym.contains("CAR")) {
+            catMark = CATCAM.ATT.get(object.getCategoryOfMark());
+        } else {
+            if (acronym.contains("LAT")) {
+                catMark = CATLAM.ATT.get(object.getCategoryOfMark());
+            } else {
+                if (acronym.contains("SPP")) {
+                    catMark = CATSPM.ATT.get(object.getCategoryOfMark());
+                }
+            }
+        }
+        String label = claz.getSimpleName() + " "
+                + catMark + "\n"
                 + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
                 + "Lat : " + new Float(object.getLat()).toString() + "\n "
                 + "Lon : " + new Float(object.getLon()).toString();

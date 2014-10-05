@@ -219,6 +219,16 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                 if (s.equals("BOYLAT.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT");
+                    tmp = new File(path + "/BOYLAT.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+
+                    la.stream().forEach((l) -> {
+                        l.setName("BOYLAT");
+                    });
+                    layers.addAll(la);
+                }
                 /*
                  if (s.equals("SEAARE.shp")) {
                  loader = new PointTemplate_ShapefileLoader();
