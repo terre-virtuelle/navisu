@@ -13,7 +13,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.NAVLNE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.RESARE_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.AREA_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.TOPMAR_ShapefileLoader;
@@ -38,6 +38,7 @@ import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.GlobeAnnotation;
 import gov.nasa.worldwind.render.Material;
+import java.awt.Color;
 //import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.BufferedReader;
 import java.io.File;
@@ -267,19 +268,19 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
 
-                /*
-                 if (s.equals("SEAARE.shp")) {
-                 loader = new PointTemplate_ShapefileLoader();
-                 tmp = new File(path + "/SEAARE.shp");
-                 List<Layer> la = loader.createLayersFromSource(tmp);
-                 la.stream().forEach((l) -> {
-                 l.setName("SEAARE");
-                 });
-                 layers.addAll(la);
-                 }
-                 */
+                if (s.equals("SEAARE.shp")) {
+                    loader = new AREA_ShapefileLoader(new Color(0, 246, 232));
+                    tmp = new File(path + "/SEAARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("SEAARE");
+                    });
+                    layers.addAll(la);
+                }
+
+                // transmettre la couleur id MIPARE and Co
                 if (s.equals("RESARE.shp")) {
-                    loader = new RESARE_ShapefileLoader();
+                    loader = new AREA_ShapefileLoader(new Color(197, 69, 195));
                     tmp = new File(path + "/RESARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -287,6 +288,17 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+
+                if (s.equals("MIPARE.shp")) {
+                    loader = new AREA_ShapefileLoader(new Color(1, 5, 105));
+                    tmp = new File(path + "/MIPARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("MIPARE");
+                    });
+                    layers.addAll(la);
+                }
+
                 if (s.equals("NAVLNE.shp")) {
                     loader = new NAVLNE_ShapefileLoader();
                     tmp = new File(path + "/NAVLNE.shp");
