@@ -298,7 +298,15 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-
+                if (s.equals("FAIRWY.shp")) {
+                    loader = new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29));
+                    tmp = new File(path + "/FAIRWY.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("FAIRWY");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("NAVLNE.shp")) {
                     loader = new NAVLNE_ShapefileLoader();
                     tmp = new File(path + "/NAVLNE.shp");
