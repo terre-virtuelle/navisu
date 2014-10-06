@@ -12,6 +12,7 @@ public class AREA {
             put("MIPARE", "MilitaryPracticeArea");
             put("SEAARE", "SeaAreaNamedWaterArea");
             put("RESARE", "RestrictedArea");
+            put("FAIRWY", "Fairway");
         }
     });
 
