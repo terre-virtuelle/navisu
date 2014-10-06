@@ -269,7 +269,7 @@ public class ChartS57Controller {
                 }
 
                 if (s.equals("SEAARE.shp")) {
-                    loader = new AREA_ShapefileLoader(new Color(0, 246, 232));
+                    loader = new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232));
                     tmp = new File(path + "/SEAARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -280,7 +280,7 @@ public class ChartS57Controller {
 
                 // transmettre la couleur id MIPARE and Co
                 if (s.equals("RESARE.shp")) {
-                    loader = new AREA_ShapefileLoader(new Color(197, 69, 195));
+                    loader = new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195));
                     tmp = new File(path + "/RESARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -290,7 +290,7 @@ public class ChartS57Controller {
                 }
 
                 if (s.equals("MIPARE.shp")) {
-                    loader = new AREA_ShapefileLoader(new Color(1, 5, 105));
+                    loader = new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105));
                     tmp = new File(path + "/MIPARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {

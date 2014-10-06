@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.AREA;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
@@ -15,6 +16,7 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import java.awt.Color;
+import java.util.List;
 //import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.util.Map;
 import java.util.Set;
@@ -28,12 +30,14 @@ public class AREA_ShapefileLoader
         extends ShapefileLoader
         implements S57ShapeFileLoader {
 
-    ShapefileRecord record;
+    private ShapefileRecord record;
     private Set<Map.Entry<String, Object>> entries;
-    private Color color;
+    private final Color color;
+    private final String acronym;
 
-    public AREA_ShapefileLoader(Color color) {
+    public AREA_ShapefileLoader(String acronym, Color color) {
         this.color = color;
+        this.acronym = acronym;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class AREA_ShapefileLoader
         shape.setAttributes(attrs);
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
-        shape.setPolygonRingGroups(new int[]{0});
+      //  shape.setPolygonRingGroups(new int[]{0});
 
         ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
         highlightAttributes.setOutlineOpacity(1);
@@ -69,17 +73,22 @@ public class AREA_ShapefileLoader
 
         this.record = record;
         entries = record.getAttributes().getEntries();
-        System.out.println("entries " + entries);
+       // System.out.println("entries " + entries);
+       Iterable<double[]> coords = record.getCompoundPointBuffer().getCoords();
+       for(double[] c : coords){
+           System.out.print(c[0] + "  "  + c[1]);
+       }
+        System.out.println("");
         entries.stream().forEach((e) -> {
-
+            String label = AREA.ATT.get(acronym) + "\n";
             if (e.getKey().equals("INFORM")) {
                 if (e.getValue() != null) {
-                    shape.setValue(AVKey.DISPLAY_NAME, (String) e.getValue());
+                    shape.setValue(AVKey.DISPLAY_NAME, label.concat((String) e.getValue()));
                 }
             }
             if (e.getKey().equals("OBJNAM")) {
                 if (e.getValue() != null) {
-                    shape.setValue(AVKey.DISPLAY_NAME, (String) e.getValue());
+                    shape.setValue(AVKey.DISPLAY_NAME, label.concat((String) e.getValue()));
                 }
             }
         });
