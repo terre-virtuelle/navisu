@@ -16,10 +16,9 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import java.awt.Color;
-import java.util.List;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.util.Map;
 import java.util.Set;
+
 
 /**
  *
@@ -75,10 +74,14 @@ public class AREA_ShapefileLoader
         entries = record.getAttributes().getEntries();
        // System.out.println("entries " + entries);
        Iterable<double[]> coords = record.getCompoundPointBuffer().getCoords();
+       Coordinate[] coordinates;
        for(double[] c : coords){
            System.out.print(c[0] + "  "  + c[1]);
+           
        }
         System.out.println("");
+        
+        
         entries.stream().forEach((e) -> {
             String label = AREA.ATT.get(acronym) + "\n";
             if (e.getKey().equals("INFORM")) {
