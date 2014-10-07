@@ -13,6 +13,7 @@ public class AREA {
             put("SEAARE", "SeaAreaNamedWaterArea");
             put("RESARE", "RestrictedArea");
             put("FAIRWY", "Fairway");
+            put("DRGARE", "DredgedArea");
         }
     });
 
