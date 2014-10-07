@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.attributes.CATNAV;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.CATNAV;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.NavigationLine;
 import bzh.terrevirtuelle.navisu.util.string.Format;
 import gov.nasa.worldwind.WorldWind;

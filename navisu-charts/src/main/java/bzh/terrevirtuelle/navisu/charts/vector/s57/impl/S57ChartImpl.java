@@ -47,7 +47,7 @@ public class S57ChartImpl
 
     private static final String NAME = "S57";
     private static final String EXTENSION = ".000";
-    protected static final String GROUP = "S57Charts";
+    protected static final String GROUP = "S57 charts";
     static private int i = 0;
     protected ChartS57Controller chartS57Controller;
     protected List<Layer> layers;
@@ -115,8 +115,7 @@ public class S57ChartImpl
         environment.put("OGR_S57_OPTIONS", options);
         options = System.getProperty("user.dir") + "/bin/data";
         environment.put("GDAL_DATA", options);
-      //  System.out.println("environment " + environment);
-        
+
         String cmd;
         cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         try {
@@ -154,29 +153,42 @@ public class S57ChartImpl
         chartS57Controller = ChartS57Controller.getInstance();
         chartS57Controller.init("data/shp/shp_" + i++);
         layers = chartS57Controller.getLayers();
-
         layers.stream().filter((l) -> (l != null)).map((l) -> {
+            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             String name = l.getName();
             if (name.contains("BCNCAR")
+                    /*
                     || name.contains("BCNLAT")
                     || name.contains("BCNISD")
-                    || name.contains("TOPMAR")
                     || name.contains("OBSTRN")
                     || name.contains("LIGHTS")
                     || name.contains("SOUNDG")
-                    || name.contains("WRECK")) {
+                    || name.contains("NAVLNE")
+                    || name.contains("WRECK")
+            */
+                    ) {
                 l.setPickEnabled(true);
             }
-            if (name.contains("NAVLNE")) {
-                l.setPickEnabled(true);
-            } else {
+            if (name.contains("DEPARE")
+                    || name.contains("BCNLAT")
+                    || name.contains("BCNISD")
+                    || name.contains("OBSTRN")
+                    || name.contains("LIGHTS")
+                    || name.contains("SOUNDG")
+                    || name.contains("NAVLNE")
+                    || name.contains("WRECK")
+                    
+                    || name.contains("DEPCNT")
+                    || name.contains("OBSTRN_CNT")
+                    || name.contains("WRECKS_CNT")
+                    || name.contains("UWTROC")) {
                 l.setPickEnabled(false);
             }
-            geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
+
         airspaceLayers = chartS57Controller.getAirspaceLayers();
         airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();

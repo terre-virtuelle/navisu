@@ -32,7 +32,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
     protected final Logger LOGGER = Logger.getLogger(KapChartImpl.class.getName());
 
     protected static final String EXTENSION = ".kap";
-    protected static final String GROUP = "BSB/KAP Charts";
+    protected static final String GROUP = "BSB/KAP charts";
 
     @UsedService
     GeoViewServices geoViewServices;

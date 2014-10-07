@@ -5,9 +5,10 @@ import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerCheckTreeImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
+import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.impl.KapChartImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
@@ -62,6 +63,7 @@ public class AppMain extends Application {
                         KapChartImpl.class,
                         GribImpl.class,
                         S57ChartImpl.class,
+                        GeoTiffChartImpl.class,
                         KmlObjectImpl.class,
                         DataServerImpl.class,
                         NmeaClientImpl.class,
@@ -76,6 +78,7 @@ public class AppMain extends Application {
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
+        GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
@@ -84,6 +87,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
+        driverServices.registerNewDriver(geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         
          //------------------------------->
