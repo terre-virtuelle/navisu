@@ -45,7 +45,7 @@ public class BUOYAGE_ShapefileLoader
     private Class claz;
     private final String acronym;
     private final Map<Pair, String> topMarks;
-    private String marsys;
+    private final String marsys;
 
     public BUOYAGE_ShapefileLoader(String path, Map<Pair, String> topMarks, String marsys, String acronym) {
         this.topMarks = topMarks;
@@ -95,7 +95,7 @@ public class BUOYAGE_ShapefileLoader
 
         object.setLat(latDegrees);
         object.setLon(lonDegrees);
-        String mark = null;
+     //   String mark = null;
         entries.stream().forEach((e) -> {
             if (e.getKey().equals("RCID")) {
                 object.setId((Long) e.getValue());

@@ -81,7 +81,7 @@ public class ChartS57Controller {
 
     public ChartS57Controller() {
         wwd = GeoWorldWindViewImpl.getWW();
-        globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
+        globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe(); 
         topMarks = new HashMap<>();
         initAcronymsMap();
     }
@@ -267,7 +267,15 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-
+                if (s.equals("DGRARE.shp")) {
+                    loader = new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24));
+                    tmp = new File(path + "/DGRARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("DGRARE");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("SEAARE.shp")) {
                     loader = new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232));
                     tmp = new File(path + "/SEAARE.shp");
@@ -307,6 +315,17 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                /*
+                 if (s.equals("UWTROC.shp")) {
+                 loader = new AREA_ShapefileLoader("UWTROC", new Color(70, 101, 29));
+                 tmp = new File(path + "/UWTROC.shp");
+                 List<Layer> la = loader.createLayersFromSource(tmp);
+                 la.stream().forEach((l) -> {
+                 l.setName("UWTROC");
+                 });
+                 layers.addAll(la);
+                 }
+                 */
                 if (s.equals("NAVLNE.shp")) {
                     loader = new NAVLNE_ShapefileLoader();
                     tmp = new File(path + "/NAVLNE.shp");
@@ -318,17 +337,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
 
                 }
-                /*
-                 if (s.equals("RESARE.shp")) {
-                 loader = new PolylineTemplate_ShapefileLoader();
-                 tmp = new File(path + "/RESARE.shp");
-                 List<Layer> la = loader.createLayersFromSource(tmp);
-                 la.stream().forEach((l) -> {
-                 l.setName("RESARE");
-                 });
-                 layers.addAll(la);
-                 }
-                 */
+
                 if (s.equals("WRECKS.shp")) {
                     loader = new WRECKS_CNT_ShapefileLoader();
                     tmp = new File(path + "/WRECKS.shp");

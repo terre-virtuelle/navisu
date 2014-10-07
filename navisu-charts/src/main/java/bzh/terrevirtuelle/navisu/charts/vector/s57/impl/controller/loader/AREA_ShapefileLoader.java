@@ -6,10 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.AREA;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
+import bzh.terrevirtuelle.navisu.topology.geom.SurveyZone;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
@@ -20,6 +17,8 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,7 +63,6 @@ public class AREA_ShapefileLoader
         shape.setAttributes(attrs);
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
-        //  shape.setPolygonRingGroups(new int[]{0});
 
         ShapeAttributes highlightAttributes = new BasicShapeAttributes(attrs);
         highlightAttributes.setOutlineOpacity(1);
@@ -75,23 +73,15 @@ public class AREA_ShapefileLoader
 
         this.record = record;
         entries = record.getAttributes().getEntries();
-         System.out.println("entries " + entries);
 
+        List<double[]> vertices = new ArrayList<>();
         Iterable<double[]> coords = record.getCompoundPointBuffer().getCoords();
-        int length = 0;
-        for (double[] t : coords) {
-            length++;
+        for (double[] c : coords) {
+            vertices.add(c);
         }
-        Coordinate[] coordinates = new Coordinate[length + 1];
-        int i = 0;
-        for (double[] t : coords) {
-            coordinates[i] = new Coordinate(t[0], t[1], 0.0);
-            i++;
-        }
-        coordinates[i] = new Coordinate(coordinates[0].x, coordinates[0].y, 0.0);// Le poly doit être fermé
-        Polygon poly = new GeometryFactory().createPolygon(new GeometryFactory().createLinearRing(coordinates), null);
-       // System.out.println(poly);
-        System.out.println("poly.contains " + poly.contains(new GeometryFactory().createPoint(new Coordinate(-4.5960, 48.3302))));
+        SurveyZone surveyZone = new SurveyZone(vertices);
+        System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
+        
         entries.stream().forEach((e) -> {
             String label = AREA.ATT.get(acronym) + "\n";
             if (e.getKey().equals("INFORM")) {
