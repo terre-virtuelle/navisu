@@ -44,10 +44,7 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Logger;
-import javafx.scene.media.MediaPlayer;
-import javax.print.attribute.standard.Media;
 
 //import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 /**
@@ -205,11 +202,12 @@ public class GuiAgentImpl
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
-
+ 
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
         stage.show();
+       
     }
 
     /*private void showInstruments() {
