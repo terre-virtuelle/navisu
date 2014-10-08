@@ -1,12 +1,16 @@
 package bzh.terrevirtuelle.navisu.main;
 
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.app.processors.TObjectProcessor;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
@@ -15,7 +19,9 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.S57ChartImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.kml.misc.KmlObjectServices;
@@ -35,9 +41,10 @@ import javafx.stage.Stage;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
- *
+ * @author Serge Morvan <morvan at enib.fr>
  * @author Thibault Pensec <thibault.pensec at gmail.com>
  * @author Jordan Mens <jordan.mens at gmail.com>
+ * @author Dominique Marques <dom.marques at free.fr>
  */
 public class AppMain extends Application {
 
@@ -93,7 +100,7 @@ public class AppMain extends Application {
          //------------------------------->
         // TESTS AGENT
         //
-  /*      
+      /*  
          GObjectCUDProcessor proc = new TObjectProcessor();
   
          GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
@@ -102,7 +109,7 @@ public class AppMain extends Application {
 
          DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
 
-         guiServices.getJobsManager().newJob("Test job", pHandler -> {
+         guiAgentServices.getJobsManager().newJob("Test job", pHandler -> {
 
          double lat = 48.390834d;
          double lon = -4.485556d;
@@ -128,10 +135,11 @@ public class AppMain extends Application {
 
          dpAgentServices.delete(tObject);
          });
-         */
+         
         //
         // END TESTS AGENT
         //------------------------------->
+        */
         //------------------------------->
         // TESTS SERVER
         //
@@ -142,7 +150,6 @@ public class AppMain extends Application {
         //GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(43.14, 3.14, 5000));
         
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
-
         // Initialisation des paramtètres de diffusion des data.
         dataServerServices.init("localhost", 8080);
 
