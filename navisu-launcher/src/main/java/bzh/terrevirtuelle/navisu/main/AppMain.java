@@ -90,56 +90,56 @@ public class AppMain extends Application {
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
-        
+
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
-        
+
          //------------------------------->
         // TESTS AGENT
         //
-      /*  
-         GObjectCUDProcessor proc = new TObjectProcessor();
-  
-         GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
-         geoViewServices.registerProcessor(proc);
-         geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
+        /*
+        GObjectCUDProcessor proc = new TObjectProcessor();
 
-         DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
+        GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
+        geoViewServices.registerProcessor(proc);
+        geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
 
-         guiAgentServices.getJobsManager().newJob("Test job", pHandler -> {
+        DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
 
-         double lat = 48.390834d;
-         double lon = -4.485556d;
+        guiAgentServices.getJobsManager().newJob("Test job", pHandler -> {
 
-         TObject tObject = TObject.newBasicTObject(1, lat, lon);
-         dpAgentServices.create(tObject);
+            double lat = 48.390834d;
+            double lon = -4.485556d;
 
-         pHandler.start(100);
+            TObject tObject = TObject.newBasicTObject(1, lat, lon);
+            dpAgentServices.create(tObject);
 
-         for (int i = 0; i < 100; i++) {
+            pHandler.start(100);
 
-         lon += i / 1000.;
-         tObject.setLocation(Location.factory.newLocation(lat, lon));
-         dpAgentServices.update(tObject);
+            for (int i = 0; i < 100; i++) {
 
-         pHandler.progress("Moving TObject...", i);
+                lon += i / 1000.;
+                tObject.setLocation(Location.factory.newLocation(lat, lon));
 
-         try {
-         Thread.sleep(500);
-         } catch (InterruptedException e) {
-         }
-         }
+                dpAgentServices.update(tObject);
 
-         dpAgentServices.delete(tObject);
-         });
-         
+                pHandler.progress("Moving TObject...", i);
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
+            }
+
+            dpAgentServices.delete(tObject);
+        });
+*/
         //
         // END TESTS AGENT
         //------------------------------->
-        */
         //------------------------------->
         // TESTS SERVER
         //
@@ -148,7 +148,7 @@ public class AppMain extends Application {
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
         /*----Gruissan---*/
         //GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(43.14, 3.14, 5000));
-        
+
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
         // Initialisation des paramtètres de diffusion des data.
         dataServerServices.init("localhost", 8080);
@@ -156,11 +156,9 @@ public class AppMain extends Application {
         // Test connexion GPS 
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-        
         // Test connexion Gpsd 
         // dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // dataServerServices.openGpsd("hd-sf.com", 9009);
-        
         // Test connexion fichier 
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
@@ -186,15 +184,14 @@ public class AppMain extends Application {
         //
         // END TESTS SERVER
         //------------------------------->
-        
         //
         // TEST S57 Charts
         //
         /*
-        chartS57Services.loadFile("I:\\cartes\\SHOM_OpenData\\S57_OPENDATA_IROISEE\\S57_OPENDATA_IROISEE\\FR571220\\FR571220.000");
-        chartS57Services.addCoastlines();
-        chartS57Services.addDepthAreas();
-                */
+         chartS57Services.loadFile("I:\\cartes\\SHOM_OpenData\\S57_OPENDATA_IROISEE\\S57_OPENDATA_IROISEE\\FR571220\\FR571220.000");
+         chartS57Services.addCoastlines();
+         chartS57Services.addDepthAreas();
+         */
         //
         // END TEST S57 Charts
         //
