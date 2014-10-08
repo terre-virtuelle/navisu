@@ -29,6 +29,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.media.MediaPlayer;
 
 /**
  *
@@ -46,6 +47,7 @@ public class BUOYAGE_ShapefileLoader
     private final String acronym;
     private final Map<Pair, String> topMarks;
     private final String marsys;
+    private static final String MEDIA_URL = "file:///I:/models3D/avions/f16-01.wav";
 
     public BUOYAGE_ShapefileLoader(String path, Map<Pair, String> topMarks, String marsys, String acronym) {
         this.topMarks = topMarks;
@@ -58,6 +60,12 @@ public class BUOYAGE_ShapefileLoader
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
         objects = new ArrayList<>();
+        /*
+        // create media player
+        javafx.scene.media.Media media = new javafx.scene.media.Media(MEDIA_URL);
+        MediaPlayer mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setAutoPlay(true);
+        */
     }
 
     @Override

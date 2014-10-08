@@ -81,7 +81,7 @@ public class ChartS57Controller {
 
     public ChartS57Controller() {
         wwd = GeoWorldWindViewImpl.getWW();
-        globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe(); 
+        globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
         initAcronymsMap();
     }
@@ -346,7 +346,17 @@ public class ChartS57Controller {
                     layers.addAll(la);
 
                 }
+                if (s.equals("SLCONS.shp")) {
+                    loader = new ShapefileLoader();
+                    tmp = new File(path + "/SLCONS.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("SLCONS");
+                        //  ((RenderableLayer) l).addRenderable(tooltipAnnotation);
+                    });
+                    layers.addAll(la);
 
+                }
                 if (s.equals("WRECKS.shp")) {
                     loader = new WRECKS_CNT_ShapefileLoader();
                     tmp = new File(path + "/WRECKS.shp");
@@ -398,6 +408,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+
                 if (s.equals("LIGHTS.shp")) {
 
                     loader = new LIGHTS_ShapefileLoader();
