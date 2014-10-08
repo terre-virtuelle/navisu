@@ -27,7 +27,6 @@ import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
 import javafx.animation.Animation;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -45,7 +44,10 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Logger;
+import javafx.scene.media.MediaPlayer;
+import javax.print.attribute.standard.Media;
 
 //import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 /**
