@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -95,12 +95,12 @@ public class BUOYAGE_ShapefileLoader
 
         object.setLat(latDegrees);
         object.setLon(lonDegrees);
-     //   String mark = null;
+        //   String mark = null;
         entries.stream().forEach((e) -> {
             if (e.getKey().equals("RCID")) {
                 object.setId((Long) e.getValue());
             }
-            if (e.getKey().equals("BCNSHP") || e.getKey().equals("BCNSID") || e.getKey().equals("BOYSHP")) {
+            if (e.getKey().equals("BCNSHP") || e.getKey().equals("BOYSHP")) {
                 Object obj = e.getValue();
                 String shp = "0";
                 if (obj != null) {
@@ -108,7 +108,7 @@ public class BUOYAGE_ShapefileLoader
                 }
                 object.setShape(shp);
             }
-            if (e.getKey().equals("CATCAM") || e.getKey().equals("CATLAM")) {
+            if (e.getKey().equals("CATCAM") || e.getKey().equals("CATLAM") || e.getKey().equals("CATPPM") || e.getKey().equals("CAT")) {
                 object.setCategoryOfMark(((Long) e.getValue()).toString());
             }
             if (e.getKey().equals("OBJNAM")) {
@@ -152,30 +152,36 @@ public class BUOYAGE_ShapefileLoader
             } else {
                 if (acronym.contains("SPP")) {
                     catMark = CATSPM.ATT.get(object.getCategoryOfMark());
+                } else {
+                    if (acronym.contains("ISD")) {
+                        catMark = "0";
+                    }
                 }
             }
         }
-        String label = claz.getSimpleName() + " "
-                + catMark + "\n"
-                + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
-                + "Lat : " + new Float(object.getLat()).toString() + "\n "
-                + "Lon : " + new Float(object.getLon()).toString();
+        /*
+         String label = claz.getSimpleName() + " "
+         + catMark + "\n"
+         + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
+         + "Lat : " + new Float(object.getLat()).toString() + "\n "
+         + "Lon : " + new Float(object.getLon()).toString();
 
-        placemark.setValue(AVKey.DISPLAY_NAME, label);
+         placemark.setValue(AVKey.DISPLAY_NAME, label);
+         */
         String tm = topMarks.get(new Pair(latDegrees, lonDegrees));
         if (tm == null) {
             tm = "0";
         }
         /*
-        System.out.println("img/buoyage/" + acronym + "_"
-                + object.getShape() + "_"
-                + object.getCategoryOfMark() + "_"
-                + object.getColour() + "_"
-                + object.getColourPattern() + "_"
-                + tm
-                + "_" + marsys
-                + ".png  "   + object.getObjectName() );
-                */
+         System.out.println("img/buoyage/" + acronym + "_"
+         + object.getShape() + "_"
+         + object.getCategoryOfMark() + "_"
+         + object.getColour() + "_"
+         + object.getColourPattern() + "_"
+         + tm
+         + "_" + marsys
+         + ".png  "   + object.getObjectName() );
+         */
         attrs.setImageAddress("img/buoyage/" + acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"
@@ -187,6 +193,18 @@ public class BUOYAGE_ShapefileLoader
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.8);
         placemark.setAttributes(attrs);
+
+        String label = acronym + "_"
+                + object.getShape() + "_"
+                + object.getCategoryOfMark() + "_"
+                + object.getColour() + "_"
+                + object.getColourPattern() + "_"
+                + tm
+                + "_" + marsys
+                + ".png";
+        System.out.println("label : " + label);
+        placemark.setValue(AVKey.DISPLAY_NAME, label);
+
         return placemark;
     }
 
