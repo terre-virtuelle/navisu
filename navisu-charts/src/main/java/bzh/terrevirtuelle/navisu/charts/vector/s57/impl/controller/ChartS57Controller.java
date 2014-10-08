@@ -267,6 +267,15 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                if (s.equals("BOYSPP.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSPP");
+                    tmp = new File(path + "/BOYSPP.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BOYSPP");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("DGRARE.shp")) {
                     loader = new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24));
                     tmp = new File(path + "/DGRARE.shp");
