@@ -377,12 +377,11 @@ System.out.println("addRenderablesForMultiPoints");
     }
 
     protected Renderable createPolyline(ShapefileRecord record, ShapeAttributes attrs) {
-        System.out.println("createPolyline " +  record.getAttributes().getEntries());
+        System.out.println("createPolyline ");// +  record.getAttributes().getEntries());
         SurfacePolylines shape = new SurfacePolylines(
                 Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
-        shape.setAttributes(attrs);
-
+        shape.setAttributes(attrs);    
         return shape;
     }
 

@@ -17,7 +17,7 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  * @date 4 juin 2014 NaVisu project
  */
 public class PolylineTemplate_ShapefileLoader
-        extends ShapefileLoader
+        extends Template_ShapefileLoader
         implements S57ShapeFileLoader {
 
     ShapefileRecord record;
