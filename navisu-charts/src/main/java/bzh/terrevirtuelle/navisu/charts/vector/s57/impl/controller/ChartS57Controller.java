@@ -11,9 +11,11 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.BUOYAG
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.LIGHTS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.NAVLNE_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.AREA_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PONTON_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SLCONS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.TOPMAR_ShapefileLoader;
@@ -83,6 +85,7 @@ public class ChartS57Controller {
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
+        System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
     }
 
@@ -204,6 +207,7 @@ public class ChartS57Controller {
                 if (s.equals("BCNSPP.shp")) {
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSPP");
                     tmp = new File(path + "/BCNSPP.shp");
+
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNSPP");
@@ -294,8 +298,6 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-
-                // transmettre la couleur id MIPARE and Co
                 if (s.equals("RESARE.shp")) {
                     loader = new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195));
                     tmp = new File(path + "/RESARE.shp");
@@ -305,7 +307,17 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-
+                /*
+                if (s.equals("M_SREL.shp")) {
+                    loader = new AREA_ShapefileLoader("M_SREL", new Color(255, 0, 0));
+                    tmp = new File(path + "/M_SREL.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("M_SREL");
+                    });
+                    layers.addAll(la);
+                }
+                        */
                 if (s.equals("MIPARE.shp")) {
                     loader = new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105));
                     tmp = new File(path + "/MIPARE.shp");
@@ -324,17 +336,6 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-                /*
-                 if (s.equals("UWTROC.shp")) {
-                 loader = new AREA_ShapefileLoader("UWTROC", new Color(70, 101, 29));
-                 tmp = new File(path + "/UWTROC.shp");
-                 List<Layer> la = loader.createLayersFromSource(tmp);
-                 la.stream().forEach((l) -> {
-                 l.setName("UWTROC");
-                 });
-                 layers.addAll(la);
-                 }
-                 */
                 if (s.equals("NAVLNE.shp")) {
                     loader = new NAVLNE_ShapefileLoader();
                     tmp = new File(path + "/NAVLNE.shp");
@@ -347,12 +348,23 @@ public class ChartS57Controller {
 
                 }
                 if (s.equals("SLCONS.shp")) {
-                    loader = new ShapefileLoader();
+                    loader = new SLCONS_ShapefileLoader();
                     tmp = new File(path + "/SLCONS.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("SLCONS");
                         //  ((RenderableLayer) l).addRenderable(tooltipAnnotation);
+                    });
+                    layers.addAll(la);
+
+                }
+                if (s.equals("PONTON.shp")) {
+                    loader = new PONTON_ShapefileLoader();
+                    tmp = new File(path + "/PONTON.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("PONTON");
+                        //    ((RenderableLayer) l).addRenderable(tooltipAnnotation);
                     });
                     layers.addAll(la);
 
@@ -373,8 +385,10 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+
                 if (s.equals("OBSTRN.shp")) {
                     loader = new OBSTRN_CNT_ShapefileLoader();
+                    
                     tmp = new File(path + "/OBSTRN.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -390,8 +404,10 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+
                 if (s.equals("UWTROC.shp")) {
                     loader = new UWTROC_ShapefileLoader();
+                    //loader = new Template_ShapefileLoader();
                     tmp = new File(path + "/UWTROC.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {

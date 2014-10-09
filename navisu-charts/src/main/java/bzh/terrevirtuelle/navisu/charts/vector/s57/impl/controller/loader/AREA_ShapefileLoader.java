@@ -68,7 +68,8 @@ public class AREA_ShapefileLoader
         highlightAttributes.setOutlineOpacity(1);
         highlightAttributes.setDrawInterior(true);
         highlightAttributes.setInteriorMaterial(new Material(color));
-        highlightAttributes.setInteriorOpacity(0.5);
+        highlightAttributes.setInteriorOpacity(0.1);
+        
         shape.setHighlightAttributes(highlightAttributes);
 
         this.record = record;
@@ -80,7 +81,7 @@ public class AREA_ShapefileLoader
             vertices.add(c);
         }
         SurveyZone surveyZone = new SurveyZone(vertices);
-        System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
+      //  System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
         
         entries.stream().forEach((e) -> {
             String label = AREA.ATT.get(acronym) + "\n";

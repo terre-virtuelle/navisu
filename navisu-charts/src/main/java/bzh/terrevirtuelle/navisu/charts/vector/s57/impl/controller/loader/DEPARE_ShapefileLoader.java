@@ -42,6 +42,9 @@ public class DEPARE_ShapefileLoader
         if (val1 >= 0.0 && val2 <= 8.0) {
             color = new Color(31, 175, 247);
         }
+        if (val1 >= 0.0 && val2 <= 3.0) {
+            color = new Color(33, 255, 242);
+        }
         if (val1 == 5.0 && val2 <= 10.0) {
             color = new Color(159, 215, 247);
         }
