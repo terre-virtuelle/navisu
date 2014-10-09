@@ -59,7 +59,7 @@ public class BUOYAGE_ShapefileLoader
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
         objects = new ArrayList<>();
-       
+
     }
 
     @Override
@@ -92,6 +92,7 @@ public class BUOYAGE_ShapefileLoader
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         objects.add(object);
         entries = record.getAttributes().getEntries();
 
@@ -110,14 +111,33 @@ public class BUOYAGE_ShapefileLoader
                 }
                 object.setShape(shp);
             }
-            if (e.getKey().equals("CATCAM") || e.getKey().equals("CATLAM") || e.getKey().equals("CATPPM") || e.getKey().equals("CAT")) {
-                object.setCategoryOfMark(((Long) e.getValue()).toString());
+            if (e.getKey().equals("CATCAM") || e.getKey().equals("CATLAM") || e.getKey().equals("CAT")) {
+                if (e.getValue() != null) {
+                    object.setCategoryOfMark(((Long) e.getValue()).toString());
+                } else {
+                    object.setCategoryOfMark("0");
+                }
+            }
+            if (e.getKey().equals("CATSPM")) {
+                if (e.getValue() != null) {
+                    object.setCategoryOfMark((String) e.getValue());
+                } else {
+                    object.setCategoryOfMark("0");
+                }
             }
             if (e.getKey().equals("OBJNAM")) {
-                object.setObjectName((String) e.getValue());
+                if (e.getValue() != null) {
+                    object.setObjectName((String) e.getValue());
+                } else {
+                    object.setObjectName(" ");
+                }
             }
             if (e.getKey().equals("COLOUR")) {
-                object.setColour((String) e.getValue());
+                if (e.getValue() != null) {
+                    object.setColour((String) e.getValue());
+                } else {
+                    object.setColour("0");
+                }
             }
             if (e.getKey().equals("COLPAT")) {
                 Object obj = e.getValue();
