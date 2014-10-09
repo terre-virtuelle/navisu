@@ -14,5 +14,6 @@ dependencies {
     compile project(':navisu-charts')
     compile project(':navisu-kml')
     compile project(':navisu-instruments')
+    compile project(':navisu-agents')
     compile fileTree(dir: 'lib', include: '*.jar')
 }
