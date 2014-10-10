@@ -44,7 +44,11 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
+import javafx.concurrent.Task;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 //import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 /**
@@ -96,7 +100,7 @@ public class GuiAgentImpl
     protected RadialMenu tidesRadialMenu;
     protected RadialMenu chartsRadialMenu;
     protected RadialMenu toolsRadialMenu;
-    
+
     boolean firstBooksRadialMenu = false;
     boolean firstInstrumentsRadialMenu = false;
     boolean firstMeteoRadialMenu = false;
@@ -104,27 +108,25 @@ public class GuiAgentImpl
     boolean firstChartsRadialMenu = false;
     boolean firstTidesRadialMenu = false;
     protected ImageView centerImg;
-    
+
     protected final ImageView mobOffImg
             = new ImageView(ICON_PATH + "MOB_Off.png");
     protected final ImageView mobOnImg
             = new ImageView(ICON_PATH + "MOB_On.png");
-    
+
     public final DockItem[] ICONS = new DockItem[]{
-        
         DockItemFactory.newImageItem("user tools", ICON_PATH + "tools.png", (e) -> showToolsMenu()),
         DockItemFactory.newImageItem("charts", ICON_PATH + "charts.png", (e) -> showChartsMenu()),
         DockItemFactory.newImageItem("tides", ICON_PATH + "tides.png", (e) -> showTidesMenu()),
         DockItemFactory.newImageItem("meteo", ICON_PATH + "meteo.png", (e) -> showMeteoMenu()),
         DockItemFactory.newImageItem("instrum.", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
-        DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> showBooksMenu()),
-        //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
-        //DockItemFactory.newImageItem("config", ICON_PATH + "config.png", (e) -> System.out.println("config")),
-        //DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showInstruments()),
-        //DockItemFactory.newImageItem("simulations", ICON_PATH + "flou.png", (e) -> System.out.println("a venir 0")),
-        //DockItemFactory.newImageItem("engine", ICON_PATH + "vide.png", (e) -> System.out.println("a venir 1")),
-        //DockItemFactory.newImageItem("maintenance", ICON_PATH + "guide.png", (e) -> System.out.println("guide")),
-        //DockItemFactory.newImageItem("whitebook", ICON_PATH + "whitebook.png", (e) -> System.out.println("white book")),
+        DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> showBooksMenu()), //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
+    //DockItemFactory.newImageItem("config", ICON_PATH + "config.png", (e) -> System.out.println("config")),
+    //DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showInstruments()),
+    //DockItemFactory.newImageItem("simulations", ICON_PATH + "flou.png", (e) -> System.out.println("a venir 0")),
+    //DockItemFactory.newImageItem("engine", ICON_PATH + "vide.png", (e) -> System.out.println("a venir 1")),
+    //DockItemFactory.newImageItem("maintenance", ICON_PATH + "guide.png", (e) -> System.out.println("guide")),
+    //DockItemFactory.newImageItem("whitebook", ICON_PATH + "whitebook.png", (e) -> System.out.println("white book")),
     };
     public final DockItem[] ICONS0 = new DockItem[]{
         /* Invisible icons just for testing margins */
@@ -164,29 +166,28 @@ public class GuiAgentImpl
 
         // Create Dock Widget
         createDockWidget(scene);
-        
+
         // Create MOB as Widget
         createMOBWidget(scene);
-        
+
         // Create Books Radial Widget
         createBooksRadialWidget();
-        
+
         // Create Radial Widget (for instruments)
         createRadialWidget();
-        
+
         // Create Meteo Radial Widget
         createMeteoRadialWidget();
-        
+
         // Create Tools Radial Widget
         createToolsRadialWidget();
-        
+
         // Create Charts Radial Widget
         createChartsRadialWidget();
-        
-        
+
 // Create Tides Radial Widget
         createTidesRadialWidget();
-        
+
         // Place scene components
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
         ctrl.centerStackPane.getChildren().add(geoViewServices.getDisplayService().getDisplayable());
@@ -202,29 +203,30 @@ public class GuiAgentImpl
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
- 
+
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
         stage.show();
-       
+
     }
 
     /*private void showInstruments() {
-        if (firstInstruments == true) {
-            root.getChildren().add(dock0);
-            dock0.setOrientation(Orientation.VERTICAL);
+     if (firstInstruments == true) {
+     root.getChildren().add(dock0);
+     dock0.setOrientation(Orientation.VERTICAL);
 
-            StackPane.setMargin(dock0, (new Insets(150, 10, 0, 0)));
-            StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
-            firstInstruments = false;
-        }
-    }*/
+     StackPane.setMargin(dock0, (new Insets(150, 10, 0, 0)));
+     StackPane.setAlignment(dock0, Pos.TOP_RIGHT);
+     firstInstruments = false;
+     }
+     }*/
     private void showBooksMenu() {
         //System.out.println("showBooksMenu");
         firstBooksRadialMenu = firstBooksRadialMenu != true;
         booksRadialMenu.setVisible(firstBooksRadialMenu);
-    }    
+    }
+
     private void showInstrumentsMenu() {
         System.out.println("showInstrumentsMenu");
         firstInstrumentsRadialMenu = firstInstrumentsRadialMenu != true;
@@ -235,28 +237,28 @@ public class GuiAgentImpl
     private void showMeteoMenu() {
         System.out.println("showMeteoMenu");
         firstMeteoRadialMenu = firstMeteoRadialMenu != true;
-        meteoRadialMenu.setVisible(firstMeteoRadialMenu); 
+        meteoRadialMenu.setVisible(firstMeteoRadialMenu);
     }
-    
+
     private void showTidesMenu() {
         System.out.println("showTidesMenu");
         firstTidesRadialMenu = firstTidesRadialMenu != true;
-        tidesRadialMenu.setVisible(firstTidesRadialMenu); 
+        tidesRadialMenu.setVisible(firstTidesRadialMenu);
     }
-    
+
     private void showChartsMenu() {
         System.out.println("showChartsMenu");
         firstChartsRadialMenu = firstChartsRadialMenu != true;
-        chartsRadialMenu.setVisible(firstChartsRadialMenu); 
+        chartsRadialMenu.setVisible(firstChartsRadialMenu);
     }
+
     private void showToolsMenu() {
         System.out.println("showToolsMenu");
         firstToolsRadialMenu = firstToolsRadialMenu != true;
-        toolsRadialMenu.setVisible(firstToolsRadialMenu); 
+        toolsRadialMenu.setVisible(firstToolsRadialMenu);
     }
-    
+
     //------------------ Option center
-    
     //--------------BOOKS------------------
     private void createBooksRadialWidget() {
 
@@ -271,17 +273,17 @@ public class GuiAgentImpl
         RadialMenuContainer stage1Item2 = new RadialMenuContainer();
         ImageView stage1Item2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
         stage1Item2.setImage(stage1Item2Img);
-        
+
         //First Stage Item 3
         RadialMenuContainer stage1Item3 = new RadialMenuContainer();
         ImageView stage1Item3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/viderouge.png")));
         stage1Item3.setImage(stage1Item3Img);
-        
+
         //First Stage Item 4
         RadialMenuContainer stage1Item4 = new RadialMenuContainer();
         ImageView stage1Item4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
-        stage1Item4.setImage(stage1Item4Img);        
-        
+        stage1Item4.setImage(stage1Item4Img);
+
 //---------------------------------------------------
         //Stage 2 item 1
         RadialMenuItem stageTwoItem1 = new RadialMenuItem();
@@ -297,7 +299,7 @@ public class GuiAgentImpl
         RadialMenuItem stageTwoItem3 = new RadialMenuItem();
         ImageView stageTwoItem3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videmagenta.png")));
         stageTwoItem2.setImage(stageTwoItem3Img);
-        
+
         //Stage 2 item 4
         RadialMenuItem stageTwoItem4 = new RadialMenuItem();
         ImageView stageTwoItem4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
@@ -307,7 +309,6 @@ public class GuiAgentImpl
         RadialMenuItem stageTwoItem5 = new RadialMenuItem();
         ImageView stageTwoItem5Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
         stageTwoItem5.setImage(stageTwoItem5Img);
-                 
 
 //---------------Stage2 to Stage1 ------------------------       
         stage1Item1.addItem(stageTwoItem1);
@@ -315,16 +316,13 @@ public class GuiAgentImpl
         stage1Item1.addItem(stageTwoItem3);
         stage1Item1.addItem(stageTwoItem4);
         stage1Item1.addItem(stageTwoItem5);
-        
-        
-        
+
         booksRadialMenu = new RadialMenu(30, 60, 360, 2);
 
         booksRadialMenu.addRootItem(stage1Item1);
         booksRadialMenu.addRootItem(stage1Item2);
         booksRadialMenu.addRootItem(stage1Item3);
         booksRadialMenu.addRootItem(stage1Item4);
-        
 
         //Use setManaged(false) to not let the parent's layout resize our component !
         booksRadialMenu.setManaged(false);
@@ -337,6 +335,7 @@ public class GuiAgentImpl
         booksRadialMenu.setLayoutY(height / 2);
         booksRadialMenu.setVisible(false);
     }
+
     //--------------INSTRUMENTS------------------
     private void createRadialWidget() {
 
@@ -400,7 +399,7 @@ public class GuiAgentImpl
         instrumentsRadialMenu.setLayoutY(height / 2);
         instrumentsRadialMenu.setVisible(false);
     }
-    
+
     //--------------METEO------------------
     private void createMeteoRadialWidget() {
 
@@ -464,7 +463,7 @@ public class GuiAgentImpl
         meteoRadialMenu.setLayoutY(height / 2);
         meteoRadialMenu.setVisible(false);
     }
-    
+
     //--------------TIDES------------------
     private void createTidesRadialWidget() {
 
@@ -494,19 +493,15 @@ public class GuiAgentImpl
         RadialMenuItem stageTwoItem3 = new RadialMenuItem();
         ImageView compassImg3 = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/vide.png")));
         stageTwoItem2.setImage(compassImg3);
-        
+
         zoomInItem.addItem(stageTwoItem1);
         zoomInItem.addItem(stageTwoItem2);
         zoomInItem.addItem(stageTwoItem3);
-        
 
-        
-        
         tidesRadialMenu = new RadialMenu(70, 130, 360, 5);
 
         tidesRadialMenu.addRootItem(zoomInItem);
         tidesRadialMenu.addRootItem(zoomOutItem);
-        
 
         //Use setManaged(false) to not let the parent's layout resize our component !
         tidesRadialMenu.setManaged(false);
@@ -519,7 +514,7 @@ public class GuiAgentImpl
         tidesRadialMenu.setLayoutY(height / 2);
         tidesRadialMenu.setVisible(false);
     }
-    
+
     //--------------CHARTS------------------
     private void createChartsRadialWidget() {
 
@@ -549,19 +544,15 @@ public class GuiAgentImpl
         RadialMenuItem stageTwoItem3 = new RadialMenuItem();
         ImageView stageTwoImg3 = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/videvert.png")));
         stageTwoItem2.setImage(stageTwoImg3);
-        
+
         rootItem1.addItem(stageTwoItem1);
         rootItem1.addItem(stageTwoItem2);
         rootItem1.addItem(stageTwoItem3);
-        
 
-        
-        
         chartsRadialMenu = new RadialMenu(70, 130, 360, 5);
 
         chartsRadialMenu.addRootItem(rootItem1);
         chartsRadialMenu.addRootItem(rootItem2);
-        
 
         //Use setManaged(false) to not let the parent's layout resize our component !
         chartsRadialMenu.setManaged(false);
@@ -574,7 +565,7 @@ public class GuiAgentImpl
         chartsRadialMenu.setLayoutY(height / 2);
         chartsRadialMenu.setVisible(false);
     }
-    
+
     //--------------TOOLS------------------
     private void createToolsRadialWidget() {
 
@@ -604,19 +595,15 @@ public class GuiAgentImpl
         RadialMenuItem stageTwoItem3 = new RadialMenuItem();
         ImageView compassImg3 = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/vide.png")));
         stageTwoItem2.setImage(compassImg3);
-        
+
         zoomInItem.addItem(stageTwoItem1);
         zoomInItem.addItem(stageTwoItem2);
         zoomInItem.addItem(stageTwoItem3);
-        
 
-        
-        
         toolsRadialMenu = new RadialMenu(70, 130, 360, 5);
 
         toolsRadialMenu.addRootItem(zoomInItem);
         toolsRadialMenu.addRootItem(zoomOutItem);
-        
 
         //Use setManaged(false) to not let the parent's layout resize our component !
         toolsRadialMenu.setManaged(false);
@@ -629,12 +616,13 @@ public class GuiAgentImpl
         toolsRadialMenu.setLayoutY(height / 2);
         toolsRadialMenu.setVisible(false);
     }
-    /*********************************************
-     * MOB - Man Off Board
-     ****************************************************/
-    
+
+    /**
+     * *******************************************
+     * MOB - Man Off Board **************************************************
+     */
     private void createMOBWidget(Scene scene) {
-        
+
         Group MOBdock = new Group();
         MOBdock.getChildren().add(mobOffImg);
         //MOBdock.getChildren().add(mobOnImg);
@@ -642,9 +630,10 @@ public class GuiAgentImpl
         MOBdock.setTranslateX(400.0);
         MOBdock.setTranslateY(-30.0);
         StackPane.setAlignment(MOBdock, Pos.BOTTOM_CENTER);
-}
+    }
+
     private void createDockWidget(Scene scene) {
-        
+
         Group groupDock = new Group();
 
         groupDock.getChildren().add(basedock);

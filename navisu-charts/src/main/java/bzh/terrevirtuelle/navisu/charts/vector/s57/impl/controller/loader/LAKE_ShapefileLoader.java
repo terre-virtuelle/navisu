@@ -27,7 +27,7 @@ import java.util.Set;
  * @author Serge Morvan
  * @date 4 juin 2014 NaVisu project
  */
-public class AREA_ShapefileLoader
+public class LAKE_ShapefileLoader
         extends ShapefileLoader
         implements S57ShapeFileLoader {
 
@@ -35,8 +35,9 @@ public class AREA_ShapefileLoader
     private Set<Map.Entry<String, Object>> entries;
     private final Color color;
     private final String acronym;
-private double opacity;
-    public AREA_ShapefileLoader(String acronym, Color color, double opacity) {
+    private final double opacity;
+
+    public LAKE_ShapefileLoader(String acronym, Color color, double opacity) {
         this.color = color;
         this.acronym = acronym;
         this.opacity = opacity;
@@ -46,11 +47,12 @@ private double opacity;
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
 
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
-        normalAttributes.setDrawInterior(false);
+        normalAttributes.setDrawInterior(true);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setOutlineMaterial(new Material(color));
-        normalAttributes.setOutlineStipplePattern((short) 0xAAAA);
-        normalAttributes.setOutlineStippleFactor(5);
+        normalAttributes.setInteriorMaterial(new Material(color));
+      //  normalAttributes.setOutlineStipplePattern((short) 0xAAAA);
+      //  normalAttributes.setOutlineStippleFactor(5);
         normalAttributes.setEnableLighting(true);
 
         return normalAttributes;
@@ -70,7 +72,7 @@ private double opacity;
         highlightAttributes.setDrawInterior(true);
         highlightAttributes.setInteriorMaterial(new Material(color));
         highlightAttributes.setInteriorOpacity(opacity);
-        
+
         shape.setHighlightAttributes(highlightAttributes);
 
         this.record = record;
@@ -83,7 +85,7 @@ private double opacity;
         }
         SurveyZone surveyZone = new SurveyZone(vertices);
       //  System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
-        
+
         entries.stream().forEach((e) -> {
             String label = AREA.ATT.get(acronym) + "\n";
             if (e.getKey().equals("INFORM")) {

@@ -73,7 +73,7 @@ public class PointTemplate_ShapefileLoader
             PointPlacemarkAttributes attrs) {
 
         entries = record.getAttributes().getEntries();
-        System.out.println("entries Point " + entries);
+       // System.out.println("entries Point " + entries);
         label = new StringBuilder();
         label.append("Point").append("\n");
         label.append("Lat : ").append(new Float(latDegrees)).append("\n");

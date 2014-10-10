@@ -16,8 +16,8 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  * @author Serge Morvan
  * @date 4 juin 2014 NaVisu project
  */
-public class PolylineTemplate_ShapefileLoader
-        extends Template_ShapefileLoader
+public class PONTON_ShapefileLoader
+        extends ShapefileLoader
         implements S57ShapeFileLoader {
 
     ShapefileRecord record;
@@ -29,7 +29,7 @@ public class PolylineTemplate_ShapefileLoader
         normalAttributes.setDrawInterior(false);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setOutlineMaterial(Material.BLACK);
-
+        normalAttributes.setOutlineWidth(2.0);
         return normalAttributes;
     }
 
