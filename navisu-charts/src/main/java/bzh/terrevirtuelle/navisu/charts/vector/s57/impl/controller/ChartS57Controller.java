@@ -14,10 +14,9 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.NAVLNE
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.AREA_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.LAKE_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.LANDMARK_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PONTON_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PointTemplate_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.PolylineTemplate_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SLCONS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader.ShapefileLoader;
@@ -50,6 +49,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +69,6 @@ public class ChartS57Controller {
     private static final ChartS57Controller INSTANCE;
     protected String path;
     private File file;
-    //  private File fileDepare;
     private Map<String, String> acronyms;
     private Map<String, Map<Long, S57Object>> geos;
     private static final List<Layer> layers = new ArrayList<>();
@@ -192,6 +194,8 @@ public class ChartS57Controller {
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR");
                     tmp = new File(path + "/BCNCAR.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
+                    // List<Layer> la = loader.createLayersFromSource(fileToString("BCNCAR.shp"));
+
                     la.stream().forEach((l) -> {
                         l.setName("BCNCAR");
                     });
@@ -285,7 +289,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 if (s.equals("LNDMRK.shp")) {
-                    loader = new PointTemplate_ShapefileLoader();
+                    loader = new LANDMARK_ShapefileLoader(marsys, "LNDMRK");
                     tmp = new File(path + "/LNDMRK.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -303,7 +307,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 if (s.equals("LAKARE.shp")) {
-                    loader = new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33),1.0);
+                    loader = new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0);
                     tmp = new File(path + "/LAKARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -321,7 +325,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 if (s.equals("DGRARE.shp")) {
-                    loader = new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24),0.2);
+                    loader = new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.2);
                     tmp = new File(path + "/DGRARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -330,7 +334,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 if (s.equals("SEAARE.shp")) {
-                    loader = new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232),0.2);
+                    loader = new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.2);
                     tmp = new File(path + "/SEAARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -339,7 +343,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 if (s.equals("RESARE.shp")) {
-                    loader = new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195),0.2);
+                    loader = new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2);
                     tmp = new File(path + "/RESARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -348,18 +352,18 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 /*
-                if (s.equals("M_SREL.shp")) {
-                    loader = new AREA_ShapefileLoader("M_SREL", new Color(255, 0, 0));
-                    tmp = new File(path + "/M_SREL.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("M_SREL");
-                    });
-                    layers.addAll(la);
-                }
-                        */
+                 if (s.equals("M_SREL.shp")) {
+                 loader = new AREA_ShapefileLoader("M_SREL", new Color(255, 0, 0));
+                 tmp = new File(path + "/M_SREL.shp");
+                 List<Layer> la = loader.createLayersFromSource(tmp);
+                 la.stream().forEach((l) -> {
+                 l.setName("M_SREL");
+                 });
+                 layers.addAll(la);
+                 }
+                 */
                 if (s.equals("MIPARE.shp")) {
-                    loader = new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105),0.2);
+                    loader = new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2);
                     tmp = new File(path + "/MIPARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -368,7 +372,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                 if (s.equals("FAIRWY.shp")) {
-                    loader = new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29),0.2);
+                    loader = new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2);
                     tmp = new File(path + "/FAIRWY.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -428,7 +432,7 @@ public class ChartS57Controller {
 
                 if (s.equals("OBSTRN.shp")) {
                     loader = new OBSTRN_CNT_ShapefileLoader();
-                    
+
                     tmp = new File(path + "/OBSTRN.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -548,6 +552,22 @@ public class ChartS57Controller {
 
     private void lightsDisplay() {
 
+    }
+
+    private String fileToString(String fileName) {
+        //   Path textFile = Paths.get( +fileName);
+        Path textFile = FileSystems.getDefault().getPath("data/shp/shp_0", fileName);
+        //  System.out.println("textFile : " + textFile);
+        List<String> read = null;
+        try {
+            read = Files.readAllLines(textFile, StandardCharsets.ISO_8859_1);
+            //System.out.println("read : " + read);
+        } catch (IOException ex) {
+
+            Logger.getLogger(ChartS57Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // return null;
+        return String.join("\n", read);
     }
 
     public List<Layer> makeShapefileLayers(File f) {
