@@ -26,6 +26,7 @@ public class RadialMenuContainer extends RadialMenuItem {
 
         getPath().addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             setChildrenVisible(!isChildrenVisible());
+            System.out.println("MOUSE_CLICKED");
             event.consume();
         });
 
