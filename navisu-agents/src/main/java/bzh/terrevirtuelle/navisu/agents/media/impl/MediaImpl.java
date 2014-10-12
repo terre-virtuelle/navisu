@@ -9,6 +9,9 @@ import bzh.terrevirtuelle.navisu.agents.media.Media;
 import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.scene.media.MediaPlayer;
 import org.capcaval.c3.component.ComponentState;
 
@@ -26,7 +29,12 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
     @Override
     public void play() {
         mediaPlayer.setAutoPlay(true);
-      //  mediaPlayer.setCycleCount(10);
+        mediaPlayer.setCycleCount(10);
+        /*
+        Timer time = new Timer(); // Instantiate Timer Object
+        ScheduledTask st = new ScheduledTask(); // Instantiate SheduledTask class
+        time.schedule(st, 0, 1000); // Create Repetitively task for every 1 secs
+*/
     }
 
     @Override
@@ -84,4 +92,13 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
 
     }
 
+    class ScheduledTask extends TimerTask {
+
+        Date now; // to display current time
+        @Override
+        public void run() {
+            now = new Date(); // initialize date
+            System.out.println("Time is :" + now); // Display current time
+        }
+    }
 }
