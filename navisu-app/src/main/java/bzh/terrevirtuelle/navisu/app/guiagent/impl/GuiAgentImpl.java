@@ -44,11 +44,7 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
-import javafx.concurrent.Task;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 //import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 /**
