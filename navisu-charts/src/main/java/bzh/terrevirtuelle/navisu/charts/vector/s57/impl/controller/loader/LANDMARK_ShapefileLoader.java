@@ -180,9 +180,9 @@ public class LANDMARK_ShapefileLoader
         String label = acronym + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getConspicuousVisually() + "_"
+                + object.getFunction() + "_"
                 + object.getColour() + "_"
                 + object.getColourPattern() + "_"
-                + object.getFunction() + "_"
                 + marsys
                 + ".png";
         //System.out.println("label : " + label);
