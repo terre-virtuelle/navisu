@@ -200,8 +200,8 @@ public class GuiAgentImpl
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
-        
-root.getChildren().add(new BuoyWidget());
+
+      //  root.getChildren().add(new BuoyWidget());
 
         // setFullScreen(true);
         stage.setScene(scene);
