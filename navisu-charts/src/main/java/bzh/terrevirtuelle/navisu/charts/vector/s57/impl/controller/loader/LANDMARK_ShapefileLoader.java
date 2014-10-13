@@ -166,7 +166,7 @@ public class LANDMARK_ShapefileLoader
          + "_" + marsys
          + ".png  "   + object.getObjectName() );
          */
-        attrs.setImageAddress("img/buoyage/" + acronym + "_"
+        /*attrs.setImageAddress("img/buoyage/" + acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getColour() + "_"
@@ -175,8 +175,18 @@ public class LANDMARK_ShapefileLoader
                 + ".png");
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.8);
+        placemark.setAttributes(attrs);*/
+        attrs.setImageAddress("img/landmarks/" + acronym + "_"
+                + object.getCategoryOfMark() + "_"
+                + object.getConspicuousVisually() + "_"
+                + object.getFunction() + "_"
+                + object.getColour() + "_"
+                + object.getColourPattern() + "_"
+                + marsys
+                + ".png");
+        attrs.setImageOffset(Offset.BOTTOM_CENTER);
+        attrs.setScale(0.8);
         placemark.setAttributes(attrs);
-
         String label = acronym + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getConspicuousVisually() + "_"
