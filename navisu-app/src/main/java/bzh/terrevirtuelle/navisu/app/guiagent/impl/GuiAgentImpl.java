@@ -19,6 +19,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.widget.view.buoy.BuoyWidget;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
@@ -199,6 +200,8 @@ public class GuiAgentImpl
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
+        
+root.getChildren().add(new BuoyWidget());
 
         // setFullScreen(true);
         stage.setScene(scene);
