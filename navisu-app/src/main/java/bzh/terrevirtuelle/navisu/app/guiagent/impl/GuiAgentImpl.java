@@ -19,13 +19,15 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.widget.view.buoy.BuoyWidget;
+import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.HeadUpDisplay;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
+
+import gov.nasa.worldwind.util.StatusBar;
 import javafx.animation.Animation;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
@@ -46,6 +48,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingNode;
 
 //import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 /**
@@ -82,7 +85,7 @@ public class GuiAgentImpl
     GeoViewServices geoViewServices;
 
     protected JobsManager jobsManager;
-
+    protected StatusBar statusBar;
     protected int width;
     protected int height;
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
@@ -97,7 +100,6 @@ public class GuiAgentImpl
     protected RadialMenu tidesRadialMenu;
     protected RadialMenu chartsRadialMenu;
     protected RadialMenu toolsRadialMenu;
-
     boolean firstBooksRadialMenu = false;
     boolean firstInstrumentsRadialMenu = false;
     boolean firstMeteoRadialMenu = false;
@@ -105,7 +107,7 @@ public class GuiAgentImpl
     boolean firstChartsRadialMenu = false;
     boolean firstTidesRadialMenu = false;
     protected ImageView centerImg;
-
+SwingNode swingNode ;
     protected final ImageView mobOffImg
             = new ImageView(ICON_PATH + "MOB_Off.png");
     protected final ImageView mobOnImg
@@ -160,7 +162,12 @@ public class GuiAgentImpl
 
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
-
+/*
+         swingNode = new SwingNode();
+        StatusBar statusbar = new StatusBar();
+        statusbar.setEnabled(true);
+        swingNode.setContent(statusbar);
+*/
         // Create Dock Widget
         createDockWidget(scene);
 
@@ -201,8 +208,8 @@ public class GuiAgentImpl
             System.exit(0);
         });
 
-      //  root.getChildren().add(new BuoyWidget());
-
+        // Test avant les Displays
+          root.getChildren().add(new HeadUpDisplay());
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
@@ -628,6 +635,7 @@ public class GuiAgentImpl
         root.getChildren().add(MOBdock);
         MOBdock.setTranslateX(400.0);
         MOBdock.setTranslateY(-30.0);
+      //  MOBdock.getChildren().add(swingNode);
         StackPane.setAlignment(MOBdock, Pos.BOTTOM_CENTER);
     }
 

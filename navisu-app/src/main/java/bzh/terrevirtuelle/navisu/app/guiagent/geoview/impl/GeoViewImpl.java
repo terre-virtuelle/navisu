@@ -17,6 +17,8 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.util.StatusBar;
+import java.awt.BorderLayout;
 import javafx.scene.Node;
 import org.capcaval.c3.component.ComponentStateAdaptor;
 import org.capcaval.c3.component.annotation.ConsumedEvent;
@@ -215,7 +217,9 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
                 WorldWindLayers.WorldMap.newInstance(),
                 WorldWindLayers.ScaleBar.newInstance(),
                 WorldWindLayers.Compass.newInstance()
+
         );
+        
     }
 
     @Override
