@@ -2,13 +2,17 @@ package bzh.terrevirtuelle.navisu.main;
 
 import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
 import bzh.terrevirtuelle.navisu.agents.media.impl.MediaImpl;
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObjectCUDProcessor;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.app.processors.TObjectProcessor;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
@@ -17,7 +21,9 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.S57ChartImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
+import bzh.terrevirtuelle.navisu.core.model.tobject.TObject;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.kml.misc.KmlObjectServices;
@@ -111,8 +117,8 @@ public class AppMain extends Application {
 
         guiAgentServices.getJobsManager().newJob("Test job", pHandler -> {
 
-            double lat = 48.390834d;
-            double lon = -4.485556d;
+            double lat = 48.2510;
+            double lon = -4.8124;
 
             TObject tObject = TObject.newBasicTObject(1, lat, lon);
             dpAgentServices.create(tObject);
@@ -121,7 +127,7 @@ public class AppMain extends Application {
 
             for (int i = 0; i < 100; i++) {
 
-                lon += i / 1000.;
+                lon += i / 10000.;
                 tObject.setLocation(Location.factory.newLocation(lat, lon));
 
                 dpAgentServices.update(tObject);
@@ -159,6 +165,9 @@ public class AppMain extends Application {
         // Test connexion Gpsd 
         // dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // dataServerServices.openGpsd("hd-sf.com", 9009);
+        // A tester, ref OCPN
+        //tcp://sinagot.net:4002 NMEA/GPRMC
+         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
