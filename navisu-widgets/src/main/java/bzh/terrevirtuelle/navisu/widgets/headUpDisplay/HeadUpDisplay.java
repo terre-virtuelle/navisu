@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.widget.view.buoy;
+package bzh.terrevirtuelle.navisu.widgets.headUpDisplay;
 
-import bzh.terrevirtuelle.navisu.widget.model.Widget;
+import bzh.terrevirtuelle.navisu.widgets.Widget;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import javafx.event.ActionEvent;
@@ -20,7 +20,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Serge Morvan
  */
-public class BuoyWidget
+public class HeadUpDisplay
         extends Widget {
 
     private ImageView background;
@@ -30,35 +30,42 @@ public class BuoyWidget
     Image image;
     ImageView sample1;
 
-    public BuoyWidget() {
+    public HeadUpDisplay() {
         createScene();
     }
 
-    @Override
     protected final void createScene() {
+
         background = ImageViewBuilder.create()
-                .image(new Image(getClass().getResourceAsStream("images/cardinalWest.png")))
+                // .image(new Image(getClass().getResourceAsStream("cardinalWest.png")))
+                .image(new Image(getClass().getResourceAsStream("u25.png")))
+                .scaleX(.6)
+                .scaleY(.6)
+                .opacity(.7)
+                .layoutX(-200)
+                .layoutY(300)
                 .build();
         getChildren().add(background);
         button = ButtonBuilder.create()
                 .text("Widget Test")
                 .layoutX(55)
-                .layoutY(80)
+                .layoutY(600)
                 .prefWidth(100)
                 .prefHeight(15)
                 .build();
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println("Button");
+                getChildren().get(0).setVisible(false);
+                getChildren().get(1).setVisible(false);
             }
         });
         getChildren().add(button);
     }
 
-    @Override
+
     protected void initEvt() {
-        super.initEvt();
+       
         setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent me) {

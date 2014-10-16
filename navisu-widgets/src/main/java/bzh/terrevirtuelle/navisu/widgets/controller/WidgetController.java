@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.widget.controller;
+package bzh.terrevirtuelle.navisu.displays.widgets.controller;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;

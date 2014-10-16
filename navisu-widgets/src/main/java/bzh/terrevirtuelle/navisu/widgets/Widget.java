@@ -73,4 +73,5 @@ public class Widget
         dropShadow.setColor(Color.rgb(50, 50, 50, 0.7));
         setEffect(dropShadow);
     }
+    
 }
