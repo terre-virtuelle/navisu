@@ -36,6 +36,7 @@ public class GStation
         attrs.setImageOffset(new Offset(24d, 0d, AVKey.PIXELS, AVKey.PIXELS));
         shape.setClipToHorizon(true);
         attrs.setImageAddress("img/emetteur_1.png");
+        attrs.setScale(.6);
         shape.setAttributes(attrs);
     }
 
