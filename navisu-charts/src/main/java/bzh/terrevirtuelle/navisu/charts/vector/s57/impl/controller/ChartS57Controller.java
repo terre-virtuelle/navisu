@@ -297,6 +297,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+               
                 if (s.equals("CBLSUB.shp")) {
                     loader = new Template_ShapefileLoader();
                     tmp = new File(path + "/CBLSUB.shp");
@@ -306,6 +307,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                
                 if (s.equals("LAKARE.shp")) {
                     loader = new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0);
                     tmp = new File(path + "/LAKARE.shp");
@@ -468,7 +470,17 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-
+                /*
+                if (s.equals("SBDARE.shp")) {
+                    loader = new PolygonTemplate_ShapefileLoader();
+                    tmp = new File(path + "/SBDARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("SBDARE");
+                    });
+                    layers.addAll(la);
+                }
+                 */       
                 if (s.equals("LIGHTS.shp")) {
 
                     loader = new LIGHTS_ShapefileLoader();

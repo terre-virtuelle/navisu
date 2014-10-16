@@ -41,7 +41,7 @@ import java.util.*;
  * @author dcollins
  * @version $Id: ShapefileLoader.java 1532 2013-08-06 23:54:50Z dcollins $
  */
-public class Template_ShapefileLoader
+public class SBDARE_ShapefileLoader
         extends ShapefileLoader {
 
     ShapefileRecord record;
@@ -57,7 +57,7 @@ public class Template_ShapefileLoader
     /**
      * Constructs a ShapefileLoader, but otherwise does nothing.
      */
-    public Template_ShapefileLoader() {
+    public SBDARE_ShapefileLoader() {
     }
 
     /**
@@ -213,20 +213,20 @@ public class Template_ShapefileLoader
         if (Shapefile.isPointType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();
             this.addRenderablesForPoints(shp, (RenderableLayer) layer);
-            System.out.println("isPointType");
+           // System.out.println("isPointType");
             layers.add(layer);
         } else if (Shapefile.isMultiPointType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();
             this.addRenderablesForMultiPoints(shp, (RenderableLayer) layer);
-            System.out.println("isMultiPointType");
+          //  System.out.println("isMultiPointType");
             layers.add(layer);
         } else if (Shapefile.isPolylineType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();
             this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
-            System.out.println("isPolylineType");
+          //  System.out.println("isPolylineType");
             layers.add(layer);
         } else if (Shapefile.isPolygonType(shp.getShapeType())) {
-            System.out.println("isPolygonType");
+         //   System.out.println("isPolygonType");
             this.addRenderablesForPolygons(shp, layers);
         } else {
             Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
@@ -269,7 +269,7 @@ public class Template_ShapefileLoader
 
     protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
         //  PointPlacemarkAttributes attrs = this.createPointAttributes(null);
-        System.out.println("addRenderablesForPoints");
+       // System.out.println("addRenderablesForPoints");
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
             PointPlacemarkAttributes attrs = this.createPointAttributes(record);
@@ -284,7 +284,7 @@ public class Template_ShapefileLoader
 
     protected void addRenderablesForMultiPoints(Shapefile shp, RenderableLayer layer) {
         // PointPlacemarkAttributes attrs = this.createPointAttributes(null);
-        System.out.println("addRenderablesForMultiPoints");
+       // System.out.println("addRenderablesForMultiPoints");
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
         //   System.out.println("record " + record.getAttributes().getEntries());
@@ -310,7 +310,7 @@ public class Template_ShapefileLoader
         // the following:
         //
         //Sélection posible
-        System.out.println("addRenderablesForPolylines");
+       // System.out.println("addRenderablesForPolylines");
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
 
@@ -333,7 +333,7 @@ public class Template_ShapefileLoader
      * null.
      */
     protected void addRenderablesForPolygons(Shapefile shp, List<Layer> layers) {
-        System.out.println("addRenderablesForPolygons");
+      //  System.out.println("addRenderablesForPolygons");
         RenderableLayer layer = new RenderableLayer();
         layers.add(layer);
 
@@ -368,9 +368,10 @@ public class Template_ShapefileLoader
     //********************  Primitive Geometry Construction  *******//
     //**************************************************************//
     @SuppressWarnings({"UnusedDeclaration"})
+    @Override
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
-        System.out.println("createPoint " + record.getAttributes().getEntries());
+       // System.out.println("createPoint " + record.getAttributes().getEntries());
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setAttributes(attrs);
@@ -378,8 +379,9 @@ public class Template_ShapefileLoader
         return placemark;
     }
 
+    @Override
     protected Renderable createPolyline(ShapefileRecord record, ShapeAttributes attrs) {
-        System.out.println("createPolyline ");// +  record.getAttributes().getEntries());
+    //    System.out.println("createPolyline ");// +  record.getAttributes().getEntries());
         SurfacePolylines shape = new SurfacePolylines(
                 Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
@@ -387,8 +389,9 @@ public class Template_ShapefileLoader
         return shape;
     }
 
+    @Override
     protected Renderable createPolyline(Shapefile shp, ShapeAttributes attrs) {
-        System.out.println("createPolyline");
+     //   System.out.println("createPolyline");
         SurfacePolylines shape = new SurfacePolylines(Sector.fromDegrees(shp.getBoundingRectangle()),
                 shp.getPointBuffer());
         shape.setAttributes(attrs);
@@ -396,6 +399,7 @@ public class Template_ShapefileLoader
         return shape;
     }
 
+    @Override
     protected void createPolygon(ShapefileRecord record, ShapeAttributes attrs, RenderableLayer layer) {
         System.out.println("createPolygon");
         Double height = this.getHeight(record);
@@ -455,7 +459,6 @@ public class Template_ShapefileLoader
             shape.setWindingRule(AVKey.CLOCKWISE);
             shape.setPolygonRingGroups(new int[]{0});
             shape.setPolygonRingGroups(new int[]{0});
-            shape.setValue("NATSUR", "nature du fond");
             layer.addRenderable(shape);
         }
     }
@@ -488,16 +491,6 @@ public class Template_ShapefileLoader
         return randomAttrs.nextPolylineAttributes();
     }
 
-    @SuppressWarnings({"UnusedDeclaration"})
-    protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-        System.out.println(record.getAttributes().getEntries());
-        double[] points = ((ShapefileRecordPolygon) record).getBoundingRectangle();
-        for(double p : points){
-            System.out.print("  " +p + "  ");
-        }
-        System.out.println("");
-        return randomAttrs.nextPolygonAttributes();
-
-    }
+    
 
 }

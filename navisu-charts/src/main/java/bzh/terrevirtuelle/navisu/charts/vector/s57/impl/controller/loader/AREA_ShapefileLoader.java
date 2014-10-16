@@ -35,7 +35,8 @@ public class AREA_ShapefileLoader
     private Set<Map.Entry<String, Object>> entries;
     private final Color color;
     private final String acronym;
-private double opacity;
+    private double opacity;
+
     public AREA_ShapefileLoader(String acronym, Color color, double opacity) {
         this.color = color;
         this.acronym = acronym;
@@ -70,7 +71,7 @@ private double opacity;
         highlightAttributes.setDrawInterior(true);
         highlightAttributes.setInteriorMaterial(new Material(color));
         highlightAttributes.setInteriorOpacity(opacity);
-        
+
         shape.setHighlightAttributes(highlightAttributes);
 
         this.record = record;
@@ -83,7 +84,7 @@ private double opacity;
         }
         SurveyZone surveyZone = new SurveyZone(vertices);
       //  System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
-        
+
         entries.stream().forEach((e) -> {
             String label = AREA.ATT.get(acronym) + "\n";
             if (e.getKey().equals("INFORM")) {
@@ -92,6 +93,11 @@ private double opacity;
                 }
             }
             if (e.getKey().equals("OBJNAM")) {
+                if (e.getValue() != null) {
+                    shape.setValue(AVKey.DISPLAY_NAME, label.concat((String) e.getValue()));
+                }
+            }
+            if (e.getKey().equals("NATSUR")) {
                 if (e.getValue() != null) {
                     shape.setValue(AVKey.DISPLAY_NAME, label.concat((String) e.getValue()));
                 }
