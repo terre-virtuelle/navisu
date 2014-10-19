@@ -107,7 +107,7 @@ public class GuiAgentImpl
     boolean firstChartsRadialMenu = false;
     boolean firstTidesRadialMenu = false;
     protected ImageView centerImg;
-SwingNode swingNode ;
+    SwingNode swingNode;
     protected final ImageView mobOffImg
             = new ImageView(ICON_PATH + "MOB_Off.png");
     protected final ImageView mobOnImg
@@ -162,12 +162,12 @@ SwingNode swingNode ;
 
         Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
-/*
+        /*
          swingNode = new SwingNode();
-        StatusBar statusbar = new StatusBar();
-        statusbar.setEnabled(true);
-        swingNode.setContent(statusbar);
-*/
+         StatusBar statusbar = new StatusBar();
+         statusbar.setEnabled(true);
+         swingNode.setContent(statusbar);
+         */
         // Create Dock Widget
         createDockWidget(scene);
 
@@ -209,7 +209,8 @@ SwingNode swingNode ;
         });
 
         // Test avant les Displays
-          root.getChildren().add(new HeadUpDisplay());
+        root.getChildren().add(new HeadUpDisplay());
+
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
@@ -635,7 +636,7 @@ SwingNode swingNode ;
         root.getChildren().add(MOBdock);
         MOBdock.setTranslateX(400.0);
         MOBdock.setTranslateY(-30.0);
-      //  MOBdock.getChildren().add(swingNode);
+        //  MOBdock.getChildren().add(swingNode);
         StackPane.setAlignment(MOBdock, Pos.BOTTOM_CENTER);
     }
 
@@ -664,6 +665,7 @@ SwingNode swingNode ;
                 upAnimation.play();
             }
         });
+       
         /*
          root.getChildren().add(dock0);
          dock0.setOrientation(Orientation.VERTICAL);
