@@ -88,7 +88,7 @@ public class S57ChartImpl
     }
 
     @Override
-    public void open(ProgressHandle pHandle, String... files) {
+    public void open(ProgressHandle pHandle, String... files)  {
 
         for (String file : files) {
             this.handleOpenFile(pHandle, file);

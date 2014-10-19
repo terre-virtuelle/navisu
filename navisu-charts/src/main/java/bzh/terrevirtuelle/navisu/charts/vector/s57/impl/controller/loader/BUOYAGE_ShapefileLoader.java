@@ -162,7 +162,7 @@ public class BUOYAGE_ShapefileLoader
 
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-        placemark.setLabelText(object.getObjectName());
+     //   placemark.setLabelText(object.getObjectName());
 
         String catMark = "";
         if (acronym.contains("CAR")) {

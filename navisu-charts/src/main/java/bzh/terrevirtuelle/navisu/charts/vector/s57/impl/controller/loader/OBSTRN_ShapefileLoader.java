@@ -10,8 +10,11 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Wreck;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceText;
 //import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.awt.Color;
@@ -106,4 +109,16 @@ public class OBSTRN_ShapefileLoader
         return surfaceText;
     }
 
+    @Override
+    protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
+
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setDrawInterior(true);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(new Material(new Color(81, 161, 5)));
+        normalAttributes.setInteriorMaterial(new Material(new Color(81, 161, 5)));
+        normalAttributes.setEnableLighting(true);
+
+        return normalAttributes;
+    }
 }

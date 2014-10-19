@@ -82,7 +82,7 @@ public class ChartS57Controller {
     private final String boyagePath = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo";
     private final Map<Pair, String> topMarks;
     private String marsys;
-
+private AreaController areaController;
     static {
         INSTANCE = new ChartS57Controller();
     }
@@ -92,6 +92,7 @@ public class ChartS57Controller {
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
         System.setProperty("file.encoding", "UTF-8");
+      //  areaController = AreaController.getInstance();
         initAcronymsMap();
     }
 
@@ -160,6 +161,7 @@ public class ChartS57Controller {
             }
             for (File f : listOfFiles) {
                 String s = f.getName();
+                
                 if (s.equals("DEPARE.shp")) {
                     loader = new DEPARE_ShapefileLoader();
                     tmp = new File(path + "/DEPARE.shp");
@@ -298,15 +300,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
                
-                if (s.equals("CBLSUB.shp")) {
-                    loader = new Template_ShapefileLoader();
-                    tmp = new File(path + "/CBLSUB.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("CBLSUB");
-                    });
-                    layers.addAll(la);
-                }
+              /*  
                 
                 if (s.equals("LAKARE.shp")) {
                     loader = new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0);
@@ -373,6 +367,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                
                 if (s.equals("FAIRWY.shp")) {
                     loader = new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2);
                     tmp = new File(path + "/FAIRWY.shp");
@@ -415,6 +410,7 @@ public class ChartS57Controller {
                     layers.addAll(la);
 
                 }
+                /*
                 if (s.equals("WRECKS.shp")) {
                     loader = new WRECKS_CNT_ShapefileLoader();
                     tmp = new File(path + "/WRECKS.shp");
@@ -431,7 +427,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-
+*/
                 if (s.equals("OBSTRN.shp")) {
                     loader = new OBSTRN_CNT_ShapefileLoader();
 
@@ -470,6 +466,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                
                 /*
                 if (s.equals("SBDARE.shp")) {
                     loader = new PolygonTemplate_ShapefileLoader();
@@ -480,7 +477,16 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-                 */       
+                 */  
+                if (s.equals("CBLSUB.shp")) {
+                    loader = new Template_ShapefileLoader();
+                    tmp = new File(path + "/CBLSUB.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("CBLSUB");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("LIGHTS.shp")) {
 
                     loader = new LIGHTS_ShapefileLoader();

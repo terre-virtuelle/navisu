@@ -7,9 +7,13 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceIcon;
+import java.awt.Color;
 //import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.File;
 import java.io.IOException;
@@ -45,5 +49,17 @@ public class OBSTRN_CNT_ShapefileLoader
         surfaceIcon.setMaxSize(100.0);
         surfaceIcon.setMinSize(40.0);
         return surfaceIcon;
+    }
+    @Override
+    protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
+
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setDrawInterior(false);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(new Material(new Color(87,137,108)));
+       
+        normalAttributes.setEnableLighting(true);
+
+        return normalAttributes;
     }
 }

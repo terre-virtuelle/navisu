@@ -72,8 +72,8 @@ public class AREA_ShapefileLoader
         highlightAttributes.setInteriorMaterial(new Material(color));
         highlightAttributes.setInteriorOpacity(opacity);
 
-        shape.setHighlightAttributes(highlightAttributes);
-
+      //  shape.setHighlightAttributes(highlightAttributes);
+shape.setHighlightAttributes(null);
         this.record = record;
         entries = record.getAttributes().getEntries();
 
