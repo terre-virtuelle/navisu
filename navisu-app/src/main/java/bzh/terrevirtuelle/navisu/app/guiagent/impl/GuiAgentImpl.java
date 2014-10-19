@@ -138,6 +138,7 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
     final Dock dock = new Dock(ICONS);
     //final Dock dock0 = new Dock(ICONS0);
+    private Scene scene;
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -160,7 +161,7 @@ public class GuiAgentImpl
             System.exit(0);
         }
 
-        Scene scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
+        scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
         /*
          swingNode = new SwingNode();
@@ -209,7 +210,7 @@ public class GuiAgentImpl
         });
 
         // Test avant les Displays
-        root.getChildren().add(new HeadUpDisplay());
+       // root.getChildren().add(new HeadUpDisplay());
 
         // setFullScreen(true);
         stage.setScene(scene);
@@ -665,7 +666,7 @@ public class GuiAgentImpl
                 upAnimation.play();
             }
         });
-       
+
         /*
          root.getChildren().add(dock0);
          dock0.setOrientation(Orientation.VERTICAL);
@@ -714,4 +715,10 @@ public class GuiAgentImpl
     public StackPane getRoot() {
         return ctrl.centerStackPane;
     }
+
+    @Override
+    public Scene getScene() {
+        return scene;
+    }
+
 }

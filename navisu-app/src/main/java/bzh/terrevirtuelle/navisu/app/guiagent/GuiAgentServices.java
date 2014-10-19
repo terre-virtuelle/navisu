@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.app.guiagent;
 
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
+import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.capcaval.c3.component.ComponentService;
@@ -23,6 +24,8 @@ public interface GuiAgentServices extends ComponentService {
     void showGui(Stage stage, int width, int height);
 
     StackPane getRoot();
+
+    Scene getScene();
 
     JobsManager getJobsManager();
 }
