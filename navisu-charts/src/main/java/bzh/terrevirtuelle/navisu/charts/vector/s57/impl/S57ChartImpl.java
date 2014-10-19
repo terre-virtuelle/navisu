@@ -2,11 +2,13 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.S57Chart;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.AreaController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
@@ -32,6 +34,8 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
+import javafx.event.EventType;
+import javafx.scene.Scene;
 
 /**
  * @author Serge Morvan
@@ -42,6 +46,8 @@ public class S57ChartImpl
 
     @UsedService
     GeoViewServices geoViewServices;
+    @UsedService
+    GuiAgentServices guiAgentServices;
     @UsedService
     LayerTreeServices layerTreeServices;
 
@@ -54,6 +60,7 @@ public class S57ChartImpl
     protected List<AirspaceLayer> airspaceLayers;
     protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
     protected WorldWindow wwd;
+    protected Scene scene;
 
     @Override
     public void componentInitiated() {
@@ -73,6 +80,7 @@ public class S57ChartImpl
                 unClip();
             }
         });
+
     }
 
     @Override
@@ -88,7 +96,7 @@ public class S57ChartImpl
     }
 
     @Override
-    public void open(ProgressHandle pHandle, String... files)  {
+    public void open(ProgressHandle pHandle, String... files) {
 
         for (String file : files) {
             this.handleOpenFile(pHandle, file);
@@ -96,6 +104,8 @@ public class S57ChartImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
+        //Test capture des evts par l'AreaController
+     //   guiAgentServices.getRoot().addEventFilter(EventType.ROOT, AreaController.getInstance());
         new File("data/shp").mkdir();
         new File("data/shp/shp_" + i).mkdir();
         new File("data/shp/shp_" + i + "/soundg").mkdir();
@@ -158,12 +168,10 @@ public class S57ChartImpl
             String name = l.getName();
             if (name.contains("BCNCAR")
                     || name.contains("OBSTRN")
-                 //   || name.contains("LIGHTS")
-                    ||  name.contains("SOUNDG")
-                 //   || name.contains("NAVLNE")
-                    || name.contains("WRECK")
-            
-                    ) {
+                    //   || name.contains("LIGHTS")
+                    || name.contains("SOUNDG")
+                    //   || name.contains("NAVLNE")
+                    || name.contains("WRECK")) {
                 l.setPickEnabled(true);
             }
             if (name.contains("DEPARE")
@@ -171,10 +179,9 @@ public class S57ChartImpl
                     || name.contains("BCNISD")
                     || name.contains("OBSTRN")
                     || name.contains("LIGHTS")
-                  //  || name.contains("SOUNDG")
+                    //  || name.contains("SOUNDG")
                     || name.contains("NAVLNE")
                     || name.contains("WRECK")
-                    
                     || name.contains("DEPCNT")
                     || name.contains("OBSTRN_CNT")
                     || name.contains("WRECKS_CNT")

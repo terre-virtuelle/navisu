@@ -74,7 +74,7 @@ if (val1 >= -14.0 && val2 <= 0.0) {
             color = new Color(247, 247, 247);
         }
 
-        System.out.println("val1 : " + val1 + " val2 : " + val2);
+       // System.out.println("val1 : " + val1 + " val2 : " + val2);
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
         normalAttributes.setDrawOutline(false);
