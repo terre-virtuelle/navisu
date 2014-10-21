@@ -19,6 +19,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.widgets.controller.WidgetController;
 import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.HeadUpDisplay;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
@@ -83,7 +84,9 @@ public class GuiAgentImpl
     GeoViewImpl geoView;
     @UsedService
     GeoViewServices geoViewServices;
-
+    @UsedService
+    GuiAgentServices guiAgentServices;
+    
     protected JobsManager jobsManager;
     protected StatusBar statusBar;
     protected int width;
@@ -210,7 +213,12 @@ public class GuiAgentImpl
         });
 
         // Test avant les Displays
-       root.getChildren().add(new HeadUpDisplay());
+        WidgetController widgetController = new WidgetController();
+        HeadUpDisplay headUpDisplay = new HeadUpDisplay();
+        headUpDisplay.setTranslateY(-250);
+        widgetController.add(headUpDisplay);
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController);
+        root.getChildren().add(headUpDisplay);
 
         // setFullScreen(true);
         stage.setScene(scene);
