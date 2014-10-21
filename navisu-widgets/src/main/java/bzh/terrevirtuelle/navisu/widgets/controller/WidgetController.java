@@ -6,6 +6,7 @@ package bzh.terrevirtuelle.navisu.widgets.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
@@ -37,12 +38,12 @@ public class WidgetController implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent event) {
         if (keyComb.match(event)) {
-            widgets.stream().forEach((g) -> {
+            widgets.stream().forEach((Group g) -> {
                 if(first == true){
-                    startFadeTransition(g, 0.0, 1.0);
+                    startFadeTransition(g, 1.0, 0.0);
                     first = false;
                 }else{
-                    startFadeTransition(g, 1.0, 0.0);
+                    startFadeTransition(g, 0.0, 1.0);
                     first = true;
                 }
             });
