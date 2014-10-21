@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.topology.model;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Polygon;
+import gov.nasa.worldwind.render.SurfacePolygons;
 import java.util.List;
 
 /**
@@ -18,12 +19,10 @@ import java.util.List;
 public class SurveyZone {
 
     private Polygon polygon;
-    private final String acronym;
-    private final String objname;
+    SurfacePolygons shape;
 
-    public SurveyZone(String acronym, String objname, List<double[]> vertices) {
-        this.acronym = acronym;
-        this.objname = objname;
+    public SurveyZone(SurfacePolygons shape, List<double[]> vertices) {
+        this.shape = shape;
         Coordinate[] coordinates0 = new Coordinate[vertices.size() + 1];
         int i = 0;
         for (double[] t : vertices) {
@@ -58,11 +57,11 @@ public class SurveyZone {
     }
 
     public String getAcronym() {
-        return acronym;
+        return (String)shape.getValue("ACRONYM");
     }
 
     public String getObjname() {
-        return objname;
+        return (String)shape.getValue("OBJNAM");
     }
     
 }
