@@ -34,8 +34,8 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
-import javafx.event.EventType;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 
 /**
  * @author Serge Morvan
@@ -61,6 +61,7 @@ public class S57ChartImpl
     protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
     protected WorldWindow wwd;
     protected Scene scene;
+    private boolean first = true;
 
     @Override
     public void componentInitiated() {
@@ -105,7 +106,11 @@ public class S57ChartImpl
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         //Test capture des evts par l'AreaController
-     //   guiAgentServices.getRoot().addEventFilter(EventType.ROOT, AreaController.getInstance());
+        if (first == true) {
+
+            first = false;
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, AreaController.getInstance());
+        }
         new File("data/shp").mkdir();
         new File("data/shp/shp_" + i).mkdir();
         new File("data/shp/shp_" + i + "/soundg").mkdir();

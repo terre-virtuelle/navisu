@@ -210,7 +210,7 @@ public class GuiAgentImpl
         });
 
         // Test avant les Displays
-       // root.getChildren().add(new HeadUpDisplay());
+       root.getChildren().add(new HeadUpDisplay());
 
         // setFullScreen(true);
         stage.setScene(scene);

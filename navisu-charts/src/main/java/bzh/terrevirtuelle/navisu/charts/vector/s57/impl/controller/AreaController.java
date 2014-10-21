@@ -8,19 +8,22 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller;
 import gov.nasa.worldwind.render.SurfacePolygons;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 
 /**
  *
  * @author Serge Morvan
  * @date 18 oct. 2014 NaVisu project
  */
-public class AreaController implements EventHandler<Event> {
+public class AreaController implements EventHandler<KeyEvent> {
 
-   
     private static final AreaController instance = new AreaController();
     private final List<SurfacePolygons> shapes;
+    final KeyCombination keyComb1 = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
 
     private AreaController() {
         shapes = new ArrayList<>();
@@ -35,8 +38,9 @@ public class AreaController implements EventHandler<Event> {
     }
 
     @Override
-    public void handle(Event event) {
-        System.out.println("event : " + event );
+    public void handle(KeyEvent event) {
+        if (keyComb1.match(event)) {
+            System.out.println("Ctrl+H pressed");
+        }
     }
-    
 }
