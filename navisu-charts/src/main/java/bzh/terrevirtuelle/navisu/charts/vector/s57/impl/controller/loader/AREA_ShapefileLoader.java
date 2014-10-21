@@ -38,6 +38,7 @@ public class AREA_ShapefileLoader
     private final String acronym;
     private double opacity;
     private String objname;
+    private SurfacePolygons shape;
 
     public AREA_ShapefileLoader(String acronym, Color color, double opacity) {
         this.color = color;
@@ -61,7 +62,7 @@ public class AREA_ShapefileLoader
     @Override
     protected void createPolygon(ShapefileRecord record, ShapeAttributes attrs, RenderableLayer layer) {
         this.record = record;
-        SurfacePolygons shape = new SurfacePolygons(
+        shape = new SurfacePolygons(
                 Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
 
@@ -93,8 +94,9 @@ public class AREA_ShapefileLoader
             }
             if (e.getKey().equals("OBJNAM")) {
                 if (e.getValue() != null) {
-                    objname = (String) e.getValue();
-                    shape.setValue(AVKey.DISPLAY_NAME, label.concat(objname));
+                    objname = (String)e.getValue();
+                    shape.setValue(AVKey.DISPLAY_NAME, label.concat((String)e.getValue()));
+                    shape.setValue("OBJNAM", objname);
                 }
             }
             if (e.getKey().equals("NATSUR")) {
@@ -103,6 +105,7 @@ public class AREA_ShapefileLoader
                 }
             }
         });
+        shape.setValue("ACRONYM", acronym);
     }
 
     protected void createSurveyZone(ShapefileRecord record) {
@@ -111,9 +114,7 @@ public class AREA_ShapefileLoader
         for (double[] c : coords) {
             vertices.add(c);
         }
-        // SurveyZone surveyZone = new SurveyZone(vertices);
-        ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(acronym, objname, vertices));
-        // System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
+        ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, vertices));
     }
 
     @Override
