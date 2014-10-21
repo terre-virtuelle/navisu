@@ -107,7 +107,6 @@ public class S57ChartImpl
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         //Test capture des evts par l'AreaController
         if (first == true) {
-
             first = false;
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, AreaController.getInstance());
         }

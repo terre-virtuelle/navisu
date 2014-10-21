@@ -32,6 +32,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Light;
+import bzh.terrevirtuelle.navisu.topology.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -82,12 +83,14 @@ public class ChartS57Controller {
     private final String boyagePath = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo";
     private final Map<Pair, String> topMarks;
     private String marsys;
+    private SurveyZoneController surveyZoneController;
 
     static {
         INSTANCE = new ChartS57Controller();
     }
 
     public ChartS57Controller() {
+        surveyZoneController = new SurveyZoneController();
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
@@ -336,7 +339,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-                
+
                 if (s.equals("RESARE.shp")) {
                     loader = new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2);
                     tmp = new File(path + "/RESARE.shp");
@@ -479,7 +482,7 @@ public class ChartS57Controller {
                  }
                  */
                 if (s.equals("CBLSUB.shp")) {
-                    loader = new Template_ShapefileLoader();
+                    loader = new ShapefileLoader();
                     tmp = new File(path + "/CBLSUB.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -595,6 +598,10 @@ public class ChartS57Controller {
         //       File index = new File("data/shp");
 //        for(File f: index.listFiles()) f.delete();
         return null;
+    }
+
+    public SurveyZoneController getSurveyZoneController() {
+        return surveyZoneController;
     }
 
 }

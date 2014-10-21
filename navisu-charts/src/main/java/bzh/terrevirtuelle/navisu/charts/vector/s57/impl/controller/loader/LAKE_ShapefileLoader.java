@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.AREA;
-import bzh.terrevirtuelle.navisu.topology.geom.SurveyZone;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
@@ -83,9 +82,7 @@ public class LAKE_ShapefileLoader
         for (double[] c : coords) {
             vertices.add(c);
         }
-        SurveyZone surveyZone = new SurveyZone(vertices);
-      //  System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
-
+      
         entries.stream().forEach((e) -> {
             String label = AREA.ATT.get(acronym) + "\n";
             if (e.getKey().equals("INFORM")) {

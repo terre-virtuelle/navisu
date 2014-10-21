@@ -5,8 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.AREA;
-import bzh.terrevirtuelle.navisu.topology.geom.SurveyZone;
+import bzh.terrevirtuelle.navisu.topology.model.SurveyZone;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
@@ -36,6 +37,7 @@ public class AREA_ShapefileLoader
     private final Color color;
     private final String acronym;
     private double opacity;
+    private String objname;
 
     public AREA_ShapefileLoader(String acronym, Color color, double opacity) {
         this.color = color;
@@ -53,15 +55,16 @@ public class AREA_ShapefileLoader
         normalAttributes.setOutlineStipplePattern((short) 0xAAAA);
         normalAttributes.setOutlineStippleFactor(5);
         normalAttributes.setEnableLighting(true);
-
         return normalAttributes;
     }
 
     @Override
     protected void createPolygon(ShapefileRecord record, ShapeAttributes attrs, RenderableLayer layer) {
+        this.record = record;
         SurfacePolygons shape = new SurfacePolygons(
                 Sector.fromDegrees(((ShapefileRecordPolygon) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
+
         shape.setAttributes(attrs);
         shape.setWindingRule(AVKey.CLOCKWISE);
         shape.setPolygonRingGroups(new int[]{0});
@@ -71,20 +74,16 @@ public class AREA_ShapefileLoader
         highlightAttributes.setDrawInterior(true);
         highlightAttributes.setInteriorMaterial(new Material(color));
         highlightAttributes.setInteriorOpacity(opacity);
+        //  shape.setHighlightAttributes(highlightAttributes);
+        shape.setHighlightAttributes(null);
 
-      //  shape.setHighlightAttributes(highlightAttributes);
-shape.setHighlightAttributes(null);
-        this.record = record;
+        createValues(shape);
+        createSurveyZone(record);
+        layer.addRenderable(shape);
+    }
+
+    protected void createValues(SurfacePolygons shape) {
         entries = record.getAttributes().getEntries();
-
-        List<double[]> vertices = new ArrayList<>();
-        Iterable<double[]> coords = record.getCompoundPointBuffer().getCoords();
-        for (double[] c : coords) {
-            vertices.add(c);
-        }
-        SurveyZone surveyZone = new SurveyZone(vertices);
-      //  System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
-
         entries.stream().forEach((e) -> {
             String label = AREA.ATT.get(acronym) + "\n";
             if (e.getKey().equals("INFORM")) {
@@ -94,7 +93,8 @@ shape.setHighlightAttributes(null);
             }
             if (e.getKey().equals("OBJNAM")) {
                 if (e.getValue() != null) {
-                    shape.setValue(AVKey.DISPLAY_NAME, label.concat((String) e.getValue()));
+                    objname = (String) e.getValue();
+                    shape.setValue(AVKey.DISPLAY_NAME, label.concat(objname));
                 }
             }
             if (e.getKey().equals("NATSUR")) {
@@ -103,7 +103,17 @@ shape.setHighlightAttributes(null);
                 }
             }
         });
-        layer.addRenderable(shape);
+    }
+
+    protected void createSurveyZone(ShapefileRecord record) {
+        List<double[]> vertices = new ArrayList<>();
+        Iterable<double[]> coords = record.getCompoundPointBuffer().getCoords();
+        for (double[] c : coords) {
+            vertices.add(c);
+        }
+        // SurveyZone surveyZone = new SurveyZone(vertices);
+        ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(acronym, objname, vertices));
+        // System.out.println("poly.contains ? " + surveyZone.contains(48.3302, -4.5960));
     }
 
     @Override
