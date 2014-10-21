@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.topology.geom;
+package bzh.terrevirtuelle.navisu.topology.model;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -18,10 +18,12 @@ import java.util.List;
 public class SurveyZone {
 
     private Polygon polygon;
+    private final String acronym;
+    private final String objname;
 
-    public SurveyZone(List<double[]> vertices) {
-       // System.out.println("vertices " + vertices);
-        //   System.out.println("bounds " + bounds);
+    public SurveyZone(String acronym, String objname, List<double[]> vertices) {
+        this.acronym = acronym;
+        this.objname = objname;
         Coordinate[] coordinates0 = new Coordinate[vertices.size() + 1];
         int i = 0;
         for (double[] t : vertices) {
@@ -54,4 +56,13 @@ public class SurveyZone {
     public boolean contains(double lat, double lon) {
         return polygon.contains(new GeometryFactory().createPoint(new Coordinate(lon, lat)));
     }
+
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public String getObjname() {
+        return objname;
+    }
+    
 }
