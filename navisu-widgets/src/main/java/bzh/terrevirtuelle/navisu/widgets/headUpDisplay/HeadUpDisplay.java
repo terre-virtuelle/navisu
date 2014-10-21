@@ -24,12 +24,6 @@ public class HeadUpDisplay
         extends Widget {
 
     private ImageView background;
-    private Button button;
-    private Robot robot;
-    BufferedImage screenShot;
-    Image image;
-    ImageView sample1;
-
     public HeadUpDisplay() {
         createScene();
     }
@@ -37,42 +31,21 @@ public class HeadUpDisplay
     protected final void createScene() {
 
         background = ImageViewBuilder.create()
-                // .image(new Image(getClass().getResourceAsStream("cardinalWest.png")))
                 .image(new Image(getClass().getResourceAsStream("u25.png")))
                 .scaleX(.6)
                 .scaleY(.6)
                 .opacity(.7)
-                .layoutX(-200)
-                .layoutY(300)
+                //.layoutX(-200)
+                //.layoutY(-100)
                 .build();
         getChildren().add(background);
-        button = ButtonBuilder.create()
-                .text("Widget Test")
-                .layoutX(55)
-                .layoutY(600)
-                .prefWidth(100)
-                .prefHeight(15)
-                .build();
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                getChildren().get(0).setVisible(false);
-                getChildren().get(1).setVisible(false);
-            }
-        });
-        getChildren().add(button);
     }
 
-
     protected void initEvt() {
-       
-        setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent me) {
-                if (me != null && dragAnchor != null) {
-                    setTranslateX((int) (initX + me.getSceneX() - dragAnchor.getX()));
-                    setTranslateY((int) (initY + me.getSceneY() - dragAnchor.getY()));
-                }
+        setOnMouseDragged((MouseEvent me) -> {
+            if (me != null && dragAnchor != null) {
+                setTranslateX((int) (initX + me.getSceneX() - dragAnchor.getX()));
+                setTranslateY((int) (initY + me.getSceneY() - dragAnchor.getY()));
             }
         });
     }
