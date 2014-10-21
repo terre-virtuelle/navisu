@@ -34,9 +34,9 @@ public class DEPARE_ShapefileLoader
         if (val1 == -9.0 && val2 <= 0.0) {
             color = new Color(151, 199, 0);
         }
-if (val1 >= -14.0 && val2 <= 0.0) {
-           // color = new Color(151, 199, 0);
-    color = new Color(87, 137, 108);
+        if (val1 >= -14.0 && val2 <= 0.0) {
+            // color = new Color(151, 199, 0);
+            color = new Color(87, 137, 108);
         }
         if (val1 >= 0.0 && val2 <= 12.0) {
             color = new Color(91, 175, 247);
@@ -48,7 +48,7 @@ if (val1 >= -14.0 && val2 <= 0.0) {
         if (val1 >= 0.0 && val2 <= 3.0) {
             color = new Color(33, 255, 242);
         }
-        
+
         if (val1 == 5.0 && val2 <= 10.0) {
             color = new Color(159, 215, 247);
         }
@@ -56,6 +56,9 @@ if (val1 >= -14.0 && val2 <= 0.0) {
             color = new Color(159, 215, 247);
         }
         if (val1 == 10.0 && val2 <= 20.0) {
+            color = new Color(247, 247, 247);
+        }
+        if (val1 == 10.0 && val2 <= 30.0) {
             color = new Color(247, 247, 247);
         }
         if (val1 >= 15.0 && val2 <= 50.0) {
@@ -74,7 +77,7 @@ if (val1 >= -14.0 && val2 <= 0.0) {
             color = new Color(247, 247, 247);
         }
 
-       // System.out.println("val1 : " + val1 + " val2 : " + val2);
+        // System.out.println("val1 : " + val1 + " val2 : " + val2);
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
         normalAttributes.setDrawOutline(false);

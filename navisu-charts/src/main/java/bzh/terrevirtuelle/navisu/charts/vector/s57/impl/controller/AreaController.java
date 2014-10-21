@@ -23,7 +23,7 @@ public class AreaController implements EventHandler<KeyEvent> {
 
     private static final AreaController instance = new AreaController();
     private final List<SurfacePolygons> shapes;
-    final KeyCombination keyComb1 = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+    final KeyCombination keyComb1 = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
 
     private AreaController() {
         shapes = new ArrayList<>();
@@ -40,7 +40,7 @@ public class AreaController implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent event) {
         if (keyComb1.match(event)) {
-            System.out.println("Ctrl+H pressed");
+            System.out.println("Ctrl+A pressed");
         }
     }
 }

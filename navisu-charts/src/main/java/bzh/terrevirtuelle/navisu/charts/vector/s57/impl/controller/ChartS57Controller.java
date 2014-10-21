@@ -82,7 +82,6 @@ public class ChartS57Controller {
     private final String boyagePath = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo";
     private final Map<Pair, String> topMarks;
     private String marsys;
-    private AreaController areaController;
 
     static {
         INSTANCE = new ChartS57Controller();
@@ -93,7 +92,6 @@ public class ChartS57Controller {
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
         System.setProperty("file.encoding", "UTF-8");
-        //  areaController = AreaController.getInstance();
         initAcronymsMap();
     }
 
@@ -338,6 +336,7 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                
                 if (s.equals("RESARE.shp")) {
                     loader = new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2);
                     tmp = new File(path + "/RESARE.shp");
