@@ -79,7 +79,8 @@ public class AREA_ShapefileLoader
         shape.setHighlightAttributes(null);
 
         createValues(shape);
-        createSurveyZone(record);
+       // createSurveyZone(record);
+        ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
         layer.addRenderable(shape);
     }
 
@@ -107,16 +108,17 @@ public class AREA_ShapefileLoader
         });
         shape.setValue("ACRONYM", acronym);
     }
-
+/*
     protected void createSurveyZone(ShapefileRecord record) {
         List<double[]> vertices = new ArrayList<>();
         Iterable<double[]> coords = record.getCompoundPointBuffer().getCoords();
         for (double[] c : coords) {
             vertices.add(c);
         }
-        ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, vertices));
-    }
 
+        ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
+    }
+*/
     @Override
     public ShapefileRecord getRecord() {
         return record;
