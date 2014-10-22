@@ -50,7 +50,7 @@ public class SurveyZoneController {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS1 data = (AIS1) d;
-                contains(data.getLatitude(), data.getLongitude());
+                contains(data.getMMSI(), data.getLatitude(), data.getLongitude());
             }
         });
 
@@ -59,7 +59,7 @@ public class SurveyZoneController {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS2 data = (AIS2) d;
-                contains(data.getLatitude(), data.getLongitude());
+                contains(data.getMMSI(), data.getLatitude(), data.getLongitude());
             }
         });
 
@@ -68,7 +68,7 @@ public class SurveyZoneController {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS3 data = (AIS3) d;
-                contains(data.getLatitude(), data.getLongitude());
+                contains(data.getMMSI(), data.getLatitude(), data.getLongitude());
             }
         });
     }
@@ -77,9 +77,9 @@ public class SurveyZoneController {
         zones.add(surveyZone);
     }
 
-    private void contains(double lat, double lon) {
+    private void contains(Integer mmsi, double lat, double lon) {
         zones.stream().filter((s) -> (s.contains(lat, lon))).forEach((_item) -> {
-            System.out.println(_item.getAcronym() + " " + _item.getObjname());
+            System.out.println(mmsi + " in : " +_item.getAcronym() + " " + _item.getObjname());
         });
     }
 }
