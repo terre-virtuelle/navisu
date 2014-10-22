@@ -21,7 +21,8 @@ import java.util.List;
 public class SurveyZone {
 
     private Polygon polygon;
-    SurfacePolygons shape;
+    private SurfacePolygons shape;
+    private Coordinate[] coordinates;
 
     public SurveyZone(SurfacePolygons shape, ShapefileRecord record) {
         this.shape = shape;
@@ -30,14 +31,14 @@ public class SurveyZone {
         for (double[] c : coords) {
             vertices.add(c);
         }
-        Coordinate[] coordinates0 = new Coordinate[vertices.size() + 1];
+        coordinates = new Coordinate[vertices.size() + 1];
         int i = 0;
         for (double[] t : vertices) {
-            coordinates0[i] = new Coordinate(t[0], t[1], 0.0);
+            coordinates[i] = new Coordinate(t[0], t[1], 0.0);
             i++;
         }
-        coordinates0[i] = new Coordinate(coordinates0[0].x, coordinates0[0].y, 0.0);// Le poly doit être fermé
-        polygon = new GeometryFactory().createPolygon(new GeometryFactory().createLinearRing(coordinates0), null);
+        coordinates[i] = new Coordinate(coordinates[0].x, coordinates[0].y, 0.0);// Le poly doit être fermé
+        polygon = new GeometryFactory().createPolygon(new GeometryFactory().createLinearRing(coordinates), null);
 
     }
 
