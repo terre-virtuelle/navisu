@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.charts.vector.s57.impl;
+ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;

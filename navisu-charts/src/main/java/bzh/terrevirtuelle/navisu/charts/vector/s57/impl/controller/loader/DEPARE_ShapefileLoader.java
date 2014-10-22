@@ -76,7 +76,12 @@ public class DEPARE_ShapefileLoader
         if (val2 >= 100.0) {
             color = new Color(247, 247, 247);
         }
-
+        // pour une mer bleue, en mode nav
+        /*
+         if (val1 >= -20.0 && val2 <= 5000.0) {
+         color = new Color(35, 66, 87);
+         }
+         */
         // System.out.println("val1 : " + val1 + " val2 : " + val2);
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
