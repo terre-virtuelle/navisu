@@ -22,7 +22,9 @@ import org.capcaval.c3.component.ComponentState;
  */
 public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
 
-    private static final String EXTENSION = ".wav";
+    //   private static final String EXTENSION = ".wav";
+    private static final String EXTENSION_0 = ".wav";
+    private static final String EXTENSION_1 = ".mp3";
     javafx.scene.media.Media media;
     MediaPlayer mediaPlayer;
 
@@ -30,11 +32,6 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
     public void play() {
         mediaPlayer.setAutoPlay(true);
         mediaPlayer.setCycleCount(10);
-        /*
-        Timer time = new Timer(); // Instantiate Timer Object
-        ScheduledTask st = new ScheduledTask(); // Instantiate SheduledTask class
-        time.schedule(st, 0, 1000); // Create Repetitively task for every 1 secs
-*/
     }
 
     @Override
@@ -46,7 +43,7 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
     public boolean canOpen(String file) {
         boolean canOpen = false;
 
-        if (file.toLowerCase().endsWith(EXTENSION)) {
+        if (file.toLowerCase().endsWith(EXTENSION_0) || file.toLowerCase().endsWith(EXTENSION_1)) {
             canOpen = true;
         }
 
@@ -74,7 +71,7 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
 
     @Override
     public String[] getExtensions() {
-        return new String[]{"*" + EXTENSION};
+        return new String[]{"*" + EXTENSION_0, "*" + EXTENSION_1};
     }
 
     @Override
@@ -95,6 +92,7 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
     class ScheduledTask extends TimerTask {
 
         Date now; // to display current time
+
         @Override
         public void run() {
             now = new Date(); // initialize date
