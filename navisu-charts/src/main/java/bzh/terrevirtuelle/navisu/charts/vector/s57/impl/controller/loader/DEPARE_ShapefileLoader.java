@@ -29,7 +29,7 @@ public class DEPARE_ShapefileLoader
         Float val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());
         Float val2 = new Float(record.getAttributes().getValue("DRVAL2").toString());
 
-        Color color = new Color(255, 0, 0);
+        Color color = new Color(159,215,247);
 
         if (val1 == -9.0 && val2 <= 0.0) {
             color = new Color(151, 199, 0);
@@ -52,7 +52,7 @@ public class DEPARE_ShapefileLoader
         if (val1 == 5.0 && val2 <= 10.0) {
             color = new Color(159, 215, 247);
         }
-        if (val1 >= 5.0 && val2 <= 20.0) {
+        if (val1 >= 5.0 && val2 <= 25.0) {//20.0
             color = new Color(159, 215, 247);
         }
         if (val1 == 10.0 && val2 <= 20.0) {
