@@ -19,3 +19,4 @@
 /.nb-gradle/profiles/private/
 /.nb-gradle/private/
 /navisu-geodesy/.nb-gradle/private/
+/build/
