@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
