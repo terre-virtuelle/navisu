@@ -88,7 +88,7 @@ public class GuiAgentImpl
     GeoViewServices geoViewServices;
     @UsedService
     GuiAgentServices guiAgentServices;
-    
+
     protected JobsManager jobsManager;
     protected StatusBar statusBar;
     protected int width;
@@ -169,17 +169,17 @@ public class GuiAgentImpl
         scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
         /*
-        StackPane test= null;
-        GuiAgentController ctrlTest; 
-        try {
-             test = loader.load(GuiAgentImpl.class.getResourceAsStream("FXMLDocument.fxml"));
-             ctrlTest  = loader.getController();
-        } catch (IOException ex) {
-            Logger.getLogger(GuiAgentImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         StackPane test= null;
+         GuiAgentController ctrlTest; 
+         try {
+         test = loader.load(GuiAgentImpl.class.getResourceAsStream("FXMLDocument.fxml"));
+         ctrlTest  = loader.getController();
+         } catch (IOException ex) {
+         Logger.getLogger(GuiAgentImpl.class.getName()).log(Level.SEVERE, null, ex);
+         }
         
-        root.getChildren().add(test);
-        */
+         root.getChildren().add(test);
+         */
         /*
          swingNode = new SwingNode();
          StatusBar statusbar = new StatusBar();
@@ -227,16 +227,20 @@ public class GuiAgentImpl
         });
 
         // Test avant les Displays
-        WidgetController widgetController = new WidgetController();
+        WidgetController widgetController0 = new WidgetController();
         HeadUpDisplay headUpDisplay = new HeadUpDisplay();
         headUpDisplay.setTranslateY(-250);
-        widgetController.add(headUpDisplay);
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController);
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController0);
+        widgetController0.add(headUpDisplay);
         root.getChildren().add(headUpDisplay);
 
+        WidgetController widgetController1 = new WidgetController();
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
-         root.getChildren().add(hud_3);
-         hud_3.schedule();
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
+        widgetController1.add(hud_3);
+        root.getChildren().add(hud_3);
+        
+        hud_3.schedule();
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
