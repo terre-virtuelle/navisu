@@ -14,12 +14,7 @@
 
 <fx:root type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fitHeight="686.0" fitWidth="1016.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@190514Capture3-fond.png" />
-            </image>
-        </ImageView>
-        <Pane layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0">
+        <Pane layoutX="20.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" prefHeight="700.0" prefWidth="600.0">
             <children>
                 <ImageView focusTraversable="true" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                     <image>
