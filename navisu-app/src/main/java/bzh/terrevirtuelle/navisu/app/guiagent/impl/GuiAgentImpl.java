@@ -24,6 +24,7 @@ import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.HeadUpDisplay;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
+import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_3.HUD_3_2_1_Controller;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
@@ -48,6 +49,7 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
 
@@ -167,6 +169,18 @@ public class GuiAgentImpl
         scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
         /*
+        StackPane test= null;
+        GuiAgentController ctrlTest; 
+        try {
+             test = loader.load(GuiAgentImpl.class.getResourceAsStream("FXMLDocument.fxml"));
+             ctrlTest  = loader.getController();
+        } catch (IOException ex) {
+            Logger.getLogger(GuiAgentImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        root.getChildren().add(test);
+        */
+        /*
          swingNode = new SwingNode();
          StatusBar statusbar = new StatusBar();
          statusbar.setEnabled(true);
@@ -220,6 +234,9 @@ public class GuiAgentImpl
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController);
         root.getChildren().add(headUpDisplay);
 
+        HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
+         root.getChildren().add(hud_3);
+         hud_3.schedule();
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
