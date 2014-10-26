@@ -31,7 +31,7 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
     @Override
     public void play() {
         mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setCycleCount(10);
+        mediaPlayer.setCycleCount(1);
     }
 
     @Override
