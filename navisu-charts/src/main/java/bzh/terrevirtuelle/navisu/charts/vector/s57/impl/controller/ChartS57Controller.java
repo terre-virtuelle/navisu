@@ -92,7 +92,7 @@ public class ChartS57Controller {
     }
 
     public ChartS57Controller() {
-        surveyZoneController = new SurveyZoneController();
+      //  surveyZoneController = new SurveyZoneController();
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();

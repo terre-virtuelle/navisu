@@ -125,9 +125,9 @@ public class LIGHTS_ShapefileLoader
             lightView.setCenter(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)));
             lightView.setRadii(140.0 * range, 150.0 * range);
             if (data.getHeight() != null) {
-               lightView.setAltitude(elevation + new Double(data.getHeight()));
+                lightView.setAltitude(elevation + new Double(data.getHeight()));
                // creation du volume de la lumiere
-              //  lightView.setAltitudes(100, 300);
+                //  lightView.setAltitudes(100, 300);
             } else {
                 lightView.setAltitude(elevation + 35.0);
             }
@@ -141,7 +141,7 @@ public class LIGHTS_ShapefileLoader
             Polyline line = new Polyline(pathPositions);
             line.setColor(Color.BLACK);
             layer.addRenderable(line);
-            
+
             pathPositions.clear();
             pathPositions.add(Position.fromDegrees(latDegrees, lonDegrees, elevation + 35.0));
             latLon = Position.greatCircleEndPosition(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)),
@@ -177,10 +177,12 @@ public class LIGHTS_ShapefileLoader
             airspaceLayer.addAirspace(lightView);
         } else {
             lightView.setCenter(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)));
-            if (!data.getColour().contains("1")) {
-                lightView.setRadii(100.0 * range, 110.0 * range);
-            } else {
-                lightView.setRadii(140.0 * range, 150.0 * range);
+            if (data.getColour() != null) {
+                if (!data.getColour().contains("1")) {
+                    lightView.setRadii(100.0 * range, 110.0 * range);
+                } else {
+                    lightView.setRadii(140.0 * range, 150.0 * range);
+                }
             }
             if (data.getHeight() != null) {
                 lightView.setAltitude(elevation + new Double(data.getHeight()));
