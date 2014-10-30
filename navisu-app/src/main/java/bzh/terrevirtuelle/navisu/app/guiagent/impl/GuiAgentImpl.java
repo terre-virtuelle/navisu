@@ -233,14 +233,14 @@ public class GuiAgentImpl
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController0);
         widgetController0.add(headUpDisplay);
         root.getChildren().add(headUpDisplay);
-
+/*
         WidgetController widgetController1 = new WidgetController();
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
         widgetController1.add(hud_3);
         root.getChildren().add(hud_3);
-        
         hud_3.schedule();
+ */       
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
