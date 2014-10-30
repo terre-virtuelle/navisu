@@ -9,6 +9,7 @@ import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import java.awt.Color;
 //import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 
 /**
@@ -30,6 +31,16 @@ public class SLCONS_ShapefileLoader
         normalAttributes.setDrawOutline(true);
         normalAttributes.setOutlineMaterial(Material.BLACK);
         normalAttributes.setOutlineWidth(2.0);
+        return normalAttributes;
+    }
+
+    @SuppressWarnings({"UnusedDeclaration"})
+    @Override
+    protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
+        Color color = Color.BLACK;
+
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setInteriorMaterial(new Material(color));
         return normalAttributes;
     }
 

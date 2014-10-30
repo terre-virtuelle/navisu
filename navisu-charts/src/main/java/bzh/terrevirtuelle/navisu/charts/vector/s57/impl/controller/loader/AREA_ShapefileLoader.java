@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.AREA;
-import bzh.terrevirtuelle.navisu.topology.model.SurveyZone;
+import bzh.terrevirtuelle.navisu.topology.surveyZone.model.SurveyZone;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
@@ -79,7 +79,6 @@ public class AREA_ShapefileLoader
         shape.setHighlightAttributes(null);
 
         createValues(shape);
-       // createSurveyZone(record);
         ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
         layer.addRenderable(shape);
     }
@@ -108,17 +107,7 @@ public class AREA_ShapefileLoader
         });
         shape.setValue("ACRONYM", acronym);
     }
-/*
-    protected void createSurveyZone(ShapefileRecord record) {
-        List<double[]> vertices = new ArrayList<>();
-        Iterable<double[]> coords = record.getCompoundPointBuffer().getCoords();
-        for (double[] c : coords) {
-            vertices.add(c);
-        }
 
-        ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
-    }
-*/
     @Override
     public ShapefileRecord getRecord() {
         return record;

@@ -9,7 +9,6 @@ import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import java.awt.Color;
 //import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 
 /**
@@ -17,8 +16,8 @@ import java.awt.Color;
  * @author Serge Morvan
  * @date 4 juin 2014 NaVisu project
  */
-public class PONTON_ShapefileLoader
-        extends ShapefileLoader
+public class CBLSUB_ShapefileLoader
+        extends Template_ShapefileLoader
         implements S57ShapeFileLoader {
 
     ShapefileRecord record;
@@ -29,18 +28,9 @@ public class PONTON_ShapefileLoader
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setDrawInterior(false);
         normalAttributes.setDrawOutline(true);
-        normalAttributes.setOutlineMaterial(Material.BLACK);
-        normalAttributes.setOutlineWidth(2.0);
-        return normalAttributes;
-    }
+        normalAttributes.setOutlineOpacity(.2);
+        normalAttributes.setOutlineMaterial(Material.GRAY);
 
-    @SuppressWarnings({"UnusedDeclaration"})
-    @Override
-    protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-        Color color = Color.BLACK;
-
-        ShapeAttributes normalAttributes = new BasicShapeAttributes();
-        normalAttributes.setInteriorMaterial(new Material(color));
         return normalAttributes;
     }
 

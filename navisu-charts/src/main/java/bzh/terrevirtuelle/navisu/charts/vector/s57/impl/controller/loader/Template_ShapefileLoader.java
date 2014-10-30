@@ -201,6 +201,7 @@ public class Template_ShapefileLoader
      * @throws IllegalArgumentException if the shapefile is null or an empty
      * string, or if the Shapefile's primitive type is unrecognized.
      */
+    @Override
     public List<Layer> createLayersFromShapefile(Shapefile shp) {
         if (shp == null) {
             String message = Logging.getMessage("nullValue.ShapefileIsNull");
@@ -208,7 +209,7 @@ public class Template_ShapefileLoader
             throw new IllegalArgumentException(message);
         }
 
-        List<Layer> layers = new ArrayList<Layer>();
+        List<Layer> layers = new ArrayList<>();
 
         if (Shapefile.isPointType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();
@@ -241,6 +242,7 @@ public class Template_ShapefileLoader
      *
      * @return the maximum number of polygons to place in a layer.
      */
+    @Override
     public int getNumPolygonsPerLayer() {
         return this.numPolygonsPerLayer;
     }
@@ -254,6 +256,7 @@ public class Template_ShapefileLoader
      *
      * @throws IllegalArgumentException if the number is less than 1.
      */
+    @Override
     public void setNumPolygonsPerLayer(int numPolygonsPerLayer) {
         if (numPolygonsPerLayer < 1) {
             String message = Logging.getMessage("generic.InvalidSize", numPolygonsPerLayer);

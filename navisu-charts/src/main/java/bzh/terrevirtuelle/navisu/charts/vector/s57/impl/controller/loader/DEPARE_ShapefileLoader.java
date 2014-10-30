@@ -29,7 +29,7 @@ public class DEPARE_ShapefileLoader
         Float val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());
         Float val2 = new Float(record.getAttributes().getValue("DRVAL2").toString());
 
-        Color color = new Color(159,215,247);
+        Color color = new Color(159, 215, 247);
 
         if (val1 == -9.0 && val2 <= 0.0) {
             color = new Color(151, 199, 0);
@@ -42,11 +42,14 @@ public class DEPARE_ShapefileLoader
             color = new Color(91, 175, 247);
         }
         if (val1 >= 0.0 && val2 <= 8.0) {
-            color = new Color(31, 175, 247);
+            //color = new Color(31, 175, 247);
+            color = new Color(115, 182, 239);
         }
 
         if (val1 >= 0.0 && val2 <= 3.0) {
-            color = new Color(33, 255, 242);
+           // color = new Color(33, 255, 242);
+            // color = new Color(115, 182, 239);
+            color = new Color(31, 175, 247);
         }
 
         if (val1 == 5.0 && val2 <= 10.0) {
@@ -59,6 +62,9 @@ public class DEPARE_ShapefileLoader
             color = new Color(247, 247, 247);
         }
         if (val1 == 10.0 && val2 <= 30.0) {
+            color = new Color(247, 247, 247);
+        }
+        if (val1 == 20.0 && val2 <= 30.0) {
             color = new Color(247, 247, 247);
         }
         if (val1 >= 15.0 && val2 <= 50.0) {
@@ -87,6 +93,18 @@ public class DEPARE_ShapefileLoader
         normalAttributes.setInteriorMaterial(new Material(color));
         normalAttributes.setDrawOutline(false);
         normalAttributes.setImageSource(getClass().getResourceAsStream("img/mer.jpg"));
+        return normalAttributes;
+    }
+
+    @Override
+    protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
+        this.record = record;
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+      //  normalAttributes.setDrawInterior(true);
+      //  normalAttributes.setInteriorMaterial(Material.WHITE);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(Material.BLACK);
+        normalAttributes.setOutlineWidth(2.0);
         return normalAttributes;
     }
 
