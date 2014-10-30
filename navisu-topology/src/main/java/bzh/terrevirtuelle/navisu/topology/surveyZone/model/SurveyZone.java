@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.topology.model;
+package bzh.terrevirtuelle.navisu.topology.surveyZone.model;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -21,8 +21,8 @@ import java.util.List;
 public class SurveyZone {
 
     private Polygon polygon;
-    private SurfacePolygons shape;
-    private Coordinate[] coordinates;
+    private final SurfacePolygons shape;
+    private final Coordinate[] coordinates;
 
     public SurveyZone(SurfacePolygons shape, ShapefileRecord record) {
         this.shape = shape;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.topology.controller;
+package bzh.terrevirtuelle.navisu.topology.surveyZone.controller;
 
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
@@ -13,7 +13,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.topology.model.SurveyZone;
+import bzh.terrevirtuelle.navisu.topology.surveyZone.model.SurveyZone;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
