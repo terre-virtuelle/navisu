@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.impl.charts.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.charts.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.CATLMK;
 import gov.nasa.worldwind.WorldWind;
