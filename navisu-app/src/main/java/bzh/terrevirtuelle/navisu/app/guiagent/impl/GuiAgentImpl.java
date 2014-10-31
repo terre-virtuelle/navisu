@@ -232,6 +232,7 @@ public class GuiAgentImpl
         headUpDisplay.setTranslateY(-250);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController0);
         widgetController0.add(headUpDisplay);
+        widgetController0.startFadeTransition(headUpDisplay,1.0,0.0);
         root.getChildren().add(headUpDisplay);
 /*
         WidgetController widgetController1 = new WidgetController();
