@@ -176,7 +176,7 @@ public class LANDMARK_ShapefileLoader
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.8);
         placemark.setAttributes(attrs);*/
-        attrs.setImageAddress("img/landmarks/" + acronym + "_"
+        attrs.setImageAddress("img/landmarks_" + marsys + "/" + acronym + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getConspicuousVisually() + "_"
                 + object.getFunction() + "_"

@@ -31,13 +31,12 @@ implements Initializable {
 
     @FXML
     
-    public ImageView needle;
+
     public Text heading;
-    public Text heading1;
     public Double route=0.0;
     
     public HUD_3_2_1_Controller() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_HUD_3_2_1.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_HUD_simple.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -55,11 +54,9 @@ implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                // System.out.println("heading " + heading+"route "+route);
-                needle.setRotate(route*2);
                 heading.setText(route.toString());
-                heading1.setText(route.toString());
                 route++;
-                route %= 90;
+                route %= 360;
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
