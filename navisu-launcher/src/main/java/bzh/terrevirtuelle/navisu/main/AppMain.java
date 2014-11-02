@@ -13,8 +13,10 @@ import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.impl.KapChartImpl;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.S57ChartServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.impl.charts.S57ChartImpl;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.S57CatalogServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.impl.S57CatalogImpl;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -65,7 +67,7 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         KapChartImpl.class,
                         GribImpl.class,
-                      //  S57ChartCatalogImpl.class,
+                        S57CatalogImpl.class,
                         S57ChartImpl.class,
                         GeoTiffChartImpl.class,
                         KmlObjectImpl.class,
@@ -82,6 +84,7 @@ public class AppMain extends Application {
 
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
+        S57CatalogServices catalogS57Services = componentManager.getComponentService(S57CatalogServices.class);
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
@@ -94,6 +97,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
+        driverServices.registerNewDriver(catalogS57Services.getDriver());
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(mediaServices.getDriver());
