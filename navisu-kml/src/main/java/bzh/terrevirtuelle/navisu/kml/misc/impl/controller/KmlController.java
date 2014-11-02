@@ -55,7 +55,7 @@ public class KmlController {
         this.balloonController = new BalloonController(wwd) {
             @Override
             protected void addDocumentLayer(KMLRoot document) {
-              //  addKMLLayer(document);
+                //addKMLLayer(document);
             }
         };
         // Give the KML app controller a reference to the BalloonController so that the app controller can open
