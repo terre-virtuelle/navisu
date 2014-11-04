@@ -114,7 +114,6 @@ public class S57CatalogImpl
                 @Override
                 public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                     if (file.toFile().getName().toLowerCase().endsWith(EXTENSION)) {
-                      //  System.out.println(file.toFile().getName() + " open");
                         openFile(file.toFile().getAbsolutePath());
                     }
                     return FileVisitResult.CONTINUE;
@@ -173,19 +172,23 @@ public class S57CatalogImpl
     }
 
     private void clip() {
+        /*
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains("M_COVR"))).forEach((l) -> {
                 l.setEnabled(false);
             });
         }
+                */
     }
 
     private void unClip() {
+        /*
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains("M_COVR"))).forEach((l) -> {
                 l.setEnabled(true);
             });
         }
+                */
     }
 
     @Override
