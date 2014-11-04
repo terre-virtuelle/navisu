@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import java.util.logging.Level;
+
 
 /**
  * NaVisu
@@ -48,6 +50,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
         this.fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
+
         MenuItem menuItem = new MenuItem(tr("menu.file.open"));
         menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
         menuItem.setOnAction((e) -> {
@@ -66,19 +69,17 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
 
     protected void handleOpenFiles(List<File> files) {
 
-        for(File file : files) {
-
+        files.stream().forEach((file) -> {
             Driver driver = this.findDriverForFile(file.getAbsolutePath());
             if(driver != null) {
-
                 guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
                     driver.open(progressHandle, file.getAbsolutePath());
                 });
             }
             else {
-                LOGGER.warning("Unable to find a driver for file \"" + file.getName() + "\"");
+                LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
             }
-        }
+        });
     }
 
     protected Driver findDriverForFile(String file) {
