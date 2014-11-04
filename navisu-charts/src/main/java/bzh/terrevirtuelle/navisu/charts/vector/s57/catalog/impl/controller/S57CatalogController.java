@@ -13,16 +13,11 @@ import bzh.terrevirtuelle.navisu.topology.surveyZone.controller.SurveyZoneContro
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.layers.Layer;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Serge Morvan
@@ -39,17 +34,17 @@ public class S57CatalogController {
     protected WorldWindow wwd;
     protected Globe globe;
     private ShapefileLoader loader;
-
+    private SurveyZoneController surveyZoneController;
 
     static {
         INSTANCE = new S57CatalogController();
     }
 
     public S57CatalogController() {
-        //  surveyZoneController = new SurveyZoneController();
+       // surveyZoneController = new SurveyZoneController();
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
-        System.setProperty("file.encoding", "UTF-8"); 
+        System.setProperty("file.encoding", "UTF-8");
     }
 
     public Layer getLayer(String name) {
@@ -86,10 +81,9 @@ public class S57CatalogController {
             for (File f : listOfFiles) {
                 String s = f.getName();
                 // Contour de la carte
-                if (s.equals(""
-                        + ""
-                        + ".shp")) {
+                if (s.equals("M_COVR.shp")) {
                     loader = new M_COVR_ShapefileLoader();
+                   // loader = new ShapefileLoader();
                     tmp = new File(path + "/M_COVR.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
@@ -97,7 +91,6 @@ public class S57CatalogController {
                     });
                     layers.addAll(la);
                 }
-
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
                 }
