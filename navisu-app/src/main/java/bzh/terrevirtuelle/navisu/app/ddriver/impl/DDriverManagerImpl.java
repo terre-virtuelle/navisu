@@ -98,7 +98,6 @@ public class DDriverManagerImpl implements DDriverManager, DDriverManagerService
                 }
             });
         } catch (IOException ex) {
-            System.out.println("ex " + ex);
             Logger.getLogger(DDriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
 

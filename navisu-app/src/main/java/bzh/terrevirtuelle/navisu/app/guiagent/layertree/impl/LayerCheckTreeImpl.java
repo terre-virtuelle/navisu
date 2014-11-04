@@ -92,7 +92,6 @@ public class LayerCheckTreeImpl
     @Override
     public void createGroup(String groupName, GeoLayer<?>... layers) {
         for (GeoLayer geoLayer : layers) {
-            System.out.println(groupName + "  geoLayer " + geoLayer.getName());
             CheckBoxTreeItem<GeoLayer> treeItem;
             treeItem = new CheckBoxTreeItem<>(geoLayer);
             treeItem.setSelected(geoLayer.isVisible());
@@ -103,7 +102,6 @@ public class LayerCheckTreeImpl
                     ((Layer) geoLayer.getDisplayLayer()).setEnabled(newValue);
                 }
             });
-            System.out.println("treeItem " + search(groupName));
             search(groupName).getChildren().add(treeItem);
         }
     }
