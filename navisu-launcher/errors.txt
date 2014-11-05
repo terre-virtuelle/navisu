@@ -8,3 +8,14 @@ ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
 ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
+ERROR 1: Attempt to write non-point (MULTIPOINT) geometry to point shapefile.
