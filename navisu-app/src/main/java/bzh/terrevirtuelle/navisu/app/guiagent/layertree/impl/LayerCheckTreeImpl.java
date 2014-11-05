@@ -74,6 +74,8 @@ public class LayerCheckTreeImpl
         rootItems.add(vector);
         tmp = createNode(vector, "S57 charts", null);
         rootItems.add(tmp);
+        tmp = createNode(vector, "S57 catalog", null);
+        rootItems.add(tmp);
         CheckBoxTreeItem<GeoLayer> kml = createNode(rootItem0, "KML files", null);
         rootItems.add(kml);
     }
@@ -89,7 +91,6 @@ public class LayerCheckTreeImpl
 
     @Override
     public void createGroup(String groupName, GeoLayer<?>... layers) {
-
         for (GeoLayer geoLayer : layers) {
             CheckBoxTreeItem<GeoLayer> treeItem;
             treeItem = new CheckBoxTreeItem<>(geoLayer);

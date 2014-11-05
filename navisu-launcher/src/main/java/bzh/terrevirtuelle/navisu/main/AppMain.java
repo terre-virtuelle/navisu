@@ -2,6 +2,8 @@ package bzh.terrevirtuelle.navisu.main;
 
 import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
 import bzh.terrevirtuelle.navisu.agents.media.impl.MediaImpl;
+import bzh.terrevirtuelle.navisu.app.ddriver.DDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.ddriver.impl.DDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
@@ -67,7 +69,6 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         KapChartImpl.class,
                         GribImpl.class,
-                        S57CatalogImpl.class,
                         S57ChartImpl.class,
                         GeoTiffChartImpl.class,
                         KmlObjectImpl.class,
@@ -75,6 +76,8 @@ public class AppMain extends Application {
                         NmeaClientImpl.class,
                         Widget3DImpl.class,
                         MediaImpl.class,
+                        DDriverManagerImpl.class,
+                        S57CatalogImpl.class,
                         LoggerImpl.class
                 )
         );
@@ -88,60 +91,62 @@ public class AppMain extends Application {
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
-
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
-        
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
 
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
-        driverServices.registerNewDriver(catalogS57Services.getDriver());
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(mediaServices.getDriver());
+        
+        
+        DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
+        ddriverServices.init();
 
+        ddriverServices.registerNewDriver(catalogS57Services.getDriver());
          //------------------------------->
         // TESTS AGENT
         //
         /*
-        GObjectCUDProcessor proc = new TObjectProcessor();
+         GObjectCUDProcessor proc = new TObjectProcessor();
 
-        GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
-        geoViewServices.registerProcessor(proc);
-        geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
+         GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
+         geoViewServices.registerProcessor(proc);
+         geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
 
-        DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
+         DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
 
-        guiAgentServices.getJobsManager().newJob("Test job", pHandler -> {
+         guiAgentServices.getJobsManager().newJob("Test job", pHandler -> {
 
-            double lat = 48.2510;
-            double lon = -4.8124;
+         double lat = 48.2510;
+         double lon = -4.8124;
 
-            TObject tObject = TObject.newBasicTObject(1, lat, lon);
-            dpAgentServices.create(tObject);
+         TObject tObject = TObject.newBasicTObject(1, lat, lon);
+         dpAgentServices.create(tObject);
 
-            pHandler.start(100);
+         pHandler.start(100);
 
-            for (int i = 0; i < 100; i++) {
+         for (int i = 0; i < 100; i++) {
 
-                lon += i / 10000.;
-                tObject.setLocation(Location.factory.newLocation(lat, lon));
+         lon += i / 10000.;
+         tObject.setLocation(Location.factory.newLocation(lat, lon));
 
-                dpAgentServices.update(tObject);
+         dpAgentServices.update(tObject);
 
-                pHandler.progress("Moving TObject...", i);
+         pHandler.progress("Moving TObject...", i);
 
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                }
-            }
+         try {
+         Thread.sleep(500);
+         } catch (InterruptedException e) {
+         }
+         }
 
-            dpAgentServices.delete(tObject);
-        });
-*/
+         dpAgentServices.delete(tObject);
+         });
+         */
         //
         // END TESTS AGENT
         //------------------------------->
@@ -166,7 +171,7 @@ public class AppMain extends Application {
         // dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
-         //tcp://sinagot.net:4003 AIS 
+        //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
