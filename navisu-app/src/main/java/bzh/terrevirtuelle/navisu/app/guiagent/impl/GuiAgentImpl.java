@@ -227,7 +227,7 @@ public class GuiAgentImpl
         });
 
         // Test avant les Displays
-        /*
+        
         WidgetController widgetController0 = new WidgetController();
         HeadUpDisplay headUpDisplay = new HeadUpDisplay();
         headUpDisplay.setTranslateY(-250);
@@ -242,7 +242,7 @@ public class GuiAgentImpl
         widgetController1.add(hud_3);
         root.getChildren().add(hud_3);
         hud_3.schedule();
-        */
+       
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
