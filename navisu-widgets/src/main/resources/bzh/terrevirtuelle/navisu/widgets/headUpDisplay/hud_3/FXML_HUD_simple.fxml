@@ -17,12 +17,12 @@
         <Point3D y="1.0" />
     </rotationAxis>
    <children>
-      <ImageView fitHeight="200.0" fitWidth="275.0" opacity="0.67" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="background" fitHeight="200.0" fitWidth="275.0" opacity="0.67" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Speedo.png" />
          </image>
       </ImageView>
-      <Text fx:id="heading" fill="#47c1cf" layoutX="69.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" textAlignment="RIGHT" wrappingWidth="99.0">
+      <Text fx:id="speed" fill="#47c1cf" layoutX="69.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" textAlignment="RIGHT" wrappingWidth="99.0">
          <font>
             <Font name="Roboto Light" size="36.0" />
          </font>
@@ -37,7 +37,7 @@
             </Lighting>
          </effect>
       </Text>
-      <Text fill="#47c1cf" layoutX="35.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" textAlignment="CENTER" wrappingWidth="63.0">
+      <Text fx:id="cog" fill="#47c1cf" layoutX="35.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" textAlignment="CENTER" wrappingWidth="63.0">
          <effect>
             <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
                <bumpInput>
@@ -52,7 +52,7 @@
             <Font name="Roboto Light" size="24.0" />
          </font>
       </Text>
-      <Text fill="#47c1cf" layoutX="105.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" textAlignment="RIGHT" wrappingWidth="48.0">
+      <Text fx:id="depth" fill="#47c1cf" layoutX="105.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" textAlignment="RIGHT" wrappingWidth="48.0">
          <effect>
             <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
                <bumpInput>
@@ -67,7 +67,7 @@
             <Font name="Roboto Light" size="24.0" />
          </font>
       </Text>
-      <Text fill="#47c1cf" layoutX="168.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" textAlignment="RIGHT" wrappingWidth="50.0">
+      <Text fx:id="sog" fill="#47c1cf" layoutX="168.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" textAlignment="RIGHT" wrappingWidth="50.0">
          <effect>
             <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
                <bumpInput>

@@ -16,7 +16,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -30,9 +29,13 @@ extends Widget
 implements Initializable {
 
     @FXML
-    
-
-    public Text heading;
+    public Text speed;
+    @FXML
+    public Text cog;
+    @FXML
+    public Text sog;
+    @FXML
+    public Text depth;
     public Double route=0.0;
     
     public HUD_3_2_1_Controller() {
@@ -54,7 +57,10 @@ implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                // System.out.println("heading " + heading+"route "+route);
-                heading.setText(route.toString());
+                speed.setText(route.toString());
+                cog.setText(route.toString());
+                sog.setText(route.toString());
+                depth.setText(route.toString());
                 route++;
                 route %= 360;
             }
