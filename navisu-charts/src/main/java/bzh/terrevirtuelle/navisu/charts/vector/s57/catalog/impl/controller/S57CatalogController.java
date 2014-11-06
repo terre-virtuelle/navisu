@@ -64,6 +64,7 @@ public class S57CatalogController {
     public final void init(String path) {
         this.path = path;
         file = new File(path);
+        System.out.println("path " + path);
         initGeosMap();
     }
 

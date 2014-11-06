@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.S57Catalog;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.S57CatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.impl.controller.S57CatalogController;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -26,8 +25,10 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -52,17 +53,20 @@ public class S57CatalogImpl
     private static final String NAME = "S57 catalog";
     private static final String EXTENSION = ".000";
     protected static final String GROUP = "S57 catalog";
-    static private int i = 0;
+    private int i = 0;
     protected S57CatalogController S57CatalogController;
     protected List<Layer> layers;
+    protected Set<Layer> layersSet;
     protected static final Logger LOGGER = Logger.getLogger(S57CatalogImpl.class.getName());
     protected WorldWindow wwd;
     protected Scene scene;
     private boolean first = true;
     private Map<String, String> environment;
+    private boolean enabled;
 
     @Override
     public void componentInitiated() {
+        i = 0;
         layerTreeServices.createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
@@ -85,8 +89,7 @@ public class S57CatalogImpl
         environment.put("OGR_S57_OPTIONS", options);
         options = System.getProperty("user.dir") + "/bin/data";
         environment.put("GDAL_DATA", options);
-        
-
+        layersSet = new HashSet();
     }
 
     @Override
@@ -106,58 +109,54 @@ public class S57CatalogImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        new File("data/shp").mkdir();
-        new File("data/shp/catalog").mkdir();
-        try {
-            Path directory = Paths.get(fileName);
-            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    if (file.toFile().getName().toLowerCase().endsWith(EXTENSION)) {
-                        openFile(file.toFile().getAbsolutePath());
-                    }
-                    return FileVisitResult.CONTINUE;
-                }
-
-                @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    // Files.delete(dir);
-                    return FileVisitResult.CONTINUE;
-                }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(S57CatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
+        if (!new File("data/shp").isDirectory()) {
+            new File("data/shp").mkdir();
+            new File("data/shp/catalog").mkdir();
         }
+        openFile(fileName);
 
+        // new Thread(() -> {
+        //     openFile(fileName);
+        // }).start();
     }
 
     private void openFile(String fileName) {
-        
-        LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
+
+        LOGGER.log(Level.INFO, "Opening {0} ..." + fileName, fileName);
 
         Path inputFile = Paths.get(fileName);
-
+        Proc p = null;
         String cmd;
         cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         try {
             Path tmp = Paths.get(inputFile.toString());
-            Proc.builder.create()
+            p = Proc.builder.create()
                     .setCmd(cmd)
-                    .addArg("-skipfailures ").addArg("-f \"ESRI Shapefile\" ")
-                    .addArg("data/shp/catalog/shp_" + i)// + "/out.shp ")
+                    .addArg("-skipfailures ").addArg("-f \"ESRI Shapefile\" ").addArg("-append")
+                    .addArg("data/shp/catalog/shp_" + 0)// + "/out.shp ")
                     .addArg(tmp.toString())
-                    .addArg("layer M_COVR")
+                    .addArg("M_COVR")
                     .setOut(System.out)
                     .setErr(System.err)
                     .exec(environment);
-            inputFile = tmp;
+            //   inputFile = tmp;
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);
         }
-
+        try {
+            if (p != null) {
+                p.waitFor();
+            }
+        } catch (InterruptedException ex) {
+            Logger.getLogger(S57CatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         S57CatalogController = S57CatalogController.getInstance();
-        S57CatalogController.init("data/shp/catalog/shp_" + i++);
+        S57CatalogController.init("data/shp/catalog/shp_" + 0);
         layers = S57CatalogController.getLayers();
+       // System.out.println("layersSet " + layersSet);
+       // layersSet.stream().forEach((l) -> {
+         //   layers.add(l);
+        //});
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             String name = l.getName();
@@ -168,27 +167,26 @@ public class S57CatalogImpl
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
-
     }
 
     private void clip() {
         /*
-        if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("M_COVR"))).forEach((l) -> {
-                l.setEnabled(false);
-            });
-        }
-                */
+         if (layers != null) {
+         layers.stream().filter((l) -> (l.getName().contains("M_COVR"))).forEach((l) -> {
+         l.setEnabled(false);
+         });
+         }
+         */
     }
 
     private void unClip() {
         /*
-        if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("M_COVR"))).forEach((l) -> {
-                l.setEnabled(true);
-            });
-        }
-                */
+         if (layers != null) {
+         layers.stream().filter((l) -> (l.getName().contains("M_COVR"))).forEach((l) -> {
+         l.setEnabled(true);
+         });
+         }
+         */
     }
 
     @Override
@@ -236,5 +234,10 @@ public class S57CatalogImpl
     @Override
     public void componentStopped() {
 
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 }
