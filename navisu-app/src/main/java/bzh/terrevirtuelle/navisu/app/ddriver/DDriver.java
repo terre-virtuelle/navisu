@@ -2,7 +2,6 @@ package bzh.terrevirtuelle.navisu.app.ddriver;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 
-
 /**
  * NaVisu
  *
@@ -14,6 +13,8 @@ public interface DDriver {
     boolean canOpen(String file);
 
     void open(ProgressHandle progressHandle, String... files);
+
+    boolean isEnabled();
 
     String getName();
 

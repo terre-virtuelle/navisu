@@ -53,7 +53,7 @@ public class DDriverManagerImpl implements DDriverManager, DDriverManagerService
 
     @Override
     public void init() {
-        
+
         this.directoryChooser = new DirectoryChooser();
         this.directoryChooser.setTitle(tr("popup.directoryChooser.open"));
         this.directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -67,10 +67,10 @@ public class DDriverManagerImpl implements DDriverManager, DDriverManagerService
             // If files has been selected
             if (selectedFile != null) {
                 // Open them
-                 this.handleOpenFiles(selectedFile);
+                this.handleOpenFiles(selectedFile);
             }
         });
-       
+
     }
 
     protected void handleOpenFiles(File file) {
@@ -89,7 +89,7 @@ public class DDriverManagerImpl implements DDriverManager, DDriverManagerService
                     } else {
                         LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", dir.toFile().getName());
                     }
-                    return FileVisitResult.CONTINUE;
+                     return FileVisitResult.CONTINUE;
                 }
 
                 @Override
@@ -126,7 +126,6 @@ public class DDriverManagerImpl implements DDriverManager, DDriverManagerService
         // Hold the driver
         this.availableDriverList.add(driver);
 
-       
     }
 
     @Override
