@@ -27,7 +27,7 @@ public class Proc {
     protected OutputStream out;
     protected OutputStream err;
     protected OutputStream errors;
-
+    protected Process process;
     protected int returnCode;
 
     public Proc() {
@@ -50,8 +50,8 @@ public class Proc {
         args.stream().forEach((arg) -> {
             sb.append(arg).append(SPACE);
         });
-       // System.out.println("sb : " + sb);
-        final Process process = Runtime.getRuntime().exec(sb.toString());
+        // System.out.println("sb : " + sb);
+        process = Runtime.getRuntime().exec(sb.toString());
 
         redirectSreamAsync(process.getInputStream(), out);
         redirectSreamAsync(process.getErrorStream(), errors);
@@ -74,7 +74,7 @@ public class Proc {
             envp[count++] = entry.getKey() + "=" + entry.getValue();
         }
 
-        final Process process = Runtime.getRuntime().exec(sb.toString(), envp);
+        process = Runtime.getRuntime().exec(sb.toString(), envp);
 
         redirectSreamAsync(process.getInputStream(), out);
         redirectSreamAsync(process.getErrorStream(), errors);
@@ -96,6 +96,10 @@ public class Proc {
                 Logger.getAnonymousLogger().log(Level.WARNING, null, ex);
             }
         });
+    }
+
+    public int waitFor() throws InterruptedException {
+        return process.waitFor();
     }
 
     public interface Builder {
