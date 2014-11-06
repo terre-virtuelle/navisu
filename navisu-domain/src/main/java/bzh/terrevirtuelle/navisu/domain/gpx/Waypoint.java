@@ -83,6 +83,8 @@ import javax.xml.bind.annotation.XmlType;
     "pdop",
     "ageofdgpsdata",
     "dgpsid",
+    "course",
+    "speed",
     "extensions"
 })
 public class Waypoint {
@@ -112,6 +114,46 @@ public class Waypoint {
     protected double latitude;
     @XmlAttribute(name = "lon", required = true)
     protected double longitude;
+    protected float course;
+    protected float speed;
+
+    /**
+     * Get the value of speed
+     *
+     * @return the value of speed
+     */
+    public float getSpeed() {
+        return speed;
+    }
+
+    /**
+     * Set the value of speed
+     *
+     * @param speed new value of speed
+     */
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    
+
+    /**
+     * Get the value of course
+     *
+     * @return the value of course
+     */
+    public float getCourse() {
+        return course;
+    }
+
+    /**
+     * Set the value of course
+     *
+     * @param course new value of course
+     */
+    public void setCourse(float course) {
+        this.course = course;
+    }
 
     public Waypoint() {
       
@@ -571,6 +613,11 @@ public class Waypoint {
      */
     public void setLongitude(double value) {
         this.longitude = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Waypoint{" + "ele=" + ele + ", time=" + time + ", magvar=" + magvar + ", geoidheight=" + geoidheight + ", name=" + name + ", cmt=" + cmt + ", desc=" + desc + ", src=" + src + ", link=" + link + ", sym=" + sym + ", type=" + type + ", fix=" + fix + ", sat=" + sat + ", hdop=" + hdop + ", vdop=" + vdop + ", pdop=" + pdop + ", ageofdgpsdata=" + ageofdgpsdata + ", dgpsid=" + dgpsid + ", extensions=" + extensions + ", latitude=" + latitude + ", longitude=" + longitude + '}';
     }
 
 }

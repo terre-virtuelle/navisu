@@ -308,12 +308,18 @@ public class Route {
      * {@link Waypoint }
      * 
      * 
+     * @return 
      */
     public List<Waypoint> getRtept() {
         if (rtept == null) {
-            rtept = new ArrayList<Waypoint>();
+            rtept = new ArrayList<>();
         }
         return this.rtept;
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" + "name=" + name + ", cmt=" + cmt + ", desc=" + desc + ", src=" + src + ", link=" + link + ", number=" + number + ", type=" + type + ", extensions=" + extensions + ", rtept=" + rtept + '}';
     }
 
 }

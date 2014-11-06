@@ -314,4 +314,9 @@ public class Track {
         return this.trkseg;
     }
 
+    @Override
+    public String toString() {
+        return "Track{" + "name=" + name + ", cmt=" + cmt + ", desc=" + desc + ", src=" + src + ", link=" + link + ", number=" + number + ", type=" + type + ", extensions=" + extensions + ", trkseg=" + trkseg + '}';
+    }
+
 }

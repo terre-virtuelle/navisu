@@ -48,7 +48,6 @@ public class TrackSegment {
 
     protected List<Waypoint> trkpt;
     protected Extensions extensions;
-
     public TrackSegment() {
     }
 
@@ -108,6 +107,11 @@ public class TrackSegment {
      */
     public void setExtensions(Extensions value) {
         this.extensions = value;
+    }
+
+    @Override
+    public String toString() {
+        return "TrackSegment{" + "trkpt=" + trkpt + ", extensions=" + extensions + '}';
     }
 
 }

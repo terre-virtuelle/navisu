@@ -13,6 +13,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -54,6 +55,7 @@ import javax.xml.bind.annotation.XmlType;
     "trk",
     "extensions"
 })
+@XmlRootElement
 public class Gpx {
 
     protected Metadata metadata;
@@ -67,6 +69,9 @@ public class Gpx {
     protected String creator;
 
     public Gpx() {
+        wpt = new ArrayList<>();
+        rte = new ArrayList<>();
+        trk  = new ArrayList<>();
     }
 
     public Gpx(Metadata metadata, List<Waypoint> wpt, List<Route> rte, List<Track> trk, 
@@ -265,6 +270,11 @@ public class Gpx {
      */
     public void setCreator(String value) {
         this.creator = value;
+    }
+
+    @Override
+    public String toString() {
+        return "Gpx{" + "metadata=" + metadata + ", wpt=" + wpt + ", rte=" + rte + ", trk=" + trk + ", extensions=" + extensions + ", version=" + version + ", creator=" + creator + '}';
     }
 
 }
