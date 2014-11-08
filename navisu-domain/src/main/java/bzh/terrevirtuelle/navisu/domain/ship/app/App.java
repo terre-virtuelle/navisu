@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.ship;
+package bzh.terrevirtuelle.navisu.domain.ship.app;
 
+import bzh.terrevirtuelle.navisu.domain.ship.Ship;
+import bzh.terrevirtuelle.navisu.domain.ship.ShipBuilder;
 import java.util.GregorianCalendar;
 
 /**
