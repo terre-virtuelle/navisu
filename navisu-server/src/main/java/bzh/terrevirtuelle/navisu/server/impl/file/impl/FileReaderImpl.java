@@ -25,7 +25,7 @@ public class FileReaderImpl
     private int dataIndex = 0;
     private final String fileName;
     private String[] buffer;
-    private int size;
+    private final int size;
 
     public FileReaderImpl(int index, Vertx vertx, String fileName, int size) {
         this.index = index;
@@ -35,7 +35,7 @@ public class FileReaderImpl
         vertx.fileSystem().readFile(fileName,
                 (AsyncResultHandler<Buffer>) (AsyncResult<Buffer> ar) -> {
                     if (ar.succeeded()) {
-                        Logger.getLogger(FileReaderImpl.class.getName()).log(Level.INFO, new Integer(ar.result().length()).toString() + " bytes");
+                        Logger.getLogger(FileReaderImpl.class.getName()).log(Level.INFO, "{0} bytes", Integer.toString(ar.result().length()));
                         buffer = ar.result().toString().split("\n");
                     } else {
                         Logger.getLogger(FileReaderImpl.class.getName()).log(Level.SEVERE, ar.cause().toString());
