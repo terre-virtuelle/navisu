@@ -18,7 +18,7 @@ import java.awt.Color;
  * @date 4 juin 2014 NaVisu project
  */
 public class TSSBND_ShapefileLoader
-        extends Template_ShapefileLoader
+        extends ShapefileLoader
         implements S57ShapeFileLoader {
 
     ShapefileRecord record;
