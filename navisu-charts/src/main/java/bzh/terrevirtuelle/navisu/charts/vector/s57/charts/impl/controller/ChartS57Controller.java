@@ -13,7 +13,9 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.NAVLNE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.OBSTRN_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.AREA_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BRIDGE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.CBLSUB_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DAYMARK_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DOCARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.LAKE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.LANDMARK_ShapefileLoader;
@@ -23,6 +25,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.TOPMAR_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.TSSBND_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.UNSARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.UWTROC_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.WRECKS_CNT_ShapefileLoader;
@@ -331,6 +334,15 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                if (s.equals("DAYMRK.shp")) {
+                    loader = new DAYMARK_ShapefileLoader();
+                    tmp = new File(path + "/DAYMARK.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("DAYMARK");
+                    });
+                    layers.addAll(la);
+                }
 
                 if (s.equals("LAKARE.shp")) {
                     loader = new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0);
@@ -341,6 +353,25 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                if (s.equals("TSSBND.shp")) {
+                    loader = new TSSBND_ShapefileLoader();
+                    tmp = new File(path + "/TSSBND.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("TSSBND");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("BRIDGE.shp")) {
+                    loader = new BRIDGE_ShapefileLoader();
+                    tmp = new File(path + "/BRIDGE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BRIDGE");
+                    });
+                    layers.addAll(la);
+                }
+
                 if (s.equals("DOCARE.shp")) {
                     loader = new DOCARE_ShapefileLoader();
                     tmp = new File(path + "/DOCARE.shp");
@@ -557,7 +588,9 @@ public class ChartS57Controller {
                                     isDisplay = true;
                                     airspaceTmpLayer.removeAllAirspaces();
                                     Light data = lightView.getLight();
-                                    if (data.getSectorLimitOne() != null && data.getSectorLimitTwo() != null) {
+                                    if (data.getSectorLimitOne() != null
+                                            && data.getSectorLimitTwo() != null
+                                            && data.getValueOfNominalRange() != null) {
                                         lightView = new LightView();
                                         lightView.setTmp(true);
                                         double lat = data.getLat();
