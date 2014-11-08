@@ -5,7 +5,6 @@
 package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.impl;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;
-import bzh.terrevirtuelle.navisu.domain.nmea.controller.xml.Writer;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 
