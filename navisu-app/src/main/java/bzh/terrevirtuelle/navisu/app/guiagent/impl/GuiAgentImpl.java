@@ -24,6 +24,7 @@ import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_3.HUD_3_2_1_Controller;
+import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_4.HUD_mmsi_Controller;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
@@ -225,6 +226,7 @@ public class GuiAgentImpl
         });
 
         // Test avant les Displays
+ //------------ HUD widgets ---------------------------------------------       
         /*
         WidgetController widgetController0 = new WidgetController();
         HeadUpDisplay headUpDisplay = new HeadUpDisplay();
@@ -234,6 +236,7 @@ public class GuiAgentImpl
         widgetController0.startFadeTransition(headUpDisplay,1.0,0.0);
         root.getChildren().add(headUpDisplay);
         */
+        
         WidgetController widgetController1 = new WidgetController();
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
@@ -241,14 +244,22 @@ public class GuiAgentImpl
         root.getChildren().add(hud_3);
         hud_3.schedule();
        
+        WidgetController widgetController2 = new WidgetController();
+        HUD_mmsi_Controller hud_4 = new HUD_mmsi_Controller();
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController2);
+        widgetController2.add(hud_4);
+        root.getChildren().add(hud_4);
+        hud_4.schedule();
+       
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
         stage.show();
 
     }
-
-    /*private void showInstruments() {
+// ------------------------ HUD widgets end ------------------------------
+    /*
+    private void showInstruments() {
      if (firstInstruments == true) {
      root.getChildren().add(dock0);
      dock0.setOrientation(Orientation.VERTICAL);
