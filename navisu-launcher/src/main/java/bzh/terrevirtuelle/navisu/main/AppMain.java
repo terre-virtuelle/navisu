@@ -107,53 +107,7 @@ public class AppMain extends Application {
         ddriverServices.init();
 
         ddriverServices.registerNewDriver(catalogS57Services.getDriver());
-         //------------------------------->
-        // TESTS AGENT
-        //
-        /*
-         GObjectCUDProcessor proc = new TObjectProcessor();
-
-         GeoViewServices geoViewServices = componentManager.getComponentService(GeoViewServices.class);
-         geoViewServices.registerProcessor(proc);
-         geoViewServices.getLayerManager().insertGeoLayer(proc.getLayer());
-
-         DpAgentServices dpAgentServices = componentManager.getComponentService(DpAgentServices.class);
-
-         guiAgentServices.getJobsManager().newJob("Test job", pHandler -> {
-
-         double lat = 48.2510;
-         double lon = -4.8124;
-
-         TObject tObject = TObject.newBasicTObject(1, lat, lon);
-         dpAgentServices.create(tObject);
-
-         pHandler.start(100);
-
-         for (int i = 0; i < 100; i++) {
-
-         lon += i / 10000.;
-         tObject.setLocation(Location.factory.newLocation(lat, lon));
-
-         dpAgentServices.update(tObject);
-
-         pHandler.progress("Moving TObject...", i);
-
-         try {
-         Thread.sleep(500);
-         } catch (InterruptedException e) {
-         }
-         }
-
-         dpAgentServices.delete(tObject);
-         });
-         */
-        //
-        // END TESTS AGENT
-        //------------------------------->
-        //------------------------------->
-        // TESTS SERVER
-        //
-        // Hack pendant le dev
+        
         /*----Brest---*/
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
         /*----Gruissan---*/
@@ -194,20 +148,6 @@ public class AppMain extends Application {
         LoggerServices loggerServices = componentManager.getComponentService(LoggerServices.class);
        // loggerServices.createPrinter(new NMEA());
 
-        //
-        // END TESTS SERVER
-        //------------------------------->
-        //
-        // TEST S57 Charts
-        //
-        /*
-         chartS57Services.loadFile("I:\\cartes\\SHOM_OpenData\\S57_OPENDATA_IROISEE\\S57_OPENDATA_IROISEE\\FR571220\\FR571220.000");
-         chartS57Services.addCoastlines();
-         chartS57Services.addDepthAreas();
-         */
-        //
-        // END TEST S57 Charts
-        //
     }
 
     public static void main(String[] args) throws Exception {
