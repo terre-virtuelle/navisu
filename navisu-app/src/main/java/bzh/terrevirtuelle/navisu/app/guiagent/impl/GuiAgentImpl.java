@@ -24,10 +24,10 @@ import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_3.HUD_3_2_1_Controller;
-import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_4.HUD_mmsi_Controller;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
+import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 
 import gov.nasa.worldwind.util.StatusBar;
 import javafx.animation.Animation;
@@ -142,7 +142,7 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
     final Dock dock = new Dock(ICONS);
     //final Dock dock0 = new Dock(ICONS0);
-    private Scene scene;
+    private  Scene scene;
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -166,25 +166,9 @@ public class GuiAgentImpl
         }
 
         scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
-        this.loadCss(scene);
-        /*
-         StackPane test= null;
-         GuiAgentController ctrlTest; 
-         try {
-         test = loader.load(GuiAgentImpl.class.getResourceAsStream("FXMLDocument.fxml"));
-         ctrlTest  = loader.getController();
-         } catch (IOException ex) {
-         Logger.getLogger(GuiAgentImpl.class.getName()).log(Level.SEVERE, null, ex);
-         }
         
-         root.getChildren().add(test);
-         */
-        /*
-         swingNode = new SwingNode();
-         StatusBar statusbar = new StatusBar();
-         statusbar.setEnabled(true);
-         swingNode.setContent(statusbar);
-         */
+        this.loadCss(scene);
+        
         // Create Dock Widget
         createDockWidget(scene);
 
@@ -227,30 +211,14 @@ public class GuiAgentImpl
 
         // Test avant les Displays
  //------------ HUD widgets ---------------------------------------------       
-        /*
-        WidgetController widgetController0 = new WidgetController();
-        HeadUpDisplay headUpDisplay = new HeadUpDisplay();
-        headUpDisplay.setTranslateY(-250);
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController0);
-        widgetController0.add(headUpDisplay);
-        widgetController0.startFadeTransition(headUpDisplay,1.0,0.0);
-        root.getChildren().add(headUpDisplay);
-        */
-        
+
         WidgetController widgetController1 = new WidgetController();
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
         widgetController1.add(hud_3);
         root.getChildren().add(hud_3);
-        hud_3.schedule();
-       
-        WidgetController widgetController2 = new WidgetController();
-        HUD_mmsi_Controller hud_4 = new HUD_mmsi_Controller();
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController2);
-        widgetController2.add(hud_4);
-        root.getChildren().add(hud_4);
-        hud_4.schedule();
-       
+       // hud_3.schedule();
+
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
@@ -757,7 +725,7 @@ public class GuiAgentImpl
     }
 
     @Override
-    public Scene getScene() {
+    public  Scene getScene() {
         return scene;
     }
 
