@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <rotationAxis>
+        <Point3D y="1.0" />
+    </rotationAxis>
+   <children>
+      <ImageView fx:id="background" fitHeight="200.0" fitWidth="275.0" opacity="0.54" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@mmsi-area.png" />
+         </image>
+      </ImageView>
+      <Text fx:id="mmsi" fill="#ffc76d" layoutX="56.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="164.0">
+         <font>
+            <Font name="Roboto Light" size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="acronym" fill="#ffc76d" layoutX="36.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="164.0">
+         <font>
+            <Font name="Roboto Light" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="objectname" fill="#ffc76d" layoutX="36.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="203.0">
+         <font>
+            <Font name="Roboto Light" size="12.0" />
+         </font>
+      </Text>
+      <Text fx:id="area2" fill="#ee9701" layoutX="56.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="in" textAlignment="CENTER" wrappingWidth="164.0">
+         <font>
+            <Font name="Roboto Light" size="18.0" />
+         </font>
+      </Text>
+   </children>
+</fx:root>

@@ -29,7 +29,7 @@ public class WidgetController implements EventHandler<KeyEvent> {
 
     final KeyCombination keyComb = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
     private final List<Group> widgets;
-    private boolean first = false;
+    private boolean first = true;
 
     public WidgetController() {
         widgets = new ArrayList<>();
