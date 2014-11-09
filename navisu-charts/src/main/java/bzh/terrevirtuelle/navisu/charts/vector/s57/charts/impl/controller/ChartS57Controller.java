@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPCNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BUOYAGE_ShapefileLoader;
@@ -37,7 +38,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Light;
-import bzh.terrevirtuelle.navisu.topology.surveyZone.controller.SurveyZoneController;
+import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -60,11 +61,13 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.capcaval.c3.component.annotation.UsedService;
 
 /**
  * @author Serge Morvan
@@ -72,12 +75,14 @@ import java.util.logging.Logger;
  */
 public class ChartS57Controller {
 
+    @UsedService
+    GuiAgentServices guiAgentServices;
     private static final ChartS57Controller INSTANCE;
     protected String path;
     private File file;
     private Map<String, String> acronyms;
     private Map<String, Map<Long, S57Object>> geos;
-    private static final List<Layer> layers = new ArrayList<>();
+    private static final List<Layer> layers = Collections.synchronizedList(new ArrayList());
     private final List<AirspaceLayer> airspaceLayers = new ArrayList<>();
     private AirspaceLayer airspaceTmpLayer;
     private ShapefileLoader loader;
@@ -95,7 +100,8 @@ public class ChartS57Controller {
     }
 
     public ChartS57Controller() {
-        surveyZoneController = new SurveyZoneController();
+      //  surveyZoneController = new SurveyZoneController();
+      //  guiAgentServices.getRoot().getChildren().add(surveyZoneController);
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
@@ -676,5 +682,11 @@ public class ChartS57Controller {
     public SurveyZoneController getSurveyZoneController() {
         return surveyZoneController;
     }
+
+    public void setSurveyZoneController(SurveyZoneController surveyZoneController) {
+        this.surveyZoneController = surveyZoneController;
+    }
+
+   
 
 }

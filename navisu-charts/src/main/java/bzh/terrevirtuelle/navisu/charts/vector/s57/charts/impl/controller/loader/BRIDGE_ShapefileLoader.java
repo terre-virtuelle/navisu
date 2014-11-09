@@ -34,4 +34,13 @@ public class BRIDGE_ShapefileLoader
         return normalAttributes;
 
     }
+    @SuppressWarnings({"UnusedDeclaration"})
+    @Override
+    protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
+         ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(new Material(new Color(139,142,133)));
+        normalAttributes.setOutlineWidth(3.0);
+        return normalAttributes;
+    }
 }

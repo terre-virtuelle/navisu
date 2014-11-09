@@ -27,12 +27,15 @@ public class TSSBND_ShapefileLoader
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
         this.record = record;
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
-        normalAttributes.setDrawInterior(false);
+        normalAttributes.setDrawInterior(true);
         normalAttributes.setDrawOutline(true);
-        normalAttributes.setOutlineMaterial(new Material(new Color(198,77,187)));
-        normalAttributes.setOutlineStipplePattern((short) 0xAAAA);
-        normalAttributes.setOutlineStippleFactor(8);
-        normalAttributes.setOutlineWidth(3.0);
+        normalAttributes.setOutlineMaterial(new Material(new Color(47,91,42)));
+        normalAttributes.setInteriorMaterial(new Material(new Color(9,33,17)));
+         normalAttributes.setInteriorOpacity(.8);
+      //  normalAttributes.setOutlineMaterial(new Material(new Color(198,77,187)));
+      //  normalAttributes.setOutlineStipplePattern((short) 0xAAAA);
+       // normalAttributes.setOutlineStippleFactor(8);
+       // normalAttributes.setOutlineWidth(3.0);
         return normalAttributes;
     }
 

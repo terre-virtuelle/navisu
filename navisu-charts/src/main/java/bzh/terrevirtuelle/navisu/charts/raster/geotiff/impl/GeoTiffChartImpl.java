@@ -67,19 +67,16 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
         this.layer = new SurfaceImageLayer();
         this.layer.setOpacity(1);
         this.layer.setPickEnabled(false);
-
-        try {
-            layer.addImage(file);
-        } catch (IOException ex) {
-            Logger.getLogger(GeoTiffChartImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         if (layer != null) {
+            try {
+                layer.addImage(file);
+            } catch (IOException ex) {
+                Logger.getLogger(GeoTiffChartImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
-      //  String[] tab = file.split("\\");
-      //  this.layer.setName(tab[tab.length - 1]);
+
     }
 
     @Override

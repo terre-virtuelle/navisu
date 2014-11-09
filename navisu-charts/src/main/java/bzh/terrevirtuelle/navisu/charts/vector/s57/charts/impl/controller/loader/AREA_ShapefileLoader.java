@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.AREA;
-import bzh.terrevirtuelle.navisu.topology.surveyZone.model.SurveyZone;
+import bzh.terrevirtuelle.navisu.widgets.surveyZone.model.SurveyZone;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
