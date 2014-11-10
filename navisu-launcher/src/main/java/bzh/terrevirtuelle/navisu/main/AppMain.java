@@ -110,9 +110,7 @@ public class AppMain extends Application {
         
         /*----Brest---*/
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
-        /*----Gruissan---*/
-        //GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(43.14, 3.14, 5000));
-
+        
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
         // Initialisation des paramtètres de diffusion des data.
         dataServerServices.init("localhost", 8080);
@@ -121,7 +119,8 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // Test connexion Gpsd 
-        // dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+        // dataServerServices.openGpsd("sinagot.net", 4001); 
         // dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
