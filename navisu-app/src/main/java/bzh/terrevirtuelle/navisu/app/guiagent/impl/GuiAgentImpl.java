@@ -27,7 +27,6 @@ import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_3.HUD_3_2_1_Controlle
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
-import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 
 import gov.nasa.worldwind.util.StatusBar;
 import javafx.animation.Animation;
@@ -51,8 +50,8 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
+import javafx.scene.input.KeyCombination;
 
-//import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuRootItem;
 /**
  * NaVisu
  *
@@ -124,12 +123,6 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("meteo", ICON_PATH + "meteo.png", (e) -> showMeteoMenu()),
         DockItemFactory.newImageItem("instrum.", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
         DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> showBooksMenu()), //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
-    //DockItemFactory.newImageItem("config", ICON_PATH + "config.png", (e) -> System.out.println("config")),
-    //DockItemFactory.newImageItem("instruments", ICON_PATH + "instruments.png", (e) -> showInstruments()),
-    //DockItemFactory.newImageItem("simulations", ICON_PATH + "flou.png", (e) -> System.out.println("a venir 0")),
-    //DockItemFactory.newImageItem("engine", ICON_PATH + "vide.png", (e) -> System.out.println("a venir 1")),
-    //DockItemFactory.newImageItem("maintenance", ICON_PATH + "guide.png", (e) -> System.out.println("guide")),
-    //DockItemFactory.newImageItem("whitebook", ICON_PATH + "whitebook.png", (e) -> System.out.println("white book")),
     };
     public final DockItem[] ICONS0 = new DockItem[]{
         /* Invisible icons just for testing margins */
@@ -141,8 +134,7 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("Sounder", ICON_PATH + "soundervertical.png", (e) -> System.out.println("Sounder")),
         DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
     final Dock dock = new Dock(ICONS);
-    //final Dock dock0 = new Dock(ICONS0);
-    private  Scene scene;
+    private Scene scene;
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -166,9 +158,9 @@ public class GuiAgentImpl
         }
 
         scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
-        
+
         this.loadCss(scene);
-        
+
         // Create Dock Widget
         createDockWidget(scene);
 
@@ -210,9 +202,8 @@ public class GuiAgentImpl
         });
 
         // Test avant les Displays
- //------------ HUD widgets ---------------------------------------------       
-
-        WidgetController widgetController1 = new WidgetController();
+        //------------ HUD widgets ---------------------------------------------       
+        WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
         widgetController1.add(hud_3);
@@ -227,7 +218,7 @@ public class GuiAgentImpl
     }
 // ------------------------ HUD widgets end ------------------------------
     /*
-    private void showInstruments() {
+     private void showInstruments() {
      if (firstInstruments == true) {
      root.getChildren().add(dock0);
      dock0.setOrientation(Orientation.VERTICAL);
@@ -237,6 +228,7 @@ public class GuiAgentImpl
      firstInstruments = false;
      }
      }*/
+
     private void showBooksMenu() {
         //System.out.println("showBooksMenu");
         firstBooksRadialMenu = firstBooksRadialMenu != true;
@@ -725,7 +717,7 @@ public class GuiAgentImpl
     }
 
     @Override
-    public  Scene getScene() {
+    public Scene getScene() {
         return scene;
     }
 
