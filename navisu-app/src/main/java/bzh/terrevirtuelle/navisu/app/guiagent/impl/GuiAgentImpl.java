@@ -423,38 +423,38 @@ public class GuiAgentImpl
 
         //First Stage Item 1
         RadialMenuContainer zoomInItem = new RadialMenuContainer();
-        ImageView sounderImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/videbleu.png")));
+        ImageView sounderImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/vide.png")));
         zoomInItem.setImage(sounderImg);
 
         //First Stage Item 2
         RadialMenuContainer zoomOutItem = new RadialMenuContainer();
-        ImageView windImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/videvert.png")));
+        ImageView windImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/vide.png")));
         zoomOutItem.setImage(windImg);
 
         //First Stage Item 3
         RadialMenuContainer test1Item = new RadialMenuContainer();
-        ImageView compassImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/compassradialombre.png")));
+        ImageView compassImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/vide.png")));
         test1Item.setImage(compassImg);
 
         //First Stage Item 4
         RadialMenuContainer test2Item = new RadialMenuContainer();
-        ImageView gpsImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/GPSradialombre.png")));
+        ImageView gpsImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/vide.png")));
         test2Item.setImage(gpsImg);
 
         //First Stage Item 5
         RadialMenuContainer test3Item = new RadialMenuContainer();
-        ImageView aisImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/AISradialombre.png")));
+        ImageView aisImg = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/vide.png")));
         test3Item.setImage(aisImg);
 
         //---------------------------------------------------
         //Stage 2 item 1
         RadialMenuItem stageTwoItem1 = new RadialMenuItem();
-        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/videbleu.png")));
+        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/vide.png")));
         stageTwoItem1.setImage(gpsImg2);
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/videvert.png")));
+        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("meteoradialmenu/vide.png")));
         stageTwoItem2.setImage(compassImg2);
 
         test1Item.addItem(stageTwoItem1);
