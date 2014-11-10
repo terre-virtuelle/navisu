@@ -40,12 +40,12 @@
 /*******************************************************************************
  *                                                                             *
  * Radial menu                                                                 *
- *                                                                             *
+ *        (#7ac0ce, #253e4466)                                                                     *
  ******************************************************************************/
 #radialItem {
     //-fx-fill: linear-gradient(-fx-light-gradient, -fx-base);
     //-fx-fill : linear-gradient( -fx-light-gradient, rgba(95,134,138,0.5) );
-    //-fx-fill :rgba(95,134,138,0.5);(#7ac0ce, #253e4466)
+    //-fx-fill :rgba(95,134,138,0.5);
     
     -fx-fill : linear-gradient( rgba(122,192,206,0.5),rgba(37,62,68,0.5)) ;
     -fx-stroke: #7ac0ce;
