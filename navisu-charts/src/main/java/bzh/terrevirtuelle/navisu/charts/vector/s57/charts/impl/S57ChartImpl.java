@@ -8,14 +8,12 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57Chart;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.AreaController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.widgets.controller.WidgetController;
-import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_3.HUD_3_2_1_Controller;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
@@ -39,6 +37,8 @@ import org.capcaval.c3.component.annotation.UsedService;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -120,7 +120,7 @@ public class S57ChartImpl
                     @Override
                     public void run() {
                         guiAgentServices.getRoot().getChildren().add(surveyZoneController);
-                        WidgetController widgetController = new WidgetController();
+                        WidgetController widgetController = new WidgetController(KeyCode.Z, KeyCombination.CONTROL_DOWN);
                         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController);
                         widgetController.add(surveyZoneController);
                     }

@@ -6,7 +6,6 @@ package bzh.terrevirtuelle.navisu.widgets.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
@@ -27,11 +26,12 @@ import javafx.util.Duration;
  */
 public class WidgetController implements EventHandler<KeyEvent> {
 
-    final KeyCombination keyComb = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination keyComb;
     private final List<Group> widgets;
     private boolean first = true;
 
-    public WidgetController() {
+    public WidgetController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+        keyComb = new KeyCodeCombination(keyCode, keyCombination);
         widgets = new ArrayList<>();
     }
 
