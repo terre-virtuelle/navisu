@@ -236,32 +236,32 @@ public class GuiAgentImpl
     }
 
     private void showInstrumentsMenu() {
-        System.out.println("showInstrumentsMenu");
+       // System.out.println("showInstrumentsMenu");
         firstInstrumentsRadialMenu = firstInstrumentsRadialMenu != true;
         instrumentsRadialMenu.setVisible(firstInstrumentsRadialMenu);
         // centerImg.setVisible(firstInstrumentsRadialMenu);
     }
 
     private void showMeteoMenu() {
-        System.out.println("showMeteoMenu");
+       // System.out.println("showMeteoMenu");
         firstMeteoRadialMenu = firstMeteoRadialMenu != true;
         meteoRadialMenu.setVisible(firstMeteoRadialMenu);
     }
 
     private void showTidesMenu() {
-        System.out.println("showTidesMenu");
+       // System.out.println("showTidesMenu");
         firstTidesRadialMenu = firstTidesRadialMenu != true;
         tidesRadialMenu.setVisible(firstTidesRadialMenu);
     }
 
     private void showChartsMenu() {
-        System.out.println("showChartsMenu");
+       // System.out.println("showChartsMenu");
         firstChartsRadialMenu = firstChartsRadialMenu != true;
         chartsRadialMenu.setVisible(firstChartsRadialMenu);
     }
 
     private void showToolsMenu() {
-        System.out.println("showToolsMenu");
+      //  System.out.println("showToolsMenu");
         firstToolsRadialMenu = firstToolsRadialMenu != true;
         toolsRadialMenu.setVisible(firstToolsRadialMenu);
     }

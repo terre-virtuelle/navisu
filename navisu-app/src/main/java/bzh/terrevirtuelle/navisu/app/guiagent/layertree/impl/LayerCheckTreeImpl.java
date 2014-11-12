@@ -78,6 +78,8 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         CheckBoxTreeItem<GeoLayer> kml = createNode(rootItem0, "KML files", null);
         rootItems.add(kml);
+        CheckBoxTreeItem<GeoLayer> shp = createNode(rootItem0, "Shape files", null);
+        rootItems.add(shp);
     }
 
     @Override
