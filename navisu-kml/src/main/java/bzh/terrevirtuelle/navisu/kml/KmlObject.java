@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.kml.misc;
+package bzh.terrevirtuelle.navisu.kml;
 
 import org.capcaval.c3.component.Component;
 

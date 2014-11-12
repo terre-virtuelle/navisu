@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.kml.misc.impl.controller;
+package bzh.terrevirtuelle.navisu.kml.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -40,7 +40,7 @@ public class KmlController {
         INSTANCE = new KmlController();
     }
 
-    public KmlController() {
+    private  KmlController() {
         layers = new ArrayList<>();
         wwd = GeoWorldWindViewImpl.getWW();
         // Add a controller to handle input events on the layer selector and on browser balloons.

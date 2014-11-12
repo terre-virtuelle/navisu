@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.kml.misc.impl;
+package bzh.terrevirtuelle.navisu.kml.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
@@ -8,9 +8,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.kml.misc.KmlObject;
-import bzh.terrevirtuelle.navisu.kml.misc.KmlObjectServices;
-import bzh.terrevirtuelle.navisu.kml.misc.impl.controller.KmlController;
+import bzh.terrevirtuelle.navisu.kml.KmlObject;
+import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
+import bzh.terrevirtuelle.navisu.kml.impl.controller.KmlController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.Layer;
@@ -84,7 +84,7 @@ public class KmlObjectImpl
        
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();
-            if (name.contains("KML")) {
+            if (name.contains(NAME)) {
                 l.setPickEnabled(true);
             } else {
                 l.setPickEnabled(false);
@@ -98,7 +98,7 @@ public class KmlObjectImpl
 
     private void clip() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("KML"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains(NAME))).forEach((l) -> {
                         l.setEnabled(false);
                     });
         }
@@ -106,7 +106,7 @@ public class KmlObjectImpl
 
     private void unClip() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("KML"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains(NAME))).forEach((l) -> {
                         l.setEnabled(true);
                     });
         }
