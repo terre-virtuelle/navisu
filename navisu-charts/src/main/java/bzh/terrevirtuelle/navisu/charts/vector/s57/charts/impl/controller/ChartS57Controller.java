@@ -16,7 +16,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.AREA_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BRIDGE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.CBLSUB_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DAYMARK_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DAYMAR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DOCARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.LAKE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.LANDMARK_ShapefileLoader;
@@ -167,7 +167,6 @@ public class ChartS57Controller {
                     nsys.createLayersFromSource(new File(path + "/M_NSYS.shp"));
                     marsys = nsys.getMarsys();
                 }
-
                 if (s.equals("TOPMAR.shp")) {
                     new TOPMAR_ShapefileLoader(topMarks).createLayersFromSource(new File(path + "/TOPMAR.shp"));
                 }
@@ -340,16 +339,17 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-                if (s.equals("DAYMRK.shp")) {
-                    loader = new DAYMARK_ShapefileLoader();
-                    tmp = new File(path + "/DAYMARK.shp");
+                
+                if (s.equals("DAYMAR.shp")) {
+                    loader = new DAYMAR_ShapefileLoader(marsys);
+                    tmp = new File(path + "/DAYMAR.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
-                        l.setName("DAYMARK");
+                        l.setName("DAYMAR");
                     });
                     layers.addAll(la);
                 }
-
+                
                 if (s.equals("LAKARE.shp")) {
                     loader = new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0);
                     tmp = new File(path + "/LAKARE.shp");
