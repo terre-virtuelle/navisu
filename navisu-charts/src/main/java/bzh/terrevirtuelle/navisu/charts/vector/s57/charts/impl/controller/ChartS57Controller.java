@@ -186,7 +186,6 @@ public class ChartS57Controller {
                     layers.addAll(la);
                 }
             }
-
             for (File f : listOfFiles) {
                 String s = f.getName();
                 if (s.equals("RESARE.shp")) {
@@ -227,21 +226,36 @@ public class ChartS57Controller {
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR");
                     tmp = new File(path + "/BCNCAR.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
-                    // List<Layer> la = loader.createLayersFromSource(fileToString("BCNCAR.shp"));
-
                     la.stream().forEach((l) -> {
                         l.setName("BCNCAR");
                     });
                     layers.addAll(la);
                 }
+                if (s.equals("BCNISD.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD");
+                    tmp = new File(path + "/BCNISD.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BCNISD");
+                    });
+                    layers.addAll(la);
+                }
                 if (s.equals("BCNLAT.shp")) {
-                    // loader = new BCNLAT_ShapefileLoader();
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNLAT");
                     tmp = new File(path + "/BCNLAT.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
 
                     la.stream().forEach((l) -> {
                         l.setName("BCNLAT");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("BCNSAW.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSAW");
+                    tmp = new File(path + "/BCNSAW.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BCNSAW");
                     });
                     layers.addAll(la);
                 }
@@ -255,21 +269,12 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-                if (s.equals("BCNISD.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD");
-                    tmp = new File(path + "/BCNISD.shp");
+                if (s.equals("BRIDGE.shp")) {
+                    loader = new BRIDGE_ShapefileLoader();
+                    tmp = new File(path + "/BRIDGE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
-                        l.setName("BCNISD");
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BCNSAW.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSAW");
-                    tmp = new File(path + "/BCNSAW.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BCNSAW");
+                        l.setName("BRIDGE");
                     });
                     layers.addAll(la);
                 }
@@ -282,23 +287,21 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-                if (s.equals("BOYLAT.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT");
-                    tmp = new File(path + "/BOYLAT.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-
-                    la.stream().forEach((l) -> {
-                        l.setName("BOYLAT");
-                    });
-                    layers.addAll(la);
-                }
                 if (s.equals("BOYISD.shp")) {
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYISD");
                     tmp = new File(path + "/BOYISD.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
-
                     la.stream().forEach((l) -> {
                         l.setName("BOYISD");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("BOYLAT.shp")) {
+                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT");
+                    tmp = new File(path + "/BOYLAT.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("BOYLAT");
                     });
                     layers.addAll(la);
                 }
@@ -306,7 +309,6 @@ public class ChartS57Controller {
                     loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSAW");
                     tmp = new File(path + "/BOYSAW.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
-
                     la.stream().forEach((l) -> {
                         l.setName("BOYSAW");
                     });
@@ -318,15 +320,6 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYSPP");
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BRIDGE.shp")) {
-                    loader = new BRIDGE_ShapefileLoader();
-                    tmp = new File(path + "/BRIDGE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BRIDGE");
                     });
                     layers.addAll(la);
                 }
@@ -357,21 +350,21 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
-                if (s.equals("DGRARE.shp")) {
-                    loader = new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0);
-                    tmp = new File(path + "/DGRARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("DGRARE");
-                    });
-                    layers.addAll(la);
-                }
                 if (s.equals("DOCARE.shp")) {
                     loader = new DOCARE_ShapefileLoader();
                     tmp = new File(path + "/DOCARE.shp");
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DOCARE");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("DGRARE.shp")) {
+                    loader = new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0);
+                    tmp = new File(path + "/DGRARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("DGRARE");
                     });
                     layers.addAll(la);
                 }
@@ -390,6 +383,15 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("LAKARE");
+                    });
+                    layers.addAll(la);
+                }
+                if (s.equals("LNDMRK.shp")) {
+                    loader = new LANDMARK_ShapefileLoader(marsys, "LNDMRK");
+                    tmp = new File(path + "/LNDMRK.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("LNDMRK");
                     });
                     layers.addAll(la);
                 }
@@ -466,15 +468,6 @@ public class ChartS57Controller {
 
                     });
                 }
-                if (s.equals("LNDMRK.shp")) {
-                    loader = new LANDMARK_ShapefileLoader(marsys, "LNDMRK");
-                    tmp = new File(path + "/LNDMRK.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("LNDMRK");
-                    });
-                    layers.addAll(la);
-                }
                 if (s.equals("MIPARE.shp")) {
                     loader = new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2);
                     tmp = new File(path + "/MIPARE.shp");
@@ -530,6 +523,15 @@ public class ChartS57Controller {
                     });
                     layers.addAll(la);
                 }
+                if (s.equals("SEAARE.shp")) {
+                    loader = new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.2);
+                    tmp = new File(path + "/SEAARE.shp");
+                    List<Layer> la = loader.createLayersFromSource(tmp);
+                    la.stream().forEach((l) -> {
+                        l.setName("SEAARE");
+                    });
+                    layers.addAll(la);
+                }
                 /*
                  if (s.equals("SBDARE.shp")) {
                  loader = new PolygonTemplate_ShapefileLoader();
@@ -541,15 +543,6 @@ public class ChartS57Controller {
                  layers.addAll(la);
                  }
                  */
-                if (s.equals("SEAARE.shp")) {
-                    loader = new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.2);
-                    tmp = new File(path + "/SEAARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("SEAARE");
-                    });
-                    layers.addAll(la);
-                }
                 if (s.equals("SLCONS.shp")) {
                     loader = new SLCONS_ShapefileLoader();
                     tmp = new File(path + "/SLCONS.shp");
