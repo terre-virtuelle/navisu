@@ -102,7 +102,7 @@ public class DAYMAR_ShapefileLoader
 
         });
 
-        attrs.setImageAddress("img/buoyage_" + marsys + "/" + acronym + "_"
+        attrs.setImageAddress("img/daymarks_" + marsys + "/" + acronym + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getShape() + "_"
                 + object.getColour() + "_"
@@ -125,7 +125,7 @@ public class DAYMAR_ShapefileLoader
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setValue(AVKey.DISPLAY_NAME, label);
-    //    placemark.setAttributes(attrs);
+        placemark.setAttributes(attrs);
         return placemark;
     }
 }
