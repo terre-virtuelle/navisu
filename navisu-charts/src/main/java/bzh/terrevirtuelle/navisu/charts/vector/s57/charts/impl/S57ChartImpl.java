@@ -187,6 +187,7 @@ public class S57ChartImpl
             layers = chartS57Controller.getLayers();
             layers.stream().filter((l) -> (l != null)).map((l) -> {
                 geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
+                /*
                 String name = l.getName();
                 if (name.contains("BCNCAR")
                         || name.contains("OBSTRN")
@@ -210,6 +211,7 @@ public class S57ChartImpl
                         || name.contains("UWTROC")) {
                     l.setPickEnabled(false);
                 }
+                        */
                 return l;
             }).forEach((l) -> {
                 layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
