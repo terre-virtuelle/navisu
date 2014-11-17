@@ -77,7 +77,7 @@ public class GpxController {
             Iterator<Position> positions = reader.getTrackPositionIterator();
 
             BasicMarkerAttributes attrs
-                    = new BasicMarkerAttributes(Material.WHITE, BasicMarkerShape.SPHERE, 1d);
+                    = new BasicMarkerAttributes(Material.RED, BasicMarkerShape.SPHERE, 1d);
 
             ArrayList<Marker> markers = new ArrayList<>();
             while (positions.hasNext()) {
