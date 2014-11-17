@@ -51,7 +51,6 @@ import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.GlobeAnnotation;
 import gov.nasa.worldwind.render.Material;
 import java.awt.Color;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
