@@ -7,19 +7,31 @@ package bzh.terrevirtuelle.navisu.kml.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.formats.gpx.GpxReader;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.MarkerLayer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.kml.KMLRoot;
 import gov.nasa.worldwind.ogc.kml.impl.KMLController;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.markers.BasicMarker;
+import gov.nasa.worldwind.render.markers.BasicMarkerAttributes;
+import gov.nasa.worldwind.render.markers.BasicMarkerShape;
+import gov.nasa.worldwind.render.markers.Marker;
+import gov.nasa.worldwind.util.WWIO;
 import gov.nasa.worldwindx.examples.kml.KMLApplicationController;
 import gov.nasa.worldwindx.examples.util.BalloonController;
 import gov.nasa.worldwindx.examples.util.HotSpotController;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+import org.xml.sax.SAXException;
 
 /**
  * @author Serge Morvan
@@ -40,7 +52,7 @@ public class KmlController {
         INSTANCE = new KmlController();
     }
 
-    private  KmlController() {
+    private KmlController() {
         layers = new ArrayList<>();
         wwd = GeoWorldWindViewImpl.getWW();
         // Add a controller to handle input events on the layer selector and on browser balloons.
@@ -82,4 +94,5 @@ public class KmlController {
         return layers;
     }
 
+    
 }
