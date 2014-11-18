@@ -194,16 +194,7 @@ public class BUOYAGE_ShapefileLoader
         if (tm == null) {
             tm = "0";
         }
-        /*
-         System.out.println("img/buoyage/" + acronym + "_"
-         + object.getShape() + "_"
-         + object.getCategoryOfMark() + "_"
-         + object.getColour() + "_"
-         + object.getColourPattern() + "_"
-         + tm
-         + "_" + marsys
-         + ".png  "   + object.getObjectName() );
-         */
+        
         attrs.setImageAddress("img/buoyage_" + marsys + "/" + acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"
