@@ -181,6 +181,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DEPARE");
+                        l.setPickEnabled(false);
                     });
                     layers.addAll(la);
                 }
@@ -193,6 +194,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("RESARE");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -202,6 +204,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("UNSARE");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -227,6 +230,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNCAR");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -236,6 +240,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNISD");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -246,6 +251,7 @@ public class ChartS57Controller {
 
                     la.stream().forEach((l) -> {
                         l.setName("BCNLAT");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -255,6 +261,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNSAW");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -265,6 +272,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNSPP");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -274,6 +282,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BRIDGE");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -283,6 +292,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYCAR");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -292,6 +302,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYISD");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -301,6 +312,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYLAT");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -310,6 +322,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYSAW");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -319,6 +332,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYSPP");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -328,6 +342,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("CBLSUB");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -337,6 +352,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DAYMAR");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -346,6 +362,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DEPCNT");
+                        l.setPickEnabled(false);
                     });
                     layers.addAll(la);
                 }
@@ -355,6 +372,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DOCARE");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -364,6 +382,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DGRARE");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -373,6 +392,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("FAIRWY");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -382,6 +402,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("LAKARE");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -391,6 +412,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("LNDMRK");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -473,6 +495,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("MIPARE");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -503,6 +526,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("OBSTRN");
+                        
                     });
                     layers.addAll(la);
                     loader = new OBSTRN_ShapefileLoader();
@@ -510,6 +534,7 @@ public class ChartS57Controller {
                     la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("OBSTRN");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -519,6 +544,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("PONTON");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -528,6 +554,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("SEAARE");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -548,6 +575,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("SLCONS");
+                        
                         //  ((RenderableLayer) l).addRenderable(tooltipAnnotation);
                     });
                     layers.addAll(la);
@@ -558,6 +586,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("SOUNDG");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -567,6 +596,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("TSSBND");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -577,6 +607,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("UWTROC");
+                        
                     });
                     layers.addAll(la);
                 }
@@ -586,6 +617,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("WRECKS");
+                        
                     });
                     layers.addAll(la);
                     loader = new WRECKS_ShapefileLoader();
@@ -593,6 +625,7 @@ public class ChartS57Controller {
                     la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("WRECKS");
+                        
                     });
                     layers.addAll(la);
                 }
