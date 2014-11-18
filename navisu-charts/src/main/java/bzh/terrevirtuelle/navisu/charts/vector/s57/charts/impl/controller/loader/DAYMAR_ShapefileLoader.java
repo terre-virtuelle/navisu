@@ -8,8 +8,11 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Daymark;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -33,10 +36,32 @@ public class DAYMAR_ShapefileLoader
     private String label;
     private final String acronym = "DAYMAR";
     private final String marsys;
+    private PointPlacemarkAttributes attrs;
 
     public DAYMAR_ShapefileLoader(String marsys) {
         this.marsys = marsys;
         objects = new ArrayList<>();
+    }
+
+    @Override
+    protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
+
+        while (shp.hasNext()) {
+            ShapefileRecord record = shp.nextRecord();
+
+            if (!Shapefile.isPointType(record.getShapeType())) {
+                continue;
+            }
+            attrs = this.createPointAttributes(record);
+            double[] point = ((ShapefileRecordPoint) record).getPoint();
+            layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
+        }
+    }
+
+    @Override
+    protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
+        PointPlacemarkAttributes normalAttributes = new PointPlacemarkAttributes();
+        return normalAttributes;
     }
 
     @Override
@@ -114,8 +139,8 @@ public class DAYMAR_ShapefileLoader
         attrs.setScale(0.9);
 
         label = acronym + "_"
-                + object.getCategoryOfMark() + "_"
                 + object.getShape() + "_"
+                + object.getCategoryOfMark() + "_"
                 + object.getColour() + "_"
                 + object.getColourPattern() + "_"
                 + object.getNatureOfConstruction() + "_"
