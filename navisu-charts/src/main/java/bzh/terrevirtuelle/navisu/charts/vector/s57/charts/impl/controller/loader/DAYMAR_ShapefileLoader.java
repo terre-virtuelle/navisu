@@ -103,19 +103,19 @@ public class DAYMAR_ShapefileLoader
         });
 
         attrs.setImageAddress("img/daymarks_" + marsys + "/" + acronym + "_"
-                + object.getCategoryOfMark() + "_"
                 + object.getShape() + "_"
+                + object.getCategoryOfMark() + "_"
                 + object.getColour() + "_"
                 + object.getColourPattern() + "_"
                 + object.getNatureOfConstruction() + "_"
                 + marsys
                 + ".png");
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
-        attrs.setScale(0.9);
+        attrs.setScale(0.7);
 
         label = acronym + "_"
-                + object.getCategoryOfMark() + "_"
                 + object.getShape() + "_"
+                + object.getCategoryOfMark() + "_"
                 + object.getColour() + "_"
                 + object.getColourPattern() + "_"
                 + object.getNatureOfConstruction() + "_"
