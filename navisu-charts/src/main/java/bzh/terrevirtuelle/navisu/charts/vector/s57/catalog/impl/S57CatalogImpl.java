@@ -113,11 +113,8 @@ public class S57CatalogImpl
             new File("data/shp").mkdir();
             new File("data/shp/catalog").mkdir();
         }
+        System.out.println("fileName " + fileName);
         openFile(fileName);
-
-        // new Thread(() -> {
-        //     openFile(fileName);
-        // }).start();
     }
 
     private void openFile(String fileName) {
@@ -133,7 +130,7 @@ public class S57CatalogImpl
             p = Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ").addArg("-f \"ESRI Shapefile\" ").addArg("-append")
-                    .addArg("data/shp/catalog/shp_" + 0)// + "/out.shp ")
+                    .addArg("data/shp/catalog/shp_" + i)// + "/out.shp ")
                     .addArg(tmp.toString())
                     .addArg("M_COVR")
                     .setOut(System.out)
@@ -151,7 +148,8 @@ public class S57CatalogImpl
             Logger.getLogger(S57CatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         S57CatalogController = S57CatalogController.getInstance();
-        S57CatalogController.init("data/shp/catalog/shp_" + 0);
+        S57CatalogController.init("data/shp/catalog/shp_" + i);
+        System.out.println("appel openFile");
         layers = S57CatalogController.getLayers();
        // System.out.println("layersSet " + layersSet);
        // layersSet.stream().forEach((l) -> {
@@ -167,6 +165,7 @@ public class S57CatalogImpl
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
+        i++;
     }
 
     private void clip() {

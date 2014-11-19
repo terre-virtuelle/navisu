@@ -38,7 +38,7 @@ public class M_COVR_ShapefileLoader
         this.record = record;
         entries = record.getAttributes().getEntries();
         entries.stream().forEach((e) -> {
-            System.out.println(e);
+           // System.out.println(e);
         });
 
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
