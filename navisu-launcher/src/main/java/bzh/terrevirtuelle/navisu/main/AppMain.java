@@ -22,6 +22,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
+import bzh.terrevirtuelle.navisu.gpx.impl.GpxObjectImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
@@ -72,6 +74,7 @@ public class AppMain extends Application {
                         S57ChartImpl.class,
                         GeoTiffChartImpl.class,
                         KmlObjectImpl.class,
+                        GpxObjectImpl.class,
                         DataServerImpl.class,
                         NmeaClientImpl.class,
                         Widget3DImpl.class,
@@ -91,6 +94,7 @@ public class AppMain extends Application {
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
+        GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
@@ -100,17 +104,17 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(chartS57Services.getDriver());
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
+        driverServices.registerNewDriver(gpxObjectServices.getDriver());
         driverServices.registerNewDriver(mediaServices.getDriver());
-        
-        
+
         DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
         ddriverServices.init();
 
         ddriverServices.registerNewDriver(catalogS57Services.getDriver());
-        
+
         /*----Brest---*/
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
-        
+
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
         // Initialisation des paramtètres de diffusion des data.
         dataServerServices.init("localhost", 8080);
@@ -119,7 +123,7 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // Test connexion Gpsd 
-         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+        //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // dataServerServices.openGpsd("sinagot.net", 4001); 
         // dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
@@ -145,7 +149,7 @@ public class AppMain extends Application {
         widgetServices.createAisLocator();
 
         LoggerServices loggerServices = componentManager.getComponentService(LoggerServices.class);
-       // loggerServices.createPrinter(new NMEA());
+        // loggerServices.createPrinter(new NMEA());
 
     }
 
