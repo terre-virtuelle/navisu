@@ -74,33 +74,52 @@ public class DDriverManagerImpl implements DDriverManager, DDriverManagerService
     }
 
     protected void handleOpenFiles(File file) {
-        Path directory = Paths.get(file.getAbsolutePath());
-        try {
+        /*
+         Path directory = Paths.get(file.getAbsolutePath());
+         try {
 
-            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path dir, BasicFileAttributes attrs) throws IOException {
-                    String fileName = dir.toFile().getAbsolutePath();
-                    DDriver driver = findDriverForFile(fileName);
-                    if (driver != null) {
-                        guiAgentServices.getJobsManager().newJob(dir.toFile().getName(), (progressHandle) -> {
-                            driver.open(progressHandle, fileName);
-                        });
-                    } else {
-                        LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", dir.toFile().getName());
-                    }
-                     return FileVisitResult.CONTINUE;
-                }
+         Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+         @Override
+         public FileVisitResult visitFile(Path dir, BasicFileAttributes attrs) throws IOException {
+         String fileName = dir.toFile().getAbsolutePath();
+         DDriver driver = findDriverForFile(fileName);
+         if (driver != null) {
+         guiAgentServices.getJobsManager().newJob(dir.toFile().getName(), (progressHandle) -> {
+         driver.open(progressHandle, fileName);
+         });
+         } else {
+         LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", dir.toFile().getName());
+         }
+         return FileVisitResult.CONTINUE;
+         }
 
-                @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    return FileVisitResult.CONTINUE;
+         @Override
+         public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+         return FileVisitResult.CONTINUE;
+         }
+         });
+         */
+        /*
+        if (file.isDirectory()) {
+            File[] list = file.listFiles();
+            if (list != null) {
+                for (int i = 0; i < list.length; i++) {
+                    // Appel récursif sur les sous-répertoires
+                    handleOpenFiles(list[i]);
                 }
-            });
-        } catch (IOException ex) {
-            Logger.getLogger(DDriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                System.err.println(file + " : Erreur de lecture.");
+            }
+        } else {
+            String fileName = file.getAbsolutePath();
+            DDriver driver = findDriverForFile(fileName);
+            if (driver != null) {
+                guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
+                    driver.open(progressHandle, fileName);
+                });
+            }
         }
-
+        */
     }
 
     protected DDriver findDriverForFile(String file) {
