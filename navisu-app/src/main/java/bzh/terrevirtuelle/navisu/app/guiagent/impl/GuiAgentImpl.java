@@ -212,8 +212,8 @@ public class GuiAgentImpl
         // hud_3.schedule();
 
         // Test appel a HTML5-Javascript
-      CloudMenu cloudMenu = new CloudMenu();
-       root.getChildren().add(cloudMenu);
+      //CloudMenu cloudMenu = new CloudMenu();
+      // root.getChildren().add(cloudMenu);
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
