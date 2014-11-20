@@ -96,9 +96,9 @@ public class AppMain extends Application {
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
+        
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
-
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
@@ -109,7 +109,6 @@ public class AppMain extends Application {
 
         DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
         ddriverServices.init();
-
         ddriverServices.registerNewDriver(catalogS57Services.getDriver());
 
         /*----Brest---*/
