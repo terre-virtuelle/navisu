@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -54,29 +55,33 @@ public class S57CatalogImpl
     private static final String EXTENSION = ".000";
     protected static final String GROUP = "S57 catalog";
     private int i = 0;
-    protected S57CatalogController S57CatalogController;
+    private int j = 1;
+    protected S57CatalogController s57CatalogController;
     protected List<Layer> layers;
     protected Set<Layer> layersSet;
     protected static final Logger LOGGER = Logger.getLogger(S57CatalogImpl.class.getName());
     protected WorldWindow wwd;
-    protected Scene scene;
-    private boolean first = true;
     private Map<String, String> environment;
     private boolean enabled;
+    private List<String> files;
+    String root;
 
     @Override
     public void componentInitiated() {
+        files = new ArrayList<>();
         i = 0;
         layerTreeServices.createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
-        wwd.addPositionListener((PositionEvent event) -> {
-            float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
-            if (altitude >= 3000) {
-                clip();
-            } else {
-                unClip();
-            }
-        });
+        /*
+         wwd.addPositionListener((PositionEvent event) -> {
+         float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
+         if (altitude >= 3000) {
+         clip();
+         } else {
+         unClip();
+         }
+         });
+         */
         environment = new HashMap<>(System.getenv());
         String options
                 = "\"RECODE_BY_DSSI=ON, "
@@ -90,6 +95,8 @@ public class S57CatalogImpl
         options = System.getProperty("user.dir") + "/bin/data";
         environment.put("GDAL_DATA", options);
         layersSet = new HashSet();
+        File f = new File("test");
+        root = f.getAbsolutePath().replace("test", "");
     }
 
     @Override
@@ -113,14 +120,14 @@ public class S57CatalogImpl
             new File("data/shp").mkdir();
             new File("data/shp/catalog").mkdir();
         }
-        System.out.println("fileName " + fileName);
+        files.add(fileName);
         openFile(fileName);
     }
 
     private void openFile(String fileName) {
 
         LOGGER.log(Level.INFO, "Opening {0} ..." + fileName, fileName);
-
+//Task 
         Path inputFile = Paths.get(fileName);
         Proc p = null;
         String cmd;
@@ -130,42 +137,34 @@ public class S57CatalogImpl
             p = Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ").addArg("-f \"ESRI Shapefile\" ").addArg("-append")
-                    .addArg("data/shp/catalog/shp_" + i)// + "/out.shp ")
+                    .addArg("data/shp/catalog/shp_" + i++)
                     .addArg(tmp.toString())
                     .addArg("M_COVR")
                     .setOut(System.out)
                     .setErr(System.err)
                     .exec(environment);
-            //   inputFile = tmp;
         } catch (IOException | InterruptedException e) {
             LOGGER.log(Level.SEVERE, null, e);
         }
-        try {
-            if (p != null) {
-                p.waitFor();
-            }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(S57CatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        S57CatalogController = S57CatalogController.getInstance();
-        S57CatalogController.init("data/shp/catalog/shp_" + i);
-        System.out.println("appel openFile");
-        layers = S57CatalogController.getLayers();
-       // System.out.println("layersSet " + layersSet);
-       // layersSet.stream().forEach((l) -> {
-         //   layers.add(l);
-        //});
+    }
+
+    @Override
+    public void parse() {
+        s57CatalogController = S57CatalogController.getInstance();
+        layers = s57CatalogController.getLayers();
+        files.stream().forEach((s) -> {
+            layers.addAll(s57CatalogController.parse(root + "data\\shp\\catalog\\shp_" + j++));
+        });
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             String name = l.getName();
             if (name.contains("M_COVR")) {
-                l.setPickEnabled(true);
+                l.setPickEnabled(false);
             }
             return l;
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
-        i++;
     }
 
     private void clip() {
@@ -233,10 +232,5 @@ public class S57CatalogImpl
     @Override
     public void componentStopped() {
 
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
     }
 }
