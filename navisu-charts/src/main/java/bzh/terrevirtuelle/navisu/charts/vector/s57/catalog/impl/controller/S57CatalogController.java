@@ -41,7 +41,7 @@ public class S57CatalogController {
     }
 
     public S57CatalogController() {
-       // surveyZoneController = new SurveyZoneController();
+        // surveyZoneController = new SurveyZoneController();
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         System.setProperty("file.encoding", "UTF-8");
@@ -61,42 +61,18 @@ public class S57CatalogController {
         return INSTANCE;
     }
 
-    public final void init(String path) {
-        this.path = path;
-        file = new File(path);
-        System.out.println("path " + path);
-        initGeosMap();
-    }
-
     public List<Layer> getLayers() {
         return layers;
     }
 
-    private void initGeosMap() {
-        geos = new HashMap<>();
-        File[] listOfFiles;
-        File tmp;
-        if (file.isDirectory()) {
-            listOfFiles = file.listFiles();
-            // Context variables
-            for (File f : listOfFiles) {
-                String s = f.getName();
-                // Contour de la carte
-                if (s.equals("M_COVR.shp")) {
-                    loader = new M_COVR_ShapefileLoader();
-                   // loader = new ShapefileLoader();
-                    tmp = new File(path + "/M_COVR.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("M_COVR");
-                    });
-                    layers.addAll(la);
-                }
-                if (s.contains(".shp")) {
-                    geos.put(s.replace(".shp", ""), new HashMap<>());
-                }
-            }
-        }
-
+    public List<Layer> parse(String filename) {
+        loader = new M_COVR_ShapefileLoader();
+        File tmp = new File(filename + "\\M_COVR.shp");
+        List<Layer> la = loader.createLayersFromSource(tmp);
+        la.stream().forEach((l) -> {
+            l.setName("M_COVR");
+        });
+        layers.addAll(la);
+        return layers;
     }
 }

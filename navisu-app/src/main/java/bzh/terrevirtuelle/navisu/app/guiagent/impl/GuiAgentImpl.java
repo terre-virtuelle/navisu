@@ -19,6 +19,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.widgets.cloudmenu.CloudMenu;
 import bzh.terrevirtuelle.navisu.widgets.controller.WidgetController;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
@@ -208,8 +209,11 @@ public class GuiAgentImpl
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
         widgetController1.add(hud_3);
         root.getChildren().add(hud_3);
-       // hud_3.schedule();
+        // hud_3.schedule();
 
+        // Test appel a HTML5-Javascript
+      //CloudMenu cloudMenu = new CloudMenu();
+      // root.getChildren().add(cloudMenu);
         // setFullScreen(true);
         stage.setScene(scene);
         //stage.setMaximized(true);
@@ -236,32 +240,32 @@ public class GuiAgentImpl
     }
 
     private void showInstrumentsMenu() {
-       // System.out.println("showInstrumentsMenu");
+        // System.out.println("showInstrumentsMenu");
         firstInstrumentsRadialMenu = firstInstrumentsRadialMenu != true;
         instrumentsRadialMenu.setVisible(firstInstrumentsRadialMenu);
         // centerImg.setVisible(firstInstrumentsRadialMenu);
     }
 
     private void showMeteoMenu() {
-       // System.out.println("showMeteoMenu");
+        // System.out.println("showMeteoMenu");
         firstMeteoRadialMenu = firstMeteoRadialMenu != true;
         meteoRadialMenu.setVisible(firstMeteoRadialMenu);
     }
 
     private void showTidesMenu() {
-       // System.out.println("showTidesMenu");
+        // System.out.println("showTidesMenu");
         firstTidesRadialMenu = firstTidesRadialMenu != true;
         tidesRadialMenu.setVisible(firstTidesRadialMenu);
     }
 
     private void showChartsMenu() {
-       // System.out.println("showChartsMenu");
+        // System.out.println("showChartsMenu");
         firstChartsRadialMenu = firstChartsRadialMenu != true;
         chartsRadialMenu.setVisible(firstChartsRadialMenu);
     }
 
     private void showToolsMenu() {
-      //  System.out.println("showToolsMenu");
+        //  System.out.println("showToolsMenu");
         firstToolsRadialMenu = firstToolsRadialMenu != true;
         toolsRadialMenu.setVisible(firstToolsRadialMenu);
     }
