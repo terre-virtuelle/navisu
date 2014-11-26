@@ -22,7 +22,7 @@
             <Image url="@Speedo2.png" />
          </image>
       </ImageView>
-      <Text fx:id="speed" fill="#47c1cf" layoutX="69.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="99.0">
+      <Text fx:id="speed" fill="#47c1cf" layoutX="65.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="99.0">
          <font>
             <Font name="Roboto Light" size="36.0" />
          </font>
@@ -49,10 +49,10 @@
             </Lighting>
          </effect>
          <font>
-            <Font name="Roboto Light" size="18.0" />
+            <Font name="Roboto Light" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="depth" fill="#47c1cf" layoutX="105.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="48.0">
+      <Text fx:id="depth" fill="#47c1cf" layoutX="98.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="48.0">
          <effect>
             <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
                <bumpInput>
@@ -64,10 +64,10 @@
             </Lighting>
          </effect>
          <font>
-            <Font name="Roboto Light" size="18.0" />
+            <Font name="Roboto Light" size="16.0" />
          </font>
       </Text>
-      <Text fx:id="sog" fill="#47c1cf" layoutX="168.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="50.0">
+      <Text fx:id="sog" fill="#47c1cf" layoutX="160.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="50.0">
          <effect>
             <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
                <bumpInput>
@@ -79,7 +79,7 @@
             </Lighting>
          </effect>
          <font>
-            <Font name="Roboto Light" size="18.0" />
+            <Font name="Roboto Light" size="16.0" />
          </font>
       </Text>
    </children>

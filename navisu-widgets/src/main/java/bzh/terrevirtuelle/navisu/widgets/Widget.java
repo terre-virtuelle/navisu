@@ -24,7 +24,7 @@ public class Widget
 
     public Widget() {
         initEvt();
-        initEffects();
+       // initEffects();
     }
 
     public void setScale(double scale) {
@@ -65,7 +65,7 @@ public class Widget
             }
         });
     }
-
+/*
     private void initEffects() {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setOffsetX(10);
@@ -73,5 +73,5 @@ public class Widget
         dropShadow.setColor(Color.rgb(50, 50, 50, 0.7));
         setEffect(dropShadow);
     }
-    
+ */   
 }
