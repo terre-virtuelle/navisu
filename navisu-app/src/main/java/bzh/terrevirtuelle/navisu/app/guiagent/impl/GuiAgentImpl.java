@@ -19,12 +19,12 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.widgets.cloudmenu.CloudMenu;
 import bzh.terrevirtuelle.navisu.widgets.controller.WidgetController;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_3.HUD_3_2_1_Controller;
+import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.radar_1.Radar_Controller;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
@@ -210,7 +210,12 @@ public class GuiAgentImpl
         widgetController1.add(hud_3);
         root.getChildren().add(hud_3);
         // hud_3.schedule();
-
+        WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
+        Radar_Controller radar_1 = new Radar_Controller();
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController2);
+        widgetController2.add(radar_1);
+        root.getChildren().add(radar_1);
+        radar_1.schedule();
         // Test appel a HTML5-Javascript
       //CloudMenu cloudMenu = new CloudMenu();
       // root.getChildren().add(cloudMenu);

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>       
+     <Group>
+         <children>
+             <Rectangle arcHeight="30.0" arcWidth="30.0" height="300.0" opacity="0.66" stroke="#0a6b43" strokeType="INSIDE" width="300.0">
+                 <fill>
+                     <LinearGradient endX="1.0" endY="1.0" startX="0.37142857142857144">
+                         <stops>
+                             <Stop color="#448cbcfc" />
+                             <Stop color="#11232f" offset="1.0" />
+                         </stops>
+                     </LinearGradient>
+                 </fill>
+             </Rectangle>
+         <Group layoutX="-98.0" layoutY="-48.0">
+            <children>
+               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="110.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="80.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="30.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="10.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="50.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+               <Arc fx:id="faisceau" layoutX="250.0" layoutY="200.0" length="60.0" radiusX="110.0" radiusY="110.0" startAngle="29.7" stroke="TRANSPARENT" strokeType="INSIDE" type="ROUND">
+                  <fill>
+                     <RadialGradient centerX="0.80" centerY="0.90" focusAngle="30.0" focusDistance="0.25" radius="1.0">
+                        <stops>
+                           <Stop color="#0084ff" />
+                           <Stop color="#ffffff00" offset="1.0" />
+                        </stops>
+                     </RadialGradient>
+                  </fill>
+                  <effect>
+                     <MotionBlur angle="108.84" />
+                  </effect>
+               </Arc>
+               <Line endX="110.0" layoutX="250.0" layoutY="200.0" startX="-110.0" stroke="#1f93ff" />
+               <Line endY="110.0" layoutX="250.0" layoutY="200.0" startY="-110.0" stroke="#1f93ff" />
+               <Circle fx:id="spot1" fill="#cde7ff" layoutX="150.0" layoutY="100.0" radius="3.0" stroke="DODGERBLUE" strokeType="INSIDE">
+                  <effect>
+                     <GaussianBlur>
+                        <input>
+                           <Glow />
+                        </input>
+                     </GaussianBlur>
+                  </effect>
+               </Circle>
+                  <Circle fx:id="spot2" fill="#cde7ff" layoutX="300.0" layoutY="153.0" radius="3.0" stroke="DODGERBLUE" strokeType="INSIDE">
+                     <effect>
+                        <GaussianBlur>
+                           <input>
+                              <Glow />
+                           </input>
+                        </GaussianBlur>
+                     </effect>
+                  </Circle>
+            </children>
+            <effect>
+               <Glow level="1.0" />
+            </effect>
+         </Group>
+         </children>
+         
+              </Group>
+    </children>
+    <rotationAxis>
+        <Point3D y="1.0" />
+    </rotationAxis>
+</fx:root>
