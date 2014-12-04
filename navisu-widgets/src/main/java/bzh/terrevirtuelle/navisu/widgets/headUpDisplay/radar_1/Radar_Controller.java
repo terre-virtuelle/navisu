@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 /**
@@ -39,11 +40,12 @@ implements Initializable {
     public Circle spot2;
     @FXML
     public double route=0.0;
+    public double angle;
     public double spotInitX=20.0;
     public double spotInitY=20.0;
     public double spotX;
     public Text couleur;
-    
+    final Rotate rotationTransform = new Rotate(0, 0, 0);
     
     
     public Radar_Controller() {
@@ -57,8 +59,9 @@ implements Initializable {
             throw new RuntimeException(exception);
         }
     }
+    
 
-
+    
     public void schedule() {
         Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(.01), new EventHandler<ActionEvent>() {
             
@@ -67,9 +70,11 @@ implements Initializable {
                 
             // System.out.println("heading " + heading+"route "+route);
                 //spotX= spotInitX+(sin(route*PI/360)*25);
-                spot1.setTranslateX(spotInitX+(sin(route*PI/360)*25));
+                angle = sin(route*PI/360);
+                spot1.setTranslateX(spotInitX+(angle*25));
                 spot1.setTranslateY(spotInitY+route/2);
-                faisceau.setRotate(route);
+                faisceau.getTransforms().add(new Rotate(angle, 0, 150, 0, Rotate.Z_AXIS));
+                //faisceau.setRotate(route);
                 //faisceau.setLength(60.0);
                     route++;
                     route %= 360;

@@ -14,15 +14,10 @@
 
 <fx:root type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Pane opacity="0.0" prefHeight="600.0" prefWidth="600.0" />       
-     <Group layoutX="150.0" layoutY="150.0">
+      <Pane opacity="0.0" prefHeight="445.0" prefWidth="445.0" />
+      <Group layoutX="-25.0" layoutY="25.0">
          <children>
-            <ImageView fx:id="faisceau" fitHeight="300.0" fitWidth="300.0" layoutX="10.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@radarfaisceau.png" />
-               </image>
-            </ImageView>
-             <Rectangle arcHeight="30.0" arcWidth="30.0" height="325.0" opacity="0.66" stroke="#448cbc" strokeType="INSIDE" width="325.0">
+             <Rectangle arcHeight="30.0" arcWidth="30.0" height="325.0" layoutX="87.0" layoutY="38.0" opacity="0.66" stroke="#448cbc" strokeType="INSIDE" width="325.0">
                  <fill>
                      <LinearGradient endX="1.0" endY="1.0" startX="0.37142857142857144">
                          <stops>
@@ -32,16 +27,20 @@
                      </LinearGradient>
                  </fill>
              </Rectangle>
-         <Group layoutX="-90.0" layoutY="-35.0">
-            <children>
-               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="110.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="80.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="30.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+                  <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="130.0" stroke="DODGERBLUE" strokeType="INSIDE" />
                <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="10.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+             
+                           
+      
+                        
+                     <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="110.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="30.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+               <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="80.0" stroke="DODGERBLUE" strokeType="INSIDE" />
                <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="50.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-               <Line endX="110.0" layoutX="250.0" layoutY="200.0" startX="-110.0" stroke="#1f93ff" />
-               <Line endY="110.0" layoutX="250.0" layoutY="200.0" startY="-110.0" stroke="#1f93ff" />
-               <Circle fx:id="spot1" fill="#cde7ff" layoutX="150.0" layoutY="100.0" radius="3.0" stroke="DODGERBLUE" strokeType="INSIDE">
+                  <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="150.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+               <Line endY="150.0" layoutX="250.0" layoutY="200.0" startY="-150.0" stroke="#1f93ff" />
+               <Line endX="150.0" layoutX="250.0" layoutY="200.0" startX="-150.0" stroke="#1f93ff" />
+               <Circle fx:id="spot1" blendMode="COLOR_DODGE" fill="#cde7ff" layoutX="150.0" layoutY="100.0" radius="3.0" stroke="#a8f5aa" strokeType="INSIDE">
                   <effect>
                      <GaussianBlur>
                         <input>
@@ -50,7 +49,7 @@
                      </GaussianBlur>
                   </effect>
                </Circle>
-                  <Circle fx:id="spot2" fill="#cde7ff" layoutX="300.0" layoutY="153.0" radius="3.0" stroke="DODGERBLUE" strokeType="INSIDE">
+                  <Circle fx:id="spot2" blendMode="COLOR_DODGE" fill="#cde7ff" layoutX="300.0" layoutY="153.0" radius="3.0" stroke="#1fedff" strokeType="INSIDE">
                      <effect>
                         <GaussianBlur>
                            <input>
@@ -59,18 +58,15 @@
                         </GaussianBlur>
                      </effect>
                   </Circle>
-                  <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="130.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-                  <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="150.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-            </children>
-            <effect>
-               <Glow level="6.0" />
-            </effect>
-         </Group>
+            
+                  
+                
+                     <ImageView fx:id="faisceau" blendMode="COLOR_DODGE" fitHeight="150.0" fitWidth="150.0" layoutX="250.0" layoutY="50.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@radarfaisceau.png" />
+                        </image>
+                     </ImageView>
          </children>
-         
-              </Group>
-    </children>
-    <rotationAxis>
-        <Point3D y="1.0" />
-    </rotationAxis>
+      </Group>
+          </children>
 </fx:root>
