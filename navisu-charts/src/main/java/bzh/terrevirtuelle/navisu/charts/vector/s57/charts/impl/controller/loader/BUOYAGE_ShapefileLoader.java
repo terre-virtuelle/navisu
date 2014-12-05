@@ -194,7 +194,6 @@ public class BUOYAGE_ShapefileLoader
         if (tm == null) {
             tm = "0";
         }
-        
         attrs.setImageAddress("img/buoyage_" + marsys + "/" + acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"

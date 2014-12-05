@@ -173,502 +173,214 @@ public class ChartS57Controller {
             // DEPARE in background
             for (File f : listOfFiles) {
                 String s = f.getName();
-
-                if (s.equals("DEPARE.shp")) {
-                    loader = new DEPARE_ShapefileLoader();
-                    // loader = new Template_ShapefileLoader();
-                    tmp = new File(path + "/DEPARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("DEPARE");
-                        l.setPickEnabled(false);
-                    });
-                    layers.addAll(la);
+                switch (s) {
+                    case "DEPARE.shp":
+                        load(new DEPARE_ShapefileLoader(), "DEPARE");
+                        break;
+                    default:
                 }
             }
             for (File f : listOfFiles) {
                 String s = f.getName();
-                if (s.equals("RESARE.shp")) {
-                    loader = new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2);
-                    tmp = new File(path + "/RESARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("RESARE");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("UNSARE.shp")) {
-                    loader = new UNSARE_ShapefileLoader();
-                    tmp = new File(path + "/UNSARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("UNSARE");
-
-                    });
-                    layers.addAll(la);
+                switch (s) {
+                    case "RESARE.shp":
+                        load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2), "RESARE");
+                        break;
+                    case "UNSARE.shp":
+                        load(new UNSARE_ShapefileLoader(), "UNSARE");
+                        break;
+                    default:
                 }
             }
             for (File f : listOfFiles) {
                 String s = f.getName();
-
-                // Contour de la carte
-                /*
-                 if (s.equals("M_COVR.shp")) {
-                 loader = new M_COVR_ShapefileLoader();
-                 tmp = new File(path + "/M_COVR.shp");
-                 List<Layer> la = loader.createLayersFromSource(tmp);
-                 la.stream().forEach((l) -> {
-                 l.setName("M_COVR");
-                 });
-                 layers.addAll(la);
-                 }
-                 */
-                if (s.equals("BCNCAR.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR");
-                    tmp = new File(path + "/BCNCAR.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BCNCAR");
-
-                    });
-                    layers.addAll(la);
+                switch (s) {
+                    case "BCNCAR.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR"), "BCNCAR");
+                        break;
+                    case "BCNISD.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD"), "BCNISD");
+                        break;
+                    case "BCNLAT.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNLAT"), "BCNLAT");
+                        break;
+                    case "BCNSAW.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSAW"), "BCNSAW");
+                        break;
+                    case "BCNSPP.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSPP"), "BCNSPP");
+                        break;
+                    case "BRIDGE.shp":
+                        load(new BRIDGE_ShapefileLoader(), "BRIDGE");
+                        break;
+                    case "BOYCAR.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYCAR"), "BOYCAR");
+                        break;
+                    case "BOYISD.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYISD"), "BOYISD");
+                        break;
+                    case "BOYLAT.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT"), "BOYLAT");
+                        break;
+                    case "BOYSAW.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSAW"), "BOYSAW");
+                        break;
+                    case "BOYSPP.shp":
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSPP"), "BOYSPP");
+                        break;
+                    case "CBLSUB.shp":
+                        load(new CBLSUB_ShapefileLoader(), "CBLSUB");
+                        break;
+                    case "DAYMAR.shp":
+                        load(new DAYMAR_ShapefileLoader(marsys), "DAYMAR");
+                        break;
+                    case "DEPCNT.shp":
+                        load(new DEPCNT_ShapefileLoader(), "DEPCNT");
+                        break;
+                    case "DOCARE.shp":
+                        load(new DOCARE_ShapefileLoader(), "DOCARE");
+                        break;
+                    case "DGRARE.shp":
+                        load(new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0), "DGRARE");
+                        break;
+                    case "FAIRWY.shp":
+                        load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2), "FAIRWY");
+                        break;
+                    case "LAKARE.shp":
+                        load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "LAKARE");
+                        break;
+                    case "LNDMRK.shp":
+                        load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "LNDMRK");
+                        break;
+                    case "MIPARE.shp":
+                        load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "MIPARE");
+                        break;
+                    case "NAVLNE.shp":
+                        load(new NAVLNE_ShapefileLoader(), "NAVLNE");
+                        break;
+                    case "OBSTRN.shp":
+                        load(new OBSTRN_CNT_ShapefileLoader(), "OBSTRN");
+                        load(new OBSTRN_ShapefileLoader(), "OBSTRN");
+                        break;
+                    case "PONTON.shp":
+                        load(new PONTON_ShapefileLoader(), "PONTON");
+                        break;
+                    case "SEAARE.shp":
+                        load(new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.2), "SEAARE");
+                        break;
+                    case "SLCONS.shp":
+                        load(new SLCONS_ShapefileLoader(), "SLCONS");
+                        break;
+                    case "SOUNDG.shp":
+                        loadSoundg(new SOUNDG_ShapefileLoader(), "SOUNDG");
+                        break;
+                    case "TSSBND.shp":
+                        load(new TSSBND_ShapefileLoader(), "TSSBND");
+                        break;
+                    case "UWTROC.shp":
+                        load(new UWTROC_ShapefileLoader(), "UWTROC");
+                        break;
+                    case "WRECKS.shp":
+                        load(new WRECKS_CNT_ShapefileLoader(), "WRECKS");
+                        load(new WRECKS_ShapefileLoader(), "WRECKS");
+                        break;
+                    case "LIGHTS.shp":
+                        loadLights();
+                        break;
+                    default:
                 }
-                if (s.equals("BCNISD.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD");
-                    tmp = new File(path + "/BCNISD.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BCNISD");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BCNLAT.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNLAT");
-                    tmp = new File(path + "/BCNLAT.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-
-                    la.stream().forEach((l) -> {
-                        l.setName("BCNLAT");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BCNSAW.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSAW");
-                    tmp = new File(path + "/BCNSAW.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BCNSAW");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BCNSPP.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSPP");
-                    tmp = new File(path + "/BCNSPP.shp");
-
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BCNSPP");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BRIDGE.shp")) {
-                    loader = new BRIDGE_ShapefileLoader();
-                    tmp = new File(path + "/BRIDGE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BRIDGE");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BOYCAR.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYCAR");
-                    tmp = new File(path + "/BOYCAR.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BOYCAR");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BOYISD.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYISD");
-                    tmp = new File(path + "/BOYISD.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BOYISD");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BOYLAT.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT");
-                    tmp = new File(path + "/BOYLAT.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BOYLAT");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BOYSAW.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSAW");
-                    tmp = new File(path + "/BOYSAW.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BOYSAW");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("BOYSPP.shp")) {
-                    loader = new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSPP");
-                    tmp = new File(path + "/BOYSPP.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("BOYSPP");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("CBLSUB.shp")) {
-                    loader = new CBLSUB_ShapefileLoader();
-                    tmp = new File(path + "/CBLSUB.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("CBLSUB");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("DAYMAR.shp")) {
-                    loader = new DAYMAR_ShapefileLoader(marsys);
-                    tmp = new File(path + "/DAYMAR.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("DAYMAR");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("DEPCNT.shp")) {
-                    loader = new DEPCNT_ShapefileLoader();
-                    tmp = new File(path + "/DEPCNT.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("DEPCNT");
-                        l.setPickEnabled(false);
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("DOCARE.shp")) {
-                    loader = new DOCARE_ShapefileLoader();
-                    tmp = new File(path + "/DOCARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("DOCARE");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("DGRARE.shp")) {
-                    loader = new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0);
-                    tmp = new File(path + "/DGRARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("DGRARE");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("FAIRWY.shp")) {
-                    loader = new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2);
-                    tmp = new File(path + "/FAIRWY.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("FAIRWY");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("LAKARE.shp")) {
-                    loader = new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0);
-                    tmp = new File(path + "/LAKARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("LAKARE");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("LNDMRK.shp")) {
-                    loader = new LANDMARK_ShapefileLoader(marsys, "LNDMRK");
-                    tmp = new File(path + "/LNDMRK.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("LNDMRK");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("LIGHTS.shp")) {
-                    loader = new LIGHTS_ShapefileLoader();
-                    tmp = new File(path + "/LIGHTS.shp");
-                    loader.createLayersFromSource(tmp);
-                    AirspaceLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
-                    la.setName("LIGHTS");
-                    layers.add(la);
-                    airspaceTmpLayer = new AirspaceLayer();
-                    airspaceTmpLayer.setName("LIGHTS_TMP");
-                    airspaceLayers.add(la);
-                    airspaceLayers.add(airspaceTmpLayer);
-                    wwd.addSelectListener((SelectEvent event) -> {
-                        LightView lightView;
-                        Object o = event.getTopObject();
-                        if (event.isLeftClick() && o != null) {
-                            if (o.getClass().getInterfaces() != null) {
-                                if (o.getClass().getInterfaces()[0].equals(Lights.class)) {
-                                    lightView = ((LightView) o);
-                                    if (lightView.isTmp() == true) {
-                                        airspaceTmpLayer.removeAllAirspaces();
-                                        isDisplay = false;
-                                    } else {
-                                        if (isDisplay == false) {
-                                            isDisplay = true;
-                                            airspaceTmpLayer.removeAllAirspaces();
-                                            Light data = lightView.getLight();
-                                            if (data.getSectorLimitOne() != null
-                                                    && data.getSectorLimitTwo() != null
-                                                    && data.getValueOfNominalRange() != null) {
-                                                lightView = new LightView();
-                                                lightView.setTmp(true);
-                                                double lat = data.getLat();
-                                                double lon = data.getLon();
-                                                double elevation = globe.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                                                lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
-                                                        Angle.fromDegrees(lon)));
-                                                double range = new Double(data.getValueOfNominalRange());
-                                                lightView.setRadii(0.0, range * 1852);
-                                                lightView.getAttributes().setOpacity(0.2);
-                                                lightView.getAttributes().setOutlineOpacity(0.2);
-                                                lightView.setAltitude(elevation + 35);
-                                                lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
-                                                        Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
-                                                String label = "Light \n"
-                                                        + "Lat : " + Double.toString(lat) + "\n"
-                                                        + "Lon : " + Double.toString(lon) + "\n"
-                                                        + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
-                                                        + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
-                                                        + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
-                                                        + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
-                                                        + "Sect1 : " + data.getSectorLimitOne() + "\n"
-                                                        + "Sect2 : " + data.getSectorLimitTwo() + "\n";
-                                                lightView.setValue(AVKey.DISPLAY_NAME, label);
-                                                lightView.getAttributes().setDrawOutline(true);
-                                                // Si la couleur est blanche, la vue est jaune
-                                                if (data.getColour().contains("1")) {
-                                                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
-                                                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
-                                                } else {
-                                                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                                                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                                                }
-                                                airspaceTmpLayer.addAirspace(lightView);
-                                            }
-                                        } else {
-                                            airspaceTmpLayer.removeAllAirspaces();
-                                            isDisplay = false;
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-
-                    });
-                }
-                if (s.equals("MIPARE.shp")) {
-                    loader = new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2);
-                    tmp = new File(path + "/MIPARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("MIPARE");
-
-                    });
-                    layers.addAll(la);
-                }
-                /*
-                 if (s.equals("M_SREL.shp")) {
-                 loader = new AREA_ShapefileLoader("M_SREL", new Color(255, 0, 0));
-                 tmp = new File(path + "/M_SREL.shp");
-                 List<Layer> la = loader.createLayersFromSource(tmp);
-                 la.stream().forEach((l) -> {
-                 l.setName("M_SREL");
-                 });
-                 layers.addAll(la);
-                 }
-                 */
-                if (s.equals("NAVLNE.shp")) {
-                    loader = new NAVLNE_ShapefileLoader();
-                    tmp = new File(path + "/NAVLNE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("NAVLNE");
-                        //  ((RenderableLayer) l).addRenderable(tooltipAnnotation);
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("OBSTRN.shp")) {
-                    loader = new OBSTRN_CNT_ShapefileLoader();
-                    tmp = new File(path + "/OBSTRN.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("OBSTRN");
-
-                    });
-                    layers.addAll(la);
-                    loader = new OBSTRN_ShapefileLoader();
-                    tmp = new File(path + "/OBSTRN.shp");
-                    la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("OBSTRN");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("PONTON.shp")) {
-                    loader = new PONTON_ShapefileLoader();
-                    tmp = new File(path + "/PONTON.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("PONTON");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("SEAARE.shp")) {
-                    loader = new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.2);
-                    tmp = new File(path + "/SEAARE.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("SEAARE");
-
-                    });
-                    layers.addAll(la);
-                }
-                /*
-                 if (s.equals("SBDARE.shp")) {
-                 loader = new PolygonTemplate_ShapefileLoader();
-                 tmp = new File(path + "/SBDARE.shp");
-                 List<Layer> la = loader.createLayersFromSource(tmp);
-                 la.stream().forEach((l) -> {
-                 l.setName("SBDARE");
-                 });
-                 layers.addAll(la);
-                 }
-                 */
-                if (s.equals("SLCONS.shp")) {
-                    loader = new SLCONS_ShapefileLoader();
-                    tmp = new File(path + "/SLCONS.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("SLCONS");
-
-                        //  ((RenderableLayer) l).addRenderable(tooltipAnnotation);
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("SOUNDG.shp")) {
-                    loader = new SOUNDG_ShapefileLoader();
-                    tmp = new File(path + "/soundg/SOUNDG.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("SOUNDG");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("TSSBND.shp")) {
-                    loader = new TSSBND_ShapefileLoader();
-                    tmp = new File(path + "/TSSBND.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("TSSBND");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("UWTROC.shp")) {
-                    loader = new UWTROC_ShapefileLoader();
-                    //loader = new Template_ShapefileLoader();
-                    tmp = new File(path + "/UWTROC.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("UWTROC");
-
-                    });
-                    layers.addAll(la);
-                }
-                if (s.equals("WRECKS.shp")) {
-                    loader = new WRECKS_CNT_ShapefileLoader();
-                    tmp = new File(path + "/WRECKS.shp");
-                    List<Layer> la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("WRECKS");
-
-                    });
-                    layers.addAll(la);
-                    loader = new WRECKS_ShapefileLoader();
-                    tmp = new File(path + "/WRECKS.shp");
-                    la = loader.createLayersFromSource(tmp);
-                    la.stream().forEach((l) -> {
-                        l.setName("WRECKS");
-
-                    });
-                    layers.addAll(la);
-                }
-
                 if (s.contains(".shp")) {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
                 }
-
             }
         }
-
     }
 
-    private void lightsDisplay() {
-
+    private void load(ShapefileLoader loader, String acronym) {
+        Layer la = loader.createLayerFromSource(new File(path + "/" + acronym + ".shp"));
+        la.setName(acronym);
+        layers.add(la);
     }
 
-    private String fileToString(String fileName) {
-        //   Path textFile = Paths.get( +fileName);
-        Path textFile = FileSystems.getDefault().getPath("data/shp/shp_0", fileName);
-        //  System.out.println("textFile : " + textFile);
-        List<String> read = null;
-        try {
-            read = Files.readAllLines(textFile, StandardCharsets.ISO_8859_1);
-            //System.out.println("read : " + read);
-        } catch (IOException ex) {
-
-            Logger.getLogger(ChartS57Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // return null;
-        return String.join("\n", read);
+    private void loadSoundg(ShapefileLoader loader, String acronym) {
+        Layer la = loader.createLayerFromSource(new File(path + "/soundg/" + acronym + ".shp"));
+        la.setName(acronym);
+        layers.add(la);
     }
 
-    public List<Layer> makeShapefileLayers(File f) {
+    private void loadLights() {
+        loader = new LIGHTS_ShapefileLoader();
+        loader.createLayersFromSource(new File(path + "/LIGHTS.shp"));
+        AirspaceLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
+        la.setName("LIGHTS");
+        layers.add(la);
+        airspaceTmpLayer = new AirspaceLayer();
+        airspaceTmpLayer.setName("LIGHTS_TMP");
+        airspaceLayers.add(la);
+        airspaceLayers.add(airspaceTmpLayer);
+        wwd.addSelectListener((SelectEvent event) -> {
+            LightView lightView;
+            Object o = event.getTopObject();
+            if (event.isLeftClick() && o != null) {
+                if (o.getClass().getInterfaces() != null) {
+                    if (o.getClass().getInterfaces()[0].equals(Lights.class)) {
+                        lightView = ((LightView) o);
+                        if (lightView.isTmp() == true) {
+                            airspaceTmpLayer.removeAllAirspaces();
+                            isDisplay = false;
+                        } else {
+                            if (isDisplay == false) {
+                                isDisplay = true;
+                                airspaceTmpLayer.removeAllAirspaces();
+                                Light data = lightView.getLight();
+                                if (data.getSectorLimitOne() != null
+                                        && data.getSectorLimitTwo() != null
+                                        && data.getValueOfNominalRange() != null) {
+                                    lightView = new LightView();
+                                    lightView.setTmp(true);
+                                    double lat = data.getLat();
+                                    double lon = data.getLon();
+                                    double elevation = globe.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
+                                    lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
+                                            Angle.fromDegrees(lon)));
+                                    double range = new Double(data.getValueOfNominalRange());
+                                    lightView.setRadii(0.0, range * 1852);
+                                    lightView.getAttributes().setOpacity(0.2);
+                                    lightView.getAttributes().setOutlineOpacity(0.2);
+                                    lightView.setAltitude(elevation + 35);
+                                    lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
+                                            Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
+                                    String label = "Light \n"
+                                            + "Lat : " + Double.toString(lat) + "\n"
+                                            + "Lon : " + Double.toString(lon) + "\n"
+                                            + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
+                                            + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
+                                            + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
+                                            + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
+                                            + "Sect1 : " + data.getSectorLimitOne() + "\n"
+                                            + "Sect2 : " + data.getSectorLimitTwo() + "\n";
+                                    lightView.setValue(AVKey.DISPLAY_NAME, label);
+                                    lightView.getAttributes().setDrawOutline(true);
+                                    // Si la couleur est blanche, la vue est jaune
+                                    if (data.getColour().contains("1")) {
+                                        lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
+                                        lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                                    } else {
+                                        lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                                        lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                                    }
+                                    airspaceTmpLayer.addAirspace(lightView);
+                                }
+                            } else {
+                                airspaceTmpLayer.removeAllAirspaces();
+                                isDisplay = false;
+                            }
+                        }
 
-//        loader = null;
-//        fileDepare = null;
-        //       File index = new File("data/shp");
-//        for(File f: index.listFiles()) f.delete();
-        return null;
+                    }
+                }
+            }
+        });
     }
 
     public SurveyZoneController getSurveyZoneController() {
