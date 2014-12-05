@@ -18,9 +18,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.shape.Arc;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 /**
@@ -33,19 +34,22 @@ extends Widget
 implements Initializable {
     
     @FXML
-    public Arc faisceau;
-    
+    public ImageView faisceau;
     @FXML
     public Circle spot1;
     public Circle spot2;
     @FXML
-    public Double route=0.0;
+    public double route=0.0;
+    public double angle;
     public double spotInitX=20.0;
     public double spotInitY=20.0;
     public double spotX;
+    public Text couleur;
+    final Rotate rotationTransform = new Rotate(0, 0, 0);
+    
     
     public Radar_Controller() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar-faisceau.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -55,22 +59,25 @@ implements Initializable {
             throw new RuntimeException(exception);
         }
     }
+    
 
-
+    
     public void schedule() {
         Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(.01), new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent event) {
-                // System.out.println("heading " + heading+"route "+route);
-                spotX= spotInitX+(sin(route*PI/360)*25);
-                spot1.setTranslateX(spotX);
+                
+            // System.out.println("heading " + heading+"route "+route);
+                //spotX= spotInitX+(sin(route*PI/360)*25);
+                angle = sin(route*PI/360);
+                spot1.setTranslateX(spotInitX+(angle*25));
                 spot1.setTranslateY(spotInitY+route/2);
-                faisceau.setStartAngle(-1*route);
-                        //faisceau.setLength(60.0);
-                        
-                        route++;
-                        route %= 360;
+                faisceau.getTransforms().add(new Rotate(angle, 0, 150, 0, Rotate.Z_AXIS));
+                //faisceau.setRotate(route);
+                //faisceau.setLength(60.0);
+                    route++;
+                    route %= 360;
             }
         }));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);

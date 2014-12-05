@@ -204,11 +204,12 @@ public class GuiAgentImpl
 
         // Test avant les Displays
         //------------ HUD widgets ---------------------------------------------       
-        WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
+        /*WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
         widgetController1.add(hud_3);
         root.getChildren().add(hud_3);
+        */
         // hud_3.schedule();
         WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
         Radar_Controller radar_1 = new Radar_Controller();
