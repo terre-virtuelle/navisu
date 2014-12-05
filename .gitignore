@@ -20,3 +20,5 @@
 /.nb-gradle/private/
 /navisu-geodesy/.nb-gradle/private/
 /build/
+/navisu-launcher/data/shp/
+/navisu-launcher/errors.txt
