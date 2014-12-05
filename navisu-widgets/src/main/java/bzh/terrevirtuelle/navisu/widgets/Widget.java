@@ -6,9 +6,7 @@ package bzh.terrevirtuelle.navisu.widgets;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 /**
  *
@@ -24,7 +22,6 @@ public class Widget
 
     public Widget() {
         initEvt();
-       // initEffects();
     }
 
     public void setScale(double scale) {
@@ -32,7 +29,6 @@ public class Widget
         setScaleY(scale);
     }
 
-    
     private void initEvt() {
         setOnMouseEntered((MouseEvent me) -> {
             toFront();
@@ -65,13 +61,4 @@ public class Widget
             }
         });
     }
-/*
-    private void initEffects() {
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setOffsetX(10);
-        dropShadow.setOffsetY(10);
-        dropShadow.setColor(Color.rgb(50, 50, 50, 0.7));
-        setEffect(dropShadow);
-    }
- */   
 }

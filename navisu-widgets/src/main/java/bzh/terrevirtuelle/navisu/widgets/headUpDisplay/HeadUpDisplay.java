@@ -29,8 +29,6 @@ public class HeadUpDisplay
                 .scaleX(.6)
                 .scaleY(.6)
                 .opacity(.7)
-                //.layoutX(-200)
-                //.layoutY(-100)
                 .build();
         getChildren().add(background);
     }
@@ -43,4 +41,6 @@ public class HeadUpDisplay
             }
         });
     }
+  
+   
 }
