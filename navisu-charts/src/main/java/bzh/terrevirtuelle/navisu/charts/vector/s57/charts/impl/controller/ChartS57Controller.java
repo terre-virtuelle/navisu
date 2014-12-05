@@ -194,7 +194,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("RESARE");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -204,7 +204,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("UNSARE");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -230,7 +230,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNCAR");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -240,7 +240,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNISD");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -251,7 +251,7 @@ public class ChartS57Controller {
 
                     la.stream().forEach((l) -> {
                         l.setName("BCNLAT");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -261,7 +261,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNSAW");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -272,7 +272,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BCNSPP");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -282,7 +282,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BRIDGE");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -292,7 +292,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYCAR");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -302,7 +302,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYISD");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -312,7 +312,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYLAT");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -322,7 +322,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYSAW");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -332,7 +332,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("BOYSPP");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -342,7 +342,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("CBLSUB");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -352,7 +352,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DAYMAR");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -372,7 +372,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DOCARE");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -382,7 +382,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("DGRARE");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -392,7 +392,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("FAIRWY");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -402,7 +402,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("LAKARE");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -412,7 +412,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("LNDMRK");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -429,60 +429,63 @@ public class ChartS57Controller {
                     airspaceLayers.add(airspaceTmpLayer);
                     wwd.addSelectListener((SelectEvent event) -> {
                         LightView lightView;
-                        if (event.isLeftClick()
-                                && event.getTopObject() != null
-                                && event.getTopObject().getClass().getInterfaces() != null
-                                && event.getTopObject().getClass().getInterfaces()[0].equals(Lights.class)) {
-                            lightView = ((LightView) event.getTopObject());
-                            if (lightView.isTmp() == true) {
-                                airspaceTmpLayer.removeAllAirspaces();
-                                isDisplay = false;
-                            } else {
-                                if (isDisplay == false) {
-                                    isDisplay = true;
-                                    airspaceTmpLayer.removeAllAirspaces();
-                                    Light data = lightView.getLight();
-                                    if (data.getSectorLimitOne() != null
-                                            && data.getSectorLimitTwo() != null
-                                            && data.getValueOfNominalRange() != null) {
-                                        lightView = new LightView();
-                                        lightView.setTmp(true);
-                                        double lat = data.getLat();
-                                        double lon = data.getLon();
-                                        double elevation = globe.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                                        lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
-                                                Angle.fromDegrees(lon)));
-                                        double range = new Double(data.getValueOfNominalRange());
-                                        lightView.setRadii(0.0, range * 1852);
-                                        lightView.getAttributes().setOpacity(0.2);
-                                        lightView.getAttributes().setOutlineOpacity(0.2);
-                                        lightView.setAltitude(elevation + 35);
-                                        lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
-                                                Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
-                                        String label = "Light \n"
-                                                + "Lat : " + Double.toString(lat) + "\n"
-                                                + "Lon : " + Double.toString(lon) + "\n"
-                                                + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
-                                                + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
-                                                + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
-                                                + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
-                                                + "Sect1 : " + data.getSectorLimitOne() + "\n"
-                                                + "Sect2 : " + data.getSectorLimitTwo() + "\n";
-                                        lightView.setValue(AVKey.DISPLAY_NAME, label);
-                                        lightView.getAttributes().setDrawOutline(true);
-                                        // Si la couleur est blanche, la vue est jaune
-                                        if (data.getColour().contains("1")) {
-                                            lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
-                                            lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                        Object o = event.getTopObject();
+                        if (event.isLeftClick() && o != null) {
+                            if (o.getClass().getInterfaces() != null) {
+                                if (o.getClass().getInterfaces()[0].equals(Lights.class)) {
+                                    lightView = ((LightView) o);
+                                    if (lightView.isTmp() == true) {
+                                        airspaceTmpLayer.removeAllAirspaces();
+                                        isDisplay = false;
+                                    } else {
+                                        if (isDisplay == false) {
+                                            isDisplay = true;
+                                            airspaceTmpLayer.removeAllAirspaces();
+                                            Light data = lightView.getLight();
+                                            if (data.getSectorLimitOne() != null
+                                                    && data.getSectorLimitTwo() != null
+                                                    && data.getValueOfNominalRange() != null) {
+                                                lightView = new LightView();
+                                                lightView.setTmp(true);
+                                                double lat = data.getLat();
+                                                double lon = data.getLon();
+                                                double elevation = globe.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
+                                                lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
+                                                        Angle.fromDegrees(lon)));
+                                                double range = new Double(data.getValueOfNominalRange());
+                                                lightView.setRadii(0.0, range * 1852);
+                                                lightView.getAttributes().setOpacity(0.2);
+                                                lightView.getAttributes().setOutlineOpacity(0.2);
+                                                lightView.setAltitude(elevation + 35);
+                                                lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
+                                                        Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
+                                                String label = "Light \n"
+                                                        + "Lat : " + Double.toString(lat) + "\n"
+                                                        + "Lon : " + Double.toString(lon) + "\n"
+                                                        + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
+                                                        + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
+                                                        + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
+                                                        + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
+                                                        + "Sect1 : " + data.getSectorLimitOne() + "\n"
+                                                        + "Sect2 : " + data.getSectorLimitTwo() + "\n";
+                                                lightView.setValue(AVKey.DISPLAY_NAME, label);
+                                                lightView.getAttributes().setDrawOutline(true);
+                                                // Si la couleur est blanche, la vue est jaune
+                                                if (data.getColour().contains("1")) {
+                                                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
+                                                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                                                } else {
+                                                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                                                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                                                }
+                                                airspaceTmpLayer.addAirspace(lightView);
+                                            }
                                         } else {
-                                            lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                                            lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                                            airspaceTmpLayer.removeAllAirspaces();
+                                            isDisplay = false;
                                         }
-                                        airspaceTmpLayer.addAirspace(lightView);
                                     }
-                                } else {
-                                    airspaceTmpLayer.removeAllAirspaces();
-                                    isDisplay = false;
+
                                 }
                             }
                         }
@@ -495,7 +498,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("MIPARE");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -526,7 +529,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("OBSTRN");
-                        
+
                     });
                     layers.addAll(la);
                     loader = new OBSTRN_ShapefileLoader();
@@ -534,7 +537,7 @@ public class ChartS57Controller {
                     la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("OBSTRN");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -544,7 +547,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("PONTON");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -554,7 +557,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("SEAARE");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -575,7 +578,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("SLCONS");
-                        
+
                         //  ((RenderableLayer) l).addRenderable(tooltipAnnotation);
                     });
                     layers.addAll(la);
@@ -586,7 +589,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("SOUNDG");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -596,7 +599,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("TSSBND");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -607,7 +610,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("UWTROC");
-                        
+
                     });
                     layers.addAll(la);
                 }
@@ -617,7 +620,7 @@ public class ChartS57Controller {
                     List<Layer> la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("WRECKS");
-                        
+
                     });
                     layers.addAll(la);
                     loader = new WRECKS_ShapefileLoader();
@@ -625,7 +628,7 @@ public class ChartS57Controller {
                     la = loader.createLayersFromSource(tmp);
                     la.stream().forEach((l) -> {
                         l.setName("WRECKS");
-                        
+
                     });
                     layers.addAll(la);
                 }
