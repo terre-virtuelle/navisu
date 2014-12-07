@@ -61,9 +61,11 @@ public class LayerShapefileLoader
             this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
         } else if (Shapefile.isPolygonType(shp.getShapeType())) {
             List<Layer> layers = new ArrayList<>();
-            System.out.println("isPolygonType");
-            layers.add(layer);
+          //  System.out.println("isPolygonType");
+          //  layers.add(layer);
             this.addRenderablesForPolygons(shp, layers);
+            layer = layers.get(0);
+          //  System.out.println("layer " + layer);
         } else {
             Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
         }

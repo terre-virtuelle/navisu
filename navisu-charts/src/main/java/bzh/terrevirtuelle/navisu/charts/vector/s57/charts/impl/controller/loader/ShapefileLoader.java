@@ -165,9 +165,10 @@ public class ShapefileLoader {
             layer = new RenderableLayer();
             this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
         } else if (Shapefile.isPolygonType(shp.getShapeType())) {
-            List<Layer> layers = new ArrayList<Layer>();
+            List<Layer> layers = new ArrayList<>();
+            layers.add(layer);
             this.addRenderablesForPolygons(shp, layers);
-            layer = layers.get(0);
+           // layer = layers.get(0);
         } else {
             Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
         }
@@ -346,7 +347,7 @@ public class ShapefileLoader {
         while (shp.hasNext()) {
             try {
                 ShapefileRecord record = shp.nextRecord();
-                   System.out.println("record " + record);
+                //   System.out.println("record " + record);
                 recordNumber = record.getRecordNumber();
 
                 if (!Shapefile.isPolygonType(record.getShapeType())) {

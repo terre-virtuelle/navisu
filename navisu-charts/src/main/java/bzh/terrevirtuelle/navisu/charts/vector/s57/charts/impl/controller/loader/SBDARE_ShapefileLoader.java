@@ -149,6 +149,7 @@ public class SBDARE_ShapefileLoader
      * @throws IllegalArgumentException if the Shapefile is null, or if the
      * Shapefile's primitive type is unrecognized.
      */
+    /*
     public Layer createLayerFromShapefile(Shapefile shp) {
         if (shp == null) {
             String message = Logging.getMessage("nullValue.ShapefileIsNull");
@@ -177,7 +178,7 @@ public class SBDARE_ShapefileLoader
 
         return layer;
     }
-
+*/
     /**
      * Creates a list of {@link gov.nasa.worldwind.layers.Layer}s containing
      * shapes from a Shapefile.
@@ -199,6 +200,7 @@ public class SBDARE_ShapefileLoader
      * @throws IllegalArgumentException if the shapefile is null or an empty
      * string, or if the Shapefile's primitive type is unrecognized.
      */
+    /*
     public List<Layer> createLayersFromShapefile(Shapefile shp) {
         if (shp == null) {
             String message = Logging.getMessage("nullValue.ShapefileIsNull");
@@ -232,13 +234,14 @@ public class SBDARE_ShapefileLoader
 
         return layers;
     }
-
+*/
     /**
      * Indicates the maximum number of polygon renderables to place in a single
      * layer. If this limit is exceeded an additional layer is added.
      *
      * @return the maximum number of polygons to place in a layer.
      */
+    @Override
     public int getNumPolygonsPerLayer() {
         return this.numPolygonsPerLayer;
     }

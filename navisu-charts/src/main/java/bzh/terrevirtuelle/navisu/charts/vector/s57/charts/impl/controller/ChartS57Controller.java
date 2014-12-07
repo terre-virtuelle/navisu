@@ -75,7 +75,7 @@ public class ChartS57Controller {
 
     @UsedService
     GuiAgentServices guiAgentServices;
-    
+
     private static final ChartS57Controller INSTANCE;
     protected String path;
     private File file;
@@ -175,7 +175,6 @@ public class ChartS57Controller {
             }
 
             // DEPARE in background
-            /*
             for (File f : listOfFiles) {
                 String s = f.getName();
                 switch (s) {
@@ -185,15 +184,15 @@ public class ChartS57Controller {
                     default:
                 }
             }
-              */    
+
             for (File f : listOfFiles) {
                 String s = f.getName();
                 switch (s) {
                     case "RESARE.shp":
-                 //       load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2), "RESARE", "/");
+                        //    load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2), "RESARE", "/");
                         break;
                     case "UNSARE.shp":
-                  //      load(new UNSARE_ShapefileLoader(), "UNSARE", "/");
+                        //  load(new UNSARE_ShapefileLoader(), "UNSARE", "/");
                         break;
                     default:
                 }
@@ -238,7 +237,6 @@ public class ChartS57Controller {
                     case "CBLSUB.shp":
                         load(new CBLSUB_ShapefileLoader(), "CBLSUB", "/");
                         break;
-
                     case "DAYMAR.shp":
                         load(new DAYMAR_ShapefileLoader(marsys), "DAYMAR", "/");
                         break;
@@ -246,23 +244,23 @@ public class ChartS57Controller {
                         load(new DEPCNT_ShapefileLoader(), "DEPCNT", "/");
                         break;
                     case "DOCARE.shp":
-                   //     load(new DOCARE_ShapefileLoader(), "DOCARE", "/");
+                        //  load(new DOCARE_ShapefileLoader(), "DOCARE", "/");
                         break;
-                    //   case "DGRARE.shp":
-                    //       load(new AREA_ShapefileLoader( "DGRARE", new Color(7, 149, 24), 0.0), "DGRARE","/");
-                    //       break;
+                    case "DGRARE.shp":
+                        //     load(new AREA_ShapefileLoader( "DGRARE", new Color(7, 149, 24), 0.0), "DGRARE","/");
+                        break;
                     case "FAIRWY.shp":
-                   //     load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2), "FAIRWY", "/");
+                        load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2), "FAIRWY", "/");
                         break;
                     case "LAKARE.shp":
-                    //    load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "LAKARE", "/");
+                        //   load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "LAKARE", "/");
                         break;
                     case "LNDMRK.shp":
                         load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "LNDMRK", "/");
                         break;
-                    //  case "MIPARE.shp":
-                    //      load(new AREA_ShapefileLoader( "MIPARE", new Color(1, 5, 105), 0.2), "MIPARE","/");
-                    //     break;
+                    case "MIPARE.shp":
+                        //     load(new AREA_ShapefileLoader( "MIPARE", new Color(1, 5, 105), 0.2), "MIPARE","/");
+                        break;
                     case "NAVLNE.shp":
                         load(new NAVLNE_ShapefileLoader(), "NAVLNE", "/");
                         break;
@@ -271,11 +269,11 @@ public class ChartS57Controller {
                         load(new OBSTRN_ShapefileLoader(), "OBSTRN", "/");
                         break;
                     case "PONTON.shp":
-                    //    load(new PONTON_ShapefileLoader(), "PONTON", "/");
+                        load(new PONTON_ShapefileLoader(), "PONTON", "/");
                         break;
-                    //  case "SEAARE.shp":
-                    //     load(new AREA_ShapefileLoader( "SEAARE", new Color(0, 246, 232), 0.2), "SEAARE","/");
-                    //    break;
+                    case "SEAARE.shp":
+                        //   load(new AREA_ShapefileLoader( "SEAARE", new Color(0, 246, 232), 0.2), "SEAARE","/");
+                        break;
                     case "SLCONS.shp":
                         load(new SLCONS_ShapefileLoader(), "SLCONS", "/");
                         break;
@@ -304,7 +302,6 @@ public class ChartS57Controller {
                 }
 
             }
-
         }
 
     }
