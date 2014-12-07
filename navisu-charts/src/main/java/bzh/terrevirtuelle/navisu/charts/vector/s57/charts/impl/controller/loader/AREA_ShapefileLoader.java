@@ -12,6 +12,7 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Sector;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -27,7 +28,7 @@ import java.util.Set;
  * @date 4 juin 2014 NaVisu project
  */
 public class AREA_ShapefileLoader
-        extends ShapefileLoader
+        extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
     private ShapefileRecord record;
@@ -92,8 +93,8 @@ public class AREA_ShapefileLoader
             }
             if (e.getKey().equals("OBJNAM")) {
                 if (e.getValue() != null) {
-                    objname = (String)e.getValue();
-                    shape.setValue(AVKey.DISPLAY_NAME, label.concat((String)e.getValue()));
+                    objname = (String) e.getValue();
+                    shape.setValue(AVKey.DISPLAY_NAME, label.concat((String) e.getValue()));
                     shape.setValue("OBJNAM", objname);
                 }
             }
@@ -110,5 +111,4 @@ public class AREA_ShapefileLoader
     public ShapefileRecord getRecord() {
         return record;
     }
-
 }

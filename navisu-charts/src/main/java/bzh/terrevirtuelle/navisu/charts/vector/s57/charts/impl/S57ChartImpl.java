@@ -27,6 +27,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,7 @@ public class S57ChartImpl
     @Override
     public void componentInitiated() {
         layerTreeServices.createGroup(GROUP);
+        geoViewServices.getLayerManager().createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
             float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
@@ -112,21 +114,22 @@ public class S57ChartImpl
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         try {
             //Test capture des evts par l'AreaController
-            if (first == true) {
-                first = false;
-                surveyZoneController = new SurveyZoneController();
+            /*
+             if (first == true) {
+             first = false;
+             surveyZoneController = new SurveyZoneController();
 
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        guiAgentServices.getRoot().getChildren().add(surveyZoneController);
-                        WidgetController widgetController = new WidgetController(KeyCode.Z, KeyCombination.CONTROL_DOWN);
-                        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController);
-                        widgetController.add(surveyZoneController);
-                    }
-                });
-
-            }
+             Platform.runLater(new Runnable() {
+             @Override
+             public void run() {
+             guiAgentServices.getRoot().getChildren().add(surveyZoneController);
+             WidgetController widgetController = new WidgetController(KeyCode.Z, KeyCombination.CONTROL_DOWN);
+             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController);
+             widgetController.add(surveyZoneController);
+             }
+             });
+             }
+             */
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + i).mkdir();
             new File("data/shp/shp_" + i + "/soundg").mkdir();
@@ -180,49 +183,26 @@ public class S57ChartImpl
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, null, e);
             }
-
             chartS57Controller = ChartS57Controller.getInstance();
-            chartS57Controller.setSurveyZoneController(surveyZoneController);
+            //  chartS57Controller.setSurveyZoneController(surveyZoneController);
             chartS57Controller.init("data/shp/shp_" + i++);
             layers = chartS57Controller.getLayers();
+
+            //Filtrage des couches existant déjà
+            List<GeoLayer<Layer>> lg = geoViewServices.getLayerManager().getGroup(GROUP);
+            lg.stream().forEach((g) -> {
+                layers.stream().filter((l) -> (g.getName().equals(l.getName()))).forEach((l) -> {
+                    layers.remove(l);
+                });
+            });
+            //On ne met que les nouvelles couches
             layers.stream().filter((l) -> (l != null)).map((l) -> {
-                geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
-                
-                String name = l.getName();
-                /*
-                if (name.contains("BCNCAR")
-                        || name.contains("OBSTRN")
-                        //   || name.contains("LIGHTS")
-                        || name.contains("SOUNDG")
-                        //   || name.contains("NAVLNE")
-                        || name.contains("WRECK")) {
-                    l.setPickEnabled(true);
-                }
-                */
-                /*
-                if (name.contains("DEPARE")
-                         || name.contains("BCNCAR")
-                           || name.contains("BCNISD")
-                        || name.contains("BCNLAT")
-                        || name.contains("BCNSAW")
-                          || name.contains("BCNSPP")
-                        || name.contains("OBSTRN")
-                        || name.contains("LIGHTS")
-                        || name.contains("SOUNDG")
-                        || name.contains("NAVLNE")
-                        || name.contains("WRECK")
-                        || name.contains("DEPCNT")
-                        || name.contains("OBSTRN_CNT")
-                        || name.contains("WRECKS_CNT")
-                        || name.contains("UWTROC")) {
-                    l.setPickEnabled(false);
-                }
-                  */      
+                geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
                 return l;
             }).forEach((l) -> {
                 layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
-
+/*
             airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
                 String name = l.getName();
@@ -231,11 +211,12 @@ public class S57ChartImpl
                 } else {
                     l.setPickEnabled(false);
                 }
-                geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
+                geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
                 return l;
             }).forEach((l) -> {
                 layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
+        */
         } catch (Exception e) {
 
         }

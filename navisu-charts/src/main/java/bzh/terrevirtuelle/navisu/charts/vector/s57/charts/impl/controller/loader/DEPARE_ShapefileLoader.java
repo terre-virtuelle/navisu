@@ -9,7 +9,6 @@ import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.awt.Color;
 
 /**
@@ -18,10 +17,13 @@ import java.awt.Color;
  * @date 4 juin 2014 NaVisu project
  */
 public class DEPARE_ShapefileLoader
-        extends ShapefileLoader
+        extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
     ShapefileRecord record;
+
+    public DEPARE_ShapefileLoader() {
+    }
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
@@ -47,7 +49,7 @@ public class DEPARE_ShapefileLoader
         }
 
         if (val1 >= 0.0 && val2 <= 3.0) {
-           // color = new Color(33, 255, 242);
+            // color = new Color(33, 255, 242);
             // color = new Color(115, 182, 239);
             color = new Color(31, 175, 247);
         }
@@ -101,7 +103,7 @@ public class DEPARE_ShapefileLoader
         this.record = record;
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
       //  normalAttributes.setDrawInterior(true);
-      //  normalAttributes.setInteriorMaterial(Material.WHITE);
+        //  normalAttributes.setInteriorMaterial(Material.WHITE);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setOutlineMaterial(Material.BLACK);
         normalAttributes.setOutlineWidth(2.0);
