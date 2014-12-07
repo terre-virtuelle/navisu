@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Wreck;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfaceIcon;
@@ -28,7 +29,7 @@ import javax.imageio.ImageIO;
  * @date 4 juin 2014 NaVisu project
  */
 public class WRECKS_CNT_ShapefileLoader
-        extends ShapefileLoader {
+        extends LayerShapefileLoader {
 
     ShapefileRecord record;
     private final List<Wreck> objects;

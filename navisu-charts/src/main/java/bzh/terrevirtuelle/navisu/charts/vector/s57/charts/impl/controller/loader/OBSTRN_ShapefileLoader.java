@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Wreck;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -29,7 +30,7 @@ import java.util.Set;
  * @date 4 juin 2014 NaVisu project
  */
 public class OBSTRN_ShapefileLoader
-        extends ShapefileLoader {
+        extends LayerShapefileLoader {
 
     ShapefileRecord record;
     private final List<Wreck> obstructions;

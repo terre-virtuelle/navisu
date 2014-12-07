@@ -23,7 +23,7 @@ import java.util.List;
  * @date 4 juin 2014 NaVisu project
  */
 public class NAVLNE_ShapefileLoader
-        extends ShapefileLoader
+        extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
 

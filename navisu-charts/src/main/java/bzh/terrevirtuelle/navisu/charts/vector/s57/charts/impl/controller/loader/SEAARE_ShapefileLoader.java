@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.ShapeAttributes;
 //import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.util.Map;
@@ -17,11 +18,14 @@ import java.util.Set;
  * @date 4 juin 2014 NaVisu project
  */
 public class SEAARE_ShapefileLoader
-        extends ShapefileLoader
+        extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
     ShapefileRecord record;
     private Set<Map.Entry<String, Object>> entries;
+
+    public SEAARE_ShapefileLoader() {
+    }
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {

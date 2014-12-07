@@ -155,7 +155,6 @@ public class ShapefileLoader {
         }
 
         Layer layer = null;
-
         if (Shapefile.isPointType(shp.getShapeType())) {
             layer = new RenderableLayer();
             this.addRenderablesForPoints(shp, (RenderableLayer) layer);
@@ -347,7 +346,7 @@ public class ShapefileLoader {
         while (shp.hasNext()) {
             try {
                 ShapefileRecord record = shp.nextRecord();
-                //   System.out.println("record " + record);
+                   System.out.println("record " + record);
                 recordNumber = record.getRecordNumber();
 
                 if (!Shapefile.isPolygonType(record.getShapeType())) {
@@ -368,6 +367,7 @@ public class ShapefileLoader {
                 // continue with the remaining records
             }
         }
+        System.out.println("layers " + layers);
     }
 
     //**************************************************************//

@@ -7,40 +7,37 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.formats.shapefile.*;
-import gov.nasa.worldwind.geom.*;
-import gov.nasa.worldwind.layers.*;
-import gov.nasa.worldwind.render.*;
-import gov.nasa.worldwind.util.*;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordMultiPoint;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolyline;
+import gov.nasa.worldwind.formats.shapefile.ShapefileUtils;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Sector;
+import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolygons;
+import gov.nasa.worldwind.render.SurfacePolylines;
+import gov.nasa.worldwind.util.Logging;
+import gov.nasa.worldwind.util.VecBuffer;
+import gov.nasa.worldwind.util.WWIO;
+import gov.nasa.worldwind.util.WWMath;
+import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwindx.examples.util.RandomShapeAttributes;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import java.util.*;
 
-/**
- * Converts Shapefile geometry into World Wind renderable objects. Shapefile
- * geometries are mapped to World Wind objects as follows: <table>
- * <tr><th>Shapefile Geometry</th><th>World Wind Object</th></tr> <tr><td>Point</td><td>{@link
- * gov.nasa.worldwind.render.WWIcon}</td></tr> <tr><td>MultiPoint</td><td>List
- * of {@link
- * gov.nasa.worldwind.render.WWIcon}</td></tr>
- * <tr><td>Polyline</td><td>{@link gov.nasa.worldwind.render.SurfacePolylines}</td></tr>
- * <tr><td>Polygon</td><td>{@link gov.nasa.worldwind.render.SurfacePolygons}</td></tr>
- * </table>
- * <p/>
- * Shapefiles do not contain a standard definition for color and other visual
- * attributes. Though some Shapefiles contain color information in each record's
- * key-value attributes, ShapefileLoader does not attempt to interpret that
- * information. Instead, the World Wind renderable objects created by
- * ShapefileLoader are assigned a random color. Callers can replace or extend
- * this behavior by defining a subclass of ShapefileLoader and overriding the
- * following methods: <ul>
- * <li>{@link #createPointAttributes(gov.nasa.worldwind.formats.shapefile.ShapefileRecord)}</li>
- * <li>{@link #createPolylineAttributes(gov.nasa.worldwind.formats.shapefile.ShapefileRecord)}</li> <li>{@link
- * #createPolygonAttributes(gov.nasa.worldwind.formats.shapefile.ShapefileRecord)}</li></ul>.
- *
- * @author dcollins
- * @version $Id: ShapefileLoader.java 1532 2013-08-06 23:54:50Z dcollins $
- */
+
 public class SBDARE_ShapefileLoader
         extends ShapefileLoader {
 
@@ -75,6 +72,7 @@ public class SBDARE_ShapefileLoader
      * @throws IllegalArgumentException if the source is null or an empty
      * string, or if the Shapefile's primitive type is unrecognized.
      */
+    @Override
     public Layer createLayerFromSource(Object source) {
         if (WWUtil.isEmpty(source)) {
             String message = Logging.getMessage("nullValue.SourceIsNull");

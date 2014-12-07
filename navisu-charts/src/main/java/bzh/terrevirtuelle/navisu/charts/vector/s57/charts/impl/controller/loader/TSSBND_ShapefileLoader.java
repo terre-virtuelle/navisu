@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
@@ -18,10 +19,13 @@ import java.awt.Color;
  * @date 4 juin 2014 NaVisu project
  */
 public class TSSBND_ShapefileLoader
-        extends ShapefileLoader
+        extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
     ShapefileRecord record;
+
+    public TSSBND_ShapefileLoader() {
+    }
 
     @Override
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {

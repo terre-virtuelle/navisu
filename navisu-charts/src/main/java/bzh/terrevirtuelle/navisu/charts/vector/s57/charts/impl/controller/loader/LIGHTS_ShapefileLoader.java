@@ -19,6 +19,7 @@ import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.layers.AirspaceLayer;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -36,7 +37,7 @@ import java.util.Set;
  * @date 4 juin 2014 NaVisu project
  */
 public class LIGHTS_ShapefileLoader
-        extends ShapefileLoader {
+        extends LayerShapefileLoader {
 
     private final List<Light> dataList;
 

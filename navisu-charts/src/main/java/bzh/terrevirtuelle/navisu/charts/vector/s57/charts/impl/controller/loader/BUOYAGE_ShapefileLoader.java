@@ -18,6 +18,7 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -37,7 +38,7 @@ import java.util.logging.Logger;
  * @date 4 juin 2014 NaVisu project
  */
 public class BUOYAGE_ShapefileLoader
-        extends ShapefileLoader {
+        extends LayerShapefileLoader {
 
     private Buoyage object;
     private final List<Buoyage> objects;
@@ -48,7 +49,7 @@ public class BUOYAGE_ShapefileLoader
     private final Map<Pair, String> topMarks;
     private final String marsys;
 
-    public BUOYAGE_ShapefileLoader(String path, Map<Pair, String> topMarks, String marsys, String acronym) {
+    public BUOYAGE_ShapefileLoader( String path, Map<Pair, String> topMarks, String marsys, String acronym) {
         this.topMarks = topMarks;
         this.marsys = marsys;
         this.acronym = acronym;
@@ -163,7 +164,7 @@ public class BUOYAGE_ShapefileLoader
 
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-     //   placemark.setLabelText(object.getObjectName());
+        //   placemark.setLabelText(object.getObjectName());
 
         String catMark = "";
         if (acronym.contains("CAR")) {

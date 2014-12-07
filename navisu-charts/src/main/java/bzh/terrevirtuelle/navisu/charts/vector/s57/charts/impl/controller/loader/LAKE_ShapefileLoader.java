@@ -10,6 +10,7 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Sector;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -27,7 +28,7 @@ import java.util.Set;
  * @date 4 juin 2014 NaVisu project
  */
 public class LAKE_ShapefileLoader
-        extends ShapefileLoader
+        extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
     private ShapefileRecord record;
@@ -51,7 +52,7 @@ public class LAKE_ShapefileLoader
         normalAttributes.setOutlineMaterial(new Material(color));
         normalAttributes.setInteriorMaterial(new Material(color));
       //  normalAttributes.setOutlineStipplePattern((short) 0xAAAA);
-      //  normalAttributes.setOutlineStippleFactor(5);
+        //  normalAttributes.setOutlineStippleFactor(5);
         normalAttributes.setEnableLighting(true);
 
         return normalAttributes;
@@ -82,7 +83,7 @@ public class LAKE_ShapefileLoader
         for (double[] c : coords) {
             vertices.add(c);
         }
-      
+
         entries.stream().forEach((e) -> {
             String label = AREA.ATT.get(acronym) + "\n";
             if (e.getKey().equals("INFORM")) {
