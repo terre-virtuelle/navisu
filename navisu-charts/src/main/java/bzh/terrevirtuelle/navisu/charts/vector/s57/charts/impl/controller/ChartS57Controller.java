@@ -125,14 +125,14 @@ public class ChartS57Controller {
         }
     }
 
-    public Layer getLayer(String name) {
+    public RenderableLayer getLayer(String name) {
         Layer layer = null;
         for (Layer l : layers) {
             if (l.getName().equals(name)) {
                 layer = l;
             }
         }
-        return layer;
+        return (RenderableLayer) layer;
     }
 
     public static ChartS57Controller getInstance() {
@@ -170,7 +170,8 @@ public class ChartS57Controller {
                     marsys = nsys.getMarsys();
                 }
                 if (s.equals("TOPMAR.shp")) {
-                    new TOPMAR_ShapefileLoader(topMarks).createLayersFromSource(new File(path + "/TOPMAR.shp"));
+                  //  new TOPMAR_ShapefileLoader(topMarks).createLayersFromSource(new File(path + "/TOPMAR.shp"));
+                    load(new TOPMAR_ShapefileLoader(topMarks),"TOPMAR","/");
                 }
             }
 
@@ -189,10 +190,10 @@ public class ChartS57Controller {
                 String s = f.getName();
                 switch (s) {
                     case "RESARE.shp":
-                        //    load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2), "RESARE", "/");
+                        load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2), "RESARE", "/");
                         break;
                     case "UNSARE.shp":
-                        //  load(new UNSARE_ShapefileLoader(), "UNSARE", "/");
+                        load(new UNSARE_ShapefileLoader(), "UNSARE", "/");
                         break;
                     default:
                 }
@@ -244,22 +245,22 @@ public class ChartS57Controller {
                         load(new DEPCNT_ShapefileLoader(), "DEPCNT", "/");
                         break;
                     case "DOCARE.shp":
-                        //  load(new DOCARE_ShapefileLoader(), "DOCARE", "/");
+                          load(new DOCARE_ShapefileLoader(), "DOCARE", "/");
                         break;
                     case "DGRARE.shp":
-                        //     load(new AREA_ShapefileLoader( "DGRARE", new Color(7, 149, 24), 0.0), "DGRARE","/");
+                        load(new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0), "DGRARE", "/");
                         break;
                     case "FAIRWY.shp":
                         load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2), "FAIRWY", "/");
                         break;
                     case "LAKARE.shp":
-                        //   load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "LAKARE", "/");
+                        load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "LAKARE", "/");
                         break;
                     case "LNDMRK.shp":
                         load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "LNDMRK", "/");
                         break;
                     case "MIPARE.shp":
-                        //     load(new AREA_ShapefileLoader( "MIPARE", new Color(1, 5, 105), 0.2), "MIPARE","/");
+                        load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "MIPARE", "/");
                         break;
                     case "NAVLNE.shp":
                         load(new NAVLNE_ShapefileLoader(), "NAVLNE", "/");
@@ -272,7 +273,7 @@ public class ChartS57Controller {
                         load(new PONTON_ShapefileLoader(), "PONTON", "/");
                         break;
                     case "SEAARE.shp":
-                        //   load(new AREA_ShapefileLoader( "SEAARE", new Color(0, 246, 232), 0.2), "SEAARE","/");
+                          load(new AREA_ShapefileLoader( "SEAARE", new Color(0, 246, 232), 0.2), "SEAARE","/");
                         break;
                     case "SLCONS.shp":
                         load(new SLCONS_ShapefileLoader(), "SLCONS", "/");
@@ -307,10 +308,20 @@ public class ChartS57Controller {
     }
 
     private void load(LayerShapefileLoader loader, String acronym, String sep) {
-        Layer l = getLayer(acronym);
+        RenderableLayer l = getLayer(acronym);
         if (l == null) {
             l = new RenderableLayer();
             l.setName(acronym);
+          if (acronym.contains("DEPARE")
+                    || acronym.contains("OBSTRN")
+                    || acronym.contains("LIGHTS")
+                   // || acronym.contains("WRECK")
+                //    || acronym.contains("OBSTRN_CNT")
+                  //  || acronym.contains("WRECKS_CNT")
+                  //  || acronym.contains("UWTROC"))
+                  ){   
+                l.setPickEnabled(false);
+          }
             layers.add(l);
         }
         loader.setLayer(l);
@@ -331,7 +342,7 @@ public class ChartS57Controller {
             LightView lightView;
             Object o = event.getTopObject();
             if (event.isLeftClick() && o != null) {
-                if (o.getClass().getInterfaces() != null) {
+                if (o.getClass().getInterfaces().length != 0) {
                     if (o.getClass().getInterfaces()[0].equals(Lights.class)) {
                         lightView = ((LightView) o);
                         if (lightView.isTmp() == true) {

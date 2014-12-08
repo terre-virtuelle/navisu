@@ -22,7 +22,7 @@ import java.util.Set;
  * @date 4 juin 2014 NaVisu project
  */
 public class TOPMAR_ShapefileLoader
-        extends ShapefileLoader {
+        extends LayerShapefileLoader {
 
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;

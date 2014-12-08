@@ -166,9 +166,8 @@ public class ShapefileLoader {
             this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
         } else if (Shapefile.isPolygonType(shp.getShapeType())) {
             List<Layer> layers = new ArrayList<>();
-            layers.add(layer);
             this.addRenderablesForPolygons(shp, layers);
-           // layer = layers.get(0);
+            layer = layers.get(0);
         } else {
             Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
         }
@@ -368,7 +367,6 @@ public class ShapefileLoader {
                 // continue with the remaining records
             }
         }
-        System.out.println("layers " + layers);
     }
 
     //**************************************************************//
