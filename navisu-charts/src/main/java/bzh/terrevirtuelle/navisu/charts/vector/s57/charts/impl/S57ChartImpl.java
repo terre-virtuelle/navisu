@@ -218,7 +218,7 @@ public class S57ChartImpl
 
     private void clip() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE") || l.getName().contains("BUILDING"))).forEach((l) -> {
                 l.setEnabled(false);
             });
         }
@@ -226,7 +226,7 @@ public class S57ChartImpl
 
     private void unClip() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE")|| l.getName().contains("BUILDING"))).forEach((l) -> {
                 l.setEnabled(true);
             });
         }
@@ -234,7 +234,7 @@ public class S57ChartImpl
 
     private void clip1() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("DEPCNT"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BATHYMETRY"))).forEach((l) -> {
                 l.setEnabled(false);
             });
         }
@@ -242,7 +242,7 @@ public class S57ChartImpl
 
     private void unClip1() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("DEPCNT"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE")|| l.getName().contains("BATHYMETRY"))).forEach((l) -> {
                 l.setEnabled(true);
             });
         }
