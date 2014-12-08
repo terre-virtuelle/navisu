@@ -185,7 +185,6 @@ public class ChartS57Controller {
                     default:
                 }
             }
-
             for (File f : listOfFiles) {
                 String s = f.getName();
                 switch (s) {
@@ -260,7 +259,7 @@ public class ChartS57Controller {
                         load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "BUILDING", "LNDMRK", "/");
                         break;
                     case "MIPARE.shp":
-                        load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "AREA", "MIPARE", "/");
+                       load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "AREA", "MIPARE", "/");
                         break;
                     case "NAVLNE.shp":
                         load(new NAVLNE_ShapefileLoader(), "NAVIGATION", "NAVLNE", "/");
@@ -291,9 +290,9 @@ public class ChartS57Controller {
                         load(new WRECKS_CNT_ShapefileLoader(), "DANGERS", "WRECKS", "/");
                         load(new WRECKS_ShapefileLoader(), "DANGERS", "WRECKS", "/");
                         break;
-                     case "LIGHTS.shp":
-                         loadLights();
-                         break;
+                    case "LIGHTS.shp":
+                        loadLights();
+                        break;
 
                     default:
                 }
@@ -314,7 +313,7 @@ public class ChartS57Controller {
         la.setName("LIGHTS");
         layers.add(la);
         airspaceTmpLayer = new AirspaceLayer();
-        airspaceTmpLayer.setName("LIGHTS_TMP");
+        airspaceTmpLayer.setName("LIGHTS_1");
         airspaceLayers.add(la);
         airspaceLayers.add(airspaceTmpLayer);
         wwd.addSelectListener((SelectEvent event) -> {
@@ -387,8 +386,9 @@ public class ChartS57Controller {
         if (l == null) {
             l = new RenderableLayer();
             l.setName(group);
-            if (acronym.contains("DEPARE")
-                    || acronym.contains("OBSTRN")
+            if (//acronym.contains("DEPARE")
+                   // || 
+                    acronym.contains("OBSTRN")
                     || acronym.contains("LIGHTS")) {
                 l.setPickEnabled(false);
             }

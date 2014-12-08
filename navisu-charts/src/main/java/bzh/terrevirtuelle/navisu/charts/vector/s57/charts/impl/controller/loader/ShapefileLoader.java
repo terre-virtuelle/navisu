@@ -203,7 +203,7 @@ public class ShapefileLoader {
             throw new IllegalArgumentException(message);
         }
 
-        List<Layer> layers = new ArrayList<Layer>();
+        List<Layer> layers = new ArrayList<>();
 
         if (Shapefile.isPointType(shp.getShapeType())) {
             Layer layer = new RenderableLayer();

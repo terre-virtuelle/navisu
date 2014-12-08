@@ -12,7 +12,6 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Sector;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -78,8 +77,9 @@ public class AREA_ShapefileLoader
         shape.setHighlightAttributes(null);
 
         createValues(shape);
-        ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
+     //   ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
         layer.addRenderable(shape);
+
     }
 
     protected void createValues(SurfacePolygons shape) {
