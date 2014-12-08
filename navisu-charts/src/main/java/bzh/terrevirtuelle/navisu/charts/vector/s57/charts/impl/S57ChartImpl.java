@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.widgets.controller.WidgetController;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
@@ -27,7 +26,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,11 +34,7 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 
 /**
  * @author Serge Morvan
@@ -202,7 +196,7 @@ public class S57ChartImpl
             }).forEach((l) -> {
                 layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
-/*
+
             airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
                 String name = l.getName();
@@ -216,7 +210,7 @@ public class S57ChartImpl
             }).forEach((l) -> {
                 layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
-        */
+
         } catch (Exception e) {
 
         }
@@ -224,7 +218,7 @@ public class S57ChartImpl
 
     private void clip() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE") || l.getName().contains("BUILDING"))).forEach((l) -> {
                 l.setEnabled(false);
             });
         }
@@ -232,7 +226,7 @@ public class S57ChartImpl
 
     private void unClip() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BCN"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE")|| l.getName().contains("BUILDING"))).forEach((l) -> {
                 l.setEnabled(true);
             });
         }
@@ -240,7 +234,7 @@ public class S57ChartImpl
 
     private void clip1() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("DEPCNT"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BATHYMETRY"))).forEach((l) -> {
                 l.setEnabled(false);
             });
         }
@@ -248,7 +242,7 @@ public class S57ChartImpl
 
     private void unClip1() {
         if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("DEPCNT"))).forEach((l) -> {
+            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE")|| l.getName().contains("BATHYMETRY"))).forEach((l) -> {
                 l.setEnabled(true);
             });
         }

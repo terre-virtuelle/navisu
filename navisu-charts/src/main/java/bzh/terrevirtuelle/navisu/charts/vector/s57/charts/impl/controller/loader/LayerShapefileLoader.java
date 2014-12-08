@@ -6,8 +6,10 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.Logging;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +21,12 @@ import java.util.List;
 public class LayerShapefileLoader
         extends ShapefileLoader {
 
-    protected Layer layer;
+    protected RenderableLayer layer;
 
     public LayerShapefileLoader() {
     }
 
-    public LayerShapefileLoader(Layer layer) {
+    public LayerShapefileLoader(RenderableLayer layer) {
         this.layer = layer;
     }
 
@@ -42,7 +44,7 @@ public class LayerShapefileLoader
      *
      * @param layer new value of layer
      */
-    public void setLayer(Layer layer) {
+    public void setLayer(RenderableLayer layer) {
         this.layer = layer;
     }
 
@@ -61,15 +63,40 @@ public class LayerShapefileLoader
             this.addRenderablesForPolylines(shp, (RenderableLayer) layer);
         } else if (Shapefile.isPolygonType(shp.getShapeType())) {
             List<Layer> layers = new ArrayList<>();
-          //  System.out.println("isPolygonType");
-          //  layers.add(layer);
             this.addRenderablesForPolygons(shp, layers);
-            layer = layers.get(0);
-          //  System.out.println("layer " + layer);
+           layers.add(layer);
         } else {
             Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
         }
 
         return layer;
     }
+    @Override
+    protected void addRenderablesForPolygons(Shapefile shp, List<Layer> layers) {
+       // RenderableLayer layer = new RenderableLayer();
+       // layers.add(layer);
+
+        int recordNumber = 0;
+        while (shp.hasNext()) {
+            try {
+                ShapefileRecord record = shp.nextRecord();
+                //   System.out.println("record " + record);
+                recordNumber = record.getRecordNumber();
+
+                if (!Shapefile.isPolygonType(record.getShapeType())) {
+                    continue;
+                }
+
+                ShapeAttributes attrs = this.createPolygonAttributes(record);
+                this.createPolygon(record, attrs, layer);
+
+                
+            } catch (Exception e) {
+              //  Logging.logger().warning(Logging.getMessage("SHP.ExceptionAttemptingToConvertShapefileRecord",
+              //          recordNumber, e));
+                // continue with the remaining records
+            }
+        }
+    }
+
 }

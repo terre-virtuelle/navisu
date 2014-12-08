@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.BUOYAGE;
@@ -18,7 +17,6 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;

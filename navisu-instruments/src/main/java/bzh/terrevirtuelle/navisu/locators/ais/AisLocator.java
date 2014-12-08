@@ -154,9 +154,14 @@ public class AisLocator {
         }
 
         wwd.addSelectListener((SelectEvent event) -> {
-            if (event.isLeftClick()
-                    && event.getTopObject().getClass().getInterfaces()[0].equals(Shape.class)) {
-                makeBrowserBalloon(((Shape) event.getTopObject()).getShip());
+            Object o = event.getTopObject();
+            if (event.isLeftClick() && o != null) {
+                Class[] i = o.getClass().getInterfaces();
+                if (i.length != 0) {
+                    if (i[0].equals(Shape.class)) {
+                        makeBrowserBalloon(((Shape) o).getShip());
+                    }
+                }
             }
         });
         subscribe();

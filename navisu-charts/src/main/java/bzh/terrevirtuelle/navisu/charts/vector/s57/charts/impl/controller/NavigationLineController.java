@@ -50,6 +50,7 @@ public class NavigationLineController {
         this.tooltipAnnotation.getAttributes().setDistanceMaxScale(1);
         this.tooltipAnnotation.getAttributes().setVisible(false);
         this.tooltipAnnotation.setAlwaysOnTop(true);
+        
         wwd.addSelectListener((SelectEvent event) -> {
             if (event.getEventAction().equals(SelectEvent.ROLLOVER)) {
                 Object o = event.getTopObject();
@@ -69,6 +70,7 @@ public class NavigationLineController {
                 }
             }
         });
+        
     }
 
     /**
