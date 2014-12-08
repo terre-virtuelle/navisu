@@ -196,7 +196,7 @@ public class S57ChartImpl
             }).forEach((l) -> {
                 layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
-/*
+
             airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
                 String name = l.getName();
@@ -210,7 +210,7 @@ public class S57ChartImpl
             }).forEach((l) -> {
                 layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
-        */
+
         } catch (Exception e) {
 
         }

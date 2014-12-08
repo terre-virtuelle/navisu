@@ -291,9 +291,9 @@ public class ChartS57Controller {
                         load(new WRECKS_CNT_ShapefileLoader(), "DANGERS", "WRECKS", "/");
                         load(new WRECKS_ShapefileLoader(), "DANGERS", "WRECKS", "/");
                         break;
-                    // case "LIGHTS.shp":
-                    //     loadLights();
-                    //     break;
+                     case "LIGHTS.shp":
+                         loadLights();
+                         break;
 
                     default:
                 }
