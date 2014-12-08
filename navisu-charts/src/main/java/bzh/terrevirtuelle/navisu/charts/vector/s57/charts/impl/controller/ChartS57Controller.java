@@ -170,8 +170,8 @@ public class ChartS57Controller {
                     marsys = nsys.getMarsys();
                 }
                 if (s.equals("TOPMAR.shp")) {
-                  //  new TOPMAR_ShapefileLoader(topMarks).createLayersFromSource(new File(path + "/TOPMAR.shp"));
-                    load(new TOPMAR_ShapefileLoader(topMarks),"TOPMAR","/");
+                    //  new TOPMAR_ShapefileLoader(topMarks).createLayersFromSource(new File(path + "/TOPMAR.shp"));
+                    load(new TOPMAR_ShapefileLoader(topMarks), "BUOYAGE", "TOPMAR", "/");
                 }
             }
 
@@ -180,7 +180,7 @@ public class ChartS57Controller {
                 String s = f.getName();
                 switch (s) {
                     case "DEPARE.shp":
-                        load(new DEPARE_ShapefileLoader(), "DEPARE", "/");
+                        load(new DEPARE_ShapefileLoader(), "DEPARE", "DEPARE", "/");
                         break;
                     default:
                 }
@@ -190,10 +190,10 @@ public class ChartS57Controller {
                 String s = f.getName();
                 switch (s) {
                     case "RESARE.shp":
-                        load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2), "RESARE", "/");
+                        load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2), "RESARE", "RESARE", "/");
                         break;
                     case "UNSARE.shp":
-                        load(new UNSARE_ShapefileLoader(), "UNSARE", "/");
+                        load(new UNSARE_ShapefileLoader(), "UNSARE", "UNSARE", "/");
                         break;
                     default:
                 }
@@ -203,93 +203,93 @@ public class ChartS57Controller {
                 String s = f.getName();
                 switch (s) {
                     case "BCNCAR.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR"), "BCNCAR", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR"), "BUOYAGE", "BCNCAR", "/");
                         break;
                     case "BCNISD.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD"), "BCNISD", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD"), "BUOYAGE", "BCNISD", "/");
                         break;
                     case "BCNLAT.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNLAT"), "BCNLAT", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNLAT"), "BUOYAGE", "BCNLAT", "/");
                         break;
                     case "BCNSAW.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSAW"), "BCNSAW", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSAW"), "BUOYAGE", "BCNSAW", "/");
                         break;
                     case "BCNSPP.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSPP"), "BCNSPP", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSPP"), "BUOYAGE", "BCNSPP", "/");
                         break;
                     case "BRIDGE.shp":
-                        load(new BRIDGE_ShapefileLoader(), "BRIDGE", "/");
+                        load(new BRIDGE_ShapefileLoader(), "BRIDGE", "BRIDGE", "/");
                         break;
                     case "BOYCAR.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYCAR"), "BOYCAR", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYCAR"), "BUOYAGE", "BOYCAR", "/");
                         break;
                     case "BOYISD.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYISD"), "BOYISD", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYISD"), "BUOYAGE", "BOYISD", "/");
                         break;
                     case "BOYLAT.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT"), "BOYLAT", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT"), "BUOYAGE", "BOYLAT", "/");
                         break;
                     case "BOYSAW.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSAW"), "BOYSAW", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSAW"), "BUOYAGE", "BOYSAW", "/");
                         break;
                     case "BOYSPP.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSPP"), "BOYSPP", "/");
+                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSPP"), "BUOYAGE", "BOYSPP", "/");
                         break;
                     case "CBLSUB.shp":
-                        load(new CBLSUB_ShapefileLoader(), "CBLSUB", "/");
+                        load(new CBLSUB_ShapefileLoader(), "CBLSUB", "CBLSUB", "/");
                         break;
                     case "DAYMAR.shp":
-                        load(new DAYMAR_ShapefileLoader(marsys), "DAYMAR", "/");
+                        load(new DAYMAR_ShapefileLoader(marsys), "DAYMAR", "DAYMAR", "/");
                         break;
                     case "DEPCNT.shp":
-                        load(new DEPCNT_ShapefileLoader(), "DEPCNT", "/");
+                        load(new DEPCNT_ShapefileLoader(), "DEPCNT", "DEPCNT", "/");
                         break;
                     case "DOCARE.shp":
-                          load(new DOCARE_ShapefileLoader(), "DOCARE", "/");
+                        load(new DOCARE_ShapefileLoader(), "DOCARE", "DOCARE", "/");
                         break;
                     case "DGRARE.shp":
-                        load(new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0), "DGRARE", "/");
+                        load(new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0), "DGRARE", "DGRARE", "/");
                         break;
                     case "FAIRWY.shp":
-                        load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2), "FAIRWY", "/");
+                        load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2), "FAIRWY", "FAIRWY", "/");
                         break;
                     case "LAKARE.shp":
-                        load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "LAKARE", "/");
+                        load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "LAKARE", "LAKARE", "/");
                         break;
                     case "LNDMRK.shp":
-                        load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "LNDMRK", "/");
+                        load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "LNDMRK", "LNDMRK", "/");
                         break;
                     case "MIPARE.shp":
-                        load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "MIPARE", "/");
+                        load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "MIPARE", "MIPARE", "/");
                         break;
                     case "NAVLNE.shp":
-                        load(new NAVLNE_ShapefileLoader(), "NAVLNE", "/");
+                        load(new NAVLNE_ShapefileLoader(), "NAVLNE", "NAVLNE", "/");
                         break;
                     case "OBSTRN.shp":
-                        load(new OBSTRN_CNT_ShapefileLoader(), "OBSTRN", "/");
-                        load(new OBSTRN_ShapefileLoader(), "OBSTRN", "/");
+                        load(new OBSTRN_CNT_ShapefileLoader(), "OBSTRN", "OBSTRN", "/");
+                        load(new OBSTRN_ShapefileLoader(), "OBSTRN", "OBSTRN", "/");
                         break;
                     case "PONTON.shp":
-                        load(new PONTON_ShapefileLoader(), "PONTON", "/");
+                        load(new PONTON_ShapefileLoader(), "PONTON", "PONTON", "/");
                         break;
                     case "SEAARE.shp":
-                          load(new AREA_ShapefileLoader( "SEAARE", new Color(0, 246, 232), 0.2), "SEAARE","/");
+                        load(new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.2), "SEAARE", "SEAARE", "/");
                         break;
                     case "SLCONS.shp":
-                        load(new SLCONS_ShapefileLoader(), "SLCONS", "/");
+                        load(new SLCONS_ShapefileLoader(), "SLCONS", "SLCONS", "/");
                         break;
                     case "SOUNDG.shp":
-                        load(new SOUNDG_ShapefileLoader(), "SOUNDG", "/soundg/");
+                        load(new SOUNDG_ShapefileLoader(), "SOUNDG", "SOUNDG", "/soundg/");
                         break;
                     case "TSSBND.shp":
-                        load(new TSSBND_ShapefileLoader(), "TSSBND", "/");
+                        load(new TSSBND_ShapefileLoader(), "TSSBND", "TSSBND", "/");
                         break;
                     case "UWTROC.shp":
-                        load(new UWTROC_ShapefileLoader(), "UWTROC", "/");
+                        load(new UWTROC_ShapefileLoader(), "UWTROC", "UWTROC", "/");
                         break;
                     case "WRECKS.shp":
-                        load(new WRECKS_CNT_ShapefileLoader(), "WRECKS", "/");
-                        load(new WRECKS_ShapefileLoader(), "WRECKS", "/");
+                        load(new WRECKS_CNT_ShapefileLoader(), "WRECKS", "WRECKS", "/");
+                        load(new WRECKS_ShapefileLoader(), "WRECKS", "WRECKS", "/");
                         break;
                     // case "LIGHTS.shp":
                     //     loadLights();
@@ -305,27 +305,6 @@ public class ChartS57Controller {
             }
         }
 
-    }
-
-    private void load(LayerShapefileLoader loader, String acronym, String sep) {
-        RenderableLayer l = getLayer(acronym);
-        if (l == null) {
-            l = new RenderableLayer();
-            l.setName(acronym);
-          if (acronym.contains("DEPARE")
-                    || acronym.contains("OBSTRN")
-                    || acronym.contains("LIGHTS")
-                   // || acronym.contains("WRECK")
-                //    || acronym.contains("OBSTRN_CNT")
-                  //  || acronym.contains("WRECKS_CNT")
-                  //  || acronym.contains("UWTROC"))
-                  ){   
-                l.setPickEnabled(false);
-          }
-            layers.add(l);
-        }
-        loader.setLayer(l);
-        loader.createLayerFromSource(new File(path + sep + acronym + ".shp"));
     }
 
     private void loadLights() {
@@ -401,6 +380,22 @@ public class ChartS57Controller {
                 }
             }
         });
+    }
+
+    private void load(LayerShapefileLoader loader, String group, String acronym, String sep) {
+        RenderableLayer l = getLayer(group);
+        if (l == null) {
+            l = new RenderableLayer();
+            l.setName(group);
+            if (acronym.contains("DEPARE")
+                    || acronym.contains("OBSTRN")
+                    || acronym.contains("LIGHTS")) {
+                l.setPickEnabled(false);
+            }
+            layers.add(l);
+        }
+        loader.setLayer(l);
+        loader.createLayerFromSource(new File(path + sep + acronym + ".shp"));
     }
 
     public SurveyZoneController getSurveyZoneController() {
