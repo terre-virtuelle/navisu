@@ -115,6 +115,7 @@ public class LIGHTS_ShapefileLoader
                 }
             }
         });
+
         LightView lightView = new LightView(data);
 
         float range = 1;
@@ -127,7 +128,7 @@ public class LIGHTS_ShapefileLoader
             lightView.setRadii(140.0 * range, 150.0 * range);
             if (data.getHeight() != null) {
                 lightView.setAltitude(elevation + new Double(data.getHeight()));
-               // creation du volume de la lumiere
+                // creation du volume de la lumiere
                 //  lightView.setAltitudes(100, 300);
             } else {
                 lightView.setAltitude(elevation + 35.0);
@@ -177,6 +178,7 @@ public class LIGHTS_ShapefileLoader
 
             airspaceLayer.addAirspace(lightView);
         } else {
+
             lightView.setCenter(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)));
             if (data.getColour() != null) {
                 if (!data.getColour().contains("1")) {
@@ -190,9 +192,7 @@ public class LIGHTS_ShapefileLoader
             } else {
                 lightView.setAltitude(elevation + 35.0);
             }
-
-            lightView.setAzimuths(Angle.fromDegrees(0),
-                    Angle.fromDegrees(360));
+            lightView.setAzimuths(Angle.fromDegrees(0), Angle.fromDegrees(360));
             String label = "Light \n"
                     + "Lat : " + Double.toString(latDegrees) + "\n"
                     + "Lon : " + Double.toString(lonDegrees) + "\n"
@@ -200,20 +200,21 @@ public class LIGHTS_ShapefileLoader
                     + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
                     + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
                     + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "");
-
             lightView.setValue(AVKey.DISPLAY_NAME, label);
             lightView.getAttributes().setDrawOutline(true);
-            // Si la couleur est blanche, la vue est jaune
-            if (data.getColour().contains("1")) {
-                lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
-                lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
-            } else {
-                lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
 
+            // Si la couleur est blanche, la vue est jaune
+            if (data.getColour() != null) {
+                if (data.getColour().contains("1")) {
+                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
+                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                } else {
+                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                }
             }
-            airspaceLayer.addAirspace(lightView);
         }
+        airspaceLayer.addAirspace(lightView);
 
         return lightView;
     }

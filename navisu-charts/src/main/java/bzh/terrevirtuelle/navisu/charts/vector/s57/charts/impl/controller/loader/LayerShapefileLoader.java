@@ -64,39 +64,45 @@ public class LayerShapefileLoader
         } else if (Shapefile.isPolygonType(shp.getShapeType())) {
             List<Layer> layers = new ArrayList<>();
             this.addRenderablesForPolygons(shp, layers);
-           layers.add(layer);
+            layers.add(layer);
         } else {
             Logging.logger().warning(Logging.getMessage("generic.UnrecognizedShapeType", shp.getShapeType()));
         }
 
         return layer;
     }
+
     @Override
     protected void addRenderablesForPolygons(Shapefile shp, List<Layer> layers) {
-       // RenderableLayer layer = new RenderableLayer();
-       // layers.add(layer);
-
         int recordNumber = 0;
         while (shp.hasNext()) {
             try {
                 ShapefileRecord record = shp.nextRecord();
-                //   System.out.println("record " + record);
+               
                 recordNumber = record.getRecordNumber();
-
                 if (!Shapefile.isPolygonType(record.getShapeType())) {
                     continue;
                 }
-
                 ShapeAttributes attrs = this.createPolygonAttributes(record);
                 this.createPolygon(record, attrs, layer);
-
-                
             } catch (Exception e) {
               //  Logging.logger().warning(Logging.getMessage("SHP.ExceptionAttemptingToConvertShapefileRecord",
-              //          recordNumber, e));
+                //          recordNumber, e));
                 // continue with the remaining records
             }
         }
     }
 
+    @Override
+    protected void addRenderablesForPolylines(Shapefile shp, RenderableLayer layer) {
+
+        while (shp.hasNext()) {
+            ShapefileRecord record = shp.nextRecord();
+            if (!Shapefile.isPolylineType(record.getShapeType())) {
+                continue;
+            }
+            ShapeAttributes attrs = this.createPolylineAttributes(record);
+            layer.addRenderable(this.createPolyline(record, attrs));
+        }
+    }
 }
