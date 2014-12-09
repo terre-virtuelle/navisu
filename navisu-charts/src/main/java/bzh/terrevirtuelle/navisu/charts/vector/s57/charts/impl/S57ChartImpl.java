@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
+import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.AirspaceLayer;
@@ -68,21 +69,33 @@ public class S57ChartImpl
         layerTreeServices.createGroup(GROUP);
         geoViewServices.getLayerManager().createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
+        View view = wwd.getView();
         wwd.addPositionListener((PositionEvent event) -> {
-            float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
-            if (altitude >= 3000) {
-                clip();
+            float altitude = (int) view.getCurrentEyePosition().getAltitude();
+            if (altitude >= 240000) {
+                clip(false);
             } else {
-                unClip();
-            }
-            if (altitude >= 48000) {
-                clip1();
-            } else {
-                unClip1();
-                unClip();
+                clip(true);
             }
         });
+    }
 
+    private void clip(boolean state) {
+        if (layers != null) {
+            layers.stream().map((l) -> {
+                if (l.getName().contains("BUOYAGE")) {
+                    l.setEnabled(state);
+                }
+                return l;
+            }).map((l) -> {
+                if (l.getName().contains("BUILDING")) {
+                    l.setEnabled(state);
+                }
+                return l;
+            }).filter((l) -> (l.getName().contains("BATHYMETRY"))).forEach((l) -> {
+                l.setEnabled(state);
+            });
+        }
     }
 
     @Override
@@ -213,38 +226,6 @@ public class S57ChartImpl
 
         } catch (Exception e) {
 
-        }
-    }
-
-    private void clip() {
-        if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE") || l.getName().contains("BUILDING"))).forEach((l) -> {
-                l.setEnabled(false);
-            });
-        }
-    }
-
-    private void unClip() {
-        if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE")|| l.getName().contains("BUILDING"))).forEach((l) -> {
-                l.setEnabled(true);
-            });
-        }
-    }
-
-    private void clip1() {
-        if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BATHYMETRY"))).forEach((l) -> {
-                l.setEnabled(false);
-            });
-        }
-    }
-
-    private void unClip1() {
-        if (layers != null) {
-            layers.stream().filter((l) -> (l.getName().contains("BUOYAGE")|| l.getName().contains("BATHYMETRY"))).forEach((l) -> {
-                l.setEnabled(true);
-            });
         }
     }
 

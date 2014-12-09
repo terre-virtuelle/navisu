@@ -170,7 +170,6 @@ public class ChartS57Controller {
                     marsys = nsys.getMarsys();
                 }
                 if (s.equals("TOPMAR.shp")) {
-                    //  new TOPMAR_ShapefileLoader(topMarks).createLayersFromSource(new File(path + "/TOPMAR.shp"));
                     load(new TOPMAR_ShapefileLoader(topMarks), "BUOYAGE", "TOPMAR", "/");
                 }
             }
@@ -180,7 +179,7 @@ public class ChartS57Controller {
                 String s = f.getName();
                 switch (s) {
                     case "DEPARE.shp":
-                        load(new DEPARE_ShapefileLoader(), "AREA", "DEPARE", "/");
+                        load(new DEPARE_ShapefileLoader(), "DEPARE", "DEPARE", "/");
                         break;
                     default:
                 }
@@ -233,7 +232,7 @@ public class ChartS57Controller {
                         break;
                     case "BOYSPP.shp":
                         load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSPP"), "BUOYAGE", "BOYSPP", "/");
-                        break;
+                        break; 
                     case "CBLSUB.shp":
                         load(new CBLSUB_ShapefileLoader(), "CBLSUB", "CBLSUB", "/");
                         break;
@@ -251,7 +250,7 @@ public class ChartS57Controller {
                         break;
                     case "FAIRWY.shp":
                         load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2), "NAVIGATION", "FAIRWY", "/");
-                        break;
+                        break;                        
                     case "LAKARE.shp":
                         load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "EARTH", "LAKARE", "/");
                         break;
@@ -259,8 +258,11 @@ public class ChartS57Controller {
                         load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "BUILDING", "LNDMRK", "/");
                         break;
                     case "MIPARE.shp":
-                       load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "AREA", "MIPARE", "/");
+                        load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "AREA", "MIPARE", "/");
                         break;
+                    case "M_SREL.shp":
+                        load(new AREA_ShapefileLoader("M_SREL", new Color(0, 255, 0), 0.2), "AREA", "M_SREL", "/");
+                        break;      
                     case "NAVLNE.shp":
                         load(new NAVLNE_ShapefileLoader(), "NAVIGATION", "NAVLNE", "/");
                         break;
@@ -274,6 +276,7 @@ public class ChartS57Controller {
                     case "SEAARE.shp":
                         load(new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.2), "AREA", "SEAARE", "/");
                         break;
+                        
                     case "SLCONS.shp":
                         load(new SLCONS_ShapefileLoader(), "HARBOUR", "SLCONS", "/");
                         break;
@@ -289,11 +292,12 @@ public class ChartS57Controller {
                     case "WRECKS.shp":
                         load(new WRECKS_CNT_ShapefileLoader(), "DANGERS", "WRECKS", "/");
                         load(new WRECKS_ShapefileLoader(), "DANGERS", "WRECKS", "/");
-                        break;
+                        break;  
+                        /*
                     case "LIGHTS.shp":
                         loadLights();
-                        break;
-
+                        break; 
+                                */
                     default:
                 }
 
@@ -301,7 +305,8 @@ public class ChartS57Controller {
                     geos.put(s.replace(".shp", ""), new HashMap<>());
                 }
 
-            }
+        }
+        
         }
 
     }
@@ -309,6 +314,7 @@ public class ChartS57Controller {
     private void loadLights() {
         loader = new LIGHTS_ShapefileLoader();
         loader.createLayersFromSource(new File(path + "/LIGHTS.shp"));
+
         AirspaceLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
         la.setName("LIGHTS");
         layers.add(la);
@@ -316,6 +322,7 @@ public class ChartS57Controller {
         airspaceTmpLayer.setName("LIGHTS_1");
         airspaceLayers.add(la);
         airspaceLayers.add(airspaceTmpLayer);
+
         wwd.addSelectListener((SelectEvent event) -> {
             LightView lightView;
             Object o = event.getTopObject();
@@ -379,6 +386,7 @@ public class ChartS57Controller {
                 }
             }
         });
+
     }
 
     private void load(LayerShapefileLoader loader, String group, String acronym, String sep) {
@@ -386,8 +394,8 @@ public class ChartS57Controller {
         if (l == null) {
             l = new RenderableLayer();
             l.setName(group);
-            if (//acronym.contains("DEPARE")
-                   // || 
+            if (acronym.contains("DEPARE")
+                    || 
                     acronym.contains("OBSTRN")
                     || acronym.contains("LIGHTS")) {
                 l.setPickEnabled(false);

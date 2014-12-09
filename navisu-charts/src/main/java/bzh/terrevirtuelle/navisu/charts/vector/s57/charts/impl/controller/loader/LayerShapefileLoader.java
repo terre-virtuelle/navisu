@@ -78,6 +78,7 @@ public class LayerShapefileLoader
         while (shp.hasNext()) {
             try {
                 ShapefileRecord record = shp.nextRecord();
+               
                 recordNumber = record.getRecordNumber();
                 if (!Shapefile.isPolygonType(record.getShapeType())) {
                     continue;
