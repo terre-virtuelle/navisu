@@ -16,7 +16,6 @@ import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.impl.KapChartImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.S57CatalogServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.impl.S57CatalogImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
@@ -34,6 +33,8 @@ import bzh.terrevirtuelle.navisu.locators.Widget3DServices;
 import bzh.terrevirtuelle.navisu.locators.impl.Widget3DImpl;
 import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.loggers.impl.LoggerImpl;
+import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
+import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.shapefiles.impl.ShapefileObjectImpl;
 import gov.nasa.worldwind.geom.Position;
@@ -83,7 +84,7 @@ public class AppMain extends Application {
                         Widget3DImpl.class,
                         MediaImpl.class,
                         DDriverManagerImpl.class,
-                        S57CatalogImpl.class,
+                        MagneticImpl.class,
                         LoggerImpl.class
                 )
         );
@@ -100,6 +101,7 @@ public class AppMain extends Application {
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
+        MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
@@ -107,14 +109,16 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
+        driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
         driverServices.registerNewDriver(mediaServices.getDriver());
+        driverServices.registerNewDriver(magneticServices.getDriver());
 
-        DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
-        ddriverServices.init();
-        ddriverServices.registerNewDriver(catalogS57Services.getDriver());
+        //   DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
+        //    ddriverServices.init();
+        //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
 
         /*----Brest---*/
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
