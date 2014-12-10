@@ -68,7 +68,7 @@ public class ShapefileObjectImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-
+        System.out.println("ShapefileObjectImpl");
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         ShapefileController shapefileController = ShapefileController.getInstance();
         layers = shapefileController.init(fileName);

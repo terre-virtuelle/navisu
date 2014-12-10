@@ -11,6 +11,7 @@ import org.capcaval.c3.component.Component;
  *
  * @author Serge
  */
-public interface ShapefileObject extends Component{
-    
+public interface ShapefileObject
+        extends Component {
+
 }
