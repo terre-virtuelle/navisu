@@ -211,8 +211,7 @@ public class GuiAgentImpl
         root.getChildren().add(hud_3);
         */
         // hud_3.schedule();
-        /*
-        WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
+        /*WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
         Radar_Controller radar_1 = new Radar_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController2);
         widgetController2.add(radar_1);
