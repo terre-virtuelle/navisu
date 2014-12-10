@@ -18,8 +18,13 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.logging.Level;
-
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 
 /**
  * NaVisu
@@ -31,8 +36,10 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
 
     protected final Logger LOGGER = Logger.getLogger(DriverManagerImpl.class.getName());
 
-    @UsedService MenuManagerServices menuBarServices;
-    @UsedService GuiAgentServices guiAgentServices;
+    @UsedService
+    MenuManagerServices menuBarServices;
+    @UsedService
+    GuiAgentServices guiAgentServices;
 
     protected FileChooser fileChooser;
 
@@ -45,12 +52,18 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
 
     @Override
     public void init() {
-
         this.fileChooser = new FileChooser();
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
-        this.fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-
-
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("properties/user.properties"));
+        } catch (IOException ex) {
+            Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String userInitialDirectory = properties.getProperty("dataDir");
+        if (userInitialDirectory.equals("")) {
+            this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
+        }
         MenuItem menuItem = new MenuItem(tr("menu.file.open"));
         menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
         menuItem.setOnAction((e) -> {
@@ -59,10 +72,10 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
             List<File> selectedFiles = this.fileChooser.showOpenMultipleDialog(null);
 
             // If files has been selected
-            if(selectedFiles != null) {
-
+            if (selectedFiles != null) {
                 // Open them
                 this.handleOpenFiles(selectedFiles);
+                System.out.println(selectedFiles.get(0).getAbsolutePath());
             }
         });
     }
@@ -71,12 +84,11 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
 
         files.stream().forEach((file) -> {
             Driver driver = this.findDriverForFile(file.getAbsolutePath());
-            if(driver != null) {
+            if (driver != null) {
                 guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
                     driver.open(progressHandle, file.getAbsolutePath());
                 });
-            }
-            else {
+            } else {
                 LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
             }
         });
@@ -86,9 +98,9 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
 
         Driver compatibleDriver = null;
 
-        for(Driver driver : this.availableDriverList) {
+        for (Driver driver : this.availableDriverList) {
 
-            if(driver.canOpen(file)) {
+            if (driver.canOpen(file)) {
                 compatibleDriver = driver;
                 break;
             }
@@ -112,7 +124,10 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
     }
 
     @Override
-    public void componentStarted() {}
+    public void componentStarted() {
+    }
+
     @Override
-    public void componentStopped() {}
+    public void componentStopped() {
+    }
 }

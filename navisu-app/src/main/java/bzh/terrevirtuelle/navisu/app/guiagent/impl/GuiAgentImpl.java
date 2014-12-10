@@ -647,8 +647,8 @@ public class GuiAgentImpl
         MOBdock.getChildren().add(mobOffImg);
         //MOBdock.getChildren().add(mobOnImg);
         root.getChildren().add(MOBdock);
-        MOBdock.setTranslateX(400.0);
-        MOBdock.setTranslateY(-30.0);
+        MOBdock.setTranslateX(600.0);
+        MOBdock.setTranslateY(-50.0);
         //  MOBdock.getChildren().add(swingNode);
         StackPane.setAlignment(MOBdock, Pos.BOTTOM_CENTER);
     }
