@@ -2,7 +2,6 @@ package bzh.terrevirtuelle.navisu.main;
 
 import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
 import bzh.terrevirtuelle.navisu.agents.media.impl.MediaImpl;
-import bzh.terrevirtuelle.navisu.app.ddriver.DDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.ddriver.impl.DDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
@@ -35,6 +34,8 @@ import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.loggers.impl.LoggerImpl;
 import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
+import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
+import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.shapefiles.impl.ShapefileObjectImpl;
 import gov.nasa.worldwind.geom.Position;
@@ -85,6 +86,7 @@ public class AppMain extends Application {
                         MediaImpl.class,
                         DDriverManagerImpl.class,
                         MagneticImpl.class,
+                        SedimentologyImpl.class,
                         LoggerImpl.class
                 )
         );
@@ -102,6 +104,7 @@ public class AppMain extends Application {
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
+        SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
@@ -115,6 +118,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
         driverServices.registerNewDriver(mediaServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
+        driverServices.registerNewDriver(sedimentologyServices.getDriver());
 
         //   DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
         //    ddriverServices.init();
