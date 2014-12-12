@@ -43,6 +43,7 @@ public class MagneticShapefileController {
         RenderableLayer layer = new RenderableLayer();
         layer.setName("Magnetic");
         MagneticShapefileLoader shapefileLoader = new MagneticShapefileLoader();
+       // ShapefileLoader shapefileLoader= new ShapefileLoader();
         layers = shapefileLoader.createLayersFromSource(new File(path));
         return layers;
     }

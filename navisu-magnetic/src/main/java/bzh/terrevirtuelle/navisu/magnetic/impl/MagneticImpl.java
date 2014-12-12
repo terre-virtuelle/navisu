@@ -28,7 +28,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @author Serge Morvan
  * @date 10 nov. 2014 NaVisu project
  */
-public class MagneticImpl
+ public class MagneticImpl
         implements Magnetic, MagneticServices, Driver, ComponentState {
 
     @UsedService
@@ -50,10 +50,10 @@ public class MagneticImpl
     }
 
     @Override
-    public boolean canOpen(String file) {
+    public boolean canOpen(String category, String file) {
         boolean canOpen = false;
 
-        if (file.toLowerCase().endsWith(EXTENSION_0)) {
+        if (category.contains(NAME) && file.toLowerCase().endsWith(EXTENSION_0)) {
             canOpen = true;
         }
 
