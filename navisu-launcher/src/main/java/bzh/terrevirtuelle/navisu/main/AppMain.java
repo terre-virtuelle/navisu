@@ -112,7 +112,6 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
-        driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
