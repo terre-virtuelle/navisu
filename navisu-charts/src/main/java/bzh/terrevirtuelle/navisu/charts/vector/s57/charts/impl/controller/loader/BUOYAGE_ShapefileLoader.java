@@ -47,7 +47,7 @@ public class BUOYAGE_ShapefileLoader
     private final Map<Pair, String> topMarks;
     private final String marsys;
 
-    public BUOYAGE_ShapefileLoader( String path, Map<Pair, String> topMarks, String marsys, String acronym) {
+    public BUOYAGE_ShapefileLoader(String path, Map<Pair, String> topMarks, String marsys, String acronym) {
         this.topMarks = topMarks;
         this.marsys = marsys;
         this.acronym = acronym;
@@ -94,7 +94,11 @@ public class BUOYAGE_ShapefileLoader
 
         objects.add(object);
         entries = record.getAttributes().getEntries();
-
+        
+        if (acronym.equals("MORFAC")) {
+            System.out.println("entries" + entries);
+        }
+        
         object.setLat(latDegrees);
         object.setLon(lonDegrees);
         //   String mark = null;
@@ -110,7 +114,7 @@ public class BUOYAGE_ShapefileLoader
                 }
                 object.setShape(shp);
             }
-            if (e.getKey().equals("CATCAM") || e.getKey().equals("CATLAM") || e.getKey().equals("CAT")) {
+            if (e.getKey().equals("CATCAM") || e.getKey().equals("CATLAM") || e.getKey().equals("CAT") || e.getKey().equals("CATMOR")) {
                 if (e.getValue() != null) {
                     object.setCategoryOfMark(((Long) e.getValue()).toString());
                 } else {
@@ -124,6 +128,7 @@ public class BUOYAGE_ShapefileLoader
                     object.setCategoryOfMark("0");
                 }
             }
+
             if (e.getKey().equals("OBJNAM")) {
                 if (e.getValue() != null) {
                     object.setObjectName((String) e.getValue());
@@ -163,7 +168,6 @@ public class BUOYAGE_ShapefileLoader
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         //   placemark.setLabelText(object.getObjectName());
-
         String catMark = "";
         if (acronym.contains("CAR")) {
             catMark = CATCAM.ATT.get(object.getCategoryOfMark());
