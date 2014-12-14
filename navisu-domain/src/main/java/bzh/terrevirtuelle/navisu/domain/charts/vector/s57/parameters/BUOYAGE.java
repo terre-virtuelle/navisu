@@ -21,6 +21,7 @@ public class BUOYAGE {
             put("BOYSAW", "BuoySafeWater");
             put("BOYINB", "BuoyInstallation");
             put("LNDMRK", "Landmark");
+            put("MORFAC", "MooringWarpingFacility");
         }
     });
 
