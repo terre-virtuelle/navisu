@@ -22,7 +22,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * NaVisu
@@ -69,11 +68,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
             List<File> selectedFiles = this.fileChooser.showOpenMultipleDialog(null);
             // If files has been selected
             if (selectedFiles != null) {
-                if (fileChooser.getSelectedExtensionFilter() != null) {
-                    System.out.println(fileChooser.getSelectedExtensionFilter().getDescription());
-                }
                 // Open them
-
                 this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFiles);
                 System.out.println(selectedFiles.get(0).getAbsolutePath());
 
@@ -110,7 +105,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
                 }
             }
         }
-
+        System.out.println("driver : " + compatibleDriver);
         return compatibleDriver;
     }
 
