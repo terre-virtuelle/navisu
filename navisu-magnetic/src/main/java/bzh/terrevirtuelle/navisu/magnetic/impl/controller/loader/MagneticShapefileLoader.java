@@ -20,8 +20,9 @@ public class MagneticShapefileLoader
     @SuppressWarnings({"UnusedDeclaration"})
     @Override
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
+        System.out.println("MagneticShapefileLoader");
         if (record != null) {
-           // System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
+            System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
         return randomAttrs.nextPolylineAttributes();
     }
