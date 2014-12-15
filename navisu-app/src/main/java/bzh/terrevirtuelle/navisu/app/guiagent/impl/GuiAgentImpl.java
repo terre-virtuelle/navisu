@@ -163,10 +163,10 @@ public class GuiAgentImpl
         this.loadCss(scene);
 
         // Create Dock Widget
-        createDockWidget(scene);
+        //createDockWidget(scene);
 
         // Create MOB as Widget
-        createMOBWidget(scene);
+        //createMOBWidget(scene);
 
         // Create Books Radial Widget
         createBooksRadialWidget();
@@ -204,26 +204,28 @@ public class GuiAgentImpl
 
         // Test avant les Displays
         //------------ HUD widgets ---------------------------------------------       
-        /*WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
+            //-------------------Speedo-------------------
+        WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
         widgetController1.add(hud_3);
         root.getChildren().add(hud_3);
-        */
         // hud_3.schedule();
-        /*WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
+            //--------------------Speedo_end---------------
+            //--------------------Radar--------------------
+        WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
         Radar_Controller radar_1 = new Radar_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController2);
         widgetController2.add(radar_1);
         root.getChildren().add(radar_1);
         radar_1.schedule();
-        */
+            //-------------------- Radar_end----------------
         // Test appel a HTML5-Javascript
-      //CloudMenu cloudMenu = new CloudMenu();
-      // root.getChildren().add(cloudMenu);
+        //CloudMenu cloudMenu = new CloudMenu();
+        // root.getChildren().add(cloudMenu);
         // setFullScreen(true);
         stage.setScene(scene);
-        //stage.setMaximized(true);
+        stage.setMaximized(true);
         stage.show();
 
     }

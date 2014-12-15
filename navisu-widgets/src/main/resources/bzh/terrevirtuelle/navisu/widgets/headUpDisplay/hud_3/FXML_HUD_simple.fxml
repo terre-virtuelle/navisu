@@ -17,9 +17,9 @@
         <Point3D y="1.0" />
     </rotationAxis>
    <children>
-      <ImageView fx:id="background" fitWidth="800" fitHeight="200.0" opacity="0.67" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="background" fitHeight="200.0" fitWidth="800" opacity="0.67" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@3cadrans.png" />
+            <Image url="@Speedo2.png" />
          </image>
       </ImageView>
       <Text fx:id="speed" fill="#47c1cf" layoutX="65.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="99.0">
