@@ -23,6 +23,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.LayerShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.PONTON_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.PolygonTemplate_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.PolylineTemplate_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.SLCONS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ShapefileLoader;
@@ -187,7 +189,7 @@ public class ChartS57Controller {
                 String s = f.getName();
                 switch (s) {
                     case "RESARE.shp":
-                        load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2), "AREA", "RESARE", "/");
+                        load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2, false), "AREA", "RESARE", "/");
                         break;
                     case "UNSARE.shp":
                         load(new UNSARE_ShapefileLoader(), "AREA", "UNSARE", "/");
@@ -199,8 +201,9 @@ public class ChartS57Controller {
             for (File f : listOfFiles) {
                 String s = f.getName();
                 switch (s) {
-                     case "ACHARE.shp":
-                       load(new AREA_ShapefileLoader("ACHARE", new Color(0, 246, 232), 0.2), "AREA", "ACHARE", "/");
+                    case "ACHARE.shp":
+                        // layers.add(new PolygonTemplate_ShapefileLoader().createLayerFromSource(new File(path + "/ACHARE.shp")));
+                        load(new AREA_ShapefileLoader("ACHARE", new Color(0, 255, 0), 0.2, true), "AREA", "ACHARE", "/");
                         break;
                     case "BCNCAR.shp":
                         load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR"), "BUOYAGE", "BCNCAR", "/");
@@ -248,10 +251,10 @@ public class ChartS57Controller {
                         load(new DOCARE_ShapefileLoader(), "AREA", "DOCARE", "/");
                         break;
                     case "DGRARE.shp":
-                        load(new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0), "AREA", "DGRARE", "/");
+                        load(new AREA_ShapefileLoader("DGRARE", new Color(7, 149, 24), 0.0, false), "AREA", "DGRARE", "/");
                         break;
                     case "FAIRWY.shp":
-                        load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.2), "NAVIGATION", "FAIRWY", "/");
+                        load(new AREA_ShapefileLoader("FAIRWY", new Color(7, 141, 29), 0.0, false), "NAVIGATION", "FAIRWY", "/");
                         break;
                     case "LAKARE.shp":
                         load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "EARTH", "LAKARE", "/");
@@ -260,13 +263,13 @@ public class ChartS57Controller {
                         load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "BUILDING", "LNDMRK", "/");
                         break;
                     case "MIPARE.shp":
-                        load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.2), "AREA", "MIPARE", "/");
+                        load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.0, false), "AREA", "MIPARE", "/");
                         break;
                     case "MORFAC.shp":
                         load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "MORFAC"), "BUOYAGE", "MORFAC", "/");
                         break;
                     case "M_SREL.shp":
-                        load(new AREA_ShapefileLoader("M_SREL", new Color(0, 255, 0), 0.2), "AREA", "M_SREL", "/");
+                        load(new AREA_ShapefileLoader("M_SREL", new Color(0, 255, 0), 0.0, false), "AREA", "M_SREL", "/");
                         break;
                     case "NAVLNE.shp":
                         load(new NAVLNE_ShapefileLoader(), "NAVIGATION", "NAVLNE", "/");
@@ -279,7 +282,7 @@ public class ChartS57Controller {
                         load(new PONTON_ShapefileLoader(), "HARBOUR", "PONTON", "/");
                         break;
                     case "SEAARE.shp":
-                        load(new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.2), "AREA", "SEAARE", "/");
+                        load(new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.0, false), "AREA", "SEAARE", "/");
                         break;
 
                     case "SLCONS.shp":

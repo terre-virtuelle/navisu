@@ -33,20 +33,24 @@ public class AREA_ShapefileLoader
     private final Color color;
     private final String acronym;
     private double opacity;
+    private boolean isDrawInterior;
     private String objname;
     private SurfacePolygons shape;
 
-    public AREA_ShapefileLoader(String acronym, Color color, double opacity) {
+    public AREA_ShapefileLoader(String acronym, Color color, double opacity, boolean isDrawInterior) {
         this.color = color;
         this.acronym = acronym;
         this.opacity = opacity;
+        this.isDrawInterior = isDrawInterior;
     }
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
 
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
-        normalAttributes.setDrawInterior(false);
+        normalAttributes.setInteriorMaterial(new Material(color));
+        normalAttributes.setDrawInterior(isDrawInterior);
+        normalAttributes.setInteriorOpacity(opacity);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setOutlineMaterial(new Material(color));
         normalAttributes.setOutlineStipplePattern((short) 0xAAAA);
@@ -75,7 +79,7 @@ public class AREA_ShapefileLoader
         shape.setHighlightAttributes(null);
 
         createValues(shape);
-     //   ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
+        //   ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
         layer.addRenderable(shape);
 
     }
@@ -97,6 +101,11 @@ public class AREA_ShapefileLoader
                 }
             }
             if (e.getKey().equals("NATSUR")) {
+                if (e.getValue() != null) {
+                    shape.setValue(AVKey.DISPLAY_NAME, label.concat((String) e.getValue()));
+                }
+            }
+            if (e.getKey().equals("STATUS")) {
                 if (e.getValue() != null) {
                     shape.setValue(AVKey.DISPLAY_NAME, label.concat((String) e.getValue()));
                 }
