@@ -123,7 +123,8 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("tides", ICON_PATH + "tides.png", (e) -> showTidesMenu()),
         DockItemFactory.newImageItem("meteo", ICON_PATH + "meteo.png", (e) -> showMeteoMenu()),
         DockItemFactory.newImageItem("instrum.", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
-        DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> showBooksMenu()), //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
+        DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> showBooksMenu()), 
+        //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
     };
     public final DockItem[] ICONS0 = new DockItem[]{
         /* Invisible icons just for testing margins */
@@ -163,7 +164,7 @@ public class GuiAgentImpl
         this.loadCss(scene);
 
         // Create Dock Widget
-        //createDockWidget(scene);
+        createDockWidget(scene);
 
         // Create MOB as Widget
         //createMOBWidget(scene);
@@ -205,20 +206,24 @@ public class GuiAgentImpl
         // Test avant les Displays
         //------------ HUD widgets ---------------------------------------------       
             //-------------------Speedo-------------------
+        /*
         WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
         widgetController1.add(hud_3);
         root.getChildren().add(hud_3);
         // hud_3.schedule();
+        */
             //--------------------Speedo_end---------------
             //--------------------Radar--------------------
+        /*
         WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
         Radar_Controller radar_1 = new Radar_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController2);
         widgetController2.add(radar_1);
         root.getChildren().add(radar_1);
         radar_1.schedule();
+        */
             //-------------------- Radar_end----------------
         // Test appel a HTML5-Javascript
         //CloudMenu cloudMenu = new CloudMenu();
