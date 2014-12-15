@@ -6,7 +6,6 @@ import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
-import bzh.terrevirtuelle.navisu.core.util.Checker;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import org.capcaval.c3.component.ComponentState;
@@ -18,8 +17,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import bzh.terrevirtuelle.navisu.core.util.Checker;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -60,6 +63,8 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
         String userInitialDirectory = properties.getProperty("dataDir");
         if (userInitialDirectory.equals("")) {
             this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
+        }else{
+            this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
         }
         MenuItem menuItem = new MenuItem(tr("menu.file.open"));
         menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
@@ -88,6 +93,17 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
                 LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
             }
         });
+        Properties props = new Properties();
+        props.setProperty("dataDir", files.get(0).getParent());
+        File f = new File("properties/user.properties");
+        OutputStream out;
+        try {
+            out = new FileOutputStream(f);
+            props.store(out, "Last directory choosed by user");
+            out.close();
+        } catch (IOException ex) {
+            Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     protected Driver findDriverForFile(String category, String file) {
@@ -105,7 +121,6 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
                 }
             }
         }
-        System.out.println("driver : " + compatibleDriver);
         return compatibleDriver;
     }
 

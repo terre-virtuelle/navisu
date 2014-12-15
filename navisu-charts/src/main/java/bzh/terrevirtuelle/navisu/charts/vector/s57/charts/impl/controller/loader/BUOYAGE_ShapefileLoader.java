@@ -94,11 +94,7 @@ public class BUOYAGE_ShapefileLoader
 
         objects.add(object);
         entries = record.getAttributes().getEntries();
-        
-        if (acronym.equals("MORFAC")) {
-            System.out.println("entries" + entries);
-        }
-        
+       
         object.setLat(latDegrees);
         object.setLon(lonDegrees);
         //   String mark = null;

@@ -108,9 +108,9 @@ public class AppMain extends Application {
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
+        driverServices.registerNewDriver(chartS57Services.getDriver());
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
-        driverServices.registerNewDriver(chartS57Services.getDriver());
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());

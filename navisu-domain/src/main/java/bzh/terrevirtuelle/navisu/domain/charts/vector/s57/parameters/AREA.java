@@ -14,6 +14,7 @@ public class AREA {
             put("RESARE", "RestrictedArea");
             put("FAIRWY", "Fairway");
             put("DRGARE", "DredgedArea");
+            put("ACHARE", "AnchorageArea");
         }
     });
 
