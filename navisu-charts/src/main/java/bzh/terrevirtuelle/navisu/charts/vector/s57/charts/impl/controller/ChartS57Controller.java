@@ -199,6 +199,9 @@ public class ChartS57Controller {
             for (File f : listOfFiles) {
                 String s = f.getName();
                 switch (s) {
+                     case "ACHARE.shp":
+                       load(new AREA_ShapefileLoader("ACHARE", new Color(0, 246, 232), 0.2), "AREA", "ACHARE", "/");
+                        break;
                     case "BCNCAR.shp":
                         load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR"), "BUOYAGE", "BCNCAR", "/");
                         break;

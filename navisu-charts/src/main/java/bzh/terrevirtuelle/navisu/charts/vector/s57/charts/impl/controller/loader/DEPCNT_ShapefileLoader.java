@@ -5,8 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
-import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
@@ -33,8 +34,20 @@ public class DEPCNT_ShapefileLoader
         normalAttributes.setDrawInterior(false);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setOutlineMaterial(Material.BLACK);
-
         return normalAttributes;
+    }
+
+    @Override
+    protected void addRenderablesForPolylines(Shapefile shp, RenderableLayer layer) {
+        while (shp.hasNext()) {
+            ShapefileRecord record = shp.nextRecord();
+            if (!Shapefile.isPolylineType(record.getShapeType())) {
+                continue;
+            }
+            ShapeAttributes attrs = this.createPolylineAttributes(record);
+            layer.addRenderable(this.createPolyline(record, attrs));
+        }
+       // shp.setValue(AVKey.DISPLAY_NAME,"000");
     }
 
     @Override
