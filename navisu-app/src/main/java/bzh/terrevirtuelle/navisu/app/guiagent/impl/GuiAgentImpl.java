@@ -663,7 +663,7 @@ public class GuiAgentImpl
 
         Group groupDock = new Group();
 
-        groupDock.getChildren().add(basedock);
+        //groupDock.getChildren().add(basedock);
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
         basedock.setLayoutX(450.0);
