@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.magnetic.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.core.util.shapefile.ShapefileLoader;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.render.ShapeAttributes;
 
@@ -19,8 +20,9 @@ public class MagneticShapefileLoader
     @SuppressWarnings({"UnusedDeclaration"})
     @Override
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
+        System.out.println("MagneticShapefileLoader");
         if (record != null) {
-           // System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
+            System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
         return randomAttrs.nextPolylineAttributes();
     }

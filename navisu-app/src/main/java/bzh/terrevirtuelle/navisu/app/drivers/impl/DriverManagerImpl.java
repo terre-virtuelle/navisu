@@ -18,13 +18,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 
 /**
  * NaVisu
@@ -67,23 +64,22 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
         MenuItem menuItem = new MenuItem(tr("menu.file.open"));
         menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
         menuItem.setOnAction((e) -> {
-
             // Show the file chooser
             List<File> selectedFiles = this.fileChooser.showOpenMultipleDialog(null);
-
             // If files has been selected
             if (selectedFiles != null) {
                 // Open them
-                this.handleOpenFiles(selectedFiles);
+                this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFiles);
                 System.out.println(selectedFiles.get(0).getAbsolutePath());
+
             }
         });
     }
 
-    protected void handleOpenFiles(List<File> files) {
+    protected void handleOpenFiles(String category, List<File> files) {
 
         files.stream().forEach((file) -> {
-            Driver driver = this.findDriverForFile(file.getAbsolutePath());
+            Driver driver = this.findDriverForFile(category, file.getAbsolutePath());
             if (driver != null) {
                 guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
                     driver.open(progressHandle, file.getAbsolutePath());
@@ -94,18 +90,22 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
         });
     }
 
-    protected Driver findDriverForFile(String file) {
+    protected Driver findDriverForFile(String category, String file) {
 
         Driver compatibleDriver = null;
 
         for (Driver driver : this.availableDriverList) {
-
-            if (driver.canOpen(file)) {
+            if (driver.canOpen(category, file)) {
                 compatibleDriver = driver;
                 break;
+            } else {
+                if (driver.canOpen(file)) {
+                    compatibleDriver = driver;
+                    break;
+                }
             }
         }
-
+        System.out.println("driver : " + compatibleDriver);
         return compatibleDriver;
     }
 

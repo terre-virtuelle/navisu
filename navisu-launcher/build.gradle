@@ -16,6 +16,7 @@ dependencies {
     compile project(':navisu-gpx')
     compile project(':navisu-shapefiles')
     compile project(':navisu-magnetic')
+    compile project(':navisu-sedimentology')
     compile project(':navisu-instruments')
     compile project(':navisu-agents')
     compile fileTree(dir: 'lib', include: '*.jar')
