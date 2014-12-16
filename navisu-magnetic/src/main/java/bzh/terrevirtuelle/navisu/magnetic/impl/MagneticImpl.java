@@ -56,7 +56,6 @@ import org.capcaval.c3.component.annotation.UsedService;
         if (category.contains(NAME) && file.toLowerCase().endsWith(EXTENSION_0)) {
             canOpen = true;
         }
-
         return canOpen;
     }
 

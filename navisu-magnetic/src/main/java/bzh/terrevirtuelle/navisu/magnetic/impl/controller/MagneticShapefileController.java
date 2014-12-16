@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.magnetic.impl.controller;
 
 
-import bzh.terrevirtuelle.navisu.magnetic.impl.controller.loader.MagneticShapefileLoader;
+import bzh.terrevirtuelle.navisu.core.util.shapefile.Template_ShapefileLoader;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.File;
@@ -42,8 +42,8 @@ public class MagneticShapefileController {
 
         RenderableLayer layer = new RenderableLayer();
         layer.setName("Magnetic");
-        MagneticShapefileLoader shapefileLoader = new MagneticShapefileLoader();
-       // ShapefileLoader shapefileLoader= new ShapefileLoader();
+       // MagneticShapefileLoader shapefileLoader = new MagneticShapefileLoader();
+        Template_ShapefileLoader shapefileLoader= new Template_ShapefileLoader();
         layers = shapefileLoader.createLayersFromSource(new File(path));
         return layers;
     }
