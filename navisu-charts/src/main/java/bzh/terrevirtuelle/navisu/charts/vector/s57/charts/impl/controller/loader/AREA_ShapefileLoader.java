@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.AREA;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -28,14 +29,14 @@ public class AREA_ShapefileLoader
         extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
-    private ShapefileRecord record;
-    private Set<Map.Entry<String, Object>> entries;
-    private final Color color;
-    private final String acronym;
-    private double opacity;
-    private boolean isDrawInterior;
-    private String objname;
-    private SurfacePolygons shape;
+    protected ShapefileRecord record;
+    protected Set<Map.Entry<String, Object>> entries;
+    protected final Color color;
+    protected final String acronym;
+    protected double opacity;
+    protected final boolean isDrawInterior;
+    protected String objname;
+    protected SurfacePolygons shape;
 
     public AREA_ShapefileLoader(String acronym, Color color, double opacity, boolean isDrawInterior) {
         this.color = color;
@@ -46,7 +47,7 @@ public class AREA_ShapefileLoader
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-
+        
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
         normalAttributes.setDrawInterior(isDrawInterior);

@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ACHARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPCNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BUOYAGE_ShapefileLoader;
@@ -23,8 +24,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.LayerShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.OBSTRN_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.PONTON_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.PolygonTemplate_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.PolylineTemplate_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.SLCONS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.SOUNDG_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ShapefileLoader;
@@ -202,8 +201,7 @@ public class ChartS57Controller {
                 String s = f.getName();
                 switch (s) {
                     case "ACHARE.shp":
-                        // layers.add(new PolygonTemplate_ShapefileLoader().createLayerFromSource(new File(path + "/ACHARE.shp")));
-                        load(new AREA_ShapefileLoader("ACHARE", new Color(0, 255, 0), 0.2, true), "AREA", "ACHARE", "/");
+                        load(new ACHARE_ShapefileLoader("ACHARE", new Color(2, 200, 184), 0.4, true), "AREA", "ACHARE", "/");
                         break;
                     case "BCNCAR.shp":
                         load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR"), "BUOYAGE", "BCNCAR", "/");
