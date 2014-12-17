@@ -14,7 +14,7 @@
 
 <fx:root type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-       <Rectangle arcHeight="30.0" arcWidth="30.0" height="860.0" opacity="0.66" stroke="#448cbc" strokeType="INSIDE" width="860.0">
+       <Rectangle arcHeight="30.0" arcWidth="30.0" height="860.0" opacity="0.66" stroke="#448cbc" strokeType="INSIDE" width="1024.0">
            <fill>
                <LinearGradient endX="1.0" endY="1.0" startX="0.37142857142857144">
                    <stops>
@@ -24,33 +24,20 @@
                </LinearGradient>
            </fill>
        </Rectangle>
-         <Circle fx:id="spot1" blendMode="COLOR_DODGE" fill="#cde7ff" layoutX="80.0" layoutY="80.0" radius="3.0" stroke="#a8f5aa" strokeType="INSIDE">
-            <effect>
-               <GaussianBlur>
-                  <input>
-                     <Glow />
-                  </input>
-               </GaussianBlur>
-            </effect>
-         </Circle>
-            <Circle fx:id="spot2" blendMode="COLOR_DODGE" fill="#cde7ff" layoutX="50.0" layoutY="50.0" radius="3.0" stroke="#1fedff" strokeType="INSIDE">
-               <effect>
-                  <GaussianBlur>
-                     <input>
-                        <Glow />
-                     </input>
-                  </GaussianBlur>
-               </effect>
-            </Circle>
-      
-                                          
-          
-                                             <ImageView fx:id="faisceau" blendMode="COLOR_DODGE" fitHeight="600.0" fitWidth="600.0" layoutX="130.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@radarfaisceau600.png" />
-                  </image>
-               </ImageView>
-      <Group layoutX="179.0" layoutY="229.0" scaleX="2.5" scaleY="2.5">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21d6ff4d" height="800.0" layoutX="799.0" layoutY="29.0" stroke="#00abff" strokeType="INSIDE" width="200.0">
+         <effect>
+            <InnerShadow choke="0.05" color="#8ed1e2ed" height="28.41" offsetX="10.0" offsetY="10.0" radius="10.370000000000001" width="15.07" />
+         </effect>
+      </Rectangle>
+      <Text fill="#fff900" fontSmoothingType="LCD" layoutX="823.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-R to hide">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <effect>
+            <Glow level="0.87" />
+         </effect>
+      </Text>
+      <Group layoutX="175.0" layoutY="229.0" scaleX="2.3" scaleY="2.3">
          <children>
                <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="30.0" stroke="DODGERBLUE" strokeType="INSIDE" />
                <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="80.0" stroke="DODGERBLUE" strokeType="INSIDE" />
@@ -67,5 +54,23 @@
                <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="50.0" stroke="DODGERBLUE" strokeType="INSIDE" />
          </children>
       </Group>
+      
+                                                
+          
+                                                   <ImageView fx:id="faisceau" blendMode="COLOR_DODGE" fitHeight="600.0" fitWidth="600.0" layoutX="125.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@radarfaisceau600.png" />
+                  </image>
+               </ImageView>
+         <Circle fx:id="spot1" blendMode="LIGHTEN" fill="#00ff22" layoutX="600.0" layoutY="280.0" radius="3.0" stroke="#00ff22" strokeType="INSIDE">
+            <effect>
+               <GaussianBlur radius="0.0" />
+            </effect>
+         </Circle>
+            <Circle fx:id="spot2" blendMode="COLOR_DODGE" fill="#ffdf03" layoutX="605.0" layoutY="400.0" radius="3.0" stroke="#f2ff00" strokeType="INSIDE">
+               <effect>
+                  <GaussianBlur radius="0.0" />
+               </effect>
+            </Circle>
           </children>
 </fx:root>

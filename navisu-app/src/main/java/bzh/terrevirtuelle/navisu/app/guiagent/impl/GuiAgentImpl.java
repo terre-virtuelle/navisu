@@ -19,9 +19,11 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.widgets.controller.WidgetController;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
+import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.radar_1.Radar_Controller;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
@@ -48,6 +50,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
+import javafx.scene.input.KeyCombination;
 
 /**
  * NaVisu
@@ -201,7 +204,7 @@ public class GuiAgentImpl
 
         // Test avant les Displays
         //------------ HUD widgets ---------------------------------------------       
-            //-------------------Speedo-------------------
+            //------------------- Speedo - hide with Ctrl-S -----------------
         /*
         WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
@@ -211,7 +214,7 @@ public class GuiAgentImpl
         // hud_3.schedule();
         */
             //--------------------Speedo_end---------------
-            //--------------------Radar--------------------
+            //--------------------Radar  - hide with Ctrl-R --------------------
         /*
         WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
         Radar_Controller radar_1 = new Radar_Controller();
@@ -221,6 +224,7 @@ public class GuiAgentImpl
         radar_1.schedule();
         */
             //-------------------- Radar_end----------------
+        
         // Test appel a HTML5-Javascript
         //CloudMenu cloudMenu = new CloudMenu();
         // root.getChildren().add(cloudMenu);
@@ -231,6 +235,7 @@ public class GuiAgentImpl
 
     }
 // ------------------------ HUD widgets end ------------------------------
+    
     /*
      private void showInstruments() {
      if (firstInstruments == true) {

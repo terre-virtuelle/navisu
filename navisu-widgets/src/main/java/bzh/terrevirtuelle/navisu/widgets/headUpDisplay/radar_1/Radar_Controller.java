@@ -70,9 +70,9 @@ implements Initializable {
                 
             // System.out.println("heading " + heading+"route "+route);
                 //spotX= spotInitX+(sin(route*PI/360)*25);
-                //angle =(route*PI/360);
-                //spot1.setTranslateX(spotInitX+(sin(angle)*25));
-                //spot1.setTranslateY(spotInitY+route/2);
+                angle =(route*PI/360);
+                spot1.setTranslateX(spotInitX+(sin(angle)*25));
+                spot1.setTranslateY(spotInitY+route/2);
                 //faisceau.getTransforms().add(new Rotate(angle, 0, 150, 0, Rotate.Z_AXIS));
                 faisceau.setRotate(route);
                 //faisceau.setLength(60.0);
