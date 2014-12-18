@@ -12,6 +12,7 @@ dependencies {
     compile project(':navisu-client')
     compile project(':navisu-grib')
     compile project(':navisu-charts')
+    compile project(':navisu-currents')
     compile project(':navisu-kml')
     compile project(':navisu-gpx')
     compile project(':navisu-shapefiles')

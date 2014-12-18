@@ -20,6 +20,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.currents.CurrentsServices;
+import bzh.terrevirtuelle.navisu.currents.impl.CurrentsImpl;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
 import bzh.terrevirtuelle.navisu.gpx.impl.GpxObjectImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
@@ -78,6 +80,7 @@ public class AppMain extends Application {
                         S57ChartImpl.class,
                         GeoTiffChartImpl.class,
                         ShapefileObjectImpl.class,
+                        CurrentsImpl.class,
                         KmlObjectImpl.class,
                         GpxObjectImpl.class,
                         DataServerImpl.class,
@@ -100,6 +103,7 @@ public class AppMain extends Application {
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
+        CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
@@ -112,12 +116,13 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(chartsServices.getDriver());
         driverServices.registerNewDriver(gribServices.getDriver());
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
-        driverServices.registerNewDriver(shapefileObjectServices.getDriver());
+        driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
         driverServices.registerNewDriver(mediaServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
+        driverServices.registerNewDriver(shapefileObjectServices.getDriver());
 
         //   DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
         //    ddriverServices.init();
