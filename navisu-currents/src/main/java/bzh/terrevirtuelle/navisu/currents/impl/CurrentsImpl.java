@@ -73,11 +73,11 @@ import org.capcaval.c3.component.annotation.UsedService;
         layers = shapefileController.init(fileName);
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();
-            if (name.contains(NAME)) {
+          //  if (name.contains(NAME)) {
                 l.setPickEnabled(true);
-            } else {
-                l.setPickEnabled(false);
-            }
+           // } else {
+           //     l.setPickEnabled(false);
+            //}
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {

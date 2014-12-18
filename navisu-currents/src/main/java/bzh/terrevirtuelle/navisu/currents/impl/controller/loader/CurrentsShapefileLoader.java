@@ -6,7 +6,9 @@
 package bzh.terrevirtuelle.navisu.currents.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.core.util.shapefile.ShapefileLoader;
+import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
 import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
@@ -21,6 +23,8 @@ import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.WWIO;
 import gov.nasa.worldwind.util.WWUtil;
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -35,6 +39,10 @@ public class CurrentsShapefileLoader
 
     private final List<Double> latList;
     private final List<Double> lonList;
+    private double speed = 0.0;
+    private double depth = 0.0;
+    private double direction = 0.0;
+    private Color color;
 
     public CurrentsShapefileLoader() {
         latList = new ArrayList<>();
@@ -60,10 +68,31 @@ public class CurrentsShapefileLoader
     @Override
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
-        //  System.out.println(latDegrees + " " + lonDegrees + " " + record.getAttributes().getEntries());
+
+        Set<Entry<String, Object>> entries = record.getAttributes().getEntries();
+
+        entries.stream().map((e) -> {
+            if (((String) e.getKey()).contains("vit")) {
+                this.speed = (Double) e.getValue();
+            }
+            return e;
+        }).map((e) -> {
+            if (((String) e.getKey()).contains("dir")) {
+                this.direction = (Double) e.getValue();
+            }
+            return e;
+        }).filter((e) -> (((String) e.getKey()).contains("ELEVATION"))).forEach((e) -> {
+            this.depth = (Double) e.getValue();
+        });
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setAttributes(attrs);
+        NumberFormat nf = new DecimalFormat("0.#");
+
+        String label = "speed : " + nf.format(speed * 2) + " NM\n"
+                + "direction : " + nf.format(direction) + " °\n";
+        placemark.setValue(AVKey.DISPLAY_NAME, label);
+
         return placemark;
     }
 
@@ -102,17 +131,6 @@ public class CurrentsShapefileLoader
             System.out.println("minLat " + minLat + "  maxLat " + maxLat);
             System.out.println("minLon " + minLon + "  maxLon " + maxLon);
 
-            // List<Integer> range = IntStream.range(0, 500).boxed().collect(Collectors.toList());
-            /*
-             Stream<List<Integer>> integerListStream = Stream.of(
-             Arrays.asList(1, 2),
-             Arrays.asList(3, 4),
-             Arrays.asList(5)
-             );
-
-             Stream<Integer> integerStream = integerListStream.flatMap((integerList) -> integerList.stream());
-             integerStream.forEach(System.out::println);
-             */
             return layers;
 
         } finally {
@@ -124,13 +142,18 @@ public class CurrentsShapefileLoader
     @SuppressWarnings({"UnusedDeclaration"})
     @Override
     protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
+
         record.getAttributes().getEntries().stream().filter((e) -> (e.getKey().contains("vit"))).forEach((e) -> {
-            System.out.println("vit : " + (Double)e.getValue() * 2); //en Noeuds
+            //   System.out.println("vit : " + (Double) e.getValue() * 2); //en Noeuds
+            this.speed = (Double) e.getValue();
         });
         PointPlacemarkAttributes attributes = new PointPlacemarkAttributes();
         attributes.setUsePointAsDefaultImage(true);
-        attributes.setLineMaterial(new Material(Color.RED));
-        attributes.setScale(7d);
+        color = SHOM_CURRENTS_CLUT.getColor(speed);
+        if (color != null) {
+            attributes.setLineMaterial(new Material(color));
+        }
+        attributes.setScale(5d);
         return attributes;
     }
 }
