@@ -18,6 +18,7 @@ public class SHOM_CURRENTS_CLUT {
         ranges.add(Range.closedOpen(0.0, 0.25));
         ranges.add(Range.closedOpen(0.25, 0.5));
         ranges.add(Range.closedOpen(0.5, 0.75));
+        ranges.add(Range.closedOpen(0.75, 1.0));
         ranges.add(Range.closedOpen(1.0, 1.25));
         ranges.add(Range.closedOpen(1.25, 1.5));
         ranges.add(Range.closedOpen(1.5, 1.75));
@@ -61,7 +62,6 @@ public class SHOM_CURRENTS_CLUT {
     });
 
     public static Color getColor(double speed) {
-        int index;
         for (int i = 0; i < ranges.size(); i++) {
             if(ranges.get(i).contains(speed)){
                 return SHOM_CURRENTS_CLUT.ATT.get(i);
