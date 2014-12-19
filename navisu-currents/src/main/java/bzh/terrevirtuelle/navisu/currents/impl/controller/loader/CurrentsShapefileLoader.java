@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.currents.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.core.util.shapefile.ShapefileLoader;
+import bzh.terrevirtuelle.navisu.currents.impl.controller.GridFactory;
 import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -107,32 +108,17 @@ public class CurrentsShapefileLoader
         try {
             shp = new Shapefile(source);
             List<Layer> layers = this.createLayersFromShapefile(shp);
-            //  System.out.println("latList.size : " + latList.size() + " lonList.size : " + lonList.size());
-            double maxLat = latList.get(0);
-            double minLat = latList.get(0);
-            double maxLon = lonList.get(0);
-            double minLon = lonList.get(0);
-            for (double l : latList) {
-                if (maxLat < l) {
-                    maxLat = l;
-                }
-                if (minLat > l) {
-                    minLat = l;
-                }
-            }
-            for (double l : lonList) {
-                if (maxLon < l) {
-                    maxLon = l;
-                }
-                if (minLon > l) {
-                    minLon = l;
-                }
-            }
-            System.out.println("minLat " + minLat + "  maxLat " + maxLat);
-            System.out.println("minLon " + minLon + "  maxLon " + maxLon);
-
+            
+            GridFactory gridFactory = new GridFactory();
+            System.out.println("minLat " + gridFactory.getMin(latList) + "  maxLat " + gridFactory.getMax(latList));
+            System.out.println("minLon " + gridFactory.getMin(lonList) + "  maxLon " + gridFactory.getMax(lonList));
+          //  System.out.println("latList " + latList);
+           // System.out.println("lonList " + lonList);
+          //  System.out.println("getMinRange Lat " + gridFactory.getMinRange(latList));
+          //  System.out.println("getMinRange Lon " + gridFactory.getMinRange(lonList));
+          //  System.out.println("getDim " + gridFactory.getDim(latList));
+          //  System.out.println("getDim " + gridFactory.getDim(lonList));
             return layers;
-
         } finally {
             WWIO.closeStream(shp, source.toString());
         }
