@@ -21,6 +21,7 @@
 /navisu-geodesy/.nb-gradle/private/
 /build/
 /navisu-launcher/data/charts/
+/navisu-launcher/data/shp/
 /navisu-launcher/errors.txt
 /navisu-launcher/properties/
 /navisu-agents/.nb-gradle/private/
