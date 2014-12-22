@@ -228,10 +228,10 @@ public class GuiAgentImpl
         // root.getChildren().add(cloudMenu);
         // setFullScreen(true);
         //-------------------- Test_WebView----------------
-        
+       /* 
         WebView  webView = new WebView();
         root.getChildren().add(webView);
-        
+        */
         
         stage.setScene(scene);
         stage.setMaximized(true);
