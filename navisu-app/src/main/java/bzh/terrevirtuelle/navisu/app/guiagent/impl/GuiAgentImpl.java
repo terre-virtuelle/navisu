@@ -19,14 +19,13 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.widgets.controller.WidgetController;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
-import bzh.terrevirtuelle.navisu.widgets.headUpDisplay.radar_1.Radar_Controller;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
+import bzh.terrevirtuelle.navisu.widgets.webview.WebView;
 
 import gov.nasa.worldwind.util.StatusBar;
 import javafx.animation.Animation;
@@ -50,7 +49,6 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
-import javafx.scene.input.KeyCombination;
 
 /**
  * NaVisu
@@ -215,20 +213,26 @@ public class GuiAgentImpl
         */
             //--------------------Speedo_end---------------
             //--------------------Radar  - hide with Ctrl-R --------------------
-        /*
+    /*    
         WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
         Radar_Controller radar_1 = new Radar_Controller();
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController2);
         widgetController2.add(radar_1);
         root.getChildren().add(radar_1);
         radar_1.schedule();
-        */
+       */ 
             //-------------------- Radar_end----------------
         
         // Test appel a HTML5-Javascript
         //CloudMenu cloudMenu = new CloudMenu();
         // root.getChildren().add(cloudMenu);
         // setFullScreen(true);
+        //-------------------- Test_WebView----------------
+        
+        WebView  webView = new WebView();
+        root.getChildren().add(webView);
+        
+        
         stage.setScene(scene);
         stage.setMaximized(true);
         stage.show();
