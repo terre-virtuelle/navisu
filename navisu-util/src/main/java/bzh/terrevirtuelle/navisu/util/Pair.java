@@ -6,22 +6,24 @@
 
 package bzh.terrevirtuelle.navisu.util;
 
+import java.util.Objects;
+
 /**
  *
  * @author Serge Morvan
  * @date 4 oct. 2014
  * NaVisu project
  */
-public class Pair {
+public class Pair<T,K>{
 
-    private double x;
+    private T x;
 
-    private double y;
+    private K y;
 
     public Pair() {
     }
 
-    public Pair(double x, double y) {
+    public Pair(T x, K y) {
         this.x = x;
         this.y = y;
     }
@@ -31,7 +33,7 @@ public class Pair {
      *
      * @return the value of y
      */
-    public double getY() {
+    public K getY() {
         return y;
     }
 
@@ -40,7 +42,7 @@ public class Pair {
      *
      * @param y new value of y
      */
-    public void setY(double y) {
+    public void setY(K y) {
         this.y = y;
     }
 
@@ -49,7 +51,7 @@ public class Pair {
      *
      * @return the value of x
      */
-    public double getX() {
+    public T getX() {
         return x;
     }
 
@@ -58,7 +60,7 @@ public class Pair {
      *
      * @param x new value of x
      */
-    public void setX(double x) {
+    public void setX(T x) {
         this.x = x;
     }
 
@@ -76,15 +78,22 @@ public class Pair {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Pair other = (Pair) obj;
-        if (Double.doubleToLongBits(this.x) != Double.doubleToLongBits(other.x)) {
+        final Pair<?, ?> other = (Pair<?, ?>) obj;
+        if (!Objects.equals(this.x, other.x)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.y) != Double.doubleToLongBits(other.y)) {
+        if (!Objects.equals(this.y, other.y)) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Pair{" + "x=" + x + ", y=" + y + '}';
+    }
+
+    
 
    
 }
