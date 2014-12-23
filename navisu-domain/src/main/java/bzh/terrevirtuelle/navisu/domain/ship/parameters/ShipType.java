@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.domain.ship;
+package bzh.terrevirtuelle.navisu.domain.ship.parameters;
 
 import java.util.Collections;
 import java.util.HashMap;
