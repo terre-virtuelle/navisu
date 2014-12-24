@@ -33,25 +33,7 @@ public class GridFactory {
     public double getMin(List<Double> list) {
         return list.stream().min(Double::compare).get();
     }
-/*
-    public double getMinRange(List<Double> list) {
-        List<Double> absList = new ArrayList<>();
-        List<Double> ranges = new ArrayList<>();
-        list.stream().forEach((d) -> {
-            absList.add(Math.abs(d));
-        });
-        for (int i = 0; i < absList.size() - 1; i++) {
-           ranges.add(Math.abs(absList.get(i) - absList.get(i + 1)));  
-        }
-        System.out.println("ranges : "+ranges);
-        return ranges.stream().min(Double::compare).get();
-    }
-*/
-    /*
-    public int getDim(List<Double> list) {
-        return Math.abs((int) ((Math.abs(getMax(list)) - Math.abs(getMin(list)) / getMinRange(list))));
-    }
-*/
+
     /**
      * Get the value of lonList
      *

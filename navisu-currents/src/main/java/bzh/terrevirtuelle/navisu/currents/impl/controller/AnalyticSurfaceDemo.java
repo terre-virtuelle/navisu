@@ -32,6 +32,9 @@ import java.util.ArrayList;
  */
 public class AnalyticSurfaceDemo extends ApplicationTemplate {
 
+    protected static final int DEFAULT_RANDOM_ITERATIONS = 1000;
+    protected static final double DEFAULT_RANDOM_SMOOTHING = 0.6d;
+
     public static class AppFrame extends ApplicationTemplate.AppFrame {
 
         protected static final double HUE_BLUE = 240d / 360d;
@@ -48,7 +51,7 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate {
             this.analyticSurfaceLayer.setName("Analytic Surfaces");
             analyticSurfaceLayer.setMinActiveAltitude(0.0);
             insertAfterPlacenames(this.getWwd(), this.analyticSurfaceLayer);
-            insertAfterPlacenames(this.getWwd(), this.analyticSurfaceLayer);
+            //   insertAfterPlacenames(this.getWwd(), this.analyticSurfaceLayer);
             this.getLayerPanel().update(this.getWwd());
 
             createRandomColorSurface(HUE_BLUE, HUE_RED, 1000, 1000, this.analyticSurfaceLayer);
@@ -67,17 +70,21 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate {
          */
         AnalyticSurface surface = new AnalyticSurface();
 
-        // surface.setSector(Sector.fromDegrees(48.5954, 48.2639, -5.37804, -4.75236));
         surface.setSector(Sector.fromDegrees(48.2639, 48.5954, -5.37804, -4.75236));
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         surface.setDimensions(width, height);
         surface.setClientLayer(outLayer);
-        System.out.println("alt : " + outLayer.getMinActiveAltitude());
         outLayer.addRenderable(surface);
         outLayer.setEnabled(true);
-        BufferWrapper firstBuffer = randomGridValues(width, height, minValue, maxValue);
-
+     //   BufferWrapper firstBuffer = randomGridValues(width, height, minValue, maxValue);
+        //Creation du buffer et peuplement du buffer
+        BufferWrapper firstBuffer = loadGridValues(width, height, minValue, maxValue, 
+                DEFAULT_RANDOM_ITERATIONS, DEFAULT_RANDOM_SMOOTHING,
+                new BufferFactory.DoubleBufferFactory());
+        //
         surface.setValues(createMixedColorGradientGridValues(1.0, firstBuffer, firstBuffer, minValue, maxValue, minHue, maxHue));
+      
+        //
         AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
         attr.setDrawShadow(false);
         attr.setInteriorOpacity(1);
@@ -103,10 +110,7 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate {
     //**************************************************************//
     //********************  Random Grid Construction  **************//
     //**************************************************************//
-    protected static final int DEFAULT_RANDOM_ITERATIONS = 1000;
-    protected static final double DEFAULT_RANDOM_SMOOTHING = 0.6d;
-
-    public static BufferWrapper randomGridValues(int width, int height, double min, double max, int numIterations,
+    public static BufferWrapper loadGridValues(int width, int height, double min, double max, int numIterations,
             double smoothness, BufferFactory factory) {
         int numValues = width * height;
         double[] values = new double[numValues];
@@ -140,12 +144,12 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate {
 
         return buffer;
     }
-
+/*
     public static BufferWrapper randomGridValues(int width, int height, double min, double max) {
         return randomGridValues(width, height, min, max, DEFAULT_RANDOM_ITERATIONS, DEFAULT_RANDOM_SMOOTHING,
                 new BufferFactory.DoubleBufferFactory());
     }
-
+*/
     protected static void scaleValues(double[] values, int count, double minValue, double maxValue) {
         double min = Double.MAX_VALUE;
         double max = -Double.MAX_VALUE;

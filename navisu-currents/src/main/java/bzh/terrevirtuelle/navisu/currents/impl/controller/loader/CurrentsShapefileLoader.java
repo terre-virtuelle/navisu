@@ -7,6 +7,8 @@ package bzh.terrevirtuelle.navisu.currents.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.core.util.shapefile.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.currents.impl.controller.GridFactory;
+import bzh.terrevirtuelle.navisu.domain.currents.Current;
+import bzh.terrevirtuelle.navisu.domain.currents.CurrentBuilder;
 import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -38,16 +40,14 @@ import java.util.Set;
 public class CurrentsShapefileLoader
         extends ShapefileLoader {
 
-    private final List<Double> latList;
-    private final List<Double> lonList;
+    private final List<Current> currents;
     private double speed = 0.0;
     private double depth = 0.0;
     private double direction = 0.0;
     private Color color;
 
     public CurrentsShapefileLoader() {
-        latList = new ArrayList<>();
-        lonList = new ArrayList<>();
+        currents = new ArrayList<>();
     }
 
     @Override
@@ -59,8 +59,8 @@ public class CurrentsShapefileLoader
                 continue;
             }
             double[] point = ((ShapefileRecordPoint) record).getPoint();
-            latList.add(point[1]);
-            lonList.add(point[0]);
+
+            //  lonList.add(point[0]);
             layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
         }
     }
@@ -90,8 +90,16 @@ public class CurrentsShapefileLoader
         placemark.setAttributes(attrs);
         NumberFormat nf = new DecimalFormat("0.#");
 
-        String label = "speed : " + nf.format(speed * 2) + " NM\n"
-                + "direction : " + nf.format(direction) + " °\n";
+        String label = "Lat : " + latDegrees + " °\n"
+                + "Lon : " + lonDegrees + " °\n"
+                + "Speed : " + nf.format(speed * 2) + " NM\n"
+                + "Direction : " + nf.format(direction) + " °\n";
+        currents.add(CurrentBuilder.create()
+                .latitude(latDegrees)
+                .longitude(lonDegrees)
+                .speed(speed)
+                .direction(direction)
+                .build());
         placemark.setValue(AVKey.DISPLAY_NAME, label);
 
         return placemark;
@@ -108,16 +116,10 @@ public class CurrentsShapefileLoader
         try {
             shp = new Shapefile(source);
             List<Layer> layers = this.createLayersFromShapefile(shp);
-            
+
             GridFactory gridFactory = new GridFactory();
-            System.out.println("minLat " + gridFactory.getMin(latList) + "  maxLat " + gridFactory.getMax(latList));
-            System.out.println("minLon " + gridFactory.getMin(lonList) + "  maxLon " + gridFactory.getMax(lonList));
-          //  System.out.println("latList " + latList);
-           // System.out.println("lonList " + lonList);
-          //  System.out.println("getMinRange Lat " + gridFactory.getMinRange(latList));
-          //  System.out.println("getMinRange Lon " + gridFactory.getMinRange(lonList));
-          //  System.out.println("getDim " + gridFactory.getDim(latList));
-          //  System.out.println("getDim " + gridFactory.getDim(lonList));
+            //     System.out.println("minLat " + gridFactory.getMin(latList) + "  maxLat " + gridFactory.getMax(latList));
+            //    System.out.println("minLon " + gridFactory.getMin(lonList) + "  maxLon " + gridFactory.getMax(lonList));
             return layers;
         } finally {
             WWIO.closeStream(shp, source.toString());
@@ -141,5 +143,9 @@ public class CurrentsShapefileLoader
         }
         attributes.setScale(5d);
         return attributes;
+    }
+
+    public List<Current> getCurrents() {
+        return currents;
     }
 }
