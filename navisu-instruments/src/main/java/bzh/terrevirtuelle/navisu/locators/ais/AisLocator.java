@@ -30,7 +30,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.domain.ship.ShipType;
+import bzh.terrevirtuelle.navisu.domain.ship.parameters.ShipType;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
