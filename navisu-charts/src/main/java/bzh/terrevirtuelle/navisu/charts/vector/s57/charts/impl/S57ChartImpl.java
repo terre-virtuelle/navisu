@@ -157,8 +157,22 @@ public class S57ChartImpl
             options = System.getProperty("user.dir") + "/bin/data";
             environment.put("GDAL_DATA", options);
 
-            String cmd;
-            cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
+            String cmd = null;
+            // cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
+
+            if (OS.isWindows()) {
+                cmd = "bin/win/ogr2ogr";
+            } else {
+                if (OS.isLinux()) {
+                    cmd = "/usr/bin/ogr2ogr";
+                } else {
+                    if (OS.isMac()) {
+                        cmd = "bin/osx/ogr2ogr";
+                    } else {
+                        System.out.println("OS not found");
+                    }
+                }
+            }
             try {
                 Path tmp = Paths.get(inputFile.toString());
                 Proc.builder.create()
@@ -174,7 +188,8 @@ public class S57ChartImpl
                 LOGGER.log(Level.SEVERE, null, e);
             }
 
-            cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr -nlt POINT25D";
+            //  cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr -nlt POINT25D";
+            cmd = cmd + " -nlt POINT25D";
             try {
                 Path tmp = Paths.get(inputFile.toString());
                 Proc.builder.create()
@@ -240,7 +255,8 @@ public class S57ChartImpl
     }
 
     @Override
-    public void openChart(String file) {
+    public void openChart(String file
+    ) {
         this.open(null, file);
     }
 

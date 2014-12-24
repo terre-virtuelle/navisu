@@ -26,9 +26,9 @@ public class TOPMAR_ShapefileLoader
 
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
-    private final Map<Pair, String> topMarks;
+    private final Map<Pair<Double,Double>, String> topMarks;
 
-    public TOPMAR_ShapefileLoader(Map<Pair, String> topMarks) {
+    public TOPMAR_ShapefileLoader(Map<Pair<Double,Double>, String> topMarks) {
         this.topMarks = topMarks;
     }
 

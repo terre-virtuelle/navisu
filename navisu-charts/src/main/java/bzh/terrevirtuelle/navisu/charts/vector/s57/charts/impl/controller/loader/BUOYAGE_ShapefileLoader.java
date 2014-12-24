@@ -44,10 +44,10 @@ public class BUOYAGE_ShapefileLoader
     private Set<Entry<String, Object>> entries;
     private Class claz;
     private final String acronym;
-    private final Map<Pair, String> topMarks;
+    private final Map<Pair<Double,Double>, String> topMarks;
     private final String marsys;
 
-    public BUOYAGE_ShapefileLoader(String path, Map<Pair, String> topMarks, String marsys, String acronym) {
+    public BUOYAGE_ShapefileLoader(String path, Map<Pair<Double,Double>, String> topMarks, String marsys, String acronym) {
         this.topMarks = topMarks;
         this.marsys = marsys;
         this.acronym = acronym;

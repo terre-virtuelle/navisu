@@ -91,7 +91,7 @@ public class ChartS57Controller {
     private boolean isDisplay = false;
     private GlobeAnnotation tooltipAnnotation;
     private final String boyagePath = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo";
-    private final Map<Pair, String> topMarks;
+    private final Map<Pair<Double,Double>, String> topMarks;
     private String marsys;
     private SurveyZoneController surveyZoneController;
 
