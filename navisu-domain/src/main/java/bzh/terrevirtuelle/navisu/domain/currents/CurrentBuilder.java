@@ -42,6 +42,11 @@ public class CurrentBuilder {
         return this;
     }
 
+    public CurrentBuilder speed(double speed) {
+        this.speed = speed;
+        return this;
+    }
+
     public CurrentBuilder direction(double direction) {
         this.direction = direction;
         return this;

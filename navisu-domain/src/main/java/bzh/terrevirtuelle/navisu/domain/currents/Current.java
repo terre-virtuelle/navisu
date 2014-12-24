@@ -140,4 +140,9 @@ public class Current {
         this.lat = lat;
     }
 
+    @Override
+    public String toString() {
+        return "Current{" + "lat=" + lat + ", lon=" + lon + ", speed=" + speed + ", direction=" + direction + ", depth=" + depth + '}';
+    }
+
 }
