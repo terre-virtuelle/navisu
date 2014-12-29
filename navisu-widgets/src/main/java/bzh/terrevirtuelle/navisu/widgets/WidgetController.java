@@ -29,7 +29,6 @@ public class WidgetController
         extends Group
         implements Widget, EventHandler<KeyEvent> {
 
-    
     private final KeyCombination keyComb;
     private boolean first = true;
     protected double initX;
@@ -76,18 +75,13 @@ public class WidgetController
             }
         });
         setOnMouseClicked((MouseEvent me) -> {
-            if (me.isMetaDown() && click == 0) {
-                scale(1.5);
+            if (me.isControlDown() && click == 0) {
+                scale(0.5);
                 click++;
             } else {
-                if (me.isMetaDown() && click == 1) {
-                    scale(0.5);
-                    click++;
-                } else {
-                    if (me.isMetaDown() && click == 2) {
-                        scale(1);
-                        click = 0;
-                    }
+                if (me.isControlDown() && click == 1) {
+                    scale(1.0);
+                    click--;
                 }
             }
         });
@@ -152,6 +146,5 @@ public class WidgetController
         pt.play();
     }
     // Define an event handler
-
 
 }

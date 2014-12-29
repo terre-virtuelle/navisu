@@ -29,7 +29,7 @@
                 <InnerShadow choke="0.05" color="#8ed1e2ed" height="28.41" offsetX="10.0" offsetY="10.0" radius="10.370000000000001" width="15.07" />
             </effect>
         </Rectangle>
-        <Text fill="#fff900" fontSmoothingType="LCD" layoutX="823.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-A to hide">
+        <Text fill="#fff900" fontSmoothingType="LCD" layoutX="822.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-A to hide">
             <font>
                 <Font size="18.0" />
             </font>
@@ -65,5 +65,13 @@
                 <GaussianBlur radius="0.0" />
             </effect>
         </Circle>
+      <Text fill="#fff900" fontSmoothingType="LCD" layoutX="807.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-Click to scale">
+         <effect>
+            <Glow level="0.87" />
+         </effect>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
     </children>
 </fx:root>
