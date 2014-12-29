@@ -12,6 +12,7 @@ import java.util.Set;
 public class SHOM_CURRENTS_CLUT {
 
     static final private List<Range> ranges;
+    static final public double MAX = 10.0;
 
     static {
         ranges = new ArrayList<>();
@@ -35,6 +36,7 @@ public class SHOM_CURRENTS_CLUT {
         ranges.add(Range.closedOpen(4.25, 4.5));
         ranges.add(Range.closedOpen(4.5, 4.75));
         ranges.add(Range.closed(4.75, 5.0));
+        ranges.add(Range.closed(MAX, MAX));
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
         {
@@ -58,12 +60,13 @@ public class SHOM_CURRENTS_CLUT {
             put(17, new Color(255, 0, 0));
             put(18, new Color(204, 0, 0));
             put(19, new Color(153, 0, 0));
+            put(20, new Color(0, 0, 0, 0));
         }
     });
 
     public static Color getColor(double speed) {
         for (int i = 0; i < ranges.size(); i++) {
-            if(ranges.get(i).contains(speed)){
+            if (ranges.get(i).contains(speed)) {
                 return SHOM_CURRENTS_CLUT.ATT.get(i);
             }
         }
