@@ -39,9 +39,9 @@ import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.AbstractBrowserBalloon;
 import gov.nasa.worldwind.render.BalloonAttributes;
 import gov.nasa.worldwind.render.BasicBalloonAttributes;
+import gov.nasa.worldwind.render.GlobeBalloon;
 import gov.nasa.worldwind.render.GlobeBrowserBalloon;
 import gov.nasa.worldwind.render.Size;
 import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
@@ -98,7 +98,8 @@ public class AisLocator {
     boolean firstBt = true;
     // StackPane pane;
     Position balloonPosition;
-    AbstractBrowserBalloon balloon;
+    //  AbstractBrowserBalloon balloon;
+    GlobeBalloon balloon;
     BalloonAttributes attrs;
 
     WorldWindow wwd = GeoWorldWindViewImpl.getWW();
@@ -285,8 +286,8 @@ public class AisLocator {
         this.baloonLayer.removeAllRenderables();
 
         balloonPosition = Position.fromDegrees(ship.getLatitude(), ship.getLongitude());
-        balloon = new GlobeBrowserBalloon(htmlString, balloonPosition);
-
+       balloon = new GlobeBrowserBalloon(htmlString, balloonPosition);//Non supporté par Linux
+       // balloon = new GlobeAnnotationBalloon(htmlString, balloonPosition);
         balloon.setAttributes(attrs);
         balloon.getAttributes().setImageSource(IMAGE_EARTH.getPowerOfTwoImage());
         balloon.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
