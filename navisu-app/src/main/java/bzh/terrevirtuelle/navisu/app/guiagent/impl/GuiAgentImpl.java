@@ -22,10 +22,10 @@ import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
+import bzh.terrevirtuelle.navisu.widgets.radar.RadarController;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
-import bzh.terrevirtuelle.navisu.widgets.webview.WebView;
 
 import gov.nasa.worldwind.util.StatusBar;
 import javafx.animation.Animation;
@@ -49,6 +49,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
+import javafx.scene.input.KeyCombination;
 
 /**
  * NaVisu
@@ -211,22 +212,15 @@ public class GuiAgentImpl
         root.getChildren().add(hud_3);
         // hud_3.schedule();
         */
-            //--------------------Speedo_end---------------
-            //--------------------Radar  - hide with Ctrl-R --------------------
-    /*    
-        WidgetController widgetController2 = new WidgetController(KeyCode.R, KeyCombination.CONTROL_DOWN);
-        Radar_Controller radar_1 = new Radar_Controller();
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController2);
-        widgetController2.add(radar_1);
-        root.getChildren().add(radar_1);
-        radar_1.schedule();
-       */ 
-            //-------------------- Radar_end----------------
+        //--------------------Speedo_end---------------
+        //--------------------Radar  - hide with Ctrl-A --------------------
+        RadarController radarController = new RadarController(KeyCode.A, KeyCombination.CONTROL_DOWN);
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, radarController);
+        root.getChildren().add(radarController);
+        radarController.start();
+        //-------------------- Radar_end----------------
         
-        // Test appel a HTML5-Javascript
-        //CloudMenu cloudMenu = new CloudMenu();
-        // root.getChildren().add(cloudMenu);
-        // setFullScreen(true);
+       
         //-------------------- Test_WebView----------------
        /* 
         WebView  webView = new WebView();
