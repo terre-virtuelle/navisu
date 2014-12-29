@@ -216,7 +216,8 @@ public class GuiAgentImpl
         //--------------------Radar  - hide with Ctrl-A --------------------
         RadarController radarController = new RadarController(KeyCode.A, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, radarController);
-        root.getChildren().add(radarController);
+        root.getChildren().add(radarController); //Par defaut le radar n'est pas visible Ctrl-A
+        radarController.setVisible(true);
         radarController.start();
         //-------------------- Radar_end----------------
         
