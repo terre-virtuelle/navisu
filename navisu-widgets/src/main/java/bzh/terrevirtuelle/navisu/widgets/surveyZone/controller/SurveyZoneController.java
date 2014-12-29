@@ -13,8 +13,8 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.widgets.WidgetController;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.model.SurveyZone;
-import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl_1;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,6 +26,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.text.Text;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
@@ -35,7 +37,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @author Serge Morvan
  * @date 7 oct. 2014 NaVisu project
  */
-public class SurveyZoneController extends WidgetImpl_1
+public class SurveyZoneController extends WidgetController
         implements Initializable {
 
     protected static final Logger LOGGER = Logger.getLogger(SurveyZoneController.class.getName());
@@ -54,7 +56,8 @@ public class SurveyZoneController extends WidgetImpl_1
     @FXML
     public Text objectname;
 
-    public SurveyZoneController() {
+    public SurveyZoneController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+        super(keyCode, keyCombination);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HUD_MMSI.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);

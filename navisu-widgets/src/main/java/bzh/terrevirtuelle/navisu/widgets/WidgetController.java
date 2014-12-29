@@ -44,15 +44,11 @@ public class WidgetController
     @Override
     public void handle(KeyEvent event) {
         if (keyComb.match(event)) {
-            if (first == true) {
-                //  startFadeTransition(this, 1.0, 0.0);
-                first = false;
-                setVisible(first);
+            if(isVisible()){
+                setVisible(false);
                 stop();
-            } else {
-                //  startFadeTransition(this, 0.0, 1.0);
-                first = true;
-                setVisible(first);
+            }else{
+                setVisible(true);
                 start();
             }
         }

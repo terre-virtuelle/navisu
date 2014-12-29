@@ -28,6 +28,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -69,8 +70,8 @@ public class RadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
-        setPlot();
+        setTarget();
+        setVisible(false);
     }
 
     private void schedule() {
@@ -101,13 +102,13 @@ public class RadarController
         fiveSecondsWonder.stop();
     }
 
-    public void setPlot() {
+    public void setTarget() {
 
         Circle circle = new Circle();
         circle.setCenterX(600.0f);
         circle.setCenterY(500.0f);
         circle.setRadius(3.0f);
-        circle.setStroke(Paint.valueOf("#00ff22"));
+        circle.setFill(Paint.valueOf("#ff0000"));
         radar.getChildren().add(circle);
 
         circle.setOnMouseClicked((MouseEvent me) -> {
