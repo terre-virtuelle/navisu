@@ -78,6 +78,7 @@ import org.capcaval.c3.component.annotation.UsedService;
            // } else {
            //     l.setPickEnabled(false);
             //}
+                System.out.println("l : "+l);
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {
@@ -99,6 +100,7 @@ import org.capcaval.c3.component.annotation.UsedService;
     public void componentInitiated() {
         layerTreeServices.createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
+        /*
         wwd.addPositionListener((PositionEvent event) -> {
             float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
             if (altitude >= 3000) {
@@ -107,6 +109,7 @@ import org.capcaval.c3.component.annotation.UsedService;
                 unClip();
             }
         });
+        */
     }
 
     private void clip() {
