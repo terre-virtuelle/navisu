@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.webview;
 
-import bzh.terrevirtuelle.navisu.widgets.Widget;
+import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl_1;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -23,7 +23,7 @@ import javafx.scene.web.WebEngine;
  * @author Serge
  */
 public class WebView 
-extends Widget {
+extends WidgetImpl_1 {
 
     private HBox toolBar;
     private static String[] imageFiles = new String[]{

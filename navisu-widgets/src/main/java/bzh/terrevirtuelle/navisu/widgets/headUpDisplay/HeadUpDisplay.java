@@ -4,7 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.headUpDisplay;
 
-import bzh.terrevirtuelle.navisu.widgets.Widget;
+import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl_1;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  * @author Serge Morvan
  */
 public class HeadUpDisplay
-        extends Widget {
+        extends WidgetImpl_1 {
 
     private ImageView background;
     public HeadUpDisplay() {
@@ -33,7 +33,7 @@ public class HeadUpDisplay
         getChildren().add(background);
     }
 
-    protected void initEvt() {
+    public void initEvt() {
         setOnMouseDragged((MouseEvent me) -> {
             if (me != null && dragAnchor != null) {
                 setTranslateX((int) (initX + me.getSceneX() - dragAnchor.getX()));

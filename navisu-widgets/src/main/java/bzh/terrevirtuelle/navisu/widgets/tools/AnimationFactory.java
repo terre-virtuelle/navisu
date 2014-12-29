@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.tools;
+package bzh.terrevirtuelle.navisu.widgets.tools;
 
 
 import javafx.animation.*;

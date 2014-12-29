@@ -14,7 +14,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.model.SurveyZone;
-import bzh.terrevirtuelle.navisu.widgets.Widget;
+import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl_1;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @author Serge Morvan
  * @date 7 oct. 2014 NaVisu project
  */
-public class SurveyZoneController extends Widget
+public class SurveyZoneController extends WidgetImpl_1
         implements Initializable {
 
     protected static final Logger LOGGER = Logger.getLogger(SurveyZoneController.class.getName());

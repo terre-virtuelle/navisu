@@ -2,7 +2,7 @@ package bzh.terrevirtuelle.navisu.widgets.dock.impl;
 
 
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
-import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
+import bzh.terrevirtuelle.navisu.widgets.tools.AnimationFactory;
 import javafx.animation.Animation;
 import javafx.animation.ParallelTransition;
 import javafx.event.EventHandler;

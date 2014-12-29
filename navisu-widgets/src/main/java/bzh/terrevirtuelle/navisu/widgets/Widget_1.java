@@ -9,19 +9,11 @@ package bzh.terrevirtuelle.navisu.widgets;
  *
  * @author Serge
  */
-public interface Widget {
+public interface Widget_1 {
 
     void initEvt();
 
-    void scale(double scale);
-
-    default void init() {
-
-    }
-
-    default void start() {
-
-    }
+    void setScale(double scale);
 
     default void stop() {
 
