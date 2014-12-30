@@ -22,7 +22,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
-import bzh.terrevirtuelle.navisu.widgets.radar.controller.RadarController;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuItem;
@@ -49,7 +48,6 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.embed.swing.SwingNode;
-import javafx.scene.input.KeyCombination;
 
 /**
  * NaVisu
@@ -213,15 +211,7 @@ public class GuiAgentImpl
         // hud_3.schedule();
         */
         //--------------------Speedo_end---------------
-        //--------------------Radar  - hide with Ctrl-A --------------------
-        RadarController radarController = new RadarController(KeyCode.A, KeyCombination.CONTROL_DOWN);
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, radarController);
-        root.getChildren().add(radarController); //Par defaut le radar n'est pas visible Ctrl-A
-        radarController.setVisible(true);
-        radarController.start();
-        //-------------------- Radar_end----------------
         
-       
         //-------------------- Test_WebView----------------
        /* 
         WebView  webView = new WebView();
