@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.locators;
+package bzh.terrevirtuelle.navisu.widgets;
 
 import org.capcaval.c3.component.ComponentService;
 
