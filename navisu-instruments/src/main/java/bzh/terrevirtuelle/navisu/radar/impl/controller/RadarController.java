@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
-import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
 import bzh.terrevirtuelle.navisu.domain.devices.Transceiver;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
@@ -25,10 +24,6 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.ShipBuilder;
-import bzh.terrevirtuelle.navisu.locators.ais.AisLocator;
-import bzh.terrevirtuelle.navisu.locators.ais.controller.AisStationLocatorControllerWithDPAgent;
-import bzh.terrevirtuelle.navisu.locators.controller.StationProcessor;
-import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import bzh.terrevirtuelle.navisu.widgets.WidgetController;
 import java.io.FileInputStream;
 
@@ -149,6 +144,11 @@ public class RadarController
         ownerShip = ShipBuilder.create()
                 .mmsi(new Integer(properties.getProperty("mmsi")))
                 .name(properties.getProperty("name"))
+                .latitude(new Float(properties.getProperty("latitude")))
+                .longitude(new Float(properties.getProperty("longitude")))
+                .cog(new Float(properties.getProperty("cog")))
+                .sog(new Float(properties.getProperty("sog")))
+                .heading(new Float(properties.getProperty("heading")))
                 .country(properties.getProperty("country"))
                 .width(new Float(properties.getProperty("width")))
                 .length(new Float(properties.getProperty("length")))
@@ -178,11 +178,11 @@ public class RadarController
                                 .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
                                 .eta(ais.getETA()).destination(ais.getDestination()).build();
                         ships.put(mmsi, ship);
-                       // System.out.println("ship " + ship);
+                        // System.out.println("ship " + ship);
                     }
                     timestamps.put(mmsi, Calendar.getInstance());
                 } catch (Exception e) {
-                   // System.out.println("ais1ES.subscribe " + e);
+                    // System.out.println("ais1ES.subscribe " + e);
                 }
             }
         });
@@ -203,7 +203,7 @@ public class RadarController
                             .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
                             .eta(ais.getETA()).destination(ais.getDestination()).build();
                     ships.put(mmsi, ship);
-                    System.out.println("ship " + ship);
+                    //  System.out.println("ship " + ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -225,7 +225,7 @@ public class RadarController
                             .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
                             .eta(ais.getETA()).destination(ais.getDestination()).build();
                     ships.put(mmsi, ship);
-                    System.out.println("ship " + ship);
+                    //  System.out.println("ship " + ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -244,7 +244,7 @@ public class RadarController
                     transceivers.put(mmsi, transceiver);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
-                System.out.println("transceiver " + transceiver);
+                // System.out.println("transceiver " + transceiver);
             }
         });
         // souscription aux événements

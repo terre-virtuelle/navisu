@@ -52,15 +52,24 @@ public class GpsLocatorControllerWithDPAgent {
         // creation du TObject (l'objet metier)
         ship = new TShip(IDGenerator.newIntID(),
                 new Integer(properties.getProperty("mmsi")),
+                new Integer(properties.getProperty("imo")),
                 properties.getProperty("name"),
-                properties.getProperty("country"),
+                new Float(properties.getProperty("heading")),
+                new Float(properties.getProperty("cog")),
+                new Float(properties.getProperty("sog")),
+                new Float(properties.getProperty("rot")),
+                new Float(properties.getProperty("latitude")),
+                new Float(properties.getProperty("longitude")),
                 new Float(properties.getProperty("width")),
                 new Float(properties.getProperty("length")),
                 new Float(properties.getProperty("draught")),
                 new Integer(properties.getProperty("shipType")),
                 new Integer(properties.getProperty("navigationalStatus")),
                 new Integer(properties.getProperty("electronicPositionDevice")),
-                properties.getProperty("callSign"));
+                properties.getProperty("callSign"), 
+                null, 
+                "",
+                properties.getProperty("country"));
         ship.setShapeId(36);
         // insertion dans le DPAgent
         dpAgentServices.create(ship);
@@ -78,7 +87,7 @@ public class GpsLocatorControllerWithDPAgent {
                 GGA data = (GGA) d;
                 ship.setLatitude(data.getLatitude());
                 ship.setLongitude(data.getLongitude());
-              
+
                 // mise à jour via le DPAgent
                 dpAgentServices.update(ship);
             }

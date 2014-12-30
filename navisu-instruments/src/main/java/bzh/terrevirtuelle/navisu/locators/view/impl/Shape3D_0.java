@@ -43,7 +43,9 @@ public class Shape3D_0
             colladaRoot = ColladaRoot.createAndParse(new File(fileName));
             colladaRoot.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
             colladaRoot.setHeading(Angle.fromDegrees(30.0));
-            colladaRoot.setPosition(Position.fromDegrees(48.35, -4.497602, 0));
+           // colladaRoot.setPosition(Position.fromDegrees(48.3649, -4.490, 0));
+           // latlon.
+            colladaRoot.setPosition(new Position(latlon.getLatitude(), latlon.getLongitude(),0));
             colladaRoot.setPitch(Angle.fromDegrees(0.0));
             colladaRoot.setRoll(Angle.fromDegrees(0.0));
             colladaRoot.setModelScale(new Vec4(20.0));
