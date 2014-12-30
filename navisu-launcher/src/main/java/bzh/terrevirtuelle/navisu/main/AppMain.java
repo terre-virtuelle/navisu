@@ -30,12 +30,14 @@ import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
-import bzh.terrevirtuelle.navisu.locators.Widget3DServices;
+import bzh.terrevirtuelle.navisu.widgets.Widget3DServices;
 import bzh.terrevirtuelle.navisu.locators.impl.Widget3DImpl;
 import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.loggers.impl.LoggerImpl;
 import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
+import bzh.terrevirtuelle.navisu.radar.RadarServices;
+import bzh.terrevirtuelle.navisu.radar.impl.RadarImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -90,6 +92,7 @@ public class AppMain extends Application {
                         DDriverManagerImpl.class,
                         MagneticImpl.class,
                         SedimentologyImpl.class,
+                        RadarImpl.class,
                         LoggerImpl.class
                 )
         );
@@ -109,7 +112,9 @@ public class AppMain extends Application {
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
-
+        RadarServices radarServices = componentManager.getComponentService(RadarServices.class);
+radarServices.on();
+        
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(chartS57Services.getDriver());
