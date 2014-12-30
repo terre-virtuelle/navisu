@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.radar.RadarServices;
 import bzh.terrevirtuelle.navisu.radar.impl.controller.RadarController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -39,6 +40,9 @@ public class RadarImpl
     @Override
     public void on() {
         RadarController radarController = new RadarController(KeyCode.A, KeyCombination.CONTROL_DOWN);
-
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, radarController);
+        guiAgentServices.getRoot().getChildren().add(radarController); //Par defaut le radar n'est pas visible Ctrl-A
+        radarController.setVisible(true);
+        radarController.start();
     }
 }

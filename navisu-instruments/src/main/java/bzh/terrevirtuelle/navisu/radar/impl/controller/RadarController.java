@@ -140,13 +140,11 @@ public class RadarController
 
     private void createOwnerShip() {
         Properties properties = new Properties();
-
         try {
             properties.load(new FileInputStream("properties/domain.properties"));
         } catch (IOException ex) {
-            Logger.getLogger(bzh.terrevirtuelle.navisu.widgets.radar.controller.RadarController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RadarController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         // creation de l'objet metier
         ownerShip = ShipBuilder.create()
                 .mmsi(new Integer(properties.getProperty("mmsi")))
