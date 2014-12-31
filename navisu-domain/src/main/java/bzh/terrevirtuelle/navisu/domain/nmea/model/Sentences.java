@@ -65,6 +65,7 @@ public class Sentences {
         @XmlElement(name = "ais14", type = AIS14.class),
         @XmlElement(name = "ais18", type = AIS18.class),
         @XmlElement(name = "ais19", type = AIS19.class),
+        @XmlElement(name = "ais2", type = AIS2.class),
         @XmlElement(name = "ais3", type = AIS3.class),
         @XmlElement(name = "ais4", type = AIS4.class),
         @XmlElement(name = "ais5", type = AIS5.class),

@@ -11,11 +11,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * Position Report with SOTDMA
- *  (Self-Organizing Time Division Multiple Access) 
- *
- */
+
 @XmlRootElement(name = "ais1")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AIS1

@@ -10,10 +10,11 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 
-@XmlRootElement(name = "ais135")
+//@XmlRootElement(name = "ais135")
+@XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AIS135 extends AISMessage {
 
@@ -141,23 +142,7 @@ public class AIS135 extends AISMessage {
 
     protected int second;
 
-    /**
-     * Get the value of second
-     *
-     * @return the value of second
-     */
-    public int getSecond() {
-        return second;
-    }
-
-    /**
-     * Set the value of second
-     *
-     * @param second new value of second
-     */
-    public void setSecond(int second) {
-        this.second = second;
-    }
+   
 
     public AIS135() {
     }
@@ -222,7 +207,23 @@ public class AIS135 extends AISMessage {
         this.ETA = ETA;
         this.destination = destination;
     }
+ /**
+     * Get the value of second
+     *
+     * @return the value of second
+     */
+    public int getSecond() {
+        return second;
+    }
 
+    /**
+     * Set the value of second
+     *
+     * @param second new value of second
+     */
+    public void setSecond(int second) {
+        this.second = second;
+    }
     
 
     @Override
@@ -335,8 +336,8 @@ public class AIS135 extends AISMessage {
      *
      * @param imo
      */
-    public void setImo(int Imo) {
-        this.imo = Imo;
+    public void setImo(int imo) {
+        this.imo = imo;
     }
 
     /**

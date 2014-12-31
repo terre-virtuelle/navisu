@@ -1,9 +1,12 @@
 package bzh.terrevirtuelle.navisu.domain.nmea.model;
 
 import java.util.StringTokenizer;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
 @XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
 public class NMEA {
 
     protected String device;
