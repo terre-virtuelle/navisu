@@ -298,6 +298,7 @@ public class RadarController
                 // dpAgentServices.update(ship);
             }
         });
+        
         vtgES.subscribe(new VTGEvent() {
 
             @Override
