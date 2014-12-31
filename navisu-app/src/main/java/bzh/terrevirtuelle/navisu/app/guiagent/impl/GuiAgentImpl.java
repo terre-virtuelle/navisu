@@ -219,7 +219,7 @@ public class GuiAgentImpl
         */
         
         stage.setScene(scene);
-        stage.setMaximized(true);
+     //   stage.setMaximized(true);
         stage.show();
 
     }
@@ -721,7 +721,8 @@ public class GuiAgentImpl
 
     @Override
     public StackPane getRoot() {
-        return ctrl.centerStackPane;
+       // return ctrl.centerStackPane;
+        return root;
     }
 
     @Override
