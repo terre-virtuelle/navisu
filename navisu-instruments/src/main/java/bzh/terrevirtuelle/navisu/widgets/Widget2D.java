@@ -9,7 +9,7 @@ package bzh.terrevirtuelle.navisu.widgets;
  *
  * @author Serge
  */
-public interface Widget {
+public interface Widget2D {
 
     void initEvt();
 

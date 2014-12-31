@@ -4,7 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.widgets;
 
-import bzh.terrevirtuelle.navisu.widgets.Widget;
+import bzh.terrevirtuelle.navisu.widgets.Widget2D;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;
@@ -25,18 +25,18 @@ import javafx.util.Duration;
  *
  * @author Serge Morvan
  */
-public class WidgetController
+public class Widget2DController
         extends Group
-        implements Widget, EventHandler<KeyEvent> {
+        implements Widget2D, EventHandler<KeyEvent> {
 
     private final KeyCombination keyComb;
     private boolean first = true;
     protected double initX;
     protected double initY;
     protected Point2D dragAnchor;
-    protected int click = 0;
+    protected double scale = 1.0;
 
-    public WidgetController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public Widget2DController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         keyComb = new KeyCodeCombination(keyCode, keyCombination);
         initEvt();
     }
@@ -44,10 +44,10 @@ public class WidgetController
     @Override
     public void handle(KeyEvent event) {
         if (keyComb.match(event)) {
-            if(isVisible()){
+            if (isVisible()) {
                 setVisible(false);
                 stop();
-            }else{
+            } else {
                 setVisible(true);
                 start();
             }
@@ -71,13 +71,13 @@ public class WidgetController
             }
         });
         setOnMouseClicked((MouseEvent me) -> {
-            if (me.isControlDown() && click == 0) {
-                scale(0.5);
-                click++;
+            if (me.isControlDown() && scale != 1.0) {
+                scale(1.0);
+                scale = 1.0;
             } else {
-                if (me.isControlDown() && click == 1) {
-                    scale(1.0);
-                    click--;
+                if (me.isControlDown() && scale == 1.0) {
+                    scale(0.5);
+                    scale = 0.5;
                 }
             }
         });
@@ -85,6 +85,7 @@ public class WidgetController
 
     @Override
     public void scale(double scale) {
+        this.scale = scale;
         setScaleX(scale);
         setScaleY(scale);
     }
