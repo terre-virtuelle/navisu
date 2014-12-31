@@ -98,7 +98,7 @@ public class AppMain extends Application {
         );
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
-        guiAgentServices.showGui(stage, 1080, 800);
+        guiAgentServices.showGui(stage, 1080, 700);
 
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
