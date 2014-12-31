@@ -70,18 +70,11 @@ public class RadarController
     @FXML
     public ImageView faisceau;
     @FXML
-    public Circle spot1;
-    public Circle spot2;
-    boolean first = true;
-    @FXML
     public double route = 0.0;
-    public double angle;
-    public double spotInitX = 20.0;
-    public double spotInitY = 20.0;
-    public double spotX;
-    public Text couleur;
+ 
+    boolean first = true;
     final Rotate rotationTransform = new Rotate(0, 0, 0);
-    Timeline fiveSecondsWonder;
+    protected Timeline fiveSecondsWonder;
     protected final int CENTER_X = 425;//425
     protected final int CENTER_Y = 429;//429
     protected double latOwner = 0.0;
@@ -121,13 +114,9 @@ public class RadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
         createOwnerShip();
         subscribe();
         setTarget(CENTER_X, CENTER_Y, RADIUS, "#ff0000");
-        //  setTarget(400, 250, RADIUS);
-        //   setTarget(500, 300, RADIUS);
-        // setVisible(false);
     }
 
     @Override
@@ -196,7 +185,6 @@ public class RadarController
                         setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
                                 (int) (CENTER_Y  +(latOwner - ais.getLatitude()) * RANGE),
                                 4.0, "#00ff00");
-                        // System.out.println("ship " + ship);
                     }
                     timestamps.put(mmsi, Calendar.getInstance());
                 } catch (Exception e) {
@@ -224,7 +212,6 @@ public class RadarController
                      setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
                                 (int) (CENTER_Y +(latOwner - ais.getLatitude()) * RANGE),
                                 4.0, "#00ff00");
-                    //  System.out.println("ship " + ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -249,7 +236,6 @@ public class RadarController
                      setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
                                 (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE),
                                 4.0, "#00ff00");
-                    //  System.out.println("ship " + ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -271,7 +257,6 @@ public class RadarController
                  setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
                                 (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE),
                                 4.0, "#0000ff");
-                // System.out.println("transceiver " + transceiver);
             }
             
         });
@@ -295,7 +280,6 @@ public class RadarController
                      setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
                                 (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE),
                                 4.0, "#00ff00");
-                    //  System.out.println("ship " + ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -348,9 +332,6 @@ public class RadarController
 
     private void schedule() {
         fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(DURATION), (ActionEvent event) -> {
-            //  angle = (route * PI / 360);
-            // spot1.setTranslateX(spotInitX + (sin(angle) * 25));
-            // spot1.setTranslateY(spotInitY + route / 2);
             faisceau.setRotate(route);
             route++;
             route %= 360;
