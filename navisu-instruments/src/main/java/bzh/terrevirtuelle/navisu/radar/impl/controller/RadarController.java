@@ -273,6 +273,7 @@ public class RadarController
                                 4.0, "#0000ff");
                 // System.out.println("transceiver " + transceiver);
             }
+            
         });
         ais5ES.subscribe(new AIS5Event() {
 
