@@ -31,12 +31,12 @@ public class Ship implements Serializable {
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available = default
      */
-    private String name;
+    private String name = "";
     /**
      * Country of the ship
      *
      */
-    private String country;
+    private String country = "";
     ;
     private DoubleProperty latitude;
     private DoubleProperty longitude;
@@ -114,7 +114,7 @@ public class Ship implements Serializable {
     /**
      * 7 = 6 bit ASCII characters, @@@@@@@ = not available = default
      */
-    private String callSign;
+    private String callSign = "";
     /**
      * Estimated time of arrival; MMDDHHMM UTC Bits 19-16: month; 1-12; 0 = not
      * available = default Bits 15-11: day; 1-31; 0 = not available = default
@@ -126,7 +126,7 @@ public class Ship implements Serializable {
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available
      */
-    private String destination;
+    private String destination = "";
     /**
      * year, month, day of ETA
      */
@@ -147,7 +147,7 @@ public class Ship implements Serializable {
         this.sog = new SimpleDoubleProperty(1023);
     }
 
-    public Ship(int mmsi, String name, String country, float width, float length, float draught, 
+    public Ship(int mmsi, String name, String country, float width, float length, float draught,
             int shipType, int navigationalStatus, int electronicPositionDevice, String callSign) {
         this.mmsi = mmsi;
         this.name = name;
@@ -165,8 +165,6 @@ public class Ship implements Serializable {
         this.cog = new SimpleDoubleProperty(3600);
         this.sog = new SimpleDoubleProperty(1023);
     }
-
-   
 
     /**
      * Creates a new instance of Ship
@@ -401,6 +399,9 @@ public class Ship implements Serializable {
     }
 
     public String getName() {
+        if (name == null) {
+            name = "";
+        }
         return name;
     }
 
