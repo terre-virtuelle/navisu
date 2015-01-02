@@ -271,11 +271,10 @@ public class RadarController
                     transceivers.put(mmsi, transceiver);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
-                /*
-                 setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                 (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE),
-                 4.0, "#0000ff");
-                 */
+                
+                 setTarget(ship, (int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
+                 (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE));
+                 
             }
 
         });
