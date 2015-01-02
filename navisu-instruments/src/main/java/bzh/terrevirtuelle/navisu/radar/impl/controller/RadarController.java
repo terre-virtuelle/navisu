@@ -25,6 +25,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.ShipBuilder;
+import bzh.terrevirtuelle.navisu.radar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
 import java.io.FileInputStream;
 
@@ -32,6 +33,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -45,13 +47,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 import org.capcaval.c3.component.ComponentEventSubscribe;
@@ -71,7 +73,7 @@ public class RadarController
     public ImageView faisceau;
     @FXML
     public double route = 0.0;
- 
+
     boolean first = true;
     final Rotate rotationTransform = new Rotate(0, 0, 0);
     protected Timeline fiveSecondsWonder;
@@ -116,7 +118,7 @@ public class RadarController
         }
         createOwnerShip();
         subscribe();
-        setTarget(CENTER_X, CENTER_Y, RADIUS, "#ff0000");
+        // setTarget(ship,CENTER_X, CENTER_Y, RADIUS, "#ff0000");
     }
 
     @Override
@@ -182,9 +184,14 @@ public class RadarController
                                 .eta(ais.getETA()).destination(ais.getDestination())
                                 .build();
                         ships.put(mmsi, ship);
-                        setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
-                                (int) (CENTER_Y  +(latOwner - ais.getLatitude()) * RANGE),
-                                4.0, "#00ff00");
+                        setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                                (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
+                    } else {
+                        ship = ships.get(mmsi);
+                        ship.setLatitude(ais.getLatitude());
+                        ship.setLongitude(ais.getLongitude());
+                        updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                                (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                     }
                     timestamps.put(mmsi, Calendar.getInstance());
                 } catch (Exception e) {
@@ -209,9 +216,14 @@ public class RadarController
                             .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
                             .eta(ais.getETA()).destination(ais.getDestination()).build();
                     ships.put(mmsi, ship);
-                     setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
-                                (int) (CENTER_Y +(latOwner - ais.getLatitude()) * RANGE),
-                                4.0, "#00ff00");
+                    setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
+                } else {
+                    ship = ships.get(mmsi);
+                    ship.setLatitude(ais.getLatitude());
+                    ship.setLongitude(ais.getLongitude());
+                    updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -233,9 +245,14 @@ public class RadarController
                             .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
                             .eta(ais.getETA()).destination(ais.getDestination()).build();
                     ships.put(mmsi, ship);
-                     setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
-                                (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE),
-                                4.0, "#00ff00");
+                    setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
+                } else {
+                    ship = ships.get(mmsi);
+                    ship.setLatitude(ais.getLatitude());
+                    ship.setLongitude(ais.getLongitude());
+                    updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -254,11 +271,13 @@ public class RadarController
                     transceivers.put(mmsi, transceiver);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
-                 setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
-                                (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE),
-                                4.0, "#0000ff");
+                /*
+                 setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                 (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE),
+                 4.0, "#0000ff");
+                 */
             }
-            
+
         });
         ais5ES.subscribe(new AIS5Event() {
 
@@ -277,9 +296,14 @@ public class RadarController
                             .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
                             .eta(ais.getETA()).destination(ais.getDestination()).build();
                     ships.put(mmsi, ship);
-                     setTarget((int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
-                                (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE),
-                                4.0, "#00ff00");
+                    setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
+                } else {
+                    ship = ships.get(mmsi);
+                    ship.setLatitude(ais.getLatitude());
+                    ship.setLongitude(ais.getLongitude());
+                    updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
+                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -298,7 +322,7 @@ public class RadarController
                 // dpAgentServices.update(ship);
             }
         });
-        
+
         vtgES.subscribe(new VTGEvent() {
 
             @Override
@@ -341,28 +365,48 @@ public class RadarController
         fiveSecondsWonder.play();
     }
 
-    private void setTarget(int centerX, int centerY, double radius, String color) {
+    private void setTarget(Ship ship, int centerX, int centerY) {
         if (centerX <= 600 && centerX >= 100 && centerY <= 600 && centerY >= 100) {
-            Circle circle = new Circle();
-            circle.setCenterX(centerX);
-            circle.setCenterY(centerY);
-            circle.setRadius(radius);
-            circle.setFill(Paint.valueOf(color));
-
-            Platform.runLater(() -> {
-                radar.getChildren().add(circle);
-            });
-
-            circle.setOnMouseClicked((MouseEvent me) -> {
-
+            double radius = 4.0;
+            GRShip grship = new GRShip(ship, centerX, centerY, radius);
+            grship.setId(Integer.toString(ship.getMmsi()));
+            grship.setOnMouseClicked((MouseEvent me) -> {
                 if (first) {
-                    circle.setRadius(radius * 1.5);
+                    grship.setRadius(radius * 1.5);
                     first = false;
                 } else {
-                    circle.setRadius(radius);
+                    grship.setRadius(radius);
                     first = true;
                 }
             });
+            Platform.runLater(() -> {
+                radar.getChildren().add(grship);
+                String label = "Name : " + ship.getName() + "\n"
+                        + "MMSI : " + ship.getMmsi() + "\n"
+                        + "Sog : " + Double.toString(ship.getSog()) + "\n"
+                        + "Cog : " + Double.toString(ship.getCog());
+                Tooltip t = new Tooltip(label);
+                Tooltip.install(grship, t);
+            });
+
         }
     }
+
+    private void updateTarget(Ship ship, int centerX, int centerY) {
+
+        if (centerX <= 600 && centerX >= 100 && centerY <= 600 && centerY >= 100) {
+            Platform.runLater(() -> {
+                List<Node> nodes = radar.getChildren();
+                String mmsi = Integer.toString(ship.getMmsi());
+                nodes.stream().filter((n) -> (n.getId() != null)).filter((n) -> (n.getId().contains(mmsi))).map((n) -> (Circle) n).map((circle) -> {
+                    circle.setCenterX(centerX);
+                    return circle;
+                }).forEach((circle) -> {
+                    circle.setCenterY(centerY);
+                });
+            });
+        }
+
+    }
+
 }

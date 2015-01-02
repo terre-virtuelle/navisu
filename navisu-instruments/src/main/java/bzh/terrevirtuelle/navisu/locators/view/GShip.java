@@ -98,10 +98,10 @@ public class GShip
 
     protected final ShapeAttributes makeAttributes() {
         final ShapeAttributes pathAttrs = new BasicShapeAttributes();
-        pathAttrs.setOutlineMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
+        pathAttrs.setOutlineMaterial(ShipTypeColor.MATERIAL.get(tShip.getType()));
         pathAttrs.setOutlineOpacity(0.8);
         pathAttrs.setOutlineWidth(1);
-        pathAttrs.setInteriorMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
+        pathAttrs.setInteriorMaterial(ShipTypeColor.MATERIAL.get(tShip.getType()));
         pathAttrs.setDrawInterior(true);
         pathAttrs.setInteriorOpacity(1.0);
         return pathAttrs;

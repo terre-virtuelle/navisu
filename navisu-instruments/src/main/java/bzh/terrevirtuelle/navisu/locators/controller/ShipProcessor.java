@@ -46,8 +46,8 @@ public class ShipProcessor
 
         gShip.setLocation(tShip.getLocation());
         gShip.setCog(tShip.getOrientation().getOrientationDegree());
-        gShip.getAttributes().setInteriorMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
-        gShip.getAttributes().setOutlineMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
+        gShip.getAttributes().setInteriorMaterial(ShipTypeColor.MATERIAL.get(tShip.getType()));
+        gShip.getAttributes().setOutlineMaterial(ShipTypeColor.MATERIAL.get(tShip.getType()));
         return output;
     }
 
@@ -66,39 +66,4 @@ public class ShipProcessor
     public Class<? extends TObject> getType() {
         return TShip.class;
     }
-/*
-    protected final ShapeAttributes makeAttributes() {
-        final ShapeAttributes pathAttrs = new BasicShapeAttributes();
-        pathAttrs.setOutlineMaterial(Material.BLACK);
-        pathAttrs.setOutlineOpacity(0.8);
-        pathAttrs.setOutlineWidth(1);
-        pathAttrs.setInteriorMaterial(ShipTypeColor.VIEW.get(tShip.getType()));
-        pathAttrs.setDrawInterior(true);
-        pathAttrs.setInteriorOpacity(1.0);
-        return pathAttrs;
-    }
-
-    private double[] initShape(double latitude, double longitude) {
-        double[] shipShape = new double[6];
-        shipShape[0] = longitude;
-        shipShape[1] = latitude + 0.00075;
-        shipShape[2] = longitude + .0005;
-        shipShape[3] = latitude - .00075;
-        shipShape[4] = longitude - .0005;
-        shipShape[5] = latitude - .00075;
-        return shipShape;
-    }
-
-    protected final List<Position> makePositionList(double[] src) {
-        int numCoords = src.length / 2;
-        Position[] array = new Position[numCoords];
-
-        for (int i = 0; i < numCoords; i++) {
-            double lonDegrees = src[2 * i];
-            double latDegrees = src[2 * i + 1];
-            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 100);
-        }
-        return Arrays.asList(array);
-    }
-    */
 }

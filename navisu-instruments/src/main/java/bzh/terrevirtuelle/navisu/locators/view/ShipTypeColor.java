@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class ShipTypeColor {
 
-    public static final Map<Integer, Material> VIEW = Collections.unmodifiableMap(new HashMap<Integer, Material>() {
+    public static final Map<Integer, Material> MATERIAL = Collections.unmodifiableMap(new HashMap<Integer, Material>() {
         {
             put(0, Material.YELLOW);
             put(20, Material.ORANGE);
@@ -94,11 +94,96 @@ public class ShipTypeColor {
             put(99, Material.WHITE);
         }
     });
+    public static final Map<Integer, javafx.scene.paint.Color> COLOR = Collections.unmodifiableMap(new HashMap<Integer, javafx.scene.paint.Color>() {
+        {
+            put(0, javafx.scene.paint.Color.YELLOW);
+            put(20, javafx.scene.paint.Color.ORANGE);
+            put(21, javafx.scene.paint.Color.WHITE);
+            put(22, javafx.scene.paint.Color.WHITE);
+            put(23, javafx.scene.paint.Color.WHITE);
+            put(24, javafx.scene.paint.Color.WHITE);
+            put(25, javafx.scene.paint.Color.WHITE);
+            put(26, javafx.scene.paint.Color.WHITE);
+            put(27, javafx.scene.paint.Color.WHITE);
+            put(28, javafx.scene.paint.Color.WHITE);
+            put(29, javafx.scene.paint.Color.WHITE);
+            put(30, javafx.scene.paint.Color.web("0xFFA07A"));
+            put(31, javafx.scene.paint.Color.web("0xFFA07A"));
+            put(32, javafx.scene.paint.Color.WHITE);
+            put(33, javafx.scene.paint.Color.WHITE);
+            put(34, javafx.scene.paint.Color.WHITE);
+            put(35, javafx.scene.paint.Color.GRAY);
+            put(36, javafx.scene.paint.Color.web("0xFF00FF"));
+            put(37, javafx.scene.paint.Color.web("0xFF00FF"));
+            put(38, javafx.scene.paint.Color.WHITE);
+            put(39, javafx.scene.paint.Color.WHITE);
+            put(40, javafx.scene.paint.Color.web("0xFF6347"));
+            put(41, javafx.scene.paint.Color.web("0xFF6347"));
+            put(42, javafx.scene.paint.Color.web("0xFF6347"));
+            put(43, javafx.scene.paint.Color.web("0xFF6347"));
+            put(44, javafx.scene.paint.Color.web("0xFF6347"));
+            put(45, javafx.scene.paint.Color.web("0xFF6347"));
+            put(46, javafx.scene.paint.Color.web("0xFF6347"));
+            put(47, javafx.scene.paint.Color.web("0xFF6347"));
+            put(48, javafx.scene.paint.Color.web("0xFF6347"));
+            put(49, javafx.scene.paint.Color.web("0xFF6347"));
+            put(50, javafx.scene.paint.Color.web("0x40E0D0"));
+            put(51, javafx.scene.paint.Color.web("0x40E0D0"));
+            put(52, javafx.scene.paint.Color.web("0x40E0D0"));
+            put(53, javafx.scene.paint.Color.web("0x40E0D0"));
+            put(54, javafx.scene.paint.Color.web("0x40E0D0"));
+            put(55, javafx.scene.paint.Color.WHITE);
+            put(56, javafx.scene.paint.Color.WHITE);
+            put(57, javafx.scene.paint.Color.WHITE);
+            put(58, javafx.scene.paint.Color.WHITE);
+            put(59, javafx.scene.paint.Color.WHITE);
+            put(60, javafx.scene.paint.Color.BLUE);
+            put(61, javafx.scene.paint.Color.BLUE);
+            put(62, javafx.scene.paint.Color.BLUE);
+            put(63, javafx.scene.paint.Color.BLUE);
+            put(64, javafx.scene.paint.Color.BLUE);
+            put(65, javafx.scene.paint.Color.BLUE);
+            put(66, javafx.scene.paint.Color.BLUE);
+            put(67, javafx.scene.paint.Color.BLUE);
+            put(68, javafx.scene.paint.Color.BLUE);
+            put(69, javafx.scene.paint.Color.BLUE);
+            put(70, javafx.scene.paint.Color.GREEN);
+            put(71, javafx.scene.paint.Color.GREEN);
+            put(72, javafx.scene.paint.Color.GREEN);
+            put(73, javafx.scene.paint.Color.GREEN);
+            put(74, javafx.scene.paint.Color.GREEN);
+            put(75, javafx.scene.paint.Color.GREEN);
+            put(76, javafx.scene.paint.Color.GREEN);
+            put(77, javafx.scene.paint.Color.GREEN);
+            put(78, javafx.scene.paint.Color.GREEN);
+            put(79, javafx.scene.paint.Color.GREEN);
+            put(80, javafx.scene.paint.Color.RED);
+            put(81, javafx.scene.paint.Color.RED);
+            put(82, javafx.scene.paint.Color.RED);
+            put(83, javafx.scene.paint.Color.RED);
+            put(84, javafx.scene.paint.Color.RED);
+            put(85, javafx.scene.paint.Color.RED);
+            put(86, javafx.scene.paint.Color.RED);
+            put(87, javafx.scene.paint.Color.RED);
+            put(88, javafx.scene.paint.Color.RED);
+            put(89, javafx.scene.paint.Color.RED);
+            put(90, javafx.scene.paint.Color.WHITE);
+            put(91, javafx.scene.paint.Color.WHITE);
+            put(92, javafx.scene.paint.Color.WHITE);
+            put(93, javafx.scene.paint.Color.WHITE);
+            put(94, javafx.scene.paint.Color.WHITE);
+            put(95, javafx.scene.paint.Color.WHITE);
+            put(96, javafx.scene.paint.Color.WHITE);
+            put(97, javafx.scene.paint.Color.WHITE);
+            put(98, javafx.scene.paint.Color.WHITE);
+            put(99, javafx.scene.paint.Color.WHITE);
+        }
+    });
 
     @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
-        Set<Map.Entry<Integer, Material>> entries = ShipTypeColor.VIEW.entrySet();
+        Set<Map.Entry<Integer, Material>> entries = ShipTypeColor.MATERIAL.entrySet();
         buffer.append("[");
         entries.stream().forEach((e) -> {
             buffer.append("[").append(e.getKey()).append(", ").append(e.getValue()).append("]");
