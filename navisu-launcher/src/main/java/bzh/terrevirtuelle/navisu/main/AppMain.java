@@ -99,7 +99,8 @@ public class AppMain extends Application {
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
-
+        RadarServices radarServices = componentManager.getComponentService(RadarServices.class);
+        radarServices.on();
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         S57CatalogServices catalogS57Services = componentManager.getComponentService(S57CatalogServices.class);
@@ -112,8 +113,6 @@ public class AppMain extends Application {
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
-        RadarServices radarServices = componentManager.getComponentService(RadarServices.class);
-        radarServices.on();
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
