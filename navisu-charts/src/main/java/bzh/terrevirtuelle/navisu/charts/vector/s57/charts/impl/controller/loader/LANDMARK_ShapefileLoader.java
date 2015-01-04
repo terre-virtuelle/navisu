@@ -186,7 +186,7 @@ public class LANDMARK_ShapefileLoader
                 + marsys
                 + ".png");
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
-        attrs.setScale(0.8);
+        attrs.setScale(0.6);//0.8
         placemark.setAttributes(attrs);
         String label = acronym + "_"
                 + object.getCategoryOfMark() + "_"

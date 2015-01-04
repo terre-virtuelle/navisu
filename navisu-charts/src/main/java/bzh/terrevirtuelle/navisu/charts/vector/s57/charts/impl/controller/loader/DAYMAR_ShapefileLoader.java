@@ -137,7 +137,7 @@ public class DAYMAR_ShapefileLoader
                 + marsys
                 + ".png");
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
-        attrs.setScale(0.7);
+        attrs.setScale(0.6);//0.7
 
         label = acronym + "_"
                 + object.getShape() + "_"
