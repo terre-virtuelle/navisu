@@ -29,10 +29,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,10 +84,13 @@ public class RadarController
     protected double posX = 0.0;
     protected double posY = 0.0;
     protected final int RANGE = 5000;
-    protected final double RADIUS = 3.;
+    protected final double RADIUS = 4.;
     protected final double DURATION = .03;
+    protected final int MAX = 700;
+    protected final int MIN = 100;
     protected Map<Integer, Ship> ships;
     protected Map<Integer, GRShip> outOfRangeShips;
+    protected Map<Integer, GRShip> outOfRangeTransceivers;
     protected Map<Integer, Transceiver> transceivers;
     protected Map<Integer, Calendar> timestamps;
     protected Ship ship;
@@ -112,6 +113,7 @@ public class RadarController
         super(keyCode, keyCombination);
         ships = new HashMap<>();
         outOfRangeShips = new HashMap<>();
+        outOfRangeTransceivers= new HashMap<>();
         transceivers = new HashMap<>();
         timestamps = new HashMap<>();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar-fullscreen.fxml"));
@@ -125,7 +127,6 @@ public class RadarController
         }
         createOwnerShip();
         subscribe();
-        // setTarget(ship,CENTER_X, CENTER_Y, RADIUS, "#ff0000");
     }
 
     @Override
@@ -169,6 +170,8 @@ public class RadarController
                 .callSign(properties.getProperty("callSign")).build();
         latOwner = new Float(properties.getProperty("latitude"));
         lonOwner = new Float(properties.getProperty("longitude"));
+         setTarget(ownerShip, (int) (CENTER_X - (lonOwner - ownerShip.getLongitude()) * RANGE),
+                                (int) (CENTER_Y + (latOwner - ownerShip.getLatitude()) * RANGE));
     }
 
     private void subscribe() {
@@ -265,29 +268,30 @@ public class RadarController
         });
 
         ais4ES.subscribe(new AIS4Event() {
-
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 AIS4 ais = (AIS4) data;
                 int mmsi = ais.getMMSI();
-
+/*
                 if (!transceivers.containsKey(mmsi)) {
                     transceiver = new Transceiver(
                             ais.getMMSI(),
                             ais.getLatitude(), ais.getLongitude());
 
                     transceivers.put(mmsi, transceiver);
-                    //        setTarget(transceiver, (int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
-                    //                (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE));
+                    setTarget(transceiver, (int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
+                            (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE));
                 } else {
                     transceiver = transceivers.get(mmsi);
                     transceiver.setLatitude(ais.getLatitude());
                     transceiver.setLongitude(ais.getLongitude());
-                    //      updateTarget(transceiver, (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * RANGE),
-                    //             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
+                    updateTarget(transceiver, (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * RANGE),
+                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 }
+        */
                 timestamps.put(mmsi, Calendar.getInstance());
             }
+            
         });
 
         ais5ES.subscribe(new AIS5Event() {
@@ -367,20 +371,19 @@ public class RadarController
     }
 
     private void setTarget(Ship ship, int centerX, int centerY) {
-        double radius = 4.0;
-        GRShip grship = new GRShip(ship, centerX, centerY, radius);
+        GRShip grship = new GRShip(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMmsi()));
         grship.setOnMouseClicked((MouseEvent me) -> {
             if (first) {
-                grship.setRadius(radius * 1.5);
+                grship.setRadius(RADIUS * 1.5);
                 first = false;
             } else {
-                grship.setRadius(radius);
+                grship.setRadius(RADIUS);
                 first = true;
             }
         });
 
-        if (centerX <= 700 && centerX >= 100 && centerY <= 700 && centerY >= 100) {
+        if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
                 radar.getChildren().add(grship);
                 String label = "Name : " + ship.getName() + "\n"
@@ -397,7 +400,7 @@ public class RadarController
 
     private void updateTarget(Ship ship, int centerX, int centerY) {
         Integer mmsiI = ship.getMmsi();
-        if (centerX <= 700 && centerX >= 100 && centerY <= 700 && centerY >= 100) {
+        if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
 
                 if (outOfRangeShips.containsKey(mmsiI)) {//Ships In range
@@ -445,14 +448,39 @@ public class RadarController
                 nodes.remove(n);
                 return n;
             }).forEach((n) -> {
-                outOfRangeShips.put(ship.getMmsi(), (GRShip)n);
+                outOfRangeShips.put(ship.getMmsi(), (GRShip) n);
             });
+        }
+    }
+
+    private void setTarget(Transceiver transceiver, int centerX, int centerY) {
+        GRShip grship = new GRShip(ship, centerX, centerY, RADIUS);
+        grship.setId(Integer.toString(ship.getMmsi()));
+        grship.setOnMouseClicked((MouseEvent me) -> {
+            if (first) {
+                grship.setRadius(RADIUS * 1.5);
+                first = false;
+            } else {
+                grship.setRadius(RADIUS);
+                first = true;
+            }
+        });
+
+        if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
+            Platform.runLater(() -> {
+                radar.getChildren().add(grship);
+                String label = "MMSI : " + transceiver.getMmsi();
+                Tooltip t = new Tooltip(label);
+                Tooltip.install(grship, t);
+            });
+        } else {
+            outOfRangeTransceivers.put(ship.getMmsi(), grship);
         }
     }
 
     private void updateTarget(Transceiver transceiver, int centerX, int centerY) {
 
-        if (centerX <= 600 && centerX >= 100 && centerY <= 600 && centerY >= 100) {
+        if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
                 List<Node> nodes = radar.getChildren();
                 String mmsi = Integer.toString(transceiver.getMmsi());
