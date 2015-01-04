@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bzh.terrevirtuelle.navisu.radar.impl.controller;
 
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
@@ -25,13 +20,19 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.ShipBuilder;
+import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
 import bzh.terrevirtuelle.navisu.radar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
 import java.io.FileInputStream;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -87,11 +89,15 @@ public class RadarController
     protected final double RADIUS = 3.;
     protected final double DURATION = .03;
     protected Map<Integer, Ship> ships;
+    protected Map<Integer, GRShip> outOfRangeShips;
     protected Map<Integer, Transceiver> transceivers;
     protected Map<Integer, Calendar> timestamps;
     protected Ship ship;
     protected Ship ownerShip;
     protected Transceiver transceiver;
+    protected NumberFormat formatter = new DecimalFormat("#0");
+    protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     ComponentManager cm = ComponentManager.componentManager;
     ComponentEventSubscribe<AIS1Event> ais1ES = cm.getComponentEventSubscribe(AIS1Event.class);
     ComponentEventSubscribe<AIS2Event> ais2ES = cm.getComponentEventSubscribe(AIS2Event.class);
@@ -105,6 +111,7 @@ public class RadarController
     public RadarController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         ships = new HashMap<>();
+        outOfRangeShips = new HashMap<>();
         transceivers = new HashMap<>();
         timestamps = new HashMap<>();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar-fullscreen.fxml"));
@@ -162,7 +169,6 @@ public class RadarController
                 .callSign(properties.getProperty("callSign")).build();
         latOwner = new Float(properties.getProperty("latitude"));
         lonOwner = new Float(properties.getProperty("longitude"));
-        System.out.println("ownerShip " + ownerShip);
     }
 
     private void subscribe() {
@@ -178,10 +184,6 @@ public class RadarController
                                 .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipname())
                                 .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
                                 .latitude(ais.getLatitude()).longitude(ais.getLongitude())
-                                .width(ais.getWidth()).length(ais.getLength()).draught(ais.getDraught())
-                                .shipType(ais.getShipType()).navigationalStatus(ais.getNavigationalStatus())
-                                .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
-                                .eta(ais.getETA()).destination(ais.getDestination())
                                 .build();
                         ships.put(mmsi, ship);
                         setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
@@ -190,6 +192,8 @@ public class RadarController
                         ship = ships.get(mmsi);
                         ship.setLatitude(ais.getLatitude());
                         ship.setLongitude(ais.getLongitude());
+                        ship.setCog(ais.getCog());
+                        ship.setSog(ais.getSog());
                         updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
                                 (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                     }
@@ -214,7 +218,8 @@ public class RadarController
                             .width(ais.getWidth()).length(ais.getLength()).draught(ais.getDraught())
                             .shipType(ais.getShipType()).navigationalStatus(ais.getNavigationalStatus())
                             .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
-                            .eta(ais.getETA()).destination(ais.getDestination()).build();
+                            .eta(ais.getETA()).destination(ais.getDestination())
+                            .build();
                     ships.put(mmsi, ship);
                     setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
                             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
@@ -222,6 +227,8 @@ public class RadarController
                     ship = ships.get(mmsi);
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
+                    ship.setCog(ais.getCog());
+                    ship.setSog(ais.getSog());
                     updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
                             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 }
@@ -240,10 +247,7 @@ public class RadarController
                             .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipname())
                             .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
-                            .width(ais.getWidth()).length(ais.getLength()).draught(ais.getDraught())
-                            .shipType(ais.getShipType()).navigationalStatus(ais.getNavigationalStatus())
-                            .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
-                            .eta(ais.getETA()).destination(ais.getDestination()).build();
+                            .build();
                     ships.put(mmsi, ship);
                     setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
                             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
@@ -251,6 +255,8 @@ public class RadarController
                     ship = ships.get(mmsi);
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
+                    ship.setCog(ais.getCog());
+                    ship.setSog(ais.getSog());
                     updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
                             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 }
@@ -266,18 +272,24 @@ public class RadarController
                 int mmsi = ais.getMMSI();
 
                 if (!transceivers.containsKey(mmsi)) {
-                    transceiver = new Transceiver(ais.getMMSI(),
-                            ais.getLatitude(), ais.getLongitude(), ais.getDate());
+                    transceiver = new Transceiver(
+                            ais.getMMSI(),
+                            ais.getLatitude(), ais.getLongitude());
+
                     transceivers.put(mmsi, transceiver);
+                    //        setTarget(transceiver, (int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
+                    //                (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE));
+                } else {
+                    transceiver = transceivers.get(mmsi);
+                    transceiver.setLatitude(ais.getLatitude());
+                    transceiver.setLongitude(ais.getLongitude());
+                    //      updateTarget(transceiver, (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * RANGE),
+                    //             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
-                
-                 setTarget(ship, (int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
-                 (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE));
-                 
             }
-
         });
+
         ais5ES.subscribe(new AIS5Event() {
 
             @Override
@@ -285,29 +297,19 @@ public class RadarController
                 AIS5 ais = (AIS5) data;
                 int mmsi = ais.getMMSI();
 
-                if (!ships.containsKey(mmsi)) {
-                    ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipname())
-                            .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
-                            .latitude(ais.getLatitude()).longitude(ais.getLongitude())
-                            .width(ais.getWidth()).length(ais.getLength()).draught(ais.getDraught())
-                            .shipType(ais.getShipType()).navigationalStatus(ais.getNavigationalStatus())
-                            .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
-                            .eta(ais.getETA()).destination(ais.getDestination()).build();
-                    ships.put(mmsi, ship);
-                    setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                } else {
+                if (ships.containsKey(mmsi)) {
                     ship = ships.get(mmsi);
-                    ship.setLatitude(ais.getLatitude());
-                    ship.setLongitude(ais.getLongitude());
+                    ship.setType(ais.getShipType());
+                    ship.setName(ais.getShipname());
+                    ship.setETA(ais.getETA());
+                    ship.setDestination(ais.getDestination());
                     updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
                             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
         });
-        // souscription aux événements
+        // souscription aux événements GPS
         ggaES.subscribe(new GGAEvent() {
 
             @Override
@@ -365,47 +367,105 @@ public class RadarController
     }
 
     private void setTarget(Ship ship, int centerX, int centerY) {
-        if (centerX <= 600 && centerX >= 100 && centerY <= 600 && centerY >= 100) {
-            double radius = 4.0;
-            GRShip grship = new GRShip(ship, centerX, centerY, radius);
-            grship.setId(Integer.toString(ship.getMmsi()));
-            grship.setOnMouseClicked((MouseEvent me) -> {
-                if (first) {
-                    grship.setRadius(radius * 1.5);
-                    first = false;
-                } else {
-                    grship.setRadius(radius);
-                    first = true;
-                }
-            });
+        double radius = 4.0;
+        GRShip grship = new GRShip(ship, centerX, centerY, radius);
+        grship.setId(Integer.toString(ship.getMmsi()));
+        grship.setOnMouseClicked((MouseEvent me) -> {
+            if (first) {
+                grship.setRadius(radius * 1.5);
+                first = false;
+            } else {
+                grship.setRadius(radius);
+                first = true;
+            }
+        });
+
+        if (centerX <= 700 && centerX >= 100 && centerY <= 700 && centerY >= 100) {
             Platform.runLater(() -> {
                 radar.getChildren().add(grship);
                 String label = "Name : " + ship.getName() + "\n"
                         + "MMSI : " + ship.getMmsi() + "\n"
-                        + "Sog : " + Double.toString(ship.getSog()) + "\n"
-                        + "Cog : " + Double.toString(ship.getCog());
+                        + "Sog : " + formatter.format(ship.getSog()) + "\n"
+                        + "Cog : " + formatter.format(ship.getCog());
                 Tooltip t = new Tooltip(label);
                 Tooltip.install(grship, t);
             });
-
+        } else {
+            outOfRangeShips.put(ship.getMmsi(), grship);
         }
     }
 
     private void updateTarget(Ship ship, int centerX, int centerY) {
+        Integer mmsiI = ship.getMmsi();
+        if (centerX <= 700 && centerX >= 100 && centerY <= 700 && centerY >= 100) {
+            Platform.runLater(() -> {
+
+                if (outOfRangeShips.containsKey(mmsiI)) {//Ships In range
+                    GRShip grship = outOfRangeShips.get(mmsiI);
+                    radar.getChildren().add(grship);
+                    outOfRangeShips.remove(mmsiI, grship);
+                }
+                List<Node> nodes = radar.getChildren();
+                String mmsi = Integer.toString(mmsiI);
+
+                nodes.stream().filter((n) -> (n.getId() != null)).filter((n) -> (n.getId().contains(mmsi))).map((n) -> (Circle) n).map((circle) -> {
+                    circle.setCenterX(centerX);
+                    return circle;
+                }).map((circle) -> {
+                    circle.setCenterY(centerY);
+                    return circle;
+                }).map((circle) -> {
+                    String label = "";
+                    Calendar eta = ship.getETA();
+                    String etaFormat = "";
+                    if (eta != null) {
+                        etaFormat = dateFormatter.format(eta.getTime());
+                    }
+                    String dest = ship.getDestination();
+                    if (dest == null) {
+                        dest = "";
+                    }
+                    label = "Name : " + ship.getName() + "\n"
+                            + "MMSI : " + ship.getMmsi() + "\n"
+                            + "Sog : " + formatter.format(ship.getSog()) + "\n"
+                            + "Cog : " + formatter.format(ship.getCog()) + "\n"
+                            + "ETA : " + etaFormat + "\n"
+                            + "Dest : " + dest;
+                    Tooltip t = new Tooltip(label);
+                    Tooltip.install(circle, t);
+                    return circle;
+                }).forEach((circle) -> {
+                    circle.setFill(ShipTypeColor.COLOR.get(ship.getType()));
+                });
+            });
+        } else {
+            List<Node> nodes = radar.getChildren();//Ship out of range
+            String mmsi = Integer.toString(mmsiI);
+            nodes.stream().filter((n) -> (n.getId().contains(mmsi))).map((n) -> {
+                nodes.remove(n);
+                return n;
+            }).forEach((n) -> {
+                outOfRangeShips.put(ship.getMmsi(), (GRShip)n);
+            });
+        }
+    }
+
+    private void updateTarget(Transceiver transceiver, int centerX, int centerY) {
 
         if (centerX <= 600 && centerX >= 100 && centerY <= 600 && centerY >= 100) {
             Platform.runLater(() -> {
                 List<Node> nodes = radar.getChildren();
-                String mmsi = Integer.toString(ship.getMmsi());
+                String mmsi = Integer.toString(transceiver.getMmsi());
                 nodes.stream().filter((n) -> (n.getId() != null)).filter((n) -> (n.getId().contains(mmsi))).map((n) -> (Circle) n).map((circle) -> {
                     circle.setCenterX(centerX);
                     return circle;
-                }).forEach((circle) -> {
+                }).map((circle) -> {
                     circle.setCenterY(centerY);
+                    return circle;
+                }).forEach((circle) -> {
+                    circle.setFill(Color.BLUE);
                 });
             });
         }
-
     }
-
 }
