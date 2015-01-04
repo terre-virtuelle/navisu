@@ -1,0 +1,641 @@
+format 76
+"ais" // bzh::terrevirtuelle::navisu::locators::ais
+  revision 1
+  modified_by 2 "Serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "d:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/locators/ais/"
+  java_package "bzh.terrevirtuelle.navisu.locators.ais"
+  classview 137218 "ais"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 140034 "AisLocator"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      attribute 139778 "aisLayer"
+	protected explicit_type "Layer"
+	stereotype "GeoLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 139906 "aisStationLayer"
+	protected explicit_type "Layer"
+	stereotype "GeoLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140034 "baloonLayer"
+	protected explicit_type "RenderableLayer"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 142338 // aisLocatorController (<unidirectional association>)
+	relation 142338 --->
+	  a role_name "aisLocatorController" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 142338 // aisLocatorController (<unidirectional association>)
+	  b parent class_ref 140162 // AisLocatorControllerWithDPAgent
+      end
+
+      classrelation 142466 // aisStationLocatorControllerWithDPAgent (<unidirectional association>)
+	relation 142466 --->
+	  a role_name "aisStationLocatorControllerWithDPAgent" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 142466 // aisStationLocatorControllerWithDPAgent (<unidirectional association>)
+	  b parent class_ref 140290 // AisStationLocatorControllerWithDPAgent
+      end
+
+      classrelation 142594 // tShipProcessors (<unidirectional association>)
+	relation 142594 --->
+	  stereotype "Map"
+	  a role_name "tShipProcessors" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<Integer, ${type}> ${name}${value};
+"
+	    classrelation_ref 142594 // tShipProcessors (<unidirectional association>)
+	  b parent class_ref 140418 // ShipProcessor
+      end
+
+      attribute 140162 "timestamps"
+	protected explicit_type "Integer, Calendar"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 142722 // tStationsProcessors (<unidirectional association>)
+	relation 142722 --->
+	  stereotype "Map"
+	  a role_name "tStationsProcessors" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<Integer, ${type}> ${name}${value};
+"
+	    classrelation_ref 142722 // tStationsProcessors (<unidirectional association>)
+	  b parent class_ref 140546 // StationProcessor
+      end
+
+      attribute 140290 "midMap"
+	protected explicit_type "Integer, String"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 142850 // geoViewServices (<unidirectional association>)
+	relation 142850 --->
+	  a role_name "geoViewServices" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 142850 // geoViewServices (<unidirectional association>)
+	  b parent class_ref 130178 // GeoViewServices
+      end
+
+      classrelation 142978 // dpAgentServices (<unidirectional association>)
+	relation 142978 --->
+	  a role_name "dpAgentServices" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 142978 // dpAgentServices (<unidirectional association>)
+	  b parent class_ref 128514 // DpAgentServices
+      end
+
+      classrelation 143106 // guiAgentServices (<unidirectional association>)
+	relation 143106 --->
+	  a role_name "guiAgentServices" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 143106 // guiAgentServices (<unidirectional association>)
+	  b parent class_ref 129794 // GuiAgentServices
+      end
+
+      attribute 140418 "geoView"
+	protected explicit_type "GeoWorldWindView"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140546 "str"
+	package explicit_type "String"
+	init_value " BROWSER_BALLOON_CONTENT_PATH"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140674 "IMAGE_EARTH"
+	class_attribute const_attribute private explicit_type "PowerOfTwoPaddedImage"
+	init_value " PowerOfTwoPaddedImage.fromPath(\"logoTV200.png\")"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140802 "nf"
+	package explicit_type "NumberFormat"
+	init_value " new DecimalFormat(\"0.###\")"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 140930 "dt"
+	package explicit_type "SimpleDateFormat"
+	init_value " new SimpleDateFormat(\"hh:mm dd-MM\")"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 143234 // ship (<unidirectional association>)
+	relation 143234 --->
+	  a role_name "ship" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 143234 // ship (<unidirectional association>)
+	  b parent class_ref 140674 // TShip
+      end
+
+      classrelation 143362 // station (<unidirectional association>)
+	relation 143362 --->
+	  a role_name "station" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 143362 // station (<unidirectional association>)
+	  b parent class_ref 140802 // TStation
+      end
+
+      attribute 141058 "cm"
+	package explicit_type "ComponentManager"
+	init_value " ComponentManager.componentManager"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141186 "ais1ES"
+	package explicit_type "AIS1Event"
+	init_value " cm.getComponentEventSubscribe(AIS1Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141314 "ais2ES"
+	package explicit_type "AIS2Event"
+	init_value " cm.getComponentEventSubscribe(AIS2Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141442 "ais3ES"
+	package explicit_type "AIS3Event"
+	init_value " cm.getComponentEventSubscribe(AIS3Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141570 "ais4ES"
+	package explicit_type "AIS4Event"
+	init_value " cm.getComponentEventSubscribe(AIS4Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141698 "ais5ES"
+	package explicit_type "AIS5Event"
+	init_value " cm.getComponentEventSubscribe(AIS5Event.class)"
+	stereotype "ComponentEventSubscribe"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141826 "first"
+	package explicit_type "boolean"
+	init_value " true"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141954 "firstBt"
+	package explicit_type "boolean"
+	init_value " true"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142082 "balloonPosition"
+	package explicit_type "Position"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment " StackPane pane;"
+      end
+
+      attribute 142210 "balloon"
+	package explicit_type "GlobeBalloon"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "  AbstractBrowserBalloon balloon;"
+      end
+
+      attribute 142338 "attrs"
+	package explicit_type "BalloonAttributes"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 142466 "wwd"
+	package explicit_type "WorldWindow"
+	init_value " GeoWorldWindViewImpl.getWW()"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 149762 "AisLocator"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "geoViewServices" type class_ref 130178 // GeoViewServices
+	  param inout name "dpAgentServices" type class_ref 128514 // DpAgentServices
+	  param inout name "guiAgentServices" type class_ref 129794 // GuiAgentServices
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 149890 "subscribe"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 150018 "makeBrowserBalloon"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "ship" type class_ref 140674 // TShip
+	
+	preserve_java_body_indent final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 150146 "updateHtmlString"
+	protected explicit_return_type "String"
+	nparams 1
+	  param inout name "ship" type class_ref 140674 // TShip
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 150274 "clip"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 150402 "unClip"
+	private explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      attribute 142594 "BROWSER_BALLOON_CONTENT_PATH"
+	class_attribute const_attribute protected explicit_type "String"
+	init_value " \"<!--\\n\"
+            + \"  ~ Copyright (C) 2014 Terre Virtuelle NaVisu Project.\\n\"
+            + \"  ~ All Rights Reserved.\\n\"
+            + \"  -->\\n\"
+            + \"\\n\"
+            + \"<!DOCTYPE HTML PUBLIC \\\"-//W3C//DTD HTML 4.01 Transitional//EN\\\"\\n\"
+            + \"        \\\"http:&nbsp;//www.w3.org/TR/html4/loose.dtd\\\">\\n\"
+            + \"\\n\"
+            + \"<!-- $Id: AISTemplate.html 1171 2014-02-12 21:45:02Z Serge Morvan$ -->\\n\"
+            + \"\\n\"
+            + \"<html>\\n\"
+            + \"<head></head>\\n\"
+            + \"<body>\\n\"
+            + \"	<center>\\n\"
+            + \"<table border  width=\\\"500\\\" cellpadding=\\\"0\\\" cellspacing=\\\"0\\\">\\n\"
+            + \"    <tr>\\n\"
+            + \"    <td colspan=\\\"3\\\" align=\\\"left\\\" valign=\\\"top\\\">\\n\"
+            + \"                 <table width=\\\"100%\\\" cellpadding=\\\"0\\\" cellspacing=\\\"0\\\">\\n\"
+            + \"                    <tr> \\n\"
+            + \"                 <!--   <td align=\\\"left\\\" valign=\\\"middle\\\"><img src=\\\"logoTV200.png\\\" alt=\\\"logo\\\"/></td>-->\\n\"
+            + \"		    <td align=\\\"right\\\"><font color=\\\"#999999\\\"><strong>  Name :&nbsp; </strong></font></td>\\n\"
+            + \"                    <td><font color=\\\"#000000\\\" size=\\\"+2\\\"strong>__shipname__</strong></font></td>\\n\"
+            + \"	            </tr>\\n\"
+            + \"                    <tr>\\n\"
+            + \"		    <td align=\\\"right\\\"><font color=\\\"#999999\\\"><strong>  Type :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td><font color=\\\"#000000\\\"><strong> __shiptype__<strong> </font> </td>\\n\"
+            + \"                    <td align=\\\"right\\\"><font color=\\\"#999999\\\"><strong>  Age report :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td><font color=\\\"#000000\\\"><strong> __seconds__ <strong> </font> </td>\\n\"
+            + \"\\n\"
+            + \"	            </tr>\\n\"
+            + \"		 </table>\\n\"
+            + \"</br>\\n\"
+            + \"		 <table width=\\\"100%\\\" cellpadding=\\\"0\\\" cellspacing=\\\"0\\\">\\n\"
+            + \"	            <tr>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  CallSign :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\">	<font color=\\\"#000000\\\"><strong>  __callsign__<strong> </font> </td>\\n\"
+            + \"                    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  MMSI :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\">	<font color=\\\"#000000\\\"><strong>  __mmsi__<strong> </font> </td>\\n\"
+            + \"                    <td><font color=\\\"#999999\\\"><strong> IMO :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td><font color=\\\"#000000\\\"><strong>  __imo__<strong> </font> </td>\\n\"
+            + \"                    </tr>\\n\"
+            + \"\\n\"
+            + \"                    <tr>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  Length :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#000000\\\"><strong>  __length__<strong> </font> </td>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  Width :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#000000\\\"><strong>  __width__<strong> </font> </td>\\n\"
+            + \"		    <td><font color=\\\"#999999\\\"><strong> Draught :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td><font color=\\\"#000000\\\"><strong>  __draught__<strong> </font> </td>\\n\"
+            + \"                    </tr>\\n\"
+            + \"\\n\"
+            + \"                    <tr>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  Status :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#000000\\\"><strong>  __status__<strong> </font> </td>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  SOG :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#000000\\\"><strong>  __sog__<strong> </font> </td>\\n\"
+            + \"		    <td><font color=\\\"#999999\\\"><strong> COG :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td><font color=\\\"#000000\\\"><strong>  __cog__<strong> </font> </td>\\n\"
+            + \"                    </tr>\\n\"
+            + \"                 </table>  \\n\"
+            + \"</br> \\n\"
+            + \"                 <table width=\\\"100%\\\" cellpadding=\\\"0\\\" cellspacing=\\\"0\\\">\\n\"
+            + \"	            <tr>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  Destination :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\">	<font color=\\\"#000000\\\"><strong>  __destination__<strong> </font> </td>\\n\"
+            + \"                    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  ETA :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\">	<font color=\\\"#000000\\\"><strong>  __eta__<strong> </font> </td>                \\n\"
+            + \"                    </tr>\\n\"
+            + \"                    <tr>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  Latitude :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\">	<font color=\\\"#000000\\\"><strong>  __latitude__<strong> </font> </td>\\n\"
+            + \"                    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  Longitude :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\">	<font color=\\\"#000000\\\"><strong>  __longitude__<strong> </font> </td>             \\n\"
+            + \"                    </tr>\\n\"
+            + \"		    <td align=\\\"left\\\"><font color=\\\"#999999\\\"><strong>  Country :&nbsp; </strong></font></td>\\n\"
+            + \"		    <td align=\\\"left\\\">	<font color=\\\"#000000\\\"><strong>  __country__<strong> </font> </td>\\n\"
+            + \"	    </table> \\n\"
+            + \"</br></br>\\n\"
+            + \"<table width=\\\"100%\\\" cellpadding=\\\"0\\\" cellspacing=\\\"0\\\">\\n\"
+            + \"	   <tr>\\n\"
+            + \"<!--	   <td >\\n\"
+            + \"	   <a href=\\\"http://www.marinetraffic.com/fr/photos/of/ships/photo_keywords:\\\"><strong>\\n\"
+            + \"				   <font color=\\\"#CC3333\\\">Marine Traffic informations</font></strong></a>\\n\"
+            + \"	   </td>\\n\"
+            + \"-->\"
+            + \" </tr>\\n\"
+            + \" </table>\"
+            + \"	</td> \\n\"
+            + \"</center>\\n\"
+            + \"</body>\\n\"
+            + \"</html>\\n\""
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+  end
+
+  package_ref 137730 // controller
+
+  deploymentview 136834 "ais"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 139010 "AisLocator"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
+import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.locators.ais.controller.AisLocatorControllerWithDPAgent;
+import bzh.terrevirtuelle.navisu.locators.ais.controller.AisStationLocatorControllerWithDPAgent;
+import bzh.terrevirtuelle.navisu.locators.ais.view.AisLayer;
+import bzh.terrevirtuelle.navisu.locators.controller.StationProcessor;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.controller.ShipProcessor;
+import bzh.terrevirtuelle.navisu.locators.view.Shape;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.ship.parameters.ShipType;
+import bzh.terrevirtuelle.navisu.locators.model.TStation;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.event.PositionEvent;
+import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BalloonAttributes;
+import gov.nasa.worldwind.render.BasicBalloonAttributes;
+import gov.nasa.worldwind.render.GlobeBalloon;
+import gov.nasa.worldwind.render.GlobeBrowserBalloon;
+import gov.nasa.worldwind.render.Size;
+import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.capcaval.c3.component.ComponentEventSubscribe;
+import org.capcaval.c3.componentmanager.ComponentManager;
+${definition}"
+      associated_classes
+	class_ref 140034 // AisLocator
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+
+  package_ref 138114 // view
+end

@@ -1,6 +1,6 @@
 format 76
-"navisu" // bzh::terrevirtuelle::navisu
-  revision 2
+"locators" // bzh::terrevirtuelle::navisu::locators
+  revision 1
   modified_by 2 "Serge"
   // class settings
   //class diagram settings
@@ -26,15 +26,17 @@ format 76
   package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
   show_infonote default drawing_language default show_stereotype_properties default
   
-  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-app/src/main/java/bzh/terrevirtuelle/navisu/"
-  java_package "bzh.terrevirtuelle.navisu"
-  package_ref 128386 // app
+  java_dir "d:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/locators/"
+  java_package "bzh.terrevirtuelle.navisu.locators"
+  package_ref 137602 // ais
 
-  package_ref 137474 // locators
+  package_ref 137858 // controller
 
-  package_ref 139010 // widgets
+  package_ref 137986 // model
 
-  package_ref 139266 // loggers
+  package_ref 138370 // view
 
-  package_ref 139778 // radar
+  package_ref 138498 // gps
+
+  package_ref 138882 // impl
 end

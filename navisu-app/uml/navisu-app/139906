@@ -1,6 +1,6 @@
 format 76
-"bzh" // bzh
-  revision 2
+"impl" // bzh::terrevirtuelle::navisu::radar::impl
+  revision 1
   modified_by 2 "Serge"
   // class settings
   //class diagram settings
@@ -26,11 +26,9 @@ format 76
   package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
   show_infonote default drawing_language default show_stereotype_properties default
   
-  java_dir "i:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-app/src/main/java/bzh/"
-  java_package "bzh"
-  package_ref 128130 // terrevirtuelle
-
-  classview 130562 "navisu-app"
+  java_dir "d:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/radar/impl/"
+  java_package "bzh.terrevirtuelle.navisu.radar.impl"
+  classview 139522 "impl"
     //class diagram settings
     draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
     //collaboration diagram settings
@@ -46,11 +44,139 @@ format 76
     //activity diagram settings
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
-    classdiagram 128002 "navisu-app"
-      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A4
+    class 145410 "RadarImpl"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 151042 // <realization>
+	relation 151042 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 151042 // <realization>
+	  b parent class_ref 145154 // Radar
+      end
+
+      classrelation 151170 // <realization>
+	relation 151170 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 151170 // <realization>
+	  b parent class_ref 145282 // RadarServices
+      end
+
+      classrelation 151298 // <realization>
+	relation 151298 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 151298 // <realization>
+	  b parent class_ref 142466 // ComponentState
+      end
+
+      classrelation 151426 // guiAgentServices (<unidirectional association>)
+	relation 151426 --->
+	  a role_name "guiAgentServices" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    java_annotation "@UsedService
+"
+	    classrelation_ref 151426 // guiAgentServices (<unidirectional association>)
+	  b parent class_ref 129794 // GuiAgentServices
+      end
+
+      operation 168194 "componentInitiated"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 168322 "componentStarted"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 168450 "componentStopped"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 168578 "on"
+	public explicit_return_type "void"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
     end
   end
 
-  package_ref 138242 // unknown
+  deploymentview 139010 "impl"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 142850 "RadarImpl"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.radar.Radar;
+import bzh.terrevirtuelle.navisu.radar.RadarServices;
+import bzh.terrevirtuelle.navisu.radar.impl.controller.RadarController;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
+${definition}"
+      associated_classes
+	class_ref 145410 // RadarImpl
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+
+  package_ref 140034 // controller
 end

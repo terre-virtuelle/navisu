@@ -1,0 +1,780 @@
+format 76
+"impl" // bzh::terrevirtuelle::navisu::locators::view::impl
+  revision 1
+  modified_by 2 "Serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "d:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/locators/view/impl/"
+  java_package "bzh.terrevirtuelle.navisu.locators.view.impl"
+  classview 138754 "impl"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 143234 "Shape_4"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 149634 // <generalisation>
+	relation 149634 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 149634 // <generalisation>
+	  b parent class_ref 144386 // PointPlacemark
+      end
+
+      classrelation 149762 // <realization>
+	relation 149762 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 149762 // <realization>
+	  b parent class_ref 143490 // StationShape
+      end
+
+      operation 165890 "Shape_4"
+	public explicit_return_type ""
+	nparams 1
+	  param inout name "pstn" explicit_type "Position"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 166018 "setLocation"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "location" explicit_type "Location"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 166146 "getRenderables"
+	public explicit_return_type "Renderable"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[] ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 166274 "setRotation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cog" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 166402 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 143618 "Shape3D_0"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 148354 // <realization>
+	relation 148354 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 148354 // <realization>
+	  b parent class_ref 143106 // Shape
+      end
+
+      classrelation 148482 // tShip (<unidirectional association>)
+	relation 148482 --->
+	  a role_name "tShip" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 148482 // tShip (<unidirectional association>)
+	  b parent class_ref 140674 // TShip
+      end
+
+      attribute 146690 "colladaRoot"
+	package explicit_type "ColladaRoot"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146818 "colladaController"
+	package explicit_type "ColladaController"
+	init_value " null"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 146946 "fileName"
+	package explicit_type "String"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+	comment "\"data/collada/lithops.dae\""
+      end
+
+      operation 163330 "Shape3D_0"
+	public explicit_return_type ""
+	nparams 4
+	  param inout name "tShip" type class_ref 140674 // TShip
+	  param in name "fileName" explicit_type "String"
+	  param inout name "latlon" explicit_type "LatLon"
+	  param in name "d" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 163458 "setLocation"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "location" explicit_type "Location"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 163586 "getRenderables"
+	public explicit_return_type "Renderable"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[] ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 163714 "setRotation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cog" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 163842 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 163970 "getShip"
+	public return_type class_ref 140674 // TShip
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 164098 "getAttributes"
+	public explicit_return_type "ShapeAttributes"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 143746 "Shape_0"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 148610 // <generalisation>
+	relation 148610 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 148610 // <generalisation>
+	  b parent class_ref 143874 // Polygon
+      end
+
+      classrelation 148738 // <realization>
+	relation 148738 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 148738 // <realization>
+	  b parent class_ref 143106 // Shape
+      end
+
+      classrelation 148866 // tShip (<unidirectional association>)
+	relation 148866 --->
+	  a role_name "tShip" package
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 148866 // tShip (<unidirectional association>)
+	  b parent class_ref 140674 // TShip
+      end
+
+      operation 164226 "Shape_0"
+	public explicit_return_type ""
+	nparams 3
+	  param inout name "tShip" type class_ref 140674 // TShip
+	  param inout name "sa" explicit_type "ShapeAttributes"
+	  param inout name "itrbl" explicit_type "Iterable<? extends Position>"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 164354 "setLocation"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "location" explicit_type "Location"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 164482 "getRenderables"
+	public explicit_return_type "Renderable"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[] ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 164610 "setRotation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cog" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 164738 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 164866 "getShip"
+	public return_type class_ref 140674 // TShip
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 144002 "Shape_1"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 148994 // <generalisation>
+	relation 148994 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 148994 // <generalisation>
+	  b parent class_ref 144130 // SurfaceCircle
+      end
+
+      classrelation 149122 // <realization>
+	relation 149122 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 149122 // <realization>
+	  b parent class_ref 143106 // Shape
+      end
+
+      attribute 147074 "button"
+	package explicit_type "Button"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 149250 // tShip (<unidirectional association>)
+	relation 149250 --->
+	  a role_name "tShip" package
+	    comment "  WorldWindow wwd;
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 149250 // tShip (<unidirectional association>)
+	  b parent class_ref 140674 // TShip
+      end
+
+      attribute 147202 "first"
+	package explicit_type "boolean"
+	init_value " true"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 164994 "Shape_1"
+	public explicit_return_type ""
+	nparams 4
+	  param inout name "tShip" type class_ref 140674 // TShip
+	  param inout name "sa" explicit_type "ShapeAttributes"
+	  param inout name "latlon" explicit_type "LatLon"
+	  param in name "d" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 165122 "setLocation"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "location" explicit_type "Location"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 165250 "setRotation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cog" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 165378 "getRenderables"
+	public explicit_return_type "Renderable"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[] ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 165506 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 165634 "getShip"
+	public return_type class_ref 140674 // TShip
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+	comment "private void pick() {
+wwd.addSelectListener((SelectEvent event) -> {
+if (event.getEventAction().equals(SelectEvent.HOVER) && event.getObjects() != null) {
+if (first == true) {
+first = false;
+if (button == null) {
+button = new Button();
+}
+button.setText(\"       Quit        \");
+button.setOnAction((ActionEvent evt) -> {
+System.exit(0);
+});
+
+offset = wwd.getView().project(
+wwd.getModel().getGlobe().computePointFromLocation(
+new LatLon(Angle.fromDegrees(lat), Angle.fromDegrees(lon))));
+Platform.runLater(() -> {
+pane.getChildren().add(button);
+wwd.addPositionListener(Ship.this);
+});
+}
+}
+});
+}"
+      end
+    end
+
+    class 144258 "Shape_100"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      classrelation 149378 // <generalisation>
+	relation 149378 ---|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 149378 // <generalisation>
+	  b parent class_ref 144002 // Shape_1
+      end
+
+      classrelation 149506 // <realization>
+	relation 149506 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 149506 // <realization>
+	  b parent class_ref 143106 // Shape
+      end
+
+      operation 165762 "Shape_100"
+	public explicit_return_type ""
+	nparams 4
+	  param inout name "tShip" type class_ref 140674 // TShip
+	  param inout name "sa" explicit_type "ShapeAttributes"
+	  param inout name "latlon" explicit_type "LatLon"
+	  param in name "d" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 138242 "impl"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 141442 "Shape3D_0"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.gps.GpsLocator;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.view.Shape;
+import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Vec4;
+import gov.nasa.worldwind.ogc.collada.ColladaRoot;
+import gov.nasa.worldwind.ogc.collada.impl.ColladaController;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.stream.XMLStreamException;
+${definition}"
+      associated_classes
+	class_ref 143618 // Shape3D_0
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 141570 "Shape_0"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.view.Shape;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
+${definition}"
+      associated_classes
+	class_ref 143746 // Shape_0
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 141698 "Shape_1"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.view.Shape;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfaceCircle;
+import javafx.scene.control.Button;
+${definition}"
+      associated_classes
+	class_ref 144002 // Shape_1
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 141826 "Shape_100"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.view.Shape;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.render.ShapeAttributes;
+${definition}"
+      associated_classes
+	class_ref 144258 // Shape_100
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+
+    artifact 141954 "Shape_4"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.view.StationShape;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Renderable;
+${definition}"
+      associated_classes
+	class_ref 143234 // Shape_4
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+end

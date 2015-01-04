@@ -1,0 +1,766 @@
+format 76
+"view" // bzh::terrevirtuelle::navisu::locators::view
+  revision 1
+  modified_by 2 "Serge"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  java_dir "d:/developpement/projetNaVisu/navisu/trunk/navisu/navisu-instruments/src/main/java/bzh/terrevirtuelle/navisu/locators/view/"
+  java_package "bzh.terrevirtuelle.navisu.locators.view"
+  classview 137986 "view"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    class 141186 "GShip"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "NaVisu
+
+@author tibus
+@date 19/02/2014 18:49"
+      classrelation 147586 // <realization>
+	relation 147586 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 147586 // <realization>
+	  b parent class_ref 130434 // GObject
+      end
+
+      attribute 146306 "id"
+	const_attribute protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 147714 // tShip (<unidirectional association>)
+	relation 147714 --->
+	  a role_name "tShip" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 147714 // tShip (<unidirectional association>)
+	  b parent class_ref 140674 // TShip
+      end
+
+      classrelation 147842 // shape (<unidirectional association>)
+	relation 147842 --->
+	  a role_name "shape" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 147842 // shape (<unidirectional association>)
+	  b parent class_ref 143106 // Shape
+      end
+
+      operation 159618 "GShip"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "id" explicit_type "int"
+	  param inout name "ship" type class_ref 140674 // TShip
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 159746 "getID"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 159874 "getShape"
+	public return_type class_ref 143106 // Shape
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 160002 "setShape"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "shape" type class_ref 143106 // Shape
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 160130 "getShip"
+	public return_type class_ref 140674 // TShip
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Get the value of ship
+
+@return the value of ship"
+      end
+
+      operation 160258 "setShip"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "ship" type class_ref 140674 // TShip
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	comment "Set the value of ship
+
+@param ship new value of ship"
+      end
+
+      operation 160386 "setLocation"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "location" explicit_type "Location"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 160514 "getAttributes"
+	public explicit_return_type "ShapeAttributes"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 160642 "getRenderables"
+	public explicit_return_type "Renderable"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[] ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 160770 "setCog"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cog" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 160898 "makeAttributes"
+	protected explicit_return_type "ShapeAttributes"
+	nparams 0
+	
+	preserve_java_body_indent final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 161026 "initShape"
+	private explicit_return_type "double"
+	nparams 2
+	  param in name "latitude" explicit_type "double"
+	  param in name "longitude" explicit_type "double"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[] ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 161154 "makePositionList"
+	protected explicit_return_type "List<Position>"
+	nparams 1
+	  param inout name "src" explicit_type "double"
+	
+	preserve_java_body_indent final java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0}[] ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 161282 "getClone"
+	public explicit_return_type "Object"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 161410 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 141314 "GStation"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "NaVisu
+
+@author Serge
+@date 01/04/2014 18:49"
+      classrelation 147970 // <realization>
+	relation 147970 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 147970 // <realization>
+	  b parent class_ref 130434 // GObject
+      end
+
+      attribute 146434 "id"
+	const_attribute protected explicit_type "int"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 148098 // tStation (<unidirectional association>)
+	relation 148098 --->
+	  a role_name "tStation" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 148098 // tStation (<unidirectional association>)
+	  b parent class_ref 140802 // TStation
+      end
+
+      classrelation 148226 // shape (<unidirectional association>)
+	relation 148226 --->
+	  a role_name "shape" protected
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 148226 // shape (<unidirectional association>)
+	  b parent class_ref 143234 // Shape_4
+      end
+
+      operation 161538 "GStation"
+	public explicit_return_type ""
+	nparams 2
+	  param in name "id" explicit_type "int"
+	  param inout name "tStation" type class_ref 140802 // TStation
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 161666 "getID"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 161794 "setLocation"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "location" explicit_type "Location"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 161922 "getRenderables"
+	public explicit_return_type "Renderable"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[] ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 162050 "getClone"
+	public explicit_return_type "Object"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 162178 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+
+      operation 162306 "getShape"
+	public return_type class_ref 143234 // Shape_4
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 162434 "getAttributes"
+	public explicit_return_type "PointPlacemarkAttributes"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 143106 "Shape"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      operation 162562 "setLocation"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "location" explicit_type "Location"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 143362 "ShipTypeColor"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 146562 "VIEW"
+	class_attribute const_attribute public explicit_type "Integer, Material"
+	init_value " Collections.unmodifiableMap(new HashMap<Integer, Material>() {
+        {
+            put(0, Material.YELLOW);
+            put(20, Material.ORANGE);
+            put(21, Material.WHITE);
+            put(22, Material.WHITE);
+            put(23, Material.WHITE);
+            put(24, Material.WHITE);
+            put(25, Material.WHITE);
+            put(26, Material.WHITE);
+            put(27, Material.WHITE);
+            put(28, Material.WHITE);
+            put(29, Material.WHITE);
+            put(30, new Material(new Color(0xFFA07A)));
+            put(31, new Material(new Color(0xFFA07A)));
+            put(32, Material.WHITE);
+            put(33, Material.WHITE);
+            put(34, Material.WHITE);
+            put(35, Material.GRAY);
+            put(36, new Material(new Color(0xFF00FF)));
+            put(37, new Material(new Color(0xFF00FF)));
+            put(38, Material.WHITE);
+            put(39, Material.WHITE);
+            put(40, new Material(new Color(0xFF6347)));
+            put(41, new Material(new Color(0xFF6347)));
+            put(42, new Material(new Color(0xFF6347)));
+            put(43, new Material(new Color(0xFF6347)));
+            put(44, new Material(new Color(0xFF6347)));
+            put(45, new Material(new Color(0xFF6347)));
+            put(46, new Material(new Color(0xFF6347)));
+            put(47, new Material(new Color(0xFF6347)));
+            put(48, new Material(new Color(0xFF6347)));
+            put(49, new Material(new Color(0xFF6347)));
+            put(50, new Material(new Color(0x40E0D0)));
+            put(51, new Material(new Color(0x40E0D0)));
+            put(52, new Material(new Color(0x40E0D0)));
+            put(53, new Material(new Color(0x40E0D0)));
+            put(54, new Material(new Color(0x40E0D0)));
+            put(55, Material.WHITE);
+            put(56, Material.WHITE);
+            put(57, Material.WHITE);
+            put(58, Material.WHITE);
+            put(59, Material.WHITE);
+            put(60, Material.BLUE);
+            put(61, Material.BLUE);
+            put(62, Material.BLUE);
+            put(63, Material.BLUE);
+            put(64, Material.BLUE);
+            put(65, Material.BLUE);
+            put(66, Material.BLUE);
+            put(67, Material.BLUE);
+            put(68, Material.BLUE);
+            put(69, Material.BLUE);
+            put(70, Material.GREEN);
+            put(71, Material.GREEN);
+            put(72, Material.GREEN);
+            put(73, Material.GREEN);
+            put(74, Material.GREEN);
+            put(75, Material.GREEN);
+            put(76, Material.GREEN);
+            put(77, Material.GREEN);
+            put(78, Material.GREEN);
+            put(79, Material.GREEN);
+            put(80, Material.RED);
+            put(81, Material.RED);
+            put(82, Material.RED);
+            put(83, Material.RED);
+            put(84, Material.RED);
+            put(85, Material.RED);
+            put(86, Material.RED);
+            put(87, Material.RED);
+            put(88, Material.RED);
+            put(89, Material.RED);
+            put(90, Material.WHITE);
+            put(91, Material.WHITE);
+            put(92, Material.WHITE);
+            put(93, Material.WHITE);
+            put(94, Material.WHITE);
+            put(95, Material.WHITE);
+            put(96, Material.WHITE);
+            put(97, Material.WHITE);
+            put(98, Material.WHITE);
+            put(99, Material.WHITE);
+        }
+    })"
+	stereotype "Map"
+	cpp_decl ""
+	java_decl "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${stereotype}<${type}> ${name}${value};
+"
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 162690 "toString"
+	public explicit_return_type "String"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	java_annotation "@Override
+"
+	
+	
+	
+      end
+    end
+
+    class 143490 "StationShape"
+      visibility public stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+@author Serge"
+      operation 162818 "setLocation"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "location" explicit_type "Location"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 162946 "setRotation"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "cog" explicit_type "double"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 163074 "getRenderables"
+	public explicit_return_type "Renderable"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type}[] ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 163202 "getAttributes"
+	public explicit_return_type "PointPlacemarkAttributes"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+  end
+
+  deploymentview 138114 "view"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    artifact 140930 "GShip"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.model.TShip;
+import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_0;
+import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_1;
+import bzh.terrevirtuelle.navisu.locators.view.impl.Shape3D_0;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import java.util.Arrays;
+import java.util.List;
+${definition}"
+      associated_classes
+	class_ref 141186 // GShip
+      end
+    end
+
+    artifact 141058 "GStation"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
+import bzh.terrevirtuelle.navisu.geodesy.Location;
+import bzh.terrevirtuelle.navisu.locators.model.TStation;
+import bzh.terrevirtuelle.navisu.locators.view.impl.Shape_4;
+import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.event.PositionEvent;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.render.Offset;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Renderable;
+${definition}"
+      associated_classes
+	class_ref 141314 // GStation
+      end
+    end
+
+    artifact 141186 "ShipTypeColor"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import gov.nasa.worldwind.render.Material;
+import java.awt.Color;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+${definition}"
+      associated_classes
+	class_ref 143362 // ShipTypeColor
+      end
+    end
+
+    artifact 141314 "StationShape"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import bzh.terrevirtuelle.navisu.geodesy.Location;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Renderable;
+${definition}"
+      associated_classes
+	class_ref 143490 // StationShape
+      end
+      comment "To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor."
+    end
+  end
+
+  package_ref 139138 // impl
+end

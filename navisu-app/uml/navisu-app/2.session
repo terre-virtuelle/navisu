@@ -1,25 +1,20 @@
-window_sizes 1280 962 192 1082 851 35
+window_sizes 1280 962 370 904 851 35
 diagrams
-  active  classdiagram_ref 128002 // navisu-app
-    816 856 102 4 0 0
+  classdiagram_ref 128002 // navisu-app
+    678 856 102 4 0 0
+  active  classdiagram_ref 134530 // navisu-DP
+    904 853 100 4 0 0
 end
 show_stereotypes
-selected class_ref 131842 // LayerCheckTreeImpl
+selected class_ref 140034 // AisLocator
 open
-  classview_ref 128002 // dpagent
-  classview_ref 128258 // impl
-  classview_ref 128386 // drivers
-  classview_ref 128514 // impl
-  classview_ref 128770 // guiagent
-  classview_ref 128898 // geoview
-  classview_ref 129026 // gobject
-  classview_ref 129154 // impl
-  classview_ref 129282 // impl
-  classview_ref 129410 // layertree
-  classview_ref 130050 // impl
-  classview_ref 129538 // impl
-  classview_ref 129666 // impl
-  classview_ref 130434 // processors
+  classview_ref 137218 // ais
+  classview_ref 137346 // controller
+  classview_ref 137474 // controller
+  classview_ref 137602 // model
+  classview_ref 137986 // view
   classview_ref 130562 // navisu-app
+  classview_ref 137858 // unknown
+  classview_ref 137090 // navisu-DP
 end
 end
