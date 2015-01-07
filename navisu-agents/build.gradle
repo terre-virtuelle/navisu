@@ -7,3 +7,6 @@ dependencies {
     compile project(':navisu-topology')
     compile fileTree(dir: 'lib', include: '*.jar') 
 }
+jar {
+   destinationDir project.file('../dest')
+}

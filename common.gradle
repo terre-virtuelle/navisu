@@ -32,8 +32,12 @@ dependencies {
 String mavenArtifactId = name
 
 task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
+    manifest{
+        attributes 'Main-Class': "bzh.terrevirtuelle.navisu.main.AppMain"
+    }
     classifier = 'sources'
     from sourceSets.main.allSource
+    baseName="NaVisu"
 }
 
 artifacts {
@@ -57,3 +61,7 @@ task createFolders(description: 'Creates the source folders if they do not exist
         }
     }
 }
+
+
+
+

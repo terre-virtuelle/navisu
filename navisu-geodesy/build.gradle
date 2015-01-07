@@ -6,3 +6,6 @@ if (!hasProperty('mainClass')) {
 dependencies {
     
 }
+jar {
+   destinationDir project.file('../dest')
+}
