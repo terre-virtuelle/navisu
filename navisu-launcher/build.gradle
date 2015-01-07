@@ -22,3 +22,6 @@ dependencies {
     compile project(':navisu-agents')
     compile fileTree(dir: 'lib', include: '*.jar')
 }
+jar {
+   destinationDir project.file('../dest')
+}
