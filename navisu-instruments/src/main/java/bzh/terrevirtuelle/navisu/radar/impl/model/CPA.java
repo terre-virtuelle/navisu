@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.radar;
-
-import org.capcaval.c3.component.ComponentService;
+package bzh.terrevirtuelle.navisu.radar.impl.model;
 
 /**
  *
  * @author Serge
  */
-public interface RadarServices
-        extends ComponentService {
-
-    void on();
-    default void off(){  
-    }
+public class CPA {
     
 }

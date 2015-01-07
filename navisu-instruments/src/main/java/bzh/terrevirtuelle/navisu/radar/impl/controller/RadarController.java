@@ -22,6 +22,7 @@ import bzh.terrevirtuelle.navisu.domain.ship.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.ShipBuilder;
 import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
 import bzh.terrevirtuelle.navisu.radar.impl.view.GRShip;
+import bzh.terrevirtuelle.navisu.radar.impl.view.GRShipImpl;
 import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
 import java.io.FileInputStream;
 
@@ -371,7 +372,7 @@ public class RadarController
     }
 
     private void setTarget(Ship ship, int centerX, int centerY) {
-        GRShip grship = new GRShip(ship, centerX, centerY, RADIUS);
+        GRShipImpl grship = new GRShipImpl(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMmsi()));
         grship.setOnMouseClicked((MouseEvent me) -> {
             if (first) {
@@ -380,6 +381,9 @@ public class RadarController
             } else {
                 grship.setRadius(RADIUS);
                 first = true;
+            }
+            if(me.isAltDown()){
+                System.out.println(grship.getShip().getLatitude()+"  "+grship.getShip().getLongitude());
             }
         });
 
@@ -404,7 +408,7 @@ public class RadarController
             Platform.runLater(() -> {
 
                 if (outOfRangeShips.containsKey(mmsiI)) {//Ships In range
-                    GRShip grship = outOfRangeShips.get(mmsiI);
+                    GRShipImpl grship = (GRShipImpl)outOfRangeShips.get(mmsiI);
                     radar.getChildren().add(grship);
                     outOfRangeShips.remove(mmsiI, grship);
                 }
@@ -454,7 +458,7 @@ public class RadarController
     }
 
     private void setTarget(Transceiver transceiver, int centerX, int centerY) {
-        GRShip grship = new GRShip(ship, centerX, centerY, RADIUS);
+        GRShipImpl grship = new GRShipImpl(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMmsi()));
         grship.setOnMouseClicked((MouseEvent me) -> {
             if (first) {
