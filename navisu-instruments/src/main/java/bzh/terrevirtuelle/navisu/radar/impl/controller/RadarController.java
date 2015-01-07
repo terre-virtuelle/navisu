@@ -77,8 +77,8 @@ public class RadarController
     boolean first = true;
     final Rotate rotationTransform = new Rotate(0, 0, 0);
     protected Timeline fiveSecondsWonder;
-    protected final int CENTER_X = 425;//425
-    protected final int CENTER_Y = 429;//429
+    protected final int CENTER_X = 525;//425 + 100 suite rajout pane
+    protected final int CENTER_Y = 494;//429 + 65 et agrandissement faisceau
     protected double latOwner = 0.0;
     protected double lonOwner = 0.0;
     protected double posX = 0.0;
