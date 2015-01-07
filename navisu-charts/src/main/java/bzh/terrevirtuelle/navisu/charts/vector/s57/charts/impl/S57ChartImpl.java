@@ -52,7 +52,11 @@ public class S57ChartImpl
     LayerTreeServices layerTreeServices;
 
     private static final String NAME = "S57";
-    private static final String EXTENSION = ".000";
+    //  private static final String EXTENSION = ".000";
+    private static final String EXTENSION_0 = ".000";
+    private static final String EXTENSION_1 = ".001";
+    private static final String EXTENSION_2 = ".002";
+    private static final String EXTENSION_3 = ".003";
     protected static final String GROUP = "S57 charts";
     static private int i = 0;
     protected ChartS57Controller chartS57Controller;
@@ -103,10 +107,15 @@ public class S57ChartImpl
 
         boolean canOpen = false;
 
-        if (file.toLowerCase().endsWith(EXTENSION)) {
+        //  if (file.toLowerCase().endsWith(EXTENSION)) {
+        //      canOpen = true;
+        //  }
+        if (file.toLowerCase().endsWith(EXTENSION_0)
+                || file.toLowerCase().endsWith(EXTENSION_1)
+                || file.toLowerCase().endsWith(EXTENSION_2)
+                || file.toLowerCase().endsWith(EXTENSION_3)) {
             canOpen = true;
         }
-
         return canOpen;
     }
 
@@ -148,6 +157,7 @@ public class S57ChartImpl
             String options
                     = "\"RECODE_BY_DSSI=ON, "
                     + "ENCODING=UTF8, "
+                    + "UPDATES=APPLY, "
                     + "RETURN_PRIMITIVES=ON, "
                     + "RETURN_LINKAGES=ON, "
                     + "LNAM_REFS=ON, "
@@ -205,6 +215,7 @@ public class S57ChartImpl
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, null, e);
             }
+        
             chartS57Controller = ChartS57Controller.getInstance();
             //  chartS57Controller.setSurveyZoneController(surveyZoneController);
             chartS57Controller.init("data/shp/shp_" + i++);
@@ -251,7 +262,11 @@ public class S57ChartImpl
 
     @Override
     public String[] getExtensions() {
-        return new String[]{"*" + EXTENSION};
+        return new String[]{"*" + EXTENSION_0,
+            "*" + EXTENSION_1,
+            "*" + EXTENSION_2,
+            "*" + EXTENSION_3
+        };
     }
 
     @Override
