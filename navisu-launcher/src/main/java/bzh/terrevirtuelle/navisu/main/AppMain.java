@@ -103,7 +103,7 @@ public class AppMain extends Application {
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
         RadarServices radarServices = componentManager.getComponentService(RadarServices.class);
-        radarServices.on();
+      //  radarServices.on();
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
