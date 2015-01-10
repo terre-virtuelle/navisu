@@ -24,7 +24,7 @@
 /navisu-launcher/data/charts/
 /navisu-launcher/data/shp/
 /navisu-launcher/errors.txt
-#/navisu-launcher/properties/
+/navisu-launcher/properties/
 /navisu-agents/.nb-gradle/private/
 /navisu-app/.nb-gradle/private/
 /navisu-charts/.nb-gradle/private/
