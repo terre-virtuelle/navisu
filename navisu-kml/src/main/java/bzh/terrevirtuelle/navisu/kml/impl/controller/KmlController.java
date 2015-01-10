@@ -5,16 +5,22 @@
  */
 package bzh.terrevirtuelle.navisu.kml.impl.controller;
 
+import bzh.terrevirtuelle.navisu.kml.impl.controller.wwj.KMLApplicationController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.ogc.kml.KMLAbstractFeature;
 import gov.nasa.worldwind.ogc.kml.KMLRoot;
 import gov.nasa.worldwind.ogc.kml.impl.KMLController;
-import gov.nasa.worldwindx.examples.kml.KMLApplicationController;
+import gov.nasa.worldwind.util.WWIO;
+import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwindx.examples.util.BalloonController;
 import gov.nasa.worldwindx.examples.util.HotSpotController;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -73,6 +79,8 @@ public class KmlController {
             KMLRoot document = KMLRoot.createAndParse(path);
             KMLController kmlController = new KMLController(document);
             RenderableLayer layer = new RenderableLayer();
+            // Set the document's display name
+             document.setField(AVKey.DISPLAY_NAME,formName(this.path, document));
             layer.setName(path);
             layer.addRenderable(kmlController);
             layers.add(layer);
@@ -82,5 +90,22 @@ public class KmlController {
         return layers;
     }
 
-    
+    protected static String formName(Object kmlSource, KMLRoot kmlRoot)
+    {
+        KMLAbstractFeature rootFeature = kmlRoot.getFeature();
+
+        if (rootFeature != null && !WWUtil.isEmpty(rootFeature.getName()))
+            return rootFeature.getName();
+
+        if (kmlSource instanceof File)
+            return ((File) kmlSource).getName();
+
+        if (kmlSource instanceof URL)
+            return ((URL) kmlSource).getPath();
+
+        if (kmlSource instanceof String && WWIO.makeURL((String) kmlSource) != null)
+            return WWIO.makeURL((String) kmlSource).getPath();
+
+        return "KML Layer";
+    }
 }

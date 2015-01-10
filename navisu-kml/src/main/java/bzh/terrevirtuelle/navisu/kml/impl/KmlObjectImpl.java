@@ -81,19 +81,20 @@ public class KmlObjectImpl
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         KmlController kmlController = KmlController.getInstance();
         layers = kmlController.init(fileName);
-       
+      
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();
-            if (name.contains(NAME)) {
-                l.setPickEnabled(true);
-            } else {
-                l.setPickEnabled(false);
-            }
+        //    if (name.contains(NAME)) {
+        //        l.setPickEnabled(true);
+         //   } else {
+        //        l.setPickEnabled(false);
+        //    }
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
+        
     }
 
     private void clip() {
