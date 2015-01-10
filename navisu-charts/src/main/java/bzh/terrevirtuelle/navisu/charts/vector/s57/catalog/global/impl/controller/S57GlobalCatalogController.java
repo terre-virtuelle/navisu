@@ -8,18 +8,14 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controll
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.ogc.kml.KMLAbstractFeature;
 import gov.nasa.worldwind.ogc.kml.KMLRoot;
 import gov.nasa.worldwind.ogc.kml.impl.KMLController;
-import gov.nasa.worldwind.util.WWIO;
-import gov.nasa.worldwind.util.WWUtil;
-import gov.nasa.worldwindx.examples.util.BalloonController;
-import gov.nasa.worldwindx.examples.util.HotSpotController;
-import java.io.File;
+import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,11 +26,9 @@ import javax.xml.stream.XMLStreamException;
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class S57GlobalCatalogController {
+public class S57GlobalCatalogController
+        implements SelectListener {
 
-    protected HotSpotController hotSpotController;
-    protected KMLApplicationController kmlAppController;
-    protected BalloonController balloonController;
     protected WorldWindow wwd;
     private static final S57GlobalCatalogController INSTANCE;
     protected String path;
@@ -48,24 +42,7 @@ public class S57GlobalCatalogController {
     private S57GlobalCatalogController() {
         layers = new ArrayList<>();
         wwd = GeoWorldWindViewImpl.getWW();
-        // Add a controller to handle input events on the layer selector and on browser balloons.
-        this.hotSpotController = new HotSpotController(wwd);
-
-        // Add a controller to handle common KML application events.
-        this.kmlAppController = new KMLApplicationController(wwd);
-
-        // Add a controller to display balloons when placemarks are clicked. We override the method addDocumentLayer
-        // so that loading a KML document by clicking a KML balloon link displays an entry in the on-screen layer
-        // tree.
-        this.balloonController = new BalloonController(wwd) {
-            @Override
-            protected void addDocumentLayer(KMLRoot document) {
-                //addKMLLayer(document);
-            }
-        };
-        // Give the KML app controller a reference to the BalloonController so that the app controller can open
-        // KML feature balloons when feature's are selected in the on-screen layer tree.
-//        this.kmlAppController.setBalloonController(balloonController);
+        this.wwd.addSelectListener(this);
     }
 
     public static S57GlobalCatalogController getInstance() {
@@ -78,9 +55,7 @@ public class S57GlobalCatalogController {
             KMLRoot document = KMLRoot.createAndParse(path);
             KMLController kmlController = new KMLController(document);
             RenderableLayer layer = new RenderableLayer();
-            // Set the document's display name
-             document.setField(AVKey.DISPLAY_NAME,formName(this.path, document));
-            layer.setName(path);
+            layer.setName("Global Catalog");
             layer.addRenderable(kmlController);
             layers.add(layer);
         } catch (IOException | XMLStreamException ex) {
@@ -89,22 +64,15 @@ public class S57GlobalCatalogController {
         return layers;
     }
 
-    protected static String formName(Object kmlSource, KMLRoot kmlRoot)
-    {
-        KMLAbstractFeature rootFeature = kmlRoot.getFeature();
-
-        if (rootFeature != null && !WWUtil.isEmpty(rootFeature.getName()))
-            return rootFeature.getName();
-
-        if (kmlSource instanceof File)
-            return ((File) kmlSource).getName();
-
-        if (kmlSource instanceof URL)
-            return ((URL) kmlSource).getPath();
-
-        if (kmlSource instanceof String && WWIO.makeURL((String) kmlSource) != null)
-            return WWIO.makeURL((String) kmlSource).getPath();
-
-        return "KML Layer";
+    @Override
+    public void selected(SelectEvent event) {
+        if (event.isRightClick()) {
+            Object topObject = event.getTopObject();
+             if (topObject != null) {
+                if (topObject.getClass() == KMLSurfacePolygonImpl.class) {
+                    System.out.println("topObject " + ((KMLSurfacePolygonImpl) topObject).getEntries());
+                }
+            }
+        }
     }
 }
