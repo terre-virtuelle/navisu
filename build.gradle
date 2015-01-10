@@ -23,20 +23,5 @@ task wrapper(type: Wrapper, description: 'Creates and deploys the Gradle wrapper
     gradleVersion = '1.7'
 }
 
-
-subprojects.each { subproject -> evaluationDependsOn(subproject.path)}
-
- task allJar( type: Jar, dependsOn:  subprojects.tasks["build"] ) {
-    manifest{
-        attributes 'Main-Class': 'bzh.terrevirtuelle.navisu.main.AppMain',
-         'Class-Path': '.;./lib/c3.jar'
-
-    }
-   baseName = 'NaVisu'
-   subprojects.each { subproject -> 
-      from subproject.configurations.archives.allArtifacts.files.collect {
-         zipTree(it)
-       }
-    }
- }
+ 
 

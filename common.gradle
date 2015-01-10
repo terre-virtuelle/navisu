@@ -39,6 +39,7 @@ task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from 
     from sourceSets.main.allSource
     baseName="NaVisu"
 }
+subprojects.each { subproject -> evaluationDependsOn(subproject.path)}
 
 artifacts {
     archives jar
