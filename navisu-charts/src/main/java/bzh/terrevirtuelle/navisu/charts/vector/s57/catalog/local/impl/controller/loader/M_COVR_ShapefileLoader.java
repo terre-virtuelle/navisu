@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.impl.controller.loader;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.S57ShapeFileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ShapefileLoader;

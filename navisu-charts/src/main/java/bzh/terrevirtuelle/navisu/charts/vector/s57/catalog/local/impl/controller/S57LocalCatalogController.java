@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.impl.controller;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.impl.controller;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.impl.controller.loader.M_COVR_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.impl.controller.loader.M_COVR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
@@ -23,9 +23,9 @@ import java.util.Map;
  * @author Serge Morvan
  * @date 02/11/2014 12:49
  */
-public class S57CatalogController {
+public class S57LocalCatalogController {
 
-    private static final S57CatalogController INSTANCE;
+    private static final S57LocalCatalogController INSTANCE;
     protected String path;
     private File file;
     private Map<String, String> acronyms;
@@ -37,10 +37,10 @@ public class S57CatalogController {
     private SurveyZoneController surveyZoneController;
 
     static {
-        INSTANCE = new S57CatalogController();
+        INSTANCE = new S57LocalCatalogController();
     }
 
-    public S57CatalogController() {
+    public S57LocalCatalogController() {
         // surveyZoneController = new SurveyZoneController();
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
@@ -57,7 +57,7 @@ public class S57CatalogController {
         return layer;
     }
 
-    public static S57CatalogController getInstance() {
+    public static S57LocalCatalogController getInstance() {
         return INSTANCE;
     }
 

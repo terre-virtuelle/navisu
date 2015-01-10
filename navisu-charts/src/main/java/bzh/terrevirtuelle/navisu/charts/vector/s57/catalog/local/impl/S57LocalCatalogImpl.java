@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.impl;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.ddriver.DDriver;
@@ -6,15 +6,14 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.S57Catalog;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.S57CatalogServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.impl.controller.S57CatalogController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.S57LocalCatalog;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.S57LocalCatalogServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.impl.controller.S57LocalCatalogController;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.Layer;
 import java.io.File;
 import java.io.IOException;
@@ -35,14 +34,13 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
-import javafx.scene.Scene;
 
 /**
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class S57CatalogImpl
-        implements S57Catalog, S57CatalogServices, DDriver, ComponentState {
+public class S57LocalCatalogImpl
+        implements S57LocalCatalog, S57LocalCatalogServices, DDriver, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -56,10 +54,10 @@ public class S57CatalogImpl
     protected static final String GROUP = "S57 catalog";
     private int i = 0;
     private int j = 1;
-    protected S57CatalogController s57CatalogController;
+    protected S57LocalCatalogController s57CatalogController;
     protected List<Layer> layers;
     protected Set<Layer> layersSet;
-    protected static final Logger LOGGER = Logger.getLogger(S57CatalogImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(S57LocalCatalogImpl.class.getName());
     protected WorldWindow wwd;
     private Map<String, String> environment;
     private boolean enabled;
@@ -150,7 +148,7 @@ public class S57CatalogImpl
 
     @Override
     public void parse() {
-        s57CatalogController = S57CatalogController.getInstance();
+        s57CatalogController = S57LocalCatalogController.getInstance();
         layers = s57CatalogController.getLayers();
         files.stream().forEach((s) -> {
             layers.addAll(s57CatalogController.parse(root + "data\\shp\\catalog\\shp_" + j++));
@@ -225,7 +223,7 @@ public class S57CatalogImpl
                 }
             });
         } catch (IOException ex) {
-            Logger.getLogger(S57CatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(S57LocalCatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
