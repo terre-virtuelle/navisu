@@ -8,6 +8,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalog;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controller.S57GlobalCatalogController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -22,7 +23,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +38,14 @@ import org.capcaval.c3.component.annotation.UsedService;
  */
 public class S57GlobalCatalogImpl
         implements S57GlobalCatalog, S57GlobalCatalogServices, Driver, ComponentState {
-
+    
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
     LayerTreeServices layerTreeServices;
-
+    @UsedService
+    S57ChartServices s57ChartServices;
+    
     private static final String NAME = "S57 catalog";
     private static final String EXTENSION_0 = ".kmz";
     private static final String EXTENSION_1 = ".kml";
@@ -52,11 +54,11 @@ public class S57GlobalCatalogImpl
     protected List<Layer> layers;
     protected static final Logger LOGGER = Logger.getLogger(S57GlobalCatalogImpl.class.getName());
     protected WorldWindow wwd;
-
+    
     @Override
     public void componentInitiated() {
         layerTreeServices.createGroup(GROUP);
-
+        
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
             float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
@@ -66,7 +68,7 @@ public class S57GlobalCatalogImpl
                 unClip();
             }
         });
-
+        
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/user.properties"));
@@ -82,7 +84,7 @@ public class S57GlobalCatalogImpl
             }
         }
     }
-
+    
     Map<String, Path> listSourceFiles(Path dir) throws IOException {
         Map<String, Path> result = new HashMap<>();
         Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
@@ -102,33 +104,34 @@ public class S57GlobalCatalogImpl
         });
         return result;
     }
-
+    
     @Override
     public boolean canOpen(String file) {
-
+        
         boolean canOpen = false;
-
+        
         if (file.toLowerCase().endsWith(EXTENSION_0) || file.toLowerCase().endsWith(EXTENSION_1)) {
             canOpen = true;
         }
-
+        
         return canOpen;
     }
-
+    
     @Override
     public void open(ProgressHandle pHandle, String... files) {
-
+        
         for (String file : files) {
             this.handleOpenFile(pHandle, file);
         }
     }
-
-    protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-
+    
+    public void handleOpenFile(ProgressHandle pHandle, String fileName) {
+        
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         S57GlobalCatalogController s57GlobalCatalogController = S57GlobalCatalogController.getInstance();
+        s57GlobalCatalogController.setS57GlobalCatalogImpl(this);
         layers = s57GlobalCatalogController.init(fileName);
-
+        
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
@@ -136,7 +139,11 @@ public class S57GlobalCatalogImpl
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
     }
-
+    
+    public void loadFile(String filename) {
+        s57ChartServices.openChart(filename);
+    }
+    
     private void clip() {
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains(NAME))).forEach((l) -> {
@@ -144,7 +151,7 @@ public class S57GlobalCatalogImpl
             });
         }
     }
-
+    
     private void unClip() {
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains(NAME))).forEach((l) -> {
@@ -152,31 +159,35 @@ public class S57GlobalCatalogImpl
             });
         }
     }
-
+    
     @Override
     public String getName() {
         return NAME;
     }
-
+    
     @Override
     public String[] getExtensions() {
         return new String[]{"*" + EXTENSION_0, "*" + EXTENSION_1};
     }
-
+    
     @Override
     public void openFile(String file) {
         this.open(null, file);
     }
-
+    
+    public Map<String, Path> getFiles() {
+        return files;
+    }
+    
     @Override
     public Driver getDriver() {
         return this;
     }
-
+    
     @Override
     public void componentStarted() { /* Nothing to do here */ }
-
+    
     @Override
     public void componentStopped() { /* Nothing to do here */ }
-
+    
 }
