@@ -27,7 +27,7 @@ public class Widget3DImpl
 
     @UsedService
     DpAgentServices dpAgentServices;
-    
+
     @UsedService
     GuiAgentServices guiAgentServices;
 

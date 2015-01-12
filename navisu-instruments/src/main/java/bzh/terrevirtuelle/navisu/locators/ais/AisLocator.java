@@ -31,9 +31,9 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.ship.parameters.ShipType;
+import bzh.terrevirtuelle.navisu.locators.ais.controller.AisLocatorController;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
@@ -42,9 +42,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BalloonAttributes;
 import gov.nasa.worldwind.render.BasicBalloonAttributes;
 import gov.nasa.worldwind.render.GlobeBalloon;
-import gov.nasa.worldwind.render.GlobeBrowserBalloon;
 import gov.nasa.worldwind.render.Size;
-import gov.nasa.worldwindx.examples.util.PowerOfTwoPaddedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -56,7 +54,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentEventSubscribe;
+import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -67,23 +70,19 @@ public class AisLocator {
 
     protected GeoLayer<Layer> aisLayer;
     protected GeoLayer<Layer> aisStationLayer;
-    protected RenderableLayer baloonLayer;
-
-    protected AisLocatorControllerWithDPAgent aisLocatorController;
+  //  protected RenderableLayer baloonLayer;
+    protected AisLocatorControllerWithDPAgent aisLocatorControllerWithDPAgent;
     protected AisStationLocatorControllerWithDPAgent aisStationLocatorControllerWithDPAgent;
+    protected AisLocatorController aisLocatorController;
     protected Map<Integer, ShipProcessor> tShipProcessors;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, StationProcessor> tStationsProcessors;
     protected Map<Integer, String> midMap;
-
     protected GeoViewServices geoViewServices;
     protected DpAgentServices dpAgentServices;
     protected GuiAgentServices guiAgentServices;
-
     protected GeoWorldWindView geoView;
-    String str = BROWSER_BALLOON_CONTENT_PATH;
-    private final static PowerOfTwoPaddedImage IMAGE_EARTH
-            = PowerOfTwoPaddedImage.fromPath("logoTV200.png");
+    protected final String MID_MAP = "data/ais/mmsi.txt";
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
     TShip ship;
@@ -97,10 +96,10 @@ public class AisLocator {
     boolean first = true;
     boolean firstBt = true;
     // StackPane pane;
-    Position balloonPosition;
+   // Position balloonPosition;
     //  AbstractBrowserBalloon balloon;
-    GlobeBalloon balloon;
-    BalloonAttributes attrs;
+    //GlobeBalloon balloon;
+    //BalloonAttributes attrs;
 
     WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
@@ -111,12 +110,9 @@ public class AisLocator {
         this.geoViewServices = geoViewServices;
         this.dpAgentServices = dpAgentServices;
         this.guiAgentServices = guiAgentServices;
-
         tShipProcessors = new HashMap<>();
         tStationsProcessors = new HashMap<>();
         timestamps = new HashMap<>();
-
-        //      pane = guiAgentServices.getRoot();
         this.aisLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
 
         aisLayer.setName("AIS Layer");
@@ -134,14 +130,14 @@ public class AisLocator {
         this.aisStationLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
         aisStationLayer.setName("AIS_Station_Layer");
         geoViewServices.getLayerManager().insertGeoLayer(this.aisStationLayer);
-        this.baloonLayer = new RenderableLayer();
-        wwd.getModel().getLayers().add(baloonLayer);
-        attrs = new BasicBalloonAttributes();
-        attrs.setSize(Size.fromPixels(600, 320));
+    //    this.baloonLayer = new RenderableLayer();
+    //    wwd.getModel().getLayers().add(baloonLayer);
+      //  attrs = new BasicBalloonAttributes();
+      //  attrs.setSize(Size.fromPixels(600, 320));
         midMap = new HashMap<>();
         String[] midEntries;
         try {
-            try (BufferedReader br = new BufferedReader(new FileReader("data/ais/mmsi.txt"))) {
+            try (BufferedReader br = new BufferedReader(new FileReader(MID_MAP))) {
                 String s;
                 while ((s = br.readLine()) != null) {
                     if (!s.isEmpty()) {
@@ -164,6 +160,13 @@ public class AisLocator {
                     }
                 }
             }
+        });
+        Platform.runLater(() -> {
+            aisLocatorController = new AisLocatorController(KeyCode.B, KeyCombination.CONTROL_DOWN);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisLocatorController);
+            guiAgentServices.getRoot().getChildren().add(aisLocatorController); //Par defaut le radar n'est pas visible Ctrl-A
+            aisLocatorController.scale(1.0);
+            aisLocatorController.setVisible(false);
         });
         subscribe();
     }
@@ -189,7 +192,7 @@ public class AisLocator {
                                 ais.getETA(), ais.getDestination(), "");
                         dpAgentServices.create(ship);
 
-                        aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+                        aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
 
                         tShipProcessors.put(mmsi, shipProcessor);
                     }
@@ -218,7 +221,7 @@ public class AisLocator {
                             ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
                             ais.getETA(), ais.getDestination(), "");
                     dpAgentServices.create(ship);
-                    aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+                    aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
                     tShipProcessors.put(mmsi, shipProcessor);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -244,7 +247,7 @@ public class AisLocator {
                             ais.getETA(), ais.getDestination(), "");
                     dpAgentServices.create(ship);
 
-                    aisLocatorController = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+                    aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
                     tShipProcessors.put(mmsi, shipProcessor);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -282,112 +285,9 @@ public class AisLocator {
     }
 
     protected final void makeBrowserBalloon(TShip ship) {
-        String htmlString = updateHtmlString(ship);
-        this.baloonLayer.removeAllRenderables();
-
-        balloonPosition = Position.fromDegrees(ship.getLatitude(), ship.getLongitude());
-       balloon = new GlobeBrowserBalloon(htmlString, balloonPosition);//Non supporté par Linux
-       // balloon = new GlobeAnnotationBalloon(htmlString, balloonPosition);
-        balloon.setAttributes(attrs);
-        balloon.getAttributes().setImageSource(IMAGE_EARTH.getPowerOfTwoImage());
-        balloon.getAttributes().setImageRepeat(AVKey.REPEAT_NONE);
-        //   balloon.getAttributes().setImageScale(7);
-        //  balloon.getAttributes().setImageOffset(new Point(7, 7));
-
-        this.baloonLayer.addRenderable(balloon);
-    }
-
-    protected String updateHtmlString(TShip ship) {
-        String tmp;
-        if (ship.getName() != null) {
-            tmp = str.replace("__shipname__", ship.getName());
-        } else {
-            tmp = str.replace("__shipname__", "");
-        }
-        if (ship.getType() != 0) {
-            tmp = tmp.replace("__shiptype__", ShipType.TYPE.get(ship.getType()));
-        } else {
-            tmp = tmp.replace("__shiptype__", "");
-        }
-        if (ship.getCallSign() != null) {
-            tmp = tmp.replace("__callsign__", ship.getCallSign());
-        } else {
-            tmp = tmp.replace("__callsign__", "");
-        }
-        if (ship.getMmsi() != 0) {
-            tmp = tmp.replace("__mmsi__", Integer.toString(ship.getMmsi()));
-            long seconds = Calendar.getInstance().getTimeInMillis()
-                    - timestamps.get(ship.getMmsi()).getTimeInMillis();
-            tmp = tmp.replace("__seconds__", Long.toString(seconds / 1000) + " s");
-        } else {
-            tmp = tmp.replace("__mmsi__", "");
-        }
-        if (ship.getImo() != 0) {
-            tmp = tmp.replace("__imo__", Integer.toString(ship.getImo()));
-        } else {
-            tmp = tmp.replace("__imo__", "");
-        }
-        if (ship.getLength() != 0) {
-            tmp = tmp.replace("__length__", Float.toString(ship.getLength()) + " m");
-        } else {
-            tmp = tmp.replace("__length__", "");
-        }
-        if (ship.getWidth() != 0) {
-            tmp = tmp.replace("__width__", Float.toString(ship.getWidth()) + " m");
-        } else {
-            tmp = tmp.replace("__width__", "");
-        }
-        if (ship.getDraught() != 0) {
-            tmp = tmp.replace("__draught__", Float.toString(ship.getDraught()) + " m");
-        } else {
-            tmp = tmp.replace("__draught__", "");
-        }
-        if (ship.getNavigationalStatus() != 0) {
-            tmp = tmp.replace("__status__", Integer.toString(ship.getNavigationalStatus()));
-        } else {
-            tmp = tmp.replace("__status__", "");
-        }
-        if (ship.getSog() != 0) {
-            tmp = tmp.replace("__sog__", nf.format(ship.getSog()) + " Kn");
-        } else {
-            tmp = tmp.replace("__sog__", "");
-        }
-        if (ship.getCog() != 0 && ship.getCog() != 511) {
-            tmp = tmp.replace("__cog__", (int) ship.getCog() + " °");
-        } else {
-            tmp = tmp.replace("__cog__", "");
-        }
-        if (ship.getDestination() != null) {
-            tmp = tmp.replace("__destination__", ship.getDestination());
-        } else {
-            tmp = tmp.replace("__destination__", "");
-        }
-        if (ship.getETA() != null) {
-            tmp = tmp.replace("__eta__", dt.format(ship.getETA().getTime()));
-        } else {
-            tmp = tmp.replace("__eta__", "");
-        }
-        if (ship.getLatitude() != 0) {
-            tmp = tmp.replace("__latitude__", nf.format(ship.getLatitude()));
-        } else {
-            tmp = tmp.replace("__latitude__", "");
-        }
-        if (ship.getLongitude() != 0) {
-            tmp = tmp.replace("__longitude__", nf.format(ship.getLongitude()));
-        } else {
-            tmp = tmp.replace("__longitude__", "");
-        }
-        if (ship.getMmsi() != 0) {
-            String mmsiStr = Integer.toString(ship.getMmsi());
-            String mid = mmsiStr.substring(0, 3);
-            tmp = tmp.replace("__country__", midMap.get(new Integer(mid)));
-        } else {
-            tmp = tmp.replace("__country__", "");
-        }
-        if (ship.getMmsi() != 0) {
-            tmp = tmp.replace("photo_keywords:", "photo_keywords:" + ship.getMmsi());
-        }
-        return tmp;
+        Platform.runLater(() -> {
+            aisLocatorController.updateAisPanel(ship, timestamps, midMap);
+        });
     }
 
     private void clip() {
@@ -398,95 +298,4 @@ public class AisLocator {
         aisStationLayer.getDisplayLayer().setEnabled(true);
     }
 
-    protected static final String BROWSER_BALLOON_CONTENT_PATH = "<!--\n"
-            + "  ~ Copyright (C) 2014 Terre Virtuelle NaVisu Project.\n"
-            + "  ~ All Rights Reserved.\n"
-            + "  -->\n"
-            + "\n"
-            + "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n"
-            + "        \"http:&nbsp;//www.w3.org/TR/html4/loose.dtd\">\n"
-            + "\n"
-            + "<!-- $Id: AISTemplate.html 1171 2014-02-12 21:45:02Z Serge Morvan$ -->\n"
-            + "\n"
-            + "<html>\n"
-            + "<head></head>\n"
-            + "<body>\n"
-            + "	<center>\n"
-            + "<table border  width=\"500\" cellpadding=\"0\" cellspacing=\"0\">\n"
-            + "    <tr>\n"
-            + "    <td colspan=\"3\" align=\"left\" valign=\"top\">\n"
-            + "                 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
-            + "                    <tr> \n"
-            + "                 <!--   <td align=\"left\" valign=\"middle\"><img src=\"logoTV200.png\" alt=\"logo\"/></td>-->\n"
-            + "		    <td align=\"right\"><font color=\"#999999\"><strong>  Name :&nbsp; </strong></font></td>\n"
-            + "                    <td><font color=\"#000000\" size=\"+2\"strong>__shipname__</strong></font></td>\n"
-            + "	            </tr>\n"
-            + "                    <tr>\n"
-            + "		    <td align=\"right\"><font color=\"#999999\"><strong>  Type :&nbsp; </strong></font></td>\n"
-            + "		    <td><font color=\"#000000\"><strong> __shiptype__<strong> </font> </td>\n"
-            + "                    <td align=\"right\"><font color=\"#999999\"><strong>  Age report :&nbsp; </strong></font></td>\n"
-            + "		    <td><font color=\"#000000\"><strong> __seconds__ <strong> </font> </td>\n"
-            + "\n"
-            + "	            </tr>\n"
-            + "		 </table>\n"
-            + "</br>\n"
-            + "		 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
-            + "	            <tr>\n"
-            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  CallSign :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __callsign__<strong> </font> </td>\n"
-            + "                    <td align=\"left\"><font color=\"#999999\"><strong>  MMSI :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __mmsi__<strong> </font> </td>\n"
-            + "                    <td><font color=\"#999999\"><strong> IMO :&nbsp; </strong></font></td>\n"
-            + "		    <td><font color=\"#000000\"><strong>  __imo__<strong> </font> </td>\n"
-            + "                    </tr>\n"
-            + "\n"
-            + "                    <tr>\n"
-            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Length :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\"><font color=\"#000000\"><strong>  __length__<strong> </font> </td>\n"
-            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Width :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\"><font color=\"#000000\"><strong>  __width__<strong> </font> </td>\n"
-            + "		    <td><font color=\"#999999\"><strong> Draught :&nbsp; </strong></font></td>\n"
-            + "		    <td><font color=\"#000000\"><strong>  __draught__<strong> </font> </td>\n"
-            + "                    </tr>\n"
-            + "\n"
-            + "                    <tr>\n"
-            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Status :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\"><font color=\"#000000\"><strong>  __status__<strong> </font> </td>\n"
-            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  SOG :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\"><font color=\"#000000\"><strong>  __sog__<strong> </font> </td>\n"
-            + "		    <td><font color=\"#999999\"><strong> COG :&nbsp; </strong></font></td>\n"
-            + "		    <td><font color=\"#000000\"><strong>  __cog__<strong> </font> </td>\n"
-            + "                    </tr>\n"
-            + "                 </table>  \n"
-            + "</br> \n"
-            + "                 <table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
-            + "	            <tr>\n"
-            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Destination :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __destination__<strong> </font> </td>\n"
-            + "                    <td align=\"left\"><font color=\"#999999\"><strong>  ETA :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __eta__<strong> </font> </td>                \n"
-            + "                    </tr>\n"
-            + "                    <tr>\n"
-            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Latitude :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __latitude__<strong> </font> </td>\n"
-            + "                    <td align=\"left\"><font color=\"#999999\"><strong>  Longitude :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __longitude__<strong> </font> </td>             \n"
-            + "                    </tr>\n"
-            + "		    <td align=\"left\"><font color=\"#999999\"><strong>  Country :&nbsp; </strong></font></td>\n"
-            + "		    <td align=\"left\">	<font color=\"#000000\"><strong>  __country__<strong> </font> </td>\n"
-            + "	    </table> \n"
-            + "</br></br>\n"
-            + "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n"
-            + "	   <tr>\n"
-            + "<!--	   <td >\n"
-            + "	   <a href=\"http://www.marinetraffic.com/fr/photos/of/ships/photo_keywords:\"><strong>\n"
-            + "				   <font color=\"#CC3333\">Marine Traffic informations</font></strong></a>\n"
-            + "	   </td>\n"
-            + "-->"
-            + " </tr>\n"
-            + " </table>"
-            + "	</td> \n"
-            + "</center>\n"
-            + "</body>\n"
-            + "</html>\n";
 }
