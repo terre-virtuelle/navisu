@@ -22,39 +22,26 @@ import javafx.scene.web.WebEngine;
  *
  * @author Serge
  */
-public class WebView 
-extends WidgetImpl_1 {
+public class WebView
+        extends WidgetImpl_1 {
 
-    private HBox toolBar;
-    private static String[] imageFiles = new String[]{
-        "product.png",
-        "blog.png",
-        "documentation.png",
-        "partners.png",
-        "help.png"
-    };
-    private static String[] captions = new String[]{
-        "Products",
-        "Blogs",
-        "Documentation",
-        "Partners",
-        "Help"
-    };
-    private static String[] urls = new String[]{
-        "http://www.oracle.com/products/index.html",
-        "http://blogs.oracle.com/",
-        "http://docs.oracle.com/javase/index.html",
-        "http://www.oracle.com/partners/index.html", //     WebView.class.getResource("help.html").toExternalForm()
-    };
+    
     final ImageView selectedImage = new ImageView();
-    final Hyperlink[] hpls = new Hyperlink[captions.length];
-    final Image[] images = new Image[imageFiles.length];
     final javafx.scene.web.WebView browser = new javafx.scene.web.WebView();
     final WebEngine webEngine = browser.getEngine();
     final Button showPrevDoc = new Button("Toggle Previous Docs");
     final javafx.scene.web.WebView smallView = new javafx.scene.web.WebView();
     final ComboBox comboBox = new ComboBox();
-    private boolean needDocumentationButton = false;
+
+    public WebView(String url) {
+        browser.setPrefSize(400, 300);
+        setTranslateX(250);
+        setTranslateY(-200);
+        setMouseTransparent(false);
+        browser.setMouseTransparent(false);
+        webEngine.load(url);
+        getChildren().add(browser);
+    }
 
     public WebView() {
         browser.setPrefSize(400, 300);
@@ -105,48 +92,48 @@ extends WidgetImpl_1 {
          */
       //  smallView.setPrefSize(120, 80);
 /*
-        //handle popup windows
-        webEngine.setCreatePopupHandler(
-                new Callback<PopupFeatures, WebEngine>() {
-                    @Override
-                    public WebEngine call(PopupFeatures config) {
-                        smallView.setFontScale(0.8);
-                        if (!toolBar.getChildren().contains(smallView)) {
-                            toolBar.getChildren().add(smallView);
-                        }
-                        return smallView.getEngine();
-                    }
-                }
-        );
-        */
-/*
-        //process history
-        final WebHistory history = webEngine.getHistory();
-        history.getEntries().addListener(new ListChangeListener<WebHistory.Entry>() {
-            @Override
-            public void onChanged(ListChangeListener.Change<? extends WebHistory.Entry> c) {
-                c.next();
-                for (WebHistory.Entry e : c.getRemoved()) {
-                    comboBox.getItems().remove(e.getUrl());
-                }
-                for (WebHistory.Entry e : c.getAddedSubList()) {
-                    comboBox.getItems().add(e.getUrl());
-                }
-            }
-        });
-        */
-/*
-        //set the behavior for the history combobox               
-        comboBox.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent ev) {
-                int offset
-                        = comboBox.getSelectionModel().getSelectedIndex()
-                        - history.getCurrentIndex();
-                history.go(offset);
-            }
-        });
-        */
+         //handle popup windows
+         webEngine.setCreatePopupHandler(
+         new Callback<PopupFeatures, WebEngine>() {
+         @Override
+         public WebEngine call(PopupFeatures config) {
+         smallView.setFontScale(0.8);
+         if (!toolBar.getChildren().contains(smallView)) {
+         toolBar.getChildren().add(smallView);
+         }
+         return smallView.getEngine();
+         }
+         }
+         );
+         */
+        /*
+         //process history
+         final WebHistory history = webEngine.getHistory();
+         history.getEntries().addListener(new ListChangeListener<WebHistory.Entry>() {
+         @Override
+         public void onChanged(ListChangeListener.Change<? extends WebHistory.Entry> c) {
+         c.next();
+         for (WebHistory.Entry e : c.getRemoved()) {
+         comboBox.getItems().remove(e.getUrl());
+         }
+         for (WebHistory.Entry e : c.getAddedSubList()) {
+         comboBox.getItems().add(e.getUrl());
+         }
+         }
+         });
+         */
+        /*
+         //set the behavior for the history combobox               
+         comboBox.setOnAction(new EventHandler<ActionEvent>() {
+         @Override
+         public void handle(ActionEvent ev) {
+         int offset
+         = comboBox.getSelectionModel().getSelectedIndex()
+         - history.getCurrentIndex();
+         history.go(offset);
+         }
+         });
+         */
         /*
          // process page loading
          webEngine.getLoadWorker().stateProperty().addListener(
@@ -172,7 +159,8 @@ extends WidgetImpl_1 {
         // webEngine.load("http://www.oracle.com/products/index.html");
         //webEngine.load("http://www.marinetraffic.com/fr/photos/of/ships/photo_keywords:9302009");
         // webEngine.load("http://webapp.navionics.com/?lang=fr");//OK
-        webEngine.load("http://francois.lonchamp.free.fr/Navionics/Navionics.html");
+        //   webEngine.load("http://francois.lonchamp.free.fr/Navionics/Navionics.html");
+        webEngine.load("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
       // webEngine.load("http://maps.grade.de/");
         // webEngine.load("http://data.shom.fr/#affichage");//KO plugin non reconnu même pb avec GeoPortail
         // webEngine.load("http://marine.meteoconsult.fr/meteo-marine/de-brest-a-loctudy/france/prevision_meteo_de-brest-a-loctudy_france_zone_cotiere__6308_0.php");
