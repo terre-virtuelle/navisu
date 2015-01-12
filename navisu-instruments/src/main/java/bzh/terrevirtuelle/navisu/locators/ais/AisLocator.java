@@ -160,7 +160,9 @@ public class AisLocator {
                     }
                 }
             }
-        });
+        });   
+        
+       
         Platform.runLater(() -> {
             aisLocatorController = new AisLocatorController(KeyCode.B, KeyCombination.CONTROL_DOWN);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisLocatorController);
