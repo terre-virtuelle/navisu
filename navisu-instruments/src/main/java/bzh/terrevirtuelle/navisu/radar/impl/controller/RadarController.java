@@ -109,25 +109,7 @@ public class RadarController
     ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
     ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
 
-    public RadarController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
-        super(keyCode, keyCombination);
-        ships = new HashMap<>();
-        outOfRangeShips = new HashMap<>();
-        outOfRangeTransceivers= new HashMap<>();
-        transceivers = new HashMap<>();
-        timestamps = new HashMap<>();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar-fullscreen.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-        createOwnerShip();
-        subscribe();
-    }
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -369,7 +351,7 @@ public class RadarController
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
     }
-
+    
     private void setTarget(Ship ship, int centerX, int centerY) {
         GRShip grship = new GRShip(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMmsi()));
@@ -495,5 +477,25 @@ public class RadarController
                 });
             });
         }
+    }
+    public RadarController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+        super(keyCode, keyCombination);
+        ships = new HashMap<>();
+        outOfRangeShips = new HashMap<>();
+        outOfRangeTransceivers= new HashMap<>();
+        transceivers = new HashMap<>();
+        timestamps = new HashMap<>();
+        createOwnerShip();
+        subscribe();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar-fullscreen.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+        
     }
 }

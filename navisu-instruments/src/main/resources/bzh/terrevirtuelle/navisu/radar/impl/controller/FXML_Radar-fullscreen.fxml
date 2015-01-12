@@ -27,11 +27,11 @@
                       </LinearGradient>
                   </fill>
               </Rectangle>
-              <ImageView fx:id="faisceau" blendMode="COLOR_DODGE" fitHeight="600.0" fitWidth="600.0" layoutX="125.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15">
-                  <image>
-                      <Image url="@radarfaisceau600.png" />
-                  </image>
-              </ImageView>
+              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21d6ff4d" height="800.0" layoutX="799.0" layoutY="29.0" stroke="#00abff" strokeType="INSIDE" width="200.0">
+                  <effect>
+                      <InnerShadow choke="0.05" color="#8ed1e2ed" height="28.41" offsetX="10.0" offsetY="10.0" radius="10.370000000000001" width="15.07" />
+                  </effect>
+              </Rectangle>
             <Text fill="#fff900" fontSmoothingType="LCD" layoutX="814.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-Click Left to scale">
                <effect>
                   <Glow level="0.87" />
@@ -40,6 +40,14 @@
                   <Font size="14.0" />
                </font>
             </Text>
+              <Text fill="#fff900" fontSmoothingType="LCD" layoutX="839.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-A to hide">
+                  <effect>
+                      <Glow level="0.87" />
+                  </effect>
+               <font>
+                  <Font size="14.0" />
+               </font>
+              </Text>
               <Group layoutX="175.0" layoutY="229.0" scaleX="2.3" scaleY="2.3">
                   <children>
                       <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="30.0" stroke="DODGERBLUE" strokeType="INSIDE" />
@@ -53,19 +61,11 @@
                       <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="50.0" stroke="DODGERBLUE" strokeType="INSIDE" />
                   </children>
               </Group>
-              <Text fill="#fff900" fontSmoothingType="LCD" layoutX="839.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-A to hide">
-                  <effect>
-                      <Glow level="0.87" />
-                  </effect>
-               <font>
-                  <Font size="14.0" />
-               </font>
-              </Text>
-              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21d6ff4d" height="800.0" layoutX="799.0" layoutY="29.0" stroke="#00abff" strokeType="INSIDE" width="200.0">
-                  <effect>
-                      <InnerShadow choke="0.05" color="#8ed1e2ed" height="28.41" offsetX="10.0" offsetY="10.0" radius="10.370000000000001" width="15.07" />
-                  </effect>
-              </Rectangle>
+              <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="125.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15">
+                  <image>
+                      <Image url="@radarfaisceau600.png" />
+                  </image>
+              </ImageView>
          </children>
       </Group>
     </children>
