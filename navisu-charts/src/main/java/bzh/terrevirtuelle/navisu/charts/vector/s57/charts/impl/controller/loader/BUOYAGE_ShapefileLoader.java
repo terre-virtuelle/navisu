@@ -73,6 +73,7 @@ public class BUOYAGE_ShapefileLoader
             attrs = this.createPointAttributes(record);
             double[] point = ((ShapefileRecordPoint) record).getPoint();
             layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
+            
         }
     }
 
@@ -213,7 +214,7 @@ public class BUOYAGE_ShapefileLoader
                 + tm
                 + "_" + marsys
                 + ".png";
-        //System.out.println("label : " + label);
+       // System.out.println("label : " + label);
         placemark.setValue(AVKey.DISPLAY_NAME, label);
 
         return placemark;

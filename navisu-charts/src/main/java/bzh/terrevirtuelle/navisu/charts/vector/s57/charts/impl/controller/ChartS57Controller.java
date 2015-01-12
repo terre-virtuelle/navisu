@@ -397,6 +397,7 @@ public class ChartS57Controller {
 
     private void load(LayerShapefileLoader loader, String group, String acronym, String sep) {
         RenderableLayer l = getLayer(group);
+        
         if (l == null) {
             l = new RenderableLayer();
             l.setName(group);

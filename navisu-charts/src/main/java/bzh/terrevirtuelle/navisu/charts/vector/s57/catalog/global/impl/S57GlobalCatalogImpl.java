@@ -38,27 +38,29 @@ import org.capcaval.c3.component.annotation.UsedService;
  */
 public class S57GlobalCatalogImpl
         implements S57GlobalCatalog, S57GlobalCatalogServices, Driver, ComponentState {
-    
+
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
     LayerTreeServices layerTreeServices;
     @UsedService
     S57ChartServices s57ChartServices;
-    
+
     private static final String NAME = "S57 catalog";
     private static final String EXTENSION_0 = ".kmz";
     private static final String EXTENSION_1 = ".kml";
+    private static final String CHART_EXT = ".000";
+    private static final String SEP = "\\\\";
     protected static final String GROUP = "S57 catalog";
     protected Map<String, Path> files;
     protected List<Layer> layers;
     protected static final Logger LOGGER = Logger.getLogger(S57GlobalCatalogImpl.class.getName());
     protected WorldWindow wwd;
-    
+
     @Override
     public void componentInitiated() {
         layerTreeServices.createGroup(GROUP);
-        
+
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
             float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
@@ -68,7 +70,7 @@ public class S57GlobalCatalogImpl
                 unClip();
             }
         });
-        
+
         Properties properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/user.properties"));
@@ -76,24 +78,28 @@ public class S57GlobalCatalogImpl
             Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         String userS57ChartsDirectory = properties.getProperty("s57ChartsDir");
-        if (userS57ChartsDirectory != null) {
-            try {
-                files = listSourceFiles(Paths.get(userS57ChartsDirectory));
-            } catch (IOException ex) {
-                Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
+        String[] userS57ChartsDirectories = userS57ChartsDirectory.split(":");
+        int l = userS57ChartsDirectories.length;
+        for (int i = 0; i < l; i++) {
+            if (userS57ChartsDirectories[i] != null) {
+                try {
+                    files = listSourceFiles(Paths.get(userS57ChartsDirectories[i]));
+                } catch (IOException ex) {
+                    Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }
-    
+
     Map<String, Path> listSourceFiles(Path dir) throws IOException {
         Map<String, Path> result = new HashMap<>();
         Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path file, BasicFileAttributes attrs) {
-                DirectoryStream.Filter<Path> filter = (Path entry) -> (entry.toString().contains(".000"));
+                DirectoryStream.Filter<Path> filter = (Path entry) -> (entry.toString().contains(CHART_EXT));
                 try (DirectoryStream<Path> stream = Files.newDirectoryStream(file, filter)) {
                     for (Path path : stream) {
-                        String[] f = path.toString().split("\\\\");
+                        String[] f = path.toString().split(SEP);
                         result.put(f[f.length - 1], path);
                     }
                 } catch (IOException ex) {
@@ -104,34 +110,34 @@ public class S57GlobalCatalogImpl
         });
         return result;
     }
-    
+
     @Override
     public boolean canOpen(String file) {
-        
+
         boolean canOpen = false;
-        
+
         if (file.toLowerCase().endsWith(EXTENSION_0) || file.toLowerCase().endsWith(EXTENSION_1)) {
             canOpen = true;
         }
-        
+
         return canOpen;
     }
-    
+
     @Override
     public void open(ProgressHandle pHandle, String... files) {
-        
+
         for (String file : files) {
             this.handleOpenFile(pHandle, file);
         }
     }
-    
+
     public void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        
+
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         S57GlobalCatalogController s57GlobalCatalogController = S57GlobalCatalogController.getInstance();
         s57GlobalCatalogController.setS57GlobalCatalogImpl(this);
         layers = s57GlobalCatalogController.init(fileName);
-        
+
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
@@ -139,11 +145,11 @@ public class S57GlobalCatalogImpl
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
         });
     }
-    
+
     public void loadFile(String filename) {
         s57ChartServices.openChart(filename);
     }
-    
+
     private void clip() {
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains(NAME))).forEach((l) -> {
@@ -151,7 +157,7 @@ public class S57GlobalCatalogImpl
             });
         }
     }
-    
+
     private void unClip() {
         if (layers != null) {
             layers.stream().filter((l) -> (l.getName().contains(NAME))).forEach((l) -> {
@@ -159,35 +165,35 @@ public class S57GlobalCatalogImpl
             });
         }
     }
-    
+
     @Override
     public String getName() {
         return NAME;
     }
-    
+
     @Override
     public String[] getExtensions() {
         return new String[]{"*" + EXTENSION_0, "*" + EXTENSION_1};
     }
-    
+
     @Override
     public void openFile(String file) {
         this.open(null, file);
     }
-    
+
     public Map<String, Path> getFiles() {
         return files;
     }
-    
+
     @Override
     public Driver getDriver() {
         return this;
     }
-    
+
     @Override
     public void componentStarted() { /* Nothing to do here */ }
-    
+
     @Override
     public void componentStopped() { /* Nothing to do here */ }
-    
+
 }
