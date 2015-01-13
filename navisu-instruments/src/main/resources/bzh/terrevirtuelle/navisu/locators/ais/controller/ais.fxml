@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="ais" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Group>
+         <children>
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00524e99" height="318.0" stroke="#005450" strokeType="INSIDE" width="400.0" />
+            <Line endX="400.0" endY="78.0" startY="78.0" stroke="#00aba3" strokeWidth="0.5" />
+            <Line endX="400.0" endY="78.0" layoutY="200.0" startY="78.0" stroke="#00aba3" strokeWidth="0.5" />
+            <Line endX="400.0" endY="78.0" layoutY="120.0" startY="78.0" stroke="#00aba3" strokeWidth="0.5" />
+            <Group layoutX="9.0">
+               <children>
+                  <Text fx:id="shipname" fill="#10e4d6" layoutX="66.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="318.13671875">
+                     <font>
+                        <Font name="Roboto Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="type" fill="#10e4d6" layoutX="114.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="ageReport" fill="#10e4d6" layoutX="337.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="callSign" fill="#10e4d6" layoutX="74.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="mmsi" fill="#10e4d6" layoutX="200.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="imo" fill="#10e4d6" layoutX="350.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="length" fill="#10e4d6" layoutX="74.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="width" fill="#10e4d6" layoutX="200.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="draught" fill="#10e4d6" layoutX="350.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="status" fill="#10e4d6" layoutX="72.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="32.09375">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="sog" fill="#10e4d6" layoutX="200.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="cog" fill="#10e4d6" layoutX="350.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="destination" fill="#10e4d6" layoutX="87.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" wrappingWidth="75.20703125">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="eta" fill="#10e4d6" layoutX="294.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER" wrappingWidth="73.884765625">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="latitude" fill="#10e4d6" layoutX="74.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="longitude" fill="#10e4d6" layoutX="321.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="country" fill="#10e4d6" layoutX="75.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" textAlignment="CENTER">
+                     <font>
+                        <Font name="Roboto Bold" size="12.0" />
+                     </font></Text>
+                  <Text fill="#00aba3" layoutX="73.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="262.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age report">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="5.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Call sign">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="145.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MMSI">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="280.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IMO">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="5.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Length">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="145.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Width">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="280.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Draught">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="5.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="145.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SOG">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="280.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COG">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="5.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="262.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ETA">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="226.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Longitude" textAlignment="RIGHT">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="5.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Latitude">
+                     <font>
+                        <Font name="Roboto Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#00aba3" layoutX="5.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Country">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Group>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@logoTV64AIS.png" />
+               </image>
+               <effect>
+                  <Glow />
+               </effect>
+            </ImageView>
+         </children>
+      </Group>
+   </children>
+</fx:root>

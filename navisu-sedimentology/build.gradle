@@ -4,3 +4,6 @@ dependencies {
     compile project(':navisu-app')
     compile fileTree(dir: 'lib', include: '*.jar') 
 }
+jar {
+   destinationDir project.file('../dest')
+}

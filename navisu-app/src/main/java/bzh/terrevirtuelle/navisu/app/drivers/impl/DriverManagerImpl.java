@@ -42,7 +42,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
     GuiAgentServices guiAgentServices;
 
     protected FileChooser fileChooser;
-
+Properties properties;
     protected List<Driver> availableDriverList = new ArrayList<>();
 
     @Override
@@ -54,7 +54,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
     public void init() {
         this.fileChooser = new FileChooser();
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
-        Properties properties = new Properties();
+         properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/user.properties"));
         } catch (IOException ex) {
@@ -93,13 +93,13 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
                 LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
             }
         });
-        Properties props = new Properties();
-        props.setProperty("dataDir", files.get(0).getParent());
+       
+        properties.setProperty("dataDir", files.get(0).getParent());
         File f = new File("properties/user.properties");
         OutputStream out;
         try {
             out = new FileOutputStream(f);
-            props.store(out, "Last directory choosed by user");
+            properties.store(out, "Last directory choosed by user");
             out.close();
         } catch (IOException ex) {
             Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,28 +5,17 @@
  */
 package bzh.terrevirtuelle.navisu.radar.impl.view;
 
-import bzh.terrevirtuelle.navisu.domain.ship.Ship;
-import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
-import javafx.scene.shape.Circle;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 
 /**
  *
  * @author Serge
  */
-public class GRShip extends Circle {
+public interface GRShip 
+extends EventHandler<KeyEvent>{
 
-    private final Ship ship;
-
-    public GRShip(Ship ship, int x, int y, double radius) {
-        this.ship = ship;
-        setCenterX(x);
-        setCenterY(y);
-        
-        setRadius(radius);
-        setFill(ShipTypeColor.COLOR.get(ship.getType()));
-    }
-
-    public Ship getShip() {
-        return ship;
+    @Override
+    default void handle(KeyEvent event) {
     }
 }
