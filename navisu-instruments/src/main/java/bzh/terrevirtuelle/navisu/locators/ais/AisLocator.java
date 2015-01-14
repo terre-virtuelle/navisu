@@ -30,19 +30,12 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.domain.ship.parameters.ShipType;
 import bzh.terrevirtuelle.navisu.locators.ais.controller.AisLocatorController;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.event.SelectEvent;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
-import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.BalloonAttributes;
-import gov.nasa.worldwind.render.BasicBalloonAttributes;
-import gov.nasa.worldwind.render.GlobeBalloon;
-import gov.nasa.worldwind.render.Size;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -59,7 +52,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentEventSubscribe;
-import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -130,10 +122,7 @@ public class AisLocator {
         this.aisStationLayer = GeoLayer.factory.newWorldWindGeoLayer(new AisLayer());
         aisStationLayer.setName("AIS_Station_Layer");
         geoViewServices.getLayerManager().insertGeoLayer(this.aisStationLayer);
-    //    this.baloonLayer = new RenderableLayer();
-    //    wwd.getModel().getLayers().add(baloonLayer);
-      //  attrs = new BasicBalloonAttributes();
-      //  attrs.setSize(Size.fromPixels(600, 320));
+    
         midMap = new HashMap<>();
         String[] midEntries;
         try {
@@ -164,7 +153,7 @@ public class AisLocator {
         
        
         Platform.runLater(() -> {
-            aisLocatorController = new AisLocatorController(KeyCode.B, KeyCombination.CONTROL_DOWN);
+            aisLocatorController = new AisLocatorController( KeyCode.B, KeyCombination.CONTROL_DOWN);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisLocatorController);
             guiAgentServices.getRoot().getChildren().add(aisLocatorController); //Par defaut le radar n'est pas visible Ctrl-A
             aisLocatorController.scale(1.0);

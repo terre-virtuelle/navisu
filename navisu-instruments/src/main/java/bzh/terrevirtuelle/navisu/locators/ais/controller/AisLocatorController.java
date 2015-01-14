@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import static bzh.terrevirtuelle.navisu.domain.ship.parameters.ShipType.TYPE;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
-import bzh.terrevirtuelle.navisu.widgets.webview.WebView;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -76,7 +75,8 @@ public class AisLocatorController
     public Text country;
     @FXML
     public Text eta;
-
+  //  @FXML
+  //  public Button photo;
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
 
@@ -90,15 +90,12 @@ public class AisLocatorController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        /*
+/*
         photo.setOnAction(new EventHandler<ActionEvent>() {
-
             public void handle(ActionEvent event) {
-                System.out.println("WebView");
-
                 Platform.runLater(() -> {
-                    WebView webView = new WebView("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
-                    guiAgentServices.getRoot().getChildren().add(webView); 
+                  //  WebView webView = new WebView("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
+                    // guiAgentServices.getRoot().getChildren().add(webView); 
                 });
             }
         });
