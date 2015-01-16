@@ -164,9 +164,6 @@ public class S57GlobalCatalogImpl
             layers.stream().forEach((l) -> {
                 l.setEnabled(false);
             }); 
-//  layers.stream().filter((l) -> (l.getName().contains("Global Catalog"))).forEach((l) -> {
-            //      l.setEnabled(false);
-            //  });
         }
     }
 
@@ -175,9 +172,6 @@ public class S57GlobalCatalogImpl
             layers.stream().forEach((l) -> {
                 l.setEnabled(true);
             }); 
-          //  layers.stream().filter((l) -> (l.getName().contains("Global Catalog"))).forEach((l) -> {
-           //     l.setEnabled(true);
-          //  });
         }
     }
 
