@@ -30,6 +30,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -51,7 +52,7 @@ public class S57GlobalCatalogImpl
     private static final String EXTENSION_0 = ".kmz";
     private static final String EXTENSION_1 = ".kml";
     private static final String CHART_EXT = ".000";
-    private static final String SEP = "\\\\";
+    private static final String SEP = Pattern.quote(System.getProperty("file.separator"));
     protected static final String GROUP = "S57 catalog";
     protected Map<String, Path> files;
     protected List<Layer> layers;
@@ -61,7 +62,7 @@ public class S57GlobalCatalogImpl
     @Override
     public void componentInitiated() {
         layerTreeServices.createGroup(GROUP);
-        
+        // Alternative: use Pattern.quote(File.separator)
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
             float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
