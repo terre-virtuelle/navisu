@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,7 +33,7 @@ import java.util.logging.Level;
  */
 public class DriverManagerImpl implements DriverManager, DriverManagerServices, ComponentState {
 
-    protected final Logger LOGGER = Logger.getLogger(DriverManagerImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(DriverManagerImpl.class.getName());
 
     @UsedService
     MenuManagerServices menuBarServices;
