@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.xml.stream.XMLStreamException;
 
 /**
@@ -34,7 +35,9 @@ public class S57GlobalCatalogController
 
     protected WorldWindow wwd;
     private static final S57GlobalCatalogController INSTANCE;
+    private static final String SEP = Pattern.quote(System.getProperty("file.separator"));
     protected String path;
+    protected String fileName;
     private Set<Map.Entry<String, Object>> entries;
     private final List<Layer> layers;
     private S57GlobalCatalogImpl s57GlobalCatalogImpl;
@@ -54,12 +57,17 @@ public class S57GlobalCatalogController
     }
 
     public final List<Layer> init(String path) {
+        fileName = path;
+        String[] tab = fileName.split(SEP);
+        fileName = tab[tab.length - 1];
+        tab = fileName.split("\\.");
+        fileName = tab[0];
         this.path = path;
         try {
             KMLRoot document = KMLRoot.createAndParse(path);
             KMLController kmlController = new KMLController(document);
             RenderableLayer layer = new RenderableLayer();
-            layer.setName("Global Catalog");
+            layer.setName(fileName);
             layer.addRenderable(kmlController);
             layers.add(layer);
         } catch (IOException | XMLStreamException ex) {
