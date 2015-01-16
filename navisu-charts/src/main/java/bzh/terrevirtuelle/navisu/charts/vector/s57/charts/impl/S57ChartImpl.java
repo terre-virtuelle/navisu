@@ -215,7 +215,7 @@ public class S57ChartImpl
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, null, e);
             }
-        
+
             chartS57Controller = ChartS57Controller.getInstance();
             //  chartS57Controller.setSurveyZoneController(surveyZoneController);
             chartS57Controller.init("data/shp/shp_" + i++);
@@ -282,25 +282,27 @@ public class S57ChartImpl
 
     @Override
     public void componentStarted() {
+
         try {
             Path directory = Paths.get("data/shp");
-            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-                @Override
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    Files.delete(file);
-                    return FileVisitResult.CONTINUE;
-                }
+                Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        Files.delete(file);
+                        return FileVisitResult.CONTINUE;
+                    }
 
-                @Override
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    Files.delete(dir);
-                    return FileVisitResult.CONTINUE;
-                }
+                    @Override
+                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                        Files.delete(dir);
+                        return FileVisitResult.CONTINUE;
+                    }
 
-            });
+                });
         } catch (IOException ex) {
-            Logger.getLogger(S57ChartImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(S57ChartImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
         }
+
     }
 
     @Override
