@@ -82,6 +82,7 @@ public class S57GlobalCatalogImpl
         clipConditionsKeySet = clipConditions.keySet();
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
+          //  System.out.println("altitude : " + ((int) wwd.getView().getCurrentEyePosition().getAltitude()));
             filter();
         });
         Properties properties = new Properties();
