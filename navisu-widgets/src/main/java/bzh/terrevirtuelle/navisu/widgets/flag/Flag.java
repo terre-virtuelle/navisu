@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.widgets.cloth;
+package bzh.terrevirtuelle.navisu.widgets.flag;
 
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.PointLight;
@@ -14,9 +14,6 @@ import javafx.scene.shape.DrawMode;
 import bzh.org.fxyz.cameras.CameraTransformer;
 import bzh.org.fxyz.shapes.complex.cloth.ClothMesh;
 import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 
 /**
  *
