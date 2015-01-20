@@ -7,6 +7,9 @@ package bzh.terrevirtuelle.navisu.widgets.impl;
 import bzh.terrevirtuelle.navisu.widgets.Widget_1;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -21,8 +24,14 @@ public class WidgetImpl_1
     protected double initY;
     protected Point2D dragAnchor;
     protected int click = 0;
+    protected Scene scene;
 
     public WidgetImpl_1() {
+         initEvt();
+    }
+
+    public WidgetImpl_1(Scene scene) {
+        this.scene = scene;
         initEvt();
     }
 
@@ -64,5 +73,7 @@ public class WidgetImpl_1
                 }
             }
         });
+
     }
+
 }
