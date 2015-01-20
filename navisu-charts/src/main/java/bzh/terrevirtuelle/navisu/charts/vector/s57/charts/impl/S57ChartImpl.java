@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
@@ -27,15 +28,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.TreeItem;
 
 /**
  * @author Serge Morvan
@@ -62,43 +67,61 @@ public class S57ChartImpl
     protected ChartS57Controller chartS57Controller;
     private SurveyZoneController surveyZoneController;
     protected List<Layer> layers;
+    protected Layer layer;
+    protected List<Layer> enabledLayers;
+    protected List<CheckBoxTreeItem<GeoLayer>> rootItems;
     protected List<AirspaceLayer> airspaceLayers;
     protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
     protected WorldWindow wwd;
     protected Scene scene;
     private boolean first = true;
+    protected Map<String, Pair<Integer, Integer>> clipConditions;
+    protected Set<String> clipConditionsKeySet;
+    protected float altitude;
 
     @Override
     public void componentInitiated() {
+        enabledLayers = new ArrayList<>();
+        clipConditions = new HashMap<>();
+        clipConditions.put("BUOYAGE", new Pair(0, 240000));
+        clipConditions.put("BUILDING", new Pair(0, 240000));
+        clipConditions.put("BATHYMETRY", new Pair(0, 240000));
+        clipConditionsKeySet = clipConditions.keySet();
         layerTreeServices.createGroup(GROUP);
         geoViewServices.getLayerManager().createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
         View view = wwd.getView();
         wwd.addPositionListener((PositionEvent event) -> {
-            float altitude = (int) view.getCurrentEyePosition().getAltitude();
-            if (altitude >= 240000) {
-                clip(false);
-            } else {
-                clip(true);
-            }
+            //  System.out.println("altitude : " + ((int) wwd.getView().getCurrentEyePosition().getAltitude()));
+            filter();
         });
     }
 
-    private void clip(boolean state) {
-        if (layers != null) {
-            layers.stream().map((l) -> {
-                if (l.getName().contains("BUOYAGE")) {
-                    l.setEnabled(state);
+    private void filter() {
+        enabledLayers.clear();
+        CheckBoxTreeItem<GeoLayer> i = (CheckBoxTreeItem) layerTreeServices.search("S57 charts");
+        List<TreeItem<GeoLayer>> childrens = i.getChildren();
+
+        childrens.stream().forEach((t) -> {
+            String value = t.getValue().getName().trim();
+            if (clipConditionsKeySet.contains(value)) {
+                layer = (Layer) t.getValue().getDisplayLayer();
+                if (((CheckBoxTreeItem<GeoLayer>) t).isSelected()) {
+                    enabledLayers.add(layer);
                 }
-                return l;
-            }).map((l) -> {
-                if (l.getName().contains("BUILDING")) {
-                    l.setEnabled(state);
-                }
-                return l;
-            }).filter((l) -> (l.getName().contains("BATHYMETRY"))).forEach((l) -> {
-                l.setEnabled(state);
-            });
+            }
+        });
+        altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
+        enabledLayers.stream().forEach((l) -> {
+            clip(l, clipConditions.get(l.getName()));
+        });
+    }
+
+    private void clip(Layer layer, Pair<Integer, Integer> minMax) {
+        if (altitude < minMax.getX() || altitude > minMax.getY()) {
+            layer.setEnabled(false);
+        } else {
+            layer.setEnabled(true);
         }
     }
 
@@ -285,20 +308,20 @@ public class S57ChartImpl
 
         try {
             Path directory = Paths.get("data/shp");
-                Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-                    @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        Files.delete(file);
-                        return FileVisitResult.CONTINUE;
-                    }
+            Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
 
-                    @Override
-                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                        Files.delete(dir);
-                        return FileVisitResult.CONTINUE;
-                    }
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
 
-                });
+            });
         } catch (IOException ex) {
             Logger.getLogger(S57ChartImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
         }
