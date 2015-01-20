@@ -8,8 +8,13 @@ import gov.nasa.worldwind.layers.CompassLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.layers.placename.PlaceNameLayer;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-import java.util.*;
+
 
 
 /**
@@ -195,7 +200,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         int targetPosition = 0;
         LayerList layers = model.getLayers();
         for (Layer l : layers) {
-            if (l.getName().indexOf(targetName) != -1) {
+            if (l.getName().contains(targetName)) {
                 targetPosition = layers.indexOf(l);
                 break;
             }

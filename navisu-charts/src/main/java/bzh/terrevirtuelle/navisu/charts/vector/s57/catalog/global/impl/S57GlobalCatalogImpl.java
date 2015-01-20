@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controlle
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.Layer;
@@ -23,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +33,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.TreeItem;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -56,53 +60,51 @@ public class S57GlobalCatalogImpl
     protected static final String GROUP = "S57 catalog";
     protected Map<String, Path> files;
     protected List<Layer> layers;
+    protected Layer layer;
+    protected List<Layer> enabledLayers;
+    protected List<CheckBoxTreeItem<GeoLayer>> rootItems;
     protected static final Logger LOGGER = Logger.getLogger(S57GlobalCatalogImpl.class.getName());
     protected WorldWindow wwd;
+    protected float altitude;
+    protected Map<String, Pair<Integer, Integer>> clipConditions;
+    protected Set<String> clipConditionsKeySet;
 
     @Override
     public void componentInitiated() {
-        // layerTreeServices.createGroup(GROUP);
-        // Alternative: use Pattern.quote(File.separator)
+        enabledLayers = new ArrayList<>();
+        clipConditions = new HashMap<>();
+        clipConditions.put("ENC_NP1", new Pair(7400000, 25000000));
+        clipConditions.put("ENC_NP2", new Pair(550000, 7400000));
+        clipConditions.put("ENC_NP3", new Pair(370000, 7400000));
+        clipConditions.put("ENC_NP4", new Pair(150000, 7400000));
+        clipConditions.put("ENC_NP5", new Pair(100000, 370000));
+        clipConditions.put("ENC_NP6", new Pair(100000, 370000));
+        clipConditionsKeySet = clipConditions.keySet();
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
-            float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
-            if (altitude <= 50000 || altitude >= 400000) {
-                clip();
-            } else {
-                unClip();
-            }
-            // System.out.println("altitude " + altitude);
+          //  System.out.println("altitude : " + ((int) wwd.getView().getCurrentEyePosition().getAltitude()));
+            filter();
         });
-
-Properties properties = new Properties();
+        Properties properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/user.properties"));
         } catch (IOException ex) {
-            Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE,"Erreur lecture : properties/user.properties", ex);
+            Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, "Erreur lecture : properties/user.properties", ex);
         }
-        String userS57ChartsDirectory =
-properties.getProperty("s57ChartsDir");
-        System.out.println("userS57ChartsDirectory " + userS57ChartsDirectory);
-        String[] userS57ChartsDirectories = userS57ChartsDirectory.split(",");
-        for (int i = 0; i < userS57ChartsDirectories.length; i++) {
-            System.out.println(userS57ChartsDirectories[i]);
-        }
-        int l = userS57ChartsDirectories.length;
-        for (int i = 0; i < l; i++) {
-            if (userS57ChartsDirectories[i] != null) {
-                try {
-                    files =
-listSourceFiles(Paths.get(userS57ChartsDirectories[i]));
-                } catch (IOException ex) {
-                    Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.INFO,"Loading charts DB", ex);
+        String userS57ChartsDirectory = properties.getProperty("s57ChartsDir");
+        if (!"".equals(userS57ChartsDirectory)) {
+            String[] userS57ChartsDirectories = userS57ChartsDirectory.split(",");
+            int l = userS57ChartsDirectories.length;
+            for (int i = 0; i < l; i++) {
+                if (userS57ChartsDirectories[i] != null) {
+                    try {
+                        files = listSourceFiles(Paths.get(userS57ChartsDirectories[i]));
+                    } catch (IOException ex) {
+                        Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.INFO, "Loading charts DB", ex);
+                    }
                 }
             }
         }
-             Set<String> keys = files.keySet();
-                keys.stream().forEach((s) -> {
-                   System.out.println(s + "  " + files.get(s));
-                 });
-
     }
 
     Map<String, Path> listSourceFiles(Path dir) throws IOException {
@@ -139,11 +141,12 @@ listSourceFiles(Paths.get(userS57ChartsDirectories[i]));
 
     @Override
     public void open(ProgressHandle pHandle, String... files) {
+        if (files != null) {
+            for (String file : files) {
 
-        for (String file : files) {
-            this.handleOpenFile(pHandle, file);
+                this.handleOpenFile(pHandle, file);
+            }
         }
-       
     }
 
     public void handleOpenFile(ProgressHandle pHandle, String fileName) {
@@ -165,19 +168,31 @@ listSourceFiles(Paths.get(userS57ChartsDirectories[i]));
         s57ChartServices.openChart(filename);
     }
 
-    private void clip() {
-        if (layers != null) {
-            layers.stream().forEach((l) -> {
-                l.setEnabled(false);
-            }); 
-        }
+    private void filter() {
+        enabledLayers.clear();
+        CheckBoxTreeItem<GeoLayer> i = (CheckBoxTreeItem) layerTreeServices.search("S57 catalog");
+        List<TreeItem<GeoLayer>> childrens = i.getChildren();
+
+        childrens.stream().forEach((t) -> {
+            String value = t.getValue().getName().trim();
+            if (clipConditionsKeySet.contains(value)) {
+                layer = (Layer) t.getValue().getDisplayLayer();
+                if (((CheckBoxTreeItem<GeoLayer>) t).isSelected()) {
+                    enabledLayers.add(layer);
+                }
+            }
+        });
+        altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
+        enabledLayers.stream().forEach((l) -> {
+            clip(l, clipConditions.get(l.getName()));
+        });
     }
 
-    private void unClip() {
-        if (layers != null) {
-            layers.stream().forEach((l) -> {
-                l.setEnabled(true);
-            }); 
+    private void clip(Layer layer, Pair<Integer, Integer> minMax) {
+        if (altitude < minMax.getX() || altitude > minMax.getY()) {
+            layer.setEnabled(false);
+        } else {
+            layer.setEnabled(true);
         }
     }
 

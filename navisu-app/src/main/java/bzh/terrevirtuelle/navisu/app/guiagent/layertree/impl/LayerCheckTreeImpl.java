@@ -83,7 +83,7 @@ public class LayerCheckTreeImpl
         CheckBoxTreeItem<GeoLayer> gpx = createNode(rootItem0, "GPX files", null);
         rootItems.add(gpx);
         CheckBoxTreeItem<GeoLayer> shp = createNode(rootItem0, "Shape files", null);
-        rootItems.add(shp);
+        rootItems.add(shp);       
     }
 
     @Override
@@ -149,7 +149,8 @@ public class LayerCheckTreeImpl
         return new ImageView(new Image(LayerCheckTreeImpl.class.getResourceAsStream(name)));
     }
 
-    private CheckBoxTreeItem<GeoLayer> search(String name) {
+    @Override
+    public CheckBoxTreeItem<GeoLayer> search(String name) {
         CheckBoxTreeItem<GeoLayer> result = null;
         for (CheckBoxTreeItem<GeoLayer> cb : rootItems) {
             if (cb.getValue().getName().equals(name)) {
@@ -159,4 +160,8 @@ public class LayerCheckTreeImpl
         return result;
     }
 
+    @Override
+    public List<CheckBoxTreeItem<GeoLayer>> getCheckBoxTreeItems() {
+        return rootItems;
+    }
 }
