@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
+import static bzh.org.fxyz.extras.BillboardBehavior.timer;
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -19,6 +20,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.widgets.cloth.Flag;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
@@ -46,7 +48,10 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 
 /**
@@ -119,8 +124,7 @@ public class GuiAgentImpl
         DockItemFactory.newImageItem("tides", ICON_PATH + "tides.png", (e) -> showTidesMenu()),
         DockItemFactory.newImageItem("meteo", ICON_PATH + "meteo.png", (e) -> showMeteoMenu()),
         DockItemFactory.newImageItem("instrum.", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
-        DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> showBooksMenu()), 
-        //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
+        DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> showBooksMenu()), //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
     };
     public final DockItem[] ICONS0 = new DockItem[]{
         /* Invisible icons just for testing margins */
@@ -164,7 +168,6 @@ public class GuiAgentImpl
 
         // Create MOB as Widget
         //createMOBWidget(scene);
-
         // Create Books Radial Widget
         createBooksRadialWidget();
 
@@ -201,30 +204,33 @@ public class GuiAgentImpl
 
         // Test avant les Displays
         //------------ HUD widgets ---------------------------------------------       
-            //------------------- Speedo - hide with Ctrl-S -----------------
+        //------------------- Speedo - hide with Ctrl-S -----------------
         /*
-        WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
-        HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
-        widgetController1.add(hud_3);
-        root.getChildren().add(hud_3);
-        // hud_3.schedule();
-        */
+         WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
+         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
+         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
+         widgetController1.add(hud_3);
+         root.getChildren().add(hud_3);
+         // hud_3.schedule();
+         */
         //--------------------Speedo_end---------------
-        
         //-------------------- Test_WebView----------------
        /* 
-        WebView  webView = new WebView();
-        root.getChildren().add(webView);
-        */
-        
+         WebView  webView = new WebView();
+         root.getChildren().add(webView);
+         */
+        Flag flag = new Flag();
+        root.getChildren().add(flag);
+        Timer timer = new Timer();
+        timer.schedule(new FlagAnimation(flag, timer), 15 * 1000);
+
         stage.setScene(scene);
-     //   stage.setMaximized(true);
+        //   stage.setMaximized(true);
         stage.show();
 
     }
 // ------------------------ HUD widgets end ------------------------------
-    
+
     /*
      private void showInstruments() {
      if (firstInstruments == true) {
@@ -236,7 +242,6 @@ public class GuiAgentImpl
      firstInstruments = false;
      }
      }*/
-
     private void showBooksMenu() {
         //System.out.println("showBooksMenu");
         firstBooksRadialMenu = firstBooksRadialMenu != true;
@@ -721,7 +726,7 @@ public class GuiAgentImpl
 
     @Override
     public StackPane getRoot() {
-       // return ctrl.centerStackPane;
+        // return ctrl.centerStackPane;
         return root;
     }
 
@@ -730,4 +735,24 @@ public class GuiAgentImpl
         return scene;
     }
 
+    class FlagAnimation extends TimerTask {
+
+        Timer timer;
+        Flag flag;
+
+        public FlagAnimation(Flag flag, Timer timer) {
+            this.flag = flag;
+            this.timer = timer;
+            flag.startSimulation();
+        }
+
+        @Override
+        public void run() {
+            Platform.runLater(() -> {
+                flag.stopSimulation();
+                timer.cancel();
+                root.getChildren().remove(flag);
+            });
+        }
+    }
 }
