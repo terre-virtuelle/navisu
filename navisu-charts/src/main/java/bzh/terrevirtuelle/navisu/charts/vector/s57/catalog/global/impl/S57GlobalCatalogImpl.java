@@ -74,28 +74,34 @@ public class S57GlobalCatalogImpl
             // System.out.println("altitude " + altitude);
         });
 
-        Properties properties = new Properties();
+Properties properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/user.properties"));
         } catch (IOException ex) {
-            Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE,"Erreur lecture : properties/user.properties", ex);
         }
-        String userS57ChartsDirectory = properties.getProperty("s57ChartsDir");
+        String userS57ChartsDirectory =
+properties.getProperty("s57ChartsDir");
+        System.out.println("userS57ChartsDirectory " + userS57ChartsDirectory);
         String[] userS57ChartsDirectories = userS57ChartsDirectory.split(",");
+        for (int i = 0; i < userS57ChartsDirectories.length; i++) {
+            System.out.println(userS57ChartsDirectories[i]);
+        }
         int l = userS57ChartsDirectories.length;
         for (int i = 0; i < l; i++) {
             if (userS57ChartsDirectories[i] != null) {
                 try {
-                    files = listSourceFiles(Paths.get(userS57ChartsDirectories[i]));
+                    files =
+listSourceFiles(Paths.get(userS57ChartsDirectories[i]));
                 } catch (IOException ex) {
-                    Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.INFO, "Loading charts DB", ex);
+                    Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.INFO,"Loading charts DB", ex);
                 }
             }
         }
-     //   Set<String> keys = files.keySet();
-        //   keys.stream().forEach((s) -> {
-        //      System.out.println(s + "  " + files.get(s));
-        //   });
+             Set<String> keys = files.keySet();
+                keys.stream().forEach((s) -> {
+                   System.out.println(s + "  " + files.get(s));
+                 });
 
     }
 
