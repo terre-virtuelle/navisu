@@ -20,7 +20,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.widgets.cloth.Flag;
+import bzh.terrevirtuelle.navisu.widgets.flag.Flag;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
