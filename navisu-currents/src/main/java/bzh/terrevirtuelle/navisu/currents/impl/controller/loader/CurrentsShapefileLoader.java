@@ -132,9 +132,9 @@ public class CurrentsShapefileLoader
             //     System.out.println("minLat " + gridFactory.getMin(latList) + "  maxLat " + gridFactory.getMax(latList));
             //    System.out.println("minLon " + gridFactory.getMin(lonList) + "  maxLon " + gridFactory.getMax(lonList));
             // Sector.fromDegrees(48.2639, 48.5954, -5.37804, -4.75236
-             minLat = latList.stream().min(Double::compare).get();
+            minLat = latList.stream().min(Double::compare).get();
             double maxLat = latList.stream().max(Double::compare).get();
-             minLon = lonList.stream().min(Double::compare).get();
+            minLon = lonList.stream().min(Double::compare).get();
             double maxLon = lonList.stream().max(Double::compare).get();
             latRange = Math.abs(Math.abs(maxLat) - Math.abs(minLat));
             lonRange = Math.abs(Math.abs(maxLon) - Math.abs(minLon));

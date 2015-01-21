@@ -9,12 +9,10 @@ import bzh.terrevirtuelle.navisu.currents.impl.controller.loader.CurrentsShapefi
 import bzh.terrevirtuelle.navisu.domain.currents.Current;
 import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
 import gov.nasa.worldwind.WorldWind;
-import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwindx.examples.analytics.AnalyticSurface;
 import gov.nasa.worldwindx.examples.analytics.AnalyticSurfaceAttributes;
-import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
