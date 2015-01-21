@@ -222,7 +222,7 @@ public class GuiAgentImpl
         Flag flag = new Flag();
         root.getChildren().add(flag);
         Timer timer = new Timer();
-        timer.schedule(new FlagAnimation(flag, timer), 15 * 1000);
+        timer.schedule(new FlagAnimation(flag, timer), 10 * 1000);
 
         stage.setScene(scene);
         //   stage.setMaximized(true);
