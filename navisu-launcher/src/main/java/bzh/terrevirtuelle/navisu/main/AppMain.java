@@ -182,7 +182,6 @@ public class AppMain extends Application {
         // loggerServices.createPrinter(new NMEA());
 
     }
-
     public static void main(String[] args) throws Exception {
         Application.launch();
     }
