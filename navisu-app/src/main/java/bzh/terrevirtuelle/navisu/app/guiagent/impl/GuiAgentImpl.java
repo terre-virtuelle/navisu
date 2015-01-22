@@ -219,10 +219,10 @@ public class GuiAgentImpl
          WebView  webView = new WebView();
          root.getChildren().add(webView);
          */
-        Flag flag = new Flag();
-        root.getChildren().add(flag);
-        Timer timer = new Timer();
-        timer.schedule(new FlagAnimation(flag, timer), 10 * 1000);
+  //      Flag flag = new Flag();
+  //      root.getChildren().add(flag);
+   //     Timer timer = new Timer();
+  //      timer.schedule(new FlagAnimation(flag, timer), 5 * 1000);
 
         stage.setScene(scene);
         //   stage.setMaximized(true);

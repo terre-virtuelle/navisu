@@ -54,7 +54,8 @@ public class CurrentsShapefileController {
         RenderableLayer layer = new RenderableLayer();
         layer.setName("Currents");
         CurrentsShapefileLoader shapefileLoader = new CurrentsShapefileLoader();
-        layers =shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
+        layers =
+                shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
         currents = shapefileLoader.getCurrents();
         System.out.println("currents.size() " + Math.sqrt(currents.size()));
         AnalyticSurface surface = new AnalyticSurface();
@@ -64,7 +65,7 @@ public class CurrentsShapefileController {
         surface.setClientLayer(layer);
         layer.addRenderable(surface);
         layer.setEnabled(true);
-       // layers.add(layer);//si AnalyticSurface
+     //   layers.add(layer);//si AnalyticSurface
 
         latRange = shapefileLoader.getLatRange() / HEIGHT;
         lonRange = shapefileLoader.getLonRange() / WIDTH;

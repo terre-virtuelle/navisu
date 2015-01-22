@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.bathymetry.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.bathymetry.Depth;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.parameters.SHOM_BATHYMETRY_CLUT;
-import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
@@ -21,7 +21,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
@@ -35,6 +37,7 @@ public class BathymetryController {
     private static final BathymetryController INSTANCE;
     private List<Layer> layers;
     private List<Depth> depths;
+    private Map<Pair<Double,Double>, Double> depthmap;
     private Color color;
     RenderableLayer layer;
     int counter = 0;
@@ -46,6 +49,7 @@ public class BathymetryController {
     private BathymetryController() {
         this.layers = new ArrayList<>();
         this.depths = new ArrayList<>();
+        this.depthmap=new HashMap<>();
     }
 
     public static BathymetryController getInstance() {
@@ -66,10 +70,10 @@ public class BathymetryController {
     }
 
     private void filter(String s) {
-       // if (counter == 10) {
+        if (counter == 10) {
             build(s);
-       //     counter = 0;
-       // }
+            counter = 0;
+        }
         counter++;
     }
 
@@ -78,7 +82,10 @@ public class BathymetryController {
         double lat = new Double(tmp[1]);
         double lon = new Double(tmp[0]);
         double depth = new Double(tmp[2]);
-        depths.add(new Depth(tmp[3], lat, lon, depth));
+      // depths.add(new Depth(tmp[3], lat, lon, depth));
+       //new Pair(lat, lon);
+        depthmap.put(new Pair(lat, lon), depth);
+        /*
         PointPlacemarkAttributes attributes = new PointPlacemarkAttributes();
         attributes.setUsePointAsDefaultImage(true);
         color = SHOM_BATHYMETRY_CLUT.getColor(depth);
@@ -89,6 +96,7 @@ public class BathymetryController {
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setAttributes(attributes);
-        layer.addRenderable(placemark);
+      //  layer.addRenderable(placemark);
+                */
     }
 }

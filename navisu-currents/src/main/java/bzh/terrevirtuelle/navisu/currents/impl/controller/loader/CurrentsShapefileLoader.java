@@ -155,7 +155,9 @@ public class CurrentsShapefileLoader
             this.speed = (Double) e.getValue();
         });
         PointPlacemarkAttributes attributes = new PointPlacemarkAttributes();
-        attributes.setUsePointAsDefaultImage(true);
+     //   attributes.setUsePointAsDefaultImage(true);
+        attributes.setImageAddress("img/up_arrow_16x16.png");
+      //  attributes.
         color = SHOM_CURRENTS_CLUT.getColor(speed);
         if (color != null) {
             attributes.setLineMaterial(new Material(color));
