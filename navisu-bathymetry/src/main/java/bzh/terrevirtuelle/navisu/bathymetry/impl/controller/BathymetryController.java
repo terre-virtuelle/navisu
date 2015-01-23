@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.domain.bathymetry.Depth;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.parameters.SHOM_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -61,11 +62,11 @@ public class BathymetryController {
         try {
             Path path = Paths.get(fileName);
             Stream<String> lines = Files.lines(path);
-            lines.forEach(s -> filter(s));
+            lines.forEach(s -> build(s));
         } catch (IOException ex) {
             Logger.getLogger(BathymetryController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(counter);
+     //   System.out.println(counter);
         return layer;
     }
 
@@ -85,7 +86,7 @@ public class BathymetryController {
       // depths.add(new Depth(tmp[3], lat, lon, depth));
        //new Pair(lat, lon);
         depthmap.put(new Pair(lat, lon), depth);
-        /*
+        
         PointPlacemarkAttributes attributes = new PointPlacemarkAttributes();
         attributes.setUsePointAsDefaultImage(true);
         color = SHOM_BATHYMETRY_CLUT.getColor(depth);
@@ -96,7 +97,7 @@ public class BathymetryController {
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setAttributes(attributes);
-      //  layer.addRenderable(placemark);
-                */
+        layer.addRenderable(placemark);
+           placemark.setValue(AVKey.DISPLAY_NAME,Double.toString(depth)+" m");
     }
 }
