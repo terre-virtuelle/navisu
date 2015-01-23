@@ -16,6 +16,7 @@ public class SHOM_BATHYMETRY_CLUT {
 
     static {
         ranges = new ArrayList<>();
+        ranges.add(Range.closedOpen(-10.0, 0.0));
         ranges.add(Range.closedOpen(0.0, 19.94));
         ranges.add(Range.closedOpen(19.94, 39.87));
         ranges.add(Range.closedOpen(39.87, 59.81));
@@ -30,18 +31,18 @@ public class SHOM_BATHYMETRY_CLUT {
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
         {
-            put(0, new Color(255, 0, 0));
-            put(1, new Color(255, 45, 0));
-            put(2, new Color(255, 91, 0));
-            put(3, new Color(255, 136, 0));
-            put(4, new Color(255, 181, 0));
-            put(5, new Color(255, 227, 0));
-            put(6, new Color(238, 255, 0));
-            put(7, new Color(193, 255, 0));
-            put(8, new Color(147, 255, 0));
-            put(9, new Color(102, 255, 0));
+            put(0, new Color(204, 192, 2));
+            put(1, new Color(255, 0, 0));
+            put(2, new Color(255, 45, 0));
+            put(3, new Color(255, 91, 0));
+            put(4, new Color(255, 136, 0));
+            put(5, new Color(255, 181, 0));
+            put(6, new Color(255, 227, 0));
+            put(7, new Color(238, 255, 0));
+            put(8, new Color(193, 255, 0));
+            put(9, new Color(147, 255, 0));
             put(10, new Color(102, 255, 0));
-            
+            put(11, new Color(102, 255, 0));
         }
     });
 
