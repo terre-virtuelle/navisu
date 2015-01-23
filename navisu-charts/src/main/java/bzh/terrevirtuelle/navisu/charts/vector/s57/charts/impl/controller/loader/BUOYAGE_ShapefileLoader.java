@@ -203,7 +203,7 @@ public class BUOYAGE_ShapefileLoader
                 + "_" + marsys
                 + ".png");
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
-        attrs.setScale(0.6);//0.9
+        attrs.setScale(0.65);//0.9
         placemark.setAttributes(attrs);
 
         String label = acronym + "_"

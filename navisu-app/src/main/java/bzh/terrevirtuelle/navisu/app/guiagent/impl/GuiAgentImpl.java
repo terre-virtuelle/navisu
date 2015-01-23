@@ -20,7 +20,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.widgets.cloth.Flag;
+import bzh.terrevirtuelle.navisu.widgets.flag.Flag;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
@@ -219,11 +219,11 @@ public class GuiAgentImpl
          WebView  webView = new WebView();
          root.getChildren().add(webView);
          */
-        Flag flag = new Flag();
-        root.getChildren().add(flag);
-        Timer timer = new Timer();
-        timer.schedule(new FlagAnimation(flag, timer), 15 * 1000);
-        
+  //      Flag flag = new Flag();
+  //      root.getChildren().add(flag);
+   //     Timer timer = new Timer();
+  //      timer.schedule(new FlagAnimation(flag, timer), 5 * 1000);
+
         stage.setScene(scene);
         //   stage.setMaximized(true);
         stage.show();

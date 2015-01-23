@@ -1,0 +1,10 @@
+# Material cuboid
+newmtl cuboid
+illum 4
+Kd 0.0 0.0 0.0
+Ka 0.10 0.10 0.10
+Tf 1.00 1.00 1.00
+map_Kd palette_65536.png
+Ni 1.00
+Ks 1.00 1.00 1.00
+Ns 32.00

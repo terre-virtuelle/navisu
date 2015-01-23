@@ -16,7 +16,6 @@ import bzh.terrevirtuelle.navisu.currents.CurrentsServices;
 import bzh.terrevirtuelle.navisu.currents.impl.controller.CurrentsShapefileController;
 
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.Layer;
 import java.util.List;
 import java.util.logging.Level;

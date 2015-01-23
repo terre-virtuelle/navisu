@@ -41,7 +41,7 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
     GuiAgentServices guiAgentServices;
 
     protected FileChooser fileChooser;
-Properties properties;
+    Properties properties;
     protected List<Driver> availableDriverList = new ArrayList<>();
 
     @Override
@@ -53,7 +53,8 @@ Properties properties;
     public void init() {
         this.fileChooser = new FileChooser();
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
-         properties = new Properties();
+
+        properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/user.properties"));
         } catch (IOException ex) {
@@ -62,27 +63,27 @@ Properties properties;
         String userInitialDirectory = properties.getProperty("dataDir");
         if (userInitialDirectory.equals("")) {
             this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
-        }else{
+        } else {
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
         }
         MenuItem menuItem = new MenuItem(tr("menu.file.open"));
         menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
         menuItem.setOnAction((e) -> {
             // Show the file chooser
-            List<File> selectedFiles = this.fileChooser.showOpenMultipleDialog(null);
+            File selectedFile = this.fileChooser.showOpenDialog(null);
             // If files has been selected
-            if (selectedFiles != null) {
+            if (selectedFile != null) {
                 // Open them
-                this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFiles);
-                System.out.println(selectedFiles.get(0).getAbsolutePath());
+                this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
+                System.out.println(selectedFile.getAbsolutePath());
 
             }
         });
     }
 
-    protected void handleOpenFiles(String category, List<File> files) {
+    protected void handleOpenFiles(String category, File file) {
 
-        files.stream().forEach((file) -> {
+      //  files.stream().forEach((file) -> {
             Driver driver = this.findDriverForFile(category, file.getAbsolutePath());
             if (driver != null) {
                 guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
@@ -91,9 +92,9 @@ Properties properties;
             } else {
                 LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
             }
-        });
-       
-        properties.setProperty("dataDir", files.get(0).getParent());
+     //   });
+
+        properties.setProperty("dataDir", file.getParent());
         File f = new File("properties/user.properties");
         OutputStream out;
         try {

@@ -9,12 +9,10 @@ import bzh.terrevirtuelle.navisu.currents.impl.controller.loader.CurrentsShapefi
 import bzh.terrevirtuelle.navisu.domain.currents.Current;
 import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
 import gov.nasa.worldwind.WorldWind;
-import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwindx.examples.analytics.AnalyticSurface;
 import gov.nasa.worldwindx.examples.analytics.AnalyticSurfaceAttributes;
-import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +54,8 @@ public class CurrentsShapefileController {
         RenderableLayer layer = new RenderableLayer();
         layer.setName("Currents");
         CurrentsShapefileLoader shapefileLoader = new CurrentsShapefileLoader();
-        layers =shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
+        layers =
+                shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
         currents = shapefileLoader.getCurrents();
         System.out.println("currents.size() " + Math.sqrt(currents.size()));
         AnalyticSurface surface = new AnalyticSurface();
@@ -66,7 +65,7 @@ public class CurrentsShapefileController {
         surface.setClientLayer(layer);
         layer.addRenderable(surface);
         layer.setEnabled(true);
-       // layers.add(layer);//si AnalyticSurface
+     //   layers.add(layer);//si AnalyticSurface
 
         latRange = shapefileLoader.getLatRange() / HEIGHT;
         lonRange = shapefileLoader.getLonRange() / WIDTH;
