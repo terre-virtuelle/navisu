@@ -3,6 +3,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalog;
@@ -15,6 +16,7 @@ import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.Layer;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -51,7 +53,8 @@ public class S57GlobalCatalogImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     S57ChartServices s57ChartServices;
-
+    @UsedService
+    GuiAgentServices guiAgentServices;
     private static final String NAME = "S57 catalog";
     private static final String EXTENSION_0 = ".kmz";
     private static final String EXTENSION_1 = ".kml";
@@ -82,7 +85,7 @@ public class S57GlobalCatalogImpl
         clipConditionsKeySet = clipConditions.keySet();
         wwd = GeoWorldWindViewImpl.getWW();
         wwd.addPositionListener((PositionEvent event) -> {
-          //  System.out.println("altitude : " + ((int) wwd.getView().getCurrentEyePosition().getAltitude()));
+            //  System.out.println("altitude : " + ((int) wwd.getView().getCurrentEyePosition().getAltitude()));
             filter();
         });
         Properties properties = new Properties();
@@ -165,7 +168,11 @@ public class S57GlobalCatalogImpl
     }
 
     public void loadFile(String filename) {
-        s57ChartServices.openChart(filename);
+        File file = new File(filename);
+        guiAgentServices.getJobsManager().newJob(filename, (progressHandle) -> {
+            s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
+        });
+        // s57ChartServices.openChart(filename);
     }
 
     private void filter() {
