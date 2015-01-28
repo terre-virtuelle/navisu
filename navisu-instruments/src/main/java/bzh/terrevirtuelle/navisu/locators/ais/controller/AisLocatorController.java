@@ -106,20 +106,22 @@ public class AisLocatorController
         setVisible(true);
         if (ship.getName() != null) {
             shipname.setText(ship.getName());
+            System.out.println(ship.getName());    
         } else {
-            shipname.setText("");
+            shipname.setText("Unknown");
+            System.out.println("Unknown");
         }
         // Le type est publié tel quel, le dictionnaire n'est pas bien defini dans la spec AIS
         // A revoir
         if (ship.getType() != 0) {
             type.setText(TYPE.get(ship.getType()));
         } else {
-            type.setText("");
+            type.setText("-----");
         }
         if (ship.getCallSign() != null) {
             callSign.setText(ship.getCallSign());
         } else {
-            callSign.setText("");
+            callSign.setText("-----");
         }
         if (ship.getMmsi() != 0) {
             mmsi.setText(Integer.toString(ship.getMmsi()));
@@ -127,69 +129,69 @@ public class AisLocatorController
                     - timestamps.get(ship.getMmsi()).getTimeInMillis();
             ageReport.setText(Long.toString(seconds / 1000) + " s");
         } else {
-            mmsi.setText("");
+            mmsi.setText("-----");
         }
         if (ship.getImo() != 0) {
             imo.setText(Integer.toString(ship.getImo()));
         } else {
-            imo.setText("");
+            imo.setText("-----");
         }
         if (ship.getLength() != 0) {
             length.setText(Float.toString(ship.getLength()) + " m");
         } else {
-            length.setText("");
+            length.setText("-----");
         }
         if (ship.getWidth() != 0) {
             width.setText(Float.toString(ship.getWidth()) + " m");
         } else {
-            width.setText("");
+            width.setText("-----");
         }
         if (ship.getDraught() != 0) {
             draught.setText(Float.toString(ship.getDraught()) + " m");
         } else {
-            draught.setText("");
+            draught.setText("-----");
         }
         if (ship.getNavigationalStatus() != 0) {
             status.setText(Integer.toString(ship.getNavigationalStatus()));
         } else {
-            status.setText("");
+            status.setText("-----");
         }
         if (ship.getSog() != 0) {
             sog.setText(nf.format(ship.getSog()) + " Kn");
         } else {
-            sog.setText("");
+            sog.setText("-----");
         }
         if (ship.getCog() != 0 && ship.getCog() != 511) {
             cog.setText((int) ship.getCog() + " °");
         } else {
-            cog.setText("");
+            cog.setText("-----");
         }
         if (ship.getDestination() != null) {
             destination.setText(ship.getDestination());
         } else {
-            destination.setText("");
+            destination.setText("-----");
         }
         if (ship.getETA() != null) {
             eta.setText(dt.format(ship.getETA().getTime()));
         } else {
-            eta.setText("");
+            eta.setText("-----");
         }
         if (ship.getLatitude() != 0) {
             latitude.setText(nf.format(ship.getLatitude()));
         } else {
-            latitude.setText("");
+            latitude.setText("-----");
         }
         if (ship.getLongitude() != 0) {
             longitude.setText(nf.format(ship.getLongitude()));
         } else {
-            longitude.setText("");
+            longitude.setText("-----");
         }
         if (ship.getMmsi() != 0) {
             String mmsiStr = Integer.toString(ship.getMmsi());
             String mid = mmsiStr.substring(0, 3);
             country.setText(midMap.get(new Integer(mid)));
         } else {
-            country.setText("");
+            country.setText("-----");
         }
     }
 }
