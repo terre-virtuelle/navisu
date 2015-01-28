@@ -11,7 +11,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.bathymetry.Bathymetry;
 import bzh.terrevirtuelle.navisu.bathymetry.BathymetryServices;
-import bzh.terrevirtuelle.navisu.bathymetry.impl.controller.BathymetryController;
+import bzh.terrevirtuelle.navisu.bathymetry.impl.controller.BathymetryAnalyticController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -72,7 +72,7 @@ public class BathymetryImpl
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
-        BathymetryController bathymetryController = BathymetryController.getInstance();
+        BathymetryAnalyticController bathymetryController = BathymetryAnalyticController.getInstance();
         layers.add(bathymetryController.init(fileName));
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();
