@@ -26,6 +26,12 @@ public class Depth {
         this.id = id;
     }
 
+    public Depth(double latitude, double longitude, double depth) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.depth = depth;
+    }
+
     /**
      * Get the value of depth
      *

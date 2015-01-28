@@ -12,7 +12,7 @@ import java.util.Set;
 public class SHOM_BATHYMETRY_CLUT {
 
     static final private List<Range> ranges;
-    static final public double MAX = 8000.0;
+    static final public double MAX = 10000.0;
 
     static {
         ranges = new ArrayList<>();
@@ -26,7 +26,7 @@ public class SHOM_BATHYMETRY_CLUT {
         ranges.add(Range.closedOpen(119.62, 139.55));
         ranges.add(Range.closedOpen(139.55, 159.49));
         ranges.add(Range.closedOpen(159.49, 179.42));
-        ranges.add(Range.closedOpen(179.42, 8000.0));  
+        ranges.add(Range.closedOpen(179.42, 10000.0));  
         ranges.add(Range.closed(MAX, MAX));
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
@@ -42,7 +42,7 @@ public class SHOM_BATHYMETRY_CLUT {
             put(8, new Color(193, 255, 0));
             put(9, new Color(147, 255, 0));
             put(10, new Color(102, 255, 0));
-            put(11, new Color(102, 255, 0));
+            put(11, new Color(0, 0, 0, 0));
         }
     });
 

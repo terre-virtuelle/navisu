@@ -51,7 +51,6 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate {
             this.analyticSurfaceLayer.setName("Analytic Surfaces");
             analyticSurfaceLayer.setMinActiveAltitude(0.0);
             insertAfterPlacenames(this.getWwd(), this.analyticSurfaceLayer);
-            //   insertAfterPlacenames(this.getWwd(), this.analyticSurfaceLayer);
             this.getLayerPanel().update(this.getWwd());
 
             createRandomColorSurface(HUE_BLUE, HUE_RED, 1000, 1000, this.analyticSurfaceLayer);
@@ -76,7 +75,7 @@ public class AnalyticSurfaceDemo extends ApplicationTemplate {
         surface.setClientLayer(outLayer);
         outLayer.addRenderable(surface);
         outLayer.setEnabled(true);
-     //   BufferWrapper firstBuffer = randomGridValues(width, height, minValue, maxValue);
+    //    BufferWrapper firstBuffer = randomGridValues(width, height, minValue, maxValue);
         //Creation du buffer et peuplement du buffer
         BufferWrapper firstBuffer = loadGridValues(width, height, minValue, maxValue, 
                 DEFAULT_RANDOM_ITERATIONS, DEFAULT_RANDOM_SMOOTHING,

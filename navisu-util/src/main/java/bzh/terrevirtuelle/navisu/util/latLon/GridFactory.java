@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.currents.impl.controller;
+package bzh.terrevirtuelle.navisu.util.latLon;
 
 import java.util.List;
 
@@ -14,22 +14,37 @@ import java.util.List;
 public class GridFactory {
 
     private List<Double> latList;
-
     private List<Double> lonList;
+    private double minLat;
+    private double maxLat;
+    private double minLon;
+    private double maxLon;
 
-    public GridFactory() {
-    }
+   
 
     public GridFactory(List<Double> latList, List<Double> lonList) {
         this.latList = latList;
         this.lonList = lonList;
+        minLat = getMin(latList);
+        maxLat = getMax(latList);
+        minLon = getMin(lonList);
+        maxLon = getMax(lonList);
     }
 
-    public double getMax(List<Double> list) {
+    public double[] getSector() {
+        double[] sector = new double[4];
+        sector[0] = minLat;
+        sector[1] = maxLat;
+        sector[2] = minLon;
+        sector[3] = maxLon;
+        return sector;
+    }
+
+    public final double getMax(List<Double> list) {
         return list.stream().max(Double::compare).get();
     }
 
-    public double getMin(List<Double> list) {
+    public final double getMin(List<Double> list) {
         return list.stream().min(Double::compare).get();
     }
 
@@ -69,4 +84,28 @@ public class GridFactory {
         this.latList = latList;
     }
 
+    public double getLatRange() {
+        return Math.abs(maxLat - minLat);
+    }
+
+    public double getLonRange() {
+        return Math.abs(maxLon - minLon);
+    }
+
+    public double getMinLat() {
+        return minLat;
+    }
+
+    public double getMaxLat() {
+        return maxLat;
+    }
+
+    public double getMinLon() {
+        return minLon;
+    }
+
+    public double getMaxLon() {
+        return maxLon;
+    }
+    
 }

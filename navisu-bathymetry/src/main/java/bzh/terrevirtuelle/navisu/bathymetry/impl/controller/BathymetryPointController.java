@@ -33,9 +33,9 @@ import java.util.stream.Stream;
  *
  * @author Serge
  */
-public class BathymetryController {
+public class BathymetryPointController {
 
-    private static final BathymetryController INSTANCE;
+    private static final BathymetryPointController INSTANCE;
     private List<Layer> layers;
     private List<Depth> depths;
     private Map<Pair<Double,Double>, Double> depthmap;
@@ -44,16 +44,16 @@ public class BathymetryController {
     int counter = 0;
 
     static {
-        INSTANCE = new BathymetryController();
+        INSTANCE = new BathymetryPointController();
     }
 
-    private BathymetryController() {
+    private BathymetryPointController() {
         this.layers = new ArrayList<>();
         this.depths = new ArrayList<>();
         this.depthmap=new HashMap<>();
     }
 
-    public static BathymetryController getInstance() {
+    public static BathymetryPointController getInstance() {
         return INSTANCE;
     }
 
@@ -64,7 +64,7 @@ public class BathymetryController {
             Stream<String> lines = Files.lines(path);
             lines.forEach(s -> build(s));
         } catch (IOException ex) {
-            Logger.getLogger(BathymetryController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BathymetryPointController.class.getName()).log(Level.SEVERE, null, ex);
         }
      //   System.out.println(counter);
         return layer;
