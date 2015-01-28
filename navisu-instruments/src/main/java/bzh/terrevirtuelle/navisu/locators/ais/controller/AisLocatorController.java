@@ -71,7 +71,7 @@ public class AisLocatorController
     @FXML
     public Text eta;
   //  @FXML
-  //  public Button photo;
+    //  public Button photo;
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
 
@@ -85,16 +85,16 @@ public class AisLocatorController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-/*
-        photo.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                Platform.runLater(() -> {
-                  //  WebView webView = new WebView("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
-                    // guiAgentServices.getRoot().getChildren().add(webView); 
-                });
-            }
-        });
-*/
+        /*
+         photo.setOnAction(new EventHandler<ActionEvent>() {
+         public void handle(ActionEvent event) {
+         Platform.runLater(() -> {
+         //  WebView webView = new WebView("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
+         // guiAgentServices.getRoot().getChildren().add(webView); 
+         });
+         }
+         });
+         */
     }
 
     @Override
@@ -104,10 +104,10 @@ public class AisLocatorController
 
     public void updateAisPanel(TShip ship, Map<Integer, Calendar> timestamps, Map<Integer, String> midMap) {
         setVisible(true);
-        if (ship.getName() != null) {
-            shipname.setText(ship.getName());
+        if (ship.getName() == null || "".equals(ship.getName())) {
+            shipname.setText("Not yet available");
         } else {
-            shipname.setText("");
+            shipname.setText(ship.getName());
         }
         // Le type est publié tel quel, le dictionnaire n'est pas bien defini dans la spec AIS
         // A revoir
@@ -175,12 +175,12 @@ public class AisLocatorController
             eta.setText("");
         }
         if (ship.getLatitude() != 0) {
-            latitude.setText(nf.format(ship.getLatitude()));
+            latitude.setText(nf.format(ship.getLatitude()) + " °");
         } else {
             latitude.setText("");
         }
         if (ship.getLongitude() != 0) {
-            longitude.setText(nf.format(ship.getLongitude()));
+            longitude.setText(nf.format(ship.getLongitude()) + " °");
         } else {
             longitude.setText("");
         }
