@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.core.util.shapefile.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.currents.Current;
 import bzh.terrevirtuelle.navisu.domain.currents.CurrentBuilder;
 import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
+import bzh.terrevirtuelle.navisu.util.latLon.GridFactory;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
@@ -49,10 +50,8 @@ public class CurrentsShapefileLoader
     private double direction = 0.0;
     private Color color;
     private Sector sector;
-    private double latRange;
-    private double lonRange;
-    private double minLat;
-    private double minLon;
+
+    private GridFactory gridFactory;
 
     public CurrentsShapefileLoader() {
         currents = new ArrayList<>();
@@ -127,18 +126,11 @@ public class CurrentsShapefileLoader
         try {
             shp = new Shapefile(source);
             List<Layer> layers = this.createLayersFromShapefile(shp);
-
-            //    GridFactory gridFactory = new GridFactory();
-            //     System.out.println("minLat " + gridFactory.getMin(latList) + "  maxLat " + gridFactory.getMax(latList));
-            //    System.out.println("minLon " + gridFactory.getMin(lonList) + "  maxLon " + gridFactory.getMax(lonList));
-            // Sector.fromDegrees(48.2639, 48.5954, -5.37804, -4.75236
-            minLat = latList.stream().min(Double::compare).get();
-            double maxLat = latList.stream().max(Double::compare).get();
-            minLon = lonList.stream().min(Double::compare).get();
-            double maxLon = lonList.stream().max(Double::compare).get();
-            latRange = Math.abs(Math.abs(maxLat) - Math.abs(minLat));
-            lonRange = Math.abs(Math.abs(maxLon) - Math.abs(minLon));
-            sector = Sector.fromDegrees(minLat, maxLat, minLon, maxLon);
+            gridFactory = new GridFactory(latList, lonList);
+            sector = Sector.fromDegrees(gridFactory.getSector()[0],
+                    gridFactory.getSector()[1],
+                    gridFactory.getSector()[2],
+                    gridFactory.getSector()[3]);
             return layers;
         } finally {
             WWIO.closeStream(shp, source.toString());
@@ -156,8 +148,8 @@ public class CurrentsShapefileLoader
         });
         PointPlacemarkAttributes attributes = new PointPlacemarkAttributes();
         attributes.setUsePointAsDefaultImage(true);
-      //  attributes.setImageAddress("img/up_arrow_16x16.png");
-      //  attributes.
+        //  attributes.setImageAddress("img/up_arrow_16x16.png");
+        //  attributes.
         color = SHOM_CURRENTS_CLUT.getColor(speed);
         if (color != null) {
             attributes.setLineMaterial(new Material(color));
@@ -175,11 +167,11 @@ public class CurrentsShapefileLoader
     }
 
     public double getLatRange() {
-        return latRange;
+        return gridFactory.getLatRange();
     }
 
     public double getLonRange() {
-        return lonRange;
+        return gridFactory.getLonRange();
     }
 
     public List<Double> getLatList() {
@@ -191,11 +183,11 @@ public class CurrentsShapefileLoader
     }
 
     public double getMinLat() {
-        return minLat;
+        return gridFactory.getMinLat();
     }
 
     public double getMinLon() {
-        return minLon;
+        return gridFactory.getMinLon();
     }
 
 }

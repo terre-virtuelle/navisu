@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.currents.impl.controller;
 
+import static bzh.terrevirtuelle.navisu.currents.impl.controller.AnalyticSurfaceDemo.smoothValues;
 import bzh.terrevirtuelle.navisu.currents.impl.controller.loader.CurrentsShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.currents.Current;
 import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
@@ -26,9 +27,9 @@ public class CurrentsShapefileController {
 
     private static final CurrentsShapefileController INSTANCE;
     protected String path;
-    private final int WIDTH = 132;
-    private final int HEIGHT = 132;
-    private  List<Layer> layers;
+    private final int WIDTH = 132;//132
+    private final int HEIGHT =132;
+    private List<Layer> layers;
     private List<Current> currents;
     private double latRange;
     private double lonRange;
@@ -54,10 +55,11 @@ public class CurrentsShapefileController {
         RenderableLayer layer = new RenderableLayer();
         layer.setName("Currents");
         CurrentsShapefileLoader shapefileLoader = new CurrentsShapefileLoader();
-        layers =
-                shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
+      //   layers =
+        shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
+       // System.out.println("layers : " + layers);
         currents = shapefileLoader.getCurrents();
-        System.out.println("currents.size() " + Math.sqrt(currents.size()));
+      //  System.out.println("currents.size() " + Math.sqrt(currents.size()));
         AnalyticSurface surface = new AnalyticSurface();
         surface.setSector(shapefileLoader.getSector());
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
@@ -65,12 +67,13 @@ public class CurrentsShapefileController {
         surface.setClientLayer(layer);
         layer.addRenderable(surface);
         layer.setEnabled(true);
-     //   layers.add(layer);//si AnalyticSurface
+        layers.add(layer);//si AnalyticSurface
 
         latRange = shapefileLoader.getLatRange() / HEIGHT;
         lonRange = shapefileLoader.getLonRange() / WIDTH;
         minLat = Math.abs(shapefileLoader.getMinLat());
         minLon = Math.abs(shapefileLoader.getMinLon());
+        System.out.println(minLat + "  " + latRange + "  " + minLon + "  " + lonRange);
         int tmpI;
         double tmpD;
         int line = 0;
@@ -84,8 +87,8 @@ public class CurrentsShapefileController {
             tmpD = Math.abs((Math.abs(c.getLon()) - minLon) / lonRange);
             tmpI = (int) (tmpD);
             if (tmpD - tmpI > 0) {
-                if (tmpI < WIDTH - 2) {
-                    col =tmpI + 1;
+                if (tmpI < WIDTH - 1) {//-2
+                    col = tmpI;//1
                 } else {
                     col = tmpI;
                 }
@@ -94,16 +97,17 @@ public class CurrentsShapefileController {
             tmpI = (int) (tmpD);
 
             if (tmpD - tmpI > 0) {
-                if (tmpI < HEIGHT - 2) {
-                    line = HEIGHT-tmpI + 1;
+                if (tmpI < HEIGHT - 1) {//-2
+                    line = HEIGHT - tmpI;//+1
                 } else {
-                    line = HEIGHT-tmpI;
+                    line = HEIGHT - tmpI;
                 }
             }
             if (line < WIDTH && col < HEIGHT) {
                 gridPoints[line][col] = c.getSpeed();
             }
         }
+        //  smoothValues(WIDTH, HEIGHT, gridPoints, 0.5);
         /*
          for (int i = 0; i < WIDTH; i++) {
          for (int j = 0; j < HEIGHT; j++) {
@@ -130,4 +134,40 @@ public class CurrentsShapefileController {
 
         return layers;
     }
+
+    protected static void smoothValues(int width, int height, double[] values, double smoothness) {
+        // top to bottom
+        for (int x = 0; x < width; x++) {
+            smoothBand(values, x, width, height, smoothness);
+        }
+
+        // bottom to top
+        int lastRowOffset = (height - 1) * width;
+        for (int x = 0; x < width; x++) {
+            smoothBand(values, x + lastRowOffset, -width, height, smoothness);
+        }
+
+        // left to right
+        for (int y = 0; y < height; y++) {
+            smoothBand(values, y * width, 1, width, smoothness);
+        }
+
+        // right to left
+        int lastColOffset = width - 1;
+        for (int y = 0; y < height; y++) {
+            smoothBand(values, lastColOffset + y * width, -1, width, smoothness);
+        }
+    }
+
+    protected static void smoothBand(double[] values, int start, int stride, int count, double smoothness) {
+        double prevValue = values[start];
+        int j = start + stride;
+
+        for (int i = 0; i < count - 1; i++) {
+            values[j] = smoothness * prevValue + (1 - smoothness) * values[j];
+            prevValue = values[j];
+            j += stride;
+        }
+    }
+
 }
