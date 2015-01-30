@@ -59,7 +59,7 @@ public class CurrentsShapefileController {
         shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
        // System.out.println("layers : " + layers);
         currents = shapefileLoader.getCurrents();
-      //  System.out.println("currents.size() " + Math.sqrt(currents.size()));
+        System.out.println("currents.size() " + currents.size());
         AnalyticSurface surface = new AnalyticSurface();
         surface.setSector(shapefileLoader.getSector());
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
