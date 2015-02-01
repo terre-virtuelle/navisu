@@ -10,8 +10,10 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.bathymetry.BathymetryServices;
-import bzh.terrevirtuelle.navisu.bathymetry.impl.BathymetryImpl;
+import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.BathymetryLocalCatalogServices;
+import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.impl.BathymetryLocalCatalogImpl;
+import bzh.terrevirtuelle.navisu.bathymetry.charts.BathymetryServices;
+import bzh.terrevirtuelle.navisu.bathymetry.charts.impl.BathymetryImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
@@ -89,6 +91,7 @@ public class AppMain extends Application {
                         ShapefileObjectImpl.class,
                         CurrentsImpl.class,
                         BathymetryImpl.class,
+                        BathymetryLocalCatalogImpl.class,
                         KmlObjectImpl.class,
                         GpxObjectImpl.class,
                         DataServerImpl.class,
@@ -116,6 +119,7 @@ public class AppMain extends Application {
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
+        BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
@@ -131,6 +135,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver(bathymetryServices.getDriver());
+        driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
         driverServices.registerNewDriver(mediaServices.getDriver());
