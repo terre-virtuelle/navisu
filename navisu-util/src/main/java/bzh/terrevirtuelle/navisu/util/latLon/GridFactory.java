@@ -20,8 +20,6 @@ public class GridFactory {
     private double minLon;
     private double maxLon;
 
-   
-
     public GridFactory(List<Double> latList, List<Double> lonList) {
         this.latList = latList;
         this.lonList = lonList;
@@ -107,5 +105,14 @@ public class GridFactory {
     public double getMaxLon() {
         return maxLon;
     }
-    
+
+    @Override
+    public String toString() {
+        return "GridFactory{" + "latList=" + latList + ", lonList=" + lonList + ", minLat=" + minLat + ", maxLat=" + maxLat + ", minLon=" + minLon + ", maxLon=" + maxLon + '}';
+    }
+
+    public String getDisplaySector() {
+        double[] sector = getSector();
+        return sector[0] + "_" + sector[1] + "_" + sector[2] + "_" + sector[3];
+    }
 }
