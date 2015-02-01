@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.bathymetry;
+package bzh.terrevirtuelle.navisu.bathymetry.charts;
 
 import org.capcaval.c3.component.Component;
 

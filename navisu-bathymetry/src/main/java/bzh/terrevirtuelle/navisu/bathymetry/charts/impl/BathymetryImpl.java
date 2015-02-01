@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.bathymetry.impl;
+package bzh.terrevirtuelle.navisu.bathymetry.charts.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.bathymetry.Bathymetry;
-import bzh.terrevirtuelle.navisu.bathymetry.BathymetryServices;
-import bzh.terrevirtuelle.navisu.bathymetry.impl.controller.BathymetryAnalyticController;
+import bzh.terrevirtuelle.navisu.bathymetry.charts.Bathymetry;
+import bzh.terrevirtuelle.navisu.bathymetry.charts.BathymetryServices;
+import bzh.terrevirtuelle.navisu.bathymetry.charts.impl.controller.BathymetryAnalyticController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
