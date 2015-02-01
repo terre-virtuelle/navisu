@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.currents.impl.controller;
 
-import static bzh.terrevirtuelle.navisu.currents.impl.controller.AnalyticSurfaceDemo.smoothValues;
 import bzh.terrevirtuelle.navisu.currents.impl.controller.loader.CurrentsShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.currents.Current;
 import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
@@ -55,11 +54,14 @@ public class CurrentsShapefileController {
         RenderableLayer layer = new RenderableLayer();
         layer.setName("Currents");
         CurrentsShapefileLoader shapefileLoader = new CurrentsShapefileLoader();
-      //   layers =
+         layers =
         shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
        // System.out.println("layers : " + layers);
         currents = shapefileLoader.getCurrents();
-        System.out.println("currents.size() " + currents.size());
+       // System.out.println("currents.size() " + currents.size());
+      //  System.out.println("currents.sector() " + shapefileLoader.getSector());
+      //  System.out.println("LatList"+shapefileLoader.getLatList().size());
+      //  System.out.println("LonList"+shapefileLoader.getLonList().size());
         AnalyticSurface surface = new AnalyticSurface();
         surface.setSector(shapefileLoader.getSector());
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
@@ -67,7 +69,7 @@ public class CurrentsShapefileController {
         surface.setClientLayer(layer);
         layer.addRenderable(surface);
         layer.setEnabled(true);
-        layers.add(layer);//si AnalyticSurface
+       // layers.add(layer);//si AnalyticSurface
 
         latRange = shapefileLoader.getLatRange() / HEIGHT;
         lonRange = shapefileLoader.getLonRange() / WIDTH;
