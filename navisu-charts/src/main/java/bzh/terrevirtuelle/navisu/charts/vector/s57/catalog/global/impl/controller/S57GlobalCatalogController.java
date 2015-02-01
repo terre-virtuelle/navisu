@@ -78,7 +78,6 @@ public class S57GlobalCatalogController
 
     @Override
     public void selected(SelectEvent event) {
-       // System.out.println("event " + event);
         if (event.isRightClick()) {
             Object topObject = event.getTopObject();
             if (topObject != null) {

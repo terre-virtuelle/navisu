@@ -172,7 +172,6 @@ public class S57GlobalCatalogImpl
         guiAgentServices.getJobsManager().newJob(filename, (progressHandle) -> {
             s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
         });
-        // s57ChartServices.openChart(filename);
     }
 
     private void filter() {
