@@ -80,6 +80,8 @@ public class LayerCheckTreeImpl
         rootItems.add(currents);
         CheckBoxTreeItem<GeoLayer> bathymetry = createNode(rootItem0, "Bathymetry", null);
         rootItems.add(bathymetry);
+        tmp = createNode(bathymetry, "Bathymetry catalog", null);
+        rootItems.add(tmp);
         CheckBoxTreeItem<GeoLayer> kml = createNode(rootItem0, "KML files", null);
         rootItems.add(kml);
         CheckBoxTreeItem<GeoLayer> gpx = createNode(rootItem0, "GPX files", null);
