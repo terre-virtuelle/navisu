@@ -119,22 +119,23 @@ public class GuiAgentImpl
             = new ImageView(ICON_PATH + "MOB_On.png");
 
     public final DockItem[] ICONS = new DockItem[]{
-        DockItemFactory.newImageItem("user tools", ICON_PATH + "tools.png", (e) -> showToolsMenu()),
-        DockItemFactory.newImageItem("charts", ICON_PATH + "charts.png", (e) -> showChartsMenu()),
-        DockItemFactory.newImageItem("tides", ICON_PATH + "tides.png", (e) -> showTidesMenu()),
-        DockItemFactory.newImageItem("meteo", ICON_PATH + "meteo.png", (e) -> showMeteoMenu()),
-        DockItemFactory.newImageItem("instrum.", ICON_PATH + "instruments.png", (e) -> showInstrumentsMenu()),
-        DockItemFactory.newImageItem("logbook", ICON_PATH + "book.png", (e) -> showBooksMenu()), //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
+        DockItemFactory.newImageItem("user tools", ICON_PATH + "dock_icons/tools.png", (e) -> showToolsMenu()),
+        DockItemFactory.newImageItem("charts", ICON_PATH + "dock_icons/charts.png", (e) -> showChartsMenu()),
+        DockItemFactory.newImageItem("tides", ICON_PATH + "dock_icons/tides.png", (e) -> showTidesMenu()),
+        DockItemFactory.newImageItem("meteo", ICON_PATH + "dock_icons/meteo.png", (e) -> showMeteoMenu()),
+        DockItemFactory.newImageItem("instrum.", ICON_PATH + "dock_icons/instruments.png", (e) -> showInstrumentsMenu()),
+        DockItemFactory.newImageItem("logbook", ICON_PATH + "dock_icons/book.png", (e) -> showBooksMenu()), 
+      //DockItemFactory.newImageItem("MOB", ICON_PATH + "MOB.png", (e) -> System.out.println("MOB")),
     };
-    public final DockItem[] ICONS0 = new DockItem[]{
+   //public final DockItem[] ICONS0 = new DockItem[]{
         /* Invisible icons just for testing margins */
         //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
         //DockItemFactory.newImageItem("", ICON_PATH + "invisible.png", (e) -> System.out.println("")),
-        DockItemFactory.newImageItem("AIS", ICON_PATH + "AISvertical.png", (e) -> System.out.println("AIS")),
-        DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> showInstrumentsMenu()),
-        DockItemFactory.newImageItem("Compass", ICON_PATH + "compassvertical.png", (e) -> System.out.println("Compass")),
-        DockItemFactory.newImageItem("Sounder", ICON_PATH + "soundervertical.png", (e) -> System.out.println("Sounder")),
-        DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
+        //DockItemFactory.newImageItem("AIS", ICON_PATH + "AISvertical.png", (e) -> System.out.println("AIS")),
+        //DockItemFactory.newImageItem("GPS", ICON_PATH + "GPSvertical.png", (e) -> showInstrumentsMenu()),
+        //DockItemFactory.newImageItem("Compass", ICON_PATH + "compassvertical.png", (e) -> System.out.println("Compass")),
+        //DockItemFactory.newImageItem("Sounder", ICON_PATH + "soundervertical.png", (e) -> System.out.println("Sounder")),
+        //DockItemFactory.newImageItem("Wind", ICON_PATH + "windvertical.png", (e) -> System.out.println("Wind")),};
     final Dock dock = new Dock(ICONS);
     private Scene scene;
 
@@ -287,48 +288,48 @@ public class GuiAgentImpl
 
         //First Stage Item 1
         RadialMenuContainer stage1Item1 = new RadialMenuContainer();
-        ImageView stage1Item1Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
+        ImageView stage1Item1Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stage1Item1.setImage(stage1Item1Img);
 
         //First Stage Item 2
         RadialMenuContainer stage1Item2 = new RadialMenuContainer();
-        ImageView stage1Item2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
+        ImageView stage1Item2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stage1Item2.setImage(stage1Item2Img);
 
         //First Stage Item 3
         RadialMenuContainer stage1Item3 = new RadialMenuContainer();
-        ImageView stage1Item3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/viderouge.png")));
+        ImageView stage1Item3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stage1Item3.setImage(stage1Item3Img);
 
         //First Stage Item 4
         RadialMenuContainer stage1Item4 = new RadialMenuContainer();
-        ImageView stage1Item4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
+        ImageView stage1Item4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stage1Item4.setImage(stage1Item4Img);
 
 //---------------------------------------------------
         //Stage 2 item 1
         RadialMenuItem stageTwoItem1 = new RadialMenuItem();
-        ImageView stageTwoItem1Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videbleu.png")));
+        ImageView stageTwoItem1Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stageTwoItem1.setImage(stageTwoItem1Img);
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView stageTwoItem2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/viderouge.png")));
+        ImageView stageTwoItem2Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stageTwoItem2.setImage(stageTwoItem2Img);
 
         //Stage 2 item 3
         RadialMenuItem stageTwoItem3 = new RadialMenuItem();
-        ImageView stageTwoItem3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videmagenta.png")));
+        ImageView stageTwoItem3Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stageTwoItem2.setImage(stageTwoItem3Img);
 
         //Stage 2 item 4
         RadialMenuItem stageTwoItem4 = new RadialMenuItem();
-        ImageView stageTwoItem4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videvert.png")));
+        ImageView stageTwoItem4Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stageTwoItem2.setImage(stageTwoItem4Img);
 
         //Stage 2 item 5
         RadialMenuItem stageTwoItem5 = new RadialMenuItem();
-        ImageView stageTwoItem5Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/videorange.png")));
+        ImageView stageTwoItem5Img = new ImageView(new Image(getClass().getResourceAsStream("booksradialmenu/vide.png")));
         stageTwoItem5.setImage(stageTwoItem5Img);
 
 //---------------Stage2 to Stage1 ------------------------       
@@ -364,27 +365,27 @@ public class GuiAgentImpl
 
         //First Stage Item 1
         RadialMenuContainer zoomInItem = new RadialMenuContainer();
-        ImageView sounderImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/sounderradialombre.png")));
+        ImageView sounderImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/vide.png")));
         zoomInItem.setImage(sounderImg);
 
         //First Stage Item 2
         RadialMenuContainer zoomOutItem = new RadialMenuContainer();
-        ImageView windImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/windradialombre.png")));
+        ImageView windImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/vide.png")));
         zoomOutItem.setImage(windImg);
 
         //First Stage Item 3
         RadialMenuContainer test1Item = new RadialMenuContainer();
-        ImageView compassImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/compassradialombre.png")));
+        ImageView compassImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/vide.png")));
         test1Item.setImage(compassImg);
 
         //First Stage Item 4
         RadialMenuContainer test2Item = new RadialMenuContainer();
-        ImageView gpsImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/GPSradialombre.png")));
+        ImageView gpsImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/vide.png")));
         test2Item.setImage(gpsImg);
 
         //First Stage Item 5
         RadialMenuContainer test3Item = new RadialMenuContainer();
-        ImageView aisImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/AISradialombre.png")));
+        ImageView aisImg = new ImageView(new Image(getClass().getResourceAsStream("instrumentsradialmenu/vide.png")));
         test3Item.setImage(aisImg);
 
         //---------------------------------------------------
@@ -492,7 +493,7 @@ public class GuiAgentImpl
 
         //First Stage Item 1
         RadialMenuContainer zoomInItem = new RadialMenuContainer();
-        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/videvert.png")));
+        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/vide.png")));
         zoomInItem.setImage(zoominImg);
 
         //First Stage Item 2
@@ -502,12 +503,12 @@ public class GuiAgentImpl
 //---------------------------------------------------
         //Stage 2 item 1
         RadialMenuItem stageTwoItem1 = new RadialMenuItem();
-        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/videbleu.png")));
+        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/vide.png")));
         stageTwoItem1.setImage(gpsImg2);
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/videvert.png")));
+        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("tidesradialmenu/vide.png")));
         stageTwoItem2.setImage(compassImg2);
 
         //Stage 2 item 2
@@ -543,12 +544,12 @@ public class GuiAgentImpl
 
         //First Stage Item 1
         RadialMenuContainer rootItem1 = new RadialMenuContainer();
-        ImageView rootItem1Img = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/configradial.png")));
+        ImageView rootItem1Img = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/vide.png")));
         rootItem1.setImage(rootItem1Img);
 
         //First Stage Item 2
         RadialMenuContainer rootItem2 = new RadialMenuContainer();
-        ImageView rootItem2Img = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/toolsradial.png")));
+        ImageView rootItem2Img = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/vide.png")));
         rootItem2.setImage(rootItem2Img);
 //---------------------------------------------------
         //Stage 2 item 1
@@ -558,12 +559,12 @@ public class GuiAgentImpl
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView stageTwoImg2 = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/videbleu.png")));
+        ImageView stageTwoImg2 = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/vide.png")));
         stageTwoItem2.setImage(stageTwoImg2);
 
         //Stage 2 item 3
         RadialMenuItem stageTwoItem3 = new RadialMenuItem();
-        ImageView stageTwoImg3 = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/videvert.png")));
+        ImageView stageTwoImg3 = new ImageView(new Image(getClass().getResourceAsStream("chartsradialmenu/vide.png")));
         stageTwoItem2.setImage(stageTwoImg3);
 
         rootItem1.addItem(stageTwoItem1);
@@ -594,22 +595,22 @@ public class GuiAgentImpl
 
         //First Stage Item 1
         RadialMenuContainer zoomInItem = new RadialMenuContainer();
-        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/configradial.png")));
+        ImageView zoominImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/vide.png")));
         zoomInItem.setImage(zoominImg);
 
         //First Stage Item 2
         RadialMenuContainer zoomOutItem = new RadialMenuContainer();
-        ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/toolsradial.png")));
+        ImageView zoomoutImg = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/vide.png")));
         zoomOutItem.setImage(zoomoutImg);
 //---------------------------------------------------
         //Stage 2 item 1
         RadialMenuItem stageTwoItem1 = new RadialMenuItem();
-        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/videbleu.png")));
+        ImageView gpsImg2 = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/vide.png")));
         stageTwoItem1.setImage(gpsImg2);
 
         //Stage 2 item 2
         RadialMenuItem stageTwoItem2 = new RadialMenuItem();
-        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/videvert.png")));
+        ImageView compassImg2 = new ImageView(new Image(getClass().getResourceAsStream("toolsradialmenu/vide.png")));
         stageTwoItem2.setImage(compassImg2);
 
         //Stage 2 item 2
