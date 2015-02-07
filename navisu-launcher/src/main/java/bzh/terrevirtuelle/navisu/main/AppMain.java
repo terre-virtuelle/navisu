@@ -180,7 +180,7 @@ public class AppMain extends Application {
 
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
-        widgetServices.createGpsLocator();
+     //   widgetServices.createGpsLocator();
         widgetServices.createAisLocator();
 
         LoggerServices loggerServices = componentManager.getComponentService(LoggerServices.class);
