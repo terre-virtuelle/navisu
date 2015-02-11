@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.S57GlobalCatalogImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -87,11 +88,16 @@ public class S57GlobalCatalogController
                     entries.stream().forEach((e) -> {
                         if (e.getKey().contains("DisplayName")) {
                             String filename = e.getValue() + ".000";
-                            Path filepath = s57GlobalCatalogImpl.getFiles().get(filename);
-                            if (filepath != null) {
-                                s57GlobalCatalogImpl.loadFile(filepath.toString());
-                            } else {
-                                System.out.println("La carte: " + filename + " n'est pas dans votre catalogue");
+                            if (s57GlobalCatalogImpl.getFiles() != null) {
+                                Path filepath = s57GlobalCatalogImpl.getFiles().get(filename);
+                                if (filepath != null) {
+                                    s57GlobalCatalogImpl.loadFile(filepath.toString());
+                                } else {
+                                    System.out.println("La carte: " + filename + " n'est pas dans votre catalogue");
+                                }
+                            }else{
+                                System.out.println(Translator.tr("chart.error"));
+                                System.out.println("");
                             }
                         }
                     });
