@@ -1,68 +1,69 @@
 grammar NMEA;
 
 @header{
-package bzh.terrevirtuelle. navisu.nmea.controller.parser.impl;
+package bzh.terrevirtuelle. navisu.nmea.controller.parser.impl.output;
 
 
     }
 @lexer::header{
-package bzh.terrevirtuelle.navisu.nmea.controller.parser.impl;
+package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl.output;
 
-import bzh.terrevirtuelle.navisu.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 
-import bzh.terrevirtuelle.navisu.nmea.model.AAM;
-import bzh.terrevirtuelle.navisu.nmea.model.APB;
-import bzh.terrevirtuelle.navisu.nmea.model.BEC;
-import bzh.terrevirtuelle.navisu.nmea.model.BOD;
-import bzh.terrevirtuelle.navisu.nmea.model.BWC;
-import bzh.terrevirtuelle.navisu.nmea.model.BWR;
-import bzh.terrevirtuelle.navisu.nmea.model.BWW;
-import bzh.terrevirtuelle.navisu.nmea.model.DBT;
-import bzh.terrevirtuelle.navisu.nmea.model.DBK;
-import bzh.terrevirtuelle.navisu.nmea.model.DBS;
-import bzh.terrevirtuelle.navisu.nmea.model.DPT;
-import bzh.terrevirtuelle.navisu.nmea.model.GGA;
-import bzh.terrevirtuelle.navisu.nmea.model.GLL;
-import bzh.terrevirtuelle.navisu.nmea.model.GSA;
-import bzh.terrevirtuelle.navisu.nmea.model.GSV;
-import bzh.terrevirtuelle.navisu.nmea.model.HDG;
-import bzh.terrevirtuelle.navisu.nmea.model.HDM;
-import bzh.terrevirtuelle.navisu.nmea.model.HDT;
-import bzh.terrevirtuelle.navisu.nmea.model.MTA;
-import bzh.terrevirtuelle.navisu.nmea.model.MTW;
-import bzh.terrevirtuelle.navisu.nmea.model.MWD;
-import bzh.terrevirtuelle.navisu.nmea.model.MWV;
-import bzh.terrevirtuelle.navisu.nmea.model.MSK;
-import bzh.terrevirtuelle.navisu.nmea.model.RMB;
-import bzh.terrevirtuelle.navisu.nmea.model.RMC;
-import bzh.terrevirtuelle.navisu.nmea.model.RSD;
-import bzh.terrevirtuelle.navisu.nmea.model.RTE;
-import bzh.terrevirtuelle.navisu.nmea.model.VBW;
-import bzh.terrevirtuelle.navisu.nmea.model.VHW;
-import bzh.terrevirtuelle.navisu.nmea.model.VLW;
-import bzh.terrevirtuelle.navisu.nmea.model.VPW;
-import bzh.terrevirtuelle.navisu.nmea.model.VTG;
-import bzh.terrevirtuelle.navisu.nmea.model.VWR;
-import bzh.terrevirtuelle.navisu.nmea.model.VWT;
-import bzh.terrevirtuelle.navisu.nmea.model.XTE;
-import bzh.terrevirtuelle.navisu.nmea.model.ZDA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.AAM;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.APB;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.BEC;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.BOD;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.BWC;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.BWR;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.BWW;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.DBT;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.DBK;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.DBS;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.DPT;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GLL;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GSA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GSV;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.HDG;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.HDM;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.HDT;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.MTA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.MTW;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.MWD;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.MWV;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.MSK;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMB;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RSD;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RTE;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VBW;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VHW;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VLW;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VPW;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VWR;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VWT;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.XTE;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.ZDA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GPSSatellite;
 
-import bzh.terrevirtuelle.navisu.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS4;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS5;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS8;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS18;
-import bzh.terrevirtuelle.navisu.nmea.model.AIS24;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS08;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS18;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS24;
 
-import bzh.terrevirtuelle.navisu.nmea.model.PGN130306;
-import bzh.terrevirtuelle.navisu.nmea.model.PGN128267;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN130306;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128267;
 
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.Handler;  
-import bzh.terrevirtuelle.navisu.nmea.controller.parser.handler.impl.PrintHandler; 
-import bzh.terrevirtuelle.navisu.nmea.ais.controller.parser.impl.AISParser;
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;  
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.impl.PrintHandler; 
+import bzh.terrevirtuelle.navisu.domain.nmea.ais.controller.parser.impl.AISParser;
  
-import bzh.terrevirtuelle.navisu.nmea.model.GPSSatellite;
+
 
  
 import java.util.Calendar;
@@ -118,11 +119,11 @@ import java.util.StringTokenizer;
    protected XTE xte = null;
    protected ZDA zda = null;
    
-   protected AIS1 ais1 = null;
-   protected AIS3 ais3 = null;
-   protected AIS4 ais4 = null;
-   protected AIS5 ais5 = null;
-   protected AIS8 ais8 = null;
+   protected AIS01 ais01 = null;
+   protected AIS03 ais03 = null;
+   protected AIS04 ais04 = null;
+   protected AIS05 ais05 = null;
+   protected AIS08 ais08 = null;
    protected AIS18 ais18 = null;
    protected AIS24 ais24 = null;
    
@@ -1429,12 +1430,12 @@ GPSD_AIS : '{''"class":"AIS"' SEP
 	  if(dev != null && mmsi != null && status != null && turn != null 
 	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
 	     
-	     ais1 = new AIS1(new Float(turn.getText()), (new Float(course.getText()))/10.0f, (new Float(speed.getText()))/10.0f,
+	     ais01 = new AIS01(new Float(turn.getText()), (new Float(course.getText()))/10.0f, (new Float(speed.getText()))/10.0f,
 	                         new Integer(status.getText()), new Float(heading.getText()), 
 	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
 	                         new Integer(second.getText()), new Integer(mmsi.getText()), dev.getText()); 
 	  //System.out.println(ais1);
-	   aisHandler.doIt(ais1);
+	   aisHandler.doIt(ais01);
 	  }
            break;
 	case "4" :
@@ -1453,13 +1454,13 @@ GPSD_AIS : '{''"class":"AIS"' SEP
 	    minutes  = new Integer(tmp3[1]);
 	    seconds = new Integer(tmp3[2].substring(0, 2));
 	  
-	    ais4 = new AIS4(new Integer(mmsi.getText()), device,
+	    ais04 = new AIS04(new Integer(mmsi.getText()), device,
 	                         new GregorianCalendar(year, month, day, hours, minutes, seconds),
 	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText()))
 	                        );  
 	                                         
 	    //System.out.println(ais4);
-	    aisHandler.doIt(ais4);
+	    aisHandler.doIt(ais04);
 	 }
 	   break;
 	case "5" :
@@ -1483,16 +1484,16 @@ GPSD_AIS : '{''"class":"AIS"' SEP
 	  date.set(Calendar.MINUTE, minutes);
 	  
 	  
-	  ais5 = new AIS5(new Integer(mmsi.getText()), device, 
+	  ais05 = new AIS05(new Integer(mmsi.getText()), device, 
 	                        new Integer(imo.getText()), shipname.getText(), new Integer(shiptype.getText()),
 	                        new Integer(to_starboard.getText())*2, new Integer(to_bow.getText())+ new Integer(to_stern.getText()),
 	                        new Integer(draught.getText()), callsign.getText(), date, destination.getText());
-	  aisHandler.doIt(ais5);
+	  aisHandler.doIt(ais05);
 	  }
 	  
 	   break;
 	case "8" :
-	   System.out.println("ais8");
+	   System.out.println("ais08");
 	   break;
 	case "18":
           if(dev != null && mmsi != null && speed != null && longitude != null && latitude != null &&
