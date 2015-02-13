@@ -25,10 +25,10 @@ import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.locators.controller.ShipProcessor;
 import bzh.terrevirtuelle.navisu.locators.view.Shape;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.locators.ais.controller.AisLocatorController;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
@@ -169,7 +169,7 @@ public class AisLocator {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 try {
-                    AIS1 ais = (AIS1) data;
+                    AIS01 ais = (AIS01) data;
                     int mmsi = ais.getMMSI();
                     if (!tShipProcessors.containsKey(mmsi)) {
                         ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
@@ -199,7 +199,7 @@ public class AisLocator {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS2 ais = (AIS2) data;
+                AIS02 ais = (AIS02) data;
                 int mmsi = ais.getMMSI();
                 if (!tShipProcessors.containsKey(mmsi)) {
                     ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
@@ -224,7 +224,7 @@ public class AisLocator {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS3 ais = (AIS3) data;
+                AIS03 ais = (AIS03) data;
                 int mmsi = ais.getMMSI();
                 if (!tShipProcessors.containsKey(mmsi)) {
                     ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
@@ -250,7 +250,7 @@ public class AisLocator {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS4 ais = (AIS4) data;
+                AIS04 ais = (AIS04) data;
                 int mmsi = ais.getMMSI();
 
                 if (!tStationsProcessors.containsKey(mmsi)) {

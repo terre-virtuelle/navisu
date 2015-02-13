@@ -9,15 +9,15 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
 import bzh.terrevirtuelle.navisu.domain.devices.Transceiver;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS5;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.GGA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.VTG;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.ShipBuilder;
 import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
@@ -163,7 +163,7 @@ public class RadarController
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 try {
-                    AIS1 ais = (AIS1) data;
+                    AIS01 ais = (AIS01) data;
                     int mmsi = ais.getMMSI();
                     if (!ships.containsKey(mmsi)) {
                         ship = ShipBuilder.create()
@@ -194,7 +194,7 @@ public class RadarController
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS2 ais = (AIS2) data;
+                AIS02 ais = (AIS02) data;
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
@@ -226,7 +226,7 @@ public class RadarController
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS3 ais = (AIS3) data;
+                AIS03 ais = (AIS03) data;
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
@@ -253,7 +253,7 @@ public class RadarController
         ais4ES.subscribe(new AIS4Event() {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS4 ais = (AIS4) data;
+                AIS04 ais = (AIS04) data;
                 int mmsi = ais.getMMSI();
 /*
                 if (!transceivers.containsKey(mmsi)) {
@@ -281,7 +281,7 @@ public class RadarController
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS5 ais = (AIS5) data;
+                AIS05 ais = (AIS05) data;
                 int mmsi = ais.getMMSI();
 
                 if (ships.containsKey(mmsi)) {

@@ -9,9 +9,9 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.widgets.WidgetController;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.model.SurveyZone;
@@ -76,7 +76,7 @@ public class SurveyZoneController extends WidgetController
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                AIS1 data = (AIS1) d;
+                AIS01 data = (AIS01) d;
                 contains(data.getMMSI(), data.getLatitude(), data.getLongitude());
             }
         });
@@ -85,7 +85,7 @@ public class SurveyZoneController extends WidgetController
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                AIS2 data = (AIS2) d;
+                AIS02 data = (AIS02) d;
                 contains(data.getMMSI(), data.getLatitude(), data.getLongitude());
             }
         });
@@ -94,7 +94,7 @@ public class SurveyZoneController extends WidgetController
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                AIS3 data = (AIS3) d;
+                AIS03 data = (AIS03) d;
                 contains(data.getMMSI(), data.getLatitude(), data.getLongitude());
             }
         });

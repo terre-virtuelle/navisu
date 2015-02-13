@@ -12,10 +12,10 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS5;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 
 import java.util.logging.Logger;
@@ -53,7 +53,7 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                AIS1 data = (AIS1) d;
+                AIS01 data = (AIS01) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
@@ -72,7 +72,7 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                AIS2 data = (AIS2) d;
+                AIS02 data = (AIS02) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
@@ -90,7 +90,7 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                AIS3 data = (AIS3) d;
+                AIS03 data = (AIS03) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
@@ -107,7 +107,7 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                AIS5 data = (AIS5) d;
+                AIS05 data = (AIS05) d;
                 if (data.getMMSI() == ship.getMmsi()) {
                     ship.setName(data.getShipname());
                     ship.setLength(data.getLength());
