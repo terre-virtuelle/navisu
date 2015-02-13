@@ -6,7 +6,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.nmea.model.ais;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.ais.Message;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,7 +15,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AISMessage
         extends NMEA
-        implements Message, Comparable<AISMessage> {
+        implements  Comparable<AISMessage> {
 
     /**
      * MMSI Number
@@ -86,10 +85,6 @@ public class AISMessage
     public void ConcatAisBinary(String ligne) {
     }
 
-    /**
-     *
-     */
-    @Override
     public void displayFrame() {
         System.out.println(this.toString());
     }
