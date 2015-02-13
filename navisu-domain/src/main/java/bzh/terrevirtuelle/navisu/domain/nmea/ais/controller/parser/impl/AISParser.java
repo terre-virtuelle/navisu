@@ -15,19 +15,19 @@
  */
 package bzh.terrevirtuelle.navisu.domain.nmea.ais.controller.parser.impl;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AISFrame;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AISMessage;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS1;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS11;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS14;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS18;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS19;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS3;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS4;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS5;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS9;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AISFrame;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AISMessage;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS11;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS14;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS18;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS19;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS09;
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.AIS2;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class AISParser {
     /**
      * gestion des trames de type 5
      */
-    private static AIS5 message5;
+    private static AIS05 message5;
     private static boolean isFirstFrame = true;
     private final List<String> entries = null;
     private static Sentences sentences;
@@ -101,32 +101,32 @@ public class AISParser {
                 if (isFirstFrame) {
                     whatType = messageSuper.whatType();
                     if (whatType == 1) {
-                        AIS1 message = new AIS1();
+                        AIS01 message = new AIS01();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     }
                     if (whatType == 2) {
-                        AIS2 message = new AIS2();
+                        AIS02 message = new AIS02();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 3) {
-                        AIS3 message = new AIS3();
+                        AIS03 message = new AIS03();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 4) {
-                        AIS4 message = new AIS4();
+                        AIS04 message = new AIS04();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);
                     } else if (whatType == 5) {
-                        message5 = new AIS5();
+                        message5 = new AIS05();
                         message5.fill(ligne);
                         isFirstFrame = false;
                     } else if (whatType == 9) {
-                        AIS9 message = new AIS9();
+                        AIS09 message = new AIS09();
                         message.fill(ligne);
                         message.decodeFrame();
                         handler.doIt(message);

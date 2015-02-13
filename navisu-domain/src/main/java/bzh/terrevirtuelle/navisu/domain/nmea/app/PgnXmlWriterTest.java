@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.nmea.app;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.xml.Writer;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.PGN130306;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN130306;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 
 
