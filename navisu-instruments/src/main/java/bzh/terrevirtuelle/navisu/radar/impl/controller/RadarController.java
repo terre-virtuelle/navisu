@@ -167,7 +167,7 @@ public class RadarController
                     int mmsi = ais.getMMSI();
                     if (!ships.containsKey(mmsi)) {
                         ship = ShipBuilder.create()
-                                .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipname())
+                                .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipName())
                                 .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
                                 .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                                 .build();
@@ -198,12 +198,12 @@ public class RadarController
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipname())
+                            .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipName())
                             .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .width(ais.getWidth()).length(ais.getLength()).draught(ais.getDraught())
                             .shipType(ais.getShipType()).navigationalStatus(ais.getNavigationalStatus())
-                            .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallsign())
+                            .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallSign())
                             .eta(ais.getETA()).destination(ais.getDestination())
                             .build();
                     ships.put(mmsi, ship);
@@ -230,7 +230,7 @@ public class RadarController
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipname())
+                            .mmsi(ais.getMMSI()).imo(ais.getImo()).name(ais.getShipName())
                             .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .build();
@@ -287,7 +287,7 @@ public class RadarController
                 if (ships.containsKey(mmsi)) {
                     ship = ships.get(mmsi);
                     ship.setType(ais.getShipType());
-                    ship.setName(ais.getShipname());
+                    ship.setName(ais.getShipName());
                     ship.setETA(ais.getETA());
                     ship.setDestination(ais.getDestination());
                     updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),

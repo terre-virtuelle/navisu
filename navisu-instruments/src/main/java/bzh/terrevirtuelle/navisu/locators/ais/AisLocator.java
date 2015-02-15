@@ -176,11 +176,11 @@ public class AisLocator {
                         geoViewServices.registerProcessor(shipProcessor);
 
                         ship = new TShip(IDGenerator.newIntID(),
-                                ais.getMMSI(), ais.getImo(), ais.getShipname(),
+                                ais.getMMSI(), ais.getImo(), ais.getShipName(),
                                 ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
                                 ais.getLatitude(), ais.getLongitude(),
                                 ais.getWidth(), ais.getLength(), ais.getDraught(),
-                                ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
+                                ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallSign(),
                                 ais.getETA(), ais.getDestination(), "");
                         dpAgentServices.create(ship);
 
@@ -206,11 +206,11 @@ public class AisLocator {
                     geoViewServices.registerProcessor(shipProcessor);
 
                     ship = new TShip(IDGenerator.newIntID(),
-                            ais.getMMSI(), ais.getImo(), ais.getShipname(),
+                            ais.getMMSI(), ais.getImo(), ais.getShipName(),
                             ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
                             ais.getLatitude(), ais.getLongitude(),
                             ais.getWidth(), ais.getLength(), ais.getDraught(),
-                            ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
+                            ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallSign(),
                             ais.getETA(), ais.getDestination(), "");
                     dpAgentServices.create(ship);
                     aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
@@ -231,11 +231,11 @@ public class AisLocator {
                     geoViewServices.registerProcessor(shipProcessor);
 
                     ship = new TShip(IDGenerator.newIntID(),
-                            ais.getMMSI(), ais.getImo(), ais.getShipname(),
+                            ais.getMMSI(), ais.getImo(), ais.getShipName(),
                             ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
                             ais.getLatitude(), ais.getLongitude(),
                             ais.getWidth(), ais.getLength(), ais.getDraught(),
-                            ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallsign(),
+                            ais.getShipType(), ais.getNavigationalStatus(), ais.getElectronicPositionDevice(), ais.getCallSign(),
                             ais.getETA(), ais.getDestination(), "");
                     dpAgentServices.create(ship);
 

@@ -109,7 +109,7 @@ public class AisLocatorControllerWithDPAgent {
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS05 data = (AIS05) d;
                 if (data.getMMSI() == ship.getMmsi()) {
-                    ship.setName(data.getShipname());
+                    ship.setName(data.getShipName());
                     ship.setLength(data.getLength());
                     ship.setWidth(data.getWidth());
                     ship.setDraught(data.getDraught());
