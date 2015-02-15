@@ -38,7 +38,7 @@ public class AIS05 extends AIS135 {
         if (messageAisBinary.length() == 425) {
             MMSI = binaryToInt(messageAisBinary, 8, 38);
             imo = binaryToInt(messageAisBinary, 40, 70);
-            callsign = binaryToString(messageAisBinary, 70, 112);
+            callSign = binaryToString(messageAisBinary, 70, 112);
             shipname = binaryToString(messageAisBinary, 112, 232);
             shipType = binaryToInt(messageAisBinary, 232, 240);
             destination = binaryToString(messageAisBinary, 302, 422);

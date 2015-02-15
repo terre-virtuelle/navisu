@@ -1291,7 +1291,9 @@ VDM 	: '!' device=DEVICE 'VDM' SEP
 	}
 	;
 	
-/** SECTION GPSD */
+/** 
+* SECTION GPSD 
+*/
 GPSD_AIS : '{''"class":"AIS"' SEP 
     	'"device":' dev= DEV SEP 
     	'"type":' type = NUMBER SEP

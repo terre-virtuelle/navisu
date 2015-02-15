@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 //@XmlRootElement(name = "ais135")
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AIS135 extends AISMessage {
+public class AIS135 extends AISMessage implements Ais135Inteface {
 
     // Types 1,2,3
     // http://www.navcen.uscg.gov/index.php
@@ -118,7 +118,7 @@ public class AIS135 extends AISMessage {
      *
      * @@@@@@@ = not available = default
      */
-    protected String callsign;
+    protected String callSign;
     /**
      * Estimated time of arrival; MMDDHHMM UTC Bits 19-16: month; 1-12; 0 = not
      * available = default Bits 15-11: day; 1-31; 0 = not available = default
@@ -165,7 +165,7 @@ public class AIS135 extends AISMessage {
         this.shipname = shipname;
         this.shipType = shipType;
         this.draught = draught;
-        this.callsign = callsign;
+        this.callSign = callsign;
         this.ETA = ETA;
         this.destination = destination;
     }
@@ -185,7 +185,7 @@ public class AIS135 extends AISMessage {
         this.length = length;
         this.draught = draught;
         this.electronicPositionDevice = electronicPositionDevice;
-        this.callsign = CallSign;
+        this.callSign = CallSign;
         this.ETA = ETA;
         this.destination = destination;
         this.year = year;
@@ -203,7 +203,7 @@ public class AIS135 extends AISMessage {
         this.width = width;
         this.length = length;
         this.draught = draught;
-        this.callsign = callsign;
+        this.callSign = callsign;
         this.ETA = ETA;
         this.destination = destination;
     }
@@ -212,6 +212,7 @@ public class AIS135 extends AISMessage {
      *
      * @return the value of second
      */
+    @Override
     public int getSecond() {
         return second;
     }
@@ -221,6 +222,7 @@ public class AIS135 extends AISMessage {
      *
      * @param second new value of second
      */
+    @Override
     public void setSecond(int second) {
         this.second = second;
     }
@@ -260,11 +262,12 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public String toHTML() {
 
         String text = "";
-        if (getShipname() != null) {
-            text += getShipname() + "<br/>";
+        if (getShipName() != null) {
+            text += getShipName() + "<br/>";
         } else {
             text += "" + "<br/>";
         }
@@ -280,14 +283,17 @@ public class AIS135 extends AISMessage {
     /**
      *
      */
+    @Override
     public void display() {
         System.out.println(this.toString());
     }
 
+    @Override
     public int getElectronicPositionDevice() {
         return electronicPositionDevice;
     }
 
+    @Override
     public void setElectronicPositionDevice(int electronicPositionDevice) {
         this.electronicPositionDevice = electronicPositionDevice;
     }
@@ -296,22 +302,25 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
-    public String getCallsign() {
-        return callsign;
+    @Override
+    public String getCallSign() {
+        return callSign;
     }
 
     /**
      *
      * @param callsign
      */
-    public void setCallsign(String callsign) {
-        this.callsign = callsign;
+    @Override
+    public void setCallSign(String callsign) {
+        this.callSign = callsign;
     }
 
     /**
      *
      * @return
      */
+    @Override
     public Calendar getETA() {
         return ETA;
     }
@@ -320,6 +329,7 @@ public class AIS135 extends AISMessage {
      *
      * @param ETA
      */
+    @Override
     public void setETA(Calendar ETA) {
         this.ETA = ETA;
     }
@@ -328,6 +338,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getImo() {
         return imo;
     }
@@ -336,6 +347,7 @@ public class AIS135 extends AISMessage {
      *
      * @param imo
      */
+    @Override
     public void setImo(int imo) {
         this.imo = imo;
     }
@@ -344,6 +356,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public float getCog() {
         return cog;
     }
@@ -352,6 +365,7 @@ public class AIS135 extends AISMessage {
      *
      * @param cog
      */
+    @Override
     public void setCog(float cog) {
         this.cog = cog;
     }
@@ -360,6 +374,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getDay() {
         return day;
     }
@@ -368,6 +383,7 @@ public class AIS135 extends AISMessage {
      *
      * @param day
      */
+    @Override
     public void setDay(int day) {
         this.day = day;
     }
@@ -376,6 +392,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public String getDestination() {
         return destination;
     }
@@ -384,6 +401,7 @@ public class AIS135 extends AISMessage {
      *
      * @param destination
      */
+    @Override
     public void setDestination(String destination) {
         this.destination = destination;
     }
@@ -392,6 +410,7 @@ public class AIS135 extends AISMessage {
      *
      * @return draught
      */
+    @Override
     public float getDraught() {
         return draught;
     }
@@ -400,6 +419,7 @@ public class AIS135 extends AISMessage {
      *
      * @param draught
      */
+    @Override
     public void setDraught(float draught) {
         this.draught = draught;
     }
@@ -408,6 +428,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public float getHeading() {
         return heading;
     }
@@ -416,6 +437,7 @@ public class AIS135 extends AISMessage {
      *
      * @param heading
      */
+    @Override
     public void setHeading(float heading) {
         this.heading = heading;
     }
@@ -424,6 +446,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getHour() {
         return hour;
     }
@@ -432,6 +455,7 @@ public class AIS135 extends AISMessage {
      *
      * @param hour
      */
+    @Override
     public void setHour(int hour) {
         this.hour = hour;
     }
@@ -440,6 +464,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public float getLatitude() {
         return latitude;
     }
@@ -448,6 +473,7 @@ public class AIS135 extends AISMessage {
      *
      * @param latitude
      */
+    @Override
     public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
@@ -456,6 +482,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public float getLength() {
         return length;
     }
@@ -464,6 +491,7 @@ public class AIS135 extends AISMessage {
      *
      * @param length
      */
+    @Override
     public void setLength(float length) {
         this.length = length;
     }
@@ -472,6 +500,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public float getLongitude() {
         return longitude;
     }
@@ -480,6 +509,7 @@ public class AIS135 extends AISMessage {
      *
      * @param longitude
      */
+    @Override
     public void setLongitude(float longitude) {
         this.longitude = longitude;
     }
@@ -488,6 +518,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getMinute() {
         return minute;
     }
@@ -496,6 +527,7 @@ public class AIS135 extends AISMessage {
      *
      * @param minute
      */
+    @Override
     public void setMinute(int minute) {
         this.minute = minute;
     }
@@ -504,6 +536,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getMonth() {
         return month;
     }
@@ -512,6 +545,7 @@ public class AIS135 extends AISMessage {
      *
      * @param month
      */
+    @Override
     public void setMonth(int month) {
         this.month = month;
     }
@@ -520,7 +554,8 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
-    public String getShipname() {
+    @Override
+    public String getShipName() {
         return shipname;
     }
 
@@ -528,7 +563,8 @@ public class AIS135 extends AISMessage {
      *
      * @param name
      */
-    public void setShipname(String name) {
+    @Override
+    public void setShipName(String name) {
         this.shipname = name;
     }
 
@@ -536,6 +572,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getNavigationTool() {
         return electronicPositionDevice;
     }
@@ -544,6 +581,7 @@ public class AIS135 extends AISMessage {
      *
      * @param navigationTool
      */
+    @Override
     public void setNavigationTool(int navigationTool) {
         this.electronicPositionDevice = navigationTool;
     }
@@ -552,6 +590,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public float getRot() {
         return rot;
     }
@@ -560,6 +599,7 @@ public class AIS135 extends AISMessage {
      *
      * @param rot
      */
+    @Override
     public void setRot(float rot) {
         this.rot = rot;
     }
@@ -568,6 +608,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getShipType() {
         return shipType;
     }
@@ -576,6 +617,7 @@ public class AIS135 extends AISMessage {
      *
      * @param shipType
      */
+    @Override
     public void setShipType(int shipType) {
         this.shipType = shipType;
     }
@@ -584,6 +626,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public float getSog() {
         return sog;
     }
@@ -592,6 +635,7 @@ public class AIS135 extends AISMessage {
      *
      * @param sog
      */
+    @Override
     public void setSog(float sog) {
         this.sog = sog;
     }
@@ -600,6 +644,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getNavigationalStatus() {
         return navigationalStatus;
     }
@@ -608,6 +653,7 @@ public class AIS135 extends AISMessage {
      *
      * @param navigationalStatus
      */
+    @Override
     public void setNavigationalStatus(int navigationalStatus) {
         this.navigationalStatus = navigationalStatus;
     }
@@ -616,6 +662,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public float getWidth() {
         return width;
     }
@@ -624,6 +671,7 @@ public class AIS135 extends AISMessage {
      *
      * @param width
      */
+    @Override
     public void setWidth(float width) {
         this.width = width;
     }
@@ -632,6 +680,7 @@ public class AIS135 extends AISMessage {
      *
      * @return
      */
+    @Override
     public int getYear() {
         return year;
     }
@@ -640,6 +689,7 @@ public class AIS135 extends AISMessage {
      *
      * @param year
      */
+    @Override
     public void setYear(int year) {
         this.year = year;
     }
