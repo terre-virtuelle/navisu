@@ -5,10 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.surveyZone.controller;
 
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS01Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS02Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS03Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS04Event;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
@@ -43,10 +43,10 @@ public class SurveyZoneController extends WidgetController
     protected static final Logger LOGGER = Logger.getLogger(SurveyZoneController.class.getName());
 
     ComponentManager cm = ComponentManager.componentManager;
-    ComponentEventSubscribe<AIS1Event> ais1ES = cm.getComponentEventSubscribe(AIS1Event.class);
-    ComponentEventSubscribe<AIS2Event> ais2ES = cm.getComponentEventSubscribe(AIS2Event.class);
-    ComponentEventSubscribe<AIS3Event> ais3ES = cm.getComponentEventSubscribe(AIS3Event.class);
-    ComponentEventSubscribe<AIS4Event> ais4ES = cm.getComponentEventSubscribe(AIS4Event.class);
+    ComponentEventSubscribe<AIS01Event> ais1ES = cm.getComponentEventSubscribe(AIS01Event.class);
+    ComponentEventSubscribe<AIS02Event> ais2ES = cm.getComponentEventSubscribe(AIS02Event.class);
+    ComponentEventSubscribe<AIS03Event> ais3ES = cm.getComponentEventSubscribe(AIS03Event.class);
+    ComponentEventSubscribe<AIS04Event> ais4ES = cm.getComponentEventSubscribe(AIS04Event.class);
 
     private final List<SurveyZone> zones;
     @FXML
@@ -72,7 +72,7 @@ public class SurveyZoneController extends WidgetController
     }
 
     private void subscribe() {
-        ais1ES.subscribe(new AIS1Event() {
+        ais1ES.subscribe(new AIS01Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
@@ -81,7 +81,7 @@ public class SurveyZoneController extends WidgetController
             }
         });
 
-        ais2ES.subscribe(new AIS2Event() {
+        ais2ES.subscribe(new AIS02Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
@@ -90,7 +90,7 @@ public class SurveyZoneController extends WidgetController
             }
         });
 
-        ais3ES.subscribe(new AIS3Event() {
+        ais3ES.subscribe(new AIS03Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
