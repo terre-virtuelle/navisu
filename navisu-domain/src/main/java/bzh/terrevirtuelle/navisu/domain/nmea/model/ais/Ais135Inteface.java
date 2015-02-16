@@ -72,7 +72,7 @@ public interface Ais135Inteface {
      *
      * @return
      */
-    int getImo();
+    int getIMO();
 
     /**
      *
@@ -213,7 +213,7 @@ public interface Ais135Inteface {
      *
      * @param imo
      */
-    void setImo(int imo);
+    void setIMO(int imo);
 
     /**
      *

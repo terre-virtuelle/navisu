@@ -339,7 +339,7 @@ public class AIS135 extends AISMessage implements Ais135Inteface {
      * @return
      */
     @Override
-    public int getImo() {
+    public int getIMO() {
         return imo;
     }
 
@@ -348,7 +348,7 @@ public class AIS135 extends AISMessage implements Ais135Inteface {
      * @param imo
      */
     @Override
-    public void setImo(int imo) {
+    public void setIMO(int imo) {
         this.imo = imo;
     }
 
