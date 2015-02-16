@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.locators.ais.controller;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS04Event;
 import bzh.terrevirtuelle.navisu.locators.model.TTransceiver;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
@@ -28,7 +28,7 @@ public class AisStationLocatorControllerWithDPAgent {
     boolean update = false;
     ComponentManager cm = ComponentManager.componentManager;
 
-    ComponentEventSubscribe<AIS4Event> ais4ES = cm.getComponentEventSubscribe(AIS4Event.class);
+    ComponentEventSubscribe<AIS04Event> ais4ES = cm.getComponentEventSubscribe(AIS04Event.class);
 
     protected TStation station;
 
@@ -41,7 +41,7 @@ public class AisStationLocatorControllerWithDPAgent {
 
     private void subscribe() {
 
-        ais4ES.subscribe(new AIS4Event() {
+        ais4ES.subscribe(new AIS04Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {

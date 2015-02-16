@@ -6,9 +6,9 @@
 package bzh.terrevirtuelle.navisu.locators.gps.controller;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
 import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;

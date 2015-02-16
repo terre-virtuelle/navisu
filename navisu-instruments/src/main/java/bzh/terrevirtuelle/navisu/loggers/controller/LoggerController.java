@@ -5,9 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.loggers.controller;
 
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.NMEAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN128267Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN130306Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.NMEAEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN128267Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN130306Event;
 import bzh.terrevirtuelle.navisu.loggers.view.Printer;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128267;

@@ -8,11 +8,11 @@ package bzh.terrevirtuelle.navisu.locators.ais;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS01Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS02Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS03Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS04Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS05Event;
 import bzh.terrevirtuelle.navisu.core.util.IDGenerator;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
@@ -80,19 +80,14 @@ public class AisLocator {
     TShip ship;
     TStation station;
     ComponentManager cm = ComponentManager.componentManager;
-    ComponentEventSubscribe<AIS1Event> ais1ES = cm.getComponentEventSubscribe(AIS1Event.class);
-    ComponentEventSubscribe<AIS2Event> ais2ES = cm.getComponentEventSubscribe(AIS2Event.class);
-    ComponentEventSubscribe<AIS3Event> ais3ES = cm.getComponentEventSubscribe(AIS3Event.class);
-    ComponentEventSubscribe<AIS4Event> ais4ES = cm.getComponentEventSubscribe(AIS4Event.class);
-    ComponentEventSubscribe<AIS5Event> ais5ES = cm.getComponentEventSubscribe(AIS5Event.class);
+    ComponentEventSubscribe<AIS01Event> ais1ES = cm.getComponentEventSubscribe(AIS01Event.class);
+    ComponentEventSubscribe<AIS02Event> ais2ES = cm.getComponentEventSubscribe(AIS02Event.class);
+    ComponentEventSubscribe<AIS03Event> ais3ES = cm.getComponentEventSubscribe(AIS03Event.class);
+    ComponentEventSubscribe<AIS04Event> ais4ES = cm.getComponentEventSubscribe(AIS04Event.class);
+    ComponentEventSubscribe<AIS05Event> ais5ES = cm.getComponentEventSubscribe(AIS05Event.class);
     boolean first = true;
     boolean firstBt = true;
-    // StackPane pane;
-   // Position balloonPosition;
-    //  AbstractBrowserBalloon balloon;
-    //GlobeBalloon balloon;
-    //BalloonAttributes attrs;
-
+    
     WorldWindow wwd = GeoWorldWindViewImpl.getWW();
 
     public AisLocator(GeoViewServices geoViewServices,
@@ -164,7 +159,7 @@ public class AisLocator {
     }
 
     private void subscribe() {
-        ais1ES.subscribe(new AIS1Event() {
+        ais1ES.subscribe(new AIS01Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
@@ -176,7 +171,7 @@ public class AisLocator {
                         geoViewServices.registerProcessor(shipProcessor);
 
                         ship = new TShip(IDGenerator.newIntID(),
-                                ais.getMMSI(), ais.getImo(), ais.getShipName(),
+                                ais.getMMSI(), ais.getIMO(), ais.getShipName(),
                                 ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
                                 ais.getLatitude(), ais.getLongitude(),
                                 ais.getWidth(), ais.getLength(), ais.getDraught(),
@@ -195,7 +190,7 @@ public class AisLocator {
             }
         });
 
-        ais2ES.subscribe(new AIS2Event() {
+        ais2ES.subscribe(new AIS02Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
@@ -206,7 +201,7 @@ public class AisLocator {
                     geoViewServices.registerProcessor(shipProcessor);
 
                     ship = new TShip(IDGenerator.newIntID(),
-                            ais.getMMSI(), ais.getImo(), ais.getShipName(),
+                            ais.getMMSI(), ais.getIMO(), ais.getShipName(),
                             ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
                             ais.getLatitude(), ais.getLongitude(),
                             ais.getWidth(), ais.getLength(), ais.getDraught(),
@@ -220,7 +215,7 @@ public class AisLocator {
             }
         });
 
-        ais3ES.subscribe(new AIS3Event() {
+        ais3ES.subscribe(new AIS03Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
@@ -231,7 +226,7 @@ public class AisLocator {
                     geoViewServices.registerProcessor(shipProcessor);
 
                     ship = new TShip(IDGenerator.newIntID(),
-                            ais.getMMSI(), ais.getImo(), ais.getShipName(),
+                            ais.getMMSI(), ais.getIMO(), ais.getShipName(),
                             ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
                             ais.getLatitude(), ais.getLongitude(),
                             ais.getWidth(), ais.getLength(), ais.getDraught(),
@@ -246,7 +241,7 @@ public class AisLocator {
             }
         });
 
-        ais4ES.subscribe(new AIS4Event() {
+        ais4ES.subscribe(new AIS04Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
