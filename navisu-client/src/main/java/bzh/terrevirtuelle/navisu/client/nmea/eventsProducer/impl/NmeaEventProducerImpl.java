@@ -5,58 +5,73 @@
  */
 package bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.impl;
 
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AAMEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS11Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS14Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS18Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS19Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS1Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS24Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS2Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS3Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS4Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS5Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS8Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS9Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.AIS135Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.APBEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.BECEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.BODEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.BWCEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.BWREvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.DBKEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.DBSEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.DBTEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.DPTEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GGAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GLLEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GSAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.GSVEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.HDGEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.HDMevent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.HDTEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.MSKevent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.MTAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.MTWEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.MWDevent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.MWVEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.NMEAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN128267Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.PGN130306Event;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMBEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMCEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RMTEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RSDEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.RTEEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VBWEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VHWevent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VLWEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VPWEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VTGEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VWREvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.VWTEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.XTEEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ZDAEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.AAMEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS11Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS14Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS18Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS19Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS01Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS24Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS02Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS03Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS04Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS05Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS06Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS07Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS08Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS09Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS10Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS12Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS135Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS13Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS15Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS16Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS17Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS20Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS21Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS22Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS23Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS25Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS26Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS27Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.APBEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.BECEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.BODEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.BWCEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.BWREvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.DBKEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.DBSEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.DBTEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.DPTEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GLLEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GSAEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GSVEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.HDGEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.HDMevent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.HDTEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.MSKevent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.MTAEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.MTWEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.MWDevent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.MWVEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.NMEAEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN128267Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN130306Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMBEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMTEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RSDEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RTEEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VBWEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VHWevent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VLWEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VPWEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VWREvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VWTEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.XTEEvent;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.ZDAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.NmeaEventProducer;
 import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.NmeaEventProducerServices;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.AAM;
@@ -198,29 +213,60 @@ public class NmeaEventProducerImpl
     protected ZDAEvent zdaEvent;
 
     @ProducedEvent
-    protected AIS1Event ais1Event;
+    protected AIS01Event ais01Event;
+    @ProducedEvent
+    protected AIS02Event ais02Event;
+    @ProducedEvent
+    protected AIS03Event ais03Event;
+    @ProducedEvent
+    protected AIS04Event ais04Event;
+    @ProducedEvent
+    protected AIS05Event ais05Event;
+    @ProducedEvent
+    protected AIS06Event ais06Event;
+    @ProducedEvent
+    protected AIS07Event ais07Event;
+    @ProducedEvent
+    protected AIS08Event ais08Event;
+    @ProducedEvent
+    protected AIS09Event ais09Event;
+    @ProducedEvent
+    protected AIS10Event ais10Event;
     @ProducedEvent
     protected AIS11Event ais11Event;
     @ProducedEvent
+    protected AIS12Event ais12Event;
+    @ProducedEvent
+    protected AIS13Event ais13Event;
+    @ProducedEvent
     protected AIS14Event ais14Event;
+    @ProducedEvent
+    protected AIS15Event ais15Event;
+    @ProducedEvent
+    protected AIS16Event ais16Event;
+    @ProducedEvent
+    protected AIS17Event ais17Event;
     @ProducedEvent
     protected AIS18Event ais18Event;
     @ProducedEvent
     protected AIS19Event ais19Event;
     @ProducedEvent
+    protected AIS20Event ais20Event;
+    @ProducedEvent
+    protected AIS21Event ais21Event;
+    @ProducedEvent
+    protected AIS22Event ais22Event;
+    @ProducedEvent
+    protected AIS23Event ais23Event;
+    @ProducedEvent
     protected AIS24Event ais24Event;
     @ProducedEvent
-    protected AIS2Event ais2Event;
+    protected AIS25Event ais25Event;
     @ProducedEvent
-    protected AIS3Event ais3Event;
+    protected AIS26Event ais26Event;
     @ProducedEvent
-    protected AIS4Event ais4Event;
-    @ProducedEvent
-    protected AIS5Event ais5Event;
-    @ProducedEvent
-    protected AIS8Event ais8Event;
-    @ProducedEvent
-    protected AIS9Event ais9Event;
+    protected AIS27Event ais27Event;
+
     @ProducedEvent
     protected AIS135Event ais135Event;
 
@@ -280,18 +326,34 @@ public class NmeaEventProducerImpl
         nmeaEvents.put(XTE.class, xteEvent);
         nmeaEvents.put(ZDA.class, zdaEvent);
 
-        nmeaEvents.put(AIS01.class, ais1Event);
+        nmeaEvents.put(AIS01.class, ais01Event);
+        nmeaEvents.put(AIS02.class, ais24Event);
+        nmeaEvents.put(AIS03.class, ais03Event);
+        nmeaEvents.put(AIS04.class, ais04Event);
+        nmeaEvents.put(AIS05.class, ais05Event);
+        // nmeaEvents.put(AIS06.class, ais06Event);
+        //  nmeaEvents.put(AIS07.class, ais06Event);
+        nmeaEvents.put(AIS08.class, ais08Event);
+        nmeaEvents.put(AIS09.class, ais08Event);
+        //  nmeaEvents.put(AIS10.class, ais10Event);
         nmeaEvents.put(AIS11.class, ais11Event);
+      //  nmeaEvents.put(AIS12.class, ais12Event);
+        //  nmeaEvents.put(AIS13.class, ais13Event);
         nmeaEvents.put(AIS14.class, ais14Event);
+      //  nmeaEvents.put(AIS15.class, ais15Event);
+        //  nmeaEvents.put(AIS16.class, ais16Event);
+        //  nmeaEvents.put(AIS17.class, ais17Event);
         nmeaEvents.put(AIS18.class, ais18Event);
         nmeaEvents.put(AIS19.class, ais19Event);
+     //   nmeaEvents.put(AIS20.class, ais20Event);
+        //  nmeaEvents.put(AIS21.class, ais21Event);
+        //   nmeaEvents.put(AIS22.class, ais22Event);
+        //   nmeaEvents.put(AIS23.class, ais23Event);
         nmeaEvents.put(AIS24.class, ais24Event);
-        nmeaEvents.put(AIS02.class, ais24Event);
-        nmeaEvents.put(AIS03.class, ais3Event);
-        nmeaEvents.put(AIS04.class, ais4Event);
-        nmeaEvents.put(AIS05.class, ais5Event);
-        nmeaEvents.put(AIS08.class, ais8Event);
-        nmeaEvents.put(AIS09.class, ais8Event);
+     //   nmeaEvents.put(AIS25.class, ais25Event);
+        //   nmeaEvents.put(AIS26.class, ais26Event);
+        //   nmeaEvents.put(AIS27.class, ais27Event);
+
         nmeaEvents.put(AIS135.class, ais135Event);
 
         nmeaEvents.put(PGN130306.class, pgn130306Event);
