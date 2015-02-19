@@ -7,9 +7,9 @@ package bzh.terrevirtuelle.navisu.currents.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.core.util.shapefile.ShapefileLoader;
 //import bzh.terrevirtuelle.navisu.currents.impl.controller.GridFactory;
-import bzh.terrevirtuelle.navisu.domain.currents.Current;
-import bzh.terrevirtuelle.navisu.domain.currents.CurrentBuilder;
-import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
+import bzh.terrevirtuelle.navisu.domain.currents.model.Current;
+import bzh.terrevirtuelle.navisu.domain.currents.model.CurrentBuilder;
+import bzh.terrevirtuelle.navisu.domain.currents.view.SHOM_CURRENTS_CLUT;
 import bzh.terrevirtuelle.navisu.util.latLon.GridFactory;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;

@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.shapefiles.impl.contoller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.ndf.parameters.NFD_COLOUR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.ndf.view.NFD_COLOUR;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;

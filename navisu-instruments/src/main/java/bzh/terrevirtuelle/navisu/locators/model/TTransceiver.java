@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.locators.model;
 
-import bzh.terrevirtuelle.navisu.domain.devices.Transceiver;
+import bzh.terrevirtuelle.navisu.domain.devices.model.Transceiver;
 import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;

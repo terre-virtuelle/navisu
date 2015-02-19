@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.charts.impl.controller;
 
-import bzh.terrevirtuelle.navisu.domain.bathymetry.Depth;
-import bzh.terrevirtuelle.navisu.domain.bathymetry.parameters.SHOM_BATHYMETRY_CLUT;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.util.latLon.GridFactory;
 import gov.nasa.worldwind.WorldWind;

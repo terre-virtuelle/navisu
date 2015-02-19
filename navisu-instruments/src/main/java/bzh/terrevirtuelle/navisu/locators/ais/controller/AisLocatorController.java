@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.locators.ais.controller;
 
-import static bzh.terrevirtuelle.navisu.domain.ship.parameters.ShipType.TYPE;
+import static bzh.terrevirtuelle.navisu.domain.ship.view.ShipType.TYPE;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
 import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
 import java.io.IOException;

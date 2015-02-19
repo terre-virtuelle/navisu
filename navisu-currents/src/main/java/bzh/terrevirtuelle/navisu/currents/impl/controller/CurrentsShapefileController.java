@@ -6,8 +6,8 @@
 package bzh.terrevirtuelle.navisu.currents.impl.controller;
 
 import bzh.terrevirtuelle.navisu.currents.impl.controller.loader.CurrentsShapefileLoader;
-import bzh.terrevirtuelle.navisu.domain.currents.Current;
-import bzh.terrevirtuelle.navisu.domain.currents.parameters.SHOM_CURRENTS_CLUT;
+import bzh.terrevirtuelle.navisu.domain.currents.model.Current;
+import bzh.terrevirtuelle.navisu.domain.currents.view.SHOM_CURRENTS_CLUT;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;

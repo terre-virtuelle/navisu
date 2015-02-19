@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.radar.impl.view;
 
-import bzh.terrevirtuelle.navisu.domain.ship.Ship;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.locators.view.ShipTypeColor;
 import javafx.scene.shape.Circle;
 
