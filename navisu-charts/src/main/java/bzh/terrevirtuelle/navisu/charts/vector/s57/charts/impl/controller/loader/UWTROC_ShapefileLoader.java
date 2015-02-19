@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.UnderwaterAwashRock;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.UnderwaterAwashRock;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.layers.Layer;

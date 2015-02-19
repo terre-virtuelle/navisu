@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Light;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import gov.nasa.worldwind.render.airspaces.PartialCappedCylinder;
 
 /**

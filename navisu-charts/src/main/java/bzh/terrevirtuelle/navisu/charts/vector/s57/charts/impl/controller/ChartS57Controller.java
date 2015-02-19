@@ -36,10 +36,10 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.Lights;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR_NAME;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Light;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
@@ -75,7 +75,8 @@ public class ChartS57Controller {
 
     @UsedService
     GuiAgentServices guiAgentServices;
-
+    
+    private final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     private static final ChartS57Controller INSTANCE;
     protected String path;
     private File file;
@@ -90,8 +91,7 @@ public class ChartS57Controller {
     protected Globe globe;
     private boolean isDisplay = false;
     private GlobeAnnotation tooltipAnnotation;
-    private final String boyagePath = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo";
-    private final Map<Pair<Double,Double>, String> topMarks;
+    private final Map<Pair<Double, Double>, String> topMarks;
     private String marsys;
     private SurveyZoneController surveyZoneController;
 
@@ -204,37 +204,37 @@ public class ChartS57Controller {
                         load(new ACHARE_ShapefileLoader("ACHARE", new Color(2, 200, 184), 0.4, true), "AREA", "ACHARE", "/");
                         break;
                     case "BCNCAR.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNCAR"), "BUOYAGE", "BCNCAR", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BCNCAR"), "BUOYAGE", "BCNCAR", "/");
                         break;
                     case "BCNISD.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNISD"), "BUOYAGE", "BCNISD", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BCNISD"), "BUOYAGE", "BCNISD", "/");
                         break;
                     case "BCNLAT.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNLAT"), "BUOYAGE", "BCNLAT", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BCNLAT"), "BUOYAGE", "BCNLAT", "/");
                         break;
                     case "BCNSAW.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSAW"), "BUOYAGE", "BCNSAW", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BCNSAW"), "BUOYAGE", "BCNSAW", "/");
                         break;
                     case "BCNSPP.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BCNSPP"), "BUOYAGE", "BCNSPP", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BCNSPP"), "BUOYAGE", "BCNSPP", "/");
                         break;
                     case "BRIDGE.shp":
                         load(new BRIDGE_ShapefileLoader(), "BUILDING", "BRIDGE", "/");
                         break;
                     case "BOYCAR.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYCAR"), "BUOYAGE", "BOYCAR", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BOYCAR"), "BUOYAGE", "BOYCAR", "/");
                         break;
                     case "BOYISD.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYISD"), "BUOYAGE", "BOYISD", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BOYISD"), "BUOYAGE", "BOYISD", "/");
                         break;
                     case "BOYLAT.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYLAT"), "BUOYAGE", "BOYLAT", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BOYLAT"), "BUOYAGE", "BOYLAT", "/");
                         break;
                     case "BOYSAW.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSAW"), "BUOYAGE", "BOYSAW", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BOYSAW"), "BUOYAGE", "BOYSAW", "/");
                         break;
                     case "BOYSPP.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "BOYSPP"), "BUOYAGE", "BOYSPP", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "BOYSPP"), "BUOYAGE", "BOYSPP", "/");
                         break;
                     case "CBLSUB.shp":
                         load(new CBLSUB_ShapefileLoader(), "CBLSUB", "CBLSUB", "/");
@@ -264,7 +264,7 @@ public class ChartS57Controller {
                         load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.0, false), "AREA", "MIPARE", "/");
                         break;
                     case "MORFAC.shp":
-                        load(new BUOYAGE_ShapefileLoader(boyagePath, topMarks, marsys, "MORFAC"), "BUOYAGE", "MORFAC", "/");
+                        load(new BUOYAGE_ShapefileLoader(BUOYAGE_PATH, topMarks, marsys, "MORFAC"), "BUOYAGE", "MORFAC", "/");
                         break;
                     case "M_SREL.shp":
                         load(new AREA_ShapefileLoader("M_SREL", new Color(0, 255, 0), 0.0, false), "AREA", "M_SREL", "/");
@@ -397,7 +397,7 @@ public class ChartS57Controller {
 
     private void load(LayerShapefileLoader loader, String group, String acronym, String sep) {
         RenderableLayer l = getLayer(group);
-        
+
         if (l == null) {
             l = new RenderableLayer();
             l.setName(group);

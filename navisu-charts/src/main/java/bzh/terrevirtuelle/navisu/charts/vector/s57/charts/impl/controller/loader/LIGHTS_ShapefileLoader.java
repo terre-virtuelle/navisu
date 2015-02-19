@@ -8,9 +8,9 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.parameters.COLOUR_NAME;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Light;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;

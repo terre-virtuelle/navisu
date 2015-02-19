@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.impl.controlle
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.impl.controller.loader.M_COVR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ShapefileLoader;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Object;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.globes.Globe;

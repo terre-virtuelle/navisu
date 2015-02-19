@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.geo.Daymark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Daymark;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
