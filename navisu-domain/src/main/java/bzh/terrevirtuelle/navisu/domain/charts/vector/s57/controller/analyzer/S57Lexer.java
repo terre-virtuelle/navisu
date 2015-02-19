@@ -4,7 +4,6 @@
 	import java.util.HashMap;
         import java.util.HashSet;	
 	import java.util.Vector;
-	import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.*;
 
 import java.io.InputStream;
 import antlr.TokenStreamException;

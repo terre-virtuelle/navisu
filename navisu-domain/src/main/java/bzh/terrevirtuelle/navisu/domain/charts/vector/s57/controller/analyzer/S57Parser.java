@@ -1,11 +1,14 @@
 // $ANTLR 2.7.5 (20050128): "S57.g" -> "S57Parser.java"$
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.S57Model;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.DataSetGeographicReference;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Feature;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Vector;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.*;
 
 import antlr.TokenBuffer;
 import antlr.TokenStreamException;

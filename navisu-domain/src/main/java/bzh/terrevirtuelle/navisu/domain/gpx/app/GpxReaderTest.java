@@ -5,11 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.domain.gpx.app;
 
-import bzh.terrevirtuelle.navisu.domain.gpx.Gpx;
-import bzh.terrevirtuelle.navisu.domain.gpx.Route;
-import bzh.terrevirtuelle.navisu.domain.gpx.Track;
-import bzh.terrevirtuelle.navisu.domain.gpx.TrackSegment;
-import bzh.terrevirtuelle.navisu.domain.gpx.Waypoint;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Route;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Track;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackSegment;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Waypoint;
 import bzh.terrevirtuelle.navisu.domain.gpx.controller.xml.Reader;
 import java.util.List;
 

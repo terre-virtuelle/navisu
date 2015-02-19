@@ -4,7 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.gpx.controller.xml;
 
-import bzh.terrevirtuelle.navisu.domain.gpx.Gpx;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s52.app;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.ChartSymbols;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.model.ChartSymbols;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.controller.xml.Reader;
 
 /**

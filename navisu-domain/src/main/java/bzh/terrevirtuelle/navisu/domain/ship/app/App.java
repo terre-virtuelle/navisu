@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.ship.app;
 
-import bzh.terrevirtuelle.navisu.domain.ship.Ship;
-import bzh.terrevirtuelle.navisu.domain.ship.ShipBuilder;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
 import java.util.GregorianCalendar;
 
 /**

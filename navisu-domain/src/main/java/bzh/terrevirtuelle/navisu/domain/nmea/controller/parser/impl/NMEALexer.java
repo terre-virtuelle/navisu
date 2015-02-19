@@ -42,10 +42,9 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.ZDA;
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;  
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.impl.PrintHandler;  
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GPSSatellite;
-import bzh.terrevirtuelle.navisu.domain.nmea.ais.controller.parser.impl.AISParser;
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.ais.parser.impl.AISParser;
 //import bzh.terrevirtuelle.navisu.nmea.ais.controller.parser.handler.AISHandler;
-//import bzh.terrevirtuelle.navisu.nmea.ais.controller.parser.handler.impl.AISPrintHandler;  
- 
+//import bzh.terrevirtuelle.navisu.nmea.ais.controller.parser.handler.impl.AISPrintHandler;   
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;

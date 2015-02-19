@@ -168,8 +168,15 @@ import java.util.StringTokenizer;
    protected Handler handler = new PrintHandler();
    protected Handler aisHandler = new PrintHandler();
    protected AISParser aisParser = new AISParser(aisHandler);
-   
-   
+
+   /* NmeaHandler is injected by the server 
+    The NMEA object is add at the sentences before fire event
+    @Override
+    public <T extends NMEA> void doIt(T t) {
+        sentences.add(t);
+    }
+   */
+
    public void setHandler(Handler handler){
    this.handler = handler;
    }

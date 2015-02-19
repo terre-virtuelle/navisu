@@ -4,8 +4,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s52.controller.xml;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.ChartSymbols;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.Patterns;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.model.ChartSymbols;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s52.model.Patterns;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

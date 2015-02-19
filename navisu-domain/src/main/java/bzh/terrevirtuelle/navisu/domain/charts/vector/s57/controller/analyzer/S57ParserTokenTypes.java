@@ -4,7 +4,6 @@
 	import java.util.HashMap;
         import java.util.HashSet;	
 	import java.util.Vector;
-	import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.*;
 
 public interface S57ParserTokenTypes {
 	int EOF = 1;
