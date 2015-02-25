@@ -17,8 +17,8 @@ public class ShipBuilder {
     private int imo;
     private String name;
     private String country;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     private float heading;
     private float cog;
     private float sog;
@@ -74,12 +74,12 @@ public class ShipBuilder {
         return this;
     }
 
-    public ShipBuilder latitude(float latitude) {
+    public ShipBuilder latitude(double latitude) {
         this.latitude = latitude;
         return this;
     }
 
-    public ShipBuilder longitude(float longitude) {
+    public ShipBuilder longitude(double longitude) {
         this.longitude = longitude;
         return this;
     }

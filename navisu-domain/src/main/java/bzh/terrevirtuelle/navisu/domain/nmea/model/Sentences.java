@@ -5,18 +5,31 @@
  */
 package bzh.terrevirtuelle.navisu.domain.nmea.model;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS09;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS11;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS135;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS14;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS18;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS19;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AISMessage;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AISMessageImpl;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS02;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS09;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS10;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS11;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS12;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS13;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS14;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS15;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS16;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS17;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS18;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS19;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS20;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS21;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS22;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS23;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS24;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS25;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS26;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS27;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.N2K;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128267;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN130306;
@@ -57,8 +70,8 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VWR;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VWT;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.XTE;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -112,39 +125,83 @@ public class Sentences {
         @XmlElement(name = "vwr", type = VWR.class),
         @XmlElement(name = "vwt", type = VWT.class),
         @XmlElement(name = "xte", type = XTE.class),
-        @XmlElement(name = "ais", type = AISMessage.class),
+
+        @XmlElement(name = "ais", type = AISMessageImpl.class),
         @XmlElement(name = "ais01", type = AIS01.class),
-        @XmlElement(name = "ais11", type = AIS11.class),
-        @XmlElement(name = "ais14", type = AIS14.class),
-        @XmlElement(name = "ais18", type = AIS18.class),
-        @XmlElement(name = "ais19", type = AIS19.class),
         @XmlElement(name = "ais02", type = AIS02.class),
-        @XmlElement(name = "ais03", type = AIS03.class),
+        @XmlElement(name = "ais30", type = AIS03.class),
         @XmlElement(name = "ais04", type = AIS04.class),
         @XmlElement(name = "ais05", type = AIS05.class),
-        @XmlElement(name = "ais135", type = AIS135.class),
         @XmlElement(name = "ais09", type = AIS09.class),
+        @XmlElement(name = "ais10", type = AIS10.class),
+        @XmlElement(name = "ais11", type = AIS11.class),
+        @XmlElement(name = "ais12", type = AIS12.class),
+        @XmlElement(name = "ais13", type = AIS13.class),
+        @XmlElement(name = "ais14", type = AIS14.class),
+        @XmlElement(name = "ais15", type = AIS15.class),
+        @XmlElement(name = "ais16", type = AIS16.class),
+        @XmlElement(name = "ais17", type = AIS17.class),
+        @XmlElement(name = "ais18", type = AIS18.class),
+        @XmlElement(name = "ais19", type = AIS19.class),
+        @XmlElement(name = "ais20", type = AIS20.class),
+        @XmlElement(name = "ais21", type = AIS21.class),
+        @XmlElement(name = "ais22", type = AIS22.class),
+        @XmlElement(name = "ais23", type = AIS23.class),
+        @XmlElement(name = "ais24", type = AIS24.class),
+        @XmlElement(name = "ais25", type = AIS25.class),
+        @XmlElement(name = "ais26", type = AIS26.class),
+        @XmlElement(name = "ais27", type = AIS27.class),
+
         @XmlElement(name = "n2k", type = N2K.class),
         @XmlElement(name = "pgn130306", type = PGN130306.class),
         @XmlElement(name = "pgn128267", type = PGN128267.class)
     })
-    List<NMEA> sentences;
+    private final ConcurrentLinkedQueue<NMEA> nmeaQueue;
 
     public Sentences() {
-        sentences = new ArrayList<>();
+        nmeaQueue = new ConcurrentLinkedQueue<>();
     }
 
     public void add(NMEA data) {
-        sentences.add(data);
+        nmeaQueue.add(data);
     }
 
-    public List<NMEA> getSentences() {
-        return sentences;
+    public void addAll(Collection<? extends NMEA> data) {
+        nmeaQueue.addAll(data);
+    }
+
+    public NMEA poll() {
+        return nmeaQueue.poll();
+    }
+
+    public boolean isEmpty() {
+        return nmeaQueue.isEmpty();
+    }
+
+    public ConcurrentLinkedQueue<NMEA> getNmeaQueue() {
+        return nmeaQueue;
+    }
+
+    public int size() {
+        return nmeaQueue.size();
+    }
+
+    public void clear() {
+        nmeaQueue.clear();
     }
 
     @Override
     public String toString() {
-        return "Sentences{" + sentences + '}';
+        return "Sentences{" + nmeaQueue + '}';
+    }
+
+    public void display() {
+
+        nmeaQueue.stream().forEach((nmea) -> {
+            if (nmea != null) {
+                System.out.println(nmea);
+            }
+        });
     }
 
 }

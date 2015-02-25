@@ -6,6 +6,7 @@ package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.impl;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 
 /**
  *
@@ -20,5 +21,10 @@ public class PrintHandler
         // System.out.println(data.getChecksumValidation());
         // System.out.println(data.getClass());
        // System.out.println(data);
+    }
+
+    @Override
+    public Sentences getSentences() {
+       return null;
     }
 }

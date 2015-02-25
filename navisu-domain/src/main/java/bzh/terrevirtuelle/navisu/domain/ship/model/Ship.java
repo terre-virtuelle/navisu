@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -177,7 +177,7 @@ public class Ship implements Serializable {
 
     public Ship(int mmsi, int imo, String name,
             float heading, float cog, float sog, float rot,
-            float latitude, float longitude,
+            double latitude, double longitude,
             float width, float length, float draught,
             int type, int navigationalStatus, int electronicPositionDevice, String callSign,
             Calendar ETA, String destination, String country) {
@@ -207,10 +207,39 @@ public class Ship implements Serializable {
         this.latitude = new SimpleDoubleProperty(latitude);
         this.longitude = new SimpleDoubleProperty(longitude);
     }
+    /*
+     ais.getMMSI(),
+     ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
+     ais.getLatitude(), ais.getLongitude(),
+     ais.getNavigationalStatus()
+     */
+
+    public Ship(int mmsi, float heading, float cog, float sog, float rot,
+            double latitude, double longitude, int navigationalStatus) {
+        this.mmsi = mmsi;
+        this.heading = new SimpleDoubleProperty(heading);
+        this.cog = new SimpleDoubleProperty(cog);
+        this.sog = new SimpleDoubleProperty(sog);
+        this.rot = new SimpleDoubleProperty(rot);
+        this.latitude = new SimpleDoubleProperty(latitude);
+        this.longitude = new SimpleDoubleProperty(longitude);
+        this.navigationalStatus = new SimpleIntegerProperty(navigationalStatus);
+
+    }
 
     @Override
     public String toString() {
-        return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country + ", latitude=" + latitude + ", longitude=" + longitude + ", heading=" + heading + ", cog=" + cog + ", sog=" + sog + ", rot=" + rot + ", width=" + width + ", length=" + length + ", draught=" + draught + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus + ", electronicPositionDevice=" + electronicPositionDevice + ", callSign=" + callSign + ", ETA=" + ETA + ", destination=" + destination + ", year=" + year + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minute=" + minute + '}';
+        return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country 
+                + ", latitude=" + getLatitude() + ", longitude=" + getLongitude() 
+                + ", heading=" + getHeading() + ", cog=" + getCog() + ", sog=" + getSog()
+                + ", rot=" + getRot() + ", width=" + getWidth() + ", length=" + getLength() 
+                + ", draught=" + getDraught()
+                + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus 
+                + ", electronicPositionDevice=" + getElectronicPositionDevice ()
+                + ", callSign=" + getCallSign() 
+                + ", ETA=" + ETA + ", destination=" + destination 
+                + ", year=" + year + ", month=" + month + ", day=" + day 
+                + ", hour=" + hour + ", minute=" + minute + '}';
     }
 
     public int getMonth() {

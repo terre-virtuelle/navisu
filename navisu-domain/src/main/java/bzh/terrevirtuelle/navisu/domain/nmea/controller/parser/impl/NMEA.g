@@ -1,12 +1,12 @@
 grammar NMEA;
 
 @header{
-package bzh.terrevirtuelle. navisu.nmea.controller.parser.impl.output;
+package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl;
 
 
     }
 @lexer::header{
-package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl.output;
+package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 
@@ -48,20 +48,20 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.XTE;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.ZDA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GPSSatellite;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS08;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS18;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS24;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS08;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS18;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS24;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN130306;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128267;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;  
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.impl.PrintHandler; 
-import bzh.terrevirtuelle.navisu.domain.nmea.ais.controller.parser.impl.AISParser;
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.ais.AISParser;
  
 
 
@@ -167,7 +167,7 @@ import java.util.StringTokenizer;
    /* Default handlers */
    protected Handler handler = new PrintHandler();
    protected Handler aisHandler = new PrintHandler();
-   protected AISParser aisParser = new AISParser(aisHandler);
+   protected AISParser aisParser;
 
    /* NmeaHandler is injected by the server 
     The NMEA object is add at the sentences before fire event
@@ -176,7 +176,9 @@ import java.util.StringTokenizer;
         sentences.add(t);
     }
    */
-
+    public void setAISParser(AISParser aisParser){
+      this.aisParser = aisParser;
+    }
    public void setHandler(Handler handler){
    this.handler = handler;
    }
@@ -279,7 +281,7 @@ entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT
 		//AIS
 		|VDM|TXT|ALR
 		//GPSD
-		|GPSD_AIS|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH
+		//|GPSD_AIS|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH
 		//PRO
 		|PRO)+;
 
@@ -1294,13 +1296,14 @@ VDM 	: '!' device=DEVICE 'VDM' SEP
  	  NUMBER* 
  	  checksum=CHECKSUM
 	{
-	aisParser.parse(getText());
+	aisParser.parse(getText().trim());
 	}
 	;
 	
 /** 
 * SECTION GPSD 
 */
+/*
 GPSD_AIS : '{''"class":"AIS"' SEP 
     	'"device":' dev= DEV SEP 
     	'"type":' type = NUMBER SEP
@@ -1517,8 +1520,6 @@ GPSD_AIS : '{''"class":"AIS"' SEP
             aisHandler.doIt(ais18);                       
          }
     	}
-    	
-    	
 	}
     	;
 GPSD_DEVICE 
@@ -1548,7 +1549,8 @@ GPSD_WATCH
     	{
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
-    	;    	
+    	;    
+    	*/	
 PGN
     	:	
     	'{"timestamp":' timestamp=TIME_STAMP  SEP 
