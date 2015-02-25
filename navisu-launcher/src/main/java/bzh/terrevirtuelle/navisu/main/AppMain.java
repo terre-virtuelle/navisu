@@ -152,7 +152,7 @@ public class AppMain extends Application {
 
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
         // Initialisation des paramtètres de diffusion des data.
-        dataServerServices.init("localhost", 8080);
+        dataServerServices.init("localhost", 8585);
 
         // Test connexion GPS 
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
@@ -173,10 +173,11 @@ public class AppMain extends Application {
 
         // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
+        
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
-        nmeaClientServices.open("localhost", 8080);
-        nmeaClientServices.request(500);
+        nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
+        nmeaClientServices.request(1000);
 
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
