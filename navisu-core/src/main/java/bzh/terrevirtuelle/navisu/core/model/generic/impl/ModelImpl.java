@@ -82,7 +82,6 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
     public void update(int id, T data) {
 
         checkId(id);
-
         if(data == null) {
             throw new NullPointerException("data is null");
         }
@@ -97,7 +96,6 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
         for(ModelEvents<T> observer : this.observerList) {
             observer.notifyDataUpdated(id, (T) data.getClone());
         }
-        
     }
 
     @Override
