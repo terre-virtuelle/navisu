@@ -13,10 +13,10 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ConcurrentModificationException;
-import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -36,7 +36,6 @@ public class NmeaClientImpl
         implements NmeaClient, NmeaClientServices, ComponentState {
 
     private WebSocket ws;
-    private List<NMEA> list;
     private Sentences sentences;
     private Properties properties;
     private Vertx vertx;
@@ -45,7 +44,7 @@ public class NmeaClientImpl
     private int port;
     private int period;
     private boolean xml = false;
-
+    private NMEA nmea;
     @SubComponent
     protected NmeaEventProducerImpl eventProducer;
 
@@ -90,6 +89,7 @@ public class NmeaClientImpl
 
     private void initVertx() {
         vertx = VertxFactory.newVertx();
+        try{
         vertx.createHttpClient()
                 .setHost(hostName)
                 .setPort(port)
@@ -102,13 +102,16 @@ public class NmeaClientImpl
                             } else {
                                 sentences = (Sentences) unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())));
                             }
-                            response(sentences);
+                            response();
                         } catch (JAXBException ex) {
-                            System.out.println(ex);
+                            // System.out.println(ex);
                         }
                     });
                     ws = websocket;
                 });
+        }catch(Exception e){
+            Logger.getLogger(NmeaEventProducerImpl.class.getName()).log(Level.SEVERE, "Erreur", e);
+        }
     }
 
     @Override
@@ -117,7 +120,6 @@ public class NmeaClientImpl
         vertx.setPeriodic(period, (Long timerID) -> {
             ws.writeTextFrame("request");
         });
-
     }
 
     @Override
@@ -127,36 +129,29 @@ public class NmeaClientImpl
         request(period);
     }
 
-    private void response(Sentences sentences) {
+    private void response() {
         /* With new classe in the domain, create also new Event for diffusion */
         /* Debug mode : comment notifyNMEAEvent, uncomment display */
-        try {
-            notifyNMEAEvent();
-        } catch (Exception e) {
-
-        }
-        // display();
+        notifyNMEAEvent();
+       // display();
     }
 
     public void display() {
-
-        list = sentences.getSentences();
-        list.stream().forEach((n) -> {
-            System.out.println(n);
-        });
-
+        sentences.toString();
     }
 
     private void notifyNMEAEvent() {
 
-        list = sentences.getSentences();
-        try {
-            list.stream().forEach((n) -> {
-                eventProducer.notifyNMEAEvent(n);
-            });
-        } catch (ConcurrentModificationException e) {
-            //System.out.println("NmeaClientImpl " + e);
+        ConcurrentLinkedQueue<NMEA> queue = sentences.getNmeaQueue();
+        int size = queue.size();
+        for (int i = 0; i < size; i++) {
+             nmea = queue.poll();  
+            if (nmea != null) {
+               // System.out.println(nmea);
+                eventProducer.notifyNMEAEvent(queue.poll());
+            }
         }
+
     }
 
     private void response(StringBuilder stringBuilder) {

@@ -75,19 +75,6 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.ZDAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.NmeaEventProducer;
 import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.NmeaEventProducerServices;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.AAM;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS11;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS14;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS18;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS19;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS24;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS08;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS09;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS135;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.APB;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.BEC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.BOD;
@@ -110,6 +97,33 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.MTW;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.MWD;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.MWV;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS02;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS06;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS07;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS08;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS09;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS10;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS11;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS12;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS13;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS14;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS15;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS16;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS17;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS18;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS19;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS20;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS21;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS22;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS23;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS24;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS25;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS26;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS27;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128267;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN130306;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMB;
@@ -282,7 +296,16 @@ public class NmeaEventProducerImpl
     }
 
     public void notifyNMEAEvent(NMEA nmea) {
-        nmeaEvents.get(nmea.getClass()).notifyNmeaMessageChanged(nmea);
+        // System.out.println("nmea "+nmea.getClass().getName());
+        // System.out.println("nmea "+ nmea);
+        try {
+            if (nmea != null) {
+                nmeaEvents.get(nmea.getClass()).notifyNmeaMessageChanged(nmea);
+            }
+        } catch (Exception e) {
+              //    System.out.println("e "+ e.getClass().getName()+"  "+nmea);
+            System.out.print("");
+        }
     }
 
     // Appelé par le composant principal, lors de l'initialisation
@@ -331,30 +354,28 @@ public class NmeaEventProducerImpl
         nmeaEvents.put(AIS03.class, ais03Event);
         nmeaEvents.put(AIS04.class, ais04Event);
         nmeaEvents.put(AIS05.class, ais05Event);
-        // nmeaEvents.put(AIS06.class, ais06Event);
-        //  nmeaEvents.put(AIS07.class, ais06Event);
+        nmeaEvents.put(AIS06.class, ais06Event);
+        nmeaEvents.put(AIS07.class, ais06Event);
         nmeaEvents.put(AIS08.class, ais08Event);
         nmeaEvents.put(AIS09.class, ais08Event);
-        //  nmeaEvents.put(AIS10.class, ais10Event);
+        nmeaEvents.put(AIS10.class, ais10Event);
         nmeaEvents.put(AIS11.class, ais11Event);
-      //  nmeaEvents.put(AIS12.class, ais12Event);
-        //  nmeaEvents.put(AIS13.class, ais13Event);
+        nmeaEvents.put(AIS12.class, ais12Event);
+        nmeaEvents.put(AIS13.class, ais13Event);
         nmeaEvents.put(AIS14.class, ais14Event);
-      //  nmeaEvents.put(AIS15.class, ais15Event);
-        //  nmeaEvents.put(AIS16.class, ais16Event);
-        //  nmeaEvents.put(AIS17.class, ais17Event);
+        nmeaEvents.put(AIS15.class, ais15Event);
+        nmeaEvents.put(AIS16.class, ais16Event);
+        nmeaEvents.put(AIS17.class, ais17Event);
         nmeaEvents.put(AIS18.class, ais18Event);
         nmeaEvents.put(AIS19.class, ais19Event);
-     //   nmeaEvents.put(AIS20.class, ais20Event);
-        //  nmeaEvents.put(AIS21.class, ais21Event);
-        //   nmeaEvents.put(AIS22.class, ais22Event);
-        //   nmeaEvents.put(AIS23.class, ais23Event);
+        nmeaEvents.put(AIS20.class, ais20Event);
+        nmeaEvents.put(AIS21.class, ais21Event);
+        nmeaEvents.put(AIS22.class, ais22Event);
+        nmeaEvents.put(AIS23.class, ais23Event);
         nmeaEvents.put(AIS24.class, ais24Event);
-     //   nmeaEvents.put(AIS25.class, ais25Event);
-        //   nmeaEvents.put(AIS26.class, ais26Event);
-        //   nmeaEvents.put(AIS27.class, ais27Event);
-
-        nmeaEvents.put(AIS135.class, ais135Event);
+        nmeaEvents.put(AIS25.class, ais25Event);
+        nmeaEvents.put(AIS26.class, ais26Event);
+        nmeaEvents.put(AIS27.class, ais27Event);
 
         nmeaEvents.put(PGN130306.class, pgn130306Event);
         nmeaEvents.put(PGN128267.class, pgn128267Event);
