@@ -33,7 +33,6 @@ public class ShipProcessor
 
     @Override
     public GObject processCreated(int id, TObject input) {
-
         tShip = (TShip) input;
         gShip = new GShip(id, tShip);
         return gShip;
@@ -43,7 +42,6 @@ public class ShipProcessor
     public GObject processUpdated(int id, TObject input, GObject output) {
         tShip = (TShip) input;
         gShip = (GShip) output;
-
         gShip.setLocation(tShip.getLocation());
         gShip.setCog(tShip.getOrientation().getOrientationDegree());
         gShip.getAttributes().setInteriorMaterial(ShipTypeColor.MATERIAL.get(tShip.getType()));

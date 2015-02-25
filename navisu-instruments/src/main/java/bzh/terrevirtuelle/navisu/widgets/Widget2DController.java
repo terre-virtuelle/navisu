@@ -4,7 +4,6 @@
  */
 package bzh.terrevirtuelle.navisu.widgets;
 
-import bzh.terrevirtuelle.navisu.widgets.Widget2D;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;

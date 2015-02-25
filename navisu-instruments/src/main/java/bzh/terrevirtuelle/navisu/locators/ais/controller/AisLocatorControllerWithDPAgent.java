@@ -12,11 +12,12 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS03Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS04Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS05Event;
 import bzh.terrevirtuelle.navisu.locators.model.TShip;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
+
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS02;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
 
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentEventSubscribe;
@@ -53,6 +54,7 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+               /* 
                 AIS01 data = (AIS01) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
@@ -63,8 +65,10 @@ public class AisLocatorControllerWithDPAgent {
                     ship.setHeading(data.getHeading());
                     ship.setRot(data.getRot());
                     // mise à jour via le DPAgent
-                    dpAgentServices.update(ship);
+                  //  dpAgentServices.update(ship);//pb
+                 //   System.out.println("ship "+ship);
                 }
+               */ 
             }
         });
 
@@ -72,6 +76,7 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+               /* 
                 AIS02 data = (AIS02) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
@@ -81,8 +86,10 @@ public class AisLocatorControllerWithDPAgent {
                     ship.setCog(data.getCog());
                     ship.setHeading(data.getHeading());
                     // mise à jour via le DPAgent
-                    dpAgentServices.update(ship);
+                   // dpAgentServices.update(ship);
+                   // System.out.println("ship "+ship);
                 }
+               */ 
             }
         });
 
@@ -90,6 +97,7 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+           /*     
                 AIS03 data = (AIS03) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
@@ -99,14 +107,17 @@ public class AisLocatorControllerWithDPAgent {
                     ship.setCog(data.getCog());
                     ship.setHeading(data.getHeading());
                     // mise à jour via le DPAgent
-                    dpAgentServices.update(ship);
+                  //  dpAgentServices.update(ship);
+               // System.out.println("ship "+ship);
                 }
+               */ 
             }
         });
         ais5ES.subscribe(new AIS05Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+              /*  
                 AIS05 data = (AIS05) d;
                 if (data.getMMSI() == ship.getMmsi()) {
                     ship.setName(data.getShipName());
@@ -118,7 +129,9 @@ public class AisLocatorControllerWithDPAgent {
                     ship.setType(data.getShipType());
                     // mise à jour via le DPAgent
                     dpAgentServices.update(ship);
+                 //   System.out.println("ship "+ship);
                 }
+                */        
             }
         });
 

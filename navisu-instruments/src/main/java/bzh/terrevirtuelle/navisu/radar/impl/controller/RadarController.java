@@ -9,13 +9,13 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
 import bzh.terrevirtuelle.navisu.domain.devices.model.Transceiver;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS01;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS02;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS03;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS05;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS02;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS03;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
@@ -167,7 +167,7 @@ public class RadarController
                     int mmsi = ais.getMMSI();
                     if (!ships.containsKey(mmsi)) {
                         ship = ShipBuilder.create()
-                                .mmsi(ais.getMMSI()).imo(ais.getIMO()).name(ais.getShipName())
+                                .mmsi(ais.getMMSI())
                                 .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
                                 .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                                 .build();
@@ -198,13 +198,10 @@ public class RadarController
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI()).imo(ais.getIMO()).name(ais.getShipName())
+                            .mmsi(ais.getMMSI())
                             .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
-                            .width(ais.getWidth()).length(ais.getLength()).draught(ais.getDraught())
-                            .shipType(ais.getShipType()).navigationalStatus(ais.getNavigationalStatus())
-                            .electronicPositionDevice(ais.getElectronicPositionDevice()).callSign(ais.getCallSign())
-                            .eta(ais.getETA()).destination(ais.getDestination())
+                            .navigationalStatus(ais.getNavigationalStatus())
                             .build();
                     ships.put(mmsi, ship);
                     setTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
@@ -230,7 +227,7 @@ public class RadarController
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI()).imo(ais.getIMO()).name(ais.getShipName())
+                            .mmsi(ais.getMMSI())
                             .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .build();

@@ -7,9 +7,8 @@ package bzh.terrevirtuelle.navisu.locators.ais.controller;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS04Event;
-import bzh.terrevirtuelle.navisu.locators.model.TTransceiver;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AIS04;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import gov.nasa.worldwind.avlist.AVKey;
 
@@ -47,7 +46,7 @@ public class AisStationLocatorControllerWithDPAgent {
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS04 data = (AIS04) d;
                 String mmsi = "Unknow";
-
+/*
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == station.getMmsi()) {
@@ -68,6 +67,7 @@ public class AisStationLocatorControllerWithDPAgent {
                     // mise à jour via le DPAgent
                     dpAgentServices.update(station);
                 }
+        */
             }
         });
 

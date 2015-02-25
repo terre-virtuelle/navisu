@@ -29,6 +29,12 @@ public class TShip
         this.id = id;
     }
 
+    public TShip(int id, int mmsi, float heading, float cog, float sog, float rot,
+            double latitude, double longitude, int navigationalStatus) {
+        super(mmsi, heading, cog, sog, rot, latitude, longitude, navigationalStatus);
+        this.id = id;
+    }
+
     public TShip(int id, int mmsi, String name, String country, float width, float length, float draught, int shipType, int navigationalStatus, int electronicPositionDevice, String callSign) {
         super(mmsi, name, country, width, length, draught, shipType, navigationalStatus, electronicPositionDevice, callSign);
         this.id = id;
@@ -103,6 +109,6 @@ public class TShip
 
     @Override
     public String toString() {
-        return "TShip{" + "id=" + id + ", shapeId=" + shapeId + " "+  super.toString() + '}';
+        return "TShip{" + "id=" + id + ", shapeId=" + shapeId + " " + super.toString() + '}';
     }
 }
