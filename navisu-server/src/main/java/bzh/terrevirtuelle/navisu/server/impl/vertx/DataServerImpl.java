@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.server.impl.vertx;
 
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.server.impl.serial.impl.jssc.SerialPortReaderImpl;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import bzh.terrevirtuelle.navisu.server.DataServer;
@@ -57,9 +58,10 @@ public class DataServerImpl
     private int readerIndex = 0;
     private int currentReaderIndex = 0;
     private int queueSize;
-
+    private StringWriter response;
+    private StringWriter stringWriter = null;
     protected static final Logger LOGGER = Logger.getLogger(DataServerImpl.class.getName());
-    
+
     @Override
     public void componentInitiated() {
         properties = new Properties();
@@ -72,6 +74,9 @@ public class DataServerImpl
             Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         queueSize = new Integer(properties.getProperty("queueSize").trim());
+        sentences = new Sentences();
+        parser = new NmeaStringParser(sentences);
+
     }
 
     @Override
@@ -97,7 +102,10 @@ public class DataServerImpl
                     if (readers.get(currentReaderIndex).getClass().getSimpleName().equals("FileReaderImpl")) {
                         readers.get(currentReaderIndex).read();
                     }
-                    ws.writeTextFrame(response(currentReaderIndex));
+                    response = response(currentReaderIndex);
+                    if (response != null) {
+                        ws.writeTextFrame(response.toString());
+                    }
                     // rotation dans les buffers des readers
                     currentReaderIndex = (currentReaderIndex + 1) % sentenceQueues.size();
                 });
@@ -116,25 +124,26 @@ public class DataServerImpl
         if (serialPortReader != null) {
             serialPortReader.closePort();
         }
-      // fileHandler.close();
+        // fileHandler.close();
     }
 
     @Override
-    public String response(int currentReader) {
-        sentences = new Sentences();
-        parser = new NmeaStringParser(sentences);
-        sentenceQueues.get(currentReader).stream().forEach((s) -> {
-            //LOGGER.info(s);
-            parser.parse(s);
-        });
-        StringWriter stringWriter = new StringWriter();
+    public StringWriter response(int currentReader) {
+        sentences.clear();
         try {
-            marshaller.marshal(sentences, stringWriter);
-        } catch (JAXBException ex) {
-            java.util.logging.Logger.getLogger(DataServer.class.getName()).log(Level.SEVERE, null, ex);
+            sentenceQueues.get(currentReader).stream().forEach((s) -> {
+                //  LOGGER.info(s);
+                parser.parse(s.trim());
+            });
+            stringWriter = new StringWriter();
+            if (!sentences.isEmpty()) {
+                marshaller.marshal(sentences, stringWriter);
+            }
+        } catch (Exception e) {
+           // System.out.println("sentenceQueues "+ sentenceQueues);
+           // System.out.println("Warning " + stringWriter);
         }
-       // System.out.println("stringWriter.toString() : " + stringWriter.toString());
-        return stringWriter.toString();
+        return stringWriter;
     }
 
     @Override
@@ -199,12 +208,12 @@ public class DataServerImpl
         HttpServer httpserver = new HttpServer(vertx, hostname, port);
     }
 }
+
 class MyFormatter extends Formatter {
 
     @Override
     public String format(LogRecord record) {
-        return record.getMessage()+"\n";
+        return record.getMessage() + "\n";
     }
 
 }
-
