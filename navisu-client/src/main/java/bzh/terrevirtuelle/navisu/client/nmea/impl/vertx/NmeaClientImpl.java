@@ -131,14 +131,10 @@ public class NmeaClientImpl
 
     private void response() {
         /* With new classe in the domain, create also new Event for diffusion */
-        /* Debug mode : comment notifyNMEAEvent, uncomment display */
-        notifyNMEAEvent();
-       // display();
+        notifyNMEAEvent();    
     }
 
-    public void display() {
-        sentences.toString();
-    }
+   
 
     private void notifyNMEAEvent() {
 
@@ -147,14 +143,14 @@ public class NmeaClientImpl
         for (int i = 0; i < size; i++) {
              nmea = queue.poll();  
             if (nmea != null) {
-               // System.out.println(nmea);
-                eventProducer.notifyNMEAEvent(queue.poll());
+              //  System.out.println(nmea);
+                eventProducer.notifyNMEAEvent(nmea);
             }
         }
 
     }
 
     private void response(StringBuilder stringBuilder) {
-        System.out.println(stringBuilder);
+       // System.out.println(stringBuilder);
     }
 }

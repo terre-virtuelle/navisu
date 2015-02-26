@@ -303,8 +303,8 @@ public class NmeaEventProducerImpl
                 nmeaEvents.get(nmea.getClass()).notifyNmeaMessageChanged(nmea);
             }
         } catch (Exception e) {
-              //    System.out.println("e "+ e.getClass().getName()+"  "+nmea);
-            System.out.print("");
+             //    System.out.println("e "+ e.getClass().getName()+"  "+nmea);
+            //System.out.print("");
         }
     }
 
