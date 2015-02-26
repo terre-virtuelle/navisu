@@ -54,21 +54,18 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-               /* 
                 AIS01 data = (AIS01) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
-                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
+
+                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMMSI()) {
                     ship.setLatitude(lat);
                     ship.setLongitude(lon);
                     ship.setCog(data.getCog());
                     ship.setHeading(data.getHeading());
                     ship.setRot(data.getRot());
-                    // mise à jour via le DPAgent
-                  //  dpAgentServices.update(ship);//pb
-                 //   System.out.println("ship "+ship);
+                    dpAgentServices.update(ship);
                 }
-               */ 
             }
         });
 
@@ -76,20 +73,16 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-               /* 
+
                 AIS02 data = (AIS02) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
-                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
+                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMMSI()) {
                     ship.setLatitude(lat);
                     ship.setLongitude(lon);
                     ship.setCog(data.getCog());
                     ship.setHeading(data.getHeading());
-                    // mise à jour via le DPAgent
-                   // dpAgentServices.update(ship);
-                   // System.out.println("ship "+ship);
                 }
-               */ 
             }
         });
 
@@ -97,41 +90,37 @@ public class AisLocatorControllerWithDPAgent {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-           /*     
                 AIS03 data = (AIS03) d;
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
-                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMmsi()) {
+                if (lat != 0.0 && lon != 0.0 && data.getMMSI() == ship.getMMSI()) {
                     ship.setLatitude(lat);
                     ship.setLongitude(lon);
                     ship.setCog(data.getCog());
                     ship.setHeading(data.getHeading());
-                    // mise à jour via le DPAgent
-                  //  dpAgentServices.update(ship);
-               // System.out.println("ship "+ship);
+                    dpAgentServices.update(ship);
                 }
-               */ 
             }
         });
+        
         ais5ES.subscribe(new AIS05Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-              /*  
+
                 AIS05 data = (AIS05) d;
-                if (data.getMMSI() == ship.getMmsi()) {
+
+                if (data.getMMSI() == ship.getMMSI()) {
                     ship.setName(data.getShipName());
                     ship.setLength(data.getLength());
                     ship.setWidth(data.getWidth());
                     ship.setDraught(data.getDraught());
                     ship.setETA(data.getETA());
                     ship.setDestination(data.getDestination());
-                    ship.setType(data.getShipType());
-                    // mise à jour via le DPAgent
+                    ship.setShipType(data.getShipType());
+                    System.out.println("AisLocatorControllerWithDPAgent " + data.getShipType());
                     dpAgentServices.update(ship);
-                 //   System.out.println("ship "+ship);
-                }
-                */        
+               }
             }
         });
 

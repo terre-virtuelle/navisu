@@ -29,6 +29,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS02;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS03;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
 import bzh.terrevirtuelle.navisu.locators.ais.controller.AisLocatorController;
 import bzh.terrevirtuelle.navisu.locators.model.TStation;
 import gov.nasa.worldwind.WorldWindow;
@@ -61,7 +62,6 @@ public class AisLocator {
 
     protected GeoLayer<Layer> aisLayer;
     protected GeoLayer<Layer> aisStationLayer;
-    //  protected RenderableLayer baloonLayer;
     protected AisLocatorControllerWithDPAgent aisLocatorControllerWithDPAgent;
     protected AisStationLocatorControllerWithDPAgent aisStationLocatorControllerWithDPAgent;
     protected AisLocatorController aisLocatorController;
@@ -139,7 +139,7 @@ public class AisLocator {
                 Class[] i = o.getClass().getInterfaces();
                 if (i.length != 0) {
                     if (i[0].equals(Shape.class)) {
-                        makeBrowserBalloon(((Shape) o).getShip());
+                        updateAisPanel(((Shape) o).getShip());
                     }
                 }
             }
@@ -157,6 +157,7 @@ public class AisLocator {
     }
 
     private void subscribe() {
+
         ais1ES.subscribe(new AIS01Event() {
 
             @Override
@@ -187,26 +188,21 @@ public class AisLocator {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-               // System.out.println("data " + data);
-                try {
-                    AIS02 ais = (AIS02) data;
-                    int mmsi = ais.getMMSI();
-                    if (!tShipProcessors.containsKey(mmsi)) {
-                        ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
-                        geoViewServices.registerProcessor(shipProcessor);
-                        ship = new TShip(IDGenerator.newIntID(),
-                                ais.getMMSI(),
-                                ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
-                                ais.getLatitude(), ais.getLongitude(),
-                                ais.getNavigationalStatus());
-                        dpAgentServices.create(ship);
-                        aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
-                        tShipProcessors.put(mmsi, shipProcessor);
-                    }
-                    timestamps.put(mmsi, Calendar.getInstance());
-                } catch (Exception e) {
-                    System.out.println("ais1ES.subscribe " + e);
+                AIS02 ais = (AIS02) data;
+                int mmsi = ais.getMMSI();
+                if (!tShipProcessors.containsKey(mmsi)) {
+                    ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
+                    geoViewServices.registerProcessor(shipProcessor);
+                    ship = new TShip(IDGenerator.newIntID(),
+                            ais.getMMSI(),
+                            ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
+                            ais.getLatitude(), ais.getLongitude(),
+                            ais.getNavigationalStatus());
+                    dpAgentServices.create(ship);
+                    aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+                    tShipProcessors.put(mmsi, shipProcessor);
                 }
+                timestamps.put(mmsi, Calendar.getInstance());
             }
         });
 
@@ -214,63 +210,76 @@ public class AisLocator {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-               // System.out.println("data " + data);
-                try {
-                    AIS03 ais = (AIS03) data;
-                    int mmsi = ais.getMMSI();
-                    if (!tShipProcessors.containsKey(mmsi)) {
-                        ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
-                        geoViewServices.registerProcessor(shipProcessor);
-                        ship = new TShip(IDGenerator.newIntID(),
-                                ais.getMMSI(),
-                                ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
-                                ais.getLatitude(), ais.getLongitude(), ais.getNavigationalStatus());
-                        dpAgentServices.create(ship);
-                        aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
-                        tShipProcessors.put(mmsi, shipProcessor);
-                    }
-                    timestamps.put(mmsi, Calendar.getInstance());
-                } catch (Exception e) {
-                    System.out.println("ais3ES.subscribe " + e);
+
+                AIS03 ais = (AIS03) data;
+                int mmsi = ais.getMMSI();
+                if (!tShipProcessors.containsKey(mmsi)) {
+                    ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
+                    geoViewServices.registerProcessor(shipProcessor);
+                    ship = new TShip(IDGenerator.newIntID(),
+                            ais.getMMSI(),
+                            ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
+                            ais.getLatitude(), ais.getLongitude(), ais.getNavigationalStatus());
+                    dpAgentServices.create(ship);
+                    aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+                    tShipProcessors.put(mmsi, shipProcessor);
                 }
+                timestamps.put(mmsi, Calendar.getInstance());
             }
         });
-
         ais4ES.subscribe(new AIS04Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-              //  System.out.println("data " + data);
-                try {
-                    AIS04 ais = (AIS04) data;
-                    int mmsi = ais.getMMSI();
 
-                    if (!tStationsProcessors.containsKey(mmsi)) {
-                        StationProcessor stationProcessor = new StationProcessor(AisLocator.this.aisStationLayer);
-                        geoViewServices.registerProcessor(stationProcessor);
-                        station = new TStation(IDGenerator.newIntID(),
-                                ais.getMMSI(),
-                                ais.getLatitude(), ais.getLongitude(), ais.getDate());
+                AIS04 ais = (AIS04) data;
+                int mmsi = ais.getMMSI();
 
-                        dpAgentServices.create(station);
+                if (!tStationsProcessors.containsKey(mmsi)) {
+                    StationProcessor stationProcessor = new StationProcessor(AisLocator.this.aisStationLayer);
+                    geoViewServices.registerProcessor(stationProcessor);
+                    station = new TStation(IDGenerator.newIntID(),
+                            ais.getMMSI(),
+                            ais.getLatitude(), ais.getLongitude(), ais.getDate());
 
-                        aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
-                        /*
-                         wwd.addPositionListener((PositionEvent event) -> {
-                         System.out.println((int) wwd.getView().getCurrentEyePosition().getElevation());
-                         });
-                         */
-                        tStationsProcessors.put(mmsi, stationProcessor);
-                    }
-                    timestamps.put(mmsi, Calendar.getInstance());
-                } catch (Exception e) {
-                    System.out.println("ais1ES.subscribe " + e);
+                    dpAgentServices.create(station);
+
+                    aisStationLocatorControllerWithDPAgent = new AisStationLocatorControllerWithDPAgent(dpAgentServices, station);
+                    /*
+                     wwd.addPositionListener((PositionEvent event) -> {
+                     System.out.println((int) wwd.getView().getCurrentEyePosition().getElevation());
+                     });
+                     */
+                    tStationsProcessors.put(mmsi, stationProcessor);
                 }
+                timestamps.put(mmsi, Calendar.getInstance());
             }
         });
+
+        ais5ES.subscribe(new AIS05Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                
+                AIS05 ais = (AIS05) data;
+                int mmsi = ais.getMMSI();
+                if (!tShipProcessors.containsKey(mmsi)) {
+                    ShipProcessor shipProcessor = new ShipProcessor(AisLocator.this.aisLayer);
+                    geoViewServices.registerProcessor(shipProcessor);
+                    ship = new TShip(IDGenerator.newIntID(),
+                            ais.getMMSI(),
+                            ais.getShipName(), ais.getShipType());
+                    dpAgentServices.create(ship);
+                    aisLocatorControllerWithDPAgent = new AisLocatorControllerWithDPAgent(dpAgentServices, ship);
+                    tShipProcessors.put(mmsi, shipProcessor);
+                }
+                timestamps.put(mmsi, Calendar.getInstance());
+            }
+        });
+
     }
 
-    protected final void makeBrowserBalloon(TShip ship) {
+    protected final void updateAisPanel(TShip ship) {
         Platform.runLater(() -> {
             aisLocatorController.updateAisPanel(ship, timestamps, midMap);
         });

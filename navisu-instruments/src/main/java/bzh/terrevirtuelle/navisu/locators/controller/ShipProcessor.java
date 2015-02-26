@@ -44,8 +44,8 @@ public class ShipProcessor
         gShip = (GShip) output;
         gShip.setLocation(tShip.getLocation());
         gShip.setCog(tShip.getOrientation().getOrientationDegree());
-        gShip.getAttributes().setInteriorMaterial(ShipTypeColor.MATERIAL.get(tShip.getType()));
-        gShip.getAttributes().setOutlineMaterial(ShipTypeColor.MATERIAL.get(tShip.getType()));
+        gShip.getAttributes().setInteriorMaterial(ShipTypeColor.MATERIAL.get(tShip.getShipType()));
+        gShip.getAttributes().setOutlineMaterial(ShipTypeColor.MATERIAL.get(tShip.getShipType()));
         return output;
     }
 

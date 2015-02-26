@@ -46,7 +46,7 @@ public class AisStationLocatorControllerWithDPAgent {
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 AIS04 data = (AIS04) d;
                 String mmsi = "Unknow";
-/*
+
                 double lat = data.getLatitude();
                 double lon = data.getLongitude();
                 if (lat != 0.0 && lon != 0.0 && data.getMMSI() == station.getMmsi()) {
@@ -67,7 +67,7 @@ public class AisStationLocatorControllerWithDPAgent {
                     // mise à jour via le DPAgent
                     dpAgentServices.update(station);
                 }
-        */
+        
             }
         });
 

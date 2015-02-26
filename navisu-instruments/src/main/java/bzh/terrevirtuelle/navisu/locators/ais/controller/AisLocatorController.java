@@ -112,8 +112,8 @@ public class AisLocatorController
         }
         // Le type est publié tel quel, le dictionnaire n'est pas bien defini dans la spec AIS
         // A revoir
-        if (ship.getType() != 0) {
-            type.setText(TYPE.get(ship.getType()));
+        if (ship.getShipType() != 0) {
+            type.setText(TYPE.get(ship.getShipType()));
         } else {
             type.setText("---");
         }
@@ -122,16 +122,16 @@ public class AisLocatorController
         } else {
             callSign.setText("---");
         }
-        if (ship.getMmsi() != 0) {
-            mmsi.setText(Integer.toString(ship.getMmsi()));
+        if (ship.getMMSI() != 0) {
+            mmsi.setText(Integer.toString(ship.getMMSI()));
             long seconds = Calendar.getInstance().getTimeInMillis()
-                    - timestamps.get(ship.getMmsi()).getTimeInMillis();
+                    - timestamps.get(ship.getMMSI()).getTimeInMillis();
             ageReport.setText(Long.toString(seconds / 1000) + " s");
         } else {
             mmsi.setText("---");
         }
-        if (ship.getImo() != 0) {
-            imo.setText(Integer.toString(ship.getImo()));
+        if (ship.getIMO() != 0) {
+            imo.setText(Integer.toString(ship.getIMO()));
         } else {
             imo.setText("---");
         }
@@ -185,8 +185,8 @@ public class AisLocatorController
         } else {
             longitude.setText("---");
         }
-        if (ship.getMmsi() != 0) {
-            String mmsiStr = Integer.toString(ship.getMmsi());
+        if (ship.getMMSI() != 0) {
+            String mmsiStr = Integer.toString(ship.getMMSI());
             String mid = mmsiStr.substring(0, 3);
             country.setText(midMap.get(new Integer(mid)));
         } else {

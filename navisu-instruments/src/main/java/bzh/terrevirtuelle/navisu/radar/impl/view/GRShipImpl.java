@@ -25,7 +25,7 @@ public class GRShipImpl
         setCenterY(y);
 
         setRadius(radius);
-        setFill(ShipTypeColor.COLOR.get(ship.getType()));
+        setFill(ShipTypeColor.COLOR.get(ship.getShipType()));
     }
 
     public Ship getShip() {
