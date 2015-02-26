@@ -109,7 +109,7 @@ public class AppMain extends Application {
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
         RadarServices radarServices = componentManager.getComponentService(RadarServices.class);
-      //  radarServices.on();
+        radarServices.on();
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
@@ -177,7 +177,7 @@ public class AppMain extends Application {
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
-        nmeaClientServices.request(1000);
+        nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
         Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
