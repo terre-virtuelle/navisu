@@ -6,16 +6,12 @@ package bzh.terrevirtuelle.navisu.domain.ship.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  *
  * @author morvan
  */
-public class Ship implements Serializable {
+public class Ship implements Serializable, Cloneable {
 
     /**
      * MMSI number :1-999999999; 0 = not available = default
@@ -37,23 +33,23 @@ public class Ship implements Serializable {
      *
      */
     private String country = "";
-    ;
-    private DoubleProperty latitude;
-    private DoubleProperty longitude;
+
+    private double latitude;
+    private double longitude;
     /**
      * True heading Degrees (0-359) (511 indicates not available = default)
      */
-    private DoubleProperty heading;
+    private double heading;
     /**
      * Course over ground in 1/10deg (0-3 599). 3 600 (E10h) = not available =
      * default; 3 601-4 095 should not be used
      */
-    private DoubleProperty cog;
+    private double cog;
     /**
      * Speed over ground in 1/10 knot steps (0-102.2 knots) 1 023 = not
      * available, 1 022 = 102.2 knots or higher
      */
-    private DoubleProperty sog;
+    private double sog;
     /**
      * Rate of turn 0 to +126 = turning right at up to 708 deg per min or higher
      * 0 to -126 = turning left at up to 708 deg per min or higher Values
@@ -65,7 +61,7 @@ public class Ship implements Serializable {
      * available) -128 (80 hex) indicates no turn information available
      * (default). ROT data should not be derived from COG information.
      */
-    private DoubleProperty rot;
+    private double rot;
     /**
      * Width of the ship
      */
@@ -91,7 +87,7 @@ public class Ship implements Serializable {
      * defined in the 1949 Geneva Conventions and Additional Protocols) 59 Ships
      * according to RR Resolution No. 18 (Mob-83)
      */
-    private IntegerProperty shipType;
+    private int shipType;
     /**
      * 0 = under way using engine, 1 = at anchor, 2 = not under command, 3 =
      * restricted maneuverability, 4 = constrained by her draught, 5 = moored, 6
@@ -104,7 +100,7 @@ public class Ship implements Serializable {
      * reserved for future use, 14 = AIS-SART (active), 15 = not defined =
      * default (also used by AIS-SART under test)
      */
-    private IntegerProperty navigationalStatus;
+    private int navigationalStatus;
     /**
      * 0 = Undefined (default); 1 = GPS, 2 = GLONASS, 3 = combined GPS/GLONASS,
      * 4 = Loran-C, 5 = Chayka, 6 = integrated navigation system, 7 = surveyed;
@@ -140,14 +136,31 @@ public class Ship implements Serializable {
      * Creates a new instance of Ship
      */
     public Ship() {
-        this.latitude = new SimpleDoubleProperty(0);
-        this.longitude = new SimpleDoubleProperty(0);
-        this.heading = new SimpleDoubleProperty(0);
-        this.cog = new SimpleDoubleProperty(3600);
-        this.sog = new SimpleDoubleProperty(1023);
     }
 
-    public Ship(int mmsi, String name, String country, float width, float length, float draught,
+    public Ship(int mmsi) {
+        this.mmsi = mmsi;
+    }
+
+    public Ship(int mmsi, double latitude, double longitude) {
+        this.mmsi = mmsi;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Ship(int mmsi, double heading, double cog, double sog, double rot, double latitude, double longitude, int navigationalStatus) {
+        this.mmsi = mmsi;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.heading = heading;
+        this.cog = cog;
+        this.sog = sog;
+        this.rot = rot;
+        this.navigationalStatus = navigationalStatus;
+    }
+
+    public Ship(int mmsi, String name, String country,
+            float width, float length, float draught,
             int shipType, int navigationalStatus, int electronicPositionDevice, String callSign) {
         this.mmsi = mmsi;
         this.name = name;
@@ -155,24 +168,17 @@ public class Ship implements Serializable {
         this.width = width;
         this.length = length;
         this.draught = draught;
-        this.shipType = new SimpleIntegerProperty(shipType);
-        this.navigationalStatus = new SimpleIntegerProperty(navigationalStatus);
+        this.shipType = shipType;
+        this.navigationalStatus = navigationalStatus;
         this.electronicPositionDevice = electronicPositionDevice;
         this.callSign = callSign;
-        this.latitude = new SimpleDoubleProperty(0);
-        this.longitude = new SimpleDoubleProperty(0);
-        this.heading = new SimpleDoubleProperty(0);
-        this.cog = new SimpleDoubleProperty(3600);
-        this.sog = new SimpleDoubleProperty(1023);
     }
 
-    /**
-     * Creates a new instance of Ship
-     *
-     * @param mmsi
-     */
-    public Ship(int mmsi) {
+
+    public Ship(int mmsi, String name, int shipType) {
         this.mmsi = mmsi;
+        this.name = name;
+        this.shipType = shipType;
     }
 
     public Ship(int mmsi, int imo, String name,
@@ -184,127 +190,167 @@ public class Ship implements Serializable {
         this.mmsi = mmsi;
         this.imo = imo;
         this.name = name;
-        this.heading = new SimpleDoubleProperty(heading);
-        this.cog = new SimpleDoubleProperty(cog);
-        this.sog = new SimpleDoubleProperty(sog);
-        this.rot = new SimpleDoubleProperty(rot);
-        this.latitude = new SimpleDoubleProperty(latitude);
-        this.longitude = new SimpleDoubleProperty(longitude);
+        this.heading = heading;
+        this.cog = cog;
+        this.sog = sog;
+        this.rot = rot;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.width = width;
         this.length = length;
         this.draught = draught;
-        this.shipType = new SimpleIntegerProperty(type);
-        this.navigationalStatus = new SimpleIntegerProperty(navigationalStatus);
+        this.shipType = type;
+        this.navigationalStatus = navigationalStatus;
         this.electronicPositionDevice = electronicPositionDevice;
         this.callSign = callSign;
+        this.country = country;
         this.ETA = ETA;
         this.destination = destination;
         this.country = country;
     }
 
-    public Ship(int mmsi, float latitude, float longitude) {
+    public int getMMSI() {
+        return mmsi;
+    }
+
+    public void setMMSI(int mmsi) {
         this.mmsi = mmsi;
-        this.latitude = new SimpleDoubleProperty(latitude);
-        this.longitude = new SimpleDoubleProperty(longitude);
-    }
-    /*
-     ais.getMMSI(),
-     ais.getHeading(), ais.getCog(), ais.getSog(), ais.getRot(),
-     ais.getLatitude(), ais.getLongitude(),
-     ais.getNavigationalStatus()
-     */
-
-    public Ship(int mmsi, float heading, float cog, float sog, float rot,
-            double latitude, double longitude, int navigationalStatus) {
-        this.mmsi = mmsi;
-        this.heading = new SimpleDoubleProperty(heading);
-        this.cog = new SimpleDoubleProperty(cog);
-        this.sog = new SimpleDoubleProperty(sog);
-        this.rot = new SimpleDoubleProperty(rot);
-        this.latitude = new SimpleDoubleProperty(latitude);
-        this.longitude = new SimpleDoubleProperty(longitude);
-        this.navigationalStatus = new SimpleIntegerProperty(navigationalStatus);
-
     }
 
-    @Override
-    public String toString() {
-        return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country 
-                + ", latitude=" + getLatitude() + ", longitude=" + getLongitude() 
-                + ", heading=" + getHeading() + ", cog=" + getCog() + ", sog=" + getSog()
-                + ", rot=" + getRot() + ", width=" + getWidth() + ", length=" + getLength() 
-                + ", draught=" + getDraught()
-                + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus 
-                + ", electronicPositionDevice=" + getElectronicPositionDevice ()
-                + ", callSign=" + getCallSign() 
-                + ", ETA=" + ETA + ", destination=" + destination 
-                + ", year=" + year + ", month=" + month + ", day=" + day 
-                + ", hour=" + hour + ", minute=" + minute + '}';
+    public int getIMO() {
+        return imo;
     }
 
-    public int getMonth() {
-        return month;
+    public void setIMO(int imo) {
+        this.imo = imo;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public String getName() {
+        return name;
     }
 
-    public DoubleProperty latitudeProperty() {
-        return this.latitude;
+    public String getShipName() {
+        return name;
     }
 
-    /**
-     *
-     * @return
-     */
-    public double getLatitude() {
-        return this.latitudeProperty().get();
+    public void setName(String name) {
+        this.name = name;
     }
 
-    /**
-     *
-     * @param latitude
-     */
-    public void setLatitude(double latitude) {
-        this.latitudeProperty().set(latitude);
+    public void setShipName(String name) {
+        this.name = name;
     }
 
-    public DoubleProperty longitudeProperty() {
-        return this.longitude;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public double getLongitude() {
-        return longitudeProperty().get();
-    }
-
-    /**
-     *
-     * @param longitude
-     */
-    public void setLongitude(double longitude) {
-
-        this.longitudeProperty().set(longitude);
-    }
-
-    /**
-     *
-     * @return
-     */
     public String getCountry() {
         return country;
     }
 
-    /**
-     *
-     * @param country
-     */
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getHeading() {
+        return heading;
+    }
+
+    public void setHeading(double heading) {
+        this.heading = heading;
+    }
+
+    public double getCog() {
+        return cog;
+    }
+
+    public void setCog(double cog) {
+        this.cog = cog;
+    }
+
+    public double getSog() {
+        return sog;
+    }
+
+    public void setSog(double sog) {
+        this.sog = sog;
+    }
+
+    public double getRot() {
+        return rot;
+    }
+
+    public void setRot(double rot) {
+        this.rot = rot;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getLength() {
+        return length;
+    }
+
+    public void setLength(float length) {
+        this.length = length;
+    }
+
+    public float getDraught() {
+        return draught;
+    }
+
+    public void setDraught(float draught) {
+        this.draught = draught;
+    }
+
+    public int getShipType() {
+        return shipType;
+    }
+
+    public void setShipType(int shipType) {
+        this.shipType = shipType;
+    }
+
+    public int getNavigationalStatus() {
+        return navigationalStatus;
+    }
+
+    public void setNavigationalStatus(int navigationalStatus) {
+        this.navigationalStatus = navigationalStatus;
+    }
+
+    public int getElectronicPositionDevice() {
+        return electronicPositionDevice;
+    }
+
+    public void setElectronicPositionDevice(int electronicPositionDevice) {
+        this.electronicPositionDevice = electronicPositionDevice;
+    }
+
+    public String getCallSign() {
+        return callSign;
+    }
+
+    public void setCallSign(String callSign) {
+        this.callSign = callSign;
     }
 
     public Calendar getETA() {
@@ -313,6 +359,30 @@ public class Ship implements Serializable {
 
     public void setETA(Calendar ETA) {
         this.ETA = ETA;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
     }
 
     public int getDay() {
@@ -337,161 +407,6 @@ public class Ship implements Serializable {
 
     public void setMinute(int minute) {
         this.minute = minute;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getCallSign() {
-        return callSign;
-    }
-
-    public void setCallSign(String callSign) {
-        this.callSign = callSign;
-    }
-
-    public DoubleProperty cogProperty() {
-        return cog;
-    }
-
-    public double getCog() {
-        return cogProperty().get();
-    }
-
-    public void setCog(float cog) {
-        this.cogProperty().set(cog);
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public float getDraught() {
-        return draught;
-    }
-
-    public void setDraught(float draught) {
-        this.draught = draught;
-    }
-
-    public int getElectronicPositionDevice() {
-        return electronicPositionDevice;
-    }
-
-    public void setElectronicPositionDevice(int electronicPositionDevice) {
-        this.electronicPositionDevice = electronicPositionDevice;
-    }
-
-    public DoubleProperty headingProperty() {
-        return this.heading;
-    }
-
-    public double getHeading() {
-        return headingProperty().get();
-    }
-
-    public void setHeading(float heading) {
-        this.headingProperty().set(heading);
-    }
-
-    public int getImo() {
-        return imo;
-    }
-
-    public void setImo(int imo) {
-        this.imo = imo;
-    }
-
-    public float getLength() {
-        return length;
-    }
-
-    public void setLength(float length) {
-        this.length = length;
-    }
-
-    public int getMmsi() {
-        return mmsi;
-    }
-
-    public void setMmsi(int mmsi) {
-        this.mmsi = mmsi;
-    }
-
-    public String getName() {
-        if (name == null) {
-            name = "";
-        }
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public IntegerProperty navigationalStatusProperty() {
-        return navigationalStatus;
-    }
-
-    public int getNavigationalStatus() {
-        return navigationalStatusProperty().get();
-    }
-
-    public void setNavigationalStatus(int navigationalStatus) {
-        this.navigationalStatusProperty().set(navigationalStatus);
-    }
-
-    public DoubleProperty rotProperty() {
-        return rot;
-    }
-
-    public double getRot() {
-        return rotProperty().get();
-    }
-
-    public void setRot(float rot) {
-        this.rotProperty().set(rot);
-    }
-
-    public DoubleProperty sogProperty() {
-        return sog;
-    }
-
-    public double getSog() {
-        return sogProperty().get();
-    }
-
-    public void setSog(float sog) {
-        this.sogProperty().set(sog);
-    }
-
-    public IntegerProperty typeProperty() {
-        return shipType;
-    }
-
-    public int getType() {
-        return typeProperty().get();
-    }
-
-    public void setType(int type) {
-        this.typeProperty().set(type);
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
     }
 
 }

@@ -4,7 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.nmea.controller.ais.xml;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.Sentences;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

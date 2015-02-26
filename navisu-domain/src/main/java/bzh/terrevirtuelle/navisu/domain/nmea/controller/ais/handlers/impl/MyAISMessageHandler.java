@@ -60,36 +60,41 @@ public class MyAISMessageHandler implements HandleAISMessage {
      */
     @Override
     public void handleAISMessage(AISMessage message) {
-        /*
-        messages.add(message);
-        messagesCount++;
-        final AISMessageProvenance provenance = message.getProvenance();
-        System.out.println("provenance " + provenance);
-        final List<Annotation> annotations = provenance.getAnnotations();
-        System.out.println("annotations " + annotations);
-        if (annotations.size() > 0) {
-            annotatedMessagesCount++;
-            for (Annotation annotation : annotations) {
-                if (annotation instanceof NrOfFillBitsAnnotation) {
-                    nrOfFillBitsAnnotationCount++;
-                } else if (annotation instanceof AISIllegalValueAnnotation) {
-                    illegalValueAnnotationCount++;
-                } else if (annotation instanceof ChannelIdAnnotation) {
-                    channelIDAnnotationCount++;
-                } else if (annotation instanceof ChangedChannelIdAnnotation) {
-                    changedChannelIdAnnotationCount++;
-                } else if (annotation instanceof AISInconsistentLengthForTypeAnnotation) {
-                    inconsistentLengthForTypeAnnotationCount++;
-                } else if (annotation instanceof AISHypothesisAnnotation) {
-                    AISHypothesisAnnotationCount++;
-                } else {
-                    otherCount++;
-                }
-            }
-        } else {
-
+       // sentences.add((NMEA) message);
+/*
+         messages.add(message);
+         messagesCount++;
+         final AISMessageProvenance provenance = message.getProvenance();
+         System.out.println("provenance " + provenance);
+         final List<Annotation> annotations = provenance.getAnnotations();
+         System.out.println("annotations " + annotations);
+         if (annotations.size() > 0) {
+         annotatedMessagesCount++;
+         for (Annotation annotation : annotations) {
+         if (annotation instanceof NrOfFillBitsAnnotation) {
+         nrOfFillBitsAnnotationCount++;
+         } else if (annotation instanceof AISIllegalValueAnnotation) {
+         illegalValueAnnotationCount++;
+         } else if (annotation instanceof ChannelIdAnnotation) {
+         channelIDAnnotationCount++;
+         } else if (annotation instanceof ChangedChannelIdAnnotation) {
+         changedChannelIdAnnotationCount++;
+         } else if (annotation instanceof AISInconsistentLengthForTypeAnnotation) {
+         inconsistentLengthForTypeAnnotationCount++;
+         } else if (annotation instanceof AISHypothesisAnnotation) {
+         AISHypothesisAnnotationCount++;
+         } else {
+         otherCount++;
+         }
+         }
+            
+         } else {
+         sentences.add((NMEA) message);
+         }
+         */
+        if (message.toString().length() > 20) {
+            sentences.add((NMEA) message);
         }
-        */
     }
-                
+
 }
