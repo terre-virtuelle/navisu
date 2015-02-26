@@ -132,17 +132,19 @@ public class DataServerImpl
         sentences.clear();
         try {
             sentenceQueues.get(currentReader).stream().forEach((s) -> {
-                //  LOGGER.info(s);
+                // LOGGER.info(s);
                 parser.parse(s.trim());
             });
             stringWriter = new StringWriter();
             if (!sentences.isEmpty()) {
                 marshaller.marshal(sentences, stringWriter);
+              //  System.out.println("DataServerImpl stringWriter " + stringWriter);
             }
         } catch (Exception e) {
            // System.out.println("sentenceQueues "+ sentenceQueues);
-           // System.out.println("Warning " + stringWriter);
+          //  System.out.println("DataServerImpl Exception" + sentences);
         }
+       // System.out.println("DataServerImpl " + stringWriter);
         return stringWriter;
     }
 
