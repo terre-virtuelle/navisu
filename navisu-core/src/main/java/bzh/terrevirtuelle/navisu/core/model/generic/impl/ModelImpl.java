@@ -9,11 +9,10 @@ import bzh.terrevirtuelle.navisu.core.util.ICloneable;
 import java.util.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: tibus
- * Date: 17/10/13
- * Time: 20:01
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: tibus Date: 17/10/13 Time: 20:01 To change
+ * this template use File | Settings | File Templates.
+ *
+ * @param <T>
  */
 public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServices<T> {
 
@@ -51,6 +50,7 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
     @Override
     public WriteDataServices<T> getWriteDataServices() {
         return this;
+
     }
 
     @Override
@@ -60,40 +60,37 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
 
     @Override
     public void create(int id, T data) {
-        checkId(id);
-        if(data == null) {
-            throw new NullPointerException("data is null");
-        }
-        if(this.dataMap.containsKey(id)) {
-           throw new RuntimeException("id " + id + " already added to the tObjectModel");
-        }
-        
-       
-        final ICloneable clone = (ICloneable) data.getClone();
-        
-        this.dataMap.put(id, (T) clone);//pb
+            checkId(id);
+            if (data == null) {
+                throw new NullPointerException("data is null");
+            }
+            if (this.dataMap.containsKey(id)) {
+                throw new RuntimeException("id " + id + " already added to the tObjectModel");
+            }
+            final ICloneable clone = (ICloneable) data.getClone();
+            this.dataMap.put(id, (T) clone);//pb
 
-        for(ModelEvents<T> observer : this.observerList) {
-            observer.notifyDataCreated(id, (T) data.getClone());
-        } 
+            for (ModelEvents<T> observer : this.observerList) {
+                observer.notifyDataCreated(id, (T) data.getClone());
+            }
     }
 
     @Override
     public void update(int id, T data) {
 
         checkId(id);
-        if(data == null) {
+        if (data == null) {
             throw new NullPointerException("data is null");
         }
 
-        if(!this.dataMap.containsKey(id)) {
+        if (!this.dataMap.containsKey(id)) {
             throw new RuntimeException("id " + id + " does not exists");
         }
 
         final ICloneable clone = (ICloneable) data.getClone();
         this.dataMap.put(id, (T) clone);
 
-        for(ModelEvents<T> observer : this.observerList) {
+        for (ModelEvents<T> observer : this.observerList) {
             observer.notifyDataUpdated(id, (T) data.getClone());
         }
     }
@@ -103,7 +100,7 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
 
         checkId(id);
 
-        if(!this.dataMap.containsKey(id)) {
+        if (!this.dataMap.containsKey(id)) {
             throw new RuntimeException("id " + id + " does not exists");
         }
 
@@ -113,7 +110,7 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
         // And delete it from the map
         dataMap.remove(id);
 
-        for(ModelEvents<T> observer : this.observerList) {
+        for (ModelEvents<T> observer : this.observerList) {
             observer.notifyDataDeleted(id, (T) deletedData.getClone());
         }
 
@@ -125,7 +122,7 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
 
         checkId(id);
 
-        if(!this.dataMap.containsKey(id)) {
+        if (!this.dataMap.containsKey(id)) {
             throw new RuntimeException("id " + id + " does not exists");
         }
 
@@ -147,7 +144,7 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
 
     protected void checkId(int id) {
 
-        if(id < 0) {
+        if (id < 0) {
             throw new IllegalArgumentException("id must be greater than 0");
         }
     }
