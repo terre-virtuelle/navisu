@@ -56,7 +56,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         this.geoView = bzh.terrevirtuelle.navisu.core.view.geoview.GeoView.factory.newWorldWindGeo3DView();
         this.layerManager = this.geoView.getLayerManager();
 
-       this.initDefaultLayers(this.layerManager);
+        this.initDefaultLayers(this.layerManager);
 
         this.layerManager.getGroups().forEach((groupName, geoLayerList) -> {
 
@@ -71,19 +71,19 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
     protected void createGObject(GObjectCUDProcessor processor, TObject tObject) {
         // Create the GObject
-        final GObject newGObject = processor.processCreated(tObject.getID(), tObject);
+        GObject newGObject = processor.processCreated(tObject.getID(), tObject);
         //TODO /!\ C'est pas top de faire
         final RenderableLayer layer = (RenderableLayer) processor.getLayer().getDisplayLayer();
 
         for (Renderable renderable : newGObject.getRenderables()) {
             layer.addRenderable(renderable);
         }
-
         // Add the new GObject in the modelÒ
         this.model.getWriteDataServices().create(newGObject.getID(), newGObject);
 
         // Redraw WorldWind
         this.geoView.getWorldWindow().redraw();
+
     }
 
     protected void updateGObject(GObjectCUDProcessor processor, TObject tObject) {
@@ -129,15 +129,15 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
             @Override
             public void notifyCreated(TObject tObject) {
-                //LOGGER.info("notifyCreated(" + tObject.getID() + ")");
+                //  LOGGER.info("notifyCreated(" + tObject.getID() + ")");
+                GObjectCUDProcessor processor = null;
 
-                GObjectCUDProcessor processor = findProcessor(tObject);
+                processor = findProcessor(tObject);
 
                 if (processor == null) {
                     LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
                     return;
                 }
-
                 createGObject(processor, tObject);
             }
 
@@ -196,7 +196,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
 
     protected void initDefaultLayers(final LayerManager<Layer> layerManager) {
 
-        layerManager.createGroup("On-earth layers", 
+        layerManager.createGroup("On-earth layers",
                 WorldWindLayers.Stars.newInstance(),
                 WorldWindLayers.SkyGradient.newInstance(),
                 WorldWindLayers.BlueMarbleImage.newInstance(),
@@ -211,13 +211,12 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
                 WorldWindLayers.LatLonGraticule.newInstance()
         );
 
-        layerManager.createGroup("On-screen layers", 
+        layerManager.createGroup("On-screen layers",
                 WorldWindLayers.WorldMap.newInstance(),
                 WorldWindLayers.ScaleBar.newInstance(),
                 WorldWindLayers.Compass.newInstance()
-
         );
-        
+
     }
 
     @Override

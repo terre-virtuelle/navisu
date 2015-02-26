@@ -25,13 +25,13 @@ public class TObjectProcessor implements GObjectCUDProcessor {
 
     @Override
     public GObject processCreated(int id, TObject input) {
+        GObject gObject = null;
 
-        final GObject gObject = new GObjectImpl(
+        gObject = new GObjectImpl(
                 id,
                 input.getLocation().getLatitudeDegree(),
                 input.getLocation().getLongitudeDegree()
         );
-
         return gObject;
     }
 
