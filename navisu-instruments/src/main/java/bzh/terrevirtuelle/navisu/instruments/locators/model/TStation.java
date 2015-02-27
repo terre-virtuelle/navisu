@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.locators.model;
 
 import bzh.terrevirtuelle.navisu.core.model.tobject.TOrientedObject;
-import bzh.terrevirtuelle.navisu.domain.devices.model.Transceiver;
+import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.geodesy.Orientation;
 import bzh.terrevirtuelle.navisu.instruments.locators.view.GStation;
@@ -17,7 +17,7 @@ import java.util.Calendar;
  * @author Serge
  */
 public class TStation
-        extends Transceiver
+        extends BaseStation
         implements TOrientedObject {
 
     protected final int id;

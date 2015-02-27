@@ -8,7 +8,7 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS05Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
-import bzh.terrevirtuelle.navisu.domain.devices.model.Transceiver;
+import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
@@ -92,11 +92,11 @@ public class AisRadarController
     protected Map<Integer, Ship> ships;
     protected Map<Integer, GRShip> outOfRangeShips;
     protected Map<Integer, GRShip> outOfRangeTransceivers;
-    protected Map<Integer, Transceiver> transceivers;
+    protected Map<Integer, BaseStation> transceivers;
     protected Map<Integer, Calendar> timestamps;
     protected Ship ship;
     protected Ship ownerShip;
-    protected Transceiver transceiver;
+    protected BaseStation transceiver;
     protected NumberFormat formatter = new DecimalFormat("#0");
     protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
@@ -449,7 +449,7 @@ public class AisRadarController
         }
     }
 
-    private void setTarget(Transceiver transceiver, int centerX, int centerY) {
+    private void setTarget(BaseStation transceiver, int centerX, int centerY) {
         GRShipImpl grship = new GRShipImpl(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMMSI()));
         grship.setOnMouseClicked((MouseEvent me) -> {
@@ -465,7 +465,7 @@ public class AisRadarController
         if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
                 radar.getChildren().add(grship);
-                String label = "MMSI : " + transceiver.getMmsi();
+                String label = "MMSI : " + transceiver.getMMSI();
                 Tooltip t = new Tooltip(label);
                 Tooltip.install(grship, t);
             });
@@ -474,12 +474,12 @@ public class AisRadarController
         }
     }
 
-    private void updateTarget(Transceiver transceiver, int centerX, int centerY) {
+    private void updateTarget(BaseStation transceiver, int centerX, int centerY) {
 
         if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
                 List<Node> nodes = radar.getChildren();
-                String mmsi = Integer.toString(transceiver.getMmsi());
+                String mmsi = Integer.toString(transceiver.getMMSI());
                 nodes.stream().filter((n) -> (n.getId() != null)).filter((n) -> (n.getId().contains(mmsi))).map((n) -> (Circle) n).map((circle) -> {
                     circle.setCenterX(centerX);
                     return circle;
