@@ -14,15 +14,15 @@ import javafx.beans.property.SimpleDoubleProperty;
  *
  * @author Serge
  */
-public class Transceiver 
+public class BaseStation
         implements Serializable {
 
     /**
      * MMSI number :1-999999999; 0 = not available = default
      */
     private int mmsi;
-    private DoubleProperty latitude;
-    private DoubleProperty longitude;
+    private double latitude;
+    private double longitude;
     private Calendar date;
     /**
      * Electronic Position Fixing Device 0 Undefined (default) 1 GPS 2 GLONASS 3
@@ -31,40 +31,36 @@ public class Transceiver
      */
     private int epfd;
 
-    public Transceiver(){
+    public BaseStation() {
     }
 
-    public Transceiver(int mmsi, double latitude, double longitude, Calendar date, int epfd) {
+    public BaseStation(int mmsi, double latitude, double longitude, Calendar date, int epfd) {
         this.mmsi = mmsi;
-        this.latitude = new SimpleDoubleProperty(latitude);
-        this.longitude = new SimpleDoubleProperty(longitude);
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.date = date;
         this.epfd = epfd;
     }
 
-    public Transceiver(int mmsi, double latitude, double longitude) {
+    public BaseStation(int mmsi, double latitude, double longitude) {
         this.mmsi = mmsi;
-        this.latitude = new SimpleDoubleProperty(latitude);
-        this.longitude = new SimpleDoubleProperty(longitude);
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public Transceiver(int mmsi, double latitude, double longitude, Calendar date) {
+    public BaseStation(int mmsi, double latitude, double longitude, Calendar date) {
         this.mmsi = mmsi;
-         this.latitude = new SimpleDoubleProperty(latitude);
-        this.longitude = new SimpleDoubleProperty(longitude);
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.date = date;
     }
 
-    public int getMmsi() {
+    public int getMMSI() {
         return mmsi;
     }
 
-    public void setMmsi(int mmsi) {
+    public void setMMSI(int mmsi) {
         this.mmsi = mmsi;
-    }
-
-    public DoubleProperty latitudeProperty() {
-        return this.latitude;
     }
 
     /**
@@ -72,19 +68,12 @@ public class Transceiver
      * @return
      */
     public double getLatitude() {
-        return this.latitudeProperty().get();
+        return this.latitude;
+
     }
 
-    /**
-     *
-     * @param latitude
-     */
     public void setLatitude(double latitude) {
-        this.latitudeProperty().set(latitude);
-    }
-
-    public DoubleProperty longitudeProperty() {
-        return this.longitude;
+        this.latitude = latitude;
     }
 
     /**
@@ -92,7 +81,7 @@ public class Transceiver
      * @return
      */
     public double getLongitude() {
-        return longitudeProperty().get();
+        return longitude;
     }
 
     /**
@@ -100,8 +89,7 @@ public class Transceiver
      * @param longitude
      */
     public void setLongitude(double longitude) {
-
-        this.longitudeProperty().set(longitude);
+        this.longitude = longitude;
     }
 
     public Calendar getDate() {
