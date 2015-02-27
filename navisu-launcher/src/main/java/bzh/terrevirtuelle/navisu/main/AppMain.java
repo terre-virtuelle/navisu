@@ -36,14 +36,14 @@ import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
-import bzh.terrevirtuelle.navisu.widgets.Widget3DServices;
-import bzh.terrevirtuelle.navisu.locators.impl.Widget3DImpl;
-import bzh.terrevirtuelle.navisu.loggers.LoggerServices;
-import bzh.terrevirtuelle.navisu.loggers.impl.LoggerImpl;
+import bzh.terrevirtuelle.navisu.instruments.widgets.Widget3DServices;
+import bzh.terrevirtuelle.navisu.instruments.locators.impl.Widget3DImpl;
+import bzh.terrevirtuelle.navisu.instruments.loggers.LoggerServices;
+import bzh.terrevirtuelle.navisu.instruments.loggers.impl.LoggerImpl;
 import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
-import bzh.terrevirtuelle.navisu.radar.RadarServices;
-import bzh.terrevirtuelle.navisu.radar.impl.RadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
+import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -79,8 +79,7 @@ public class AppMain extends Application {
 
         // deploy components
         LOGGER.info("\n"
-                + componentManager.startApplication(
-                        DpAgentImpl.class,
+                + componentManager.startApplication(DpAgentImpl.class,
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
                         KapChartImpl.class,
@@ -101,15 +100,15 @@ public class AppMain extends Application {
                         DDriverManagerImpl.class,
                         MagneticImpl.class,
                         SedimentologyImpl.class,
-                        RadarImpl.class,
+                        AisRadarImpl.class,
                         LoggerImpl.class
                 )
         );
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
-        RadarServices radarServices = componentManager.getComponentService(RadarServices.class);
-     //   radarServices.on();
+        AisRadarServices radarServices = componentManager.getComponentService(AisRadarServices.class);
+        radarServices.on();
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
