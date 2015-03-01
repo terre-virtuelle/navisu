@@ -32,11 +32,12 @@ import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
 import bzh.terrevirtuelle.navisu.gpx.impl.GpxObjectImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.impl.AisImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
-import bzh.terrevirtuelle.navisu.instruments.widgets.Widget3DServices;
 import bzh.terrevirtuelle.navisu.instruments.locators.impl.Widget3DImpl;
 import bzh.terrevirtuelle.navisu.instruments.loggers.LoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.loggers.impl.LoggerImpl;
@@ -96,6 +97,7 @@ public class AppMain extends Application {
                         DataServerImpl.class,
                         NmeaClientImpl.class,
                         Widget3DImpl.class,
+                        AisImpl.class,
                         MediaImpl.class,
                         DDriverManagerImpl.class,
                         MagneticImpl.class,
@@ -108,7 +110,7 @@ public class AppMain extends Application {
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
         AisRadarServices radarServices = componentManager.getComponentService(AisRadarServices.class);
-        radarServices.on();
+       radarServices.on();
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
@@ -172,21 +174,23 @@ public class AppMain extends Application {
 
         // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
-        
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
-        Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
-     //   widgetServices.createGpsLocator();
-        widgetServices.createAisLocator();
+        //   Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
+        //   widgetServices.createGpsLocator();
+        //   widgetServices.createAisLocator();
+        AisServices aisServices = componentManager.getComponentService(AisServices.class);
+        aisServices.on();
 
         LoggerServices loggerServices = componentManager.getComponentService(LoggerServices.class);
         // loggerServices.createPrinter(new NMEA());
 
     }
+
     public static void main(String[] args) throws Exception {
         Application.launch();
     }
