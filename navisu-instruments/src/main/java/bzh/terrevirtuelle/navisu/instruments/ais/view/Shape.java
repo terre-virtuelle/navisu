@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.ais.view;
 
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.geodesy.Location;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 
@@ -16,7 +16,7 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  */
 public interface Shape {
 
-    void setLocation(Location location);
+    void setPosition(Position position);
 
     default void setRotation(double cog) {
     }
@@ -25,5 +25,9 @@ public interface Shape {
 
     Ship getShip();
 
-    public ShapeAttributes getAttributes();
+    ShapeAttributes getAttributes();
+
+    default void setAttributes(ShapeAttributes shapeAttributes) {
+
+    }
 }

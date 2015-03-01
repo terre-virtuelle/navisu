@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.Shape;
 import bzh.terrevirtuelle.navisu.instruments.locators.gps.GpsLocator;
-import bzh.terrevirtuelle.navisu.instruments.locators.model.TShip;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
@@ -57,9 +56,9 @@ public class Shape3D_0
         colladaController = new ColladaController(colladaRoot);
     }
 
-    @Override
-    public void setLocation(Location location) {
-
+   @Override
+    public void setPosition(Position position) {
+       // moveTo(position);
     }
 
     @Override

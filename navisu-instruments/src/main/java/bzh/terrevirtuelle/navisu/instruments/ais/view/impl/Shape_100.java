@@ -15,7 +15,7 @@ import gov.nasa.worldwind.render.ShapeAttributes;
  * @author Serge
  */
 public class Shape_100
-        extends Shape_1
+        extends Shape_0
         implements Shape {
 
     public Shape_100(Ship ship, ShapeAttributes sa, LatLon latlon, double d) {

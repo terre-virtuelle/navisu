@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.instruments.ais.impl;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.Ais;
 import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.impl.controller.AisController;
@@ -29,6 +30,8 @@ public class AisImpl
 
     @UsedService
     GuiAgentServices guiAgentServices;
+    @UsedService
+    LayerTreeServices layerTreeServices;
 
     @Override
     public void componentInitiated() {
@@ -44,6 +47,6 @@ public class AisImpl
 
     @Override
     public void on() {
-        AisController controller = new AisController(geoViewServices, dpAgentServices, guiAgentServices);
+        AisController controller = new AisController(geoViewServices,  layerTreeServices,dpAgentServices, guiAgentServices);
     }
 }

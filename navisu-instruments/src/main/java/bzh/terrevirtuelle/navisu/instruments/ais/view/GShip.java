@@ -1,14 +1,14 @@
 package bzh.terrevirtuelle.navisu.instruments.ais.view;
 
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.impl.Shape3D_0;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.impl.Shape_0;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.impl.Shape_1;
+import bzh.terrevirtuelle.navisu.instruments.ais.view.impl.Shape_0;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.util.Arrays;
@@ -20,33 +20,35 @@ import java.util.List;
  * @author tibus
  * @date 19/02/2014 18:49
  */
-public class GShip{
+public class GShip {
 
-    protected final int id;
     protected Ship ship;
     protected Shape shape;
 
-    public GShip(int id, Ship ship) {
-        this.id = id;
-        this.ship = ship;
-        if (this.ship.getNavigationalStatus() == 0) {
-            shape = new Shape_0(this.ship, makeAttributes(),
-                    makePositionList(initShape(this.ship.getLatitude(), this.ship.getLongitude())));
-        }
-        if (this.ship.getNavigationalStatus() == 1) {
-            shape = new Shape_1(this.ship, makeAttributes(),
-                    new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
-                    40.0);
-        }
-        if (this.ship.getNavigationalStatus() == 36) {
-            shape = new Shape3D_0(this.ship, "data/collada/sail01.dae",
-                    new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
-                    40.0);
-        }
-    }
+    public GShip(Ship ship) {
 
-    public int getID() {
-        return this.id;
+        this.ship = ship;
+        switch (ship.getNavigationalStatus()) {
+
+            case 0:
+                shape = new Shape_0(this.ship, makeAttributes(),
+                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
+                        40.0);
+                break;
+            case 1:
+                shape = new Shape_1(this.ship, makeAttributes(),
+                        makePositionList(initShape(this.ship.getLatitude(), this.ship.getLongitude())));
+                break;
+            case 36:
+                shape = new Shape3D_0(this.ship, "data/collada/sail01.dae",
+                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
+                        40.0);
+                break;
+            default:
+                shape = new Shape_0(this.ship, makeAttributes(),
+                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
+                        40.0);
+        }
     }
 
     public Shape getShape() {
@@ -75,8 +77,6 @@ public class GShip{
         this.ship = ship;
     }
 
-   
-
     public ShapeAttributes getAttributes() {
         return shape.getAttributes();
     }
@@ -87,6 +87,18 @@ public class GShip{
 
     public void setCog(double cog) {
         shape.setRotation(cog);
+    }
+
+    public void update(Ship ship) {
+      //  System.out.println("ship "+ship);
+        shape.setPosition(new Position(Angle.fromDegrees(ship.getLatitude()),
+                Angle.fromDegrees(ship.getLongitude()), 15));
+        shape.setRotation(ship.getCog());
+        ShapeAttributes pathAttrs = shape.getAttributes();
+        pathAttrs.setOutlineMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
+        pathAttrs.setInteriorMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
+     //   System.out.print(ship.getShipType()+"  ");
+      //  System.out.println(""+ShipTypeColor.MATERIAL.get(ship.getShipType()).getSpecular()); 
     }
 
     protected final ShapeAttributes makeAttributes() {
@@ -101,14 +113,14 @@ public class GShip{
     }
 
     private double[] initShape(double latitude, double longitude) {
-       
+
         double[] shipShape = new double[10];
         shipShape[0] = longitude;
         shipShape[1] = latitude + 0.00150;
         shipShape[2] = longitude;
         shipShape[3] = latitude + 0.00075;
         shipShape[4] = longitude + 0.0005;
-        shipShape[5] = latitude - 0.00075; 
+        shipShape[5] = latitude - 0.00075;
         shipShape[6] = longitude - 0.0005;
         shipShape[7] = latitude - 0.00075;
         shipShape[8] = longitude;
@@ -128,10 +140,8 @@ public class GShip{
         return Arrays.asList(array);
     }
 
-   
-
     @Override
     public String toString() {
-        return "GShip{" + "id=" + id + ", tShip=" + ship + ", shape=" + shape + '}';
+        return "GShip{" + ", Ship=" + ship + ", shape=" + shape + '}';
     }
 }

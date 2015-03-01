@@ -110,6 +110,25 @@ public class AisRadarController
     ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
     ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
 
+    public AisRadarController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+        super(keyCode, keyCombination);
+        ships = new HashMap<>();
+        outOfRangeShips = new HashMap<>();
+        outOfRangeTransceivers= new HashMap<>();
+        transceivers = new HashMap<>();
+        timestamps = new HashMap<>();
+        createOwnerShip();
+        subscribe();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar-fullscreen.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
     
 
     @Override
@@ -283,8 +302,8 @@ public class AisRadarController
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 AIS05 ais = (AIS05) data;
                 int mmsi = ais.getMMSI();
+                
                  if (!ships.containsKey(mmsi)) {
-                     
                     ship = ShipBuilder.create()
                             .mmsi(ais.getMMSI())
                             .destination(ais.getDestination())
@@ -294,6 +313,7 @@ public class AisRadarController
                     createTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
                             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 } else {
+                  //   System.out.println("radar update mmsi " + mmsi);
                     ship = ships.get(mmsi);
                     ship.setShipType(ais.getShipType());
                     ship.setName(ais.getShipName());
@@ -396,6 +416,7 @@ public class AisRadarController
 
     private void updateTarget(Ship ship, int centerX, int centerY) {
         Integer mmsiI = ship.getMMSI();
+       // System.out.println("radar "+ship.getShipType());
         if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
 
@@ -492,24 +513,5 @@ public class AisRadarController
             });
         }
     }
-    public AisRadarController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
-        super(keyCode, keyCombination);
-        ships = new HashMap<>();
-        outOfRangeShips = new HashMap<>();
-        outOfRangeTransceivers= new HashMap<>();
-        transceivers = new HashMap<>();
-        timestamps = new HashMap<>();
-        createOwnerShip();
-        subscribe();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar-fullscreen.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-        
-    }
+    
 }
