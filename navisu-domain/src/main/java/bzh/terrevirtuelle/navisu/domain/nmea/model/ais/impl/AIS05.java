@@ -368,6 +368,7 @@ public class AIS05
      * shown in the order and units as specified by the standard separated by
      * the SEPARATOR string.
      */
+    
     @Override
     public String toString() {
 
@@ -377,7 +378,7 @@ public class AIS05
         result += SEPARATOR + callSign;
         result += SEPARATOR + name;
         result += SEPARATOR + UtilsShipType8.shipTypeToString(typeOfShipAndCargoType);
-        result += SEPARATOR + UtilsDimensions30.toString(dimension);
+     //   result += SEPARATOR + UtilsDimensions30.toString(dimension);
         String etaString = twoDigits.format(UtilsEta.getMonth(eta)) + "-" + twoDigits.format(UtilsEta.getDay(eta))
                 + "T" + twoDigits.format(UtilsEta.getHour(eta)) + ":" + twoDigits.format(UtilsEta.getMinute(eta));
         result += SEPARATOR + etaString;
@@ -387,9 +388,9 @@ public class AIS05
         result += SEPARATOR + (dte ? "no DTE" : "with DTE");
 
         return result;
-
     }
-
+    
+   
     /**
      * AIS05 default constructor
      */

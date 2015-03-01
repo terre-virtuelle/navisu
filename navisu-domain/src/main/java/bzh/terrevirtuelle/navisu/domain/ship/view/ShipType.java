@@ -9,6 +9,7 @@ public class ShipType {
 
     public static final Map<Integer, String> TYPE = Collections.unmodifiableMap(new HashMap<Integer, String>() {
         {
+            put(0, "Not defined");
             put(20, " Wing in ground");
             put(21, " Wing in ground");
             put(22, " Wing in ground");
