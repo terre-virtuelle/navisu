@@ -31,7 +31,8 @@ import java.util.logging.Level;
  * @author tibus
  * @date 11/11/2013 18:55
  */
-public class DriverManagerImpl implements DriverManager, DriverManagerServices, ComponentState {
+public class DriverManagerImpl
+        implements DriverManager, DriverManagerServices, ComponentState {
 
     protected static final Logger LOGGER = Logger.getLogger(DriverManagerImpl.class.getName());
 
@@ -83,16 +84,16 @@ public class DriverManagerImpl implements DriverManager, DriverManagerServices, 
 
     protected void handleOpenFiles(String category, File file) {
 
-      //  files.stream().forEach((file) -> {
-            Driver driver = this.findDriverForFile(category, file.getAbsolutePath());
-            if (driver != null) {
-                guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
-                    driver.open(progressHandle, file.getAbsolutePath());
-                });
-            } else {
-                LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
-            }
-     //   });
+        //  files.stream().forEach((file) -> {
+        Driver driver = this.findDriverForFile(category, file.getAbsolutePath());
+        if (driver != null) {
+            guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
+                driver.open(progressHandle, file.getAbsolutePath());
+            });
+        } else {
+            LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
+        }
+        //   });
 
         properties.setProperty("dataDir", file.getParent());
         File f = new File("properties/user.properties");

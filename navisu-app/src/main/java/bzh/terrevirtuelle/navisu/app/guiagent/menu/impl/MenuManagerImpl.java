@@ -47,7 +47,7 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
         for(DefaultMenuEnum defaultMenu : DefaultMenuEnum.getAll()) {
 
             String key = defaultMenu.getKey();
-            this.createMenu(key, Translator.tr(key));
+             this.createMenu(key, Translator.tr(key));
         }
     }
 

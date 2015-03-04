@@ -9,6 +9,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.menu;
 public enum DefaultMenuEnum {
 
     FILE("menu.file"),
+    URL("menu.url"),
     EDIT("menu.edit"),
     WINDOW("menu.window"),
     HELP("menu.help");
@@ -25,7 +26,7 @@ public enum DefaultMenuEnum {
 
     public static DefaultMenuEnum[] getAll() {
         return new DefaultMenuEnum[] {
-            FILE, EDIT, WINDOW, HELP
+            FILE, URL, EDIT, WINDOW, HELP
         };
     }
 }
