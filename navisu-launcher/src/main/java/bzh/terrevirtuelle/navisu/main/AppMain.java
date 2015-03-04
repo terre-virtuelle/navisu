@@ -6,6 +6,8 @@ import bzh.terrevirtuelle.navisu.app.drivers.ddriver.impl.DDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.impl.WebDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
@@ -84,6 +86,7 @@ public class AppMain extends Application {
                 + componentManager.startApplication(DpAgentImpl.class,
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
+                        WebDriverManagerImpl.class,
                         KapChartImpl.class,
                         GribImpl.class,
                         S57ChartImpl.class,
@@ -162,8 +165,9 @@ public class AppMain extends Application {
         //   DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
         //    ddriverServices.init();
         //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
-
-        /*----Brest---*/
+        WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
+        webDriverServices.init();
+        
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
 
         // Initialisation des paramtètres de diffusion des data.
@@ -194,11 +198,10 @@ public class AppMain extends Application {
         nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
-        radarServices.on();
+       // radarServices.on();
         aisServices.on();
-      //  aisLoggerServices.on();
+        //  aisLoggerServices.on();
         aisPlotterServices.on();
-
 
     }
 
