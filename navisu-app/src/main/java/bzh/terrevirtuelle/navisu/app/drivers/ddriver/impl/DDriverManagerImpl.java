@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.ddriver.impl;
+package bzh.terrevirtuelle.navisu.app.drivers.ddriver.impl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import bzh.terrevirtuelle.navisu.app.ddriver.DDriver;
-import bzh.terrevirtuelle.navisu.app.ddriver.DDriverManager;
-import bzh.terrevirtuelle.navisu.app.ddriver.DDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriverManager;
+import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import java.io.IOException;

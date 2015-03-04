@@ -1,8 +1,8 @@
-package bzh.terrevirtuelle.navisu.app.drivers.impl;
+package bzh.terrevirtuelle.navisu.app.drivers.driver.impl;
 
-import bzh.terrevirtuelle.navisu.app.drivers.Driver;
-import bzh.terrevirtuelle.navisu.app.drivers.DriverManager;
-import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManager;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;

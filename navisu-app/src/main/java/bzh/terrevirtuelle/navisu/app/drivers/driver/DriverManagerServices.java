@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.drivers;
+package bzh.terrevirtuelle.navisu.app.drivers.driver;
 
 import org.capcaval.c3.component.ComponentService;
 
