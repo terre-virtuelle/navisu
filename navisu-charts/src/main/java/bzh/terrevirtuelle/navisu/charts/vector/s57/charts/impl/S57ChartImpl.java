@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
-import bzh.terrevirtuelle.navisu.app.drivers.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;

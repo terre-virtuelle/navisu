@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local;
 
-import bzh.terrevirtuelle.navisu.app.ddriver.DDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**

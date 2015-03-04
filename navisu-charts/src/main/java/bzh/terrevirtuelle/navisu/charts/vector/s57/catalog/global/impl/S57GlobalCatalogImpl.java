@@ -1,8 +1,8 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
-import bzh.terrevirtuelle.navisu.app.drivers.Driver;
-import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -132,13 +132,10 @@ public class S57GlobalCatalogImpl
 
     @Override
     public boolean canOpen(String file) {
-
         boolean canOpen = false;
-
         if (file.toLowerCase().endsWith(EXTENSION_0) || file.toLowerCase().endsWith(EXTENSION_1)) {
             canOpen = true;
         }
-
         return canOpen;
     }
 
@@ -146,7 +143,6 @@ public class S57GlobalCatalogImpl
     public void open(ProgressHandle pHandle, String... files) {
         if (files != null) {
             for (String file : files) {
-
                 this.handleOpenFile(pHandle, file);
             }
         }
