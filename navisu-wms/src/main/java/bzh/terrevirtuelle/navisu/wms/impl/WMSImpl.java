@@ -36,6 +36,7 @@ public class WMSImpl
     GuiAgentServices guiAgentServices;
 
     protected static final String GROUP = "WMS";
+    protected static final String NAME = "WMS";
     protected WorldWindow wwd = null;
     protected final URI serverURI = null;
 
