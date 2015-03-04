@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.magnetic;
 
-import bzh.terrevirtuelle.navisu.app.drivers.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import org.capcaval.c3.component.ComponentService;
 
 /**

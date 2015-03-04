@@ -104,7 +104,7 @@ public class NmeaClientImpl
                             }
                             response();
                         } catch (JAXBException ex) {
-                            // System.out.println(ex);
+                           //  System.out.println(ex);
                         }
                     });
                     ws = websocket;

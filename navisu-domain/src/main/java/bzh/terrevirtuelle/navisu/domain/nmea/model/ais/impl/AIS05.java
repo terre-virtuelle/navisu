@@ -161,6 +161,7 @@ public class AIS05
      *
      * @return int value of typeOfShipAndCargoType (8 bits [233,240])
      */
+    @Override
     public int getTypeOfShipAndCargoType() {
         return typeOfShipAndCargoType;
     }
@@ -178,6 +179,7 @@ public class AIS05
      *
      * @return BitVector value of dimension (30 bits [241,270])
      */
+    @Override
     public BitVector getDimension() {
         return dimension;
     }
@@ -217,6 +219,7 @@ public class AIS05
      * @return int value of typeOfElectronicPositionFixingDevice (4 bits
      * [271,274])
      */
+    @Override
     public int getTypeOfElectronicPositionFixingDevice() {
         return typeOfElectronicPositionFixingDevice;
     }
@@ -231,6 +234,7 @@ public class AIS05
      *
      * @return BitVector value of eta (20 bits [275,294])
      */
+    @Override
     public BitVector getEta() {
         return eta;
     }
@@ -254,6 +258,7 @@ public class AIS05
      *
      * @return int value of maximumPresentStaticDraught (8 bits [295,302])
      */
+    @Override
     public int getMaximumPresentStaticDraught() {
         return maximumPresentStaticDraught;
     }
@@ -271,6 +276,7 @@ public class AIS05
      *
      * @return String value of destination (120 bits [303,422])
      */
+    @Override
     public String getDestination() {
         return destination;
     }
@@ -336,6 +342,7 @@ public class AIS05
      *
      * @return boolean value of dte (bit 423)
      */
+    @Override
     public boolean getDte() {
         return dte;
     }
@@ -350,6 +357,7 @@ public class AIS05
      *
      * @return int value of spare (1 bits [424,424])
      */
+    @Override
     public int getSpare() {
         return spare;
     }
@@ -378,15 +386,14 @@ public class AIS05
         result += SEPARATOR + callSign;
         result += SEPARATOR + name;
         result += SEPARATOR + UtilsShipType8.shipTypeToString(typeOfShipAndCargoType);
-     //   result += SEPARATOR + UtilsDimensions30.toString(dimension);
-        String etaString = twoDigits.format(UtilsEta.getMonth(eta)) + "-" + twoDigits.format(UtilsEta.getDay(eta))
-                + "T" + twoDigits.format(UtilsEta.getHour(eta)) + ":" + twoDigits.format(UtilsEta.getMinute(eta));
-        result += SEPARATOR + etaString;
+        result += SEPARATOR + UtilsDimensions30.toString(dimension);
+     //   String etaString = twoDigits.format(UtilsEta.getMonth(eta)) + "-" + twoDigits.format(UtilsEta.getDay(eta))
+     //           + "T" + twoDigits.format(UtilsEta.getHour(eta)) + ":" + twoDigits.format(UtilsEta.getMinute(eta));
+      //  result += SEPARATOR + etaString;
         result += SEPARATOR + maximumPresentStaticDraught;
         result += SEPARATOR + UtilsPositioningDevice.toString(typeOfElectronicPositionFixingDevice);
         result += SEPARATOR + destination;
         result += SEPARATOR + (dte ? "no DTE" : "with DTE");
-
         return result;
     }
     

@@ -2,10 +2,10 @@ package bzh.terrevirtuelle.navisu.main;
 
 import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
 import bzh.terrevirtuelle.navisu.agents.media.impl.MediaImpl;
-import bzh.terrevirtuelle.navisu.app.ddriver.impl.DDriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.ddriver.impl.DDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
-import bzh.terrevirtuelle.navisu.app.drivers.DriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
@@ -34,17 +34,18 @@ import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.impl.AisImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.logger.AisLoggerServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.logger.impl.AisLoggerImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPlotterImpl;
+import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
+import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
-import bzh.terrevirtuelle.navisu.instruments.locators.impl.Widget3DImpl;
-import bzh.terrevirtuelle.navisu.instruments.loggers.LoggerServices;
-import bzh.terrevirtuelle.navisu.instruments.loggers.impl.LoggerImpl;
 import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -96,36 +97,50 @@ public class AppMain extends Application {
                         GpxObjectImpl.class,
                         DataServerImpl.class,
                         NmeaClientImpl.class,
-                        Widget3DImpl.class,
                         AisImpl.class,
+                        AisLoggerImpl.class,
+                        AisPlotterImpl.class,
                         MediaImpl.class,
                         DDriverManagerImpl.class,
                         MagneticImpl.class,
                         SedimentologyImpl.class,
-                        AisRadarImpl.class,
-                        LoggerImpl.class
+                        AisRadarImpl.class
                 )
         );
 
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
+
+        AisServices aisServices = componentManager.getComponentService(AisServices.class);
         AisRadarServices radarServices = componentManager.getComponentService(AisRadarServices.class);
-       radarServices.on();
+        AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
+        AisPlotterServices aisPlotterServices = componentManager.getComponentService(AisPlotterServices.class);
+
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
-        GribServices gribServices = componentManager.getComponentService(GribServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
+
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
+
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
+
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
+
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
+
         MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
+
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
+
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
+
+        GribServices gribServices = componentManager.getComponentService(GribServices.class);
+
+        DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
@@ -151,7 +166,6 @@ public class AppMain extends Application {
         /*----Brest---*/
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
 
-        DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
         // Initialisation des paramtètres de diffusion des data.
         dataServerServices.init("localhost", 8585);
 
@@ -180,14 +194,11 @@ public class AppMain extends Application {
         nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
-        //   Widget3DServices widgetServices = componentManager.getComponentService(Widget3DServices.class);
-        //   widgetServices.createGpsLocator();
-        //   widgetServices.createAisLocator();
-        AisServices aisServices = componentManager.getComponentService(AisServices.class);
+        radarServices.on();
         aisServices.on();
+      //  aisLoggerServices.on();
+        aisPlotterServices.on();
 
-        LoggerServices loggerServices = componentManager.getComponentService(LoggerServices.class);
-        // loggerServices.createPrinter(new NMEA());
 
     }
 

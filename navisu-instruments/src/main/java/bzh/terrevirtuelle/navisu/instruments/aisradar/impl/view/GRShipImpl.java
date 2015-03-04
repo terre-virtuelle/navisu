@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.aisradar.impl.view;
 
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.locators.view.ShipTypeColor;
+import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.ShipTypeColor;
 import javafx.scene.shape.Circle;
 
 /**
