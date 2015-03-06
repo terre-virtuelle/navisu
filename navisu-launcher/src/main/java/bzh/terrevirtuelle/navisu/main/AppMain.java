@@ -52,6 +52,8 @@ import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.shapefiles.impl.ShapefileObjectImpl;
+import bzh.terrevirtuelle.navisu.wms.WMSServices;
+import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
@@ -87,6 +89,7 @@ public class AppMain extends Application {
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
                         WebDriverManagerImpl.class,
+                        WMSImpl.class,
                         KapChartImpl.class,
                         GribImpl.class,
                         S57ChartImpl.class,
@@ -145,6 +148,9 @@ public class AppMain extends Application {
 
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
+        WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
+        wmsServices.init();
+
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(chartS57Services.getDriver());
@@ -166,8 +172,9 @@ public class AppMain extends Application {
         //    ddriverServices.init();
         //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
+        webDriverServices.registerNewDriver(wmsServices.getDriver());
         webDriverServices.init();
-        
+
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
 
         // Initialisation des paramtètres de diffusion des data.
@@ -198,9 +205,9 @@ public class AppMain extends Application {
         nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
-       // radarServices.on();
+        // radarServices.on();
         aisServices.on();
-        //  aisLoggerServices.on();
+        //   aisLoggerServices.on();
         aisPlotterServices.on();
 
     }
