@@ -15,8 +15,9 @@ public interface WebDriver {
 
     boolean canOpen(String file);
 
-    void open(ProgressHandle progressHandle, String... files);
+    void open(ProgressHandle progressHandle, String url);
 
     String getName();
 
+    void load();
 }

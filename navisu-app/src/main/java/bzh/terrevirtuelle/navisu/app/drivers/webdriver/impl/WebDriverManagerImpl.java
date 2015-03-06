@@ -5,20 +5,23 @@
  */
 package bzh.terrevirtuelle.navisu.app.drivers.webdriver.impl;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
+import bzh.terrevirtuelle.navisu.widgets.textfield.TextFieldController;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
+import bzh.terrevirtuelle.navisu.widgets.textlist.TextListController;
+import gov.nasa.worldwind.ogc.wms.WMSCapabilities;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.Group;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -34,26 +37,64 @@ public class WebDriverManagerImpl
     MenuManagerServices menuBarServices;
     @UsedService
     GuiAgentServices guiAgentServices;
-    protected List<Driver> availableDriverList = new ArrayList<>();
-    StackPane root;
+    protected List<WebDriver> availableDriverList = new ArrayList<>();
+    protected StackPane root;
+    protected URI serverURI;
+    protected WMSCapabilities caps;
+    protected static final Logger LOGGER = Logger.getLogger(WebDriverManagerImpl.class.getName());
+    protected final String NAME = "WMS";
 
     @Override
     public void init() {
         root = guiAgentServices.getRoot();
-        URLField url = new URLField(root);
+        TextFieldController textFieldController = new TextFieldController();
+      //   TextListController textListController = new TextListController();
         MenuItem menuItem = new MenuItem(tr("menu.url.load"));
         menuBarServices.addMenuItem(DefaultMenuEnum.URL, menuItem);
         menuItem.setOnAction((e) -> {
-            root.getChildren().add(url);
+            textFieldController.setServer("http://ows.emodnet-bathymetry.eu/wms");
+            root.getChildren().add(textFieldController);
+           // root.getChildren().add(textListController);
+
+            textFieldController.getTextField().setOnAction((event) -> {
+               // System.out.println("Work in progress :-)");
+                // load(textFieldController.getTextField().getText());
+                handleOpenFiles(textFieldController.getTextField().getText());
+                root.getChildren().remove(textFieldController);
+            });
         });
     }
 
-    @Override
-    public void registerNewDriver(Driver driver) {
-        Checker.notNull(driver, "Driver must not be null.");
+    protected void handleOpenFiles(String url) {
 
-        // Hold the driver
+        WebDriver driver = this.findDriverForUrl(NAME);
+        if (driver != null) {
+            guiAgentServices.getJobsManager().newJob(url, (progressHandle) -> {
+                driver.open(progressHandle, url);
+            });
+        } else {
+            LOGGER.log(Level.WARNING, "Unable to find a driver for url \"{0}\"", url);
+        }
+
+    }
+
+    @Override
+    public void registerNewDriver(WebDriver driver) {
+        Checker.notNull(driver, "Driver must not be null.");
         this.availableDriverList.add(driver);
+    }
+
+    protected WebDriver findDriverForUrl(String ws) {
+
+        WebDriver compatibleDriver = null;
+
+        for (WebDriver driver : this.availableDriverList) {
+            if (driver.canOpen(ws)) {
+                compatibleDriver = driver;
+                break;
+            }
+        }
+        return compatibleDriver;
     }
 
     @Override
@@ -68,23 +109,8 @@ public class WebDriverManagerImpl
     public void componentStopped() {
     }
 
-}
-
-class URLField extends Group {
-
-    public URLField(StackPane root) {
-        setTranslateX(-300);
-        BorderPane pane = new BorderPane();
-        pane.setPrefSize(200, 100);
-
-        TextField textField = new TextField();
-        pane.setCenter(textField);
-        textField.setPrefWidth(500);
-        textField.setStyle("-fx-text-fill:black;-fx-prompt-text-fill:gray;-fx-background-color: skyblue;");
-        textField.setOnAction((event) -> {
-            System.out.println("Work in progress :-)");
-            root.getChildren().remove(this);
-        });
-        getChildren().add(pane);
+    public StackPane getRoot() {
+        return root;
     }
+
 }

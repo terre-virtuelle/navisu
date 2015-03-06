@@ -5,16 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.app.drivers.webdriver;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
  * @date 4 mars 2015
  * @author Serge Morvan
  */
-public interface WebDriverManagerServices extends ComponentService {
+public interface WebDriverManagerServices
+        extends ComponentService {
 
     void init();
 
-    void registerNewDriver(Driver driver);
+    void registerNewDriver(WebDriver driver);
 }

@@ -77,14 +77,12 @@ public class DriverManagerImpl
                 // Open them
                 this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
                 System.out.println(selectedFile.getAbsolutePath());
-
             }
         });
     }
 
     protected void handleOpenFiles(String category, File file) {
 
-        //  files.stream().forEach((file) -> {
         Driver driver = this.findDriverForFile(category, file.getAbsolutePath());
         if (driver != null) {
             guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
@@ -93,7 +91,6 @@ public class DriverManagerImpl
         } else {
             LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
         }
-        //   });
 
         properties.setProperty("dataDir", file.getParent());
         File f = new File("properties/user.properties");
