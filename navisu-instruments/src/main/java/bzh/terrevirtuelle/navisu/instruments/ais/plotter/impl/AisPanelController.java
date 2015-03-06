@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl;
 
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import static bzh.terrevirtuelle.navisu.domain.ship.view.ShipType.TYPE;
-import bzh.terrevirtuelle.navisu.instruments.widgets.Widget2DController;
+import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
