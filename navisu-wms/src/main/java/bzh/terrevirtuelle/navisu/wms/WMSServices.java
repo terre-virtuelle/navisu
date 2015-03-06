@@ -5,18 +5,23 @@
  */
 package bzh.terrevirtuelle.navisu.wms;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriver;
+import gov.nasa.worldwind.wms.Capabilities;
 import org.capcaval.c3.component.ComponentService;
 
 /**
  * @date 4 mars 2015
  * @author Serge Morvan
  */
-public interface WMSServices 
-extends ComponentService {
+public interface WMSServices
+        extends ComponentService {
 
-    Driver getDriver();
+    void init();
+
+    WebDriver getDriver();
 
     void load(String server);
+
+    Capabilities GetCapabilities();
 
 }
