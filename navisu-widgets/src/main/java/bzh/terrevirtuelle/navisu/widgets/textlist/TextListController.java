@@ -7,13 +7,15 @@ package bzh.terrevirtuelle.navisu.widgets.textlist;
 
 import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
 import java.io.IOException;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -26,11 +28,25 @@ public class TextListController
     @FXML
     public Group textListPanel;
     @FXML
+    public ImageView quit;
+    @FXML
     GridPane gridPane;
     @FXML
     ScrollPane scrollPane;
 
     public TextListController() {
+        setMouseTransparent(false);
+        load();
+    }
+
+    public TextListController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+
+        super(keyCode, keyCombination);
+        setMouseTransparent(false);
+        load();
+    }
+
+    private void load() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TextListPanel.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -42,10 +58,9 @@ public class TextListController
         }
         gridPane.setStyle("-fx-background-color: #00524e99");
         scrollPane.setStyle("-fx-background-color: #00524e99");
-    }
-
-    public TextListController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
-        super(keyCode, keyCombination);
+        quit.setOnMouseClicked((MouseEvent event) -> {
+            setVisible(false);
+        });
     }
 
     public Group getTextListPanel() {

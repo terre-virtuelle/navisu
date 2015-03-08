@@ -10,11 +10,10 @@
 <?import javafx.scene.layout.*?>
 
 <fx:root fx:id="textListPanel" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   
     <children>
         <Group>
             <children>
-                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00524e99" height="597.0" layoutX="3.0" stroke="#005450" strokeType="INSIDE" width="406.0" />
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00524e99" height="350.0" layoutX="3.0" stroke="#005450" strokeType="INSIDE" width="406.0" />
                 <Line endX="400.0" endY="105.0" layoutX="2.0" layoutY="-53.0" startY="105.0" stroke="#04fff2" strokeWidth="0.5" />
                 <Group layoutX="9.0">
                     <children>
@@ -30,23 +29,21 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ScrollPane  fx:id="scrollPane" layoutX="16.0" layoutY="53.0" prefHeight="508.0" prefWidth="378.0">
+                <ScrollPane  fx:id="scrollPane" layoutX="16.0" layoutY="53.0" prefHeight="250.0" prefWidth="378.0">
                     <content>
-                        <GridPane  fx:id="gridPane"  prefHeight="600.0" prefWidth="362.0" AnchorPane.bottomAnchor="512.0" AnchorPane.leftAnchor="0.0">
+                        <GridPane  fx:id="gridPane"  prefHeight="250.0" prefWidth="400.0" >
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="176.0" minWidth="10.0" prefWidth="58.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="304.0" minWidth="10.0" prefWidth="304.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="600.0" />
                             </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
                         </GridPane> 
                     </content>
                 </ScrollPane>
+                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="357.0" layoutY="11.0"  pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                    <image>
+                        <Image url="@quit.png"/>
+                    </image>
+                </ImageView>
             </children>
         </Group>
     </children>
-
 </fx:root>

@@ -46,6 +46,7 @@ public class Widget2DController
 
     @Override
     public void handle(KeyEvent event) {
+        System.out.println("event " + event);
         if (keyComb.match(event)) {
             if (isVisible()) {
                 setVisible(false);
