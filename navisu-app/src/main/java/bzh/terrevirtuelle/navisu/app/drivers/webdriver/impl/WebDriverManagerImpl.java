@@ -14,7 +14,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
-import bzh.terrevirtuelle.navisu.widgets.textlist.TextListController;
 import gov.nasa.worldwind.ogc.wms.WMSCapabilities;
 import java.net.URI;
 import java.util.ArrayList;
@@ -43,22 +42,18 @@ public class WebDriverManagerImpl
     protected WMSCapabilities caps;
     protected static final Logger LOGGER = Logger.getLogger(WebDriverManagerImpl.class.getName());
     protected final String NAME = "WMS";
+    protected final String DEFAULT_URL = "http://ows.emodnet-bathymetry.eu/wms";
 
     @Override
     public void init() {
         root = guiAgentServices.getRoot();
         TextFieldController textFieldController = new TextFieldController();
-      //   TextListController textListController = new TextListController();
         MenuItem menuItem = new MenuItem(tr("menu.url.load"));
         menuBarServices.addMenuItem(DefaultMenuEnum.URL, menuItem);
         menuItem.setOnAction((e) -> {
-            textFieldController.setServer("http://ows.emodnet-bathymetry.eu/wms");
+            textFieldController.setServer(DEFAULT_URL);
             root.getChildren().add(textFieldController);
-           // root.getChildren().add(textListController);
-
             textFieldController.getTextField().setOnAction((event) -> {
-               // System.out.println("Work in progress :-)");
-                // load(textFieldController.getTextField().getText());
                 handleOpenFiles(textFieldController.getTextField().getText());
                 root.getChildren().remove(textFieldController);
             });
@@ -75,7 +70,6 @@ public class WebDriverManagerImpl
         } else {
             LOGGER.log(Level.WARNING, "Unable to find a driver for url \"{0}\"", url);
         }
-
     }
 
     @Override
@@ -85,9 +79,7 @@ public class WebDriverManagerImpl
     }
 
     protected WebDriver findDriverForUrl(String ws) {
-
         WebDriver compatibleDriver = null;
-
         for (WebDriver driver : this.availableDriverList) {
             if (driver.canOpen(ws)) {
                 compatibleDriver = driver;

@@ -89,7 +89,9 @@ public class LayerCheckTreeImpl
         CheckBoxTreeItem<GeoLayer> gpx = createNode(rootItem0, "GPX files", null);
         rootItems.add(gpx);
         CheckBoxTreeItem<GeoLayer> shp = createNode(rootItem0, "Shape files", null);
-        rootItems.add(shp);       
+        rootItems.add(shp); 
+        CheckBoxTreeItem<GeoLayer> wms = createNode(rootItem0, "WMS Layers", null);
+        rootItems.add(wms);  
     }
 
     @Override
