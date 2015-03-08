@@ -53,11 +53,9 @@ import org.capcaval.c3.component.annotation.UsedService;
     @Override
     public boolean canOpen(String category, String file) {
         boolean canOpen = false;
-
         if (category.contains(NAME) && file.toLowerCase().endsWith(EXTENSION_0)) {
             canOpen = true;
         }
-
         return canOpen;
     }
 
