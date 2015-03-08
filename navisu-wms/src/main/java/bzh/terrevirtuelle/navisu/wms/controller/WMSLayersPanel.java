@@ -222,9 +222,10 @@ public class WMSLayersPanel extends JPanel
             // If the layer is selected, add it to the world window's current model, else remove it from the model.
             if (((JCheckBox) actionEvent.getSource()).isSelected())
             {
-                if (this.component == null)
+                if (this.component == null){
                     this.component = createComponent(layerInfo.caps, layerInfo.params);
-
+                    System.out.println(layerInfo.caps+"  "+layerInfo.params);
+                }
                 updateComponent(this.component, true);
             }
             else
