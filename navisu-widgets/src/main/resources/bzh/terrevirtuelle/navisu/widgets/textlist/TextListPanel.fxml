@@ -13,7 +13,7 @@
     <children>
         <Group>
             <children>
-                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00524e99" height="350.0" layoutX="3.0" stroke="#005450" strokeType="INSIDE" width="406.0" />
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00524e80" height="350.0" layoutX="3.0" stroke="#005450" strokeType="INSIDE" width="406.0" />
                 <Line endX="400.0" endY="105.0" layoutX="2.0" layoutY="-53.0" startY="105.0" stroke="#04fff2" strokeWidth="0.5" />
                 <Group layoutX="9.0">
                     <children>
@@ -29,18 +29,18 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ScrollPane  fx:id="scrollPane" layoutX="16.0" layoutY="53.0" prefHeight="250.0" prefWidth="378.0">
+                <ScrollPane fx:id="scrollPane" layoutX="16.0" layoutY="53.0" prefHeight="250.0" prefWidth="378.0" styleClass=".scroll-pane" stylesheets="@../../../../../textlist.css">
                     <content>
-                        <GridPane  fx:id="gridPane"  prefHeight="250.0" prefWidth="400.0" >
+                        <GridPane fx:id="gridPane" prefHeight="252.0" prefWidth="380.0" styleClass=".gridpane" stylesheets="@../../../../../textlist.css">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="600.0" />
                             </columnConstraints>
                         </GridPane> 
                     </content>
                 </ScrollPane>
-                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="357.0" layoutY="11.0"  pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="357.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
                     <image>
-                        <Image url="@quit.png"/>
+                        <Image url="@quit.png" />
                     </image>
                 </ImageView>
             </children>

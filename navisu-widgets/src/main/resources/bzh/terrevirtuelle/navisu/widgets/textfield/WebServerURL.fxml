@@ -9,7 +9,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="web"  type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="web" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    
    <children>
       <Group>
@@ -31,7 +31,7 @@
                   <Glow />
                </effect>
             </ImageView>
-            <TextField fx:id="server" layoutX="14.0" layoutY="120.0" prefHeight="25.0" prefWidth="379.0" />
+            <TextField fx:id="server" layoutX="14.0" layoutY="120.0" prefHeight="25.0" prefWidth="379.0" style="-fx-background-color: #00524e00;" />
          </children>
       </Group>
    </children>
