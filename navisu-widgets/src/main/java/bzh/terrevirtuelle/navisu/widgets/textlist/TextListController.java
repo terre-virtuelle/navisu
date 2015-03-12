@@ -56,8 +56,8 @@ public class TextListController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        gridPane.setStyle("-fx-background-color: #00524e99");
-        scrollPane.setStyle("-fx-background-color: #00524e99");
+        //gridPane.setStyle("-fx-background-color: #00524e99");
+        //scrollPane.setStyle("-fx-background-color: #00524e99");
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
