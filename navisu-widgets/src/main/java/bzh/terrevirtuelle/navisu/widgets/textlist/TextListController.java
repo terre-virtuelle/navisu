@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.widgets.textlist;
 
 import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
 import java.io.IOException;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -17,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 
 /**
  * @date 6 mars 2015
@@ -33,6 +33,8 @@ public class TextListController
     GridPane gridPane;
     @FXML
     ScrollPane scrollPane;
+    @FXML
+    Text title;
 
     public TextListController() {
         setMouseTransparent(false);
@@ -69,6 +71,10 @@ public class TextListController
 
     public GridPane getGridPane() {
         return gridPane;
+    }
+
+    public void setTitle(Text title) {
+        this.title = title;
     }
 
 }
