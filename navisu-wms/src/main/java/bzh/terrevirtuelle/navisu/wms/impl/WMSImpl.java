@@ -22,6 +22,8 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.avlist.AVList;
 import gov.nasa.worldwind.avlist.AVListImpl;
+import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.globes.ElevationModel;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.LayerList;
@@ -55,7 +57,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @author Serge Morvan
  */
 public class WMSImpl
-        implements WMS, WMSServices, WebDriver, ComponentState {
+        implements WMS, WMSServices, WebDriver, ComponentState  {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -228,6 +230,7 @@ public class WMSImpl
             Layer layer = (Layer) component;
             LayerList layers = this.wwd.getModel().getLayers();
             layer.setEnabled(enable);
+            layer.setPickEnabled(true);
             if (enable) {
                 if (!layers.contains(layer)) {
                     GeoLayer geoLayer = GeoLayer.factory.newWorldWindGeoLayer(layer);
@@ -337,7 +340,7 @@ public class WMSImpl
 
         public void update() {
             if (this.component != null) {
-                updateComponent(this.component, false, first);
+                updateComponent(this.component, true, first);
             }
             wwd.redraw();
         }
@@ -346,4 +349,5 @@ public class WMSImpl
             return title;
         }
     }
+    
 }
