@@ -14,7 +14,7 @@ import org.capcaval.c3.component.ComponentService;
 public interface WebDriverManagerServices
         extends ComponentService {
 
-    void init();
+    void init(String server);
 
     void registerNewDriver(WebDriver driver);
 }

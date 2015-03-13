@@ -45,13 +45,13 @@ public class WebDriverManagerImpl
     protected final String DEFAULT_URL = "http://ows.emodnet-bathymetry.eu/wms";
 
     @Override
-    public void init() {
+    public void init(String server) {
         root = guiAgentServices.getRoot();
         TextFieldController textFieldController = new TextFieldController();
         MenuItem menuItem = new MenuItem(tr("menu.url.load"));
         menuBarServices.addMenuItem(DefaultMenuEnum.URL, menuItem);
         menuItem.setOnAction((e) -> {
-            textFieldController.setServer(DEFAULT_URL);
+            textFieldController.setServer(server);
             root.getChildren().add(textFieldController);
             textFieldController.getTextField().setOnAction((event) -> {
                 handleOpenFiles(textFieldController.getTextField().getText());
