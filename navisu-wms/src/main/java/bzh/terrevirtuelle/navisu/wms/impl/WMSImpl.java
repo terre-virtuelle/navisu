@@ -40,15 +40,13 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.Tooltip;
-import javafx.scene.control.TreeItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -114,6 +112,7 @@ public class WMSImpl
                 caps.parse();
                 Platform.runLater(() -> {
                     root.getChildren().add(textListController);
+                    textListController.setTitle(new Text(server));
                 });
                 final List<WMSLayerCapabilities> namedLayerCaps = caps.getNamedLayers();
                 if (namedLayerCaps == null) {
