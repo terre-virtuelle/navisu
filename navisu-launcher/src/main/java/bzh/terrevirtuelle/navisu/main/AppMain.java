@@ -173,8 +173,9 @@ public class AppMain extends Application {
         //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         webDriverServices.registerNewDriver(wmsServices.getDriver());
-        webDriverServices.init();
-
+        webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
+       // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
+       // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
 
         // Initialisation des paramtètres de diffusion des data.
