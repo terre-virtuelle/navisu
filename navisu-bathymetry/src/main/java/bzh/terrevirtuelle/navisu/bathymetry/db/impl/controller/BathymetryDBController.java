@@ -29,6 +29,7 @@ public class BathymetryDBController
     private BathymetryDBController() {
          wwd = GeoWorldWindViewImpl.getWW();
         this.wwd.addSelectListener(this);
+
     }
 
     public static BathymetryDBController getInstance() {
@@ -41,7 +42,7 @@ public class BathymetryDBController
         if (event.isRightClick()) {
             Object topObject = event.getTopObject();
             if (topObject != null) {
-                // if (topObject.getClass() == KMLSurfacePolygonImpl.class) {
+                // if (topObject.getClass() == SurfacePolygons.class) {
                 System.out.println(topObject.getClass().getName());
                 //  }
             }
@@ -51,4 +52,6 @@ public class BathymetryDBController
     public void setBathymetryDB(BathymetryDBImpl bathymetryDBImpl) {
         this.bathymetryDBImpl = bathymetryDBImpl;
     }
+
+    
 }
