@@ -9,16 +9,31 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="textListPanel" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="textListPanel" stylesheets="@../../../../../textlist.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Group>
             <children>
-                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00524e80" height="350.0" layoutX="3.0" stroke="#005450" strokeType="INSIDE" width="406.0" />
-                <Line endX="400.0" endY="105.0" layoutX="2.0" layoutY="-53.0" startY="105.0" stroke="#04fff2" strokeWidth="0.5" />
-                <Group layoutX="9.0">
+                <Pane prefHeight="50.0" prefWidth="405.0" opacity="0.6" styleClass="top-pane" />
+                <Pane prefHeight="250.0" prefWidth="15.0" opacity="0.6" layoutX="0" layoutY="50"  styleClass="left-pane" />
+                <Pane prefHeight="250.0" prefWidth="15.0" opacity="0.6" layoutX="390" layoutY="50"  styleClass="right-pane" />   
+                <Pane prefHeight="40.0" prefWidth="405.0" opacity="0.6" layoutY="300"  styleClass="foot-pane" />
+                <Group layoutX="10.0">
                     <children>
                         <Text fx:id="title" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisname" text="Web Server URL List" textAlignment="CENTER" wrappingWidth="149.0">
                         </Text>
+                      <ScrollPane fx:id="scrollPane" layoutX="5.0" layoutY="50.0" opacity="0.6" prefHeight="250.0" prefWidth="375.0" styleClass="scrolling-pane">
+                          <content>
+                              <GridPane fx:id="gridPane" opacity="1" prefHeight="252.0" prefWidth="380.0">
+                                  <columnConstraints>
+                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="600.0" />
+                                  </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints />
+                              <RowConstraints />
+                           </rowConstraints>
+                              </GridPane> 
+                          </content>
+                      </ScrollPane>
                     </children>
                 </Group>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
@@ -29,15 +44,6 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ScrollPane fx:id="scrollPane" layoutX="16.0" layoutY="53.0" prefHeight="250.0" prefWidth="378.0" styleClass=".scroll-pane" stylesheets="@../../../../../textlist.css">
-                    <content>
-                        <GridPane fx:id="gridPane" prefHeight="252.0" prefWidth="380.0" styleClass=".gridpane" stylesheets="@../../../../../textlist.css">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="600.0" />
-                            </columnConstraints>
-                        </GridPane> 
-                    </content>
-                </ScrollPane>
                 <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="357.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
                     <image>
                         <Image url="@quit.png" />

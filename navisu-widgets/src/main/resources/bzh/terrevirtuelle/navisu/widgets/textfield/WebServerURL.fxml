@@ -14,7 +14,7 @@
    <children>
       <Group>
          <children>
-            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00524e99" height="240.0" stroke="#005450" strokeType="INSIDE" width="400.0" />
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#143c28" opacity="0.6"  height="240.0" stroke="#005450" strokeType="INSIDE" width="400.0" />
             <Line endX="400.0" endY="105.0" layoutY="-3.0" startY="105.0" stroke="#04fff2" strokeWidth="0.5" />
             <Line endX="400.0" endY="78.0" layoutY="80.0" startY="78.0" stroke="#04fff2" strokeWidth="0.5" />
             <Group layoutX="9.0">
@@ -31,7 +31,7 @@
                   <Glow />
                </effect>
             </ImageView>
-            <TextField fx:id="server" layoutX="14.0" layoutY="120.0" prefHeight="25.0" prefWidth="379.0" style="-fx-background-color: #00524e00;" />
+            <TextField fx:id="server" layoutX="14.0" layoutY="120.0" prefHeight="25.0" prefWidth="379.0" style="-fx-background-color: #143c2800;" />
          </children>
       </Group>
    </children>
