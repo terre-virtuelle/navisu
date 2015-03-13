@@ -16,6 +16,8 @@ import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.BathymetryLocalCatalog
 import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.impl.BathymetryLocalCatalogImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.charts.BathymetryServices;
 import bzh.terrevirtuelle.navisu.bathymetry.charts.impl.BathymetryImpl;
+import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
+import bzh.terrevirtuelle.navisu.bathymetry.db.impl.BathymetryDBImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
@@ -30,6 +32,8 @@ import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.currents.CurrentsServices;
 import bzh.terrevirtuelle.navisu.currents.impl.CurrentsImpl;
+import bzh.terrevirtuelle.navisu.database.DatabaseServices;
+import bzh.terrevirtuelle.navisu.database.impl.DatabaseImpl;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
 import bzh.terrevirtuelle.navisu.gpx.impl.GpxObjectImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
@@ -71,6 +75,14 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 public class AppMain extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
+    private final String HOST_NAME = "localhost";
+    private final String PORT = "5433";
+    private final String DRIVER_NAME = "org.postgresql.Driver";
+    private final String JDBC_PROTOCOL = "jdbc:postgresql://";
+    private final String DB_NAME = "Bathy";
+    private final String USER_NAME = "Serge";
+    private final String PASSWD = "lithops";
+    private final String DATA_FILE_NAME = "data/bathy.glz";
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -88,6 +100,7 @@ public class AppMain extends Application {
                 + componentManager.startApplication(DpAgentImpl.class,
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
+                        DatabaseImpl.class,
                         WebDriverManagerImpl.class,
                         WMSImpl.class,
                         KapChartImpl.class,
@@ -98,6 +111,7 @@ public class AppMain extends Application {
                         ShapefileObjectImpl.class,
                         CurrentsImpl.class,
                         BathymetryImpl.class,
+                        BathymetryDBImpl.class,
                         BathymetryLocalCatalogImpl.class,
                         KmlObjectImpl.class,
                         GpxObjectImpl.class,
@@ -117,6 +131,8 @@ public class AppMain extends Application {
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
 
+        DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
+
         AisServices aisServices = componentManager.getComponentService(AisServices.class);
         AisRadarServices radarServices = componentManager.getComponentService(AisRadarServices.class);
         AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
@@ -133,6 +149,10 @@ public class AppMain extends Application {
 
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
+       
+        BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
+        bathymetryDBServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD, DATA_FILE_NAME);
+        bathymetryDBServices.open();
 
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
@@ -174,8 +194,8 @@ public class AppMain extends Application {
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         webDriverServices.registerNewDriver(wmsServices.getDriver());
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
-       // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
-       // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
+        // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
+        // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
 
         // Initialisation des paramtètres de diffusion des data.
