@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.database;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import org.capcaval.c3.component.ComponentService;
 
@@ -18,7 +19,11 @@ public interface DatabaseServices
 
     Statement connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd);
 
+    Statement getStatement();
+
     void execute(String statement);
+
+    ResultSet executeQuery(String query);
 
     PreparedStatement prepare(String statement);
 

@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.database.DatabaseServices;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -53,12 +54,23 @@ public class DatabaseImpl
     }
 
     @Override
-    public void execute(String statement) {
+    public void execute(String stmt) {
         try {
-            this.statement.execute(statement);
+            this.statement.execute(stmt);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public ResultSet executeQuery(String query) {
+        ResultSet r = null;
+        try {
+            r = this.statement.executeQuery(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return r;
     }
 
     @Override
@@ -106,4 +118,8 @@ public class DatabaseImpl
         }
     }
 
+    @Override
+    public Statement getStatement() {
+        return statement;
+    }
 }
