@@ -95,7 +95,7 @@ public class S57GlobalCatalogController
                                 } else {
                                     System.out.println("La carte: " + filename + " n'est pas dans votre catalogue");
                                 }
-                            }else{
+                            } else {
                                 System.out.println(Translator.tr("chart.error"));
                                 System.out.println("");
                             }
