@@ -82,7 +82,7 @@ public class AppMain extends Application {
     private final String DB_NAME = "Bathy";
     private final String USER_NAME = "Serge";
     private final String PASSWD = "lithops";
-    private final String DATA_FILE_NAME = "data/bathy.glz";
+    private final String DATA_FILE_NAME = "data/shom/bathy.glz";
 
     @Override
     public void start(Stage stage) throws Exception {
