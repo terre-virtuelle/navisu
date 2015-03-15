@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.db;
 
+import java.sql.Connection;
 import java.sql.Statement;
 import org.capcaval.c3.component.ComponentService;
 
@@ -15,11 +16,9 @@ import org.capcaval.c3.component.ComponentService;
 public interface BathymetryDBServices
         extends ComponentService {
 
-    Statement connect(String dbName, String hostName, String protocol, String port, 
-            String driverName, 
+    Connection connect(String dbName, String hostName, String protocol, String port,
+            String driverName,
             String userName, String passwd, String dataFileName);
-
-    void open();
 
     void close();
 
