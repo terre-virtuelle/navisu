@@ -41,7 +41,7 @@ public class DatabaseImpl
     }
 
     @Override
-    public Statement connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd) {
+    public Connection connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd) {
         try {
             Class.forName(driverName);
             String url = protocol + hostName + ":" + port + "/" + dbName;
@@ -50,7 +50,7 @@ public class DatabaseImpl
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return statement;
+        return connection;
     }
 
     @Override
@@ -122,4 +122,9 @@ public class DatabaseImpl
     public Statement getStatement() {
         return statement;
     }
+
+    @Override
+    public boolean isConnect() {
+        return connection != null;
+   }
 }
