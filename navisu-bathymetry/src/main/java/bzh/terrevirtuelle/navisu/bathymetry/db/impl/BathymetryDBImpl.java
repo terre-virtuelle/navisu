@@ -191,13 +191,9 @@ public class BathymetryDBImpl
                 ResultSet r = connection.createStatement().executeQuery("SELECT ST_AsText(coord) AS gid, coord, elevation FROM bathy");
                 while (r.next()) {
                     geom = (PGgeometry) r.getObject(2);
-                    //  System.out.print(geom.getGeometry().getFirstPoint().getX() + " ");
-                    // System.out.print("  " + geom.getGeometry().getFirstPoint().getY() + " ");
-                    //  System.out.println(r.getDouble(3));
                 }
             } catch (SQLException ex) {
-                // LOGGER.log(Level.SEVERE, null, ex);
-                System.out.println("ex " + ex);
+                LOGGER.log(Level.SEVERE, null, ex);
             }
         });
     }
