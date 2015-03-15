@@ -22,7 +22,7 @@
 /build/
 /dest/
 /navisu-launcher/data/shp/
-#/navisu-launcher/data/
+/navisu-launcher/data/bathymetry/shom
 /navisu-launcher/errors.txt
 /navisu-launcher/properties/
 /navisu-agents/.nb-gradle/private/
