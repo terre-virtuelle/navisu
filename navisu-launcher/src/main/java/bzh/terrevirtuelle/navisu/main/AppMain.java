@@ -151,7 +151,7 @@ public class AppMain extends Application {
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
        
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
-      //  bathymetryDBServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD, DATA_FILE_NAME);
+     //   bathymetryDBServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD, DATA_FILE_NAME);
 
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
