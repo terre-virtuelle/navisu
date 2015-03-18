@@ -14,9 +14,8 @@ import bzh.terrevirtuelle.navisu.bathymetry.db.impl.controller.BathymetryDBContr
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.DatabaseServices;
-import bzh.terrevirtuelle.navisu.domain.currents.model.CurrentBuilder;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point2D;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point2Df;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -62,8 +61,8 @@ public class BathymetryDBImpl
     private String dataFileName;
     private Connection connection;
     private PreparedStatement preparedStatement;
-    private List<Point2Df> points2df;
-    private List<Point2D> points2d;
+    private List<Point3Df> points3df;
+    private List<Point3D> points3d;
     protected WorldWindow wwd;
     protected RenderableLayer layer;
     protected static final String GROUP = "Bathymetry";
@@ -76,8 +75,8 @@ public class BathymetryDBImpl
 
     @Override
     public void componentInitiated() {
-        points2df = new ArrayList<>();
-        points2d = new ArrayList<>();
+        points3df = new ArrayList<>();
+        points3d = new ArrayList<>();
         bathymetryDBController = BathymetryDBController.getInstance();
         bathymetryDBController.setBathymetryDB(this);
         wwd = GeoWorldWindViewImpl.getWW();
@@ -112,10 +111,10 @@ public class BathymetryDBImpl
 
     public final void read() {
         try {
-            points2df = Files.lines(new File(dataFileName).toPath())
+            points3df = Files.lines(new File(dataFileName).toPath())
                     .map(line -> line.trim())
                     .map(line -> line.split(" "))
-                    .map(tab -> new Point2Df(Float.parseFloat(tab[1]),
+                    .map(tab -> new Point3Df(Float.parseFloat(tab[1]),
                                     Float.parseFloat(tab[0]),
                                     Float.parseFloat(tab[2])))
                     .collect(Collectors.toList());
@@ -125,7 +124,7 @@ public class BathymetryDBImpl
     }
 
     public final void insert() {
-        points2df.stream().forEach((p) -> {
+        points3df.stream().forEach((p) -> {
             try {
                 preparedStatement.setDouble(1, p.getLon());
                 preparedStatement.setDouble(2, p.getLat());
@@ -145,11 +144,11 @@ public class BathymetryDBImpl
         }
     }
 
-    public final List<Point2D> retrieve(double lat, double lon) {
+    public final List<Point3D> retrieve(double lat, double lon) {
         PGgeometry geom;
         ResultSet r0;
         ResultSet r1;
-        points2d.clear();
+        points3d.clear();
         layer.removeAllRenderables();
         try {
             r0 = connection.createStatement().executeQuery(
@@ -172,7 +171,7 @@ public class BathymetryDBImpl
                         + ");");
                 while (r1.next()) {
                     if ((Double) r1.getObject(1) < 900.0) {
-                        points2d.add(new Point2D(latitude, longitude, r0.getDouble(2)));
+                        points3d.add(new Point3D(latitude, longitude, r0.getDouble(2)));
                         PointPlacemark pointPlacemark = createSounding(latitude, longitude, r0.getDouble(2));
                         layer.addRenderable(pointPlacemark);
                     }
@@ -181,7 +180,7 @@ public class BathymetryDBImpl
         } catch (SQLException ex) {
             System.out.println("ex " + ex);
         }
-        return points2d;
+        return points3d;
     }
 
     public final void retrieveAll() {
@@ -203,7 +202,7 @@ public class BathymetryDBImpl
         databaseServices.close();
     }
 
-    public void view(List<Point2Df> points) {
+    public void view(List<Point3Df> points) {
 
     }
 

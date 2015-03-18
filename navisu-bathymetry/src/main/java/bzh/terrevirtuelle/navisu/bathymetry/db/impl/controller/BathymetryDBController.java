@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.bathymetry.db.impl.controller;
 
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.BathymetryDBImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.geometry.Point2D;
+import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -25,7 +25,7 @@ public class BathymetryDBController {
     private static final BathymetryDBController INSTANCE;
     protected WorldWindow wwd;
     private BathymetryDBImpl bathymetryDBImpl;
-    List<Point2D> points;
+    List<Point3D> points;
     private Connection connection;
 
     static {
