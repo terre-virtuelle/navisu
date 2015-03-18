@@ -10,7 +10,7 @@ package bzh.terrevirtuelle.navisu.domain.geometry;
  * @date 12 mars 2015
  * @author Serge Morvan
  */
-public class Point2Df {
+public class Point3Df {
 
     public float lon;
 
@@ -18,10 +18,10 @@ public class Point2Df {
 
     public float elevation;
 
-    public Point2Df() {
+    public Point3Df() {
     }
 
-    public Point2Df(float lat, float lon, float elevation) {
+    public Point3Df(float lat, float lon, float elevation) {
         this.lon = lon;
         this.lat = lat;
         this.elevation = elevation;
