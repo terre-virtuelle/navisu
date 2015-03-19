@@ -72,6 +72,7 @@ public class BathymetryLocalCatalogLoader {
         pgon.setAttributes(normalAttributes);
         pgon.setHighlightAttributes(highlightAttributes);
         layer.addRenderable(pgon);
+        layer.setName("Shom");
         layers.add(layer);
         return layers;
     }

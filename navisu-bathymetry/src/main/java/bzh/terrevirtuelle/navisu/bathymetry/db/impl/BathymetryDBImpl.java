@@ -65,7 +65,7 @@ public class BathymetryDBImpl
     private List<Point3D> points3d;
     protected WorldWindow wwd;
     protected RenderableLayer layer;
-    protected static final String GROUP = "Bathymetry";
+    protected static final String GROUP = "Bathymetry data";
     double longitude;
     double latitude;
     NumberFormat nf4 = new DecimalFormat("0.0000");
@@ -81,7 +81,7 @@ public class BathymetryDBImpl
         bathymetryDBController.setBathymetryDB(this);
         wwd = GeoWorldWindViewImpl.getWW();
         layer = new RenderableLayer();
-        layer.setName("BATHY SHOM");
+        layer.setName("Shom");
         geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
 
