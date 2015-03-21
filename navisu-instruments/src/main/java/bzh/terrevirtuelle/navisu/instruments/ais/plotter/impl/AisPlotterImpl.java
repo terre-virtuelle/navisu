@@ -181,7 +181,7 @@ public class AisPlotterImpl
             aisPanelController = new AisPanelController(KeyCode.B, KeyCombination.CONTROL_DOWN);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisPanelController);
             guiAgentServices.getRoot().getChildren().add(aisPanelController); //Par defaut le radar n'est pas visible Ctrl-A
-            aisPanelController.scale(1.0);
+            aisPanelController.setScale(1.0);
             aisPanelController.setVisible(false);
         });
     }

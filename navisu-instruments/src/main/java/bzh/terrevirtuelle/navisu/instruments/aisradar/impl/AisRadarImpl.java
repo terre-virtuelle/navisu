@@ -30,7 +30,7 @@ public class AisRadarImpl
     @Override
     public void componentInitiated() {
         radarController = new AisRadarController(KeyCode.A, KeyCombination.CONTROL_DOWN);
-        radarController.scale(0.5);
+        radarController.setScale(0.5);
     }
 
     @Override

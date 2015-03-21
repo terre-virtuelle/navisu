@@ -23,7 +23,7 @@ import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.ShipTypeColor;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.view.GRShipImpl;
-import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
+import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.FileInputStream;
 
 import java.io.IOException;
