@@ -1,5 +1,6 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.menu;
+package bzh.terrevirtuelle.navisu.app.guiagent.dock;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.menu.*;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import org.capcaval.c3.component.ComponentService;
@@ -10,7 +11,7 @@ import org.capcaval.c3.component.ComponentService;
  * @author tibus
  * @date 02/11/2013 11:54
  */
-public interface MenuManagerServices extends ComponentService {
+public interface DockManagerServices extends ComponentService {
 
     void setMenuComponent(MenuBar menu);
 
