@@ -10,8 +10,6 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
-import gov.nasa.worldwind.event.SelectEvent;
-import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.geom.Position;
 import java.sql.Connection;
 import java.util.List;
@@ -37,7 +35,7 @@ public class BathymetryDBController {
 
         wwd.addPositionListener((PositionEvent event) -> {
             Position pos = event.getPosition();
-            if (pos != null && connection !=null) {
+            if (pos != null && connection != null && pos.getAltitude() < 20.0) {
                 points = bathymetryDBImpl.retrieve(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees());
             }
         });
@@ -49,7 +47,7 @@ public class BathymetryDBController {
 
     public void setBathymetryDB(BathymetryDBImpl bathymetryDBImpl) {
         this.bathymetryDBImpl = bathymetryDBImpl;
-       
+
     }
 
     public void setConnection(Connection connection) {
