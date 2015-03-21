@@ -10,6 +10,8 @@ import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.impl.WebDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.BathymetryLocalCatalogServices;
@@ -76,7 +78,7 @@ public class AppMain extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
     private final String HOST_NAME = "localhost";
-    private final String PORT = "5433";
+    private final String PORT = "5432";
     private final String DRIVER_NAME = "org.postgresql.Driver";
     private final String JDBC_PROTOCOL = "jdbc:postgresql://";
     private final String DB_NAME = "Bathy";
@@ -86,7 +88,7 @@ public class AppMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
- 
+
         Translator.setLang(I18nLangEnum.FRENCH);
 
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
@@ -122,7 +124,8 @@ public class AppMain extends Application {
                         DDriverManagerImpl.class,
                         MagneticImpl.class,
                         SedimentologyImpl.class,
-                        AisRadarImpl.class
+                        AisRadarImpl.class,
+                        OptionsManagerImpl.class
                 )
         );
 
@@ -147,9 +150,9 @@ public class AppMain extends Application {
 
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
-       
+
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
-     //  bathymetryDBServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD, DATA_FILE_NAME);
+        //  bathymetryDBServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD, DATA_FILE_NAME);
 
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
@@ -167,7 +170,10 @@ public class AppMain extends Application {
 
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
-
+        
+        OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
+      //  optionsManagerServices.show();
+       
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(chartS57Services.getDriver());
