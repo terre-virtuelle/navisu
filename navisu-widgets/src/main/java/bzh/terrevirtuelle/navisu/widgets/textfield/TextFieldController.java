@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.textfield;
 
-import bzh.terrevirtuelle.navisu.widgets.Widget2DController;
+import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

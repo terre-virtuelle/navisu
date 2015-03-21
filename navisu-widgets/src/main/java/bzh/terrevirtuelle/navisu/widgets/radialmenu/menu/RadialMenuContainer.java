@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.widgets.radialmenu.menu;
 
-
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -8,17 +7,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseEvent;
 
-
 /**
  * NaVisu
  *
  * @author Jordan Mens
  */
-public class RadialMenuContainer extends RadialMenuItem {
+public class RadialMenuContainer
+        extends RadialMenuItem {
 
     private ObservableList<RadialMenuItem> items = FXCollections.observableArrayList();
     private BooleanProperty isChildrenVisible;
-
 
     public RadialMenuContainer() {
 
@@ -33,13 +31,14 @@ public class RadialMenuContainer extends RadialMenuItem {
         items.addListener((InvalidationListener) obs -> update());
     }
 
-
     protected void updateChildren() {
-        if(items.size() == 0) return;
+        if (items.size() == 0) {
+            return;
+        }
         //TODO Radial separator
         double radialItemLenght = 360 / items.size();
 
-        for(int i = 0; i < items.size(); i++) {
+        for (int i = 0; i < items.size(); i++) {
 
             RadialMenuItem radialMenuItem = items.get(i);
 
@@ -76,18 +75,19 @@ public class RadialMenuContainer extends RadialMenuItem {
         getChildren().add(item);
     }
 
-
     public ObservableList<RadialMenuItem> getItems() {
         return items;
     }
 
-    /************************************************************/
+    /**
+     * *********************************************************
+     */
     public final BooleanProperty isChildrenVisibleProperty() {
         if (isChildrenVisible == null) {
             isChildrenVisible = new SimpleBooleanProperty(this, "isChildrenVisible") {
                 @Override
                 protected void invalidated() {
-                    for(RadialMenuItem item : items) {
+                    for (RadialMenuItem item : items) {
                         item.setVisible(get());
                     }
                 }

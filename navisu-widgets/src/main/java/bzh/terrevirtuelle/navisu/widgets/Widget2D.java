@@ -13,7 +13,7 @@ public interface Widget2D {
 
     void initEvt();
 
-    void scale(double scale);
+    void setScale(double scale);
 
     default void init() {
 

@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.headUpDisplay.hud_3;
 
-import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl_1;
+import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ import javafx.util.Duration;
  * modifs Dom : variables public
  */
 public class HUD_3_2_1_Controller 
-extends WidgetImpl_1 
+extends WidgetImpl 
 implements Initializable {
 
     @FXML

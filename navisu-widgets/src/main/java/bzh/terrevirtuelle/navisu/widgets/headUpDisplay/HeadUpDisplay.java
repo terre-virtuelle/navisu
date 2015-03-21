@@ -4,7 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.headUpDisplay;
 
-import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl_1;
+import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.ImageViewBuilder;
@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  * @author Serge Morvan
  */
 public class HeadUpDisplay
-        extends WidgetImpl_1 {
+        extends WidgetImpl {
 
     private ImageView background;
     public HeadUpDisplay() {

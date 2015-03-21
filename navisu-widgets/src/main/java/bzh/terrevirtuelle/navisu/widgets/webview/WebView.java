@@ -5,13 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.webview;
 
-import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl_1;
+import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -23,7 +21,7 @@ import javafx.scene.web.WebEngine;
  * @author Serge
  */
 public class WebView
-        extends WidgetImpl_1 {
+        extends WidgetImpl {
 
     
     final ImageView selectedImage = new ImageView();

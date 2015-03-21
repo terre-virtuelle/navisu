@@ -13,17 +13,12 @@ public interface Widget {
 
     void initEvt();
 
-    void scale(double scale);
-
-    default void init() {
-
-    }
-
-    default void start() {
-
-    }
+    void setScale(double scale);
 
     default void stop() {
 
+    }
+    default void start(){
+        
     }
 }

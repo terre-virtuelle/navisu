@@ -1,7 +1,6 @@
 package bzh.terrevirtuelle.navisu.widgets.radialmenu.menu;
 
-
-import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl_1;
+import bzh.terrevirtuelle.navisu.widgets.impl.WidgetImpl;
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -9,16 +8,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseEvent;
 
-
 /**
  * NaVisu
  *
  * @author Jordan Mens
  */
-public class RadialMenu extends WidgetImpl_1 {
+public class RadialMenu extends WidgetImpl {
 
     private DoubleProperty gap;
-
     private DoubleProperty length;
     private DoubleProperty innerRadius;
     private DoubleProperty outerRadius;
@@ -30,19 +27,28 @@ public class RadialMenu extends WidgetImpl_1 {
         outerRadiusProperty().set(outerRadius);
         lengthProperty().set(length);
         gapProperty().set(gap);
-
         this.rootItems.addListener((InvalidationListener) obs -> updateChildren());
-
         this.rootItems.addAll(items);
+        getChildren().addAll(items);
+    }
 
+    public RadialMenu(double innerRadius, double outerRadius, double length, double gap, ObservableList<RadialMenuItem> items) {
+        innerRadiusProperty().set(innerRadius);
+        outerRadiusProperty().set(outerRadius);
+        lengthProperty().set(length);
+        gapProperty().set(gap);
+        this.rootItems.addListener((InvalidationListener) obs -> updateChildren());
+        this.rootItems.addAll(items);
         getChildren().addAll(items);
     }
 
     private void updateChildren() {
-        if(rootItems.size() == 0) return;
+        if (rootItems.size() == 0) {
+            return;
+        }
 
         double radialItemLenght = getLength() / rootItems.size();
-        for(int i = 0; i < rootItems.size() ; i++) {
+        for (int i = 0; i < rootItems.size(); i++) {
             RadialMenuItem radialMenuItem = rootItems.get(i);
             radialMenuItem.setInnerRadius(getInnerRadius());
             radialMenuItem.setOuterRadius(getOuterRadius());
@@ -56,7 +62,9 @@ public class RadialMenu extends WidgetImpl_1 {
         }
     }
 
-    /************************************************************/
+    /**
+     * *********************************************************
+     */
     public final DoubleProperty gapProperty() {
         if (gap == null) {
             gap = new SimpleDoubleProperty(this, "gap") {
@@ -76,7 +84,10 @@ public class RadialMenu extends WidgetImpl_1 {
     public final void setGap(double gap) {
         this.gapProperty().set(gap);
     }
-    /************************************************************/
+
+    /**
+     * *********************************************************
+     */
     public final DoubleProperty lengthProperty() {
         if (length == null) {
             length = new SimpleDoubleProperty(this, "length") {
@@ -97,7 +108,9 @@ public class RadialMenu extends WidgetImpl_1 {
         this.lengthProperty().set(length);
     }
 
-    /************************************************************/
+    /**
+     * *********************************************************
+     */
     public final DoubleProperty innerRadiusProperty() {
         if (innerRadius == null) {
             innerRadius = new SimpleDoubleProperty(this, "innerRadius") {
@@ -118,7 +131,9 @@ public class RadialMenu extends WidgetImpl_1 {
         this.innerRadiusProperty().set(innerRadius);
     }
 
-    /************************************************************/
+    /**
+     * *********************************************************
+     */
     public final DoubleProperty outerRadiusProperty() {
         if (outerRadius == null) {
             outerRadius = new SimpleDoubleProperty(this, "outerRadius") {
@@ -139,18 +154,21 @@ public class RadialMenu extends WidgetImpl_1 {
         this.outerRadiusProperty().set(outerRadius);
     }
 
-    /************************************************************/
+    /**
+     * *********************************************************
+     */
     public void addRootItem(RadialMenuItem rootItem) {
         rootItems.add(rootItem);
-        if(rootItem instanceof RadialMenuContainer)  {
+        if (rootItem instanceof RadialMenuContainer) {
 
             RadialMenuContainer container = (RadialMenuContainer) rootItem;
             container.getPath().addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-                for(RadialMenuItem item : rootItems) {
-                    if(item instanceof RadialMenuContainer) {
+                for (RadialMenuItem item : rootItems) {
+                    if (item instanceof RadialMenuContainer) {
                         RadialMenuContainer otherContainer = (RadialMenuContainer) item;
-                        if(otherContainer != container)
+                        if (otherContainer != container) {
                             otherContainer.setChildrenVisible(false);
+                        }
                     }
                 }
                 e.consume();
