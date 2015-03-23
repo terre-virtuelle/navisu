@@ -1,12 +1,12 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.menu;
+package bzh.terrevirtuelle.navisu.app.guiagent.dock;
 
 /**
  * NaVisu
  *
- * @author tibus
- * @date 11/11/2013 21:28
+ * @date 22 mars 2015
+ * @author Serge Morvan
  */
-public enum DefaultMenuEnum {
+public enum DefaultDockEnum {
 
     FILE("menu.file"),
     URL("menu.url"),
@@ -16,7 +16,7 @@ public enum DefaultMenuEnum {
 
     protected final String key;
 
-    DefaultMenuEnum(String key) {
+    DefaultDockEnum(String key) {
         this.key = key;
     }
 
@@ -24,8 +24,8 @@ public enum DefaultMenuEnum {
         return key;
     }
 
-    public static DefaultMenuEnum[] getAll() {
-        return new DefaultMenuEnum[] {
+    public static DefaultDockEnum[] getAll() {
+        return new DefaultDockEnum[] {
             FILE, URL, EDIT, WINDOW, HELP
         };
     }

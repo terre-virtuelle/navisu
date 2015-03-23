@@ -1,20 +1,18 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.dock.impl;
 
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.*;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManager;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.dock.DefaultDockEnum;
+import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManager;
+import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManagerServices;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import org.capcaval.c3.component.ComponentState;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import  bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import java.util.logging.Level;
+import  bzh.terrevirtuelle.navisu.widgets.dock.Dock;
+import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 
 /**
  * NaVisu
@@ -22,7 +20,7 @@ import java.util.logging.Level;
  * @author tibus
  * @date 02/11/2013 11:54
  */
-public class DockManagerImpl implements MenuManager, MenuManagerServices, ComponentState {
+public class DockManagerImpl implements DockManager, DockManagerServices, ComponentState {
 
     protected static final Logger LOGGER = Logger.getLogger(DockManagerImpl.class.getName());
 
@@ -37,8 +35,8 @@ public class DockManagerImpl implements MenuManager, MenuManagerServices, Compon
     }
 
     @Override
-    public void setMenuComponent(MenuBar menu) {
-
+    public void setDockComponent(Dock dock) {
+/*
         this.menuBar = menu;
 
         if(this.menuBar.getMenus().size() > 0) {
@@ -50,6 +48,7 @@ public class DockManagerImpl implements MenuManager, MenuManagerServices, Compon
             String key = defaultMenu.getKey();
              this.createMenu(key, Translator.tr(key));
         }
+        */
     }
 
     @Override
@@ -67,10 +66,10 @@ public class DockManagerImpl implements MenuManager, MenuManagerServices, Compon
             this.menuBar.getMenus().add(menu);
         }
         else {
-            LOGGER.log(Level.WARNING, "Menu with key \"{0}\" already exists.", menuKey);
+          //  LOGGER.log(Level.WARNING, "Menu with key \"{0}\" already exists.", menuKey);
         }
     }
-
+/*
     @Override
     public void addMenuItem(String menuKey, String menuName, MenuItem item) {
 
@@ -92,10 +91,18 @@ public class DockManagerImpl implements MenuManager, MenuManagerServices, Compon
         Menu menu = this.menuMap.get(defMenu.getKey());
         menu.getItems().add(item);
     }
-
+*/
     @Override
     public void componentStarted() {}
 
     @Override
     public void componentStopped() {}
+
+    @Override
+    public void addDockItem(String menuKey, String menuName, DockItem item) {
+    }
+
+    @Override
+    public void addDockItem(DefaultDockEnum menu, DockItem item) {
+   }
 }

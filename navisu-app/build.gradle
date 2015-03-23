@@ -1,5 +1,4 @@
 
-
 dependencies {
     compile project(':navisu-core')
     compile project(':navisu-widgets')
