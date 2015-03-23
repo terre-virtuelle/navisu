@@ -10,7 +10,6 @@ import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import java.util.Date;
-import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.media.MediaPlayer;
 import org.capcaval.c3.component.ComponentState;
