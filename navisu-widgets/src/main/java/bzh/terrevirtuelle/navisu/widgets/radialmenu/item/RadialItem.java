@@ -41,7 +41,6 @@ public class RadialItem extends Group {
     public RadialItem() {
 
         this.path.setId("radialItem");
-
         this.path.getElements().add(moveTo);
         this.path.getElements().add(lineTo);
         this.path.getElements().add(arcTo);
@@ -68,21 +67,20 @@ public class RadialItem extends Group {
             double arcLengthAngle, double startAngle) {
 
         this();
-
         innerRadiusProperty().set(innerRadius);
         outerRadiusProperty().set(outerRadius);
         lengthProperty().set(arcLengthAngle);
         startAngleProperty().set(startAngle);
+
     }
 
     protected void update() {
-
         //Arc lenght angle
         double arcAngleLengthInRadians = Math.toRadians(getLength());
 
         //Angle rotation of the item
         double startAngleInRadians = Math.toRadians(getStartAngle() + ANGLE_TO_START_AT_ZERO_DEGREE);
-
+       
         moveTo.setX(getInnerRadius() * Math.cos(startAngleInRadians));
         moveTo.setY(getInnerRadius() * Math.sin(startAngleInRadians));
 

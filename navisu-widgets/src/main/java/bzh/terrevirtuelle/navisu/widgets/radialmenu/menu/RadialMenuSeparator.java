@@ -17,7 +17,7 @@ public class RadialMenuSeparator extends RadialMenuItem {
     	//TODO Must be review
     	double delta = 2;
         double center = (getOuterRadius() + getInnerRadius()) / 2;
-
+        System.out.println("update "+ getLength());
         //Arc lenght angle
         double arcAngleLengthInRadians = Math.toRadians(getLength());
 

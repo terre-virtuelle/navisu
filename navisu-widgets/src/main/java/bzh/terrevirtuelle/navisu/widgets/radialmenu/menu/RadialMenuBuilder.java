@@ -70,7 +70,7 @@ public class RadialMenuBuilder {
         return this;
     }
 
-    public RadialMenuBuilder stageItem(int stageId, String imgStage,
+     public RadialMenuBuilder stageItem(int stageId, String imgStage,
             int itemId, String imgItem,
             EventHandler<MouseEvent> callback) {
         RadialMenuItem radialMenuItem = new RadialMenuItem(callback);
@@ -103,7 +103,7 @@ public class RadialMenuBuilder {
             radialMenuContainer1.setImage(new ImageView(new Image(getClass().getResourceAsStream(img1Stage))));
         }
         radialMenuContainer1.addItem(radialMenuItem);
-        
+
         if (stage0Id < containers0.size()) {
             radialMenuContainer0 = containers0.get(stage0Id);
         } else {
@@ -112,9 +112,7 @@ public class RadialMenuBuilder {
             radialMenuContainer0.setImage(new ImageView(new Image(getClass().getResourceAsStream(img0Stage))));
         }
         radialMenuContainer0.addItem(radialMenuContainer1);
-        
-        
-        
+
         return this;
     }
 

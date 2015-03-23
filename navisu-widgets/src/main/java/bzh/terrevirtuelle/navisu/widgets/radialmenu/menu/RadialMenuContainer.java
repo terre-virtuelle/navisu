@@ -21,7 +21,6 @@ public class RadialMenuContainer
     public RadialMenuContainer() {
 
         setChildrenVisible(false);
-
         getPath().addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             setChildrenVisible(!isChildrenVisible());
             System.out.println("MOUSE_CLICKED");
@@ -37,9 +36,8 @@ public class RadialMenuContainer
         }
         //TODO Radial separator
         double radialItemLenght = 360 / items.size();
-
+        double ratio = 1.0 / items.size()/2.0;
         for (int i = 0; i < items.size(); i++) {
-
             RadialMenuItem radialMenuItem = items.get(i);
 
             double parentInnerRadius = radialMenuItem.getParentItem().getInnerRadius();
@@ -49,10 +47,10 @@ public class RadialMenuContainer
             double newInnerRadius = parentOuterRadius;
             double newOuterRadius = parentOuterRadius + (parentOuterRadius - parentInnerRadius);
 
-            double ratio = parentOuterRadius / newOuterRadius;
+           // double ratio = parentOuterRadius / newOuterRadius;
+            // double ratio = 0.5;
             double newArcLenght = parentArcLenght * ratio;
             //double newArcLenght = radialItemLenght;
-
             double startAngle = radialMenuItem.getParentItem().getStartAngle(); //+ ((newArcLenght - parentArcLenght) / 2);
 
             radialMenuItem.setInnerRadius(newInnerRadius);
