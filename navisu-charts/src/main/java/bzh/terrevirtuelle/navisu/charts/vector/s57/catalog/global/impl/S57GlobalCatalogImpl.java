@@ -154,22 +154,34 @@ public class S57GlobalCatalogImpl
         S57GlobalCatalogController s57GlobalCatalogController = S57GlobalCatalogController.getInstance();
         s57GlobalCatalogController.setS57GlobalCatalogImpl(this);
         layers = s57GlobalCatalogController.init(fileName);
+
         if (!layers.isEmpty()) {
+            layer = layers.get(layers.size() - 1);
+            layer.setEnabled(false);
             geoViewServices
                     .getLayerManager()
-                    .insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layers.get(layers.size() - 1)));
+                    .insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices
-                    .addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layers.get(layers.size() - 1)));
+                    .addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
     }
 
+    @Override
     public void loadFile(String filename) {
         File file = new File(filename);
         guiAgentServices.getJobsManager().newJob(filename, (progressHandle) -> {
             s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
+           // this.open(progressHandle, file.getAbsolutePath());
         });
     }
-
+@Override
+    public void load(String filename) {
+        File file = new File(filename);
+        guiAgentServices.getJobsManager().newJob(filename, (progressHandle) -> {
+           // s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
+            this.open(progressHandle, file.getAbsolutePath());
+        });
+    }
     private void filter() {
         enabledLayers.clear();
         CheckBoxTreeItem<GeoLayer> i = (CheckBoxTreeItem) layerTreeServices.search("S57 catalog");
