@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.main;
 
-
 import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
 import bzh.terrevirtuelle.navisu.agents.media.impl.MediaImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.ddriver.impl.DDriverManagerImpl;
@@ -86,6 +85,12 @@ public class AppMain extends Application {
     private final String USER_NAME = "Serge";
     private final String PASSWD = "lithops";
     private final String DATA_FILE_NAME = "data/shom/bathy.glz";
+    private final String DATA_S57_CATALOG_1 = "data/charts/vector/s57/catalog/ENC_NP1.kmz";
+    private final String DATA_S57_CATALOG_2 = "data/charts/vector/s57/catalog/ENC_NP2.kmz";
+    private final String DATA_S57_CATALOG_3 = "data/charts/vector/s57/catalog/ENC_NP3.kmz";
+    private final String DATA_S57_CATALOG_4 = "data/charts/vector/s57/catalog/ENC_NP4.kmz";
+    private final String DATA_S57_CATALOG_5 = "data/charts/vector/s57/catalog/ENC_NP5.kmz";
+    private final String DATA_S57_CATALOG_6 = "data/charts/vector/s57/catalog/ENC_NP6.kmz";
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -171,10 +176,10 @@ public class AppMain extends Application {
 
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
-        
+
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
-      //  optionsManagerServices.show();
-       
+        //  optionsManagerServices.show();
+
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(chartS57Services.getDriver());
@@ -200,6 +205,15 @@ public class AppMain extends Application {
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
         // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
         // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
+
+        
+        s57GlobalCatalogServices.load(DATA_S57_CATALOG_1);
+        s57GlobalCatalogServices.load(DATA_S57_CATALOG_2);
+        s57GlobalCatalogServices.load(DATA_S57_CATALOG_3);
+        s57GlobalCatalogServices.load(DATA_S57_CATALOG_4);
+        s57GlobalCatalogServices.load(DATA_S57_CATALOG_5);
+        s57GlobalCatalogServices.load(DATA_S57_CATALOG_6);
+
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
 
         // Initialisation des paramtètres de diffusion des data.
