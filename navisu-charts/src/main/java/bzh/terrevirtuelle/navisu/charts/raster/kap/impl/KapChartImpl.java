@@ -31,7 +31,8 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
     protected final Logger LOGGER = Logger.getLogger(KapChartImpl.class.getName());
 
-    protected static final String EXTENSION = ".kap";
+    protected static final String EXTENSION_0 = ".kap";
+    private static final String EXTENSION_1 = ".KAP";
     protected static final String GROUP = "BSB/KAP charts";
 
     @UsedService
@@ -50,7 +51,8 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
         boolean canOpen = false;
 
-        if (file.toLowerCase().endsWith(EXTENSION)) {
+        if (file.toLowerCase().endsWith(EXTENSION_0)
+                || file.toLowerCase().endsWith(EXTENSION_1)) {
             canOpen = true;
         }
 
@@ -114,7 +116,9 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
     @Override
     public String[] getExtensions() {
-        return new String[]{"*" + EXTENSION};
+        return new String[]{"*" + EXTENSION_0,
+            "*" + EXTENSION_1
+        };
     }
 
     @Override

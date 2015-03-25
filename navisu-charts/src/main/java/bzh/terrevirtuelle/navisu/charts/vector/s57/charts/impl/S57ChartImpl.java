@@ -129,10 +129,6 @@ public class S57ChartImpl
     public boolean canOpen(String file) {
 
         boolean canOpen = false;
-
-        //  if (file.toLowerCase().endsWith(EXTENSION)) {
-        //      canOpen = true;
-        //  }
         if (file.toLowerCase().endsWith(EXTENSION_0)
                 || file.toLowerCase().endsWith(EXTENSION_1)
                 || file.toLowerCase().endsWith(EXTENSION_2)

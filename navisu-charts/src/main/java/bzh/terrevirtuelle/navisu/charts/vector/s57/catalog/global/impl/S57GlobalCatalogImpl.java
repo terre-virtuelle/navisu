@@ -171,17 +171,19 @@ public class S57GlobalCatalogImpl
         File file = new File(filename);
         guiAgentServices.getJobsManager().newJob(filename, (progressHandle) -> {
             s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
-           // this.open(progressHandle, file.getAbsolutePath());
+            // this.open(progressHandle, file.getAbsolutePath());
         });
     }
-@Override
+
+    @Override
     public void load(String filename) {
         File file = new File(filename);
         guiAgentServices.getJobsManager().newJob(filename, (progressHandle) -> {
-           // s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
+            // s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
             this.open(progressHandle, file.getAbsolutePath());
         });
     }
+
     private void filter() {
         enabledLayers.clear();
         CheckBoxTreeItem<GeoLayer> i = (CheckBoxTreeItem) layerTreeServices.search("S57 catalog");
