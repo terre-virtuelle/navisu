@@ -206,12 +206,16 @@ public class AppMain extends Application {
         // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
         // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
 
-        
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_1);
+        Thread.sleep(100);
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_2);
+        Thread.sleep(200);
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_3);
+        Thread.sleep(200);
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_4);
+        Thread.sleep(200);
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_5);
+        Thread.sleep(200);
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_6);
 
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
