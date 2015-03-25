@@ -171,17 +171,22 @@ public class S57GlobalCatalogImpl
         File file = new File(filename);
         guiAgentServices.getJobsManager().newJob(filename, (progressHandle) -> {
             s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
-            // this.open(progressHandle, file.getAbsolutePath());
         });
     }
 
     @Override
-    public void load(String filename) {
-        File file = new File(filename);
-        guiAgentServices.getJobsManager().newJob(filename, (progressHandle) -> {
-            // s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
-            this.open(progressHandle, file.getAbsolutePath());
-        });
+    public void load(String... filenames) {
+        for (String f : filenames) {
+            File file = new File(f);
+            guiAgentServices.getJobsManager().newJob(f, (progressHandle) -> {
+                this.open(progressHandle, file.getAbsolutePath());
+            });
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     private void filter() {

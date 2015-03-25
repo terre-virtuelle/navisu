@@ -17,5 +17,6 @@ public interface S57GlobalCatalogServices
     void openFile(String file);
 
     void loadFile(String filename);
-    void load(String filename);
+
+    void load(String... filenames);
 }
