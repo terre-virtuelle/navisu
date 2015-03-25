@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.dock.impl.DockFactory;
+import bzh.terrevirtuelle.navisu.app.guiagent.dock.impl.DockManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -60,12 +60,16 @@ public class GuiAgentImpl
     MenuManagerServices menuServices;
 
     @SubComponent
+    DockManagerImpl dockManager;
+
+    @SubComponent
     LayerCheckTreeImpl layerTree;
     @UsedService
     LayerTreeServices layerTreeServices;
 
     @SubComponent
     GeoViewImpl geoView;
+    
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
@@ -84,7 +88,7 @@ public class GuiAgentImpl
     protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";
     protected final ImageView mobOffImg = new ImageView(ICON_PATH + "MOB_Off.png");
     protected final ImageView mobOnImg = new ImageView(ICON_PATH + "MOB_On.png");
-   
+
     @Override
     public void showGui(Stage stage, int width, int height) {
         this.width = width;
@@ -103,9 +107,9 @@ public class GuiAgentImpl
         scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
 
-        DockFactory dockFactory = new DockFactory(root, scene, height, width);
-        dockFactory.makeDock();
-
+        dockManager.init(root, scene, height, width);
+        dockManager.makeDock();
+        
         createMOBWidget(scene);
 
         // Place scene components

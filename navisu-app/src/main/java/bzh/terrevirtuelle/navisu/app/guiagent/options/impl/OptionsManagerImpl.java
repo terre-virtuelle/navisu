@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * User: Jordan
- * Date: 08/11/2013
+ * User: Jordan Date: 08/11/2013
  */
-public class OptionsManagerImpl implements OptionsManager, OptionsManagerServices, ComponentState {
+public class OptionsManagerImpl
+        implements OptionsManager, OptionsManagerServices, ComponentState {
 
     private final static Logger LOGGER = Logger.getLogger(OptionsManagerImpl.class.getName());
 
@@ -56,13 +56,12 @@ public class OptionsManagerImpl implements OptionsManager, OptionsManagerService
         this.stage.close();
     }
 
-
     @Override
     public void add(OptionsController... controllers) {
 
         Checker.notNull(controllers, "List of OptionsController is null");
 
-        for(OptionsController controller : controllers) {
+        for (OptionsController controller : controllers) {
             this.optionsControllers.add(controller);
             this.addOptionViewTab(controller);
         }
@@ -88,6 +87,6 @@ public class OptionsManagerImpl implements OptionsManager, OptionsManagerService
 
     @Override
     public void hide() {
-       this.stage.hide();
+        this.stage.hide();
     }
 }

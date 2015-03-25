@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.dock;
 
-import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
-import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -9,13 +9,10 @@ import org.capcaval.c3.component.ComponentService;
  *
  * @date 22 mars 2015
  * @author Serge Morvan
- */ 
+ */
 public interface DockManagerServices extends ComponentService {
 
-    void setDockComponent(Dock dock);
+    void init(StackPane root, Scene scene, int height, int width);
 
-    void createMenu(String menuKey, String menuName);
-
-    void addDockItem(String menuKey, String menuName, DockItem item);
-    void addDockItem(DefaultDockEnum menu, DockItem item);
+    void makeDock();
 }
