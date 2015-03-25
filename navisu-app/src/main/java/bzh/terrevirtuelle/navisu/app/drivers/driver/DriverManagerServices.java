@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.drivers.driver;
 
+import javafx.stage.FileChooser;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -11,6 +12,10 @@ import org.capcaval.c3.component.ComponentService;
 public interface DriverManagerServices extends ComponentService {
 
     void init();
+
+    default void open(FileChooser.ExtensionFilter ext) {
+
+    }
 
     void registerNewDriver(Driver driver);
 }

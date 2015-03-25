@@ -81,6 +81,17 @@ public class DriverManagerImpl
         });
     }
 
+    @Override
+    public void open(FileChooser.ExtensionFilter ext) {
+       // fileChooser.getExtensionFilters().add(0, ext);
+        File selectedFile = this.fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
+            System.out.println(selectedFile.getAbsolutePath());
+        }
+        //fileChooser.getExtensionFilters().remove(0);
+    }
+
     protected void handleOpenFiles(String category, File file) {
 
         Driver driver = this.findDriverForFile(category, file.getAbsolutePath());

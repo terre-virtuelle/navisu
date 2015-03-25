@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.dock.impl;
 
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.dock.DefaultDockEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import bzh.terrevirtuelle.navisu.widgets.dock.Dock;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
-import bzh.terrevirtuelle.navisu.widgets.mob.Mob;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuBuilder;
 import javafx.animation.Animation;
@@ -24,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import org.capcaval.c3.component.annotation.UsedService;
 
 /*
@@ -37,6 +37,8 @@ public class DockManagerImpl
 
     @UsedService
     GuiAgentServices guiAgentServices;
+    @UsedService
+    DriverManagerServices driverManagerServices;
 
     protected static final Logger LOGGER = Logger.getLogger(DockManagerImpl.class.getName());
 
@@ -79,7 +81,6 @@ public class DockManagerImpl
         this.root = root;
         this.height = height;
         this.width = width;
-        System.out.println("guiAgentServices " + guiAgentServices);
     }
 
     @Override
@@ -96,6 +97,30 @@ public class DockManagerImpl
 
     private void testMenuItem() {
         System.out.println("testMenuItem");
+    }
+//--------------CHARTS------------------
+
+    private void createChartsRadialWidget() {
+        chartsRadialMenu = RadialMenuBuilder.create()
+                .centralImage("chartsradialmenu150.png")
+                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
+              //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
+                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("GeoTiff", ".tif"))
+                .createNode(1, "sedimento.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
+                .build();
+
+        chartsRadialMenu.setLayoutX((width / 2) - 10);
+        chartsRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(chartsRadialMenu);
+    }
+
+    private void showChartsMenu() {
+        firstChartsRadialMenu = firstChartsRadialMenu != true;
+        chartsRadialMenu.setVisible(firstChartsRadialMenu);
+    }
+
+    private void open(String description, String des) {
+        driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
     }
 
     //--------------BOOKS------------------
@@ -163,27 +188,6 @@ public class DockManagerImpl
         tidesRadialMenu.setVisible(firstTidesRadialMenu);
     }
 
-    //--------------CHARTS------------------
-    private void createChartsRadialWidget() {
-        chartsRadialMenu = RadialMenuBuilder.create()
-                .centralImage("chartsradialmenu150.png")
-                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> testMenuItem())
-                .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> testMenuItem())
-                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> testMenuItem())
-                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> testMenuItem())
-                .createNode(1, "sedimento.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .build();
-
-        chartsRadialMenu.setLayoutX((width / 2) - 10);
-        chartsRadialMenu.setLayoutY(height / 2);
-        root.getChildren().add(chartsRadialMenu);
-    }
-
-    private void showChartsMenu() {
-        firstChartsRadialMenu = firstChartsRadialMenu != true;
-        chartsRadialMenu.setVisible(firstChartsRadialMenu);
-    }
-
     //--------------TOOLS------------------
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
@@ -198,24 +202,6 @@ public class DockManagerImpl
     private void showToolsMenu() {
         firstToolsRadialMenu = firstToolsRadialMenu != true;
         toolsRadialMenu.setVisible(firstToolsRadialMenu);
-    }
-
-    /**
-     * *******************************************
-     * MOB - Man Over Board **************************************************
-     */
-    private void createMOBWidget(Scene scene) {
-
-        //Group mob = new Group();
-        // mob.getChildren().add(mobOffImg);
-        //  mob.getChildren().add(mobOnImg);
-        Mob mob = new Mob();
-        root.getChildren().add(mob);
-        mob.setTranslateX(540.0);
-        mob.setTranslateY(-70.0);
-        //  mob.setVisible(true);
-        // mob.getChildren().add(swingNode);
-        StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);
     }
 
     private void createDockWidget(Scene scene) {
