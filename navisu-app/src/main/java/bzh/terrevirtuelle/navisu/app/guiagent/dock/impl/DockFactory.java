@@ -67,13 +67,13 @@ public class DockFactory {
 
     public void makeDock() {
         createDockWidget(scene);
-     //   createMOBWidget(scene);
-        createBooksRadialWidget();
-        createInstrumentsRadialWidget();
-        createMeteoRadialWidget();
-        createToolsRadialWidget();
+        //   createMOBWidget(scene);
+        //   createBooksRadialWidget();
+        //   createInstrumentsRadialWidget();
+        //  createMeteoRadialWidget();
+        //   createToolsRadialWidget();
         createChartsRadialWidget();
-        createTidesRadialWidget();
+        //  createTidesRadialWidget();
     }
 
     private void testMenuItem() {
@@ -85,12 +85,6 @@ public class DockFactory {
         booksRadialMenu = RadialMenuBuilder.create()
                 //  .innerRadius(30).outerRadius(60).length(360).gap(2)
                 .centralImage("centreradialmenu60.png")
-                .stageItem(0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 1, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 2, "vide.png", (e) -> testMenuItem())
-                .stageItem(1, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(2, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(3, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
                 .build();
 
         booksRadialMenu.setLayoutX((width / 2) - 50);
@@ -107,12 +101,6 @@ public class DockFactory {
     private void createInstrumentsRadialWidget() {
         instrumentsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("instrumentsradialmenu150.png")
-                .stageItem(0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 1, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 2, "vide.png", (e) -> testMenuItem())
-                .stageItem(1, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(2, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(3, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);
@@ -129,12 +117,6 @@ public class DockFactory {
     private void createMeteoRadialWidget() {
         meteoRadialMenu = RadialMenuBuilder.create()
                 .centralImage("meteoradialmenu150.png")
-                .stageItem(0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 1, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 2, "vide.png", (e) -> testMenuItem())
-                .stageItem(1, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(2, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(3, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
                 .build();
 
         meteoRadialMenu.setLayoutX((width / 2) - 30);
@@ -151,12 +133,6 @@ public class DockFactory {
     private void createTidesRadialWidget() {
         tidesRadialMenu = RadialMenuBuilder.create()
                 .centralImage("tidesradialmenu150.png")
-                .stageItem(0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 1, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 2, "vide.png", (e) -> testMenuItem())
-                .stageItem(1, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(2, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(3, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
                 .build();
 
         tidesRadialMenu.setLayoutX((width / 2) - 10);
@@ -173,22 +149,11 @@ public class DockFactory {
     private void createChartsRadialWidget() {
         chartsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chartsradialmenu150.png")
-               // .stageItem(0, "nav.png", 0, "raster.png", (e) -> testMenuItem())
-              //  .stageItem(1, "nav.png", 1, "vector.png", (e) -> testMenuItem())
-                
-                .stageItem(0, "nav.png", 0, "vector.png", 1, "s57.png", (e) -> testMenuItem())
-                .stageItem(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> testMenuItem())
-               // .stageItem(0, "nav.png", 2, "raster.png", 1, "geotiff.png", (e) -> testMenuItem())
-                /*
-                .stageItem(0, "vector.png", 0, "s57.png", (e) -> testMenuItem())
-                .stageItem(1, "raster.png", 0, "bsbkap.png", (e) -> testMenuItem())
-                .stageItem(1, 1, "geotiff.png", (e) -> testMenuItem())
-                */
-                //.stageItem(0, 1, "vide.png", (e) -> testMenuItem())
-               // .stageItem(0, 2, "vide.png", (e) -> testMenuItem())
-               // .stageItem(1, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-               // .stageItem(2, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-               // .stageItem(3, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
+                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> testMenuItem())
+                .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> testMenuItem())
+                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> testMenuItem())
+                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> testMenuItem())
+                .createNode(1, "sedimento.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
                 .build();
 
         chartsRadialMenu.setLayoutX((width / 2) - 10);
@@ -205,12 +170,6 @@ public class DockFactory {
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-                .stageItem(0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 1, "vide.png", (e) -> testMenuItem())
-                .stageItem(0, 2, "vide.png", (e) -> testMenuItem())
-                .stageItem(1, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(2, "vide.png", 0, "vide.png", (e) -> testMenuItem())
-                .stageItem(3, "vide.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
                 .build();
 
         toolsRadialMenu.setLayoutX((width / 2));
