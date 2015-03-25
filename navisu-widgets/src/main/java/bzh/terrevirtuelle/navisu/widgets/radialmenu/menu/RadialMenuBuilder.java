@@ -19,109 +19,86 @@ import javafx.scene.input.MouseEvent;
  * @author Serge Morvan
  */
 public class RadialMenuBuilder {
-
-    private double gap = 5;
+    
+    private double gap = 2;
     private double length = 360;
     private double innerRadius = 70;
     private double outerRadius = 130;
     private final ObservableList<RadialMenuItem> rootItems = FXCollections.observableArrayList();
-    private final List<RadialMenuContainer> containers0 = new ArrayList<>();
-    private final List<RadialMenuContainer> containers1 = new ArrayList<>();
-    private final List<RadialMenuItem> items = new ArrayList<>();
+    private final List<List<RadialMenuContainer>> containers = new ArrayList<>();
+    private final List<RadialMenuContainer> roots = new ArrayList<>();
+    private final int NUM = 5;
     private ImageView centerImage;
-    private RadialMenuContainer radialMenuContainer0;
-    private RadialMenuContainer radialMenuContainer1;
-
+    
     public RadialMenuBuilder() {
+        for (int i = 0; i < NUM; i++) {
+            List<RadialMenuContainer> l = new ArrayList<>();
+            for (int j = 0; j < NUM; j++) {
+                l.add(new RadialMenuContainer());
+            }
+            containers.add(l);
+            roots.add(new RadialMenuContainer());
+        }
     }
-
+    
     public static RadialMenuBuilder create() {
         return new RadialMenuBuilder();
     }
-
+    
     public RadialMenu build() {
-        containers0.stream().forEach((r) -> {
-            rootItems.add(r);
-        });
+        for (int i = 0; i < NUM; i++) {
+            if (roots.get(i).getChildren().size() > 1) {
+                rootItems.add(roots.get(i));
+                for (int j = 0; j < NUM; j++) {
+                    if (containers.get(i).get(j).getChildren().size() > 1) {
+                        roots.get(i).addItem(containers.get(i).get(j));
+                    }
+                }
+            }
+        }
         RadialMenu radialMenu = new RadialMenu(innerRadius, outerRadius, length, gap, rootItems);
         radialMenu.getChildren().add(centerImage);
         radialMenu.setManaged(false);
         radialMenu.setVisible(false);
         return radialMenu;
     }
-
+    
     public RadialMenuBuilder gap(double gap) {
         this.gap = gap;
         return this;
     }
-
+    
     public RadialMenuBuilder length(double length) {
         this.length = length;
         return this;
     }
-
+    
     public RadialMenuBuilder innerRadius(double innerRadius) {
         this.innerRadius = innerRadius;
         return this;
     }
-
+    
     public RadialMenuBuilder outerRadius(double outerRadius) {
         this.outerRadius = outerRadius;
         return this;
     }
-
-     public RadialMenuBuilder stageItem(int stageId, String imgStage,
-            int itemId, String imgItem,
+    
+    public RadialMenuBuilder createNode(int idRoot, String imgRoot,
+            int idChild, String imgChild,
+            int idItem, String imgItem,
             EventHandler<MouseEvent> callback) {
+        roots.get(idRoot).setImage(new ImageView(new Image(getClass().getResourceAsStream(imgRoot))));
+        
         RadialMenuItem radialMenuItem = new RadialMenuItem(callback);
         radialMenuItem.setImage(new ImageView(new Image(getClass().getResourceAsStream(imgItem))));
-
-        if (stageId < containers0.size()) {
-            radialMenuContainer0 = containers0.get(stageId);
-        } else {
-            radialMenuContainer0 = new RadialMenuContainer();
-            containers0.add(stageId, radialMenuContainer0);
-            radialMenuContainer0.setImage(new ImageView(new Image(getClass().getResourceAsStream(imgStage))));
-        }
-        radialMenuContainer0.addItem(radialMenuItem);
+        
+        RadialMenuContainer r = containers.get(idRoot).get(idChild);
+        r.setImage(new ImageView(new Image(getClass().getResourceAsStream(imgChild))));
+        r.addItem(radialMenuItem);
+        
         return this;
     }
-
-    public RadialMenuBuilder stageItem(int stage0Id, String img0Stage,
-            int stage1Id, String img1Stage,
-            int itemId, String imgItem,
-            EventHandler<MouseEvent> callback) {
-
-        RadialMenuItem radialMenuItem = new RadialMenuItem(callback);
-        radialMenuItem.setImage(new ImageView(new Image(getClass().getResourceAsStream(imgItem))));
-
-        if (stage1Id < containers1.size()) {
-            radialMenuContainer1 = containers1.get(stage1Id);
-        } else {
-            radialMenuContainer1 = new RadialMenuContainer();
-            containers1.add(stage1Id, radialMenuContainer1);
-            radialMenuContainer1.setImage(new ImageView(new Image(getClass().getResourceAsStream(img1Stage))));
-        }
-        radialMenuContainer1.addItem(radialMenuItem);
-
-        if (stage0Id < containers0.size()) {
-            radialMenuContainer0 = containers0.get(stage0Id);
-        } else {
-            radialMenuContainer0 = new RadialMenuContainer();
-            containers0.add(stage0Id, radialMenuContainer0);
-            radialMenuContainer0.setImage(new ImageView(new Image(getClass().getResourceAsStream(img0Stage))));
-        }
-        radialMenuContainer0.addItem(radialMenuContainer1);
-
-        return this;
-    }
-
-    public RadialMenuBuilder stageItem(int stageId,
-            int itemId, String imgItem,
-            EventHandler<MouseEvent> callback) {
-        return stageItem(stageId, null, itemId, imgItem, callback);
-    }
-
+    
     public RadialMenuBuilder centralImage(String img) {
         this.centerImage = new ImageView(new Image(getClass().getResourceAsStream(img)));
         centerImage.setLayoutX((-centerImage.getImage().getWidth() / 2));

@@ -36,7 +36,7 @@ public class RadialMenuContainer
         }
         //TODO Radial separator
         double radialItemLenght = 360 / items.size();
-        double ratio = 1.0 / items.size()/2.0;
+        double ratio = 1.0 / items.size() / 1.7;//2.0
         for (int i = 0; i < items.size(); i++) {
             RadialMenuItem radialMenuItem = items.get(i);
 
@@ -47,7 +47,7 @@ public class RadialMenuContainer
             double newInnerRadius = parentOuterRadius;
             double newOuterRadius = parentOuterRadius + (parentOuterRadius - parentInnerRadius);
 
-           // double ratio = parentOuterRadius / newOuterRadius;
+            // double ratio = parentOuterRadius / newOuterRadius;
             // double ratio = 0.5;
             double newArcLenght = parentArcLenght * ratio;
             //double newArcLenght = radialItemLenght;
@@ -69,8 +69,13 @@ public class RadialMenuContainer
     public void addItem(RadialMenuItem item) {
         item.setParentItem(this);
         items.add(item);
-
         getChildren().add(item);
+    }
+
+    public void removeItem(RadialMenuItem item) {
+        item.setParentItem(null);
+        items.remove(item);
+        getChildren().remove(item);
     }
 
     public ObservableList<RadialMenuItem> getItems() {
