@@ -16,5 +16,7 @@ public interface WebDriverManagerServices
 
     void init(String server);
 
+    void handleOpenFiles(String url);
+
     void registerNewDriver(WebDriver driver);
 }

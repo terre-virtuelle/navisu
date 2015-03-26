@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.dock.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManagerServices;
@@ -39,10 +40,14 @@ public class DockManagerImpl
     GuiAgentServices guiAgentServices;
     @UsedService
     DriverManagerServices driverManagerServices;
+    @UsedService
+    WebDriverManagerServices webDriverManagerServices;
 
     protected static final Logger LOGGER = Logger.getLogger(DockManagerImpl.class.getName());
 
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
+    protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
+    protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
     protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;
     protected RadialMenu meteoRadialMenu;
@@ -104,9 +109,12 @@ public class DockManagerImpl
         chartsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chartsradialmenu150.png")
                 .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
-              //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
+                //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("GeoTiff", ".tif"))
-                .createNode(1, "sedimento.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
+                .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
+                .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
+                .createNode(1, "bathy.png", 1, "catalog.png", 1, "shom.png", (e) -> open("Catalog SHOM"))
+                .createNode(2, "sediment.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
                 .build();
 
         chartsRadialMenu.setLayoutX((width / 2) - 10);
@@ -119,8 +127,16 @@ public class DockManagerImpl
         chartsRadialMenu.setVisible(firstChartsRadialMenu);
     }
 
+    private void open(String test) {
+        System.out.println("Test " + test);
+    }
+
     private void open(String description, String des) {
         driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
+    }
+
+    private void openWMS(String description, String url) {
+        webDriverManagerServices.handleOpenFiles(url);
     }
 
     //--------------BOOKS------------------

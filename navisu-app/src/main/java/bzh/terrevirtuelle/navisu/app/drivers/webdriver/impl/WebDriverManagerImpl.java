@@ -60,7 +60,8 @@ public class WebDriverManagerImpl
         });
     }
 
-    protected void handleOpenFiles(String url) {
+    @Override
+    public void handleOpenFiles(String url) {
 
         WebDriver driver = this.findDriverForUrl(NAME);
         if (driver != null) {
