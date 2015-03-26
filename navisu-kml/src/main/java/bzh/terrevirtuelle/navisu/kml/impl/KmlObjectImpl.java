@@ -49,19 +49,21 @@ public class KmlObjectImpl
         wwd.addPositionListener((PositionEvent event) -> {
             float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
             if (altitude >= 3000) {
-                clip();
+              //  clip();
             } else {
-                unClip();
+              //  unClip();
             }
         });
     }
 
     @Override
-    public boolean canOpen(String file) {
+    public boolean canOpen(String category, String file) {
 
         boolean canOpen = false;
 
-        if (file.toLowerCase().endsWith(EXTENSION_0) || file.toLowerCase().endsWith(EXTENSION_1)) {
+        if (category.contains(NAME)
+                && (file.toLowerCase().endsWith(EXTENSION_0)
+                || file.toLowerCase().endsWith(EXTENSION_1))) {
             canOpen = true;
         }
 
@@ -77,8 +79,7 @@ public class KmlObjectImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        
-        LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
+        LOGGER.log(Level.INFO, "Opening {0} ***", fileName);
         KmlController kmlController = KmlController.getInstance();
         layers = kmlController.init(fileName);
       
@@ -89,6 +90,7 @@ public class KmlObjectImpl
          //   } else {
         //        l.setPickEnabled(false);
         //    }
+            System.out.println("-------------------");
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {
