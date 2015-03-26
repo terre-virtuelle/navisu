@@ -35,6 +35,8 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 /**
  * NaVisu
@@ -61,20 +63,18 @@ public class GuiAgentImpl
 
     @SubComponent
     DockManagerImpl dockManager;
-
     @SubComponent
     LayerCheckTreeImpl layerTree;
-    @UsedService
-    LayerTreeServices layerTreeServices;
-
     @SubComponent
     GeoViewImpl geoView;
-    
+
+    @UsedService
+    LayerTreeServices layerTreeServices;
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
     GuiAgentServices guiAgentServices;
-
+    
     private Scene scene;
     protected Stage stage;
     protected StackPane root;
@@ -109,7 +109,7 @@ public class GuiAgentImpl
 
         dockManager.init(root, scene, height, width);
         dockManager.makeDock();
-        
+
         createMOBWidget(scene);
 
         // Place scene components
@@ -152,6 +152,15 @@ public class GuiAgentImpl
     private void createMOBWidget(Scene scene) {
         Mob mob = new Mob();
         root.getChildren().add(mob);
+        /*
+        mob.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("+++++++++++++++++");
+            }
+        });
+*/
         mob.setTranslateX(540.0);
         mob.setTranslateY(-70.0);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);

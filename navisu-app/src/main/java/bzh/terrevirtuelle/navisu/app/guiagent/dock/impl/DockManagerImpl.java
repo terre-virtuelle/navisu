@@ -114,7 +114,7 @@ public class DockManagerImpl
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
                 .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
                 .createNode(1, "bathy.png", 1, "catalog.png", 1, "shom.png", (e) -> open("Catalog SHOM"))
-                .createNode(2, "sediment.png", 0, "vide.png", 0, "vide.png", (e) -> testMenuItem())
+                .createNode(2, "sediment.png", 0, "vide.png", 0, "vide.png", (e) -> openShp("data/",".shp"))
                 .build();
 
         chartsRadialMenu.setLayoutX((width / 2) - 10);
@@ -131,7 +131,11 @@ public class DockManagerImpl
         System.out.println("Test " + test);
     }
 
-    private void open(String description, String des) {
+    private void open(String file, String des) {
+      //  driverManagerServices.open(file, des);
+    }
+
+    private void openShp(String description, String des) {
         driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
     }
 
