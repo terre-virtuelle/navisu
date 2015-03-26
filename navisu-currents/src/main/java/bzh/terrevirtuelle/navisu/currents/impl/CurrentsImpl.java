@@ -28,7 +28,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @author Serge Morvan
  * @date 10 nov. 2014 NaVisu project
  */
- public class CurrentsImpl
+public class CurrentsImpl
         implements Currents, CurrentsServices, Driver, ComponentState {
 
     @UsedService
@@ -38,6 +38,7 @@ import org.capcaval.c3.component.annotation.UsedService;
 
     private static final String NAME = "Currents";
     private static final String EXTENSION_0 = ".shp";
+    private static final String EXTENSION_1 = ".SHP";
     protected static final String GROUP = "Currents";
 
     protected List<Layer> layers;
@@ -53,7 +54,9 @@ import org.capcaval.c3.component.annotation.UsedService;
     public boolean canOpen(String category, String file) {
         boolean canOpen = false;
 
-        if (category.contains(NAME) && file.toLowerCase().endsWith(EXTENSION_0)) {
+        if (category.contains(NAME)
+                && (file.toLowerCase().endsWith(EXTENSION_0)
+                || file.toLowerCase().endsWith(EXTENSION_1))) {
             canOpen = true;
         }
         return canOpen;
@@ -72,12 +75,12 @@ import org.capcaval.c3.component.annotation.UsedService;
         layers = shapefileController.init(fileName);
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();
-          //  if (name.contains(NAME)) {
-                l.setPickEnabled(true);
-           // } else {
-           //     l.setPickEnabled(false);
+            //  if (name.contains(NAME)) {
+            l.setPickEnabled(true);
+            // } else {
+            //     l.setPickEnabled(false);
             //}
-                System.out.println("l : "+l);
+            System.out.println("l : " + l);
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {
@@ -92,7 +95,9 @@ import org.capcaval.c3.component.annotation.UsedService;
 
     @Override
     public String[] getExtensions() {
-        return new String[]{"*" + EXTENSION_0};
+        return new String[]{"*" + EXTENSION_0,
+            "*" + EXTENSION_1
+        };
     }
 
     @Override
@@ -100,15 +105,15 @@ import org.capcaval.c3.component.annotation.UsedService;
         layerTreeServices.createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
         /*
-        wwd.addPositionListener((PositionEvent event) -> {
-            float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
-            if (altitude >= 3000) {
-                clip();
-            } else {
-                unClip();
-            }
-        });
-        */
+         wwd.addPositionListener((PositionEvent event) -> {
+         float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
+         if (altitude >= 3000) {
+         clip();
+         } else {
+         unClip();
+         }
+         });
+         */
     }
 
     private void clip() {
