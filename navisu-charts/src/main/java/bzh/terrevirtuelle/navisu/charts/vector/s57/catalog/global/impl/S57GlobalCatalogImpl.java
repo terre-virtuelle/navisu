@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl;
 
+import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
@@ -32,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -176,13 +179,14 @@ public class S57GlobalCatalogImpl
 
     @Override
     public void load(String... filenames) {
+
         for (String f : filenames) {
             File file = new File(f);
             guiAgentServices.getJobsManager().newJob(f, (progressHandle) -> {
                 this.open(progressHandle, file.getAbsolutePath());
             });
             try {
-                Thread.sleep(200);
+                Thread.sleep(200);//peu mieux faire ! job dans une file d'attente
             } catch (InterruptedException ex) {
                 Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
