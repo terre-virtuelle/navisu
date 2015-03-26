@@ -22,8 +22,7 @@ public final class Mob extends Group
     protected final ImageView mobOffImg = new ImageView();
     protected final ImageView mobOnImg = new ImageView();
     private boolean first = true;
-    EventHandler<MouseEvent> callback;
-
+   
     public Mob() {
         mobOffImg.setImage(new Image(getClass().getResourceAsStream("MOB_Off.png")));
         mobOnImg.setImage(new Image(getClass().getResourceAsStream("MOB_On.png")));
