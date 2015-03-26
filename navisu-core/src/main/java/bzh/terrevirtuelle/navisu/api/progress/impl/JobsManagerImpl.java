@@ -5,7 +5,6 @@ import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
 import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobDisplayController;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -14,13 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -46,7 +45,7 @@ public class JobsManagerImpl implements JobsManager {
 
         this.text = new Text("0 job processes...");
         this.text.setOnMousePressed(e -> {
-            if(this.ctrls.size() > 0) {
+            if (this.ctrls.size() > 0) {
                 jobsDialog.show();
             }
         });
@@ -73,6 +72,18 @@ public class JobsManagerImpl implements JobsManager {
             JobDisplayController jobViewCtrl = new JobDisplayController(name);
             playJob(jobViewCtrl, job);
         });
+    }
+
+    @Override
+    public void newJob(final String name, final Job... jobs) {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        for (Job j : jobs) {
+            es.execute(() -> {
+
+                JobDisplayController jobViewCtrl = new JobDisplayController(name);
+                playJob(jobViewCtrl, j);
+            });
+        }
     }
 
     @Override
@@ -116,7 +127,7 @@ public class JobsManagerImpl implements JobsManager {
         final int nbJobs = this.ctrls.size();
 
         Platform.runLater(() -> {
-            this.text.setText(nbJobs + " job"+ (nbJobs > 1 ? "s" : "") + " processes...");
+            this.text.setText(nbJobs + " job" + (nbJobs > 1 ? "s" : "") + " processes...");
             this.progress.setVisible(nbJobs > 0);
         });
     }
