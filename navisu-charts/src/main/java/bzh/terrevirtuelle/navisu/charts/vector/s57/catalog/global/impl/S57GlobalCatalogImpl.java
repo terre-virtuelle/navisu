@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl;
 
-import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
@@ -33,8 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -134,9 +131,11 @@ public class S57GlobalCatalogImpl
     }
 
     @Override
-    public boolean canOpen(String file) {
+    public boolean canOpen(String category, String file) {
         boolean canOpen = false;
-        if (file.toLowerCase().endsWith(EXTENSION_0) || file.toLowerCase().endsWith(EXTENSION_1)) {
+        if (category.contains(NAME)
+                && (file.toLowerCase().endsWith(EXTENSION_0)
+                || file.toLowerCase().endsWith(EXTENSION_1))) {
             canOpen = true;
         }
         return canOpen;

@@ -25,7 +25,8 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
 
     protected final Logger LOGGER = Logger.getLogger(GeoTiffChartImpl.class.getName());
 
-    protected static final String EXTENSION = ".tif";
+    protected static final String EXTENSION_0 = ".tif";
+    private static final String EXTENSION_1 = ".TIF";
     protected static final String GROUP = "GeoTiff charts";
     private SurfaceImageLayer layer;
 
@@ -45,10 +46,10 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
 
         boolean canOpen = false;
 
-        if (file.toLowerCase().endsWith(EXTENSION)) {
+       if (file.toLowerCase().endsWith(EXTENSION_0)
+                || file.toLowerCase().endsWith(EXTENSION_1)) {
             canOpen = true;
         }
-
         return canOpen;
     }
 
@@ -84,9 +85,11 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
         return "GeoTiff";
     }
 
-    @Override
+   @Override
     public String[] getExtensions() {
-        return new String[]{"*" + EXTENSION};
+        return new String[]{"*" + EXTENSION_0,
+            "*" + EXTENSION_1
+        };
     }
 
     @Override
