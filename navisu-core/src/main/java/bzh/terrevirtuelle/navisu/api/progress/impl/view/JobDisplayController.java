@@ -3,7 +3,6 @@ package bzh.terrevirtuelle.navisu.api.progress.impl.view;
 import bzh.terrevirtuelle.navisu.api.common.DisplayController;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobDisplayImpl;
-import bzh.terrevirtuelle.navisu.api.progress.impl.view.impl.JobFXMLDisplayImpl;
 import javafx.application.Platform;
 
 /**

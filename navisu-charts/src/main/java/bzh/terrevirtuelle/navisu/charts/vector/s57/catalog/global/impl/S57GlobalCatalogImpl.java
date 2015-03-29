@@ -2,6 +2,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
+import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobDisplayController;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -33,8 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -134,9 +133,11 @@ public class S57GlobalCatalogImpl
     }
 
     @Override
-    public boolean canOpen(String file) {
+    public boolean canOpen(String category, String file) {
         boolean canOpen = false;
-        if (file.toLowerCase().endsWith(EXTENSION_0) || file.toLowerCase().endsWith(EXTENSION_1)) {
+        if (category.contains(NAME)
+                && (file.toLowerCase().endsWith(EXTENSION_0)
+                || file.toLowerCase().endsWith(EXTENSION_1))) {
             canOpen = true;
         }
         return canOpen;
@@ -179,18 +180,13 @@ public class S57GlobalCatalogImpl
 
     @Override
     public void load(String... filenames) {
-
-        for (String f : filenames) {
-            File file = new File(f);
-            guiAgentServices.getJobsManager().newJob(f, (progressHandle) -> {
+        
+        guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+            for (String f : filenames) {
+                File file = new File(f);
                 this.open(progressHandle, file.getAbsolutePath());
-            });
-            try {
-                Thread.sleep(200);//peu mieux faire ! job dans une file d'attente
-            } catch (InterruptedException ex) {
-                Logger.getLogger(S57GlobalCatalogImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        });
     }
 
     private void filter() {
