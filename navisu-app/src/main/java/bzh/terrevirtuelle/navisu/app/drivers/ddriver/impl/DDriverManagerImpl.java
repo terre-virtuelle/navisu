@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import java.io.IOException;
@@ -142,4 +143,6 @@ public class DDriverManagerImpl
     @Override
     public void componentStopped() {
     }
+
+   
 }
