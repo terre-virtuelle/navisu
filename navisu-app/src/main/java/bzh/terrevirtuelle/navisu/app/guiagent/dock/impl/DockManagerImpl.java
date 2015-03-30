@@ -92,7 +92,7 @@ public class DockManagerImpl
     public void makeDock() {
         createDockWidget(scene);
         //   createMOBWidget(scene);
-        //   createBooksRadialWidget();
+        createBooksRadialWidget();
         //   createInstrumentsRadialWidget();
         //  createMeteoRadialWidget();
         //   createToolsRadialWidget();
@@ -109,7 +109,7 @@ public class DockManagerImpl
         chartsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chartsradialmenu150.png")
                 .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
-                //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
+                .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("GeoTiff", ".tif"))
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
                 .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
@@ -127,6 +127,29 @@ public class DockManagerImpl
         chartsRadialMenu.setVisible(firstChartsRadialMenu);
     }
 
+    //--------------BOOKS------------------
+     private void createBooksRadialWidget() {
+        booksRadialMenu = RadialMenuBuilder.create()
+                .centralImage("booksradialmenu150.png")
+                .createNode(0, "logbook.png", 0, "vide.png", 0, "vide.png", (e) -> open("S57", ".000"))
+                .createNode(0, "logbook.png", 1, "vide.png", 0, "vide.png", (e) -> open("BSB/KAP", ".KAP"))                
+                .createNode(1, "lightsbook.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))                
+                .createNode(1, "lightsbook.png", 1, "vide.png", 1, "vide.png", (e) -> open("Catalog SHOM"))                
+                .createNode(2, "sailingbook.png", 0, "worldwide_sailing_directions.png", 0, "vide.png", (e) -> openShp("data/",".shp"))
+                .createNode(2, "sailingbook.png", 1, "IrelandSouth_sailing_directions.png", 0, "vide.png", (e) -> openShp("data/",".shp"))
+                .createNode(2, "sailingbook.png", 2, "UK_Welsh harbours_sailing_directions.png", 0, "vide.png", (e) -> openShp("data/",".shp"))
+                .build();
+
+        booksRadialMenu.setLayoutX((width / 2) - 10);
+        booksRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(booksRadialMenu);
+    }
+
+    private void showBooksMenu() {
+        firstBooksRadialMenu = firstBooksRadialMenu != true;
+        booksRadialMenu.setVisible(firstBooksRadialMenu);
+    }
+    
     private void open(String test) {
         System.out.println("Test " + test);
     }
@@ -143,23 +166,8 @@ public class DockManagerImpl
         webDriverManagerServices.handleOpenFiles(url);
     }
 
-    //--------------BOOKS------------------
-    private void createBooksRadialWidget() {
-        booksRadialMenu = RadialMenuBuilder.create()
-                //  .innerRadius(30).outerRadius(60).length(360).gap(2)
-                .centralImage("centreradialmenu60.png")
-                .build();
-
-        booksRadialMenu.setLayoutX((width / 2) - 50);
-        booksRadialMenu.setLayoutY(height / 2);
-        root.getChildren().add(booksRadialMenu);
-    }
-
-    private void showBooksMenu() {
-        firstBooksRadialMenu = firstBooksRadialMenu != true;
-        booksRadialMenu.setVisible(firstBooksRadialMenu);
-    }
-
+    
+    
     //--------------INSTRUMENTS------------------
     private void createInstrumentsRadialWidget() {
         instrumentsRadialMenu = RadialMenuBuilder.create()
