@@ -6,6 +6,8 @@ import bzh.terrevirtuelle.navisu.app.drivers.ddriver.impl.DDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.impl.InstrumentDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.impl.WebDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -131,7 +133,8 @@ public class AppMain extends Application {
                         MagneticImpl.class,
                         SedimentologyImpl.class,
                         AisRadarImpl.class,
-                        OptionsManagerImpl.class
+                        OptionsManagerImpl.class,
+                        InstrumentDriverManagerImpl.class
                 )
         );
 
@@ -178,7 +181,7 @@ public class AppMain extends Application {
         wmsServices.init();
 
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
-        //  optionsManagerServices.show();
+       // optionsManagerServices.show();
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
@@ -205,7 +208,11 @@ public class AppMain extends Application {
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
         // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
         // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
-       
+
+        InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
+        instrumentDriverManagerServices.init();
+        instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
+        
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_1,
                 DATA_S57_CATALOG_2,
                 DATA_S57_CATALOG_3,
