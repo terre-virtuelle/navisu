@@ -57,6 +57,7 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
+        System.out.println("fileName " + fileName);
         String url = fileName.replace("\\", "/");
         media = new javafx.scene.media.Media("file:///" + url);
         mediaPlayer = new MediaPlayer(media);
