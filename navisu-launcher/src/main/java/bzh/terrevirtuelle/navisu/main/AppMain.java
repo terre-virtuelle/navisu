@@ -1,7 +1,5 @@
 package bzh.terrevirtuelle.navisu.main;
 
-import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
-import bzh.terrevirtuelle.navisu.agents.media.impl.MediaImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.ddriver.impl.DDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
@@ -50,12 +48,16 @@ import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
+import bzh.terrevirtuelle.navisu.instruments.template.impl.InstrumentTemplateImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
 import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
+import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
+import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -128,13 +130,14 @@ public class AppMain extends Application {
                         AisImpl.class,
                         AisLoggerImpl.class,
                         AisPlotterImpl.class,
-                        MediaImpl.class,
+                        SoundImpl.class,
                         DDriverManagerImpl.class,
                         MagneticImpl.class,
                         SedimentologyImpl.class,
                         AisRadarImpl.class,
                         OptionsManagerImpl.class,
-                        InstrumentDriverManagerImpl.class
+                        InstrumentDriverManagerImpl.class,
+                        InstrumentTemplateImpl.class
                 )
         );
 
@@ -167,7 +170,7 @@ public class AppMain extends Application {
 
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
 
-        MediaServices mediaServices = componentManager.getComponentService(MediaServices.class);
+        SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
 
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
 
@@ -181,7 +184,9 @@ public class AppMain extends Application {
         wmsServices.init();
 
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
-       // optionsManagerServices.show();
+        // optionsManagerServices.show();
+
+        InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
 
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
@@ -195,7 +200,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
-        driverServices.registerNewDriver(mediaServices.getDriver());
+        driverServices.registerNewDriver(soundServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
@@ -212,6 +217,7 @@ public class AppMain extends Application {
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_1,
                 DATA_S57_CATALOG_2,
