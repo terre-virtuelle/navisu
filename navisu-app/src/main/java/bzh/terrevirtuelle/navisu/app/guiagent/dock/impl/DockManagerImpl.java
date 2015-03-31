@@ -16,6 +16,8 @@ import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuBuilder;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.animation.Animation;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -67,6 +69,7 @@ public class DockManagerImpl
     protected int height;
     private StackPane root = null;
     private Scene scene = null;
+    private List<RadialMenu> radialMenus;
     public final DockItem[] ICONS = new DockItem[]{
         DockItemFactory.newImageItem("user tools", ICON_PATH + "dock_icons/tools.png", (e) -> showToolsMenu()),
         DockItemFactory.newImageItem("charts", ICON_PATH + "dock_icons/charts.png", (e) -> showChartsMenu()),
@@ -79,7 +82,7 @@ public class DockManagerImpl
 
     @Override
     public void componentInitiated() {
-
+        radialMenus = new ArrayList<>();
     }
 
     @Override
@@ -121,6 +124,7 @@ public class DockManagerImpl
         chartsRadialMenu.setLayoutX((width / 2) - 10);
         chartsRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(chartsRadialMenu);
+        radialMenus.add(chartsRadialMenu);
     }
 
     private void showChartsMenu() {
@@ -144,32 +148,12 @@ public class DockManagerImpl
         booksRadialMenu.setLayoutX((width / 2) - 10);
         booksRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(booksRadialMenu);
+        radialMenus.add(booksRadialMenu);
     }
 
     private void showBooksMenu() {
         firstBooksRadialMenu = firstBooksRadialMenu != true;
         booksRadialMenu.setVisible(firstBooksRadialMenu);
-    }
-
-    private void open() {
-        System.out.println("In progress");
-
-    }
-
-    private void open(String test) {
-        instrumentDriverManagerServices.open(test);
-    }
-
-    private void open(String file, String des) {
-        //  driverManagerServices.open(file, des);
-    }
-
-    private void openShp(String description, String des) {
-        driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
-    }
-
-    private void openWMS(String description, String url) {
-        webDriverManagerServices.handleOpenFiles(url);
     }
 
     //--------------INSTRUMENTS------------------
@@ -183,6 +167,7 @@ public class DockManagerImpl
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);
         instrumentsRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(instrumentsRadialMenu);
+        radialMenus.add(instrumentsRadialMenu);
     }
 
     private void showInstrumentsMenu() {
@@ -199,6 +184,7 @@ public class DockManagerImpl
         meteoRadialMenu.setLayoutX((width / 2) - 30);
         meteoRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(meteoRadialMenu);
+        radialMenus.add(meteoRadialMenu);
     }
 
     private void showMeteoMenu() {
@@ -215,6 +201,7 @@ public class DockManagerImpl
         tidesRadialMenu.setLayoutX((width / 2) - 10);
         tidesRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(tidesRadialMenu);
+        radialMenus.add(tidesRadialMenu);
     }
 
     private void showTidesMenu() {
@@ -231,6 +218,7 @@ public class DockManagerImpl
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(toolsRadialMenu);
+        radialMenus.add(toolsRadialMenu);
     }
 
     private void showToolsMenu() {
@@ -259,6 +247,37 @@ public class DockManagerImpl
                 upAnimation.play();
             }
         });
+    }
+
+    private void open() {
+        System.out.println("In progress");
+        clear();
+    }
+
+    private void open(String test) {
+        instrumentDriverManagerServices.open(test);
+        clear();
+    }
+
+    private void open(String file, String des) {
+        //  driverManagerServices.open(file, des);
+        clear();
+    }
+
+    private void openShp(String description, String des) {
+        driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
+        clear();
+    }
+
+    private void openWMS(String description, String url) {
+        webDriverManagerServices.handleOpenFiles(url);
+        clear();
+    }
+
+    private void clear() {
+        for (RadialMenu r : radialMenus) {
+            r.setVisible(false);
+        }
     }
 
     @Override
