@@ -30,7 +30,7 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="36 0.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="360.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
                     <image>
                         <Image url="@quit.png" />
                     </image>
