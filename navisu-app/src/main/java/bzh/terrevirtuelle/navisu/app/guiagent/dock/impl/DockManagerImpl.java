@@ -93,13 +93,12 @@ public class DockManagerImpl
     @Override
     public void makeDock() {
         createDockWidget(scene);
-        //   createMOBWidget(scene);
         createBooksRadialWidget();
         createInstrumentsRadialWidget();
-        //  createMeteoRadialWidget();
-        //   createToolsRadialWidget();
+        createMeteoRadialWidget();
+        createToolsRadialWidget();
         createChartsRadialWidget();
-        //  createTidesRadialWidget();
+        createTidesRadialWidget();
     }
 
     private void testMenuItem() {
@@ -133,13 +132,13 @@ public class DockManagerImpl
     private void createBooksRadialWidget() {
         booksRadialMenu = RadialMenuBuilder.create()
                 .centralImage("booksradialmenu150.png")
-                .createNode(0, "logbook.png", 0, "vide.png", 0, "vide.png", (e) -> open("S57", ".000"))
-                .createNode(0, "logbook.png", 1, "vide.png", 0, "vide.png", (e) -> open("BSB/KAP", ".KAP"))
-                .createNode(1, "lightsbook.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
-                .createNode(1, "lightsbook.png", 1, "vide.png", 1, "vide.png", (e) -> open("Catalog SHOM"))
-                .createNode(2, "sailingbook.png", 0, "worldwide_sailing_directions.png", 0, "vide.png", (e) -> openShp("data/", ".shp"))
-                .createNode(2, "sailingbook.png", 1, "IrelandSouth_sailing_directions.png", 0, "vide.png", (e) -> openShp("data/", ".shp"))
-                .createNode(2, "sailingbook.png", 2, "UK_Welsh harbours_sailing_directions.png", 0, "vide.png", (e) -> openShp("data/", ".shp"))
+                .createNode(0, "logbook.png", 0, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(0, "logbook.png", 1, "vide.png", 0, "vide.png", (e) -> open())
+                .createNode(1, "lightsbook.png", 0, "images.png", 0, "emodnet.png", (e) -> open())
+                .createNode(1, "lightsbook.png", 1, "vide.png", 1, "vide.png", (e) -> open())
+                .createNode(2, "sailingbook.png", 0, "worldwide_sailing_directions.png", 0, "vide.png", (e) -> open())
+                .createNode(2, "sailingbook.png", 1, "IrelandSouth_sailing_directions.png", 0, "vide.png", (e) -> open())
+                .createNode(2, "sailingbook.png", 2, "UK_Welsh harbours_sailing_directions.png", 0, "vide.png", (e) -> open())
                 .build();
 
         booksRadialMenu.setLayoutX((width / 2) - 10);
@@ -152,8 +151,12 @@ public class DockManagerImpl
         booksRadialMenu.setVisible(firstBooksRadialMenu);
     }
 
+    private void open() {
+        System.out.println("In progress");
+
+    }
+
     private void open(String test) {
-        //  System.out.println("Test " + test);
         instrumentDriverManagerServices.open(test);
     }
 
@@ -174,6 +177,7 @@ public class DockManagerImpl
         instrumentsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("instrumentsradialmenu150.png")
                 .createNode(0, "navigation.png", 0, "ais.png", 0, "aisradar.png", (e) -> open("AisRadar"))
+                .createNode(0, "navigation.png", 1, "ais.png", 1, "template.png", (e) -> open("InstrumentTemplate"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);

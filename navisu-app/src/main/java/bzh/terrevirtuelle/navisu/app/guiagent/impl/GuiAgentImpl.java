@@ -37,6 +37,8 @@ import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 /**
  * NaVisu
@@ -74,7 +76,7 @@ public class GuiAgentImpl
     GeoViewServices geoViewServices;
     @UsedService
     GuiAgentServices guiAgentServices;
-    
+
     private Scene scene;
     protected Stage stage;
     protected StackPane root;
@@ -152,17 +154,31 @@ public class GuiAgentImpl
     private void createMOBWidget(Scene scene) {
         Mob mob = new Mob();
         root.getChildren().add(mob);
-        /*
         mob.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            boolean first = true;
+            MediaPlayer mediaPlayer;
 
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("+++++++++++++++++");
+                guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+                    if (first == true) {
+                        javafx.scene.media.Media media;
+                        String url = System.getProperty("user.dir") + "/data/sounds/alarm10.wav";
+                        media = new Media("file:///" + url);
+                        mediaPlayer = new MediaPlayer(media);
+                        mediaPlayer.setAutoPlay(true);
+                        mediaPlayer.setCycleCount(100);
+                        first = false;
+                    } else {
+                        mediaPlayer.dispose();
+                        first=true;
+                    }
+                });
             }
         });
-*/
-        mob.setTranslateX(300.0);
-        mob.setTranslateY(-10.0);
+
+        mob.setTranslateX(550.0);
+        mob.setTranslateY(-70.0);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);
     }
 
