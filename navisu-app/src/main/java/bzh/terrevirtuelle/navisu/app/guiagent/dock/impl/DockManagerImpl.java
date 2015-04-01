@@ -259,8 +259,8 @@ public class DockManagerImpl
         clear();
     }
 
-    private void open(String file, String des) {
-        //  driverManagerServices.open(file, des);
+    private void open(String description, String des) {
+        driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
         clear();
     }
 
@@ -275,9 +275,9 @@ public class DockManagerImpl
     }
 
     private void clear() {
-        for (RadialMenu r : radialMenus) {
+        radialMenus.stream().forEach((r) -> {
             r.setVisible(false);
-        }
+        }); 
     }
 
     @Override
