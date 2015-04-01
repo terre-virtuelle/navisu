@@ -42,6 +42,7 @@ public class DriverManagerImpl
     GuiAgentServices guiAgentServices;
 
     protected FileChooser fileChooser;
+    protected FileChooser fileChooserDock;
     Properties properties;
     protected List<Driver> availableDriverList = new ArrayList<>();
 
@@ -53,6 +54,7 @@ public class DriverManagerImpl
     @Override
     public void init() {
         this.fileChooser = new FileChooser();
+        this.fileChooserDock = new FileChooser();
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
 
         properties = new Properties();
@@ -64,8 +66,10 @@ public class DriverManagerImpl
         String userInitialDirectory = properties.getProperty("dataDir");
         if (userInitialDirectory.equals("")) {
             this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
+            this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
         } else {
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
+            this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
         }
         MenuItem menuItem = new MenuItem(tr("menu.file.open"));
         menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
@@ -83,17 +87,46 @@ public class DriverManagerImpl
 
     @Override
     public void open(FileChooser.ExtensionFilter ext) {
-       // fileChooser.getExtensionFilters().add(0, ext);
+        // fileChooser.getExtensionFilters().add(0, ext);
         File selectedFile = this.fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
-            System.out.println(selectedFile.getAbsolutePath());
+            System.out.println("Load : " + selectedFile.getAbsolutePath());
         }
         //fileChooser.getExtensionFilters().remove(0);
     }
 
-    protected void handleOpenFiles(String category, File file) {
+    @Override
+    public void open(String description, String[] ext) {
+        this.fileChooserDock.getExtensionFilters().clear();
+        this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, ext));
+        File selectedFile = this.fileChooserDock.showOpenDialog(null);
+        if (selectedFile != null) {
+            this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
+            System.out.println("Load : " + selectedFile.getAbsolutePath());
+        }
+    }
 
+    @Override
+    public void open(String description, String[] ext, String path) {
+        String userInitialDirectory = properties.getProperty("dataDir");
+        if (userInitialDirectory.equals("")) {
+            this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
+            this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
+        } else {
+            this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
+            this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+        }
+        this.fileChooserDock.getExtensionFilters().clear();
+        this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, ext));
+        File selectedFile = this.fileChooserDock.showOpenDialog(null);
+        if (selectedFile != null) {
+            this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
+            System.out.println("Load : " + selectedFile.getAbsolutePath());
+        }
+    }
+
+    protected void handleOpenFiles(String category, File file) {
         Driver driver = this.findDriverForFile(category, file.getAbsolutePath());
         if (driver != null) {
             guiAgentServices.getJobsManager().newJob(file.getName(), (progressHandle) -> {
@@ -142,9 +175,8 @@ public class DriverManagerImpl
         this.availableDriverList.add(driver);
 
         // Add the supported extension to the file chooser
-        this.fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter(driver.getName(), driver.getExtensions())
-        );
+        this.fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter(driver.getName(), driver.getExtensions()));
     }
 
     @Override
