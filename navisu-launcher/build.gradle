@@ -21,6 +21,7 @@ dependencies {
     compile project(':navisu-sedimentology')
     compile project(':navisu-instruments')
     compile project(':navisu-agents')
+    compile project(':navisu-media')
     compile project(':navisu-wms')
     compile fileTree(dir: 'lib', include: '*.jar')
 }

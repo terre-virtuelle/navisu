@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.widgets.mob;
 
 import bzh.terrevirtuelle.navisu.widgets.Widget;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

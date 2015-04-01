@@ -14,59 +14,64 @@
 
 <fx:root fx:id="radar" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" />
-      <Group layoutX="100.0" layoutY="65.0">
-         <children>
-              <Rectangle arcHeight="30.0" arcWidth="30.0" height="860.0" opacity="0.66" stroke="#448cbc" strokeType="INSIDE" width="1024.0">
-                  <fill>
-                      <LinearGradient endX="1.0" endY="1.0" startX="0.37142857142857144">
-                          <stops>
-                              <Stop color="#448cbcfc" />
-                              <Stop color="#11232f" offset="1.0" />
-                          </stops>
-                      </LinearGradient>
-                  </fill>
-              </Rectangle>
-              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21d6ff4d" height="800.0" layoutX="799.0" layoutY="29.0" stroke="#00abff" strokeType="INSIDE" width="200.0">
-                  <effect>
-                      <InnerShadow choke="0.05" color="#8ed1e2ed" height="28.41" offsetX="10.0" offsetY="10.0" radius="10.370000000000001" width="15.07" />
-                  </effect>
-              </Rectangle>
-            <Text fill="#fff900" fontSmoothingType="LCD" layoutX="814.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-Click Left to scale">
-               <effect>
-                  <Glow level="0.87" />
-               </effect>
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-              <Text fill="#fff900" fontSmoothingType="LCD" layoutX="839.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-A to hide">
-                  <effect>
-                      <Glow level="0.87" />
-                  </effect>
-               <font>
-                  <Font size="14.0" />
-               </font>
-              </Text>
-              <Group layoutX="175.0" layoutY="229.0" scaleX="2.3" scaleY="2.3">
-                  <children>
-                      <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="30.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-                      <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="80.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-                      <Line endY="150.0" layoutX="250.0" layoutY="200.0" startY="-150.0" stroke="#1f93ff" />
-                      <Line endX="150.0" layoutX="250.0" layoutY="200.0" startX="-150.0" stroke="#1f93ff" />
-                      <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="10.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-                      <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="150.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-                      <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="130.0" stroke="DODGERBLUE" strokeType="INSIDE" />                      
-                      <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="110.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-                      <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="50.0" stroke="DODGERBLUE" strokeType="INSIDE" />
-                  </children>
-              </Group>
-              <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="125.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15">
-                  <image>
-                      <Image url="@radarfaisceau600.png" />
-                  </image>
-              </ImageView>
-         </children>
-      </Group>
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" />
+        <Group layoutX="100.0" layoutY="65.0">
+            <children>
+                <Rectangle arcHeight="30.0" arcWidth="30.0" height="860.0" opacity="0.66" stroke="#448cbc" strokeType="INSIDE" width="1024.0">
+                    <fill>
+                        <LinearGradient endX="1.0" endY="1.0" startX="0.37142857142857144">
+                            <stops>
+                                <Stop color="#448cbcfc" />
+                                <Stop color="#11232f" offset="1.0" />
+                            </stops>
+                        </LinearGradient>
+                    </fill>
+                </Rectangle>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#21d6ff4d" height="800.0" layoutX="799.0" layoutY="29.0" stroke="#00abff" strokeType="INSIDE" width="200.0">
+                    <effect>
+                        <InnerShadow choke="0.05" color="#8ed1e2ed" height="28.41" offsetX="10.0" offsetY="10.0" radius="10.370000000000001" width="15.07" />
+                    </effect>
+                </Rectangle>
+                <Text fill="#fff900" fontSmoothingType="LCD" layoutX="800.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Press Ctrl-Click Left to scale">
+                    <effect>
+                        <Glow level="0.87" />
+                    </effect>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Text>
+                <Group layoutX="175.0" layoutY="229.0" scaleX="2.3" scaleY="2.3">
+                    <children>
+                        <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="30.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+                        <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="80.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+                        <Line endY="150.0" layoutX="250.0" layoutY="200.0" startY="-150.0" stroke="#1f93ff" />
+                        <Line endX="150.0" layoutX="250.0" layoutY="200.0" startX="-150.0" stroke="#1f93ff" />
+                        <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="10.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+                        <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="150.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+                        <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="130.0" stroke="DODGERBLUE" strokeType="INSIDE" />                      
+                        <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="110.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+                        <Circle fill="#1f93ff00" layoutX="250.0" layoutY="200.0" radius="50.0" stroke="DODGERBLUE" strokeType="INSIDE" />
+                    </children>
+                </Group>
+                <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="125.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15">
+                    <image>
+                        <Image url="@radarfaisceau600.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@logoTV64AIS.png" />
+                    </image>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </ImageView>
+                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="980.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                    <image>
+                        <Image url="@quit.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Group>
     </children>
 </fx:root>

@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.drivers.ddriver;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**

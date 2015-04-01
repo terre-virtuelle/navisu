@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.aisradar;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -19,4 +20,7 @@ public interface AisRadarServices
     default void off() {
     }
 
+    boolean canOpen(String category);
+
+    InstrumentDriver getDriver();
 }

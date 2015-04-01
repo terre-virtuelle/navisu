@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
@@ -20,6 +21,8 @@ import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 import org.capcaval.c3.component.ComponentState;
 
@@ -37,6 +40,8 @@ public class LayerCheckTreeImpl
     protected LayerManager<Layer> layerManager;
     private CheckBoxTreeItem<GeoLayer> rootItem0;
     private List<CheckBoxTreeItem<GeoLayer>> rootItems;
+    private GeoLayer layer;
+    private String value;
 
     @Override
     public void componentInitiated() {
@@ -91,9 +96,9 @@ public class LayerCheckTreeImpl
         CheckBoxTreeItem<GeoLayer> gpx = createNode(rootItem0, "GPX files", null);
         rootItems.add(gpx);
         CheckBoxTreeItem<GeoLayer> shp = createNode(rootItem0, "Shape files", null);
-        rootItems.add(shp); 
+        rootItems.add(shp);
         CheckBoxTreeItem<GeoLayer> wms = createNode(rootItem0, "WMS Layers", null);
-        rootItems.add(wms);  
+        rootItems.add(wms);
     }
 
     @Override
@@ -133,9 +138,9 @@ public class LayerCheckTreeImpl
             treeItem = new CheckBoxTreeItem<>(geoLayer);
         }
         treeItem.setSelected(geoLayer.isVisible());
+
         treeItem.selectedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) -> {
             geoLayer.setVisible(newValue);
-
             if (geoLayer instanceof Layer) {
                 ((Layer) geoLayer.getDisplayLayer()).setEnabled(newValue);
             }
@@ -173,5 +178,18 @@ public class LayerCheckTreeImpl
     @Override
     public List<CheckBoxTreeItem<GeoLayer>> getCheckBoxTreeItems() {
         return rootItems;
+    }
+
+    @Override
+    public GeoLayer getLayer(String name) {
+
+        CheckBoxTreeItem<GeoLayer> i = (CheckBoxTreeItem) this.search(name);
+        List<TreeItem<GeoLayer>> childrens = i.getChildren();
+        childrens.stream().forEach((t) -> {
+            if (t.getValue().getName().trim().equals(name)) {
+                layer = t.getValue();
+            }
+        });
+        return layer;
     }
 }

@@ -21,12 +21,11 @@ import javafx.util.Duration;
 
 /**
  *
- * @author Serge
- * modifs Dom : variables public
+ * @author Serge modifs Dom : variables public
  */
 public class HUD_mmsi_Controller
-extends WidgetImpl 
-implements Initializable {
+        extends WidgetImpl
+        implements Initializable {
 
     @FXML
     public Text mmsi;
@@ -34,8 +33,8 @@ implements Initializable {
     public Text acronym;
     public Text objectname;
     public Integer mmsitest;
-    public Integer route=0;
-    
+    public Integer route = 0;
+
     public HUD_mmsi_Controller() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("HUD_MMSI.fxml"));
         fxmlLoader.setRoot(this);
@@ -48,18 +47,17 @@ implements Initializable {
         }
     }
 
-
     public void schedule() {
         Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(.2), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-               // System.out.println("heading " + heading+"route "+route);
+                // System.out.println("heading " + heading+"route "+route);
                 mmsitest = 227483000 + route;
                 mmsi.setText(mmsitest.toString());
                 acronym.setText("SEAARE");
                 objectname.setText("CHAUSSÉE DE SEIN");
-                
+
                 route++;
                 route %= 360;
             }
@@ -67,7 +65,7 @@ implements Initializable {
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

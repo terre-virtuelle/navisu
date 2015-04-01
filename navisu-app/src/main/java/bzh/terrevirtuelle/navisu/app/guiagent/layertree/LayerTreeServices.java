@@ -22,8 +22,10 @@ public interface LayerTreeServices extends ComponentService {
     void addGeoLayer(String groupName, GeoLayer<?>... layers);
 
     Display<Node> getDisplayService();
-    
+
     List<CheckBoxTreeItem<GeoLayer>> getCheckBoxTreeItems();
-    
+
     CheckBoxTreeItem<GeoLayer> search(String name);
+
+    GeoLayer getLayer(String name);
 }

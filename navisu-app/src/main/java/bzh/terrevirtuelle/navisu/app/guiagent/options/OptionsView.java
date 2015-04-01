@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.options;
+ package bzh.terrevirtuelle.navisu.app.guiagent.options;
 
 import bzh.terrevirtuelle.navisu.core.view.display.jfx.impl.JFXAbstractDisplay;
 

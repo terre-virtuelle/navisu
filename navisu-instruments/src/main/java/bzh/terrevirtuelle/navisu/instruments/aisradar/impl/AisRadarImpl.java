@@ -5,11 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.aisradar.impl;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadar;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.controller.AisRadarController;
-import javafx.event.EventType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -21,7 +21,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @author Serge
  */
 public class AisRadarImpl
-        implements AisRadar, AisRadarServices, ComponentState {
+        implements AisRadar, AisRadarServices, InstrumentDriver, ComponentState {
 
     @UsedService
     GuiAgentServices guiAgentServices;
@@ -29,7 +29,7 @@ public class AisRadarImpl
 
     @Override
     public void componentInitiated() {
-        radarController = new AisRadarController(KeyCode.A, KeyCombination.CONTROL_DOWN);
+        radarController = new AisRadarController(this, KeyCode.A, KeyCombination.CONTROL_DOWN);
         radarController.setScale(0.5);
     }
 
@@ -52,8 +52,20 @@ public class AisRadarImpl
     @Override
     public void off() {
         guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, radarController);
-        guiAgentServices.getRoot().getChildren().remove(radarController); 
+        guiAgentServices.getRoot().getChildren().remove(radarController);
         radarController.setVisible(false);
         radarController.stop();
     }
+
+    @Override
+    public InstrumentDriver getDriver() {
+        return this;
+    }
+
+    @Override
+    public boolean canOpen(String category) {
+
+        return category.equals("AisRadar");
+    }
+
 }

@@ -1,8 +1,6 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl;
 
-import bzh.terrevirtuelle.navisu.api.progress.Job;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
-import bzh.terrevirtuelle.navisu.api.progress.impl.view.JobDisplayController;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;

@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.agents.media.impl;
+package bzh.terrevirtuelle.navisu.media.sound.impl;
 
-import bzh.terrevirtuelle.navisu.agents.media.Media;
-import bzh.terrevirtuelle.navisu.agents.media.MediaServices;
+
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.media.sound.Sound;
+import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import java.util.Date;
 import java.util.TimerTask;
 import javafx.scene.media.MediaPlayer;
@@ -19,7 +20,7 @@ import org.capcaval.c3.component.ComponentState;
  * @author Serge Morvan
  * @date 9 oct. 2014 NaVisu project
  */
-public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
+public class SoundImpl implements Sound, SoundServices, Driver, ComponentState {
 
     //   private static final String EXTENSION = ".wav";
     private static final String EXTENSION_0 = ".wav";
@@ -57,7 +58,6 @@ public class MediaImpl implements Media, MediaServices, Driver, ComponentState {
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        System.out.println("fileName " + fileName);
         String url = fileName.replace("\\", "/");
         media = new javafx.scene.media.Media("file:///" + url);
         mediaPlayer = new MediaPlayer(media);
