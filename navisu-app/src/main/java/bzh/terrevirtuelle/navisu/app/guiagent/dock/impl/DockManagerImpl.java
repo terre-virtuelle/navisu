@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuBuilder;
+import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.Animation;
@@ -167,7 +168,7 @@ public class DockManagerImpl
     private void createChartsRadialWidget() {
         chartsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chartsradialmenu150.png")
-                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
+                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("charts/vector/S57","S57",  ".000"))
                 //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("charts/raster/geotiff", "GeoTiff", ".tif", ".TIF", ".tiff"))
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
@@ -212,8 +213,8 @@ public class DockManagerImpl
     private void createNavigationRadialWidget() {
         navigationRadialMenu = RadialMenuBuilder.create()
                 .centralImage("navigation_150.png")
-                .createNode(0, "navigation.png", 0, "tracks.png", 0, "gpx.png", (e) -> open("gpx", "Gpx", ".gpx", ".GPX"))
-                .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("kml", "KML", ".kml", ".KML", "kmz", "KMZ"))
+                .createNode(0, "navigation.png", 0, "tracks.png", 0, "gpx.png", (e) -> open("Gpx", ".gpx", ".GPX"))
+                .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", "kmz", "KMZ"))
                 .build();
 
         navigationRadialMenu.setLayoutX((width / 2) - 30);
@@ -226,7 +227,7 @@ public class DockManagerImpl
     private void createTidesRadialWidget() {
         tidesRadialMenu = RadialMenuBuilder.create()
                 .centralImage("tidesradialmenu150.png")
-                .createNode(2, "currents.png", 0, "catalog.png", 0, "shom.png", (e) -> open("currents", "Currents SHOM", ".shp", ".SHP"))
+                .createNode(0, "currents.png", 0, "catalog.png", 0, "shom.png", (e) -> open("Currents", ".shp", ".SHP"))
                 .build();
 
         tidesRadialMenu.setLayoutX((width / 2) - 10);
@@ -239,8 +240,9 @@ public class DockManagerImpl
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
+               // .createNode(0, "system.png", 0, "catalog.png", 0, "shom.png", (e) -> open("Currents", ".shp", ".SHP"))
+               // .createNode(0, "data.png", 0, "catalog.png", 1, "shom.png", (e) -> open("shp", "SHP", ".shp"))
                 .build();
-
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(toolsRadialMenu);
@@ -248,7 +250,7 @@ public class DockManagerImpl
     }
 
     private void open() {
-        System.out.println("Job in progress");
+        System.out.println("Work in progress");
         clear();
     }
 
@@ -257,7 +259,7 @@ public class DockManagerImpl
         clear();
     }
 
-    private void open(String path, String description, String... des) {
+    private void open(String description, String... des) {
         String[] tab = new String[des.length];
         int i = 0;
         for (String s : des) {

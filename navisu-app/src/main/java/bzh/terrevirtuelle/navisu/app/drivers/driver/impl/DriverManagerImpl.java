@@ -95,30 +95,34 @@ public class DriverManagerImpl
         }
         //fileChooser.getExtensionFilters().remove(0);
     }
+    /*
+     @Override
+     public void open(String description, String[] ext) {
+     this.fileChooserDock.getExtensionFilters().clear();
+     this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, ext));
+     File selectedFile = this.fileChooserDock.showOpenDialog(null);
+     if (selectedFile != null) {
+     this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
+     System.out.println("Load : " + selectedFile.getAbsolutePath());
+     }
+     }
+     */
 
     @Override
-    public void open(String description, String[] ext) {
-        this.fileChooserDock.getExtensionFilters().clear();
-        this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, ext));
-        File selectedFile = this.fileChooserDock.showOpenDialog(null);
-        if (selectedFile != null) {
-            this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
-            System.out.println("Load : " + selectedFile.getAbsolutePath());
-        }
-    }
+    public void open(String category, String[] ext) {
 
-    @Override
-    public void open(String description, String[] ext, String path) {
-        String userInitialDirectory = properties.getProperty("dataDir");
-        if (userInitialDirectory.equals("")) {
-            this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
-            this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
-        } else {
-            this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-            this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+        String userInitialDirectory = properties.getProperty(category);
+        if (userInitialDirectory != null) {
+            if (userInitialDirectory.equals("")) {
+                this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
+                this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
+            } else {
+                this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
+                this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+            }
         }
         this.fileChooserDock.getExtensionFilters().clear();
-        this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, ext));
+        this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(category, ext));
         File selectedFile = this.fileChooserDock.showOpenDialog(null);
         if (selectedFile != null) {
             this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
@@ -136,7 +140,8 @@ public class DriverManagerImpl
             LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
         }
 
-        properties.setProperty("dataDir", file.getParent());
+        // properties.setProperty("dataDir", file.getParent());
+        properties.setProperty(category, file.getParent());
         File f = new File("properties/user.properties");
         OutputStream out;
         try {

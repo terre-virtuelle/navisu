@@ -19,7 +19,7 @@ public interface DriverManagerServices extends ComponentService {
 
     void open(String description, String[] ext);
 
-    void open(String description, String[] ext, String path);
+   // void open(String description, String[] ext, String path);
 
     void registerNewDriver(Driver driver);
 }
