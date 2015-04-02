@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.drivers.ddriver.impl;
+package bzh.terrevirtuelle.navisu.app.drivers.directorydriver.impl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriver;
-import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriverManager;
-import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriverManager;
+import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
@@ -34,10 +34,10 @@ import javafx.stage.DirectoryChooser;
  * @author tibus
  * @date 11/11/2013 18:55
  */
-public class DDriverManagerImpl
-        implements DDriverManager, DDriverManagerServices, ComponentState {
+public class DirectoryDriverManagerImpl
+        implements DirectoryDriverManager, DirectoryDriverManagerServices, ComponentState {
 
-    protected static final Logger LOGGER = Logger.getLogger(DDriverManagerImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(DirectoryDriverManagerImpl.class.getName());
 
     @UsedService
     MenuManagerServices menuBarServices;
@@ -46,8 +46,8 @@ public class DDriverManagerImpl
 
     //  protected FileChooser fileChooser;
     protected DirectoryChooser directoryChooser = new DirectoryChooser();
-    protected List<DDriver> availableDriverList = new ArrayList<>();
-    protected DDriver driver;
+    protected List<DirectoryDriver> availableDriverList = new ArrayList<>();
+    protected DirectoryDriver driver;
 
     @Override
     public void componentInitiated() {
@@ -90,7 +90,7 @@ public class DDriverManagerImpl
                             try {
                                 Thread.sleep(1000);
                             } catch (InterruptedException ex) {
-                                Logger.getLogger(DDriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(DirectoryDriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         });
                     } else {
@@ -106,16 +106,17 @@ public class DDriverManagerImpl
             });
 
         } catch (IOException ex) {
-            Logger.getLogger(DDriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DirectoryDriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //driver.parse();
         //driver.parse();
     }
 
-    protected DDriver findDriverForFile(String file) {
+    protected DirectoryDriver findDriverForFile(String file) {
 
-        DDriver compatibleDriver = null;
+        DirectoryDriver compatibleDriver = null;
 
-        for (DDriver driver : this.availableDriverList) {
+        for (DirectoryDriver driver : this.availableDriverList) {
 
             if (driver.canOpen(file)) {
                 compatibleDriver = driver;
@@ -127,7 +128,7 @@ public class DDriverManagerImpl
     }
 
     @Override
-    public void registerNewDriver(DDriver driver) {
+    public void registerNewDriver(DirectoryDriver driver) {
 
         Checker.notNull(driver, "Driver must not be null.");
 

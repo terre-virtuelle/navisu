@@ -16,7 +16,6 @@ import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuBuilder;
-import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuContainer;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.animation.Animation;
@@ -29,6 +28,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.capcaval.c3.component.annotation.UsedService;
 
 /*
@@ -48,8 +48,15 @@ public class DockManagerImpl
     WebDriverManagerServices webDriverManagerServices;
     @UsedService
     InstrumentDriverManagerServices instrumentDriverManagerServices;
-    protected static final Logger LOGGER = Logger.getLogger(DockManagerImpl.class.getName());
 
+    protected static final Logger LOGGER = Logger.getLogger(DockManagerImpl.class.getName());
+    private final String HOST_NAME = "localhost";
+    private final String PORT = "5432";
+    private final String DRIVER_NAME = "org.postgresql.Driver";
+    private final String JDBC_PROTOCOL = "jdbc:postgresql://";
+    private final String DB_NAME = "Bathy";
+    private final String USER_NAME = "Serge";
+    private final String PASSWD = "lithops";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
     protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
@@ -168,7 +175,7 @@ public class DockManagerImpl
     private void createChartsRadialWidget() {
         chartsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chartsradialmenu150.png")
-                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("charts/vector/S57","S57",  ".000"))
+                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("charts/vector/S57", "S57", ".000"))
                 //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("charts/raster/geotiff", "GeoTiff", ".tif", ".TIF", ".tiff"))
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
@@ -214,7 +221,7 @@ public class DockManagerImpl
         navigationRadialMenu = RadialMenuBuilder.create()
                 .centralImage("navigation_150.png")
                 .createNode(0, "navigation.png", 0, "tracks.png", 0, "gpx.png", (e) -> open("Gpx", ".gpx", ".GPX"))
-                .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", "kmz", "KMZ"))
+                .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", ".kmz", ".KMZ"))
                 .build();
 
         navigationRadialMenu.setLayoutX((width / 2) - 30);
@@ -240,8 +247,9 @@ public class DockManagerImpl
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-               // .createNode(0, "system.png", 0, "catalog.png", 0, "shom.png", (e) -> open("Currents", ".shp", ".SHP"))
-               // .createNode(0, "data.png", 0, "catalog.png", 1, "shom.png", (e) -> open("shp", "SHP", ".shp"))
+                .createNode(0, "system.png", 0, "system.png", 0, "system.png", (e) -> open())
+                .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
+                .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
                 .build();
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);
@@ -270,6 +278,7 @@ public class DockManagerImpl
         clear();
     }
 
+    
     private void openShp(String description, String des) {
         driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
         clear();
@@ -277,6 +286,11 @@ public class DockManagerImpl
 
     private void openWMS(String description, String url) {
         webDriverManagerServices.handleOpenFiles(url);
+        clear();
+    }
+
+    private void openDB(String description, String url) {
+        //   bathymetryDBServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD, DATA_FILE_NAME);
         clear();
     }
 
