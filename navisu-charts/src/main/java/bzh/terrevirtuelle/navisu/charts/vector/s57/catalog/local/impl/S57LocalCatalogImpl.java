@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
-import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
@@ -40,7 +40,7 @@ import java.util.logging.Logger;
  * @date 11/05/2014 12:49
  */
 public class S57LocalCatalogImpl
-        implements S57LocalCatalog, S57LocalCatalogServices, DDriver, ComponentState {
+        implements S57LocalCatalog, S57LocalCatalogServices, DirectoryDriver, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -201,7 +201,7 @@ public class S57LocalCatalogImpl
     }
 
     @Override
-    public DDriver getDriver() {
+    public DirectoryDriver getDriver() {
         return this;
     }
 
