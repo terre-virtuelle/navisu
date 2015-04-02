@@ -23,7 +23,7 @@ public class RadialMenuContainer
         setChildrenVisible(false);
         getPath().addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             setChildrenVisible(!isChildrenVisible());
-            System.out.println("MOUSE_CLICKED");
+          //  System.out.println("MOUSE_CLICKED");
             event.consume();
         });
 
