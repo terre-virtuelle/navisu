@@ -20,6 +20,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.widgets.mob.Mob;
+import bzh.terrevirtuelle.navisu.widgets.sonar.sonar3D.TriangleMeshes;
 import gov.nasa.worldwind.util.StatusBar;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -39,6 +40,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.StageStyle;
 
 /**
  * NaVisu
@@ -48,35 +50,35 @@ import javafx.scene.media.MediaPlayer;
  */
 public class GuiAgentImpl
         implements GuiAgent, GuiAgentServices {
-
+    
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
-
+    
     private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
-
+    
     @SubComponent
     OptionsManagerImpl optionsManager;
     @UsedService
     OptionsManagerServices optionsManagerServices;
-
+    
     @SubComponent
     MenuManagerImpl menu;
     @UsedService
     MenuManagerServices menuServices;
-
+    
     @SubComponent
     DockManagerImpl dockManager;
     @SubComponent
     LayerCheckTreeImpl layerTree;
     @SubComponent
     GeoViewImpl geoView;
-
+    
     @UsedService
     LayerTreeServices layerTreeServices;
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
     GuiAgentServices guiAgentServices;
-
+    
     private Scene scene;
     protected Stage stage;
     protected StackPane root;
@@ -90,7 +92,7 @@ public class GuiAgentImpl
     protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";
     protected final ImageView mobOffImg = new ImageView(ICON_PATH + "MOB_Off.png");
     protected final ImageView mobOnImg = new ImageView(ICON_PATH + "MOB_On.png");
-
+    
     @Override
     public void showGui(Stage stage, int width, int height) {
         this.width = width;
@@ -105,13 +107,13 @@ public class GuiAgentImpl
             LOGGER.severe("Cannot load " + GUI_AGENT_FXML + " !");
             System.exit(0);
         }
-
+        
         scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
-
+        
         dockManager.init(root, scene, height, width);
         dockManager.makeDock();
-
+        
         createMOBWidget(scene);
 
         // Place scene components
@@ -122,30 +124,28 @@ public class GuiAgentImpl
         // Initialize menu
         this.menuServices.setMenuComponent(ctrl.menuBar);
         this.initializeMenuItems(this.menuServices);
-
+        
         stage.setTitle(TITLE);
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application");
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
-
-        // Test avant les Displays
-        //------------ HUD widgets ---------------------------------------------       
-        //------------------- Speedo - hide with Ctrl-S -----------------
-        /*
-         WidgetController widgetController1 = new WidgetController(KeyCode.H, KeyCombination.CONTROL_DOWN);
-         HUD_3_2_1_Controller hud_3 = new HUD_3_2_1_Controller();
-         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController1);
-         widgetController1.add(hud_3);
-         root.getChildren().add(hud_3);
-         // hud_3.schedule();
-         */
-        //--------------------Speedo_end---------------
         stage.setScene(scene);
-        //   stage.setMaximized(true);
         stage.show();
-
+     /*   
+        // Test début Sonar 3D
+        Stage stage1 = new Stage();
+        stage1.setAlwaysOnTop(true);
+        stage1.setOpacity(.75);
+        stage1.setHeight(200);
+        stage1.setWidth(400);
+        stage1.setX(600);
+        stage1.setY(200);
+        stage1.initStyle(StageStyle.UNDECORATED);
+        new TriangleMeshes(stage1);
+        */
+        
     }
 
     /**
@@ -157,7 +157,7 @@ public class GuiAgentImpl
         mob.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             boolean first = true;
             MediaPlayer mediaPlayer;
-
+            
             @Override
             public void handle(MouseEvent event) {
                 guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
@@ -171,57 +171,57 @@ public class GuiAgentImpl
                         first = false;
                     } else {
                         mediaPlayer.dispose();
-                        first=true;
+                        first = true;
                     }
                 });
             }
         });
-
+        
         mob.setTranslateX(550.0);
         mob.setTranslateY(-70.0);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);
     }
-
+    
     private void loadCss(Scene scene) {
         scene.getStylesheets().add(getClass().getResource(NAVISU_LOOK_AND_FEEL_PATH).toExternalForm());
     }
-
+    
     protected void initializeMenuItems(final MenuManagerServices menuServices) {
-
+        
         MenuItem fileMenuItem = new MenuItem(Translator.tr("menu.file.exit"));
         fileMenuItem.setOnAction(e -> {
-
+            
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
         menuServices.addMenuItem(DefaultMenuEnum.FILE, fileMenuItem);
-
+        
         MenuItem preferenceMenuItem = new MenuItem(Translator.tr("menu.edit.preferences"));
         preferenceMenuItem.setOnAction(e -> optionsManagerServices.show());
-
+        
         menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);
     }
-
+    
     @Override
     public JobsManager getJobsManager() {
         return this.jobsManager;
     }
-
+    
     @Override
     public boolean isFullScreen() {
         return this.stage.isFullScreen();
     }
-
+    
     @Override
     public void setFullScreen(boolean fullScreen) {
         this.stage.setFullScreen(true);
     }
-
+    
     @Override
     public StackPane getRoot() {
         return root;
     }
-
+    
     @Override
     public Scene getScene() {
         return scene;

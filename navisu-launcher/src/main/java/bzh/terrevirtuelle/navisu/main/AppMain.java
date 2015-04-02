@@ -1,7 +1,8 @@
 package bzh.terrevirtuelle.navisu.main;
 
-import bzh.terrevirtuelle.navisu.app.drivers.ddriver.impl.DDriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.impl.DirectoryDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
@@ -131,7 +132,7 @@ public class AppMain extends Application {
                         AisLoggerImpl.class,
                         AisPlotterImpl.class,
                         SoundImpl.class,
-                        DDriverManagerImpl.class,
+                        DirectoryDriverManagerImpl.class,
                         MagneticImpl.class,
                         SedimentologyImpl.class,
                         AisRadarImpl.class,
@@ -205,7 +206,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
 
-        //   DDriverManagerServices ddriverServices = componentManager.getComponentService(DDriverManagerServices.class);
+        // DirectoryDriverManagerServices ddriverServices = componentManager.getComponentService(DirectoryDriverManagerServices.class);
         //    ddriverServices.init();
         //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);

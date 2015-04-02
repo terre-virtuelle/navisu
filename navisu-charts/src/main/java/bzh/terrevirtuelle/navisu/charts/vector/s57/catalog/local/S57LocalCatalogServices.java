@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local;
 
-import bzh.terrevirtuelle.navisu.app.drivers.ddriver.DDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -12,7 +12,7 @@ import org.capcaval.c3.component.ComponentService;
 public interface S57LocalCatalogServices
         extends ComponentService {
 
-    DDriver getDriver();
+    DirectoryDriver getDriver();
 
     void openChart(String file);
 

@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.drivers.ddriver;
+package bzh.terrevirtuelle.navisu.app.drivers.directorydriver;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
@@ -9,9 +9,9 @@ import org.capcaval.c3.component.ComponentService;
  * @author tibus
  * @date 11/11/2013 18:55
  */
-public interface DDriverManagerServices extends ComponentService {
+public interface DirectoryDriverManagerServices extends ComponentService {
 
     void init();
 
-    void registerNewDriver(DDriver driver);
+    void registerNewDriver(DirectoryDriver driver);
 }

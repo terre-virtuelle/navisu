@@ -28,6 +28,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.capcaval.c3.component.annotation.UsedService;
 
 /*
@@ -47,8 +48,15 @@ public class DockManagerImpl
     WebDriverManagerServices webDriverManagerServices;
     @UsedService
     InstrumentDriverManagerServices instrumentDriverManagerServices;
-    protected static final Logger LOGGER = Logger.getLogger(DockManagerImpl.class.getName());
 
+    protected static final Logger LOGGER = Logger.getLogger(DockManagerImpl.class.getName());
+    private final String HOST_NAME = "localhost";
+    private final String PORT = "5432";
+    private final String DRIVER_NAME = "org.postgresql.Driver";
+    private final String JDBC_PROTOCOL = "jdbc:postgresql://";
+    private final String DB_NAME = "Bathy";
+    private final String USER_NAME = "Serge";
+    private final String PASSWD = "lithops";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
     protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
@@ -58,25 +66,43 @@ public class DockManagerImpl
     protected RadialMenu tidesRadialMenu;
     protected RadialMenu chartsRadialMenu;
     protected RadialMenu toolsRadialMenu;
-    boolean firstBooksRadialMenu = false;
-    boolean firstInstrumentsRadialMenu = false;
-    boolean firstMeteoRadialMenu = false;
-    boolean firstToolsRadialMenu = false;
-    boolean firstChartsRadialMenu = false;
-    boolean firstTidesRadialMenu = false;
+    protected RadialMenu navigationRadialMenu;
     protected ImageView centerImg;
     protected int width;
     protected int height;
     private StackPane root = null;
     private Scene scene = null;
     private List<RadialMenu> radialMenus;
+
     public final DockItem[] ICONS = new DockItem[]{
-        DockItemFactory.newImageItem("user tools", ICON_PATH + "dock_icons/tools.png", (e) -> showToolsMenu()),
-        DockItemFactory.newImageItem("charts", ICON_PATH + "dock_icons/charts.png", (e) -> showChartsMenu()),
-        DockItemFactory.newImageItem("tides", ICON_PATH + "dock_icons/tides.png", (e) -> showTidesMenu()),
-        DockItemFactory.newImageItem("meteo", ICON_PATH + "dock_icons/meteo.png", (e) -> showMeteoMenu()),
-        DockItemFactory.newImageItem("instrum.", ICON_PATH + "dock_icons/instruments.png", (e) -> showInstrumentsMenu()),
-        DockItemFactory.newImageItem("logbook", ICON_PATH + "dock_icons/book.png", (e) -> showBooksMenu())
+        DockItemFactory.newImageItem("user tools", ICON_PATH + "dock_icons/tools.png",
+        (e) -> {
+            toolsRadialMenu.setVisible(!toolsRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("charts", ICON_PATH + "dock_icons/charts.png",
+        (e) -> {
+            chartsRadialMenu.setVisible(!chartsRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("tides", ICON_PATH + "dock_icons/tides.png",
+        (e) -> {
+            tidesRadialMenu.setVisible(!tidesRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("meteo", ICON_PATH + "dock_icons/meteo.png",
+        (e) -> {
+            meteoRadialMenu.setVisible(!meteoRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("instrum.", ICON_PATH + "dock_icons/instruments.png",
+        (e) -> {
+            instrumentsRadialMenu.setVisible(!instrumentsRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("navigation", ICON_PATH + "dock_icons/navigation_150.png",
+        (e) -> {
+            navigationRadialMenu.setVisible(!navigationRadialMenu.isVisible());
+        }),
+        DockItemFactory.newImageItem("logbook", ICON_PATH + "dock_icons/book.png",
+        (e) -> {
+            booksRadialMenu.setVisible(!booksRadialMenu.isVisible());
+        })
     };
     final Dock dock = new Dock(ICONS);
 
@@ -97,39 +123,33 @@ public class DockManagerImpl
     public void makeDock() {
         createDockWidget(scene);
         createBooksRadialWidget();
+        createChartsRadialWidget();
         createInstrumentsRadialWidget();
         createMeteoRadialWidget();
-        createToolsRadialWidget();
-        createChartsRadialWidget();
         createTidesRadialWidget();
+        createToolsRadialWidget();
+        createNavigationRadialWidget();
     }
 
-    private void testMenuItem() {
-        System.out.println("testMenuItem");
-    }
-//--------------CHARTS------------------
+    private void createDockWidget(Scene scene) {
 
-    private void createChartsRadialWidget() {
-        chartsRadialMenu = RadialMenuBuilder.create()
-                .centralImage("chartsradialmenu150.png")
-                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
-                //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
-                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("GeoTiff", ".tif"))
-                .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
-                .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
-                .createNode(1, "bathy.png", 1, "catalog.png", 1, "shom.png", (e) -> open("Catalog SHOM"))
-                .createNode(2, "sediment.png", 0, "vide.png", 0, "vide.png", (e) -> openShp("data/", ".shp"))
-                .build();
-
-        chartsRadialMenu.setLayoutX((width / 2) - 10);
-        chartsRadialMenu.setLayoutY(height / 2);
-        root.getChildren().add(chartsRadialMenu);
-        radialMenus.add(chartsRadialMenu);
-    }
-
-    private void showChartsMenu() {
-        firstChartsRadialMenu = firstChartsRadialMenu != true;
-        chartsRadialMenu.setVisible(firstChartsRadialMenu);
+        Group groupDock = new Group();
+        groupDock.getChildren().add(dock);
+        root.getChildren().add(groupDock);
+        dock.setLayoutX(475.0);
+        dock.setLayoutY(40.0);
+        dock.setOrientation(Orientation.HORIZONTAL);
+        StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
+        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300, true);
+        Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0, true);
+        scene.setOnKeyPressed((KeyEvent ke) -> {
+            if (ke.getCode() == KeyCode.DOWN) {
+                downAnimation.play();
+            }
+            if (ke.getCode() == KeyCode.UP) {
+                upAnimation.play();
+            }
+        });
     }
 
     //--------------BOOKS------------------
@@ -151,9 +171,23 @@ public class DockManagerImpl
         radialMenus.add(booksRadialMenu);
     }
 
-    private void showBooksMenu() {
-        firstBooksRadialMenu = firstBooksRadialMenu != true;
-        booksRadialMenu.setVisible(firstBooksRadialMenu);
+    //--------------CHARTS------------------
+    private void createChartsRadialWidget() {
+        chartsRadialMenu = RadialMenuBuilder.create()
+                .centralImage("chartsradialmenu150.png")
+                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("charts/vector/S57", "S57", ".000"))
+                //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
+                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("charts/raster/geotiff", "GeoTiff", ".tif", ".TIF", ".tiff"))
+                .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
+                .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
+                .createNode(1, "bathy.png", 1, "catalog.png", 1, "shom.png", (e) -> open("Catalog SHOM"))
+                .createNode(2, "sediment.png", 0, "catalog.png", 0, "shom.png", (e) -> open("sedimentology", "Sediments SHOM", ".shp"))
+                .build();
+
+        chartsRadialMenu.setLayoutX((width / 2) - 10);
+        chartsRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(chartsRadialMenu);
+        radialMenus.add(chartsRadialMenu);
     }
 
     //--------------INSTRUMENTS------------------
@@ -170,11 +204,6 @@ public class DockManagerImpl
         radialMenus.add(instrumentsRadialMenu);
     }
 
-    private void showInstrumentsMenu() {
-        firstInstrumentsRadialMenu = firstInstrumentsRadialMenu != true;
-        instrumentsRadialMenu.setVisible(firstInstrumentsRadialMenu);
-    }
-
     //--------------METEO------------------
     private void createMeteoRadialWidget() {
         meteoRadialMenu = RadialMenuBuilder.create()
@@ -186,16 +215,26 @@ public class DockManagerImpl
         root.getChildren().add(meteoRadialMenu);
         radialMenus.add(meteoRadialMenu);
     }
+//--------------NAVIGATION------------------
 
-    private void showMeteoMenu() {
-        firstMeteoRadialMenu = firstMeteoRadialMenu != true;
-        meteoRadialMenu.setVisible(firstMeteoRadialMenu);
+    private void createNavigationRadialWidget() {
+        navigationRadialMenu = RadialMenuBuilder.create()
+                .centralImage("navigation_150.png")
+                .createNode(0, "navigation.png", 0, "tracks.png", 0, "gpx.png", (e) -> open("Gpx", ".gpx", ".GPX"))
+                .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", ".kmz", ".KMZ"))
+                .build();
+
+        navigationRadialMenu.setLayoutX((width / 2) - 30);
+        navigationRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(navigationRadialMenu);
+        radialMenus.add(navigationRadialMenu);
     }
 
     //--------------TIDES------------------
     private void createTidesRadialWidget() {
         tidesRadialMenu = RadialMenuBuilder.create()
                 .centralImage("tidesradialmenu150.png")
+                .createNode(0, "currents.png", 0, "catalog.png", 0, "shom.png", (e) -> open("Currents", ".shp", ".SHP"))
                 .build();
 
         tidesRadialMenu.setLayoutX((width / 2) - 10);
@@ -204,53 +243,22 @@ public class DockManagerImpl
         radialMenus.add(tidesRadialMenu);
     }
 
-    private void showTidesMenu() {
-        firstTidesRadialMenu = firstTidesRadialMenu != true;
-        tidesRadialMenu.setVisible(firstTidesRadialMenu);
-    }
-
     //--------------TOOLS------------------
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
+                .createNode(0, "system.png", 0, "system.png", 0, "system.png", (e) -> open())
+                .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
+                .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
                 .build();
-
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(toolsRadialMenu);
         radialMenus.add(toolsRadialMenu);
     }
 
-    private void showToolsMenu() {
-        firstToolsRadialMenu = firstToolsRadialMenu != true;
-        toolsRadialMenu.setVisible(firstToolsRadialMenu);
-    }
-
-    private void createDockWidget(Scene scene) {
-
-        Group groupDock = new Group();
-        groupDock.getChildren().add(dock);
-        root.getChildren().add(groupDock);
-        dock.setLayoutX(475.0);
-        dock.setLayoutY(40.0);
-        dock.setOrientation(Orientation.HORIZONTAL);
-        /* margins if necessity to adjust position of whole group */
-        //StackPane.setMargin(groupdock,(new Insets(0, 0, 0, 0)));
-        StackPane.setAlignment(groupDock, Pos.BOTTOM_CENTER);
-        Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300, true);
-        Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0, true);
-        scene.setOnKeyPressed((KeyEvent ke) -> {
-            if (ke.getCode() == KeyCode.DOWN) {
-                downAnimation.play();
-            }
-            if (ke.getCode() == KeyCode.UP) {
-                upAnimation.play();
-            }
-        });
-    }
-
     private void open() {
-        System.out.println("In progress");
+        System.out.println("Work in progress");
         clear();
     }
 
@@ -259,11 +267,18 @@ public class DockManagerImpl
         clear();
     }
 
-    private void open(String description, String des) {
-        driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
+    private void open(String description, String... des) {
+        String[] tab = new String[des.length];
+        int i = 0;
+        for (String s : des) {
+            tab[i] = "*" + s;
+            i++;
+        }
+        driverManagerServices.open(description, tab);
         clear();
     }
 
+    
     private void openShp(String description, String des) {
         driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
         clear();
@@ -274,10 +289,15 @@ public class DockManagerImpl
         clear();
     }
 
+    private void openDB(String description, String url) {
+        //   bathymetryDBServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD, DATA_FILE_NAME);
+        clear();
+    }
+
     private void clear() {
         radialMenus.stream().forEach((r) -> {
             r.setVisible(false);
-        }); 
+        });
     }
 
     @Override
