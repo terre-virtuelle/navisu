@@ -54,7 +54,7 @@ public class CurrentsImpl
     public boolean canOpen(String category, String file) {
         boolean canOpen = false;
 
-        if (category.contains(NAME)
+        if (category.equalsIgnoreCase(NAME)
                 && (file.toLowerCase().endsWith(EXTENSION_0)
                 || file.toLowerCase().endsWith(EXTENSION_1))) {
             canOpen = true;
