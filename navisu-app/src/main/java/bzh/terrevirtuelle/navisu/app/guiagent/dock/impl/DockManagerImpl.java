@@ -182,9 +182,9 @@ public class DockManagerImpl
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("charts/raster/geotiff", "GeoTiff", ".tif", ".TIF", ".tiff"))
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
                 .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
-                .createNode(1, "bathy.png", 1, "catalog.png", 1, "dbshomon.png", (e) -> openDB(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD))
-                .createNode(1, "bathy.png", 1, "catalog.png", 2, "dbshomoff.png", (e) -> closeDB(DB_NAME))
-                .createNode(2, "sediment.png", 0, "catalog.png", 0, "shom.png", (e) -> open("sedimentology", "Sediments SHOM", ".shp"))
+                .createNode(1, "bathy.png", 1, "data.png", 1, "dbshomon.png", (e) -> openDB(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD))
+                .createNode(1, "bathy.png", 1, "data.png", 2, "dbshomoff.png", (e) -> closeDB(DB_NAME))
+                .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", "Sediments SHOM", ".shp"))
                 .build();
 
         chartsRadialMenu.setLayoutX((width / 2) - 10);
