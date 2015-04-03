@@ -133,10 +133,10 @@ public class GuiAgentImpl
         });
         stage.setScene(scene);
         stage.show();
-     /*   
+       
         // Test début Sonar 3D
         Stage stage1 = new Stage();
-        stage1.setAlwaysOnTop(true);
+        //stage1.setAlwaysOnTop(true);
         stage1.setOpacity(.75);
         stage1.setHeight(200);
         stage1.setWidth(400);
@@ -144,7 +144,7 @@ public class GuiAgentImpl
         stage1.setY(200);
         stage1.initStyle(StageStyle.UNDECORATED);
         new TriangleMeshes(stage1);
-        */
+        
         
     }
 

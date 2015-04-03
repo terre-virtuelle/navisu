@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.widgets.sonar.sonar3D;
 
-import javafx.application.Application;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.AmbientLight;
