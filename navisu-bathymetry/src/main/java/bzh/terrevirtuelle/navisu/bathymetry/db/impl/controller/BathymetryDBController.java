@@ -12,7 +12,10 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.geom.Position;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @date 13 mars 2015
@@ -35,8 +38,12 @@ public class BathymetryDBController {
 
         wwd.addPositionListener((PositionEvent event) -> {
             Position pos = event.getPosition();
-            if (pos != null && connection != null && pos.getAltitude() < 20.0) {
-                points = bathymetryDBImpl.retrieve(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees());
+            try {
+                if (pos != null && connection != null && !connection.isClosed() && pos.getAltitude() < 20.0) {
+                    points = bathymetryDBImpl.retrieve(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees());
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BathymetryDBController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

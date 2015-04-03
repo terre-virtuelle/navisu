@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.dock.impl;
 
+import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
@@ -28,7 +29,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.capcaval.c3.component.annotation.UsedService;
 
 /*
@@ -48,6 +48,8 @@ public class DockManagerImpl
     WebDriverManagerServices webDriverManagerServices;
     @UsedService
     InstrumentDriverManagerServices instrumentDriverManagerServices;
+    @UsedService
+    DatabaseDriverManagerServices databaseDriverManagerServices;
 
     protected static final Logger LOGGER = Logger.getLogger(DockManagerImpl.class.getName());
     private final String HOST_NAME = "localhost";
@@ -95,7 +97,7 @@ public class DockManagerImpl
         (e) -> {
             instrumentsRadialMenu.setVisible(!instrumentsRadialMenu.isVisible());
         }),
-        DockItemFactory.newImageItem("navigation", ICON_PATH + "dock_icons/navigation.png",
+        DockItemFactory.newImageItem("navigation", ICON_PATH + "dock_icons/navigation_150.png",
         (e) -> {
             navigationRadialMenu.setVisible(!navigationRadialMenu.isVisible());
         }),
@@ -180,8 +182,9 @@ public class DockManagerImpl
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("charts/raster/geotiff", "GeoTiff", ".tif", ".TIF", ".tiff"))
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
                 .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
-                .createNode(1, "bathy.png", 1, "catalog.png", 1, "shom.png", (e) -> open("Catalog SHOM"))
-                .createNode(2, "sediment.png", 0, "catalog.png", 0, "shom.png", (e) -> open("sedimentology", "Sediments SHOM", ".shp"))
+                .createNode(1, "bathy.png", 1, "data.png", 1, "dbshomon.png", (e) -> openDB(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD))
+                .createNode(1, "bathy.png", 1, "data.png", 2, "dbshomoff.png", (e) -> closeDB(DB_NAME))
+                .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", "Sediments SHOM", ".shp"))
                 .build();
 
         chartsRadialMenu.setLayoutX((width / 2) - 10);
@@ -219,7 +222,7 @@ public class DockManagerImpl
 
     private void createNavigationRadialWidget() {
         navigationRadialMenu = RadialMenuBuilder.create()
-                .centralImage("navigationradialmenu150.png")
+                .centralImage("navigation_150.png")
                 .createNode(0, "navigation.png", 0, "tracks.png", 0, "gpx.png", (e) -> open("Gpx", ".gpx", ".GPX"))
                 .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", ".kmz", ".KMZ"))
                 .build();
@@ -278,7 +281,6 @@ public class DockManagerImpl
         clear();
     }
 
-    
     private void openShp(String description, String des) {
         driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
         clear();
@@ -289,8 +291,15 @@ public class DockManagerImpl
         clear();
     }
 
-    private void openDB(String description, String url) {
-        //   bathymetryDBServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD, DATA_FILE_NAME);
+    private void openDB(String dbName, String hostName, String protocol, String port,
+            String driverName, String userName, String passwd) {
+        //  databaseDriverManagerServices.connect(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD);
+        databaseDriverManagerServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
+        clear();
+    }
+
+    private void closeDB(String dbName) {
+        databaseDriverManagerServices.close(dbName);
         clear();
     }
 

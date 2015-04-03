@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.db.impl;
 
+import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -46,9 +47,10 @@ import org.postgis.PGgeometry;
  * @author Serge Morvan
  */
 public class BathymetryDBImpl
-        implements BathymetryDB, BathymetryDBServices, ComponentState {
+        implements BathymetryDB, BathymetryDBServices, DatabaseDriver, ComponentState {
 
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
+    final String NAME = "Bathy";
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
@@ -106,6 +108,14 @@ public class BathymetryDBImpl
     }
 
     @Override
+    public Connection connect(String dbName, String hostName, String protocol, String port,
+            String driverName, String userName, String passwd) {
+        this.connection = databaseServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
+        bathymetryDBController.setConnection(connection);
+        return connection;
+    }
+
+    @Override
     public void create() {
     }
 
@@ -150,7 +160,9 @@ public class BathymetryDBImpl
         ResultSet r1;
         points3d.clear();
         layer.removeAllRenderables();
+
         try {
+
             r0 = connection.createStatement().executeQuery(
                     "SELECT coord,elevation "
                     + "FROM bathy "
@@ -177,8 +189,9 @@ public class BathymetryDBImpl
                     }
                 }
             }
+
         } catch (SQLException ex) {
-            System.out.println("ex " + ex);
+            Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return points3d;
     }
@@ -224,6 +237,17 @@ public class BathymetryDBImpl
 
     public Connection getConnection() {
         return connection;
+    }
+
+    @Override
+    public boolean canOpen(String dbName) {
+
+        return dbName.equalsIgnoreCase(NAME);
+    }
+
+    @Override
+    public DatabaseDriver getDriver() {
+        return this;
     }
 
 }
