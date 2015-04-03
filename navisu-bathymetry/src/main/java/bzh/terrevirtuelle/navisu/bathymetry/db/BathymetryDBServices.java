@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.db;
 
+import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import java.sql.Connection;
-import java.sql.Statement;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -20,7 +20,13 @@ public interface BathymetryDBServices
             String driverName,
             String userName, String passwd, String dataFileName);
 
+    Connection connect(String dbName, String hostName, String protocol, String port,
+            String driverName,
+            String userName, String passwd);
+
     void close();
 
     void create();
+
+    DatabaseDriver getDriver();
 }
