@@ -2,7 +2,8 @@ package bzh.terrevirtuelle.navisu.main;
 
 import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.impl.DirectoryDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
-import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.impl.DatabaseDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
@@ -112,6 +113,7 @@ public class AppMain extends Application {
                         GuiAgentImpl.class,
                         DriverManagerImpl.class,
                         DatabaseImpl.class,
+                        DatabaseDriverManagerImpl.class,
                         WebDriverManagerImpl.class,
                         WMSImpl.class,
                         KapChartImpl.class,
@@ -219,6 +221,9 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.init();
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
+        
+        DatabaseDriverManagerServices databaseDriverManagerServices = componentManager.getComponentService(DatabaseDriverManagerServices.class);
+        databaseDriverManagerServices.registerNewDriver(bathymetryDBServices.getDriver());
         
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_1,
                 DATA_S57_CATALOG_2,
