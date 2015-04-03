@@ -53,10 +53,11 @@ public class DockItemImageImpl implements DockItem {
 
         Objects.requireNonNull(iconPath);
         // init reflection
+/*
         this.reflection = new Reflection();
         this.reflection.setFraction(0.30);
-        this.reflection.setTopOffset(-10.0);
-
+        this.reflection.setTopOffset(-50.0);
+*/
         // init. name text
         this.nameText = new Text(name);
         this.nameText.setFont(Font.font("Arial", FontWeight.BOLD, 15));

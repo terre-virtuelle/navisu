@@ -97,7 +97,7 @@ public class DockManagerImpl
         (e) -> {
             instrumentsRadialMenu.setVisible(!instrumentsRadialMenu.isVisible());
         }),
-        DockItemFactory.newImageItem("navigation", ICON_PATH + "dock_icons/navigation_150.png",
+        DockItemFactory.newImageItem("navi.", ICON_PATH + "dock_icons/navigation.png",
         (e) -> {
             navigationRadialMenu.setVisible(!navigationRadialMenu.isVisible());
         }),
@@ -222,7 +222,7 @@ public class DockManagerImpl
 
     private void createNavigationRadialWidget() {
         navigationRadialMenu = RadialMenuBuilder.create()
-                .centralImage("navigation_150.png")
+                .centralImage("navigationradialmenu150.png")
                 .createNode(0, "navigation.png", 0, "tracks.png", 0, "gpx.png", (e) -> open("Gpx", ".gpx", ".GPX"))
                 .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", ".kmz", ".KMZ"))
                 .build();

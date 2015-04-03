@@ -175,8 +175,8 @@ public class GuiAgentImpl
             }
         });
 
-        mob.setTranslateX(550.0);
-        mob.setTranslateY(-70.0);
+        mob.setTranslateX(400.0);
+        mob.setTranslateY(-10.0);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);
     }
 
