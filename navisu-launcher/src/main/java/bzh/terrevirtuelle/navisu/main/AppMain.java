@@ -144,6 +144,7 @@ public class AppMain extends Application {
                         WMSImpl.class
                 )
         );
+        // Services
         AisServices aisServices = componentManager.getComponentService(AisServices.class);
         AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
         AisPlotterServices aisPlotterServices = componentManager.getComponentService(AisPlotterServices.class);
@@ -184,6 +185,7 @@ public class AppMain extends Application {
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
 
+        // Manager services
         DatabaseDriverManagerServices databaseDriverManagerServices = componentManager.getComponentService(DatabaseDriverManagerServices.class);
         databaseDriverManagerServices.registerNewDriver(bathymetryDBServices.getDriver());
 
