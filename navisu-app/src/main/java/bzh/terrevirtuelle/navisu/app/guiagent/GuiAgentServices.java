@@ -28,4 +28,6 @@ public interface GuiAgentServices extends ComponentService {
     Scene getScene();
 
     JobsManager getJobsManager();
+
+    Stage getStage();
 }

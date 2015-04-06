@@ -97,7 +97,7 @@ public class DockManagerImpl
         (e) -> {
             instrumentsRadialMenu.setVisible(!instrumentsRadialMenu.isVisible());
         }),
-        DockItemFactory.newImageItem("navi.", ICON_PATH + "dock_icons/navigation.png",
+        DockItemFactory.newImageItem("navigation", ICON_PATH + "dock_icons/navigation.png",
         (e) -> {
             navigationRadialMenu.setVisible(!navigationRadialMenu.isVisible());
         }),
@@ -177,14 +177,14 @@ public class DockManagerImpl
     private void createChartsRadialWidget() {
         chartsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chartsradialmenu150.png")
-                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("charts/vector/S57", "S57", ".000"))
+                .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
                 //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
-                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("charts/raster/geotiff", "GeoTiff", ".tif", ".TIF", ".tiff"))
+                .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("GeoTiff", ".tif", ".TIF", ".tiff"))
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
                 .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
                 .createNode(1, "bathy.png", 1, "data.png", 1, "dbshomon.png", (e) -> openDB(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD))
                 .createNode(1, "bathy.png", 1, "data.png", 2, "dbshomoff.png", (e) -> closeDB(DB_NAME))
-                .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", "Sediments SHOM", ".shp"))
+                .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", ".shp"))
                 .build();
 
         chartsRadialMenu.setLayoutX((width / 2) - 10);
@@ -199,6 +199,7 @@ public class DockManagerImpl
                 .centralImage("instrumentsradialmenu150.png")
                 .createNode(0, "navigation.png", 0, "ais.png", 0, "aisradar.png", (e) -> open("AisRadar"))
                 .createNode(0, "navigation.png", 1, "ais.png", 1, "template.png", (e) -> open("InstrumentTemplate"))
+                .createNode(0, "navigation.png", 2, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);
