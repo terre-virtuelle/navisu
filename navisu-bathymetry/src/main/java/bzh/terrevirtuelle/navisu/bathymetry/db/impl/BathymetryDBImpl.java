@@ -9,12 +9,14 @@ import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDB;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.controller.BathymetryDBController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.DatabaseServices;
+import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3D;
 import bzh.terrevirtuelle.navisu.domain.geometry.Point3Df;
 import gov.nasa.worldwind.WorldWind;
@@ -59,7 +61,8 @@ public class BathymetryDBImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     DatabaseServices databaseServices;
-
+    @UsedService
+    BathymetryEventProducerServices bathymetryEventProducerServices;
     private String dataFileName;
     private Connection connection;
     private PreparedStatement preparedStatement;
@@ -77,6 +80,7 @@ public class BathymetryDBImpl
 
     @Override
     public void componentInitiated() {
+
         points3df = new ArrayList<>();
         points3d = new ArrayList<>();
         bathymetryDBController = BathymetryDBController.getInstance();
@@ -193,6 +197,7 @@ public class BathymetryDBImpl
         } catch (SQLException ex) {
             Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+        bathymetryEventProducerServices.setBathymetry(new Bathymetry(points3d));
         return points3d;
     }
 
@@ -234,7 +239,7 @@ public class BathymetryDBImpl
 
         return placemark;
     }
-
+  
     public Connection getConnection() {
         return connection;
     }
@@ -249,5 +254,4 @@ public class BathymetryDBImpl
     public DatabaseDriver getDriver() {
         return this;
     }
-
 }
