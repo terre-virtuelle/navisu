@@ -88,4 +88,8 @@ public class Point3D {
         this.elevation = elevation;
     }
 
+    @Override
+    public String toString() {
+        return "{" + lat + ", " + lon + ", " + elevation + "}";
+    }  
 }
