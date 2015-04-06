@@ -199,6 +199,7 @@ public class DockManagerImpl
                 .centralImage("instrumentsradialmenu150.png")
                 .createNode(0, "navigation.png", 0, "ais.png", 0, "aisradar.png", (e) -> open("AisRadar"))
                 .createNode(0, "navigation.png", 1, "ais.png", 1, "template.png", (e) -> open("InstrumentTemplate"))
+                .createNode(0, "navigation.png", 2, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);

@@ -34,11 +34,14 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.StageStyle;
 
 /**
  * NaVisu
@@ -79,6 +82,8 @@ public class GuiAgentImpl
 
     private Scene scene;
     protected Stage stage;
+    protected Stage stage1;
+    protected List<Stage> stages = new ArrayList<>();
     protected StackPane root;
     protected static GuiAgentController ctrl = null;
     protected JobsManager jobsManager;
@@ -131,18 +136,14 @@ public class GuiAgentImpl
         });
         stage.setScene(scene);
         stage.show();
-        /*   
-         // Test début Sonar 3D
-         Stage stage1 = new Stage();
-         stage1.setAlwaysOnTop(true);
-         stage1.setOpacity(.75);
-         stage1.setHeight(200);
-         stage1.setWidth(400);
-         stage1.setX(600);
-         stage1.setY(200);
-         stage1.initStyle(StageStyle.UNDECORATED);
-         new TriangleMeshes(stage1);
-         */
+        stage1 = new Stage();
+        stage1.setOpacity(.0);
+        stage1.setHeight(400);
+        stage1.setWidth(400);
+        stage1.setX(600);
+        stage1.setY(200);
+        stage1.initStyle(StageStyle.UNDECORATED);
+        stage1.setAlwaysOnTop(true);
 
     }
 
@@ -223,5 +224,10 @@ public class GuiAgentImpl
     @Override
     public Scene getScene() {
         return scene;
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage1;
     }
 }
