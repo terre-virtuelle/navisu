@@ -43,24 +43,10 @@ public class TriangleMeshes extends Group {
 
         //Step 3a:  Create a Pyramid with a color and add to the Scene
         //Lets assume our height is 100 and our width (hypotenuse) at the base is 50.
-        Group pyramid1 = buildPyramid(100, 200, Color.GOLDENROD, true, false);
+        Group pyramid1 = buildPyramid(100, 200, Color.GOLDENROD, true, true);
         pyramid1.setTranslateX(-100);
-        //Step 3b:  Create and transform a Pyramid using DrawMode FILL
-        Group pyramid2 = buildPyramid(100, 200, Color.GOLDENROD, true, true);
-        //Since the pyramid is a group it can be translated and rotated like a primitive
-        pyramid2.setTranslateX(-100);
-        pyramid2.setTranslateY(-100);
-        pyramid2.setRotationAxis(Rotate.Z_AXIS);
-        pyramid2.setRotate(180);
-        //Step 3c:  Add some more pyramids of a different color
-        Group pyramid3 = buildPyramid(100, 200, Color.LAWNGREEN, true, true);
-        pyramid3.setTranslateX(100);
-        Group pyramid4 = buildPyramid(100, 200, Color.LAWNGREEN, true, false);
-        pyramid4.setTranslateX(100);
-        pyramid4.setTranslateY(-100);
-        pyramid4.setRotationAxis(Rotate.Z_AXIS);
-        pyramid4.setRotate(180);
-        Group pyramidGroup = new Group(pyramid1, pyramid2, pyramid3, pyramid4);
+        
+        Group pyramidGroup = new Group(pyramid1);
         sceneRoot.getChildren().addAll(pyramidGroup);
 
         //Step 4a: Add a Mouse Handler for Rotations
@@ -122,6 +108,7 @@ public class TriangleMeshes extends Group {
                 4, 0, 1, 0, 2, 0, // Base Triangle 1 "wind" clockwise because camera has rotated
                 4, 0, 3, 0, 1, 0 // Base Triangle 2 "wind" clockwise because camera has rotated
         ); //End Step 2d
+         
         //Step 2e: Create a viewable MeshView to be added to the scene
         //To add a TriangleMesh to a 3D scene you need a MeshView container object
         MeshView meshView = new MeshView(mesh);
