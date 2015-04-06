@@ -25,12 +25,13 @@ public class AisRadarImpl
 
     @UsedService
     GuiAgentServices guiAgentServices;
-    private AisRadarController radarController;
+    private AisRadarController controller;
+    private final String NAME = "AisRadar";
 
     @Override
     public void componentInitiated() {
-        radarController = new AisRadarController(this, KeyCode.A, KeyCombination.CONTROL_DOWN);
-        radarController.setScale(0.5);
+        controller = new AisRadarController(this, KeyCode.A, KeyCombination.CONTROL_DOWN);
+        controller.setScale(0.5);
     }
 
     @Override
@@ -43,18 +44,18 @@ public class AisRadarImpl
 
     @Override
     public void on() {
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, radarController);
-        guiAgentServices.getRoot().getChildren().add(radarController); //Par defaut le radar n'est pas visible Ctrl-A
-        radarController.setVisible(true);
-        radarController.start();
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
+        guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
+        controller.setVisible(true);
+        controller.start();
     }
 
     @Override
     public void off() {
-        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, radarController);
-        guiAgentServices.getRoot().getChildren().remove(radarController);
-        radarController.setVisible(false);
-        radarController.stop();
+        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
+        guiAgentServices.getRoot().getChildren().remove(controller);
+        controller.setVisible(false);
+        controller.stop();
     }
 
     @Override
@@ -65,7 +66,7 @@ public class AisRadarImpl
     @Override
     public boolean canOpen(String category) {
 
-        return category.equals("AisRadar");
+        return category.equals(NAME);
     }
 
 }

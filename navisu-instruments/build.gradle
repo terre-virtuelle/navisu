@@ -4,6 +4,7 @@ dependencies {
     compile project(':navisu-client')
     compile project(':navisu-domain')
     compile project(':navisu-app')
+    compile project(':navisu-bathymetry')
     compile fileTree(dir: 'lib', include: '*.jar')
 }
 jar {
