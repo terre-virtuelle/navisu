@@ -20,6 +20,8 @@ import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.BathymetryLocalCatalog
 import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.impl.BathymetryLocalCatalogImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.charts.BathymetryServices;
 import bzh.terrevirtuelle.navisu.bathymetry.charts.impl.BathymetryImpl;
+import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducerServices;
+import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.impl.BathymetryEventProducerImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.BathymetryDBImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
@@ -50,6 +52,8 @@ import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
+import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
 import bzh.terrevirtuelle.navisu.instruments.template.impl.InstrumentTemplateImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
@@ -115,8 +119,9 @@ public class AppMain extends Application {
                         AisLoggerImpl.class,
                         AisPlotterImpl.class,
                         AisRadarImpl.class,
-                        BathymetryImpl.class,
                         BathymetryDBImpl.class,
+                        BathymetryEventProducerImpl.class,
+                        BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
                         CurrentsImpl.class,
                         DataServerImpl.class,
@@ -137,6 +142,7 @@ public class AppMain extends Application {
                         OptionsManagerImpl.class,
                         SedimentologyImpl.class,
                         ShapefileObjectImpl.class,
+                        SonarImpl.class,
                         SoundImpl.class,
                         S57ChartImpl.class,
                         S57GlobalCatalogImpl.class,
@@ -153,6 +159,7 @@ public class AppMain extends Application {
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
+        BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
 
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
 
@@ -177,6 +184,7 @@ public class AppMain extends Application {
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
+        SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
         SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
@@ -192,34 +200,34 @@ public class AppMain extends Application {
         // DirectoryDriverManagerServices ddriverServices = componentManager.getComponentService(DirectoryDriverManagerServices.class);
         //    ddriverServices.init();
         //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
-      
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
-        driverServices.registerNewDriver(chartS57Services.getDriver());
-        driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
-        driverServices.registerNewDriver(chartsServices.getDriver());
-        driverServices.registerNewDriver(gribServices.getDriver());
-        driverServices.registerNewDriver(geoTiffChartServices.getDriver());
-        driverServices.registerNewDriver(currentsServices.getDriver());
-        driverServices.registerNewDriver(bathymetryServices.getDriver());
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
-        driverServices.registerNewDriver(kmlObjectServices.getDriver());
+        driverServices.registerNewDriver(bathymetryServices.getDriver());
+        driverServices.registerNewDriver(chartsServices.getDriver());
+        driverServices.registerNewDriver(chartS57Services.getDriver());
+        driverServices.registerNewDriver(currentsServices.getDriver());
+        driverServices.registerNewDriver(geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
-        driverServices.registerNewDriver(soundServices.getDriver());
+        driverServices.registerNewDriver(gribServices.getDriver());
+        driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
-        driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
+        driverServices.registerNewDriver(sedimentologyServices.getDriver());
+        driverServices.registerNewDriver(soundServices.getDriver());
+        driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
 
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
-        instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
-        webDriverServices.registerNewDriver(wmsServices.getDriver());
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
         // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
         // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
+        webDriverServices.registerNewDriver(wmsServices.getDriver());
 
         //Loading S57 catalog
         s57GlobalCatalogServices.load(DATA_S57_CATALOG_1,
@@ -228,9 +236,10 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_4,
                 DATA_S57_CATALOG_5,
                 DATA_S57_CATALOG_6);
-        
+
         //First position
-        GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
+       // GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
+        GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(49.70, -0.66, 15000));
 
         // Initialisation des paramètres de diffusion des data.
         dataServerServices.init("localhost", 8585);
