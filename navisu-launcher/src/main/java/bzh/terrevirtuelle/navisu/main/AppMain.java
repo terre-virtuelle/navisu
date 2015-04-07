@@ -238,8 +238,8 @@ public class AppMain extends Application {
                 DATA_S57_CATALOG_6);
 
         //First position
-       // GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
-        GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(49.70, -0.66, 15000));
+        GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
+      //  GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(49.70, -0.66, 15000));
 
         // Initialisation des paramètres de diffusion des data.
         dataServerServices.init("localhost", 8585);
