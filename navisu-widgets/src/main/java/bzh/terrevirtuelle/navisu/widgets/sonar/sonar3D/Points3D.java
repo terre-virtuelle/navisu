@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.widgets.sonar.sonar3D;
 
-
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_BATHYMETRY_CLUT_JAVA_FX;
 import java.util.List;
 import javafx.beans.property.DoubleProperty;
@@ -145,14 +144,15 @@ public class Points3D extends Group {
             sphere.setTranslateY((p.getX() - minLat) * 1000);
             sphere.setTranslateZ(-p.getZ());
             sphere.setMaterial(new PhongMaterial(SHOM_BATHYMETRY_CLUT_JAVA_FX.getColor(p.getZ())));
-           
+
             Tooltip t = new Tooltip(Double.toString(p.getZ()));
             Tooltip.install(sphere, t);
-
+            System.out.println(sphere.getTranslateX() + "," + sphere.getTranslateY() + "," + sphere.getTranslateZ());
             return sphere;
         }).forEach((sphere) -> {
             group.getChildren().add(sphere);
         });
+         System.out.println("\n\n\n");
         return group;
     }
 }
