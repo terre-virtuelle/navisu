@@ -30,7 +30,7 @@ public class InstrumentTemplateController
         extends Widget2DController
         implements Initializable {
 
-    private final String FXML = "template.fxml";
+    private final String FXML = "InstrumentTemplate.fxml";
     @FXML
     public Group view;
     @FXML

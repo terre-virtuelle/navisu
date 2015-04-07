@@ -42,22 +42,26 @@
 .foot-pane {
     -fx-border-radius: 0 0 20 20;
     -fx-background-radius: 0 0 20 20;
-    -fx-background-color: #143b28;
+    //-fx-background-color: #143b28;
+    -fx-background-color: linear-gradient(to top, derive(#143b28,55%), derive(#143b28,-5%));
 }
 .top-pane {
     -fx-border-radius: 20 20 0 0;
     -fx-background-radius: 20 20 0 0;
-    -fx-background-color: #143b28;    
+    //-fx-background-color: #143b28;
+    -fx-background-color: linear-gradient(to bottom, derive(#143b28,55%), derive(#143b28,-5%));
 }
 .left-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
-    -fx-background-color: #143b28;    
+    //-fx-background-color: #143b28;
+    -fx-background-color: linear-gradient(to right, derive(#143b28,55%), derive(#143b28,-5%));
 }
 .right-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
-    -fx-background-color: #143b28;    
+    //-fx-background-color: #143b28;
+    -fx-background-color: linear-gradient(to left, derive(#143b28,55%), derive(#143b28,-5%));
 }
 
 
@@ -119,4 +123,6 @@
 .grid-pane {
    -fx-background-color: transparent;  
 }
-
+.grid-instruments {
+   -fx-background-color: #143b28; 
+}

@@ -10,7 +10,10 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.Sonar;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.controller.SonarController;
+import bzh.terrevirtuelle.navisu.widgets.sonar.sonar3D.TriangleMeshes;
+import javafx.application.Platform;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -39,7 +42,7 @@ public class SonarImpl
         stage = guiAgentServices.getStage();
         stage.setOpacity(.75);
         controller = new SonarController(this, stage);
-        /*
+        
          // Bug in JavaFX ?
          Platform.runLater(new Runnable() {
          @Override
@@ -51,11 +54,11 @@ public class SonarImpl
          stage.setX(600);
          stage.setY(200);
          stage.initStyle(StageStyle.UNDECORATED);
-         stage.setAlwaysOnTop(true);
+         //stage.setAlwaysOnTop(true);
          new TriangleMeshes(stage);
          }
          });
-         */
+         
         //  new TriangleMeshes(stage);
     }
 

@@ -137,7 +137,8 @@ public class GuiAgentImpl
         stage.setScene(scene);
         stage.show();
         stage1 = new Stage();
-        stage1.setOpacity(.0);
+        stage1.toFront();
+        stage1.setOpacity(1.0);
         stage1.setHeight(400);
         stage1.setWidth(400);
         stage1.setX(600);
