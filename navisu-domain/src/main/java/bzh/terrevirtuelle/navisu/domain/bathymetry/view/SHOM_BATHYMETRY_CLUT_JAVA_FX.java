@@ -12,45 +12,69 @@ import javafx.scene.paint.Color;
 
 public class SHOM_BATHYMETRY_CLUT_JAVA_FX {
 
-    static final private List<Range> ranges;
+    static final private List<Range> largeRanges;
+    static final private List<Range> smallRanges;
     static final public double MAX = 10000.0;
 
     static {
-        ranges = new ArrayList<>();
-        ranges.add(Range.closedOpen(-10.0, 0.0));
-        ranges.add(Range.closedOpen(0.0, 19.94));
-        ranges.add(Range.closedOpen(19.94, 39.87));
-        ranges.add(Range.closedOpen(39.87, 59.81));
-        ranges.add(Range.closedOpen(59.81, 79.74));
-        ranges.add(Range.closedOpen(79.74, 99.88));
-        ranges.add(Range.closedOpen(99.88, 119.62));
-        ranges.add(Range.closedOpen(119.62, 139.55));
-        ranges.add(Range.closedOpen(139.55, 159.49));
-        ranges.add(Range.closedOpen(159.49, 179.42));
-        ranges.add(Range.closedOpen(179.42, 10000.0));  
-        ranges.add(Range.closed(MAX, MAX));
+        largeRanges = new ArrayList<>();
+        largeRanges.add(Range.closedOpen(-10.0, 0.0));
+        largeRanges.add(Range.closedOpen(0.0, 19.94));
+        largeRanges.add(Range.closedOpen(19.94, 39.87));
+        largeRanges.add(Range.closedOpen(39.87, 59.81));
+        largeRanges.add(Range.closedOpen(59.81, 79.74));
+        largeRanges.add(Range.closedOpen(79.74, 99.88));
+        largeRanges.add(Range.closedOpen(99.88, 119.62));
+        largeRanges.add(Range.closedOpen(119.62, 139.55));
+        largeRanges.add(Range.closedOpen(139.55, 159.49));
+        largeRanges.add(Range.closedOpen(159.49, 179.42));
+        largeRanges.add(Range.closedOpen(179.42, 10000.0));
+        largeRanges.add(Range.closed(MAX, MAX));
+        smallRanges = new ArrayList<>();
+        smallRanges.add(Range.closedOpen(-10.0, 0.0));
+        smallRanges.add(Range.closedOpen(0.0, 2.0));
+        smallRanges.add(Range.closedOpen(2.0, 4.0));
+        smallRanges.add(Range.closedOpen(4.0, 8.0));
+        smallRanges.add(Range.closedOpen(8.0, 16.0));
+        smallRanges.add(Range.closedOpen(16.0, 32.0));
+        smallRanges.add(Range.closedOpen(32.0, 64.0));
+        smallRanges.add(Range.closedOpen(64.0, 128.0));
+        smallRanges.add(Range.closedOpen(128.0, 256.0));
+        smallRanges.add(Range.closedOpen(256.0, 512.0));
+        smallRanges.add(Range.closedOpen(512.0, 10000.0));
+        smallRanges.add(Range.closed(MAX, MAX));
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
         {
-            put(0,  Color.rgb(204, 192, 2));
-            put(1,  Color.rgb(255, 0, 0));
-            put(2,  Color.rgb(255, 45, 0));
-            put(3,  Color.rgb(255, 91, 0));
-            put(4,  Color.rgb(255, 136, 0));
-            put(5,  Color.rgb(255, 181, 0));
-            put(6,  Color.rgb(255, 227, 0));
-            put(7,  Color.rgb(238, 255, 0));
-            put(8,  Color.rgb(193, 255, 0));
-            put(9,  Color.rgb(147, 255, 0));
-            put(10,  Color.rgb(102, 255, 0));
-            put(11,  Color.rgb(0, 0, 0, 0));
+            put(0, Color.rgb(255, 22, 00));
+            put(1, Color.rgb(255, 84, 0));
+            put(2, Color.rgb(255, 133, 0));
+            put(3, Color.rgb(255, 233, 0));
+            put(4, Color.rgb(209, 255, 0));
+          //  put(5, Color.rgb(92, 255, 0));
+            put(5, Color.rgb(0, 255, 32));
+          //  put(7, Color.rgb(0, 255, 223));
+            put(6, Color.rgb(0, 11, 255));
+            put(7, Color.rgb(0, 255, 255));
+            put(8, Color.rgb(0, 0, 102));
+            put(9, Color.rgb(0, 0,200));
+             put(10, Color.rgb(0, 0,255));
+              put(11, Color.rgb(0, 0,0));
         }
     });
 
-    public static Color getColor(double data) {
-        for (int i = 0; i < ranges.size(); i++) {
-            if (ranges.get(i).contains(data)) {
-                return SHOM_BATHYMETRY_CLUT_JAVA_FX.ATT.get(i);
+    public static Color getColor(double data, boolean large) {
+        if (large == true) {
+            for (int i = 0; i < largeRanges.size(); i++) {
+                if (largeRanges.get(i).contains(data)) {
+                    return SHOM_BATHYMETRY_CLUT_JAVA_FX.ATT.get(i);
+                }
+            }
+        } else {
+            for (int i = 0; i < largeRanges.size(); i++) {
+                if (smallRanges.get(i).contains(data)) {
+                    return SHOM_BATHYMETRY_CLUT_JAVA_FX.ATT.get(i);
+                }
             }
         }
         return null;
