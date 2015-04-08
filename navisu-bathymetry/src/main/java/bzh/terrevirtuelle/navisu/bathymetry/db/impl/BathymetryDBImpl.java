@@ -53,6 +53,7 @@ public class BathymetryDBImpl
 
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
     final String NAME = "Bathy";
+    final String LIMIT = "100";
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
@@ -172,7 +173,7 @@ public class BathymetryDBImpl
                     + "FROM bathy "
                     + "ORDER BY coord <-> ST_SetSRID("
                     + "ST_MakePoint(" + Double.toString(lon) + ", " + Double.toString(lat) + "), 4326) "
-                    + "LIMIT 100");
+                    + "LIMIT " + LIMIT);
             while (r0.next()) {
 
                 geom = (PGgeometry) r0.getObject(1);
