@@ -39,29 +39,38 @@
  * cadre                                                                *
  *                                                                             *
  ******************************************************************************/
+
+.foot-pane, 
+.top-pane,
+.left-pane,
+.right-pane {
+    -fx-color-contour : #143b28;
+    //-fx-color-contour : #000000;
+}
+
 .foot-pane {
     -fx-border-radius: 0 0 20 20;
     -fx-background-radius: 0 0 20 20;
     //-fx-background-color: #143b28;
-    -fx-background-color: linear-gradient(to top, derive(#143b28,55%), derive(#143b28,-5%));
+    -fx-background-color: linear-gradient(to top, derive(-fx-color-contour ,55%), derive(-fx-color-contour ,-5%));
 }
 .top-pane {
     -fx-border-radius: 20 20 0 0;
     -fx-background-radius: 20 20 0 0;
     //-fx-background-color: #143b28;
-    -fx-background-color: linear-gradient(to bottom, derive(#143b28,55%), derive(#143b28,-5%));
+    -fx-background-color: linear-gradient(to bottom, derive(-fx-color-contour,55%), derive(-fx-color-contour,-5%));
 }
 .left-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
     //-fx-background-color: #143b28;
-    -fx-background-color: linear-gradient(to right, derive(#143b28,55%), derive(#143b28,-5%));
+    -fx-background-color: linear-gradient(to right, derive(-fx-color-contour,55%), derive(-fx-color-contour,-5%));
 }
 .right-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
     //-fx-background-color: #143b28;
-    -fx-background-color: linear-gradient(to left, derive(#143b28,55%), derive(#143b28,-5%));
+    -fx-background-color: linear-gradient(to left, derive(-fx-color-contour,55%), derive(-fx-color-contour,-5%));
 }
 
 
