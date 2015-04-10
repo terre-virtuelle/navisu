@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -71,8 +73,27 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
         LOGGER.log(Level.INFO, "Opening {0} ...", file);
 
         Path inputFile = Paths.get(file);
-        final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/gdal_translate";
+        // final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/gdal_translate";
+        String cmd = null;
+        // cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
+        Map<String, String> environment = new HashMap<>(System.getenv());
+        String options
+                = "\"BSB_IGNORE_LINENUMBERS=true\"";
+        environment.put("GDAL_DATA", options);
 
+        if (OS.isWindows()) {
+            cmd = "bin/win/gdal_translate";
+        } else {
+            if (OS.isLinux()) {
+                cmd = "/usr/bin/gdal_translate";
+            } else {
+                if (OS.isMac()) {
+                    cmd = "bin/osx/gdal_translate";
+                } else {
+                    System.out.println("OS not found");
+                }
+            }
+        }
         try {
 
             Path tmpTif = Paths.get(inputFile.toString() + ".tif");
@@ -84,11 +105,11 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
                     .addArg(tmpTif.toString())
                     .setOut(System.out)
                     .setErr(System.err)
-                    .exec();
+                    .exec(environment);
 
             inputFile = tmpTif;
         } catch (IOException | InterruptedException e) {
-            LOGGER.log(Level.SEVERE, null, e);
+            System.out.println(e);
         }
 
         ImageryInstaller installer = ImageryInstaller.factory.newImageryInstaller();
@@ -99,14 +120,15 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
-
-        if (inputFile.toString().endsWith(".tif")) {
-            try {
-                Files.delete(inputFile);
-            } catch (IOException e) {
-                LOGGER.log(Level.WARNING, null, e);
-            }
-        }
+        
+         if (inputFile.toString().endsWith(".tif")) {
+         try {
+         Files.delete(inputFile);
+         } catch (IOException e) {
+         LOGGER.log(Level.WARNING, null, e);
+         }
+         }
+         
     }
 
     @Override
