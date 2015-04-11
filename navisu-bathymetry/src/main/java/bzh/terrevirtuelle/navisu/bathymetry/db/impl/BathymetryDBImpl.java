@@ -53,6 +53,7 @@ public class BathymetryDBImpl
 
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
     final String NAME = "Bathy";
+    final String LAYER_NAME = "Shom";
     final String LIMIT = "100";
     @UsedService
     GuiAgentServices guiAgentServices;
@@ -88,7 +89,7 @@ public class BathymetryDBImpl
         bathymetryDBController.setBathymetryDB(this);
         wwd = GeoWorldWindViewImpl.getWW();
         layer = new RenderableLayer();
-        layer.setName("Shom");
+        layer.setName(LAYER_NAME);
         geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
 

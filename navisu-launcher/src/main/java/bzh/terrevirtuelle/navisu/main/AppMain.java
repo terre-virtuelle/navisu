@@ -87,14 +87,6 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 public class AppMain extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
-    private final String HOST_NAME = "localhost";
-    private final String PORT = "5432";
-    private final String DRIVER_NAME = "org.postgresql.Driver";
-    private final String JDBC_PROTOCOL = "jdbc:postgresql://";
-    private final String DB_NAME = "Bathy";
-    private final String USER_NAME = "Serge";
-    private final String PASSWD = "lithops";
-    private final String DATA_FILE_NAME = "data/shom/bathy.glz";
     private final String DATA_S57_CATALOG_1 = "data/charts/vector/s57/catalog/ENC_NP1.kmz";
     private final String DATA_S57_CATALOG_2 = "data/charts/vector/s57/catalog/ENC_NP2.kmz";
     private final String DATA_S57_CATALOG_3 = "data/charts/vector/s57/catalog/ENC_NP3.kmz";
