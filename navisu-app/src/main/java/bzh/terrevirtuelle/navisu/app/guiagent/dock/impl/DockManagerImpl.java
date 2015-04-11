@@ -57,7 +57,7 @@ public class DockManagerImpl
     private final String DRIVER_NAME = "org.postgresql.Driver";
     private final String JDBC_PROTOCOL = "jdbc:postgresql://";
     private final String DB_NAME = "Bathy";
-    private final String USER_NAME = "Serge";
+    private final String USER_NAME = "postgres";
     private final String PASSWD = "lithops";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
@@ -178,7 +178,7 @@ public class DockManagerImpl
         chartsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chartsradialmenu150.png")
                 .createNode(0, "nav.png", 0, "vector.png", 0, "s57.png", (e) -> open("S57", ".000"))
-                //  .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
+                .createNode(0, "nav.png", 1, "raster.png", 0, "bsbkap.png", (e) -> open("BSB/KAP", ".KAP"))
                 .createNode(0, "nav.png", 1, "raster.png", 1, "geotiff.png", (e) -> open("GeoTiff", ".tif", ".TIF", ".tiff"))
                 .createNode(1, "bathy.png", 0, "images.png", 0, "emodnet.png", (e) -> openWMS("WMS", EMODNET))
                 .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))

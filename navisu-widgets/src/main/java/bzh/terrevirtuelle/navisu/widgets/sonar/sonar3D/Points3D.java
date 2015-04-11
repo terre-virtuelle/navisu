@@ -187,7 +187,7 @@ public class Points3D extends Group {
         }
 
         MeshView meshView = new MeshView(mesh);
-        meshView.setDrawMode(DrawMode.LINE);
+        meshView.setDrawMode(DrawMode.FILL);
         meshView.setCullFace(CullFace.NONE);
         meshView.setMaterial(new PhongMaterial(SHOM_BATHYMETRY_CLUT_JAVA_FX.getColor(centerZ, false)));
         group.getChildren().add(meshView);

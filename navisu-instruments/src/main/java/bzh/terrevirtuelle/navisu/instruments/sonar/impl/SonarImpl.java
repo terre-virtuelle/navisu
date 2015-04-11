@@ -42,24 +42,24 @@ public class SonarImpl
         stage = guiAgentServices.getStage();
         stage.setOpacity(.75);
         controller = new SonarController(this, stage);
-        
-         // Bug in JavaFX ?
-         Platform.runLater(new Runnable() {
-         @Override
-         public void run() {
-         stage = new Stage();
-         stage.setOpacity(.75);
-         stage.setHeight(200);
-         stage.setWidth(400);
-         stage.setX(600);
-         stage.setY(200);
-         stage.initStyle(StageStyle.UNDECORATED);
-         //stage.setAlwaysOnTop(true);
-         new TriangleMeshes(stage);
-         }
-         });
-         
-        //  new TriangleMeshes(stage);
+
+        // Bug in JavaFX ?
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                /*
+                 stage = new Stage();
+                 stage.setOpacity(.75);
+                 stage.setHeight(200);
+                 stage.setWidth(400);
+                 stage.setX(600);
+                 stage.setY(200);
+                 stage.initStyle(StageStyle.UNDECORATED);
+                 
+                new TriangleMeshes(stage);
+                        */
+            }
+        });
     }
 
     @Override
