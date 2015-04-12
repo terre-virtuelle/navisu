@@ -93,7 +93,7 @@ public class DockManagerImpl
         (e) -> {
             meteoRadialMenu.setVisible(!meteoRadialMenu.isVisible());
         }),
-        DockItemFactory.newImageItem("instrum.", ICON_PATH + "dock_icons/instruments.png",
+        DockItemFactory.newImageItem("instruments", ICON_PATH + "dock_icons/instruments.png",
         (e) -> {
             instrumentsRadialMenu.setVisible(!instrumentsRadialMenu.isVisible());
         }),
@@ -266,8 +266,8 @@ public class DockManagerImpl
         clear();
     }
 
-    private void open(String test) {
-        instrumentDriverManagerServices.open(test);
+    private void open(String keyName) {
+        instrumentDriverManagerServices.open(keyName);
         clear();
     }
 

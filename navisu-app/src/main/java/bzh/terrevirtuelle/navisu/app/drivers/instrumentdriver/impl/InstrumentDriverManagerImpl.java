@@ -39,10 +39,8 @@ public class InstrumentDriverManagerImpl
 
     }
 
-    protected InstrumentDriver findDriverForFile(String category) {
-
+    protected InstrumentDriver findDriver(String category) {
         InstrumentDriver compatibleDriver = null;
-
         for (InstrumentDriver driver : this.availableDriverList) {
             if (driver.canOpen(category)) {
                 compatibleDriver = driver;
@@ -54,9 +52,7 @@ public class InstrumentDriverManagerImpl
 
     @Override
     public void registerNewDriver(InstrumentDriver driver) {
-
         Checker.notNull(driver, "Driver must not be null.");
-
         // Hold the driver
         this.availableDriverList.add(driver);
     }
@@ -71,7 +67,7 @@ public class InstrumentDriverManagerImpl
 
     @Override
     public void open(String category) {
-        InstrumentDriver driver = findDriverForFile(category);
+        InstrumentDriver driver = findDriver(category);
         if (driver != null) {
             driver.on();
         }else{
