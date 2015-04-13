@@ -48,7 +48,6 @@ public class DriverManagerImpl
 
     @Override
     public void componentInitiated() {
-        // ?
     }
 
     @Override
@@ -74,11 +73,8 @@ public class DriverManagerImpl
         MenuItem menuItem = new MenuItem(tr("menu.file.open"));
         menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
         menuItem.setOnAction((e) -> {
-            // Show the file chooser
             File selectedFile = this.fileChooser.showOpenDialog(null);
-            // If files has been selected
             if (selectedFile != null) {
-                // Open them
                 this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
                 System.out.println(selectedFile.getAbsolutePath());
             }
@@ -87,27 +83,13 @@ public class DriverManagerImpl
 
     @Override
     public void open(FileChooser.ExtensionFilter ext) {
-        // fileChooser.getExtensionFilters().add(0, ext);
         File selectedFile = this.fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
             System.out.println("Load : " + selectedFile.getAbsolutePath());
         }
-        //fileChooser.getExtensionFilters().remove(0);
     }
-    /*
-     @Override
-     public void open(String description, String[] ext) {
-     this.fileChooserDock.getExtensionFilters().clear();
-     this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(description, ext));
-     File selectedFile = this.fileChooserDock.showOpenDialog(null);
-     if (selectedFile != null) {
-     this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
-     System.out.println("Load : " + selectedFile.getAbsolutePath());
-     }
-     }
-     */
-
+    
     @Override
     public void open(String category, String[] ext) {
 
@@ -139,8 +121,6 @@ public class DriverManagerImpl
         } else {
             LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
         }
-
-        // properties.setProperty("dataDir", file.getParent());
         properties.setProperty(category, file.getParent());
         File f = new File("properties/user.properties");
         OutputStream out;

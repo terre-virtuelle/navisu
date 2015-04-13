@@ -77,8 +77,6 @@ public class GuiAgentImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     GeoViewServices geoViewServices;
-    @UsedService
-    GuiAgentServices guiAgentServices;
 
     private Scene scene;
     protected Stage stage;
@@ -136,7 +134,7 @@ public class GuiAgentImpl
         });
         stage.setScene(scene);
         stage.show();
-       
+
         stage1 = new Stage();
         stage1.setOpacity(.0);
         stage1.setHeight(400);
@@ -144,7 +142,6 @@ public class GuiAgentImpl
         stage1.setX(600);
         stage1.setY(200);
         stage1.initStyle(StageStyle.UNDECORATED);
-        
     }
 
     /**
@@ -159,7 +156,7 @@ public class GuiAgentImpl
 
             @Override
             public void handle(MouseEvent event) {
-                guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+                getJobsManager().newJob("", (progressHandle) -> {
                     if (first == true) {
                         javafx.scene.media.Media media;
                         String url = System.getProperty("user.dir") + "/data/sounds/alarm10.wav";
