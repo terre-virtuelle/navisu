@@ -97,7 +97,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
         try {
 
             Path tmpTif = Paths.get(inputFile.toString() + ".tif");
-
+            System.out.print(tmpTif);
             Proc.builder.create()
                     .setCmd(cmd)
                     .addArg("-b 1")
@@ -108,6 +108,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
                     .exec(environment);
 
             inputFile = tmpTif;
+            System.out.print(tmpTif);
         } catch (IOException | InterruptedException e) {
             System.out.println(e);
         }
@@ -120,15 +121,15 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
-        
-         if (inputFile.toString().endsWith(".tif")) {
-         try {
-         Files.delete(inputFile);
-         } catch (IOException e) {
-         LOGGER.log(Level.WARNING, null, e);
-         }
-         }
-         
+
+        if (inputFile.toString().endsWith(".tif")) {
+            try {
+                Files.delete(inputFile);
+            } catch (IOException e) {
+                LOGGER.log(Level.WARNING, null, e);
+            }
+        }
+
     }
 
     @Override
