@@ -7,9 +7,12 @@ package bzh.terrevirtuelle.navisu.widgets.textfield;
 
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 /**
@@ -23,12 +26,15 @@ public class TextFieldController
     public Group web;
     @FXML
     TextField server;
+    @FXML
+    Slider transSlider ;
+    
     
     public TextFieldController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("WebServerURL.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        
+       
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
@@ -47,4 +53,5 @@ public class TextFieldController
     public void setStyleTextField(String style) {
         web.setStyle(style);
     }
+
 }
