@@ -18,8 +18,10 @@
             <Line endX="400.0" endY="78.0" layoutY="80.0" startY="78.0" stroke="#04fff2" strokeWidth="0.5" />
             <Group layoutX="9.0">
                <children>
-                  <Text fx:id="serverName" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisname" text="Web Server URL" textAlignment="CENTER" wrappingWidth="149.0"> 
-                  </Text>
+                  <Text fx:id="serverName" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="webserverurl" text="Web Server URL" textAlignment="CENTER" wrappingWidth="149.0">
+                     <font>
+                        <Font name="augie" size="10.0" />
+                     </font></Text>
                </children>
             </Group>
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
@@ -31,7 +33,7 @@
                </effect>
             </ImageView>
             <TextField fx:id="server" layoutX="14.0" layoutY="120.0" prefHeight="25.0" prefWidth="379.0" />
-            <Slider fx:id="transSlider" opacity="0.6" layoutX="24.0" layoutY="211.0" prefHeight="14.0" prefWidth="355.0" value="60.0" />
+            <Slider fx:id="transSlider" layoutX="24.0" layoutY="211.0" opacity="0.6" prefHeight="14.0" prefWidth="355.0" value="60.0" />
          </children>
       </Group>
    </children>

@@ -19,7 +19,10 @@
                 <Pane prefHeight="40.0" prefWidth="405.0" opacity="0.6" layoutY="300"  styleClass="foot-pane" />
                 <Group layoutX="10.0">
                     <children>
-                        <Text fx:id="title" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisname" text="Web Server URL List" textAlignment="CENTER" wrappingWidth="149.0">
+                        <Text fx:id="title" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="webserverlist" text="Web Server URL List" textAlignment="CENTER" wrappingWidth="149.0">
+                        <font>
+                        <Font name="augie" size="20.0" />
+                     </font>
                         </Text>
                       <ScrollPane fx:id="scrollPane" layoutX="5.0" layoutY="50.0" opacity="0.6" prefHeight="250.0" prefWidth="375.0" styleClass="scrolling-pane">
                           <content>
