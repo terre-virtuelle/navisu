@@ -14,9 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
-
-
 /**
  *
  * @author Thibault Pensec <thibault.pensec at gmail.com>
@@ -34,11 +31,11 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         this.model = model;
         this.groupMap = new HashMap<>();
 
-        this.groupMap.put(DEFAULT_GROUP, new LinkedList<GeoLayer<Layer>>());
+        this.groupMap.put(DEFAULT_GROUP, new LinkedList<>());
     }
 
     @Override
-    public void createGroup(String groupName,  GeoLayer<Layer>... layers) {
+    public void createGroup(String groupName, GeoLayer<Layer>... layers) {
         Checker.notNull(groupName, "Group titleText is null.");
         Checker.keyNotExistsInMap(this.groupMap, groupName, "Group " + groupName + " already exists.");
 
@@ -46,7 +43,7 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         List<GeoLayer<Layer>> newGroup = new LinkedList<>();
         // Add it in the group map
         this.groupMap.put(groupName, newGroup);
-       
+
         // Insert layers
         Arrays.asList(layers).forEach(layer -> {
 
@@ -94,7 +91,6 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
 
     @Override
     public void insertGeoLayer(String groupName, GeoLayer<Layer>... layers) {
-
 
         Checker.notNull(groupName, "Group titleText is null.");
         Checker.keyExistsInMap(this.groupMap, groupName, "Group " + groupName + " does not exists.");
@@ -167,8 +163,9 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         int compassPosition = 0;
         LayerList layers = model.getLayers();
         for (Layer l : layers) {
-            if (l instanceof CompassLayer)
+            if (l instanceof CompassLayer) {
                 compassPosition = layers.indexOf(l);
+            }
         }
         layers.add(compassPosition, layer);
     }
@@ -178,8 +175,9 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         int compassPosition = 0;
         LayerList layers = model.getLayers();
         for (Layer l : layers) {
-            if (l instanceof PlaceNameLayer)
+            if (l instanceof PlaceNameLayer) {
                 compassPosition = layers.indexOf(l);
+            }
         }
         layers.add(compassPosition, layer);
     }
@@ -189,8 +187,9 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         int compassPosition = 0;
         LayerList layers = model.getLayers();
         for (Layer l : layers) {
-            if (l instanceof PlaceNameLayer)
+            if (l instanceof PlaceNameLayer) {
                 compassPosition = layers.indexOf(l);
+            }
         }
         layers.add(compassPosition + 1, layer);
     }

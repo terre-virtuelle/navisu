@@ -11,18 +11,21 @@ import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import org.capcaval.c3.component.ComponentState;
 
@@ -64,11 +67,18 @@ public class LayerCheckTreeImpl
             public TreeItem<GeoLayer> fromString(String s) {
                 return null;
             }
+
         }));
+        EventHandler<MouseEvent> mouseEventHandle = (MouseEvent event) -> {
+            handleMouseClicked(event);
+        };
+
         rootItems.add(createNode(rootItem0, "On-earth layers", "16x16-icon-earth.png"));
         rootItems.add(createNode(rootItem0, "On-screen layers", "boussole.png"));
         CheckBoxTreeItem<GeoLayer> charts = createNode(rootItem0, "Charts", "charts-16x16.png");
         rootItems.add(charts);
+        Button button = new Button("aaa");
+
         CheckBoxTreeItem<GeoLayer> raster = createNode(charts, "Raster charts", null);
         rootItems.add(raster);
         CheckBoxTreeItem<GeoLayer> tmp = createNode(raster, "BSB/KAP charts", null);
@@ -99,6 +109,25 @@ public class LayerCheckTreeImpl
         rootItems.add(shp);
         CheckBoxTreeItem<GeoLayer> wms = createNode(rootItem0, "WMS Layers", null);
         rootItems.add(wms);
+        treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
+
+    }
+
+    private void handleMouseClicked(MouseEvent event) {
+        Node node = event.getPickResult().getIntersectedNode();
+
+        // System.out.println("node " + node.getClass().getName());
+        if (node instanceof Text) {
+            Map<String, List<GeoLayer<Layer>>> groupMap = layerManager.getGroups();
+            System.out.println("grouMap "+groupMap);
+            Set<String> keys = groupMap.keySet();
+            System.out.println("keys "+keys);
+            for (String k : keys) {
+                for (GeoLayer<Layer> gl : groupMap.get(k)) {
+                    System.out.println(gl.getDisplayLayer().getName());
+                }
+            }
+        }
     }
 
     @Override

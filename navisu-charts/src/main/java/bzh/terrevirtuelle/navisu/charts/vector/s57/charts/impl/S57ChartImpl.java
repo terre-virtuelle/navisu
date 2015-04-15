@@ -270,7 +270,7 @@ public class S57ChartImpl
             });
 
         } catch (Exception e) {
-
+            System.out.println("e " + e);
         }
     }
 

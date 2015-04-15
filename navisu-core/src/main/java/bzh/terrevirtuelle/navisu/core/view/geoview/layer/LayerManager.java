@@ -14,19 +14,21 @@ import java.util.Map;
  */
 public interface LayerManager<T> {
 
-
     public static final String DEFAULT_GROUP = LayerManager.class.getName() + ".DEFAULT_GROUP";
 
-    void createGroup(String groupName,  GeoLayer<T>... layers);
+    void createGroup(String groupName, GeoLayer<T>... layers);
 
     List<GeoLayer<T>> getGroup(String key);
+
     List<GeoLayer<T>> getDefaultGroup();
 
     Map<String, List<GeoLayer<T>>> getGroups();
 
-    void insertGeoLayer(                  GeoLayer<T>... layers);
+    void insertGeoLayer(GeoLayer<T>... layers);
+
     void insertGeoLayer(String groupName, GeoLayer<T>... layers);
 
-    void insertGeoLayerBeforeLayerName(                  GeoLayer<T> layer, String layerName);
+    void insertGeoLayerBeforeLayerName(GeoLayer<T> layer, String layerName);
+
     void insertGeoLayerBeforeLayerName(String groupName, GeoLayer<T> layer, String layerName);
 }
