@@ -160,8 +160,8 @@ public class GuiAgentImpl
                     if (first == true) {
                         javafx.scene.media.Media media;
                         String url = System.getProperty("user.dir") + "/data/sounds/alarm10.wav";
-                        System.out.println("url-dom = " + url);
-                        //String url = "E:/Documents/Navisu/2015/navisu-wip/navisu-launcher/data/sounds/alarm10.wav";
+                       // String url = "E:/Documents/Navisu/2015/navisu-wip/navisu-launcher/data/sounds/alarm10.wav";
+                      
                         media = new Media("file:///" + url);
                         mediaPlayer = new MediaPlayer(media);
                         mediaPlayer.setAutoPlay(true);
