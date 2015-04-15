@@ -159,8 +159,9 @@ public class GuiAgentImpl
                 getJobsManager().newJob("", (progressHandle) -> {
                     if (first == true) {
                         javafx.scene.media.Media media;
-                        //String url = System.getProperty("user.dir") + "/data/sounds/alarm10.wav";
-                        String url = "E:/Documents/Navisu/2015/navisu-wip/navisu-launcher/data/sounds/alarm10.wav";
+                        String url = System.getProperty("user.dir") + "/data/sounds/alarm10.wav";
+                       // String url = "E:/Documents/Navisu/2015/navisu-wip/navisu-launcher/data/sounds/alarm10.wav";
+                      //  System.out.println("file:///"+url);
                         media = new Media("file:///" + url);
                         mediaPlayer = new MediaPlayer(media);
                         mediaPlayer.setAutoPlay(true);
