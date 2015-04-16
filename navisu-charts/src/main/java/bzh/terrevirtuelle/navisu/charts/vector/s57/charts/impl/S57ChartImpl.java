@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.util.Pair;
+import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
@@ -38,9 +39,13 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 
 /**
  * @author Serge Morvan
@@ -83,7 +88,7 @@ public class S57ChartImpl
     public void componentInitiated() {
         enabledLayers = new ArrayList<>();
         clipConditions = new HashMap<>();
-        clipConditions.put("BUOYAGE", new Pair(0, 240000));
+       // clipConditions.put("BUOYAGE", new Pair(0, 240000));
         clipConditions.put("BUILDING", new Pair(0, 240000));
         clipConditions.put("BATHYMETRY", new Pair(0, 240000));
         clipConditionsKeySet = clipConditions.keySet();
@@ -150,21 +155,18 @@ public class S57ChartImpl
         try {
             //Test capture des evts par l'AreaController
             /*
-             if (first == true) {
-             first = false;
-             surveyZoneController = new SurveyZoneController();
+            if (first == true) {
+                first = false;
+                surveyZoneController = new SurveyZoneController(KeyCode.Z, KeyCombination.CONTROL_DOWN);
 
-             Platform.runLater(new Runnable() {
-             @Override
-             public void run() {
-             guiAgentServices.getRoot().getChildren().add(surveyZoneController);
-             WidgetController widgetController = new WidgetController(KeyCode.Z, KeyCombination.CONTROL_DOWN);
-             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, widgetController);
-             widgetController.add(surveyZoneController);
-             }
-             });
-             }
-             */
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        guiAgentServices.getRoot().getChildren().add(surveyZoneController);
+                    }
+                });
+            }
+*/
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + i).mkdir();
             new File("data/shp/shp_" + i + "/soundg").mkdir();
@@ -217,7 +219,6 @@ public class S57ChartImpl
                 LOGGER.log(Level.SEVERE, null, e);
             }
 
-            //  cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr -nlt POINT25D";
             cmd = cmd + " -nlt POINT25D";
             try {
                 Path tmp = Paths.get(inputFile.toString());
@@ -236,7 +237,7 @@ public class S57ChartImpl
             }
 
             chartS57Controller = ChartS57Controller.getInstance();
-            //  chartS57Controller.setSurveyZoneController(surveyZoneController);
+            chartS57Controller.setSurveyZoneController(surveyZoneController);
             chartS57Controller.init("data/shp/shp_" + i++);
             layers = chartS57Controller.getLayers();
 
