@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="sliderPanel" stylesheets="@slider.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Group>
+            <children>
+                <Rectangle arcHeight="10.0" arcWidth="10.0" fill="#00524e99" height="25.0" layoutX="3.0" stroke="#005450" strokeType="INSIDE" width="350.0" />
+                <Slider fx:id="slider" layoutX="10.0" layoutY="5.0" majorTickUnit="50.0" minorTickCount="4" prefHeight="5.0" prefWidth="300.0" />
+                <ImageView fx:id="quit" fitHeight="15.0" fitWidth="20.0" layoutX="332.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                    <image>
+                        <Image url="@quit.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </Group>
+    </children>
+</fx:root>
