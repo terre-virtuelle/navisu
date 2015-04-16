@@ -100,8 +100,8 @@ public class ChartS57Controller {
     }
 
     public ChartS57Controller() {
-        //  surveyZoneController = new SurveyZoneController();
-        //  guiAgentServices.getRoot().getChildren().add(surveyZoneController);
+         // surveyZoneController = new SurveyZoneController();
+         // guiAgentServices.getRoot().getChildren().add(surveyZoneController);
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();

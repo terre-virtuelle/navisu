@@ -5,10 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.AREA;
+import bzh.terrevirtuelle.navisu.widgets.surveyZone.model.SurveyZone;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
-import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -79,8 +80,8 @@ public class AREA_ShapefileLoader
         //  shape.setHighlightAttributes(highlightAttributes);
         shape.setHighlightAttributes(null);
 
-        createValues(shape);
-        //   ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
+     //   createValues(shape);
+      //  ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
         layer.addRenderable(shape);
 
     }

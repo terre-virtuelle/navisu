@@ -118,6 +118,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
         Layer layer = installer.installSurfaceImage(inputFile, pHandle);
         if (layer != null) {
+            layer.setName("BSB");
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
