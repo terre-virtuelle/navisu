@@ -20,6 +20,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.widgets.mob.Mob;
+import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
 import gov.nasa.worldwind.util.StatusBar;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -135,6 +136,7 @@ public class GuiAgentImpl
         stage.setScene(scene);
         stage.show();
 
+// Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
         stage1 = new Stage();
         stage1.setOpacity(.0);
         stage1.setHeight(400);
@@ -142,6 +144,10 @@ public class GuiAgentImpl
         stage1.setX(600);
         stage1.setY(200);
         stage1.initStyle(StageStyle.UNDECORATED);
+        
+// test Slider pour layers
+     //   SliderController sliderController = new SliderController();
+     //   root.getChildren().add(sliderController);
     }
 
     /**
@@ -162,7 +168,7 @@ public class GuiAgentImpl
                         String userDir = System.getProperty("user.dir");
                         userDir = userDir.replace("\\", "/");
                         String url = userDir + "/data/sounds/alarm10.wav";
-                    
+
                         media = new Media("file:///" + url);
                         mediaPlayer = new MediaPlayer(media);
                         mediaPlayer.setAutoPlay(true);

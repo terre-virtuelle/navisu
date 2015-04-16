@@ -8,11 +8,10 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindGeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.LayerList;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -115,18 +114,14 @@ public class LayerCheckTreeImpl
 
     private void handleMouseClicked(MouseEvent event) {
         Node node = event.getPickResult().getIntersectedNode();
-
-        // System.out.println("node " + node.getClass().getName());
         if (node instanceof Text) {
-            Map<String, List<GeoLayer<Layer>>> groupMap = layerManager.getGroups();
-            System.out.println("grouMap "+groupMap);
-            Set<String> keys = groupMap.keySet();
-            System.out.println("keys "+keys);
-            for (String k : keys) {
-                for (GeoLayer<Layer> gl : groupMap.get(k)) {
-                    System.out.println(gl.getDisplayLayer().getName());
-                }
-            }
+          LayerList layers =  geoView.getLayerManager().getModel().getLayers();
+          //  System.out.println("layers " + layers.getDisplayName());
+          for(Layer l : layers){
+             // if(node.toString().equals(l.getName())){
+                  System.out.println(l.getName());
+             // }
+          }
         }
     }
 
