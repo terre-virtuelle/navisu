@@ -37,7 +37,8 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @author Serge Morvan
  * @date 7 oct. 2014 NaVisu project
  */
-public class SurveyZoneController extends Widget2DController
+public class SurveyZoneController 
+extends Widget2DController
         implements Initializable {
 
     protected static final Logger LOGGER = Logger.getLogger(SurveyZoneController.class.getName());
