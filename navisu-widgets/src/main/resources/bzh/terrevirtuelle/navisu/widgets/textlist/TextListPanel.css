@@ -2,9 +2,7 @@
 /* CSS Document */
 @font-face {
     font-family: 'Roboto';
-    src: url('fonts/Roboto-Condensed.ttf'); 
-    
-    
+    src: url('fonts/Roboto-Condensed.ttf');     
 }
 *{
     -fx-base : #143b2860;

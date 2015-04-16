@@ -293,7 +293,7 @@ public class DockManagerImpl
     }
 
     private void openDB(String dbName, String hostName, String protocol, String port,
-        String driverName, String userName, String passwd) {
+            String driverName, String userName, String passwd) {
         databaseDriverManagerServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
         clear();
     }

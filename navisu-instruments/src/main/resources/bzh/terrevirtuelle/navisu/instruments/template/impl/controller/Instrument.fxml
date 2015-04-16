@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <rotationAxis>
+        <Point3D y="1.0" />
+    </rotationAxis>
+   <children>
+      <Pane minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="260.0" styleClass="backPane">
+         <children>
+            <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="80.0" layoutX="25.0" layoutY="100.0" stroke="#70bbbf" strokeType="INSIDE" width="70.0" />
+            <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="80.0" layoutX="95.0" layoutY="100.0" stroke="#70bbbf" strokeType="INSIDE" width="70.0" />
+            <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="80.0" layoutX="165.0" layoutY="100.0" stroke="#70bbbf" strokeType="INSIDE" width="70.0" />
+            <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="80.0" layoutX="25.0" layoutY="20.0" stroke="#70bbbf" strokeType="INSIDE" width="210.0" />
+         </children>
+      </Pane>
+      <Text fx:id="speed" fill="#47c1cf" layoutX="65.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="99.0">
+         <font>
+            <Font name="Roboto Light" size="36.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Text>
+      <Text fx:id="cog" fill="#47c1cf" layoutX="35.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000" textAlignment="CENTER" wrappingWidth="63.0">
+         <effect>
+            <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+         <font>
+            <Font name="Roboto Light" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="depth" fill="#47c1cf" layoutX="98.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="48.0">
+         <effect>
+            <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+         <font>
+            <Font name="Roboto Light" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="sog" fill="#47c1cf" layoutX="160.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000.0" textAlignment="RIGHT" wrappingWidth="50.0">
+         <effect>
+            <Lighting diffuseConstant="1.12" specularConstant="1.18" specularExponent="11.16">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+         <font>
+            <Font name="Roboto Light" size="16.0" />
+         </font>
+      </Text>
+   </children>
+</fx:root>
