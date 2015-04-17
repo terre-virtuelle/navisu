@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bzh.terrevirtuelle.navisu.agents.target;
 
-import org.capcaval.c3.component.Component;
+import org.capcaval.c3.component.ComponentService;
 
 /**
  * NaVisu
@@ -14,6 +13,7 @@ import org.capcaval.c3.component.Component;
  * @date 10 avr. 2015
  * @author Serge Morvan
  */
-public interface Target extends Component {
+public interface SimulatorServices
+        extends ComponentService {
 
 }

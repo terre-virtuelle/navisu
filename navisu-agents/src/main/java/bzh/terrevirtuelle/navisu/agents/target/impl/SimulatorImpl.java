@@ -6,8 +6,8 @@
 
 package bzh.terrevirtuelle.navisu.agents.target.impl;
 
-import bzh.terrevirtuelle.navisu.agents.target.Target;
-import bzh.terrevirtuelle.navisu.agents.target.TargetServices;
+import bzh.terrevirtuelle.navisu.agents.target.Simulator;
+import bzh.terrevirtuelle.navisu.agents.target.SimulatorServices;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import org.capcaval.c3.component.ComponentState;
@@ -18,8 +18,8 @@ import org.capcaval.c3.component.ComponentState;
  * @date 10 avr. 2015
  * @author Serge Morvan
  */
-public class TargetImpl 
-implements Target, TargetServices, Driver, ComponentState{
+public class SimulatorImpl 
+implements Simulator, SimulatorServices, Driver, ComponentState{
 
     @Override
     public void open(ProgressHandle progressHandle, String... files) {
