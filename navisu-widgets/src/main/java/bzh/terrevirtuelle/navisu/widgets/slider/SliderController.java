@@ -45,6 +45,7 @@ public class SliderController
 
     private void load() {
 
+        
         /* ----------- Répertoire des css dans le launcher -----------------*/
         //File cssfile = new File("css/slider.css");
         //css = ("file:///" + cssfile.getAbsolutePath().replace("\\", "/"));
@@ -59,10 +60,11 @@ public class SliderController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
-        /*---- si css non défini dans le fxml et css dans le launcher ------------*/
+        
+        /*---- si css non défini dans le fxml ------------*/
         //slider.getStylesheets().add(css);
-        /* ---- si css dans les ressources du widget -----------*/
+        
+        /* ---- css dans les ressources du widget -----------*/
         //css = "slider.css";
         //slider.getStylesheets().add(this.getClass().getResource(css).toExternalForm());
         
