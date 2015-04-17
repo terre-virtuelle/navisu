@@ -5,9 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.widgets.slider;
 
+import bzh.terrevirtuelle.navisu.widgets.Widget2D;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
-import java.io.File;
 import java.io.IOException;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -64,10 +65,15 @@ public class SliderController
         /*---- si css non défini dans le fxml ------------*/
         //slider.getStylesheets().add(css);
         
-        /* ---- css dans les ressources du widget -----------*/
-        //css = "slider.css";
-        //slider.getStylesheets().add(this.getClass().getResource(css).toExternalForm());
+        /* ---- css dans les ressources des widgets -----------*/
+        css = "css/slider.css";
+        slider.getStylesheets().add(Widget2D.class.getResource(css).toExternalForm());
         
+        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+           // System.out.println("..............");
+        });
+
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
