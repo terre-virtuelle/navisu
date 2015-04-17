@@ -14,7 +14,6 @@ import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.util.Pair;
-import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
@@ -39,13 +38,9 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 
 /**
  * @author Serge Morvan
@@ -185,20 +180,19 @@ public class S57ChartImpl
                     + "SPLIT_MULTIPOINT=ON, "
                     + "ADD_SOUNDG_DEPTH=ON\" \n";
             environment.put("OGR_S57_OPTIONS", options);
-            options = System.getProperty("user.dir") + "/bin/data";
+            options = System.getProperty("user.dir") + "/gdal/data";
             environment.put("GDAL_DATA", options);
 
             String cmd = null;
-            // cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
-
+          
             if (OS.isWindows()) {
-                cmd = "bin/win/ogr2ogr";
+                cmd = "gdal/win/ogr2ogr";
             } else {
                 if (OS.isLinux()) {
                     cmd = "/usr/bin/ogr2ogr";
                 } else {
                     if (OS.isMac()) {
-                        cmd = "bin/osx/ogr2ogr";
+                        cmd = "gdal/osx/ogr2ogr";
                     } else {
                         System.out.println("OS not found");
                     }

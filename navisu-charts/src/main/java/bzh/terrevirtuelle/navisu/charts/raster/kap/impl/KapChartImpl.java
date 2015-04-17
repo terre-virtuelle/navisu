@@ -73,22 +73,20 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
         LOGGER.log(Level.INFO, "Opening {0} ...", file);
 
         Path inputFile = Paths.get(file);
-        // final String cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/gdal_translate";
         String cmd = null;
-        // cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         Map<String, String> environment = new HashMap<>(System.getenv());
         String options
                 = "\"BSB_IGNORE_LINENUMBERS=true\"";
         environment.put("GDAL_DATA", options);
 
         if (OS.isWindows()) {
-            cmd = "bin/win/gdal_translate";
+            cmd = "gdal/win/gdal_translate";
         } else {
             if (OS.isLinux()) {
                 cmd = "/usr/bin/gdal_translate";
             } else {
                 if (OS.isMac()) {
-                    cmd = "bin/osx/gdal_translate";
+                    cmd = "gdal/osx/gdal_translate";
                 } else {
                     System.out.println("OS not found");
                 }

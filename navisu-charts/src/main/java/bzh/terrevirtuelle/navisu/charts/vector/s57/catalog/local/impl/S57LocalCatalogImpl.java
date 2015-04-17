@@ -90,7 +90,7 @@ public class S57LocalCatalogImpl
                 + "SPLIT_MULTIPOINT=ON, "
                 + "ADD_SOUNDG_DEPTH=ON\" \n";
         environment.put("OGR_S57_OPTIONS", options);
-        options = System.getProperty("user.dir") + "/bin/data";
+        options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
         layersSet = new HashSet();
         File f = new File("test");
@@ -129,7 +129,7 @@ public class S57LocalCatalogImpl
         Path inputFile = Paths.get(fileName);
         Proc p = null;
         String cmd;
-        cmd = "bin/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
+        cmd = "gdal/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         try {
             Path tmp = Paths.get(inputFile.toString());
             p = Proc.builder.create()
