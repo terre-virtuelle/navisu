@@ -99,15 +99,17 @@ public class DataServerImpl
             if (ws.path().equals("/nmea")) {
                 ws.dataHandler((Buffer data) -> {
                     // Analyse lexicale de la phrase et envoi en xml
-                    if (readers.get(currentReaderIndex).getClass().getSimpleName().equals("FileReaderImpl")) {
-                        readers.get(currentReaderIndex).read();
+                    if (!readers.isEmpty()) {
+                        if (readers.get(currentReaderIndex).getClass().getSimpleName().equals("FileReaderImpl")) {
+                            readers.get(currentReaderIndex).read();
+                        }
+                        response = response(currentReaderIndex);
+                        if (response != null) {
+                            ws.writeTextFrame(response.toString());
+                        }
+                        // rotation dans les buffers des readers
+                        currentReaderIndex = (currentReaderIndex + 1) % sentenceQueues.size();
                     }
-                    response = response(currentReaderIndex);
-                    if (response != null) {
-                        ws.writeTextFrame(response.toString());
-                    }
-                    // rotation dans les buffers des readers
-                    currentReaderIndex = (currentReaderIndex + 1) % sentenceQueues.size();
                 });
             } else {
                 ws.reject();
@@ -129,22 +131,24 @@ public class DataServerImpl
 
     @Override
     public StringWriter response(int currentReader) {
-        sentences.clear();
-        try {
-            sentenceQueues.get(currentReader).stream().forEach((s) -> {
-               // LOGGER.info(s);
-                parser.parse(s.trim());
-            });
-            stringWriter = new StringWriter();
-            if (!sentences.isEmpty()) {
-                marshaller.marshal(sentences, stringWriter);
-              //  System.out.println("DataServerImpl stringWriter " + stringWriter);
+        if (!sentenceQueues.isEmpty()) {
+            sentences.clear();
+            try {
+                sentenceQueues.get(currentReader).stream().forEach((s) -> {
+                    // LOGGER.info(s);
+                    parser.parse(s.trim());
+                });
+                stringWriter = new StringWriter();
+                if (!sentences.isEmpty()) {
+                    marshaller.marshal(sentences, stringWriter);
+                    //  System.out.println("DataServerImpl stringWriter " + stringWriter);
+                }
+            } catch (Exception e) {
+                // System.out.println("sentenceQueues "+ sentenceQueues);
+                //  System.out.println("DataServerImpl Exception" + sentences);
             }
-        } catch (Exception e) {
-           // System.out.println("sentenceQueues "+ sentenceQueues);
-          //  System.out.println("DataServerImpl Exception" + sentences);
         }
-       // System.out.println("DataServerImpl " + stringWriter);
+        //System.out.println("DataServerImpl " + stringWriter);
         return stringWriter;
     }
 

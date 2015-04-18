@@ -2,7 +2,6 @@ package bzh.terrevirtuelle.navisu.server;
 
 import java.io.StringWriter;
 import org.capcaval.c3.component.ComponentService;
-import org.vertx.java.core.Vertx;
 
 /**
  * Created with IntelliJ IDEA.
