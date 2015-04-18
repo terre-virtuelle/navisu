@@ -1,7 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.impl;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;

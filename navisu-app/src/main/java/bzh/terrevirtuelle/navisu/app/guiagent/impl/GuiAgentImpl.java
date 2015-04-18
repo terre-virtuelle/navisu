@@ -146,8 +146,8 @@ public class GuiAgentImpl
         stage1.initStyle(StageStyle.UNDECORATED);
         
 // test Slider pour layers
-    SliderController sliderController = new SliderController();
-    root.getChildren().add(sliderController);
+ //   SliderController sliderController = new SliderController();
+ //   root.getChildren().add(sliderController);
     }
 
     /**

@@ -251,7 +251,14 @@ public class DockManagerImpl
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-                .createNode(0, "system.png", 0, "system.png", 0, "system.png", (e) -> open())
+                .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
+                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 0, "aisOn.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 1, "aisOff.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 3, "gpsOn.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 4, "gpsOff.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
                 .build();
