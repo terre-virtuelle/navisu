@@ -36,7 +36,7 @@ public class RadialMenuContainer
         }
         //TODO Radial separator
         double radialItemLenght = 360 / items.size();
-        double ratio = 1.0 / items.size() / 1.2;//2.0 ou 1.7
+        double ratio = 1.0 / items.size() / 1.0;//2.0 ou 1.7 ou 1.2
         for (int i = 0; i < items.size(); i++) {
             RadialMenuItem radialMenuItem = items.get(i);
 
