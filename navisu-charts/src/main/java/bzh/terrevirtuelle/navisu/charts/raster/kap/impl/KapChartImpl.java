@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class KapChartImpl implements KapChart, KapChartServices, Driver, ComponentState {
 
-    protected final Logger LOGGER = Logger.getLogger(KapChartImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(KapChartImpl.class.getName());
 
     protected static final String EXTENSION_0 = ".kap";
     private static final String EXTENSION_1 = ".KAP";
