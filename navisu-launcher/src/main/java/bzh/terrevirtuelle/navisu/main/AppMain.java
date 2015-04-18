@@ -68,6 +68,8 @@ import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.shapefiles.impl.ShapefileObjectImpl;
+import bzh.terrevirtuelle.navisu.system.files.FilesServices;
+import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
@@ -122,6 +124,7 @@ public class AppMain extends Application {
                         DirectoryDriverManagerImpl.class,
                         DpAgentImpl.class,
                         DriverManagerImpl.class,
+                        FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
@@ -158,6 +161,8 @@ public class AppMain extends Application {
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
+        FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
+                
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
@@ -192,6 +197,7 @@ public class AppMain extends Application {
         // DirectoryDriverManagerServices ddriverServices = componentManager.getComponentService(DirectoryDriverManagerServices.class);
         //    ddriverServices.init();
         //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
+        
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
@@ -208,6 +214,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(soundServices.getDriver());
         driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
+        driverServices.registerNewDriver(filesServices.getDriver());
 
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
@@ -247,8 +254,8 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
-        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        dataServerServices.openFile("data/ais/ais.txt");  //AIS
+      //  dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+      //  dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
@@ -262,7 +269,7 @@ public class AppMain extends Application {
 
         // Test clients à l'écoute des événements Nmea 
         aisServices.on();
-        //   aisLoggerServices.on();
+        //aisLoggerServices.on();
         aisPlotterServices.on();
     }
 
