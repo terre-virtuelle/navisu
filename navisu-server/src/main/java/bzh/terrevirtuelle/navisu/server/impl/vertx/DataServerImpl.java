@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.server.impl.vertx;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.server.impl.serial.impl.jssc.SerialPortReaderImpl;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import bzh.terrevirtuelle.navisu.server.DataServer;
