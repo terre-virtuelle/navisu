@@ -38,7 +38,8 @@ public class InstrumentDriverManagerImpl
 
     }
 
-    protected InstrumentDriver findDriver(String category) {
+    @Override
+    public InstrumentDriver findDriver(String category) {
         InstrumentDriver compatibleDriver = null;
         for (InstrumentDriver driver : this.availableDriverList) {
             if (driver.canOpen(category)) {

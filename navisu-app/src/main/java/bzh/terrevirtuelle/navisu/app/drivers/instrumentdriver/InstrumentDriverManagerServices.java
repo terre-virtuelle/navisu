@@ -14,5 +14,7 @@ public interface InstrumentDriverManagerServices extends ComponentService {
 
     void registerNewDriver(InstrumentDriver driver);
 
+    InstrumentDriver findDriver(String category);
+
     void open(String category);
 }
