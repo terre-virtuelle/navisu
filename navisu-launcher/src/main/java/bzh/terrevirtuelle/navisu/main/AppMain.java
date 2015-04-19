@@ -221,6 +221,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
@@ -254,9 +255,9 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
-      //  dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-      //  dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
+        //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
 
@@ -268,9 +269,9 @@ public class AppMain extends Application {
         nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
-        aisServices.on();
+     //   aisServices.on();
         //aisLoggerServices.on();
-        aisPlotterServices.on();
+     //   aisPlotterServices.on();
     }
 
     public static void main(String[] args) throws Exception {
