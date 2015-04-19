@@ -52,6 +52,8 @@ import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
@@ -126,6 +128,7 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
+                        GpsLoggerImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -164,6 +167,7 @@ public class AppMain extends Application {
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
                 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
+        GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
@@ -218,10 +222,12 @@ public class AppMain extends Application {
 
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
+        instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
+        
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
@@ -255,7 +261,7 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
-        //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
         //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
