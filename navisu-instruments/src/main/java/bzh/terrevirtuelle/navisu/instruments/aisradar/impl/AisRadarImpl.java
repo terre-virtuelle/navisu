@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.instruments.aisradar.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadar;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.controller.AisRadarController;
@@ -25,8 +26,12 @@ public class AisRadarImpl
 
     @UsedService
     GuiAgentServices guiAgentServices;
+    @UsedService
+    AisServices aisServices;
+
     private AisRadarController controller;
     private final String NAME = "AisRadar";
+    protected boolean on = false;
 
     @Override
     public void componentInitiated() {
@@ -44,18 +49,27 @@ public class AisRadarImpl
 
     @Override
     public void on() {
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
-        guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
-        controller.setVisible(true);
-        controller.start();
+        if (!aisServices.isOn()) {
+            aisServices.on();
+        }
+        if (on == false) {
+            on = true;
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
+            guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
+            controller.setVisible(true);
+            controller.start();
+        }
     }
 
     @Override
     public void off() {
-        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
-        guiAgentServices.getRoot().getChildren().remove(controller);
-        controller.setVisible(false);
-        controller.stop();
+        if (on == true) {
+            on = false;
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
+            guiAgentServices.getRoot().getChildren().remove(controller);
+            controller.setVisible(false);
+            controller.stop();
+        }
     }
 
     @Override
@@ -69,4 +83,8 @@ public class AisRadarImpl
         return category.equals(NAME);
     }
 
+    @Override
+    public boolean isOn() {
+        return on;
+    }
 }

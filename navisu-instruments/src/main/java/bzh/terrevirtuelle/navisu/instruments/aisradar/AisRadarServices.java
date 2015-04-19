@@ -20,6 +20,8 @@ public interface AisRadarServices
     default void off() {
     }
 
+    boolean isOn();
+
     boolean canOpen(String category);
 
     InstrumentDriver getDriver();

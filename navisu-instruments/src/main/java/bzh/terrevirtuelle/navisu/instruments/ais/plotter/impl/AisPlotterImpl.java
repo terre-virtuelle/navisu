@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateStationEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisDeleteStationEvent;
@@ -57,6 +58,9 @@ public class AisPlotterImpl
     @UsedService
     LayerTreeServices layerTreeServices;
 
+    @UsedService
+    AisServices aisServices;
+
     ComponentManager cm;
     ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
     ComponentEventSubscribe<AisCreateTargetEvent> aisCTEvent;
@@ -75,6 +79,7 @@ public class AisPlotterImpl
     protected Map<Integer, Ship> ships;
     protected Map<Integer, GShip> gShips;
     protected Map<Integer, BaseStation> stations;
+    protected boolean on = false;
 
     @Override
     public void componentInitiated() {
@@ -110,49 +115,57 @@ public class AisPlotterImpl
 
     @Override
     public void on() {
-
-        aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
-            createTarget(updatedData);
-        });
-        aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
-            updateTarget(updatedData);
-        });
-        aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship updatedData) -> {
-            System.out.println(updatedData);
-        });
-        aisCSEvent.subscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
-        });
-        aisUSEvent.subscribe((AisUpdateStationEvent) (BaseStation updatedData) -> {
-          //  System.out.println(updatedData);
-        });
-        aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation updatedData) -> {
-            System.out.println(updatedData);
-        });
+        if (!aisServices.isOn()) {
+            aisServices.on();
+        }
+        if (on == false) {
+            on = true;
+            aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
+                createTarget(updatedData);
+            });
+            aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
+                updateTarget(updatedData);
+            });
+            aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship updatedData) -> {
+                System.out.println(updatedData);
+            });
+            aisCSEvent.subscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
+            });
+            aisUSEvent.subscribe((AisUpdateStationEvent) (BaseStation updatedData) -> {
+                //  System.out.println(updatedData);
+            });
+            aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation updatedData) -> {
+                System.out.println(updatedData);
+            });
+        }
     }
 
     @Override
     public void off() {
+        if (on == true) {
+            on = false;
+            aisCTEvent.unsubscribe((AisCreateTargetEvent) (Ship updatedDate) -> {
+                System.out.println(updatedDate);
+            });
+            aisUTEvent.unsubscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
+                System.out.println(updatedData);
+            });
+            aisDTEvent.unsubscribe((AisDeleteTargetEvent) (Ship updatedDate) -> {
+                System.out.println(updatedDate);
+            });
 
-        aisCTEvent.unsubscribe((AisCreateTargetEvent) (Ship updatedDate) -> {
-            System.out.println(updatedDate);
-        });
-        aisUTEvent.unsubscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
-            System.out.println(updatedData);
-        });
-        aisDTEvent.unsubscribe((AisDeleteTargetEvent) (Ship updatedDate) -> {
-            System.out.println(updatedDate);
-        });
-
-        aisCSEvent.unsubscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
-            System.out.println(updatedData);
-        });
-        aisUSEvent.unsubscribe((AisUpdateStationEvent) (BaseStation updatedData) -> {
-            System.out.println(updatedData);
-        });
-        aisDSEvent.unsubscribe((AisDeleteStationEvent) (BaseStation updatedDate) -> {
-            System.out.println(updatedDate);
-        });
+            aisCSEvent.unsubscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
+                System.out.println(updatedData);
+            });
+            aisUSEvent.unsubscribe((AisUpdateStationEvent) (BaseStation updatedData) -> {
+                System.out.println(updatedData);
+            });
+            aisDSEvent.unsubscribe((AisDeleteStationEvent) (BaseStation updatedDate) -> {
+                System.out.println(updatedDate);
+            });
+        }
     }
+
     private void addListeners() {
         /*
          wwd.addPositionListener((PositionEvent event) -> {
@@ -176,6 +189,7 @@ public class AisPlotterImpl
             }
         });
     }
+
     private void addPanelController() {
         Platform.runLater(() -> {
             aisPanelController = new AisPanelController(KeyCode.B, KeyCombination.CONTROL_DOWN);
@@ -185,11 +199,13 @@ public class AisPlotterImpl
             aisPanelController.setVisible(false);
         });
     }
+
     protected final void updateAisPanel(Ship ship) {
         Platform.runLater(() -> {
-          //   aisPanelController.updateAisPanel(ship);
+            //   aisPanelController.updateAisPanel(ship);
         });
     }
+
     private void createTarget(Ship target) {
         GShip gShip = new GShip(target);
         gShips.put(target.getMMSI(), gShip);
@@ -203,10 +219,15 @@ public class AisPlotterImpl
     }
 
     private void updateTarget(Ship target) {
-      //  System.out.println("updateTarget " + target.getShipType()+ "   ");
+        //  System.out.println("updateTarget " + target.getShipType()+ "   ");
         GShip gShip = gShips.get(target.getMMSI());
         gShip.update(target);
         wwd.redrawNow();
-       // createTarget( target);
+        // createTarget( target);
+    }
+
+    @Override
+    public boolean isOn() {
+        return on;
     }
 }

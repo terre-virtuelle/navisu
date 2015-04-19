@@ -18,4 +18,6 @@ public interface AisPlotterServices extends ComponentService {
     default void off() {
     }
 
+    boolean isOn();
+
 }
