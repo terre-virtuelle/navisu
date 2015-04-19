@@ -269,9 +269,9 @@ public class AppMain extends Application {
         nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
-     //   aisServices.on();
+        aisServices.on();
         //aisLoggerServices.on();
-     //   aisPlotterServices.on();
+        aisPlotterServices.on();
     }
 
     public static void main(String[] args) throws Exception {
