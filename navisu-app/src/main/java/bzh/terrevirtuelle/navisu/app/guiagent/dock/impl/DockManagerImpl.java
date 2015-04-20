@@ -69,6 +69,7 @@ public class DockManagerImpl
     protected RadialMenu chartsRadialMenu;
     protected RadialMenu toolsRadialMenu;
     protected RadialMenu navigationRadialMenu;
+    protected RadialMenu systemRadialMenu;
     protected ImageView centerImg;
     protected int width;
     protected int height;
@@ -77,6 +78,10 @@ public class DockManagerImpl
     private List<RadialMenu> radialMenus;
 
     public final DockItem[] ICONS = new DockItem[]{
+        DockItemFactory.newImageItem("system I/O", ICON_PATH + "dock_icons/system.png",
+        (e) -> {
+            systemRadialMenu.setVisible(!systemRadialMenu.isVisible());
+        }),
         DockItemFactory.newImageItem("user tools", ICON_PATH + "dock_icons/tools.png",
         (e) -> {
             toolsRadialMenu.setVisible(!toolsRadialMenu.isVisible());
@@ -131,6 +136,7 @@ public class DockManagerImpl
         createTidesRadialWidget();
         createToolsRadialWidget();
         createNavigationRadialWidget();
+        createSystemRadialWidget();
     }
 
     private void createDockWidget(Scene scene) {
@@ -198,8 +204,9 @@ public class DockManagerImpl
         instrumentsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("instrumentsradialmenu150.png")
                 .createNode(0, "navigation.png", 0, "ais.png", 0, "aisradar.png", (e) -> open("AisRadar"))
-                .createNode(0, "navigation.png", 1, "ais.png", 1, "template.png", (e) -> open("InstrumentTemplate"))
-                .createNode(0, "navigation.png", 2, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
+                .createNode(0, "navigation.png", 1, "template.png", 1, "template.png", (e) -> open("InstrumentTemplate"))
+                .createNode(0, "navigation.png", 2, "compass.png", 1, "compass.png", (e) -> open("Compass"))
+                .createNode(0, "navigation.png", 3, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);
@@ -266,6 +273,24 @@ public class DockManagerImpl
         toolsRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(toolsRadialMenu);
         radialMenus.add(toolsRadialMenu);
+    }
+    //--------------System------------------
+    private void createSystemRadialWidget() {
+        systemRadialMenu = RadialMenuBuilder.create()
+                .centralImage("toolsradialmenu150.png")
+                .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
+                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 0, "aisOn.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 1, "aisOff.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 3, "gpsOn.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 4, "gpsOff.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
+                .build();
+        systemRadialMenu.setLayoutX((width / 2));
+        systemRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(systemRadialMenu);
+        radialMenus.add(systemRadialMenu);
     }
 
     private void open() {

@@ -70,7 +70,7 @@ public class SliderController
         slider.getStylesheets().add(Widget2D.class.getResource(css).toExternalForm());
         
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-           // System.out.println("..............");
+        // System.out.println("..............");
         });
 
 

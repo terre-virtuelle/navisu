@@ -56,6 +56,8 @@ import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
 import bzh.terrevirtuelle.navisu.instruments.template.impl.InstrumentTemplateImpl;
+import bzh.terrevirtuelle.navisu.instruments.compass.CompassServices;
+import bzh.terrevirtuelle.navisu.instruments.compass.impl.CompassImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -130,6 +132,7 @@ public class AppMain extends Application {
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
+                        CompassImpl.class,
                         KapChartImpl.class,
                         KmlObjectImpl.class,
                         MagneticImpl.class,
@@ -162,7 +165,7 @@ public class AppMain extends Application {
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
-                
+
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
@@ -170,7 +173,7 @@ public class AppMain extends Application {
         guiAgentServices.showGui(stage, 1080, 700);
 
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
-
+        CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
@@ -197,7 +200,6 @@ public class AppMain extends Application {
         // DirectoryDriverManagerServices ddriverServices = componentManager.getComponentService(DirectoryDriverManagerServices.class);
         //    ddriverServices.init();
         //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
-        
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
@@ -218,7 +220,9 @@ public class AppMain extends Application {
 
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
+
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
 
@@ -254,8 +258,8 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
-      //  dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-      //  dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        //  dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
