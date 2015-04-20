@@ -2,6 +2,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.dock.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -28,7 +29,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import org.capcaval.c3.component.annotation.UsedService;
 
 /*
@@ -203,9 +203,13 @@ public class DockManagerImpl
     private void createInstrumentsRadialWidget() {
         instrumentsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("instrumentsradialmenu150.png")
-                .createNode(0, "navigation.png", 0, "ais.png", 0, "aisradar.png", (e) -> open("AisRadar"))
-                .createNode(0, "navigation.png", 1, "template.png", 1, "template.png", (e) -> open("InstrumentTemplate"))
-                .createNode(0, "navigation.png", 2, "compass.png", 1, "compass.png", (e) -> open("Compass"))
+                .createNode(0, "navigation.png", 0, "ais.png", 0, "aisRadarOn.png", (e) -> open("AisRadar"))
+                .createNode(0, "navigation.png", 0, "ais.png", 1, "aisRadarOff.png", (e) -> close("AisRadar"))
+                .createNode(0, "navigation.png", 0, "ais.png", 2, "aisLogOn.png", (e) -> open("AisLogger"))
+                .createNode(0, "navigation.png", 0, "ais.png", 3, "aisLogOff.png", (e) -> close("AisLogger"))
+                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOn.png", (e) -> open("GpsLogger"))
+                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOff.png", (e) -> close("GpsLogger"))
+                .createNode(0, "navigation.png", 2, "compass.png", 0, "compass.png", (e) -> open("Compass"))
                 .createNode(0, "navigation.png", 3, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
                 .build();
 
@@ -258,13 +262,7 @@ public class DockManagerImpl
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-                .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
-                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 0, "aisOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 1, "aisOff.png", (e) -> open())
                 .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 3, "gpsOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 4, "gpsOff.png", (e) -> open())
                 .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
@@ -274,18 +272,14 @@ public class DockManagerImpl
         root.getChildren().add(toolsRadialMenu);
         radialMenus.add(toolsRadialMenu);
     }
+
     //--------------System------------------
+
     private void createSystemRadialWidget() {
         systemRadialMenu = RadialMenuBuilder.create()
                 .centralImage("systemradialmenu150.png")
                 .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
                 .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 0, "aisOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 1, "aisOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 3, "gpsOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 4, "gpsOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
                 .build();
         systemRadialMenu.setLayoutX((width / 2));
         systemRadialMenu.setLayoutY(height / 2);
@@ -314,9 +308,11 @@ public class DockManagerImpl
         clear();
     }
 
-    private void openShp(String description, String des) {
-        driverManagerServices.open(new FileChooser.ExtensionFilter(description, des));
-        clear();
+    private void close(String keyName) {
+        InstrumentDriver instrumentDriver = instrumentDriverManagerServices.findDriver(keyName);
+        if (instrumentDriver != null) {
+            instrumentDriver.off();
+        }
     }
 
     private void openWMS(String description, String url) {
