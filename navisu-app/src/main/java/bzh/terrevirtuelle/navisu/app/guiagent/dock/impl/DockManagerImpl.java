@@ -207,8 +207,10 @@ public class DockManagerImpl
                 .createNode(0, "navigation.png", 0, "ais.png", 1, "aisRadarOff.png", (e) -> close("AisRadar"))
                 .createNode(0, "navigation.png", 0, "ais.png", 2, "aisLogOn.png", (e) -> open("AisLogger"))
                 .createNode(0, "navigation.png", 0, "ais.png", 3, "aisLogOff.png", (e) -> close("AisLogger"))
-                .createNode(0, "navigation.png", 1, "ais.png", 0, "template.png", (e) -> open("InstrumentTemplate"))
-                .createNode(0, "navigation.png", 2, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
+                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOn.png", (e) -> open("GpsLogger"))
+                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOff.png", (e) -> close("GpsLogger"))
+                .createNode(0, "navigation.png", 2, "ais.png", 0, "template.png", (e) -> open("InstrumentTemplate"))
+                .createNode(0, "navigation.png", 3, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);
@@ -260,13 +262,7 @@ public class DockManagerImpl
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-                .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
-                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 0, "aisOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 1, "aisOff.png", (e) -> open())
                 .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 3, "gpsOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 4, "gpsOff.png", (e) -> open())
                 .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
@@ -284,12 +280,6 @@ public class DockManagerImpl
                 .centralImage("toolsradialmenu150.png")
                 .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
                 .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 0, "aisOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 1, "aisOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 3, "gpsOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 4, "gpsOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
                 .build();
         systemRadialMenu.setLayoutX((width / 2));
         systemRadialMenu.setLayoutY(height / 2);
