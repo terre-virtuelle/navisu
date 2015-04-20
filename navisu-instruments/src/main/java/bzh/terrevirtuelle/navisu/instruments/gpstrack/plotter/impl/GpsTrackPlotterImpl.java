@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.gpstrack.logger.impl;
+package bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
@@ -33,7 +33,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @date 3 mars 2015
  * @author Serge Morvan
  */
-public class GpsTrackLoggerImpl
+public class GpsTrackPlotterImpl
         implements GpsLogger, GpsLoggerServices, InstrumentDriver, ComponentState {
 
     ComponentManager cm;

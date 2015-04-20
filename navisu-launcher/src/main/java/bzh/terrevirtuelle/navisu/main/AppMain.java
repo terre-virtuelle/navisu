@@ -277,7 +277,7 @@ public class AppMain extends Application {
         // Test clients à l'écoute des événements Nmea 
         aisServices.on();
         //aisLoggerServices.on();
-        aisPlotterServices.on();
+        //aisPlotterServices.on();
     }
 
     public static void main(String[] args) throws Exception {
