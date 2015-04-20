@@ -58,6 +58,8 @@ import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices
 import bzh.terrevirtuelle.navisu.instruments.template.impl.InstrumentTemplateImpl;
 import bzh.terrevirtuelle.navisu.instruments.compass.CompassServices;
 import bzh.terrevirtuelle.navisu.instruments.compass.impl.CompassImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -128,6 +130,7 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
+                        GpsLoggerImpl.class,  
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -167,6 +170,7 @@ public class AppMain extends Application {
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
+        GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
@@ -222,6 +226,8 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.init();
 
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());

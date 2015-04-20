@@ -18,4 +18,7 @@ public interface AisServices
 
     default void off() {
     }
+
+    boolean isOn();
+
 }

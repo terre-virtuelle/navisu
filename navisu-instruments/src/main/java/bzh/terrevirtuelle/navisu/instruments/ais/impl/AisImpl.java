@@ -65,6 +65,7 @@ public class AisImpl
     @ProducedEvent
     protected AisDeleteStationEvent aisDeleteStationEvent;
 
+    protected boolean on = false;
     protected Ship ship;
     protected BaseStation station;
     protected Map<Integer, Ship> ships;
@@ -112,7 +113,7 @@ public class AisImpl
 
     @Override
     public void on() {
-
+        on = true;
         ais1ES.subscribe(new AIS01Event() {
 
             @Override
@@ -244,8 +245,8 @@ public class AisImpl
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 AIS05 ais = (AIS05) data;
                 int mmsi = ais.getMMSI();
-                
-                 if (!ships.containsKey(mmsi)) {
+
+                if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
                             .mmsi(ais.getMMSI())
                             .destination(ais.getDestination())
@@ -254,7 +255,7 @@ public class AisImpl
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
-               
+
                     ship = ships.get(mmsi);
                     ship.setShipType(ais.getShipType());
                     ship.setName(ais.getShipName());
@@ -265,11 +266,12 @@ public class AisImpl
                 timestamps.put(mmsi, Calendar.getInstance());
             }
         });
-        
+
     }
 
     @Override
     public void off() {
+        on = false;
         ais1ES.unsubscribe(new AIS01Event() {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
@@ -313,4 +315,10 @@ public class AisImpl
                     .getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    public boolean isOn() {
+        return on;
+    }
+
 }

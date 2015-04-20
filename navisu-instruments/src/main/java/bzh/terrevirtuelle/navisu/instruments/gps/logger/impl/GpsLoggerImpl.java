@@ -9,24 +9,16 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
-import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateStationEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisDeleteStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisDeleteTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisUpdateStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisUpdateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLogger;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
-import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -73,7 +65,9 @@ public class GpsLoggerImpl
                 public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
 
                     GGA data = (GGA) d;
-
+                    if (on) {
+                        System.out.println(data);
+                    }
                 }
             });
 
@@ -82,7 +76,9 @@ public class GpsLoggerImpl
                 @Override
                 public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                     VTG data = (VTG) d;
-
+                    if (on) {
+                        System.out.println(data);
+                    }
                 }
             });
             rmcES.subscribe(new RMCEvent() {
@@ -90,7 +86,9 @@ public class GpsLoggerImpl
                 @Override
                 public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                     RMC data = (RMC) d;
-
+                    if (on) {
+                        System.out.println(data);
+                    }
                 }
             });
 
@@ -102,7 +100,6 @@ public class GpsLoggerImpl
         // Pb dans la lib C3 ? objet non retiré de la liste 
         if (on == true) {
             on = false;
-
         }
     }
 
