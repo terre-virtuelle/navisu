@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane id="StackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentController">
+    <children>
+        <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <bottom>
+                <BorderPane id="bo" fx:id="statusBorderPane" prefHeight="24.0" prefWidth="600.0" />
+            </bottom>
+            <center>
+                <SplitPane dividerPositions="0.0" focusTraversable="true" prefHeight="362.0" prefWidth="600.0">
+                    <items>
+                        <BorderPane fx:id="leftBorderPane" prefHeight="200.0" prefWidth="0.0" />
+                        <StackPane fx:id="centerStackPane" prefHeight="200.0" prefWidth="600.0" />
+                    </items>
+                </SplitPane>
+            </center>
+            <top>
+                <MenuBar fx:id="menuBar" useSystemMenuBar="true">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Close" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Delete" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </top>
+        </BorderPane>
+    </children>
+
+
+</StackPane>
