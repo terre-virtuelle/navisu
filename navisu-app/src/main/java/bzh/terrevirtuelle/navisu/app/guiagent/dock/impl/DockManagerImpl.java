@@ -226,7 +226,7 @@ public class DockManagerImpl
         root.getChildren().add(meteoRadialMenu);
         radialMenus.add(meteoRadialMenu);
     }
-//--------------NAVIGATION------------------
+    //--------------NAVIGATION------------------
 
     private void createNavigationRadialWidget() {
         navigationRadialMenu = RadialMenuBuilder.create()
@@ -277,7 +277,7 @@ public class DockManagerImpl
     //--------------System------------------
     private void createSystemRadialWidget() {
         systemRadialMenu = RadialMenuBuilder.create()
-                .centralImage("toolsradialmenu150.png")
+                .centralImage("systemradialmenu150.png")
                 .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
                 .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
                 .createNode(0, "system.png", 1, "devices.png", 0, "aisOn.png", (e) -> open())

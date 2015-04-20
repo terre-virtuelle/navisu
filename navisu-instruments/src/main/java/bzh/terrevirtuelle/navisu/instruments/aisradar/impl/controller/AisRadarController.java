@@ -123,7 +123,7 @@ public class AisRadarController
         timestamps = new HashMap<>();
         createOwnerShip();
         subscribe();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXML_Radar-fullscreen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AisRadar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
