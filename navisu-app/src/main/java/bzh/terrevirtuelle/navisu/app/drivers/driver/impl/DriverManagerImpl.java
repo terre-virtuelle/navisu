@@ -58,7 +58,7 @@ public class DriverManagerImpl
 
         properties = new Properties();
         try {
-            properties.load(new FileInputStream("properties/user.properties"));
+            properties.load(new FileInputStream("properties/caches.properties"));
         } catch (IOException ex) {
             Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,7 +122,7 @@ public class DriverManagerImpl
             LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
         }
         properties.setProperty(category, file.getParent());
-        File f = new File("properties/user.properties");
+        File f = new File("properties/caches.properties");
         OutputStream out;
         try {
             out = new FileOutputStream(f);
