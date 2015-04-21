@@ -133,7 +133,7 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
-                        //GpsLoggerImpl.class,
+                        GpsLoggerImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -173,7 +173,7 @@ public class AppMain extends Application {
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
                 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
-        //GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
+        GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         
         GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
         
@@ -232,7 +232,7 @@ public class AppMain extends Application {
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
-        //instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());

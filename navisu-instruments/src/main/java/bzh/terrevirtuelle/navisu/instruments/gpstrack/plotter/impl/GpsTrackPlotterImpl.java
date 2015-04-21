@@ -22,23 +22,12 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisDeleteStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisDeleteTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisUpdateStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisUpdateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPanelController;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.GShip;
-import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLogger;
-import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotter;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
 
@@ -73,13 +62,13 @@ public class GpsTrackPlotterImpl
     
     protected WorldWindow wwd;
     protected RenderableLayer gpsTrackLayer;
-    protected static final String GROUP = "Cible";
+    protected static final String GROUP = "Target";
     protected Ship ship;
     protected GShip gShip;
     protected boolean gShipCreated = false;
 
     protected boolean on = false;
-    private final String NAME = "GpsTrackLogger";
+    private final String NAME = "GpsTrackPlotter";
 
     @Override
     public void componentInitiated() {
@@ -92,9 +81,11 @@ public class GpsTrackPlotterImpl
         geoViewServices.getLayerManager().createGroup(GROUP);
 
         this.gpsTrackLayer = new RenderableLayer();
-        gpsTrackLayer.setName("Cible");
+        gpsTrackLayer.setName("Target");
         
         geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
+        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
+        
         
 
         cm = ComponentManager.componentManager;
@@ -129,7 +120,8 @@ public class GpsTrackPlotterImpl
                     	ship.setLatitude(data.getLatitude());
                     	ship.setLongitude(data.getLongitude());
                         if (gShipCreated) {
-                    		updateTarget(ship);} 
+                    		updateTarget(ship);
+                        	} 
                     			else {createTarget(ship);
                     					gShipCreated = true;}
                     	
@@ -148,6 +140,7 @@ public class GpsTrackPlotterImpl
                     	System.out.println(data);
                     	ship.setSog(10*data.getSog());
                     	ship.setCog(10*data.getCog());
+                    	createTarget(ship);
                     	if (gShipCreated) {
                     		updateTarget(ship);} 
                     			else {createTarget(ship);
@@ -157,8 +150,8 @@ public class GpsTrackPlotterImpl
                     }
 
                 }
-            });
-            rmcES.subscribe(new RMCEvent() {
+            });*/
+           /* rmcES.subscribe(new RMCEvent() {
 
                 @Override
                 public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
@@ -189,7 +182,7 @@ public class GpsTrackPlotterImpl
             Renderable[] renderables = gShip.getRenderables();
             for (Renderable r : renderables) {
                 gpsTrackLayer.addRenderable(r);
-                layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
+                
             }
             wwd.redrawNow();
         }
