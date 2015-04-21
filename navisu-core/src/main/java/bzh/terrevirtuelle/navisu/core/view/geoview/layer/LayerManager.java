@@ -26,7 +26,7 @@ public interface LayerManager<T> {
 
     void insertGeoLayer(GeoLayer<T>... layers);
 
-    void insertGeoLayer(String groupName, GeoLayer<T>... layers);
+	void insertGeoLayer(String groupName, GeoLayer<T>... layers);
 
     void insertGeoLayerBeforeLayerName(GeoLayer<T> layer, String layerName);
 

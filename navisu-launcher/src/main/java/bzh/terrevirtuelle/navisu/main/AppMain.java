@@ -54,6 +54,8 @@ import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl.GpsTrackPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
@@ -75,11 +77,14 @@ import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
+
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -128,7 +133,7 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
-                        GpsLoggerImpl.class,
+                        //GpsLoggerImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -145,7 +150,8 @@ public class AppMain extends Application {
                         S57ChartImpl.class,
                         S57GlobalCatalogImpl.class,
                         WebDriverManagerImpl.class,
-                        WMSImpl.class
+                        WMSImpl.class,
+                        GpsTrackPlotterImpl.class
                 )
         );
         // Services
@@ -167,7 +173,10 @@ public class AppMain extends Application {
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
                 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
-        GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
+        //GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
+        
+        GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
+        
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
@@ -223,7 +232,9 @@ public class AppMain extends Application {
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
+        //instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
+        
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
@@ -261,7 +272,8 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
-        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        dataServerServices.openFile("data/nmea/test.txt");
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
         //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
@@ -272,12 +284,13 @@ public class AppMain extends Application {
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
-        nmeaClientServices.request(500);
+        nmeaClientServices.request(50);
 
         // Test clients à l'écoute des événements Nmea 
         aisServices.on();
         //aisLoggerServices.on();
         aisPlotterServices.on();
+        gpsTrackPlotterServices.on();
     }
 
     public static void main(String[] args) throws Exception {
