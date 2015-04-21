@@ -10,10 +10,13 @@ import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -35,6 +38,8 @@ public class CompassController
     public Group view;
     @FXML
     public ImageView quit;
+    @FXML
+    public Slider slider;
 
     protected CompassImpl instrument;
     protected ComponentManager cm = ComponentManager.componentManager;
@@ -59,6 +64,13 @@ public class CompassController
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
+        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            Platform.runLater(() -> {
+                view.setOpacity(slider.getValue());
+                // System.out.println(slider.getValue());
+            });
+        });
+
     }
 
     @Override
