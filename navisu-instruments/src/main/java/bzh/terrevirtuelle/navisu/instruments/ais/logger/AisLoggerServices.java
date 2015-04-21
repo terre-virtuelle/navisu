@@ -24,4 +24,5 @@ public interface AisLoggerServices extends ComponentService {
     boolean canOpen(String category);
 
     InstrumentDriver getDriver();
+
 }

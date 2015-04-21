@@ -1,0 +1,192 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+    -fx-font-family: 'Navisu';
+    /*src: url('fonts/Roboto-Black.ttf');
+    src: url('fonts\\Roboto-BlackItalic.ttf');
+    src: url('fonts\\Roboto-BoldCondensed.ttf');
+    src: url('fonts\\Roboto-BoldCondensedItalic.ttf');
+    src: url('fonts\\Roboto-BoldItalic.ttf');
+    src: url('fonts/Roboto-Condensed.ttf');
+    src: url('fonts\\Roboto-CondensedItalic.ttf');
+    src: url('fonts\\Roboto-Italic.ttf');
+    src: url('fonts\\Roboto-Light.ttf');
+    src: url('fonts\\Roboto-LightItalic.ttf');
+    src: url('fonts\\Roboto-Medium.ttf');
+    src: url('fonts\\Roboto-MediumItalic.ttf');*/
+    src: url('fonts/Roboto-Regular.ttf');
+    /*src: url('fonts\\Roboto-Thin.ttf');
+    src: url('fonts\\Roboto-ThinItalic.ttf');
+    src: url('fonts/wwDigital.ttf');
+    src: url('fonts/digital-mono.ttf');*/
+}
+
+*{
+    -fx-base : #143b2860;
+    -fx-line-base : #04fff280;
+    -fx-font-family: Navisu, "Roboto Bk", "Roboto Cn", "Roboto Lt", "Roboto Th", "WW Digital", "Digital-7 Mono"  ;
+}
+.aisvalue{
+    -fx-font: 14px "Roboto Cn";
+    /*-fx-font-weight: bold;*/
+}
+.aisname{
+    -fx-font: 18px "Roboto Cn";
+    /*-fx-font-weight: bold;*/
+    -fx-underline : true;
+}
+.info-text{
+    -fx-font: 16px "Roboto Cn";
+    -fx-fill : #fff900;
+}
+/*******************************************************************************
+ *                                                                             *
+ * cadre                                                                *
+ *                                                                             *
+ ******************************************************************************/
+.foot-pane {
+    -fx-border-radius: 0 0 20 20;
+    -fx-background-radius: 0 0 20 20;
+    -fx-background-color: #143b28;
+}
+.top-pane {
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: #143b28;    
+}
+.left-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.right-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.center-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ScrollPane                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+.scrolling-pane > .viewport {
+    -fx-background-color: #143b28;
+}
+.scrolling-pane > .scroll-bar:horizontal {
+    -fx-background-insets: 0 1 1 1, 1;
+    -fx-padding: 0 1 0 1;
+}
+.scrolling-pane > .scroll-bar:horizontal > .increment-button,
+.scrolling-pane > .scroll-bar:horizontal > .decrement-button {
+    -fx-padding: 0.166667em 0.25em 0.25em  0.25em; /* 2 3 3 3 */
+}
+.scrolling-pane > .scroll-bar:vertical > .increment-button,
+.scrolling-pane > .scroll-bar:vertical > .decrement-button {
+    -fx-padding: 0.25em 0.25em 0.25em 0.166667em; /* 3 3 3 2 */
+}
+.scrolling-pane > .scroll-bar:vertical {
+    -fx-background-insets: 1 1 1 0, 1;
+    -fx-padding: 1 0 1 0;
+}
+.scrolling-pane > .corner {
+    -fx-background-color: #143b28;
+    -fx-background-insets: 0 1 1 0;
+}
+/* new styleclass for edge to edge scrollpanes that don't want to draw a border */
+.scrolling-pane.edge-to-edge,
+.tab-pane > * > .scrolling-pane {
+    -fx-background-color: #ffff00;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scrolling-pane.edge-to-edge > .scroll-bar,
+.tab-pane > * > .scrolling-pane > .scroll-bar,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scrolling-pane.edge-to-edge > .scroll-bar > .increment-button, 
+.scrolling-pane.edge-to-edge > .scroll-bar > .decrement-button,
+.tab-pane > * > .scrolling-pane > .scroll-bar > .increment-button, 
+.tab-pane > * > .scrolling-pane > .scroll-bar > .decrement-button,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar > .increment-button,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar > .decrement-button {
+    -fx-padding: 0.25em; /* 3px */
+}
+
+/*******************************************************************************
+ *                                                                             *
+ *GridPane                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+.grid-pane {
+    -fx-background-color: #143b28;  
+}
+
+
+/*******************************************************************************
+ *                                                                             *
+ * Slider                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+.slider .thumb {
+    -fx-background-color:   -fx-line-base;
+    -fx-background-insets: 2;
+    -fx-background-radius: 1.0em; /* makes sure this remains circular */
+    -fx-padding: 0.583333em;  /* 7 */
+    -fx-effect: dropshadow(two-pass-box , rgba(0, 0, 0, 0.1), 5, 0.0 , 0, 2);
+}
+.slider:focused .thumb {
+    -fx-background-radius: 1.0em; /* makes sure this remains circular */
+
+}
+.slider .track {
+    -fx-background-color:  #04fff2, -fx-line-base;
+    -fx-background-insets: 2, 1;
+    -fx-background-radius: 0.25em, 0.166667em; /* 3 3 2 */
+    -fx-padding: 0.25em; /* 3 */
+}
+.slider:vertical .track {
+    -fx-background-color: -fx-line-base;
+}
+.slider .axis {
+    -fx-tick-label-fill: derive(-fx-background, 30%);
+    -fx-tick-length: 5px;
+    -fx-minor-tick-length: 3px;
+    -fx-border-color: null;
+}
+/*******************************************************************************
+ *                                                                             *
+ * radar circles and lines                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.radar-circle, .radar-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: #143b2810;  
+}
+.radar-line{
+    -fx-stroke: -fx-line-base;      
+}
+.radar-screen {
+    /*
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 4px;
+    */
+    -fx-arc-height:30;
+    -fx-arc-width:30;
+    -fx-fill: #143b28;    
+}
+.radar-info-pane {
+    -fx-stroke: -fx-line-base;
+    -fx-arc-height:20;
+    -fx-arc-width:20;
+    -fx-fill: #143b2820;
+}

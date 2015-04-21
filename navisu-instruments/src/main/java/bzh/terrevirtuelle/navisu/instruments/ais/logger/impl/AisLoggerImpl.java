@@ -27,7 +27,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @author Serge Morvan
  */
 public class AisLoggerImpl
-        implements AisLogger, AisLoggerServices, InstrumentDriver, ComponentState {
+        implements AisLogger, InstrumentDriver, AisLoggerServices, ComponentState {
 
     @UsedService
     AisServices aisServices;
@@ -144,3 +144,4 @@ public class AisLoggerImpl
         return on;
     }
 }
+

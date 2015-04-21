@@ -37,7 +37,7 @@ public class ClientMain extends Application {
                 NmeaClientImpl.class
         ));
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
-        nmeaClientServices.open("localhost", 8585);
+        nmeaClientServices.open("localhost", 8080);
         nmeaClientServices.request(100);
 
         Button button = new Button("Stop",

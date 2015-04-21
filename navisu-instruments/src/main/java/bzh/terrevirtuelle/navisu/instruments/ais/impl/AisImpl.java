@@ -320,4 +320,5 @@ public class AisImpl
     public boolean isOn() {
         return on;
     }
+
 }

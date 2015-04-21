@@ -50,6 +50,8 @@ public class InstrumentDriverManagerImpl
         return compatibleDriver;
     }
 
+
+
     @Override
     public void registerNewDriver(InstrumentDriver driver) {
         Checker.notNull(driver, "Driver must not be null.");

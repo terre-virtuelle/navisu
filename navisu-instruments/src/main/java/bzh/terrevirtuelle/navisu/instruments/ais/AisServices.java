@@ -20,4 +20,5 @@ public interface AisServices
     }
 
     boolean isOn();
+
 }

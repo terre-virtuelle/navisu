@@ -118,7 +118,7 @@ public class NmeaClientImpl
     public void request(int period) {
         this.period = period;
         vertx.setPeriodic(period, (Long timerID) -> {
-            ws.writeTextFrame("nmea");
+            ws.writeTextFrame("request");
         });
     }
 

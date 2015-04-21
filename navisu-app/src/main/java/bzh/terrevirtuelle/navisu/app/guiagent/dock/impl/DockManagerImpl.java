@@ -29,7 +29,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.FileChooser;
 import org.capcaval.c3.component.annotation.UsedService;
 
 /*
@@ -70,6 +69,7 @@ public class DockManagerImpl
     protected RadialMenu chartsRadialMenu;
     protected RadialMenu toolsRadialMenu;
     protected RadialMenu navigationRadialMenu;
+    protected RadialMenu systemRadialMenu;
     protected ImageView centerImg;
     protected int width;
     protected int height;
@@ -78,6 +78,10 @@ public class DockManagerImpl
     private List<RadialMenu> radialMenus;
 
     public final DockItem[] ICONS = new DockItem[]{
+        DockItemFactory.newImageItem("system I/O", ICON_PATH + "dock_icons/system.png",
+        (e) -> {
+            systemRadialMenu.setVisible(!systemRadialMenu.isVisible());
+        }),
         DockItemFactory.newImageItem("user tools", ICON_PATH + "dock_icons/tools.png",
         (e) -> {
             toolsRadialMenu.setVisible(!toolsRadialMenu.isVisible());
@@ -132,6 +136,7 @@ public class DockManagerImpl
         createTidesRadialWidget();
         createToolsRadialWidget();
         createNavigationRadialWidget();
+        createSystemRadialWidget();
     }
 
     private void createDockWidget(Scene scene) {
@@ -202,8 +207,10 @@ public class DockManagerImpl
                 .createNode(0, "navigation.png", 0, "ais.png", 1, "aisRadarOff.png", (e) -> close("AisRadar"))
                 .createNode(0, "navigation.png", 0, "ais.png", 2, "aisLogOn.png", (e) -> open("AisLogger"))
                 .createNode(0, "navigation.png", 0, "ais.png", 3, "aisLogOff.png", (e) -> close("AisLogger"))
-                .createNode(0, "navigation.png", 1, "ais.png", 0, "template.png", (e) -> open("InstrumentTemplate"))
-                .createNode(0, "navigation.png", 2, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
+                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOn.png", (e) -> open("GpsLogger"))
+                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOff.png", (e) -> close("GpsLogger"))
+                .createNode(0, "navigation.png", 2, "compass.png", 0, "compass.png", (e) -> open("Compass"))
+                .createNode(0, "navigation.png", 3, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);
@@ -223,7 +230,7 @@ public class DockManagerImpl
         root.getChildren().add(meteoRadialMenu);
         radialMenus.add(meteoRadialMenu);
     }
-//--------------NAVIGATION------------------
+    //--------------NAVIGATION------------------
 
     private void createNavigationRadialWidget() {
         navigationRadialMenu = RadialMenuBuilder.create()
@@ -255,12 +262,8 @@ public class DockManagerImpl
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-                .createNode(0, "system.png", 0, "files.png", 0, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
-                .createNode(0, "system.png", 0, "files.png", 1, "fileReadOff.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 0, "aisPlotOn.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 1, "aisPlotOff.png", (e) -> open())
                 .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 3, "gpsConf.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
                 .build();
@@ -270,7 +273,20 @@ public class DockManagerImpl
         radialMenus.add(toolsRadialMenu);
     }
 
-    // Instruments
+    //--------------System------------------
+
+    private void createSystemRadialWidget() {
+        systemRadialMenu = RadialMenuBuilder.create()
+                .centralImage("systemradialmenu150.png")
+                .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
+                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
+                .build();
+        systemRadialMenu.setLayoutX((width / 2));
+        systemRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(systemRadialMenu);
+        radialMenus.add(systemRadialMenu);
+    }
+
     private void open() {
         System.out.println("Work in progress");
         clear();
@@ -281,13 +297,6 @@ public class DockManagerImpl
         clear();
     }
 
-    private void close(String keyName) {
-        InstrumentDriver instrumentDriver = instrumentDriverManagerServices.findDriver(keyName);
-        if (instrumentDriver != null) {
-            instrumentDriver.off();
-        }
-    }
-    // Files
     private void open(String description, String... des) {
         String[] tab = new String[des.length];
         int i = 0;
@@ -298,12 +307,19 @@ public class DockManagerImpl
         driverManagerServices.open(description, tab);
         clear();
     }
-    // web servers
+
+    private void close(String keyName) {
+        InstrumentDriver instrumentDriver = instrumentDriverManagerServices.findDriver(keyName);
+        if (instrumentDriver != null) {
+            instrumentDriver.off();
+        }
+    }
+
     private void openWMS(String description, String url) {
         webDriverManagerServices.handleOpenFiles(url);
         clear();
     }
-    // databases
+
     private void openDB(String dbName, String hostName, String protocol, String port,
             String driverName, String userName, String passwd) {
         databaseDriverManagerServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
@@ -314,7 +330,7 @@ public class DockManagerImpl
         databaseDriverManagerServices.close(dbName);
         clear();
     }
-    //Clear menus
+
     private void clear() {
         radialMenus.stream().forEach((r) -> {
             r.setVisible(false);
