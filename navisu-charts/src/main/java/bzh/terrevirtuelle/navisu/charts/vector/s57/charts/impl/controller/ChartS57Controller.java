@@ -75,7 +75,7 @@ public class ChartS57Controller {
 
     @UsedService
     GuiAgentServices guiAgentServices;
-    
+
     private final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     private static final ChartS57Controller INSTANCE;
     protected String path;
@@ -90,7 +90,6 @@ public class ChartS57Controller {
     protected WorldWindow wwd;
     protected Globe globe;
     private boolean isDisplay = false;
-    private GlobeAnnotation tooltipAnnotation;
     private final Map<Pair<Double, Double>, String> topMarks;
     private String marsys;
     private SurveyZoneController surveyZoneController;
@@ -101,8 +100,8 @@ public class ChartS57Controller {
     }
 
     public ChartS57Controller() {
-         // surveyZoneController = new SurveyZoneController();
-         // guiAgentServices.getRoot().getChildren().add(surveyZoneController);
+        // surveyZoneController = new SurveyZoneController();
+        // guiAgentServices.getRoot().getChildren().add(surveyZoneController);
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
@@ -259,7 +258,7 @@ public class ChartS57Controller {
                         load(new LAKE_ShapefileLoader("LAKARE", new Color(9, 13, 33), 1.0), "EARTH", "LAKARE", "/");
                         break;
                     case "LNDMRK.shp":
-                        load(new LANDMARK_ShapefileLoader(marsys, "LNDMRK"), "BUILDING", "LNDMRK", "/");
+                        load(new LANDMARK_ShapefileLoader(DEV, marsys, "LNDMRK"), "BUILDING", "LNDMRK", "/");
                         break;
                     case "MIPARE.shp":
                         load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.0, false), "AREA", "MIPARE", "/");

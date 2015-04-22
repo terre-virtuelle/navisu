@@ -65,7 +65,6 @@ public class BUOYAGE_ShapefileLoader
 
     @Override
     protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
-        System.out.println("layer " + layer + "  " + layer.getNumRenderables());
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
 
