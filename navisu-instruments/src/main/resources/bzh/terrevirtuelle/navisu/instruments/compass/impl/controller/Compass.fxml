@@ -13,17 +13,14 @@
     <children>
         <Group>
             <children>
-                <Pane opacity="0.6" prefHeight="50.0" prefWidth="405.0" styleClass="top-pane">
+                <Pane prefHeight="50.0" prefWidth="405.0" styleClass="top-pane">
                     <children>
-                        <Text fx:id="title" fill="#c2f8c4" layoutX="128.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisname" text="COMPASS" textAlignment="CENTER" wrappingWidth="149.0">
+                        <Text fx:id="title" layoutX="128.0" layoutY="31.0" styleClass="headingtext" text="COMPASS" textAlignment="CENTER" wrappingWidth="149.0">
                         </Text>
-                        <Slider fx:id="slider" layoutX="15.0" layoutY="20.0" majorTickUnit="50.0" minorTickCount="4" min="0.0" max="1.0" prefHeight="5.0" prefWidth="100.0">
-                        </Slider>
                     </children>
                 </Pane>
-                <Pane layoutX="0" layoutY="50" opacity="0.6" prefHeight="250.0" prefWidth="15.0" styleClass="left-pane" />
-                <Pane layoutX="390" layoutY="50" opacity="0.6" prefHeight="250.0" prefWidth="15.0" styleClass="right-pane" />   
-                <Pane layoutY="300" opacity="0.6" prefHeight="40.0" prefWidth="405.0" styleClass="foot-pane" />
+                <Pane layoutX="0" layoutY="50" prefHeight="250.0" prefWidth="15.0" styleClass="left-pane" />   
+                <Pane layoutY="300" prefHeight="40.0" prefWidth="405.0" styleClass="foot-pane" />
                 <Pane layoutX="30.0" layoutY="50.0" prefHeight="250.0" prefWidth="350.0" styleClass="scrolling-pane" />
                 <Group layoutX="10.0" />
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -39,7 +36,7 @@
                         <Image url="@quit.png" />
                     </image>
                 </ImageView>
-                <GridPane layoutX="15.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.6" prefHeight="250.0" prefWidth="375.0" styleClass="grid-pane">
+                <GridPane layoutX="15.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="375.0" styleClass="grid-pane">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -52,7 +49,19 @@
                     <children>
                         <Pane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="225.0" layoutX="10.0" layoutY="10.0" stroke="#70bbbf" strokeType="INSIDE" width="225.0" />
+                                <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="245.0" stroke="#70bbbf" strokeType="INSIDE" width="245.0" />
+                        <ImageView fitHeight="220.0" fitWidth="220.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@couronne.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="101.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@navirecompass.png" />
+                           </image>
+                        </ImageView>
+                        <Text fx:id="headingValue" layoutX="95.0" layoutY="175.0" styleClass="headingtext" text="270" textAlignment="CENTER" wrappingWidth="50.0" x="4.0" />
+                        
                             </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -72,6 +81,17 @@
                         </Pane>
                     </children>
                 </GridPane>
+                <Pane layoutX="390" layoutY="50" prefHeight="250.0" prefWidth="15.0" styleClass="right-pane">
+                    <children>
+                        <Slider fx:id="slider" layoutX="-5.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                        </Slider>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="-10.0" layoutY="125.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@journuit2.png" />
+                     </image>
+                  </ImageView>
+                    </children>
+                </Pane>
             </children>
         </Group>
     </children>
