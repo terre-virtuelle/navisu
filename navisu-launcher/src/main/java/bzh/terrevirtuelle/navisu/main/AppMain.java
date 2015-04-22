@@ -77,7 +77,11 @@ import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Sector;
+import gov.nasa.worldwindx.examples.util.SectorSelector;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -291,9 +295,25 @@ public class AppMain extends Application {
         //aisLoggerServices.on();
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
+        
+        SectorSelector selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
+        selector.enable();
+        
+        selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY, new PropertyChangeListener()
+        {
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                Sector sector = (Sector) evt.getNewValue();
+                System.out.println(sector != null ? sector : "no sector");
+            }
+        });
+        
     }
+        
+ 
 
     public static void main(String[] args) throws Exception {
         Application.launch();
+        
     }
 }
