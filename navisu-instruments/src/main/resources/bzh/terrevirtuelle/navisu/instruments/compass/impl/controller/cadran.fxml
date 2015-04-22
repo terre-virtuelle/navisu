@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Group scaleX="0.5" scaleY="0.5">
+         <children>
+            <Group rotate="90.0">
+               <children>
+                  <Group rotate="60.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="70.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="10.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="90.0" visible="false">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="50.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="80.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="30.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="20.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="40.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+               </children>
+            </Group>
+            <Group>
+               <children>
+                  <Group rotate="60.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="70.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="10.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="90.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="50.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="80.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="30.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="20.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="40.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+               </children>
+            </Group>
+         </children>
+      </Group>
+      <Group scaleX="0.75" scaleY="0.75">
+         <children>
+            <Group rotate="90.0">
+               <children>
+                  <Group rotate="60.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="70.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="10.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="90.0" visible="false">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="50.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="80.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="30.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="20.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="40.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+               </children>
+            </Group>
+            <Group>
+               <children>
+                  <Group rotate="60.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="70.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="10.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="90.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="50.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="80.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group>
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="30.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="20.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+                  <Group rotate="40.0">
+                     <children>
+                        <Line endX="20.0" layoutY="300.0" />
+                        <Line endX="20.0" layoutX="580.0" layoutY="300.0" />
+                     </children>
+                  </Group>
+               </children>
+            </Group>
+         </children>
+      </Group>
+   </children>
+</Pane>

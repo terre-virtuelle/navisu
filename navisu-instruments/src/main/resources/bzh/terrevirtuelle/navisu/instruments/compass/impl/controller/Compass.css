@@ -2,36 +2,32 @@
 /* CSS Document */
 @font-face {
     -fx-font-family: 'Navisu';
-    /*src: url('fonts/Roboto-Black.ttf');
-    src: url('fonts\\Roboto-BlackItalic.ttf');
-    src: url('fonts\\Roboto-BoldCondensed.ttf');
-    src: url('fonts\\Roboto-BoldCondensedItalic.ttf');
-    src: url('fonts\\Roboto-BoldItalic.ttf');
+
     src: url('fonts/Roboto-Condensed.ttf');
-    src: url('fonts\\Roboto-CondensedItalic.ttf');
-    src: url('fonts\\Roboto-Italic.ttf');
-    src: url('fonts\\Roboto-Light.ttf');
-    src: url('fonts\\Roboto-LightItalic.ttf');
-    src: url('fonts\\Roboto-Medium.ttf');
-    src: url('fonts\\Roboto-MediumItalic.ttf');*/
-    src: url('fonts/Roboto-Regular.ttf');
-    /*src: url('fonts\\Roboto-Thin.ttf');
-    src: url('fonts\\Roboto-ThinItalic.ttf');
-    src: url('fonts/wwDigital.ttf');
-    src: url('fonts/digital-mono.ttf');*/
+
 }
 
 *{
     -fx-base : #143b2860;
     -fx-line-base : #04fff280;
-    -fx-font-family: Navisu, "Roboto Bk", "Roboto Cn", "Roboto Lt", "Roboto Th", "WW Digital", "Digital-7 Mono"  ;
+    -fx-font-family: Navisu, "Roboto Cn" ;
+    -fx-color-typo: #c2f8c4;
 }
+.instrumenttitle{
+    -fx-font: 24px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+    /*-fx-font-weight: bold;
+    -fx-underline : true;*/
+}
+
 .aisvalue{
     -fx-font: 14px "Roboto Cn";
+    -fx-fill : #c2f8c4;
     /*-fx-font-weight: bold;*/
 }
 .aisname{
     -fx-font: 18px "Roboto Cn";
+    -fx-fill : #c2f8c4;
     /*-fx-font-weight: bold;*/
     -fx-underline : true;
 }
@@ -151,10 +147,35 @@
 }
 .slider:vertical .track {
     -fx-background-color: -fx-line-base;
-        }
+    -fx-background-insets: 2, 1;
+    -fx-background-radius: 0.25em, 0.166667em; /* 3 3 2 */
+    -fx-padding: 0.25em; /* 3 */
+}
 .slider .axis {
     -fx-tick-label-fill: derive(-fx-background, 30%);
     -fx-tick-length: 5px;
     -fx-minor-tick-length: 3px;
     -fx-border-color: null;
+}
+/*******************************************************************************
+ *                                                                             *
+ * compass                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+
+.compass-ticks{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 5px;
+    -fx-fill: #143b28;
+}
+.compass-ticks-quarter{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 10px;
+    -fx-fill: #143b28;
+}
+.headingtext{
+    -fx-font: 20px "Roboto Cn";
+    -fx-fill: -fx-color-typo;
+    /*-fx-font-weight: bold;*/   
 }

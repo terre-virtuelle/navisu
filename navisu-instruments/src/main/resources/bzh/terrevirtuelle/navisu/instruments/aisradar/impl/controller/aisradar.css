@@ -172,8 +172,9 @@
     -fx-stroke: -fx-line-base;
     -fx-fill: #143b2810;  
 }
-.radar-line{
-    -fx-stroke: -fx-line-base;      
+.radar-line, .radar-ticks{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1px;
 }
 .radar-screen {
     /*

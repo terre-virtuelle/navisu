@@ -61,9 +61,11 @@ public class CompassController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        view.setOpacity(0.8);
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
+        
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 view.setOpacity(slider.getValue());
