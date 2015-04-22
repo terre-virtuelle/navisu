@@ -13,7 +13,6 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -38,7 +37,8 @@ public class LANDMARK_ShapefileLoader
     private Set<Entry<String, Object>> entries;
     private Class claz;
     private final String acronym;
-    private final String marsys;
+    private final String marsys;private boolean dev=false;
+    
 
     public LANDMARK_ShapefileLoader(String marsys, String acronym) {
         this.marsys = marsys;

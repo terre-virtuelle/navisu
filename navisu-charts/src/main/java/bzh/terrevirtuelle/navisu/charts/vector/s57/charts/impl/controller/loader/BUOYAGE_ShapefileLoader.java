@@ -44,10 +44,12 @@ public class BUOYAGE_ShapefileLoader
     private Set<Entry<String, Object>> entries;
     private Class claz;
     private final String acronym;
-    private final Map<Pair<Double,Double>, String> topMarks;
+    private final Map<Pair<Double, Double>, String> topMarks;
     private final String marsys;
+    private boolean dev = false;
 
-    public BUOYAGE_ShapefileLoader(String path, Map<Pair<Double,Double>, String> topMarks, String marsys, String acronym) {
+    public BUOYAGE_ShapefileLoader(boolean dev, String path, Map<Pair<Double, Double>, String> topMarks, String marsys, String acronym) {
+        this.dev = dev;
         this.topMarks = topMarks;
         this.marsys = marsys;
         this.acronym = acronym;
@@ -63,7 +65,7 @@ public class BUOYAGE_ShapefileLoader
 
     @Override
     protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
-
+        System.out.println("layer " + layer + "  " + layer.getNumRenderables());
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
 
@@ -73,7 +75,7 @@ public class BUOYAGE_ShapefileLoader
             attrs = this.createPointAttributes(record);
             double[] point = ((ShapefileRecordPoint) record).getPoint();
             layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
-            
+
         }
     }
 
@@ -95,7 +97,7 @@ public class BUOYAGE_ShapefileLoader
 
         objects.add(object);
         entries = record.getAttributes().getEntries();
-       
+
         object.setLat(latDegrees);
         object.setLon(lonDegrees);
         //   String mark = null;
@@ -194,6 +196,25 @@ public class BUOYAGE_ShapefileLoader
         if (tm == null) {
             tm = "0";
         }
+        String label;
+        if (dev) {
+            label = acronym + "_"
+                    + object.getShape() + "_"
+                    + object.getCategoryOfMark() + "_"
+                    + object.getColour() + "_"
+                    + object.getColourPattern() + "_"
+                    + tm
+                    + "_" + marsys
+                    + ".png";
+        } else {
+            label = claz.getSimpleName() + "\n"
+                    + ((catMark != null && !catMark.equals("0")) ? catMark : "") + "\n"
+                    + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
+                    + "Lat : " + new Float(object.getLat()).toString() + "\n "
+                    + "Lon : " + new Float(object.getLon()).toString();
+        }
+        placemark.setValue(AVKey.DISPLAY_NAME, label);
+
         attrs.setImageAddress("img/buoyage_" + marsys + "/" + acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"
@@ -205,17 +226,6 @@ public class BUOYAGE_ShapefileLoader
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.65);//0.9
         placemark.setAttributes(attrs);
-
-        String label = acronym + "_"
-                + object.getShape() + "_"
-                + object.getCategoryOfMark() + "_"
-                + object.getColour() + "_"
-                + object.getColourPattern() + "_"
-                + tm
-                + "_" + marsys
-                + ".png";
-       // System.out.println("label : " + label);
-        placemark.setValue(AVKey.DISPLAY_NAME, label);
 
         return placemark;
     }
