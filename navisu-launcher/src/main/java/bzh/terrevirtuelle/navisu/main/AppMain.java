@@ -273,7 +273,7 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        dataServerServices.openFile("data/nmea/test.txt");
+        dataServerServices.openFile("data/nmea/test1.txt");
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
         //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
@@ -284,7 +284,7 @@ public class AppMain extends Application {
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
-        nmeaClientServices.request(50);
+        nmeaClientServices.request(300);
 
         // Test clients à l'écoute des événements Nmea 
         aisServices.on();

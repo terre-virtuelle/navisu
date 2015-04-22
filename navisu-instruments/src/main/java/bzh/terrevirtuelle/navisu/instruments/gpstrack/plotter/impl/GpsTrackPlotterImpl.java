@@ -5,10 +5,19 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl;
 
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.util.WWUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,10 +71,16 @@ public class GpsTrackPlotterImpl
     
     protected WorldWindow wwd;
     protected RenderableLayer gpsTrackLayer;
-    protected static final String GROUP = "Target";
+    
+    protected RenderableLayer layer;
+    protected ArrayList<Position> pathPositions;
+    protected ShapeAttributes attrs;
+    
+    protected static final String GROUP = "Target display";
     protected Ship ship;
     protected GShip gShip;
     protected boolean gShipCreated = false;
+    protected boolean pathCreated = false;
 
     protected boolean on = false;
     private final String NAME = "GpsTrackPlotter";
@@ -83,10 +98,22 @@ public class GpsTrackPlotterImpl
         this.gpsTrackLayer = new RenderableLayer();
         gpsTrackLayer.setName("Target");
         
+        this.layer= new RenderableLayer();
+        layer.setName("Path");
+        
+        pathPositions = new ArrayList<Position>();
+        
         geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
         
+        geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         
+        attrs = new BasicShapeAttributes();
+        attrs.setOutlineMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
+        attrs.setInteriorMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
+        attrs.setOutlineWidth(3.5);
+        //attrs.setOutlineWidth(2d);
 
         cm = ComponentManager.componentManager;
         ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -117,13 +144,25 @@ public class GpsTrackPlotterImpl
                     GGA data = (GGA) d;
                     if (on) {
                     	System.out.println(data);
+                    	
+                    	if (gShipCreated) {pathPositions.add(Position.fromDegrees(ship.getLatitude(), ship.getLongitude()));
+                    						layer.removeAllRenderables();
+                    						if (pathCreated) {updatePath(new Path(pathPositions));} 
+                    						else {createPath(new Path(pathPositions));}
+                    						}
+                    	
                     	ship.setLatitude(data.getLatitude());
                     	ship.setLongitude(data.getLongitude());
+                    	
+
+                       
+                    	
+                    	
                         if (gShipCreated) {
                     		updateTarget(ship);
                         	} 
                     			else {createTarget(ship);
-                    					gShipCreated = true;}
+                    					}
                     	
                     }
 
@@ -186,11 +225,38 @@ public class GpsTrackPlotterImpl
             }
             wwd.redrawNow();
         }
+        gShipCreated = true;
     }
     
     private void updateTarget(Ship target) {
           gShip.update(target);
           wwd.redrawNow();
+      }
+    
+    private void createPath(Path path) {
+        
+            
+        path.setAltitudeMode(WorldWind.ABSOLUTE);
+        //path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+        path.setVisible(true);
+        path.setExtrude(true);
+        path.setPathType(AVKey.GREAT_CIRCLE);
+        path.setAttributes(attrs);
+        layer.addRenderable(path);
+        wwd.redrawNow();
+        pathCreated = true;
+    }
+    
+    private void updatePath(Path path) {
+
+        path.setAltitudeMode(WorldWind.ABSOLUTE);
+        //path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+        path.setVisible(true);
+        path.setExtrude(true);
+        path.setPathType(AVKey.GREAT_CIRCLE);
+        path.setAttributes(attrs);
+        layer.addRenderable(path);
+        wwd.redrawNow();
       }
     
     @Override
@@ -217,4 +283,7 @@ public class GpsTrackPlotterImpl
     public boolean isOn() {
         return on;
     }
+    
+    
+    
 }
