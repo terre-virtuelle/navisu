@@ -25,14 +25,24 @@ import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.Shape;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.util.WWUtil;
+import gov.nasa.worldwindx.examples.util.SectorSelector;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -75,9 +85,19 @@ public class AisPlotterImpl
     protected Map<Integer, Ship> ships;
     protected Map<Integer, GShip> gShips;
     protected Map<Integer, BaseStation> stations;
+    
+    protected SectorSelector selector;
+    protected RenderableLayer sectorLayer;
+    protected boolean alarmOn = false;
 
     @Override
     public void componentInitiated() {
+    	
+    	selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
+        //selector.enable();
+        selector.setBorderColor(WWUtil.decodeColorRGBA("FFFF00FF"));
+        sectorLayer = (RenderableLayer)selector.getLayer();
+        
         ships = new HashMap<>();
         gShips = new HashMap<>();
         stations = new HashMap<>();
@@ -90,6 +110,10 @@ public class AisPlotterImpl
         aisLayer.setName("AIS");
         geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(aisLayer));
         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(aisLayer));
+        
+        sectorLayer.setName("AIS Watch sector");
+        geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
+        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
 
         cm = ComponentManager.componentManager;
         aisCSEvent = cm.getComponentEventSubscribe(AisCreateStationEvent.class);
@@ -112,10 +136,12 @@ public class AisPlotterImpl
     public void on() {
 
         aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
-            createTarget(updatedData);
+        	createTarget(updatedData);
+        	watchTarget(selector.getSector(), updatedData);
         });
         aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
             updateTarget(updatedData);
+            watchTarget(selector.getSector(), updatedData);
         });
         aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship updatedData) -> {
             System.out.println(updatedData);
@@ -191,7 +217,7 @@ public class AisPlotterImpl
         });
     }
     private void createTarget(Ship target) {
-        GShip gShip = new GShip(target);
+    	GShip gShip = new GShip(target);
         gShips.put(target.getMMSI(), gShip);
         if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
             Renderable[] renderables = gShip.getRenderables();
@@ -204,9 +230,38 @@ public class AisPlotterImpl
 
     private void updateTarget(Ship target) {
       //  System.out.println("updateTarget " + target.getShipType()+ "   ");
-        GShip gShip = gShips.get(target.getMMSI());
+    	GShip gShip = gShips.get(target.getMMSI());
         gShip.update(target);
         wwd.redrawNow();
        // createTarget( target);
     }
+    
+    private void watchTarget(Sector sector, Ship target) {
+
+    	if (sector != null && target != null && sector.containsDegrees(target.getLatitude(), target.getLongitude())) {
+    		System.err.println("============ W A R N I N G ============ Ship with MMSI #"+target.getMMSI()+" is inside Sector#1");
+    		
+    		if (!alarmOn)
+    			{
+    			MediaPlayer mediaPlayer;
+    			javafx.scene.media.Media media;
+    			String userDir = System.getProperty("user.dir");
+    			userDir = userDir.replace("\\", "/");
+    			String url = userDir + "/data/sounds/alarm10.wav";
+    			media = new Media("file:///" + url);
+    			mediaPlayer = new MediaPlayer(media);
+    			alarmOn = true;
+    			mediaPlayer.setAutoPlay(true);
+    			mediaPlayer.setCycleCount(1);
+    			Timer timer = new Timer();
+    	        timer.schedule (new TimerTask() {
+    	            public void run()
+    	            	{
+    	                alarmOn = false;
+    	            	}
+    	        									}, 7500);
+    			}
+    		}
+    }
+    
 }

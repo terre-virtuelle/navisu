@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl;
 
+import gov.nasa.worldwind.AbstractSceneController;
+import gov.nasa.worldwind.SceneController;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -16,6 +18,7 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfaceText;
 import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwindx.examples.util.SectorSelector;
 
@@ -24,7 +27,11 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -91,15 +98,17 @@ public class GpsTrackPlotterImpl
     
     protected SectorSelector selector;
     protected RenderableLayer sectorLayer;
+    protected boolean alarmOn = false;
 
     @Override
     public void componentInitiated() {
 
 
         ship = new Ship();
+        ship.setMMSI(999999999);
         selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
         selector.enable();
-        selector.setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
+        selector.setBorderColor(WWUtil.decodeColorRGBA("FF0000FF"));
         
        /* selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY, new PropertyChangeListener()
         {
@@ -130,7 +139,7 @@ public class GpsTrackPlotterImpl
         geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         
-        sectorLayer.setName("Sector");
+        sectorLayer.setName("Watch sector");
         geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
         
@@ -170,13 +179,13 @@ public class GpsTrackPlotterImpl
 
                     GGA data = (GGA) d;
                     if (on) {
-                    	System.out.println(data);
+                    	//Pour voir les messages NMEA
+                    	//System.out.println(data);
                     	
                     	ship.setLatitude(data.getLatitude());
                     	ship.setLongitude(data.getLongitude());
                     	
-                    	if (selector.getSector().containsDegrees(ship.getLatitude(), ship.getLongitude())) {
-                    			System.err.println("ALARM!!!!!!!!!!");}
+                    	watchTarget(selector.getSector(), ship);
                     	
                     	if (gShipCreated) {pathPositions.add(Position.fromDegrees(ship.getLatitude(), ship.getLongitude()));
                     						updateTarget(ship);
@@ -308,6 +317,45 @@ public class GpsTrackPlotterImpl
         return on;
     }
     
-    
+    private void watchTarget(Sector sector, Ship target) {
+
+    	if (sector != null && target != null && sector.containsDegrees(target.getLatitude(), target.getLongitude())) {
+    		System.err.println("============ W A R N I N G ============ Ship with MMSI #"+target.getMMSI()+" is inside Sector#1");
+    		Position pos = new Position (sector.getCentroid(),0);
+    		SurfaceText text = new SurfaceText("!", pos);
+    		text.setColor(WWUtil.decodeColorRGBA("FF0000FF"));
+    		if (sectorLayer.isEnabled()) {
+    			sectorLayer.addRenderable(text);
+    			Timer timer1 = new Timer();
+    			timer1.schedule (new TimerTask() {
+    			public void run()
+	            	{
+	                sectorLayer.removeRenderable(text);
+	            	}
+	        										}, 100);
+    			}
+    	
+    		if (!alarmOn)
+    			{
+    			MediaPlayer mediaPlayer;
+    			javafx.scene.media.Media media;
+    			String userDir = System.getProperty("user.dir");
+    			userDir = userDir.replace("\\", "/");
+    			String url = userDir + "/data/sounds/alarm10.wav";
+    			media = new Media("file:///" + url);
+    			mediaPlayer = new MediaPlayer(media);
+    			alarmOn = true;
+    			mediaPlayer.setAutoPlay(true);
+    			mediaPlayer.setCycleCount(1);
+    			Timer timer = new Timer();
+    	        timer.schedule (new TimerTask() {
+    	            public void run()
+    	            	{
+    	                alarmOn = false;
+    	            	}
+    	        									}, 7500);
+    			}
+    		}
+    }
     
 }
