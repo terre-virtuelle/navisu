@@ -77,11 +77,7 @@ import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
-import gov.nasa.worldwindx.examples.util.SectorSelector;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -277,7 +273,8 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        dataServerServices.openFile("data/nmea/test1.txt");
+        dataServerServices.openFile("data/nmea/test2.txt");
+        //dataServerServices.openFile("data/nmea/test1.txt");
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
         //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
@@ -288,25 +285,13 @@ public class AppMain extends Application {
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
-        nmeaClientServices.request(300);
+        nmeaClientServices.request(1000);
 
         // Test clients à l'écoute des événements Nmea 
         aisServices.on();
         //aisLoggerServices.on();
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
-        
-        SectorSelector selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
-        selector.enable();
-        
-        selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY, new PropertyChangeListener()
-        {
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                Sector sector = (Sector) evt.getNewValue();
-                System.out.println(sector != null ? sector : "no sector");
-            }
-        });
         
     }
         

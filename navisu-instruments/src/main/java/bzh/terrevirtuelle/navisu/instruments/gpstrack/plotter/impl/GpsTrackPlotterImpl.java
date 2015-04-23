@@ -9,6 +9,7 @@ import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -16,7 +17,10 @@ import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.WWUtil;
+import gov.nasa.worldwindx.examples.util.SectorSelector;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,12 +88,29 @@ public class GpsTrackPlotterImpl
 
     protected boolean on = false;
     private final String NAME = "GpsTrackPlotter";
+    
+    protected SectorSelector selector;
+    protected RenderableLayer sectorLayer;
 
     @Override
     public void componentInitiated() {
 
 
         ship = new Ship();
+        selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
+        selector.enable();
+        selector.setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
+        
+       /* selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY, new PropertyChangeListener()
+        {
+            public void propertyChange(PropertyChangeEvent evt)
+            {
+                Sector sector = (Sector) evt.getNewValue();
+                System.out.println(sector != null ? sector : "no sector");
+            }
+        });*/
+        
+        sectorLayer = (RenderableLayer)selector.getLayer();
         
         wwd = GeoWorldWindViewImpl.getWW();
         layerTreeServices.createGroup(GROUP);
@@ -109,6 +130,10 @@ public class GpsTrackPlotterImpl
         geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         
+        sectorLayer.setName("Sector");
+        geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
+        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
+        
         attrs = new BasicShapeAttributes();
         attrs.setOutlineMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
         attrs.setInteriorMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
@@ -119,6 +144,8 @@ public class GpsTrackPlotterImpl
         ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
         rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
         vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
+
+        
     }
 
     @Override
@@ -145,22 +172,19 @@ public class GpsTrackPlotterImpl
                     if (on) {
                     	System.out.println(data);
                     	
+                    	ship.setLatitude(data.getLatitude());
+                    	ship.setLongitude(data.getLongitude());
+                    	
+                    	if (selector.getSector().containsDegrees(ship.getLatitude(), ship.getLongitude())) {
+                    			System.err.println("ALARM!!!!!!!!!!");}
+                    	
                     	if (gShipCreated) {pathPositions.add(Position.fromDegrees(ship.getLatitude(), ship.getLongitude()));
+                    						updateTarget(ship);
                     						layer.removeAllRenderables();
                     						if (pathCreated) {updatePath(new Path(pathPositions));} 
                     						else {createPath(new Path(pathPositions));}
                     						}
-                    	
-                    	ship.setLatitude(data.getLatitude());
-                    	ship.setLongitude(data.getLongitude());
-                    	
 
-                       
-                    	
-                    	
-                        if (gShipCreated) {
-                    		updateTarget(ship);
-                        	} 
                     			else {createTarget(ship);
                     					}
                     	
