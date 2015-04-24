@@ -60,313 +60,320 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @date 3 mars 2015
  * @author Serge Morvan
  */
-public class GpsTrackPlotterImpl
-        implements GpsTrackPlotter, GpsTrackPlotterServices, InstrumentDriver, ComponentState {
-    
-    @UsedService
-    GeoViewServices geoViewServices;
+public class GpsTrackPlotterImpl implements GpsTrackPlotter,
+		GpsTrackPlotterServices, InstrumentDriver, ComponentState {
 
-    @UsedService
-    DpAgentServices dpAgentServices;
+	@UsedService
+	GeoViewServices geoViewServices;
 
-    @UsedService
-    GuiAgentServices guiAgentServices;
+	@UsedService
+	DpAgentServices dpAgentServices;
 
-    @UsedService
-    LayerTreeServices layerTreeServices;
-    
-    ComponentManager cm;
-    ComponentEventSubscribe<GGAEvent> ggaES;
-    ComponentEventSubscribe<RMCEvent> rmcES;
-    ComponentEventSubscribe<VTGEvent> vtgES;
-    
-    protected WorldWindow wwd;
-    protected RenderableLayer gpsTrackLayer;
-    
-    protected RenderableLayer layer;
-    protected ArrayList<Position> pathPositions;
-    protected ShapeAttributes attrs;
-    
-    protected static final String GROUP = "Target display";
-    protected Ship ship;
-    protected GShip gShip;
-    protected boolean gShipCreated = false;
-    protected boolean pathCreated = false;
+	@UsedService
+	GuiAgentServices guiAgentServices;
 
-    protected boolean on = false;
-    private final String NAME = "GpsTrackPlotter";
-    
-    protected SectorSelector selector;
-    protected RenderableLayer sectorLayer;
-    protected boolean alarmOn = false;
-    protected boolean isTextOn = false;
-    protected SurfaceText text = null;
+	@UsedService
+	LayerTreeServices layerTreeServices;
 
-    @Override
-    public void componentInitiated() {
+	ComponentManager cm;
+	ComponentEventSubscribe<GGAEvent> ggaES;
+	ComponentEventSubscribe<RMCEvent> rmcES;
+	ComponentEventSubscribe<VTGEvent> vtgES;
 
+	protected WorldWindow wwd;
+	protected RenderableLayer gpsTrackLayer;
 
-        ship = new Ship();
-        ship.setMMSI(999999999);
-        selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
-        selector.enable();
-        selector.setBorderColor(WWUtil.decodeColorRGBA("FF0000FF"));
-        
-       /* selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY, new PropertyChangeListener()
-        {
-            public void propertyChange(PropertyChangeEvent evt)
-            {
-                Sector sector = (Sector) evt.getNewValue();
-                System.out.println(sector != null ? sector : "no sector");
-            }
-        });*/
-        
-        sectorLayer = (RenderableLayer)selector.getLayer();
-        
-        wwd = GeoWorldWindViewImpl.getWW();
-        layerTreeServices.createGroup(GROUP);
-        geoViewServices.getLayerManager().createGroup(GROUP);
+	protected RenderableLayer layer;
+	protected ArrayList<Position> pathPositions;
+	protected ShapeAttributes attrs;
 
-        this.gpsTrackLayer = new RenderableLayer();
-        gpsTrackLayer.setName("Target");
-        
-        this.layer= new RenderableLayer();
-        layer.setName("Path");
-        
-        pathPositions = new ArrayList<Position>();
-        
-        geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
-        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
-        
-        geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
-        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
-        
-        sectorLayer.setName("Watch sector");
-        geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
-        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
-        
-        attrs = new BasicShapeAttributes();
-        attrs.setOutlineMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
-        attrs.setInteriorMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
-        attrs.setOutlineWidth(3.5);
-        //attrs.setOutlineWidth(2d);
+	protected static final String GROUP = "Target display";
+	protected Ship ship;
+	protected GShip gShip;
+	protected boolean gShipCreated = false;
+	protected boolean pathCreated = false;
 
-        cm = ComponentManager.componentManager;
-        ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
-        rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
-        vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
+	protected boolean on = false;
+	private final String NAME = "GpsTrackPlotter";
 
-        
-    }
+	protected SectorSelector selector;
+	protected RenderableLayer sectorLayer;
+	protected boolean alarmOn = false;
+	protected boolean isTextOn = false;
+	protected SurfaceText text = null;
 
-    @Override
-    public void componentStarted() {
-    }
+	@Override
+	public void componentInitiated() {
 
-    @Override
-    public void componentStopped() {
-    }
+		ship = new Ship();
+		ship.setMMSI(999999999);
+		selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
+		selector.enable();
+		selector.setBorderColor(WWUtil.decodeColorRGBA("FFFF00FF"));
 
-    @Override
-    public void on() {
+		/*
+		 * selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY,
+		 * new PropertyChangeListener() { public void
+		 * propertyChange(PropertyChangeEvent evt) { Sector sector = (Sector)
+		 * evt.getNewValue(); System.out.println(sector != null ? sector :
+		 * "no sector"); } });
+		 */
 
-        if (on == false) {
-            on = true;
+		sectorLayer = (RenderableLayer) selector.getLayer();
 
-            // souscription aux événements GPS
-            ggaES.subscribe(new GGAEvent() {
+		wwd = GeoWorldWindViewImpl.getWW();
+		layerTreeServices.createGroup(GROUP);
+		geoViewServices.getLayerManager().createGroup(GROUP);
 
-                @Override
-                public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+		this.gpsTrackLayer = new RenderableLayer();
+		gpsTrackLayer.setName("Target");
 
-                    GGA data = (GGA) d;
-                    if (on) {
-                    	//Enlever les commentaires pour voir les messages NMEA
-                    	//System.out.println(data);
-                    	
-                    	ship.setLatitude(data.getLatitude());
-                    	ship.setLongitude(data.getLongitude());
-                    	
-                    	watchTarget(selector.getSector(), ship);
-                    	
-                    	if (gShipCreated) {pathPositions.add(Position.fromDegrees(ship.getLatitude(), ship.getLongitude()));
-                    						updateTarget(ship);
-                    						layer.removeAllRenderables();
-                    						if (pathCreated) {updatePath(new Path(pathPositions));} 
-                    						else {createPath(new Path(pathPositions));}
-                    						}
+		this.layer = new RenderableLayer();
+		layer.setName("Path");
 
-                    			else {createTarget(ship);
-                    					}
-                    	
-                    }
+		pathPositions = new ArrayList<Position>();
 
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP,
+				GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
+		layerTreeServices.addGeoLayer(GROUP,
+				GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
 
-                }
-            });
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP,
+				GeoLayer.factory.newWorldWindGeoLayer(layer));
+		layerTreeServices.addGeoLayer(GROUP,
+				GeoLayer.factory.newWorldWindGeoLayer(layer));
 
-           /* vtgES.subscribe(new VTGEvent() {
+		sectorLayer.setName("Watch sector");
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP,
+				GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
+		layerTreeServices.addGeoLayer(GROUP,
+				GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
 
-                @Override
-                public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                    VTG data = (VTG) d;
-                    if (on) {
-                    	System.out.println(data);
-                    	ship.setSog(10*data.getSog());
-                    	ship.setCog(10*data.getCog());
-                    	createTarget(ship);
-                    	if (gShipCreated) {
-                    		updateTarget(ship);} 
-                    			else {createTarget(ship);
-                    					gShipCreated = true;}
-                    	
-                    	
-                    }
+		attrs = new BasicShapeAttributes();
+		attrs.setOutlineMaterial(new Material(WWUtil
+				.decodeColorRGBA("008000FF")));
+		attrs.setInteriorMaterial(new Material(WWUtil
+				.decodeColorRGBA("008000FF")));
+		attrs.setOutlineWidth(3.5);
+		// attrs.setOutlineWidth(2d);
 
-                }
-            });*/
-           /* rmcES.subscribe(new RMCEvent() {
+		cm = ComponentManager.componentManager;
+		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
+		rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
+		vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
 
-                @Override
-                public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                    RMC data = (RMC) d;
-                    if (on) {
-                    	System.out.println(data);
-                    	ship.setLatitude(data.getLatitude());
-                        ship.setLongitude(data.getLongitude());
-                        ship.setSog(10*data.getSog());
-                        ship.setCog(10*data.getCog());
-                        if (gShipCreated) {
-                    		updateTarget(ship);} 
-                    			else {createTarget(ship);
-                    					gShipCreated = true;}
-                        
-                    }
+	}
 
-                }
-            });*/
-        }
+	@Override
+	public void componentStarted() {
+	}
 
-        
-    }
+	@Override
+	public void componentStopped() {
+	}
 
-    private void createTarget(Ship target) {
-        gShip = new GShip(target);
-        if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
-            Renderable[] renderables = gShip.getRenderables();
-            for (Renderable r : renderables) {
-                gpsTrackLayer.addRenderable(r);
-                
-            }
-            wwd.redrawNow();
-        }
-        gShipCreated = true;
-    }
-    
-    private void updateTarget(Ship target) {
-          gShip.update(target);
-          wwd.redrawNow();
-      }
-    
-    private void createPath(Path path) {
-        
-            
-        path.setAltitudeMode(WorldWind.ABSOLUTE);
-        //path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-        path.setVisible(true);
-        path.setExtrude(true);
-        path.setPathType(AVKey.GREAT_CIRCLE);
-        path.setAttributes(attrs);
-        layer.addRenderable(path);
-        wwd.redrawNow();
-        pathCreated = true;
-    }
-    
-    private void updatePath(Path path) {
+	@Override
+	public void on() {
 
-        path.setAltitudeMode(WorldWind.ABSOLUTE);
-        //path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
-        path.setVisible(true);
-        path.setExtrude(true);
-        path.setPathType(AVKey.GREAT_CIRCLE);
-        path.setAttributes(attrs);
-        layer.addRenderable(path);
-        wwd.redrawNow();
-      }
-    
-    @Override
-    public void off() {
-        // Pb dans la lib C3 ? objet non retiré de la liste 
-        if (on == true) {
-            on = false;
+		if (on == false) {
+			on = true;
 
-        }
-    }
+			// souscription aux événements GPS
+			ggaES.subscribe(new GGAEvent() {
 
-    @Override
-    public InstrumentDriver getDriver() {
-        return this;
-    }
+				@Override
+				public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
 
-    @Override
-    public boolean canOpen(String category) {
+					GGA data = (GGA) d;
+					if (on) {
+						// Enlever les commentaires pour voir les messages NMEA
+						// System.out.println(data);
 
-        return category.equals(NAME);
-    }
+						ship.setLatitude(data.getLatitude());
+						ship.setLongitude(data.getLongitude());
 
-    @Override
-    public boolean isOn() {
-        return on;
-    }
-    
-    private void watchTarget(Sector sector, Ship target) {
+						watchTarget(selector.getSector(), ship);
 
-    	if (sector != null && target != null && sector.containsDegrees(target.getLatitude(), target.getLongitude())) {
-    		System.err.println("============ W A R N I N G ============ Ship with MMSI #"+target.getMMSI()+" is inside Sector#1");
-    		if (!isTextOn) {textOn(sector);}
-    		
-    		if (!alarmOn)
-    			{
-    			MediaPlayer mediaPlayer;
-    			javafx.scene.media.Media media;
-    			String userDir = System.getProperty("user.dir");
-    			userDir = userDir.replace("\\", "/");
-    			String url = userDir + "/data/sounds/alarm10.wav";
-    			media = new Media("file:///" + url);
-    			mediaPlayer = new MediaPlayer(media);
-    			alarmOn = true;
-    			mediaPlayer.setAutoPlay(true);
-    			mediaPlayer.setCycleCount(1);
-    			Timer timer = new Timer();
-    	        timer.schedule (new TimerTask() {
-    	            public void run()
-    	            	{
-    	                alarmOn = false;
-    	            	}
-    	        									}, 7500);
-    			}
-    		}
-    	if (sector != null && target != null && !sector.containsDegrees(target.getLatitude(), target.getLongitude())) {textOff(sector);}
-    }
-    
-    private void textOn(Sector sector) {
-    	text = new SurfaceText("!", new Position (sector.getCentroid(),0));
-    	text.setColor(WWUtil.decodeColorRGBA("FF0000FF"));
-    	if (sectorLayer.isEnabled()) {
-			sectorLayer.addRenderable(text);
+						if (gShipCreated) {
+							pathPositions.add(Position.fromDegrees(
+									ship.getLatitude(), ship.getLongitude()));
+							updateTarget(ship);
+							layer.removeAllRenderables();
+							if (pathCreated) {
+								updatePath(new Path(pathPositions));
+							} else {
+								createPath(new Path(pathPositions));
+							}
+						}
+
+						else {
+							createTarget(ship);
+						}
+
+					}
+
+				}
+			});
+
+			/*
+			 * vtgES.subscribe(new VTGEvent() {
+			 * 
+			 * @Override public <T extends NMEA> void notifyNmeaMessageChanged(T
+			 * d) { VTG data = (VTG) d; if (on) { System.out.println(data);
+			 * ship.setSog(10*data.getSog()); ship.setCog(10*data.getCog());
+			 * createTarget(ship); if (gShipCreated) { updateTarget(ship);} else
+			 * {createTarget(ship); gShipCreated = true;}
+			 * 
+			 * 
+			 * }
+			 * 
+			 * } });
+			 */
+			/*
+			 * rmcES.subscribe(new RMCEvent() {
+			 * 
+			 * @Override public <T extends NMEA> void notifyNmeaMessageChanged(T
+			 * d) { RMC data = (RMC) d; if (on) { System.out.println(data);
+			 * ship.setLatitude(data.getLatitude());
+			 * ship.setLongitude(data.getLongitude());
+			 * ship.setSog(10*data.getSog()); ship.setCog(10*data.getCog()); if
+			 * (gShipCreated) { updateTarget(ship);} else {createTarget(ship);
+			 * gShipCreated = true;}
+			 * 
+			 * }
+			 * 
+			 * } });
+			 */
+		}
+
+	}
+
+	private void createTarget(Ship target) {
+		gShip = new GShip(target);
+		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
+			Renderable[] renderables = gShip.getRenderables();
+			for (Renderable r : renderables) {
+				gpsTrackLayer.addRenderable(r);
+
 			}
-    	else {sectorLayer.setEnabled(true);
-			sectorLayer.addRenderable(text);
+			wwd.redrawNow();
+		}
+		gShipCreated = true;
+	}
+
+	private void updateTarget(Ship target) {
+		gShip.update(target);
+		wwd.redrawNow();
+	}
+
+	private void createPath(Path path) {
+
+		path.setAltitudeMode(WorldWind.ABSOLUTE);
+		// path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+		path.setVisible(true);
+		path.setExtrude(true);
+		path.setPathType(AVKey.GREAT_CIRCLE);
+		path.setAttributes(attrs);
+		layer.addRenderable(path);
+		wwd.redrawNow();
+		pathCreated = true;
+	}
+
+	private void updatePath(Path path) {
+
+		path.setAltitudeMode(WorldWind.ABSOLUTE);
+		// path.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
+		path.setVisible(true);
+		path.setExtrude(true);
+		path.setPathType(AVKey.GREAT_CIRCLE);
+		path.setAttributes(attrs);
+		layer.addRenderable(path);
+		wwd.redrawNow();
+	}
+
+	@Override
+	public void off() {
+		// Pb dans la lib C3 ? objet non retiré de la liste
+		if (on == true) {
+			on = false;
+
+		}
+	}
+
+	@Override
+	public InstrumentDriver getDriver() {
+		return this;
+	}
+
+	@Override
+	public boolean canOpen(String category) {
+
+		return category.equals(NAME);
+	}
+
+	@Override
+	public boolean isOn() {
+		return on;
+	}
+
+	private void watchTarget(Sector sector, Ship target) {
+
+		if (sector != null
+				&& target != null
+				&& sector.containsDegrees(target.getLatitude(),
+						target.getLongitude())) {
+			System.err
+					.println("============ W A R N I N G ============ Ship with MMSI #"
+							+ target.getMMSI() + " is inside Sector#1");
+			if (!isTextOn) {
+				textOn(sector);
 			}
-    	
-    	isTextOn = true;
-    }
-    
-    private void textOff(Sector sector) {
-    	if (text != null && sectorLayer.isEnabled()) {sectorLayer.removeRenderable(text);
-    		}
-    	isTextOn = false;
-    }
-    
-    
+
+			if (!alarmOn) {
+				MediaPlayer mediaPlayer;
+				javafx.scene.media.Media media;
+				String userDir = System.getProperty("user.dir");
+				userDir = userDir.replace("\\", "/");
+				String url = userDir + "/data/sounds/alarm10.wav";
+				media = new Media("file:///" + url);
+				mediaPlayer = new MediaPlayer(media);
+				alarmOn = true;
+				mediaPlayer.setAutoPlay(true);
+				mediaPlayer.setCycleCount(1);
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					public void run() {
+						alarmOn = false;
+					}
+				}, 8000);
+			}
+		}
+		if (sector != null
+				&& target != null
+				&& !sector.containsDegrees(target.getLatitude(),
+						target.getLongitude())) {
+			textOff(sector);
+		}
+	}
+
+	private void textOn(Sector sector) {
+		text = new SurfaceText("!", new Position(sector.getCentroid(), 0));
+		text.setColor(WWUtil.decodeColorRGBA("FF0000FF"));
+		if (sectorLayer.isEnabled()) {
+			sectorLayer.addRenderable(text);
+		} else {
+			sectorLayer.setEnabled(true);
+			sectorLayer.addRenderable(text);
+		}
+
+		isTextOn = true;
+	}
+
+	private void textOff(Sector sector) {
+		if (text != null && sectorLayer.isEnabled()) {
+			sectorLayer.removeRenderable(text);
+		}
+		isTextOn = false;
+	}
+
 }

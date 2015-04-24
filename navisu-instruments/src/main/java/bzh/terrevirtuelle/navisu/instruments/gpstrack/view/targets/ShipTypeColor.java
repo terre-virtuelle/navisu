@@ -12,7 +12,7 @@ public class ShipTypeColor {
 
     public static final Map<Integer, Material> MATERIAL = Collections.unmodifiableMap(new HashMap<Integer, Material>() {
         {
-            put(0, Material.RED);
+            put(0, Material.GREEN);
             put(20, Material.ORANGE);
             put(21, Material.WHITE);
             put(22, Material.WHITE);
