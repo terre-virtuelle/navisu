@@ -99,6 +99,8 @@ public class GpsTrackPlotterImpl
     protected SectorSelector selector;
     protected RenderableLayer sectorLayer;
     protected boolean alarmOn = false;
+    protected boolean isTextOn = false;
+    protected SurfaceText text = null;
 
     @Override
     public void componentInitiated() {
@@ -179,7 +181,7 @@ public class GpsTrackPlotterImpl
 
                     GGA data = (GGA) d;
                     if (on) {
-                    	//Pour voir les messages NMEA
+                    	//Enlever les commentaires pour voir les messages NMEA
                     	//System.out.println(data);
                     	
                     	ship.setLatitude(data.getLatitude());
@@ -321,20 +323,8 @@ public class GpsTrackPlotterImpl
 
     	if (sector != null && target != null && sector.containsDegrees(target.getLatitude(), target.getLongitude())) {
     		System.err.println("============ W A R N I N G ============ Ship with MMSI #"+target.getMMSI()+" is inside Sector#1");
-    		Position pos = new Position (sector.getCentroid(),0);
-    		SurfaceText text = new SurfaceText("!", pos);
-    		text.setColor(WWUtil.decodeColorRGBA("FF0000FF"));
-    		if (sectorLayer.isEnabled()) {
-    			sectorLayer.addRenderable(text);
-    			Timer timer1 = new Timer();
-    			timer1.schedule (new TimerTask() {
-    			public void run()
-	            	{
-	                sectorLayer.removeRenderable(text);
-	            	}
-	        										}, 100);
-    			}
-    	
+    		if (!isTextOn) {textOn(sector);}
+    		
     		if (!alarmOn)
     			{
     			MediaPlayer mediaPlayer;
@@ -356,6 +346,27 @@ public class GpsTrackPlotterImpl
     	        									}, 7500);
     			}
     		}
+    	if (sector != null && target != null && !sector.containsDegrees(target.getLatitude(), target.getLongitude())) {textOff(sector);}
     }
+    
+    private void textOn(Sector sector) {
+    	text = new SurfaceText("!", new Position (sector.getCentroid(),0));
+    	text.setColor(WWUtil.decodeColorRGBA("FF0000FF"));
+    	if (sectorLayer.isEnabled()) {
+			sectorLayer.addRenderable(text);
+			}
+    	else {sectorLayer.setEnabled(true);
+			sectorLayer.addRenderable(text);
+			}
+    	
+    	isTextOn = true;
+    }
+    
+    private void textOff(Sector sector) {
+    	if (text != null && sectorLayer.isEnabled()) {sectorLayer.removeRenderable(text);
+    		}
+    	isTextOn = false;
+    }
+    
     
 }

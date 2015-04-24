@@ -273,7 +273,7 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        dataServerServices.openFile("data/nmea/test2.txt");
+        dataServerServices.openFile("data/nmea/test1.txt");
         //dataServerServices.openFile("data/nmea/test1.txt");
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
         //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
