@@ -13,8 +13,6 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
-import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLogger;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import org.capcaval.c3.component.ComponentEventSubscribe;
@@ -54,7 +52,7 @@ public class GpsLoggerImpl
     }
 
     @Override
-    public void on() {
+    public void on(String ... files) {
 
         if (on == false) {
             on = true;

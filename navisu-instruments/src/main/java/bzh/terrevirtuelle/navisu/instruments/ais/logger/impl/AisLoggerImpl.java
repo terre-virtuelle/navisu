@@ -62,7 +62,7 @@ public class AisLoggerImpl
     }
 
     @Override
-    public void on() {
+    public void on(String... files) {
         if (!aisServices.isOn()) {
             aisServices.on();
         }
@@ -104,26 +104,27 @@ public class AisLoggerImpl
 
     @Override
     public void off() {
+
         // Pb dans la lib C3 ? objet non retiré de la liste 
         if (on == true) {
             on = false;
             aisCTEvent.unsubscribe((AisCreateTargetEvent) (Ship updatedDate) -> {
-                //System.out.println("unsubscribe");
+               
             });
             aisUTEvent.unsubscribe((AisUpdateTargetEvent) (Ship updatedDate) -> {
-                // System.out.println("unsubscribe");
+
             });
             aisDTEvent.unsubscribe((AisDeleteTargetEvent) (Ship updatedDate) -> {
-                //System.out.println("unsubscribe");
+               
             });
             aisCSEvent.unsubscribe((AisCreateStationEvent) (BaseStation updatedDate) -> {
-                //System.out.println("unsubscribe");
+               
             });
             aisUSEvent.unsubscribe((AisUpdateStationEvent) (BaseStation updatedDate) -> {
-                // System.out.println("unsubscribe");
+                
             });
             aisDSEvent.unsubscribe((AisDeleteStationEvent) (BaseStation updatedDate) -> {
-                // System.out.println("unsubscribe");
+                
             });
         }
     }
@@ -144,4 +145,3 @@ public class AisLoggerImpl
         return on;
     }
 }
-

@@ -36,7 +36,7 @@ public class SonarImpl
     }
 
     @Override
-    public void on() {
+    public void on(String ... files) {
         stage = guiAgentServices.getStage();
         stage.setOpacity(.75);
         controller = new SonarController(this, stage);
