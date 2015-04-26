@@ -133,6 +133,7 @@ public class GuiAgentImpl
             System.exit(0);
         });
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
 
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
