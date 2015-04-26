@@ -50,8 +50,6 @@ public class InstrumentDriverManagerImpl
         return compatibleDriver;
     }
 
-
-
     @Override
     public void registerNewDriver(InstrumentDriver driver) {
         Checker.notNull(driver, "Driver must not be null.");
@@ -68,12 +66,14 @@ public class InstrumentDriverManagerImpl
     }
 
     @Override
-    public void open(String category) {
-        InstrumentDriver driver = findDriver(category);
+    public InstrumentDriver open(String... category) {
+
+        InstrumentDriver driver = findDriver(category[0]);
         if (driver != null) {
-            driver.on();
-        }else{
+            driver.on(category);
+        } else {
             System.out.println("Unrecognized instrument");
         }
+        return driver;
     }
 }

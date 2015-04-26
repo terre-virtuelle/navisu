@@ -19,7 +19,9 @@ import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuBuilder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javafx.animation.Animation;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -76,6 +78,8 @@ public class DockManagerImpl
     private StackPane root = null;
     private Scene scene = null;
     private List<RadialMenu> radialMenus;
+    private Map<String, InstrumentDriver> instrumentDrivers;
+    private InstrumentDriver instrumentDriver;
 
     public final DockItem[] ICONS = new DockItem[]{
         DockItemFactory.newImageItem("system I/O", ICON_PATH + "dock_icons/system.png",
@@ -116,6 +120,7 @@ public class DockManagerImpl
     @Override
     public void componentInitiated() {
         radialMenus = new ArrayList<>();
+        instrumentDrivers = new HashMap<>();
     }
 
     @Override
@@ -274,7 +279,6 @@ public class DockManagerImpl
     }
 
     //--------------System------------------
-
     private void createSystemRadialWidget() {
         systemRadialMenu = RadialMenuBuilder.create()
                 .centralImage("systemradialmenu150.png")
@@ -293,7 +297,8 @@ public class DockManagerImpl
     }
 
     private void open(String keyName) {
-        instrumentDriverManagerServices.open(keyName);
+        instrumentDriver = instrumentDriverManagerServices.open(keyName);
+        instrumentDrivers.put(keyName, instrumentDriver);
         clear();
     }
 
@@ -309,7 +314,7 @@ public class DockManagerImpl
     }
 
     private void close(String keyName) {
-        InstrumentDriver instrumentDriver = instrumentDriverManagerServices.findDriver(keyName);
+        instrumentDriver = instrumentDrivers.get(keyName);
         if (instrumentDriver != null) {
             instrumentDriver.off();
         }
