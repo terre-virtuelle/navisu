@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.widgets.mob;
+package bzh.terrevirtuelle.navisu.widgets.alarms;
 
 import bzh.terrevirtuelle.navisu.widgets.Widget;
 import javafx.scene.Group;
@@ -12,34 +12,36 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
- * @date 21 mars 2015
+ * @date 26 avril 2015
  * @author Serge Morvan
  */
-public final class Mob extends Group
+public class Alarm extends Group
         implements Widget {
 
-    protected final ImageView mobOffImg = new ImageView();
-    protected final ImageView mobOnImg = new ImageView();
+    protected String onImgName;
+    protected String offImgName;
+    protected final ImageView onImg = new ImageView();
+    protected final ImageView offImg = new ImageView();
     private boolean first = true;
-   
-    public Mob() {
-        mobOffImg.setImage(new Image(getClass().getResourceAsStream("MOB_Off.png")));
-        mobOnImg.setImage(new Image(getClass().getResourceAsStream("MOB_On.png")));
+
+    public Alarm(String onImgName, String offImgName) {
+        onImg.setImage(new Image(getClass().getResourceAsStream(onImgName)));
+        offImg.setImage(new Image(getClass().getResourceAsStream(offImgName)));
         initEvt();
-        getChildren().add(mobOffImg);
+        getChildren().add(offImg);
     }
 
     @Override
-    public void initEvt() {
+    public final void initEvt() {
         setOnMouseClicked((MouseEvent me) -> {
             if (first == true) {
                 first = false;
-                getChildren().remove(mobOffImg);
-                getChildren().add(mobOnImg);
+                getChildren().remove(offImg);
+                getChildren().add(onImg);
             } else {
                 first = true;
-                getChildren().remove(mobOnImg);
-                getChildren().add(mobOffImg);
+                getChildren().remove(onImg);
+                getChildren().add(offImg);
             }
         });
     }
