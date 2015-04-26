@@ -91,8 +91,6 @@ public class GuiAgentImpl
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";
-    protected final ImageView mobOffImg = new ImageView(ICON_PATH + "MOB_Off.png");
-    protected final ImageView mobOnImg = new ImageView(ICON_PATH + "MOB_On.png");
     protected boolean first = true;
     protected InstrumentDriver driver = null;//Utilise par le MOB
 
@@ -125,8 +123,8 @@ public class GuiAgentImpl
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
 
         // Initialize menu
-        this.menuServices.setMenuComponent(ctrl.menuBar);
-        this.initializeMenuItems(this.menuServices);
+      //  this.menuServices.setMenuComponent(ctrl.menuBar);
+      //  this.initializeMenuItems(this.menuServices);
 
         stage.setTitle(TITLE);
         stage.setOnCloseRequest(e -> {

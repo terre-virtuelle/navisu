@@ -88,8 +88,8 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
     @Override
     public void addMenuItem(DefaultMenuEnum defMenu, MenuItem item) {
 
-        Menu menu = this.menuMap.get(defMenu.getKey());
-        menu.getItems().add(item);
+      //  Menu menu = this.menuMap.get(defMenu.getKey());
+      //  menu.getItems().add(item);
     }
 
     @Override
