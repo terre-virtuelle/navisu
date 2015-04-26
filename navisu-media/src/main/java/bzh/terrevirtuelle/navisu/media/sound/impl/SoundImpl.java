@@ -5,38 +5,52 @@
  */
 package bzh.terrevirtuelle.navisu.media.sound.impl;
 
-
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.media.sound.Sound;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import java.util.Date;
 import java.util.TimerTask;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.UsedService;
 
 /**
  *
  * @author Serge Morvan
  * @date 9 oct. 2014 NaVisu project
  */
-public class SoundImpl implements Sound, SoundServices, Driver, ComponentState {
+public class SoundImpl implements Sound, SoundServices,
+        InstrumentDriver, ComponentState {
 
-    //   private static final String EXTENSION = ".wav";
+    @UsedService
+    GuiAgentServices guiAgentServices;
+
+    private final String NAME = "SOUND";
     private static final String EXTENSION_0 = ".wav";
     private static final String EXTENSION_1 = ".mp3";
-    javafx.scene.media.Media media;
-    MediaPlayer mediaPlayer;
+    private javafx.scene.media.Media media;
+    private MediaPlayer mediaPlayer;
 
-    @Override
-    public void play() {
-        mediaPlayer.setAutoPlay(true);
-        mediaPlayer.setCycleCount(1);
-    }
+    public void open(String... config) {
+        if (canOpen(config[0])) {
+            guiAgentServices.getJobsManager().newJob("", (ProgressHandle progressHandle) -> {
 
-    @Override
-    public Driver getDriver() {
-        return this;
+                media = new Media("file:///" + config[0]);
+                mediaPlayer = new MediaPlayer(media);
+
+                if (config.length > 0) {
+                    mediaPlayer.setAutoPlay(Boolean.valueOf(config[1]));
+                }
+                if (config.length > 1) {
+                    mediaPlayer.setCycleCount(Integer.parseInt(config[2]));
+                }
+            });
+        }
     }
 
     @Override
@@ -48,30 +62,6 @@ public class SoundImpl implements Sound, SoundServices, Driver, ComponentState {
         }
 
         return canOpen;
-    }
-
-    @Override
-    public void open(ProgressHandle pHandle, String... files) {
-        for (String file : files) {
-            this.handleOpenFile(pHandle, file);
-        }
-    }
-
-    protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        String url = fileName.replace("\\", "/");
-        media = new javafx.scene.media.Media("file:///" + url);
-        mediaPlayer = new MediaPlayer(media);
-        play();
-    }
-
-    @Override
-    public String getName() {
-        return "Media";
-    }
-
-    @Override
-    public String[] getExtensions() {
-        return new String[]{"*" + EXTENSION_0, "*" + EXTENSION_1};
     }
 
     @Override
@@ -89,14 +79,18 @@ public class SoundImpl implements Sound, SoundServices, Driver, ComponentState {
 
     }
 
-    class ScheduledTask extends TimerTask {
+    @Override
+    public void on(String... files) {
+        open(files);
+    }
 
-        Date now; // to display current time
+    @Override
+    public void off() {
+        mediaPlayer.dispose();
+    }
 
-        @Override
-        public void run() {
-            now = new Date(); // initialize date
-            System.out.println("Time is :" + now); // Display current time
-        }
+    @Override
+    public InstrumentDriver getDriver() {
+        return this;
     }
 }
