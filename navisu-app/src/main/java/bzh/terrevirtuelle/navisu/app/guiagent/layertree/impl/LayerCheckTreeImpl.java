@@ -16,7 +16,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -76,8 +75,7 @@ public class LayerCheckTreeImpl
         rootItems.add(createNode(rootItem0, "On-screen layers", "boussole.png"));
         CheckBoxTreeItem<GeoLayer> charts = createNode(rootItem0, "Charts", "charts-16x16.png");
         rootItems.add(charts);
-        Button button = new Button("aaa");
-
+        
         CheckBoxTreeItem<GeoLayer> raster = createNode(charts, "Raster charts", null);
         rootItems.add(raster);
         CheckBoxTreeItem<GeoLayer> tmp = createNode(raster, "BSB/KAP charts", null);
@@ -117,13 +115,11 @@ public class LayerCheckTreeImpl
     private void handleMouseClicked(MouseEvent event) {
         Node node = event.getPickResult().getIntersectedNode();
         if (node instanceof Text) {
-          LayerList layers =  geoView.getLayerManager().getModel().getLayers();
-          //  System.out.println("layers " + layers.getDisplayName());
-          for(Layer l : layers){
-             // if(node.toString().equals(l.getName())){
-                  System.out.println(l.getName());
-             // }
-          }
+            LayerList layers = geoView.getLayerManager().getModel().getLayers();
+
+            for (Layer l : layers) {
+                System.out.println(l.getName());
+            }
         }
     }
 

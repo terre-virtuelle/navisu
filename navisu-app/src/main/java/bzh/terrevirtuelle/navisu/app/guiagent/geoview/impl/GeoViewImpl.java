@@ -212,7 +212,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         );
 
         layerManager.createGroup("On-screen layers",
-                WorldWindLayers.WorldMap.newInstance(),
+              //  WorldWindLayers.WorldMap.newInstance(),
                 WorldWindLayers.ScaleBar.newInstance(),
                 WorldWindLayers.Compass.newInstance()
         );

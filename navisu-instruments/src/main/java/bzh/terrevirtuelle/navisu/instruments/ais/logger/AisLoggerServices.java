@@ -14,7 +14,7 @@ import org.capcaval.c3.component.ComponentService;
  */
 public interface AisLoggerServices extends ComponentService {
 
-    void on();
+    void on(String ... files);
 
     default void off() {
     }

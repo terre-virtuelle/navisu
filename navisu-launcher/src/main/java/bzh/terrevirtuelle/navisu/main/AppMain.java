@@ -6,6 +6,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManage
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.impl.DatabaseDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.impl.InstrumentDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
@@ -225,7 +226,6 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
-        driverServices.registerNewDriver(soundServices.getDriver());
         driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
         driverServices.registerNewDriver(filesServices.getDriver());
 
@@ -237,6 +237,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
         
 

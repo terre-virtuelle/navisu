@@ -47,7 +47,7 @@ public class CompassImpl
     }
 
     @Override
-    public void on() {
+    public void on(String ... files) {
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
         guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
         controller.setVisible(true);

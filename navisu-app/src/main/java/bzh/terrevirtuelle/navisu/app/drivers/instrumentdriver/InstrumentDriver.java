@@ -8,11 +8,11 @@ package bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver;
  */
 public interface InstrumentDriver {
 
-    default boolean canOpen(String cateory) {
+    default boolean canOpen(String category) {
         return false;
     }
 
-    void on();
+    void on(String ... files);
 
     void off();
 }
