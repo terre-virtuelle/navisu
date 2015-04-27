@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.ais.plotter;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -18,4 +19,9 @@ public interface AisPlotterServices extends ComponentService {
     default void off() {
     }
 
+    boolean isOn();
+
+    boolean canOpen(String category);
+
+    InstrumentDriver getDriver();
 }
