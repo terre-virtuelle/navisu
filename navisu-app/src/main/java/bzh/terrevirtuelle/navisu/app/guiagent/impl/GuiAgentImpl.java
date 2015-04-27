@@ -38,11 +38,9 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-<<<<<<< HEAD
 
 import javafx.event.EventHandler;
-=======
->>>>>>> refs/remotes/origin/master
+
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 

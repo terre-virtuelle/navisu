@@ -168,7 +168,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 	}
 
 	@Override
-	public void on() {
+	public void on(String ... files) {
 
 		if (on == false) {
 			on = true;

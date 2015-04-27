@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -14,7 +15,7 @@ import org.capcaval.c3.component.ComponentService;
  */
 public interface GpsTrackPlotterServices extends ComponentService {
 
-    void on();
+    void on(String ... files);
 
     default void off() {
     }
