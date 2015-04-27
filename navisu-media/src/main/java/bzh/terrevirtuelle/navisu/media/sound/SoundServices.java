@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.media.sound;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -15,7 +15,5 @@ import org.capcaval.c3.component.ComponentService;
 public interface SoundServices
         extends ComponentService {
 
-    void play();
-
-    Driver getDriver();
+    InstrumentDriver getDriver();
 }

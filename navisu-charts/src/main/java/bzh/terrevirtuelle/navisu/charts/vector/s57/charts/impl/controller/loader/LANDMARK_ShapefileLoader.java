@@ -13,7 +13,6 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -36,11 +35,13 @@ public class LANDMARK_ShapefileLoader
     private final List<Landmark> objects;
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
-    private Class claz;
     private final String acronym;
     private final String marsys;
+    private boolean dev=false;
+    
 
-    public LANDMARK_ShapefileLoader(String marsys, String acronym) {
+    public LANDMARK_ShapefileLoader(boolean dev, String marsys, String acronym) {
+        this.dev = dev;
         this.marsys = marsys;
         this.acronym = acronym;
 
@@ -147,36 +148,25 @@ public class LANDMARK_ShapefileLoader
         if (acronym.contains("CATLMK")) {
             catMark = CATLMK.ATT.get(object.getCategoryOfMark());
         }
-        /*
-         String label = claz.getSimpleName() + " "
-         + catMark + "\n"
-         + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
-         + "Lat : " + new Float(object.getLat()).toString() + "\n "
-         + "Lon : " + new Float(object.getLon()).toString();
+        String label;
+        if (dev) {
+            label = acronym + "_"
+                    + object.getCategoryOfMark() + "_"
+                    + object.getConspicuousVisually() + "_"
+                    + object.getFunction() + "_"
+                    + object.getColour() + "_"
+                    + object.getColourPattern() + "_"
+                    + marsys
+                    + ".png";
+        } else {
+            label = CATLMK.ATT.get(object.getCategoryOfLandMark())
+                    + catMark + "\n"
+                    + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
+                    + "Lat : " + new Float(object.getLat()).toString() + "\n "
+                    + "Lon : " + new Float(object.getLon()).toString();
+        }
+        placemark.setValue(AVKey.DISPLAY_NAME, label);
 
-         placemark.setValue(AVKey.DISPLAY_NAME, label);
-         */
-
-        /*
-         System.out.println("img/buoyage/" + acronym + "_"
-         + object.getShape() + "_"
-         + object.getCategoryOfMark() + "_"
-         + object.getColour() + "_"
-         + object.getColourPattern() + "_"
-         + tm
-         + "_" + marsys
-         + ".png  "   + object.getObjectName() );
-         */
-        /*attrs.setImageAddress("img/buoyage/" + acronym + "_"
-                + object.getShape() + "_"
-                + object.getCategoryOfMark() + "_"
-                + object.getColour() + "_"
-                + object.getColourPattern() + "_"
-                + "_" + marsys
-                + ".png");
-        attrs.setImageOffset(Offset.BOTTOM_CENTER);
-        attrs.setScale(0.8);
-        placemark.setAttributes(attrs);*/
         attrs.setImageAddress("img/landmarks_" + marsys + "/" + acronym + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getConspicuousVisually() + "_"
@@ -188,17 +178,7 @@ public class LANDMARK_ShapefileLoader
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.6);//0.8
         placemark.setAttributes(attrs);
-        String label = acronym + "_"
-                + object.getCategoryOfMark() + "_"
-                + object.getConspicuousVisually() + "_"
-                + object.getFunction() + "_"
-                + object.getColour() + "_"
-                + object.getColourPattern() + "_"
-                + marsys
-                + ".png";
-        //System.out.println("label : " + label);
-        placemark.setValue(AVKey.DISPLAY_NAME, label);
-
+        
         return placemark;
     }
 

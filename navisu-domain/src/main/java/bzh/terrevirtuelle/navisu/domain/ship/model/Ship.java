@@ -6,6 +6,7 @@ package bzh.terrevirtuelle.navisu.domain.ship.model;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -16,11 +17,11 @@ public class Ship implements Serializable, Cloneable {
     /**
      * MMSI number :1-999999999; 0 = not available = default
      */
-    private int mmsi;
+    private int mmsi = 0;
     /**
      * IMO number :1-999999999; 0 = not available = default
      */
-    private int imo;
+    private int imo = 0;
     /**
      * Name of the ship : Maximum 20 characters 6-bit ASCII, as defined in Table
      * 44.
@@ -39,17 +40,17 @@ public class Ship implements Serializable, Cloneable {
     /**
      * True heading Degrees (0-359) (511 indicates not available = default)
      */
-    private double heading;
+    private double heading = 511;
     /**
      * Course over ground in 1/10deg (0-3 599). 3 600 (E10h) = not available =
      * default; 3 601-4 095 should not be used
      */
-    private double cog;
+    private double cog = 3600;
     /**
      * Speed over ground in 1/10 knot steps (0-102.2 knots) 1 023 = not
      * available, 1 022 = 102.2 knots or higher
      */
-    private double sog;
+    private double sog = 1023;
     /**
      * Rate of turn 0 to +126 = turning right at up to 708 deg per min or higher
      * 0 to -126 = turning left at up to 708 deg per min or higher Values
@@ -61,7 +62,7 @@ public class Ship implements Serializable, Cloneable {
      * available) -128 (80 hex) indicates no turn information available
      * (default). ROT data should not be derived from COG information.
      */
-    private double rot;
+    private double rot = -128;
     /**
      * Width of the ship
      */
@@ -75,7 +76,7 @@ public class Ship implements Serializable, Cloneable {
      * greater, 0 = not available = default; in accordance with IMO Resolution
      * A.851
      */
-    private float draught;
+    private float draught = 0;
     /**
      * http://gpsd.berlios.de/AIVDM.html#_type_5_static_and_voyage_related_data
      * Type of ship and cargo ship 0 = not available or no ship = default 1-99 =
@@ -100,29 +101,29 @@ public class Ship implements Serializable, Cloneable {
      * reserved for future use, 14 = AIS-SART (active), 15 = not defined =
      * default (also used by AIS-SART under test)
      */
-    private int navigationalStatus;
+    private int navigationalStatus = 15;
     /**
      * 0 = Undefined (default); 1 = GPS, 2 = GLONASS, 3 = combined GPS/GLONASS,
      * 4 = Loran-C, 5 = Chayka, 6 = integrated navigation system, 7 = surveyed;
      * 8 = Galileo, 9-15 = not used
      */
-    private int electronicPositionDevice;
+    private int electronicPositionDevice = 15;
     /**
      * 7 = 6 bit ASCII characters, @@@@@@@ = not available = default
      */
-    private String callSign = "";
+    private String callSign = "@@@@@@@";
     /**
      * Estimated time of arrival; MMDDHHMM UTC Bits 19-16: month; 1-12; 0 = not
      * available = default Bits 15-11: day; 1-31; 0 = not available = default
      * Bits 10-6: hour; 0-23; 24 = not available = default
      */
-    private Calendar ETA;
+    private Calendar ETA = new GregorianCalendar(0, 0, 0, 0, 0);
     /**
      * Maximum 20 characters using 6-bit ASCII;
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available
      */
-    private String destination = "";
+    private String destination = "@@@@@@@@@@@@@@@@@@@@";
     /**
      * year, month, day of ETA
      */
@@ -173,7 +174,6 @@ public class Ship implements Serializable, Cloneable {
         this.electronicPositionDevice = electronicPositionDevice;
         this.callSign = callSign;
     }
-
 
     public Ship(int mmsi, String name, int shipType) {
         this.mmsi = mmsi;

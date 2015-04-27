@@ -6,6 +6,8 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.JobsManager;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgent;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.impl.DockManagerImpl;
@@ -19,14 +21,13 @@ import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.widgets.mob.Mob;
-import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
+import bzh.terrevirtuelle.navisu.widgets.alarms.Alarm;
+import bzh.terrevirtuelle.navisu.widgets.alarms.Mob;
 import gov.nasa.worldwind.util.StatusBar;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -35,13 +36,8 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.StageStyle;
 
 /**
@@ -78,11 +74,12 @@ public class GuiAgentImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     GeoViewServices geoViewServices;
+    @UsedService
+    InstrumentDriverManagerServices instrumentDriverManagerServices;
 
     private Scene scene;
     protected Stage stage;
     protected Stage stage1;
-    protected List<Stage> stages = new ArrayList<>();
     protected StackPane root;
     protected static GuiAgentController ctrl = null;
     protected JobsManager jobsManager;
@@ -91,9 +88,10 @@ public class GuiAgentImpl
     protected int height;
     protected static final String TITLE = "NaVisu";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
+    protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";
-    protected final ImageView mobOffImg = new ImageView(ICON_PATH + "MOB_Off.png");
-    protected final ImageView mobOnImg = new ImageView(ICON_PATH + "MOB_On.png");
+    protected boolean first = true;
+    protected InstrumentDriver driver = null;//Utilise par le MOB
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -124,9 +122,8 @@ public class GuiAgentImpl
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
 
         // Initialize menu
-        this.menuServices.setMenuComponent(ctrl.menuBar);
-        this.initializeMenuItems(this.menuServices);
-
+        //  this.menuServices.setMenuComponent(ctrl.menuBar);
+        //  this.initializeMenuItems(this.menuServices);
         stage.setTitle(TITLE);
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application");
@@ -134,6 +131,7 @@ public class GuiAgentImpl
             System.exit(0);
         });
         stage.setScene(scene);
+       // stage.setFullScreen(true);
         stage.show();
 
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
@@ -144,44 +142,27 @@ public class GuiAgentImpl
         stage1.setX(600);
         stage1.setY(200);
         stage1.initStyle(StageStyle.UNDECORATED);
-        
+
 // test Slider pour layers
- //   SliderController sliderController = new SliderController();
- //   root.getChildren().add(sliderController);
+        //   SliderController sliderController = new SliderController();
+        //   root.getChildren().add(sliderController);
     }
 
     /**
      * MOB - Man Overboard
      */
     private void createMOBWidget(Scene scene) {
-        Mob mob = new Mob();
+        Alarm mob = new Mob();
         root.getChildren().add(mob);
-        mob.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            boolean first = true;
-            MediaPlayer mediaPlayer;
-
-            @Override
-            public void handle(MouseEvent event) {
-                getJobsManager().newJob("", (progressHandle) -> {
-                    if (first == true) {
-                        javafx.scene.media.Media media;
-                        String userDir = System.getProperty("user.dir");
-                        userDir = userDir.replace("\\", "/");
-                        String url = userDir + "/data/sounds/alarm10.wav";
-
-                        media = new Media("file:///" + url);
-                        mediaPlayer = new MediaPlayer(media);
-                        mediaPlayer.setAutoPlay(true);
-                        mediaPlayer.setCycleCount(100);
-                        first = false;
-                    } else {
-                        mediaPlayer.dispose();
-                        first = true;
-                    }
-                });
+        mob.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            if (first == true) {
+                driver = instrumentDriverManagerServices.open(DATA_PATH + "/data/sounds/alarm10.wav", "true", "100");
+                first = false;
+            } else {
+                driver.off();
+                first = true;
             }
         });
-
         mob.setTranslateX(400.0);
         mob.setTranslateY(-10.0);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);

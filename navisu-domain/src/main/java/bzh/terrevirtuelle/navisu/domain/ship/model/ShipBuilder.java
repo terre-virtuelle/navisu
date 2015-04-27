@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.ship.model;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -13,26 +14,26 @@ import java.util.Calendar;
  */
 public class ShipBuilder {
 
-    private int mmsi;
-    private int imo;
+    private int mmsi = 0;
+    private int imo = 0;
     private String name;
     private String country;
     private double latitude;
     private double longitude;
-    private float heading;
-    private float cog;
-    private float sog;
-    private float rot;
-    private float width;
-    private float length;
-    private float draught;
-    private int shipType;
-    private int navigationalStatus;
-    private int electronicPositionDevice;
-    private String callSign;
-    private Calendar ETA;
-    private String destination;
-    
+    private float heading = 511;
+    private float cog = 3600;
+    private float sog = 1023;
+    private float rot = -128;
+    private float width = 0;
+    private float length = 0;
+    private float draught = 0;
+    private int shipType = 0;
+    private int navigationalStatus = 15;
+    private int electronicPositionDevice = 15;
+    private String callSign = "@@@@@@@";
+    private Calendar ETA = new GregorianCalendar(0, 0, 0, 0, 0);
+    private String destination = "@@@@@@@@@@@@@@@@@@@@";
+
     private ShipBuilder() {
     }
 

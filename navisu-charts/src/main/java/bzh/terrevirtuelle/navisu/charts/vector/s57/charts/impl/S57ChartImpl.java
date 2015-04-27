@@ -57,7 +57,6 @@ public class S57ChartImpl
     LayerTreeServices layerTreeServices;
 
     private static final String NAME = "S57";
-    //  private static final String EXTENSION = ".000";
     private static final String EXTENSION_0 = ".000";
     private static final String EXTENSION_1 = ".001";
     private static final String EXTENSION_2 = ".002";
@@ -78,12 +77,16 @@ public class S57ChartImpl
     protected Map<String, Pair<Integer, Integer>> clipConditions;
     protected Set<String> clipConditionsKeySet;
     protected float altitude;
+    protected List<GeoLayer<Layer>> geoLayerList;
+    protected List<String> groupNames = new ArrayList<>();
+
+    ;
 
     @Override
     public void componentInitiated() {
         enabledLayers = new ArrayList<>();
         clipConditions = new HashMap<>();
-       // clipConditions.put("BUOYAGE", new Pair(0, 240000));
+        // clipConditions.put("BUOYAGE", new Pair(0, 240000));
         clipConditions.put("BUILDING", new Pair(0, 240000));
         clipConditions.put("BATHYMETRY", new Pair(0, 240000));
         clipConditionsKeySet = clipConditions.keySet();
@@ -150,18 +153,18 @@ public class S57ChartImpl
         try {
             //Test capture des evts par l'AreaController
             /*
-            if (first == true) {
-                first = false;
-                surveyZoneController = new SurveyZoneController(KeyCode.Z, KeyCombination.CONTROL_DOWN);
+             if (first == true) {
+             first = false;
+             surveyZoneController = new SurveyZoneController(KeyCode.Z, KeyCombination.CONTROL_DOWN);
 
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        guiAgentServices.getRoot().getChildren().add(surveyZoneController);
-                    }
-                });
-            }
-*/
+             Platform.runLater(new Runnable() {
+             @Override
+             public void run() {
+             guiAgentServices.getRoot().getChildren().add(surveyZoneController);
+             }
+             });
+             }
+             */
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + i).mkdir();
             new File("data/shp/shp_" + i + "/soundg").mkdir();
@@ -184,7 +187,7 @@ public class S57ChartImpl
             environment.put("GDAL_DATA", options);
 
             String cmd = null;
-          
+
             if (OS.isWindows()) {
                 cmd = "gdal/win/ogr2ogr";
             } else {
@@ -235,19 +238,17 @@ public class S57ChartImpl
             chartS57Controller.init("data/shp/shp_" + i++);
             layers = chartS57Controller.getLayers();
 
-            //Filtrage des couches existant déjà
-            List<GeoLayer<Layer>> lg = geoViewServices.getLayerManager().getGroup(GROUP);
-            lg.stream().forEach((g) -> {
-                layers.stream().filter((l) -> (g.getName().equals(l.getName()))).forEach((l) -> {
-                    layers.remove(l);
-                });
+            geoLayerList = geoViewServices.getLayerManager().getGroup(GROUP);
+            groupNames.clear();
+            geoLayerList.stream().forEach((l) -> {
+                groupNames.add(l.getName());
             });
-            //On ne met que les nouvelles couches
-            layers.stream().filter((l) -> (l != null)).map((l) -> {
-                geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
-                return l;
-            }).forEach((l) -> {
-                layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
+
+            layers.stream().filter((l) -> (!groupNames.contains(l.getName()))).map((l) -> GeoLayer.factory.newWorldWindGeoLayer(l)).map((gl) -> {
+                geoViewServices.getLayerManager().insertGeoLayer(GROUP, gl);
+                return gl;
+            }).forEach((gl) -> {
+                layerTreeServices.addGeoLayer(GROUP, gl);
             });
 
             airspaceLayers = chartS57Controller.getAirspaceLayers();
