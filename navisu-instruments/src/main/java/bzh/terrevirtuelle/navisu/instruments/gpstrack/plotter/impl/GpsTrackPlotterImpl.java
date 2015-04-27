@@ -109,7 +109,8 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 		ship.setMMSI(999999999);
 		selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
 		selector.enable();
-		selector.setBorderColor(WWUtil.decodeColorRGBA("FFFF00FF"));
+		// couleur du selector : bleu
+		selector.setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
 
 		/*
 		 * selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY,
@@ -133,29 +134,23 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 		pathPositions = new ArrayList<Position>();
 
-		geoViewServices.getLayerManager().insertGeoLayer(GROUP,
-				GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
-		layerTreeServices.addGeoLayer(GROUP,
-				GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
+		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
 
-		geoViewServices.getLayerManager().insertGeoLayer(GROUP,
-				GeoLayer.factory.newWorldWindGeoLayer(layer));
-		layerTreeServices.addGeoLayer(GROUP,
-				GeoLayer.factory.newWorldWindGeoLayer(layer));
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
 
 		sectorLayer.setName("Watch sector");
-		geoViewServices.getLayerManager().insertGeoLayer(GROUP,
-				GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
-		layerTreeServices.addGeoLayer(GROUP,
-				GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
+		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
 
 		attrs = new BasicShapeAttributes();
-		attrs.setOutlineMaterial(new Material(WWUtil
-				.decodeColorRGBA("008000FF")));
-		attrs.setInteriorMaterial(new Material(WWUtil
-				.decodeColorRGBA("008000FF")));
-		attrs.setOutlineWidth(3.5);
-		// attrs.setOutlineWidth(2d);
+		// couleur de la trace : vert
+		attrs.setOutlineMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
+		//attrs.setInteriorMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
+		attrs.setOutlineWidth(4);
+		//attrs.setOutlineOpacity(0.7);
+		//attrs.setOutlineWidth(2d);
 
 		cm = ComponentManager.componentManager;
 		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -187,7 +182,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 					GGA data = (GGA) d;
 					if (on) {
 						// Enlever les commentaires pour voir les messages NMEA
-						// System.out.println(data);
+						//System.out.println(data);
 
 						ship.setLatitude(data.getLatitude());
 						ship.setLongitude(data.getLongitude());
@@ -337,15 +332,15 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 				String url = userDir + "/data/sounds/alarm10.wav";
 				media = new Media("file:///" + url);
 				mediaPlayer = new MediaPlayer(media);
-				alarmOn = true;
 				mediaPlayer.setAutoPlay(true);
-				mediaPlayer.setCycleCount(1);
+				//mediaPlayer.setCycleCount(1);
+				alarmOn = true;
 				Timer timer = new Timer();
 				timer.schedule(new TimerTask() {
 					public void run() {
 						alarmOn = false;
 					}
-				}, 8000);
+				}, 7500);
 			}
 		}
 		if (sector != null
@@ -358,7 +353,8 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 	private void textOn(Sector sector) {
 		text = new SurfaceText("!", new Position(sector.getCentroid(), 0));
-		text.setColor(WWUtil.decodeColorRGBA("FF0000FF"));
+		// couleur du texte : jaune
+		text.setColor(WWUtil.decodeColorRGBA("FFFF00FF"));
 		if (sectorLayer.isEnabled()) {
 			sectorLayer.addRenderable(text);
 		} else {
