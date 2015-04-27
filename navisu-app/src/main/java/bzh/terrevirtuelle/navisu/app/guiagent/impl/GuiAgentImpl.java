@@ -28,7 +28,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -37,7 +36,7 @@ import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
-import java.util.logging.Logger; 
+import java.util.logging.Logger;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 
@@ -123,9 +122,8 @@ public class GuiAgentImpl
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
 
         // Initialize menu
-      //  this.menuServices.setMenuComponent(ctrl.menuBar);
-      //  this.initializeMenuItems(this.menuServices);
-
+        //  this.menuServices.setMenuComponent(ctrl.menuBar);
+        //  this.initializeMenuItems(this.menuServices);
         stage.setTitle(TITLE);
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application");
@@ -133,7 +131,7 @@ public class GuiAgentImpl
             System.exit(0);
         });
         stage.setScene(scene);
-        stage.setFullScreen(true);
+       // stage.setFullScreen(true);
         stage.show();
 
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
