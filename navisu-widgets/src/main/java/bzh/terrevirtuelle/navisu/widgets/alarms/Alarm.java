@@ -24,6 +24,7 @@ public class Alarm extends Group
     protected final ImageView offImg = new ImageView();
     private boolean first = true;
 
+    
     public Alarm(String onImgName, String offImgName) {
         onImg.setImage(new Image(getClass().getResourceAsStream(onImgName)));
         offImg.setImage(new Image(getClass().getResourceAsStream(offImgName)));
