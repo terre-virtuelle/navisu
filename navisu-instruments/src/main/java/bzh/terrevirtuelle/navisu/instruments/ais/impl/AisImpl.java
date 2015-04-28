@@ -68,9 +68,8 @@ public class AisImpl
     protected boolean on = false;
     protected Ship ship;
     protected BaseStation station;
-    protected Map<Integer, Ship> ships;
-    protected Map<Integer, GShip> gShips;
-    protected Map<Integer, BaseStation> stations;
+    protected HashMap<Integer, Ship> ships;
+    protected HashMap<Integer, BaseStation> stations;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
     protected final String MID_MAP = "data/ais/mmsi.txt";
@@ -96,7 +95,6 @@ public class AisImpl
         ais4ES = cm.getComponentEventSubscribe(AIS04Event.class);
         ais5ES = cm.getComponentEventSubscribe(AIS05Event.class);
         ships = new HashMap<>();
-        gShips = new HashMap<>();
         stations = new HashMap<>();
         midMap = new HashMap<>();
         timestamps = new HashMap<>();
@@ -319,6 +317,16 @@ public class AisImpl
     @Override
     public boolean isOn() {
         return on;
+    }
+
+    @Override
+    public HashMap<Integer, Ship> getShips() {
+        return (HashMap) ships.clone();
+    }
+
+    @Override
+    public Map<Integer, BaseStation> getStations() {
+        return (HashMap) stations.clone();
     }
 
 }

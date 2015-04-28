@@ -6,7 +6,6 @@ import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManage
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.impl.DatabaseDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.impl.InstrumentDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
@@ -231,10 +230,18 @@ public class AppMain extends Application {
 
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
+<<<<<<< HEAD
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
+=======
+
+        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
+>>>>>>> refs/remotes/origin/master
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
@@ -289,11 +296,15 @@ public class AppMain extends Application {
         nmeaClientServices.request(1000);
 
         // Test clients à l'écoute des événements Nmea 
-        aisServices.on();
+        //aisServices.on();
         //aisLoggerServices.on();
+
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
         
+
+
+
     }
         
  
