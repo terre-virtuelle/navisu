@@ -35,13 +35,9 @@ import gov.nasa.worldwindx.examples.util.SectorSelector;
 
 import java.util.HashMap;
 import java.util.Map;
-<<<<<<< HEAD
 import java.util.Timer;
 import java.util.TimerTask;
-
-=======
 import java.util.Set;
->>>>>>> refs/remotes/origin/master
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -94,19 +90,14 @@ public class AisPlotterImpl
     protected Map<Integer, Ship> ships;
     protected Map<Integer, GShip> gShips;
     protected Map<Integer, BaseStation> stations;
-<<<<<<< HEAD
-    
     protected SectorSelector selector;
     protected RenderableLayer sectorLayer;
     protected boolean alarmOn = false;
-=======
     protected final String NAME = "AisPlotter";
     protected boolean on = false;
->>>>>>> refs/remotes/origin/master
 
     @Override
     public void componentInitiated() {
-<<<<<<< HEAD
     	
     	selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
         //selector.enable();
@@ -114,8 +105,7 @@ public class AisPlotterImpl
         sectorLayer = (RenderableLayer)selector.getLayer();
         
         ships = new HashMap<>();
-=======
->>>>>>> refs/remotes/origin/master
+
         gShips = new HashMap<>();
 
         wwd = GeoWorldWindViewImpl.getWW();
@@ -164,7 +154,7 @@ public class AisPlotterImpl
             stations = aisServices.getStations();
             Set<Integer> stationSet = stations.keySet();
 
-<<<<<<< HEAD
+
         aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
         	createTarget(updatedData);
         	watchTarget(selector.getSector(), updatedData);
@@ -184,7 +174,6 @@ public class AisPlotterImpl
         aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation updatedData) -> {
             System.out.println(updatedData);
         });
-=======
             aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
                 createTarget(updatedData);
             });
@@ -203,7 +192,6 @@ public class AisPlotterImpl
                 System.out.println(updatedData);
             });
         }
->>>>>>> refs/remotes/origin/master
     }
 
     @Override
@@ -285,13 +273,8 @@ public class AisPlotterImpl
     }
 
     private void updateTarget(Ship target) {
-<<<<<<< HEAD
       //  System.out.println("updateTarget " + target.getShipType()+ "   ");
     	GShip gShip = gShips.get(target.getMMSI());
-=======
-        //  System.out.println("updateTarget " + target.getShipType()+ "   ");
-        GShip gShip = gShips.get(target.getMMSI());
->>>>>>> refs/remotes/origin/master
         gShip.update(target);
         wwd.redrawNow();
         // createTarget( target);

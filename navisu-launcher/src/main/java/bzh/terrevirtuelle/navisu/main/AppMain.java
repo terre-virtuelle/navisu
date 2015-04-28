@@ -56,6 +56,8 @@ import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl.GpsTrackPlotterImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.impl.GpsTrackSectorImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
@@ -134,6 +136,10 @@ public class AppMain extends Application {
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
+                        
+                        GpsTrackPlotterImpl.class,
+                        GpsTrackSectorImpl.class,
+                        
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -150,8 +156,7 @@ public class AppMain extends Application {
                         S57ChartImpl.class,
                         S57GlobalCatalogImpl.class,
                         WebDriverManagerImpl.class,
-                        WMSImpl.class,
-                        GpsTrackPlotterImpl.class
+                        WMSImpl.class
                 )
         );
         // Services
@@ -176,6 +181,7 @@ public class AppMain extends Application {
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         
         GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
+        GpsTrackSectorServices gpsTrackSectorServices = componentManager.getComponentService(GpsTrackSectorServices.class);
         
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
@@ -230,18 +236,18 @@ public class AppMain extends Application {
 
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
-<<<<<<< HEAD
+        
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
-=======
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackSectorServices.getDriver());
 
-        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
+        //instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
->>>>>>> refs/remotes/origin/master
+
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
@@ -301,6 +307,8 @@ public class AppMain extends Application {
 
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
+        //gpsTrackSectorServices.on();
+        
         
 
 
