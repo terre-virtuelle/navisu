@@ -9,7 +9,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="view" stylesheets="@Compass.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" stylesheets="@Compass_nuit.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Group>
             <children>
@@ -33,7 +33,7 @@
                 </ImageView>
                 <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="357.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
                     <image>
-                        <Image url="@quit.png" />
+                        <Image url="@quit_nuit.png" />
                     </image>
                 </ImageView>
                 <GridPane layoutX="15.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="375.0" styleClass="grid-pane">
@@ -52,12 +52,12 @@
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="245.0" styleClass="instrumentcadres" strokeType="INSIDE" width="245.0" />
                         <ImageView fitHeight="225.0" fitWidth="225.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" rotate="-175.3">
                            <image>
-                              <Image url="@couronne.png" />
+                              <Image url="@couronne_nuit.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="101.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@navirecompass.png" />
+                              <Image url="@navirecompass_nuit.png" />
                            </image>
                         </ImageView>
                         <Text fx:id="headingValue" layoutX="95.0" layoutY="175.0" styleClass="instrumentvalue" text="175" textAlignment="CENTER" wrappingWidth="50.0" x="4.0" />
@@ -93,7 +93,7 @@
                         </Slider>
                   <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="-10.0" layoutY="125.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@journuit.png" />
+                        <Image url="@journuit_nuit.png" />
                      </image>
                   </ImageView>
                     </children>
