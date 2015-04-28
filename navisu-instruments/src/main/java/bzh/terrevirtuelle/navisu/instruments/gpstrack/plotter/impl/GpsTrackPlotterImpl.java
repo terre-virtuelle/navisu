@@ -107,6 +107,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 		ship = new Ship();
 		ship.setMMSI(999999999);
+		
 		selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
 		selector.enable();
 		// couleur du selector : bleu
@@ -121,7 +122,8 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 		 */
 
 		sectorLayer = (RenderableLayer) selector.getLayer();
-
+		
+		
 		wwd = GeoWorldWindViewImpl.getWW();
 		layerTreeServices.createGroup(GROUP);
 		geoViewServices.getLayerManager().createGroup(GROUP);
@@ -143,6 +145,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 		sectorLayer.setName("Watch sector");
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
 		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
+		
 
 		attrs = new BasicShapeAttributes();
 		// couleur de la trace : vert
@@ -172,7 +175,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 		if (on == false) {
 			on = true;
-
+			
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
 

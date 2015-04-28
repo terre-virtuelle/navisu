@@ -271,6 +271,7 @@ public class DockManagerImpl
                 .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
+                .createNode(2, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("GpsTrackPlotter"))
                 .build();
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);
