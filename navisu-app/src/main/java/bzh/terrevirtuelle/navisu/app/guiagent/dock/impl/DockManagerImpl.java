@@ -210,6 +210,8 @@ public class DockManagerImpl
                 .centralImage("instrumentsradialmenu150.png")
                 .createNode(0, "navigation.png", 0, "ais.png", 0, "aisRadarOn.png", (e) -> open("AisRadar"))
                 .createNode(0, "navigation.png", 0, "ais.png", 1, "aisRadarOff.png", (e) -> close("AisRadar"))
+                .createNode(0, "navigation.png", 0, "ais.png", 0, "aisPlotOn.png", (e) -> open("AisPlotter"))
+                .createNode(0, "navigation.png", 0, "ais.png", 1, "aisPlotOff.png", (e) -> close("AisPlotter"))
                 .createNode(0, "navigation.png", 0, "ais.png", 2, "aisLogOn.png", (e) -> open("AisLogger"))
                 .createNode(0, "navigation.png", 0, "ais.png", 3, "aisLogOff.png", (e) -> close("AisLogger"))
                 .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOn.png", (e) -> open("GpsLogger"))
