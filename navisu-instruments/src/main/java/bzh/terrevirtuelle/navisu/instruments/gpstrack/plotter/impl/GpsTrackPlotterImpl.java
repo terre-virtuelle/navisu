@@ -123,6 +123,8 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(layer));
 		layerTreeServices.addGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(layer));
+		
+		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
 
 		attrs = new BasicShapeAttributes();
 		// couleur de la trace : vert
@@ -152,8 +154,6 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 		if (on == false) {
 			on = true;
-			
-			layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
 			
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {

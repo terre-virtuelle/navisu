@@ -112,7 +112,17 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Path", null);
         rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Watch sector", null);
+        tmp = createNode(targetDisplay, "Watch sector#1", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Watch sector#2", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Watch sector#3", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Watch sector#4", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Watch sector#5", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "New watch sector", null);
         rootItems.add(tmp);
         treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
 

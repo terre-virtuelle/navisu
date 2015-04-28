@@ -26,6 +26,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -58,6 +59,8 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
+import com.vividsolutions.jts.operation.valid.IsValidOp;
+
 /**
  * @date 3 mars 2015
  * @author Serge Morvan
@@ -84,17 +87,23 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 
 	protected WorldWindow wwd;
 
-	protected static final String GROUP = "Watch sector";
+	protected static final String GROUP1 = "Watch sector#1";
+	protected static final String GROUP2 = "Watch sector#2";
+	protected static final String GROUP3 = "Watch sector#3";
+	protected static final String GROUP4 = "Watch sector#4";
+	protected static final String GROUP5 = "Watch sector#5";
+	
 	protected Ship watchedShip;
 
 	protected boolean on = false;
 	private final String NAME = "GpsTrackSector";
 
-	protected SectorSelector selector;
-	protected RenderableLayer sectorLayer;
+	protected LinkedList<SectorSelector> selectors;
+	protected LinkedList<RenderableLayer> sectorLayers;
 	protected boolean alarmOn = false;
-	protected boolean isTextOn = false;
-	protected SurfaceText text = null;
+	protected LinkedList<Boolean> isTextOn;
+	protected LinkedList<SurfaceText> text;
+	protected int nbSelector = 1;
 
 	@Override
 	public void componentInitiated() {
@@ -103,8 +112,26 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		watchedShip.setMMSI(999999999);
 		
 		wwd = GeoWorldWindViewImpl.getWW();
-		layerTreeServices.createGroup(GROUP);
-		geoViewServices.getLayerManager().createGroup(GROUP);
+		layerTreeServices.createGroup(GROUP1);
+		geoViewServices.getLayerManager().createGroup(GROUP1);
+		
+		layerTreeServices.createGroup(GROUP2);
+		geoViewServices.getLayerManager().createGroup(GROUP2);
+		
+		layerTreeServices.createGroup(GROUP3);
+		geoViewServices.getLayerManager().createGroup(GROUP3);
+		
+		layerTreeServices.createGroup(GROUP4);
+		geoViewServices.getLayerManager().createGroup(GROUP4);
+		
+		layerTreeServices.createGroup(GROUP5);
+		geoViewServices.getLayerManager().createGroup(GROUP5);
+		
+		layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(24).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(25).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
 		
 		cm = ComponentManager.componentManager;
 		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -127,10 +154,17 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		if (on == false) {
 			on = true;
 			
-			selector = new SectorSelector(GeoWorldWindViewImpl.getWW());
-			selector.enable();
+			isTextOn = new LinkedList<Boolean>();
+			for (int k=0; k<5; k++) {isTextOn.add(false);}
+			
+			text = new LinkedList<SurfaceText>();
+			for (int k=0; k<5; k++) {text.add(null);}
+			
+			selectors = new LinkedList<SectorSelector>();
+			selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
+			selectors.get(0).enable();
 			// couleur du selector : bleu
-			selector.setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
+			selectors.get(0).setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
 
 			/*
 			 * selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY,
@@ -140,11 +174,14 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			 * "no sector"); } });
 			 */
 
-			sectorLayer = (RenderableLayer) selector.getLayer();
+			sectorLayers = new LinkedList<RenderableLayer> ();
+			sectorLayers.add((RenderableLayer) selectors.get(0).getLayer());
 			
-			sectorLayer.setName("Watch sector");
-			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
-			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayer));
+			sectorLayers.get(0).setName("Watch sector#1");
+			geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.get(0)));
+			layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.get(0)));
+			
+			System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
 			
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -158,7 +195,24 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 						watchedShip.setLatitude(data.getLatitude());
 						watchedShip.setLongitude(data.getLongitude());
 
-						watchTarget(selector.getSector(), watchedShip);
+						if (layerTreeServices.getCheckBoxTreeItems().get(26).isSelected()) {
+							
+							layerTreeServices.getCheckBoxTreeItems().get((nbSelector+21)).setSelected(true);
+							selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
+							selectors.getLast().enable();
+							nbSelector++;
+							// couleur du selector : bleu
+							selectors.getLast().setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
+							RenderableLayer TempLayer = (RenderableLayer) ((selectors.getLast()).getLayer());
+							TempLayer.setName("Watch sector#"+nbSelector);
+							sectorLayers.add(TempLayer);
+							geoViewServices.getLayerManager().insertGeoLayer("Watch sector#"+nbSelector, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+							layerTreeServices.addGeoLayer("Watch sector#"+nbSelector, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+							System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
+							layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
+							}
+						
+						for (int j=0; j<selectors.size(); j++) {watchTarget(j, watchedShip);}
 
 					}
 
@@ -223,17 +277,18 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		return on;
 	}
 
-	private void watchTarget(Sector sector, Ship target) {
+	private void watchTarget(int i, Ship target) {
 
-		if (sector != null
+		Sector sector = selectors.get(i).getSector();
+				if (sector != null
 				&& target != null
 				&& sector.containsDegrees(target.getLatitude(),
 						target.getLongitude())) {
 			System.err
 					.println("============ W A R N I N G ============ Ship with MMSI #"
-							+ target.getMMSI() + " is inside Sector#1");
-			if (!isTextOn) {
-				textOn(sector);
+							+ target.getMMSI() + " is inside Sector#"+ (i+1));
+			if (!(isTextOn.get(i))) {
+				textOn(sector, i);
 			}
 
 			if (!alarmOn) {
@@ -259,31 +314,31 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 				&& target != null
 				&& !sector.containsDegrees(target.getLatitude(),
 						target.getLongitude())) {
-			textOff(sector);
+			textOff(sector, i);
 		}
 	}
 
-	private void textOn(Sector sector) {
-		text = new SurfaceText("!", new Position(sector.getCentroid(), 0));
+	private void textOn(Sector sector, int i) {
+		text.set(i, new SurfaceText("!", new Position(sector.getCentroid(), 0)));
 		// couleur du texte : jaune
-		text.setColor(WWUtil.decodeColorRGBA("FFFF00FF"));
-		if (sectorLayer.isEnabled()) {
-			sectorLayer.addRenderable(text);
+		text.get(i).setColor(WWUtil.decodeColorRGBA("FFFF00FF"));
+		if (sectorLayers.get(i).isEnabled()) {
+			sectorLayers.get(i).addRenderable(text.get(i));
 		} else {
-			sectorLayer.setEnabled(true);
-			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
+			sectorLayers.get(i).setEnabled(true);
+			layerTreeServices.getCheckBoxTreeItems().get(21+i).setSelected(true);
 			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
-			sectorLayer.addRenderable(text);
+			sectorLayers.get(i).addRenderable(text.get(i));
 		}
 
-		isTextOn = true;
+		isTextOn.set(i, true);
 	}
 
-	private void textOff(Sector sector) {
-		if (text != null && sectorLayer.isEnabled()) {
-			sectorLayer.removeRenderable(text);
+	private void textOff(Sector sector, int i) {
+		if (text.get(i) != null && sectorLayers.get(i).isEnabled()) {
+			sectorLayers.get(i).removeRenderable(text.get(i));
 		}
-		isTextOn = false;
+		isTextOn.set(i, false);
 	}
 
 }
