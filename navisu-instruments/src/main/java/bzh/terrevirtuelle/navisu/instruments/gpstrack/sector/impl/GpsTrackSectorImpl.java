@@ -84,7 +84,7 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 
 	protected WorldWindow wwd;
 
-	protected static final String GROUP = "Target display";
+	protected static final String GROUP = "Watch sector";
 	protected Ship watchedShip;
 
 	protected boolean on = false;
@@ -103,8 +103,8 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		watchedShip.setMMSI(999999999);
 		
 		wwd = GeoWorldWindViewImpl.getWW();
-		//layerTreeServices.createGroup(GROUP);
-		//geoViewServices.getLayerManager().createGroup(GROUP);
+		layerTreeServices.createGroup(GROUP);
+		geoViewServices.getLayerManager().createGroup(GROUP);
 		
 		cm = ComponentManager.componentManager;
 		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -154,8 +154,6 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 
 					GGA data = (GGA) d;
 					if (on) {
-						// Enlever les commentaires pour voir les messages NMEA
-						//System.out.println(data);
 
 						watchedShip.setLatitude(data.getLatitude());
 						watchedShip.setLongitude(data.getLongitude());
@@ -273,8 +271,8 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			sectorLayer.addRenderable(text);
 		} else {
 			sectorLayer.setEnabled(true);
-			layerTreeServices.getCheckBoxTreeItems().get(18).setSelected(false);
-			layerTreeServices.getCheckBoxTreeItems().get(18).setSelected(true);
+			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
+			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
 			sectorLayer.addRenderable(text);
 		}
 

@@ -87,7 +87,9 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 	protected ArrayList<Position> pathPositions;
 	protected ShapeAttributes attrs;
 
-	protected static final String GROUP = "Target display";
+	protected static final String GROUP1 = "Target";
+	protected static final String GROUP2 = "Path";
+	
 	protected Ship ship;
 	protected GShip gShip;
 	protected boolean gShipCreated = false;
@@ -103,8 +105,10 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 		ship.setMMSI(999999999);
 		
 		wwd = GeoWorldWindViewImpl.getWW();
-		layerTreeServices.createGroup(GROUP);
-		geoViewServices.getLayerManager().createGroup(GROUP);
+		layerTreeServices.createGroup(GROUP1);
+		geoViewServices.getLayerManager().createGroup(GROUP1);
+		layerTreeServices.createGroup(GROUP2);
+		geoViewServices.getLayerManager().createGroup(GROUP2);
 
 		this.gpsTrackLayer = new RenderableLayer();
 		gpsTrackLayer.setName("Target");
@@ -114,11 +118,11 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 		pathPositions = new ArrayList<Position>();
 
-		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
-		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
+		layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(gpsTrackLayer));
 
-		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
-		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));		
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(layer));
+		layerTreeServices.addGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(layer));
 
 		attrs = new BasicShapeAttributes();
 		// couleur de la trace : vert
@@ -149,6 +153,8 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 		if (on == false) {
 			on = true;
 			
+			layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
+			
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
 
@@ -158,7 +164,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 					GGA data = (GGA) d;
 					if (on) {
 						// Enlever les commentaires pour voir les messages NMEA
-						//System.out.println(data);
+						System.out.println(data);
 
 						ship.setLatitude(data.getLatitude());
 						ship.setLongitude(data.getLongitude());

@@ -106,8 +106,14 @@ public class LayerCheckTreeImpl
         rootItems.add(shp);
         CheckBoxTreeItem<GeoLayer> wms = createNode(rootItem0, "WMS Layers", null);
         rootItems.add(wms);
-        CheckBoxTreeItem<GeoLayer> target = createNode(rootItem0, "Target display", null);
-        rootItems.add(target);
+        CheckBoxTreeItem<GeoLayer> targetDisplay = createNode(rootItem0, "Target display", null);
+        rootItems.add(targetDisplay);
+        tmp = createNode(targetDisplay, "Target", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Path", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Watch sector", null);
+        rootItems.add(tmp);
         treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
 
     }
