@@ -100,11 +100,12 @@ public class NmeaClientImpl
                             if (xml == true) {
                                 response(stringBuilder); //xml data
                             } else {
+                                //System.out.println(stringBuilder);
                                 sentences = (Sentences) unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())));
                             }
                             response();
                         } catch (JAXBException ex) {
-                           //  System.out.println(ex);
+                            // System.out.println(ex);
                         }
                     });
                     ws = websocket;
@@ -143,7 +144,7 @@ public class NmeaClientImpl
         for (int i = 0; i < size; i++) {
              nmea = queue.poll();  
             if (nmea != null) {
-              //  System.out.println(nmea);
+               // System.out.println(nmea);
                 eventProducer.notifyNMEAEvent(nmea);
             }
         }
