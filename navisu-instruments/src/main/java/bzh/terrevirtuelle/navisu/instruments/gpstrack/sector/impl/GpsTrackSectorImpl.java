@@ -103,7 +103,7 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 	protected boolean alarmOn = false;
 	protected LinkedList<Boolean> isTextOn;
 	protected LinkedList<SurfaceText> text;
-	protected int nbSelector = 1;
+	protected int nbSelector = 0;
 
 	@Override
 	public void componentInitiated() {
@@ -127,6 +127,7 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		layerTreeServices.createGroup(GROUP5);
 		geoViewServices.getLayerManager().createGroup(GROUP5);
 		
+		layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(24).setSelected(false);
@@ -161,10 +162,8 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			for (int k=0; k<5; k++) {text.add(null);}
 			
 			selectors = new LinkedList<SectorSelector>();
-			selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
-			selectors.get(0).enable();
-			// couleur du selector : bleu
-			selectors.get(0).setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
+			
+
 
 			/*
 			 * selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY,
@@ -175,13 +174,6 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			 */
 
 			sectorLayers = new LinkedList<RenderableLayer> ();
-			sectorLayers.add((RenderableLayer) selectors.get(0).getLayer());
-			
-			sectorLayers.get(0).setName("Watch sector#1");
-			geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.get(0)));
-			layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.get(0)));
-			
-			System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
 			
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {

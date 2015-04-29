@@ -312,7 +312,7 @@ public class AppMain extends Application {
 
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
-        //gpsTrackSectorServices.on();
+        gpsTrackSectorServices.on();
         gpsTrackPolygonServices.on();
         
         
