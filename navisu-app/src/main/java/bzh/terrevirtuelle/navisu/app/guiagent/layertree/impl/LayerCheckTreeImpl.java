@@ -128,7 +128,7 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Toggle drawer", null);
         rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Activate polygon", null);
+        tmp = createNode(targetDisplay, "Activate current polygon", null);
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Save & activate current polygon", null);
         rootItems.add(tmp);
