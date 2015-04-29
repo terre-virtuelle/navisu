@@ -56,6 +56,8 @@ import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl.GpsTrackPlotterImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl.GpsTrackPolygonImpl;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.impl.GpsTrackSectorImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
@@ -139,6 +141,7 @@ public class AppMain extends Application {
                         
                         GpsTrackPlotterImpl.class,
                         GpsTrackSectorImpl.class,
+                        GpsTrackPolygonImpl.class,
                         
                         GpxObjectImpl.class,
                         GribImpl.class,
@@ -182,6 +185,7 @@ public class AppMain extends Application {
         
         GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
         GpsTrackSectorServices gpsTrackSectorServices = componentManager.getComponentService(GpsTrackSectorServices.class);
+        GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
         
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
@@ -242,6 +246,7 @@ public class AppMain extends Application {
         
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackSectorServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
 
         //instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
@@ -308,6 +313,7 @@ public class AppMain extends Application {
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
         //gpsTrackSectorServices.on();
+        gpsTrackPolygonServices.on();
         
         
 

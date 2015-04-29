@@ -124,6 +124,14 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "New watch sector", null);
         rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Polygon#1", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Drawer ON", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Drawer OFF", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Activate Polygon", null);
+        rootItems.add(tmp);
         treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
 
     }
