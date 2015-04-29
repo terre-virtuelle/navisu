@@ -6,7 +6,10 @@
 package bzh.terrevirtuelle.navisu.instruments.ais.logger.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS01Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS05Event;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateStationEvent;
@@ -39,6 +42,9 @@ public class AisLoggerImpl
     ComponentEventSubscribe<AisDeleteTargetEvent> aisDTEvent;
     ComponentEventSubscribe<AisUpdateStationEvent> aisUSEvent;
     ComponentEventSubscribe<AisUpdateTargetEvent> aisUTEvent;
+    ComponentEventSubscribe<AIS01Event> ais1ES;
+    ComponentEventSubscribe<AIS05Event> ais5ES;
+
     protected boolean on = false;
     private final String NAME = "AisLogger";
 
@@ -51,6 +57,8 @@ public class AisLoggerImpl
         aisDTEvent = cm.getComponentEventSubscribe(AisDeleteTargetEvent.class);
         aisUSEvent = cm.getComponentEventSubscribe(AisUpdateStationEvent.class);
         aisUTEvent = cm.getComponentEventSubscribe(AisUpdateTargetEvent.class);
+        ais1ES = cm.getComponentEventSubscribe(AIS01Event.class);
+        ais5ES = cm.getComponentEventSubscribe(AIS05Event.class);
     }
 
     @Override
@@ -67,7 +75,7 @@ public class AisLoggerImpl
             aisServices.on();
         }
         if (on == false) {
-            on = true;
+            on = false;
             aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedDate) -> {
                 if (on) {
                     System.out.println(updatedDate);
@@ -100,6 +108,20 @@ public class AisLoggerImpl
                 }
             });
         }
+        ais5ES.subscribe(new AIS05Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                System.out.println("data " + data);
+            }
+        });
+        ais1ES.subscribe(new AIS01Event() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                System.out.println("data " + data);
+            }
+        });
     }
 
     @Override
@@ -109,22 +131,22 @@ public class AisLoggerImpl
         if (on == true) {
             on = false;
             aisCTEvent.unsubscribe((AisCreateTargetEvent) (Ship updatedDate) -> {
-               
+
             });
             aisUTEvent.unsubscribe((AisUpdateTargetEvent) (Ship updatedDate) -> {
 
             });
             aisDTEvent.unsubscribe((AisDeleteTargetEvent) (Ship updatedDate) -> {
-               
+
             });
             aisCSEvent.unsubscribe((AisCreateStationEvent) (BaseStation updatedDate) -> {
-               
+
             });
             aisUSEvent.unsubscribe((AisUpdateStationEvent) (BaseStation updatedDate) -> {
-                
+
             });
             aisDSEvent.unsubscribe((AisDeleteStationEvent) (BaseStation updatedDate) -> {
-                
+
             });
         }
     }
