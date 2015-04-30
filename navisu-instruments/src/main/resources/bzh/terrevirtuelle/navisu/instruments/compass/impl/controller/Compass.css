@@ -15,8 +15,8 @@
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
     -fx-fill : -fx-color-typo;
-    /*-fx-font-weight: bold;
-    -fx-underline : true;*/
+    -fx-font-weight: bold;
+   /* -fx-underline : true;*/
 }
 .infotittle{
     -fx-font: 16px "Roboto Cn";
@@ -27,10 +27,11 @@
 .instrumentvalue{
     -fx-font: 20px "Roboto Cn";
     -fx-fill: -fx-color-typo;
-    /*-fx-font-weight: bold;*/   
+    -fx-font-weight: bold; 
 }
 .instrumentcadres{
-    -fx-stroke:-fx-color-contours; 
+    -fx-stroke:-fx-color-contours;
+    -fx-stroke-width: 2;
 }
 .aisvalue{
     -fx-font: 14px "Roboto Cn";

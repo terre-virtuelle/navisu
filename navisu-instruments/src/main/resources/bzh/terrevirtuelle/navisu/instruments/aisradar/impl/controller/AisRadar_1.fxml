@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="radar" stylesheets="@aisradar.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" />
+        <Group layoutX="100.0" layoutY="65.0">
+            <children>
+                <Rectangle height="860.0" opacity="0.60" strokeType="INSIDE" styleClass="radar-screen" width="1024.0">
+                 
+                </Rectangle>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" height="800.0" layoutX="799.0" layoutY="29.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
+                    
+                </Rectangle>
+                <Text fontSmoothingType="LCD" layoutX="800.0" layoutY="69.0" styleClass="info-text" text="Press Ctrl-Click Left to scale" textAlignment="CENTER" wrappingWidth="200"> 
+                </Text>
+                <Group layoutX="175.0" layoutY="229.0" scaleX="2.3" scaleY="2.3">
+                    <children>
+                        <Circle layoutX="250.0" layoutY="200.0" radius="30.0" strokeType="INSIDE" styleClass="radar-circle" />
+                        <Circle layoutX="250.0" layoutY="200.0" radius="80.0" strokeType="INSIDE" styleClass="radar-circle" />
+                        <Line endY="150.0" layoutX="250.0" layoutY="200.0" startY="-150.0" styleClass="radar-line" />
+                        <Line endX="150.0" layoutX="250.0" layoutY="200.0" startX="-150.0" styleClass="radar-line" />
+                        <Circle layoutX="250.0" layoutY="200.0" radius="10.0" strokeType="INSIDE" styleClass="radar-circle" />
+                        <Circle layoutX="250.0" layoutY="200.0" radius="150.0" strokeType="INSIDE" styleClass="radar-circle" />
+                        <Circle layoutX="250.0" layoutY="200.0" radius="130.0" strokeType="INSIDE" styleClass="radar-circle" />                      
+                        <Circle layoutX="250.0" layoutY="200.0" radius="110.0" strokeType="INSIDE" styleClass="radar-circle" />
+                        <Circle layoutX="250.0" layoutY="200.0" radius="50.0" strokeType="INSIDE" styleClass="radar-circle" />
+                    </children>
+                </Group>
+                <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="125.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15" styleClass="screen-pane">
+                    <image>
+                        <Image url="@radarfaisceau600.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@logoTV64AIS.png" />
+                    </image>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </ImageView>
+                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="980.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                    <image>
+                        <Image url="@quit.png" />
+                    </image>
+                </ImageView>
+            <Group layoutX="130.0" layoutY="131.0" scaleX="1.16" scaleY="1.16" styleClass="radar-ticks">
+               <children>
+                  <Group rotate="90.0">
+                     <children>
+                        <Group rotate="60.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="70.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="10.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="90.0" visible="false">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="50.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="80.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group>
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="30.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="20.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="40.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutY="-2.0">
+                     <children>
+                        <Group rotate="60.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="70.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="10.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="90.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="50.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="80.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group>
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="30.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="20.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                        <Group rotate="40.0">
+                           <children>
+                              <Line endX="10.0" layoutY="300.0" styleClass="radar-ticks" />
+                              <Line endX="10.0" layoutX="580.0" layoutY="300.0" styleClass="radar-ticks" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+               </children>
+            </Group>
+            </children>
+        </Group>
+    </children>
+</fx:root>

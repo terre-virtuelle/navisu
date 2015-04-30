@@ -156,9 +156,18 @@
     -fx-stroke: -fx-line-base;
     -fx-fill: #143b2810;  
 }
-.radar-line, .radar-ticks{
+.radar-line, .radar-ticks {
     -fx-stroke: -fx-line-base;
-    -fx-stroke-width: 1px;
+    -fx-stroke-width: 2;
+}
+.radar-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.radar-degrees{
+  -fx-font: 20pt "Roboto Cn";
+  -fx-font-weight: bold;
+  -fx-fill:-fx-line-base; 
 }
 .radar-screen {
     /*
