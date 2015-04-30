@@ -87,11 +87,7 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 
 	protected WorldWindow wwd;
 
-	protected static final String GROUP1 = "Watch sector#1";
-	protected static final String GROUP2 = "Watch sector#2";
-	protected static final String GROUP3 = "Watch sector#3";
-	protected static final String GROUP4 = "Watch sector#4";
-	protected static final String GROUP5 = "Watch sector#5";
+	protected static final String GROUP = "Watch sectors";
 	
 	protected Ship watchedShip;
 
@@ -112,27 +108,11 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		watchedShip.setMMSI(999999999);
 		
 		wwd = GeoWorldWindViewImpl.getWW();
-		layerTreeServices.createGroup(GROUP1);
-		geoViewServices.getLayerManager().createGroup(GROUP1);
-		
-		layerTreeServices.createGroup(GROUP2);
-		geoViewServices.getLayerManager().createGroup(GROUP2);
-		
-		layerTreeServices.createGroup(GROUP3);
-		geoViewServices.getLayerManager().createGroup(GROUP3);
-		
-		layerTreeServices.createGroup(GROUP4);
-		geoViewServices.getLayerManager().createGroup(GROUP4);
-		
-		layerTreeServices.createGroup(GROUP5);
-		geoViewServices.getLayerManager().createGroup(GROUP5);
+		layerTreeServices.createGroup(GROUP);
+		geoViewServices.getLayerManager().createGroup(GROUP);
 		
 		layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(24).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(25).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
 		
 		cm = ComponentManager.componentManager;
 		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -187,9 +167,8 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 						watchedShip.setLatitude(data.getLatitude());
 						watchedShip.setLongitude(data.getLongitude());
 
-						if (layerTreeServices.getCheckBoxTreeItems().get(26).isSelected() && nbSelector<5) {
+						if (layerTreeServices.getCheckBoxTreeItems().get(22).isSelected()) {
 							
-							layerTreeServices.getCheckBoxTreeItems().get((nbSelector+21)).setSelected(true);
 							selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
 							selectors.getLast().enable();
 							nbSelector++;
@@ -198,15 +177,11 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 							RenderableLayer TempLayer = (RenderableLayer) ((selectors.getLast()).getLayer());
 							TempLayer.setName("Watch sector#"+nbSelector);
 							sectorLayers.add(TempLayer);
-							geoViewServices.getLayerManager().insertGeoLayer("Watch sector#"+nbSelector, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
-							layerTreeServices.addGeoLayer("Watch sector#"+nbSelector, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+							geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+							layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
 							System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
 							System.out.println("NbSelector = " + nbSelector + "\n");
-							layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
-							}
-						
-						if (layerTreeServices.getCheckBoxTreeItems().get(26).isSelected() && nbSelector>=5) {
-							layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
+							layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
 							}
 						
 						for (int j=0; j<selectors.size(); j++) {watchTarget(j, watchedShip);}
@@ -306,6 +281,10 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 					}
 				}, 7500);
 			}
+			
+			if (!layerTreeServices.getCheckBoxTreeItems().get(21).isSelected()) {
+				layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
+				}
 		}
 		if (sector != null
 				&& target != null
@@ -323,8 +302,9 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			sectorLayers.get(i).addRenderable(text.get(i));
 		} else {
 			sectorLayers.get(i).setEnabled(true);
-			layerTreeServices.getCheckBoxTreeItems().get(21+i).setSelected(true);
 			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
+		    layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
+			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
 			sectorLayers.get(i).addRenderable(text.get(i));
 		}
 

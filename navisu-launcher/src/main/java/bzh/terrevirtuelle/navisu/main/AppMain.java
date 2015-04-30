@@ -303,7 +303,7 @@ public class AppMain extends Application {
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
-        nmeaClientServices.request(750);
+        nmeaClientServices.request(1000);
 
         // Test clients à l'écoute des événements Nmea 
         aisServices.on();

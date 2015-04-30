@@ -142,13 +142,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
 		vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
 		
+		layerTreeServices.getCheckBoxTreeItems().get(24).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(25).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(true);
 		layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(30).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(true);
-		layerTreeServices.getCheckBoxTreeItems().get(32).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(33).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(34).setSelected(false);
 		
         measureTool = new MeasureTool(GeoWorldWindViewImpl.getWW());
         savedMeasureTool = new LinkedList<MeasureTool>();
@@ -196,7 +196,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 						
 						watchTarget(watchedShip, savedMeasureTool);
 						
-						if (layerTreeServices.getCheckBoxTreeItems().get(28).isSelected()) {
+						if (layerTreeServices.getCheckBoxTreeItems().get(24).isSelected()) {
 							measureTool.setArmed(true);
 							controller.setArmed(true);
 							if (!drawerActivated) {
@@ -214,7 +214,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 								}
 							}
 						
-						if (layerTreeServices.getCheckBoxTreeItems().get(29).isSelected()) {
+						if (layerTreeServices.getCheckBoxTreeItems().get(25).isSelected()) {
 							watchTarget(watchedShip);
 							if (!polygonActivated) {
 								System.out.println("Watch polygon activated.\n");
@@ -229,7 +229,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 								}
 							}
 						
-						if (layerTreeServices.getCheckBoxTreeItems().get(30).isSelected()) {
+						if (layerTreeServices.getCheckBoxTreeItems().get(26).isSelected()) {
 							measureTool.setArmed(false);
 							controller.setArmed(false);
 							savedMeasureTool.add(measureTool);
@@ -238,10 +238,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 							measureTool = new MeasureTool(wwd);
 							measureTool.setController(controller);
 							
-							if (layerTreeServices.getCheckBoxTreeItems().get(31).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);}
-							if (layerTreeServices.getCheckBoxTreeItems().get(32).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);}
-							if (layerTreeServices.getCheckBoxTreeItems().get(33).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);}
-							if (layerTreeServices.getCheckBoxTreeItems().get(34).isSelected()) {controller.setFreeHand(true);}
+							if (layerTreeServices.getCheckBoxTreeItems().get(27).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);}
+							if (layerTreeServices.getCheckBoxTreeItems().get(28).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);}
+							if (layerTreeServices.getCheckBoxTreeItems().get(29).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);}
+							if (layerTreeServices.getCheckBoxTreeItems().get(30).isSelected()) {controller.setFreeHand(true);}
 	
 							measureTool.setFollowTerrain(true);
 							controller.setUseRubberBand(true);
@@ -249,15 +249,15 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 							polygonLayer.setName("Polygon#" + nbPolygon);
 							geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
 							layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
-							layerTreeServices.getCheckBoxTreeItems().get(30).setSelected(false);
-							layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
+							layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
+							layerTreeServices.getCheckBoxTreeItems().get(24).setSelected(false);
 							System.out.println("New polygon (polygon#" + nbPolygon +") ready to be drawn.\n");
 							}
 						
-						if (layerTreeServices.getCheckBoxTreeItems().get(34).isSelected()) {
+						if (layerTreeServices.getCheckBoxTreeItems().get(30).isSelected()) {
 							// Altitude en mètres
 							double altitude = wwd.getView().getEyePosition().getAltitude();
-							double spacing = (double) ((300*altitude)/(15000));
+							double spacing = (double) ((200*altitude)/(15000));
 							controller.setFreeHand(true);
 							controller.setFreeHandMinSpacing(spacing);
 							System.out.println("Eye altitude : " + wwd.getView().getEyePosition().getAltitude());
@@ -268,9 +268,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 								polyShapeActivated = true;
 								circleShapeActivated = false;
 								ellipseShapeActivated = false;
-								layerTreeServices.getCheckBoxTreeItems().get(32).setSelected(false);
-								layerTreeServices.getCheckBoxTreeItems().get(33).setSelected(false);
-								layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(true);
+								layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
+								layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
+								layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(true);
 								System.out.println("Free hand mode activated.\n");
 								}
 						}
@@ -286,46 +286,40 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 						}
 						
 						
-						// poly 31
-						
-						if (layerTreeServices.getCheckBoxTreeItems().get(31).isSelected()) {
+						if (layerTreeServices.getCheckBoxTreeItems().get(27).isSelected()) {
 							measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
 							if (!polyShapeActivated) {
 								polyShapeActivated = true;
 								circleShapeActivated = false;
 								ellipseShapeActivated = false;
-								layerTreeServices.getCheckBoxTreeItems().get(32).setSelected(false);
-								layerTreeServices.getCheckBoxTreeItems().get(33).setSelected(false);
+								layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
+								layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
 								System.out.println("Polygon shape activated.\n");
 								}
 						}
 						
 						
-						// ellipse 32
-						
-						if (layerTreeServices.getCheckBoxTreeItems().get(32).isSelected()) {
+						if (layerTreeServices.getCheckBoxTreeItems().get(28).isSelected()) {
 							measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);
 							if (!ellipseShapeActivated) {
 								polyShapeActivated = false;
 								circleShapeActivated = false;
 								ellipseShapeActivated = true;
-								layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
-								layerTreeServices.getCheckBoxTreeItems().get(33).setSelected(false);
+								layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(false);
+								layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
 								System.out.println("Ellipse shape activated.\n");
 								}
 						}
 						
 						
-						// circle 33
-						
-						if (layerTreeServices.getCheckBoxTreeItems().get(33).isSelected()) {
+						if (layerTreeServices.getCheckBoxTreeItems().get(29).isSelected()) {
 							measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
 							if (!circleShapeActivated) {
 								polyShapeActivated = false;
 								circleShapeActivated = true;
 								ellipseShapeActivated = false;
-								layerTreeServices.getCheckBoxTreeItems().get(32).setSelected(false);
-								layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
+								layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
+								layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(false);
 								System.out.println("Circle shape activated.\n");
 								}
 						}
@@ -400,6 +394,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		if (WWMath.isLocationInside(pos, measureTool.getPositions()) && measureTool != null) {
 			System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside Polygon#" + nbPolygon + "\n");
 			
+			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
+		    layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
+			layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(true);
+			
 			if (!alarmOn) {
 				MediaPlayer mediaPlayer;
 				javafx.scene.media.Media media;
@@ -419,10 +417,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}, 7500);
 			}
 			
-			if (!layerTreeServices.getCheckBoxTreeItems().get(27).isSelected()) {
-				layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(true);
-				}
-			
 			}
 	}
 	
@@ -435,6 +429,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		if (WWMath.isLocationInside(pos, list.get(i).getPositions()) && list.get(i) != null) {
 			System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside Polygon#" + (i+1) + "\n");
+			
+			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
+			layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
+			layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(true);
 			
 			if (!alarmOn) {
 				MediaPlayer mediaPlayer;
