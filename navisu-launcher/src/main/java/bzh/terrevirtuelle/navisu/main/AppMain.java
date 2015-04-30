@@ -130,7 +130,7 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
-                        GpsLoggerImpl.class,  
+                        GpsLoggerImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -155,7 +155,7 @@ public class AppMain extends Application {
         AisServices aisServices = componentManager.getComponentService(AisServices.class);
         AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
         AisPlotterServices aisPlotterServices = componentManager.getComponentService(AisPlotterServices.class);
-        AisRadarServices radarServices = componentManager.getComponentService(AisRadarServices.class);
+        AisRadarServices aisRadarServices = componentManager.getComponentService(AisRadarServices.class);
 
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
@@ -224,14 +224,14 @@ public class AppMain extends Application {
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
 
-        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
@@ -279,9 +279,9 @@ public class AppMain extends Application {
         nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
-        //aisServices.on();
+        aisServices.on();
         //aisLoggerServices.on();
-        //aisPlotterServices.on();
+        aisPlotterServices.on();
     }
 
     public static void main(String[] args) throws Exception {

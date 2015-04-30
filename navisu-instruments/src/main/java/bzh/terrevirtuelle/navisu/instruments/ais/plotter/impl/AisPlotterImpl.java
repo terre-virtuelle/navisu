@@ -126,7 +126,6 @@ public class AisPlotterImpl
             shipSet.stream().forEach((i) -> {
                 createTarget(ships.get(i));
             });
-            System.out.println("ships " + ships.size());
             stations = aisServices.getStations();
             Set<Integer> stationSet = stations.keySet();
 
@@ -229,11 +228,9 @@ public class AisPlotterImpl
     }
 
     private void updateTarget(Ship target) {
-        //  System.out.println("updateTarget " + target.getShipType()+ "   ");
         GShip gShip = gShips.get(target.getMMSI());
-        gShip.update(target);
+        gShip.update();
         wwd.redrawNow();
-        // createTarget( target);
     }
 
     @Override

@@ -103,6 +103,7 @@ public class DriverManagerImpl
                 this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             }
         }
+        System.out.println("userInitialDirectory "+userInitialDirectory);
         this.fileChooserDock.getExtensionFilters().clear();
         this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(category, ext));
         File selectedFile = this.fileChooserDock.showOpenDialog(null);

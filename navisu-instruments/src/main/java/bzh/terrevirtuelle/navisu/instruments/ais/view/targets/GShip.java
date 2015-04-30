@@ -8,6 +8,7 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.util.Arrays;
@@ -88,19 +89,12 @@ public class GShip {
         shape.setRotation(cog);
     }
 
-    public void update(Ship ship) {
-      //  System.out.print(ship.getShipType()+ "   ");
-     //   System.out.println("gShip "+this);
+    public void update() {
+      //  this.ship = ship;
         shape.setPosition(new Position(Angle.fromDegrees(ship.getLatitude()),
                 Angle.fromDegrees(ship.getLongitude()), 15));
         shape.setRotation(ship.getCog());
-        ShapeAttributes pathAttrs = shape.getAttributes();
-        pathAttrs.setOutlineMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
-        pathAttrs.setInteriorMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
-      //  System.out.println(ShipTypeColor.MATERIAL.get(ship.getShipType()));
-     //   pathAttrs.setInteriorMaterial(Material.BLUE);
-     //   System.out.println("pathAttrs "+ pathAttrs.getInteriorMaterial());
-      //  shape.setAttributes(makeAttributes());
+        shape.setAttributes(makeAttributes());
     }
 
     protected final ShapeAttributes makeAttributes() {

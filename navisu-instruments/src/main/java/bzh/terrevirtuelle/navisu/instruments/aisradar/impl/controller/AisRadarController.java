@@ -189,6 +189,7 @@ public class AisRadarController
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 try {
                     AIS01 ais = (AIS01) data;
+                    //System.out.println("ais "+ais);
                     int mmsi = ais.getMMSI();
                     if (!ships.containsKey(mmsi)) {
                         ship = ShipBuilder.create()
@@ -306,22 +307,25 @@ public class AisRadarController
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+               // System.out.println("ais "+data);
                 AIS05 ais = (AIS05) data;
                 int mmsi = ais.getMMSI();
-
                 if (!ships.containsKey(mmsi)) {
+                   //  System.out.println("ais "+ais);
                     ship = ShipBuilder.create()
                             .mmsi(ais.getMMSI())
                             .destination(ais.getDestination())
+                            .shipType(ais.getShipType())
                             .name(ais.getName())
                             .build();
                     ships.put(mmsi, ship);
                     createTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
                             (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
                 } else {
-                    //   System.out.println("radar update mmsi " + mmsi);
+                  //   System.out.println("ais "+ais);
                     ship = ships.get(mmsi);
                     ship.setShipType(ais.getShipType());
+                    
                     ship.setName(ais.getShipName());
                     ship.setETA(ais.getETA());
                     ship.setDestination(ais.getDestination());
