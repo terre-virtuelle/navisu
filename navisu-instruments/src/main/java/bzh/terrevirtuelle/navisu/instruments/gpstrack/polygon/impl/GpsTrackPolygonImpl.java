@@ -257,7 +257,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 						if (layerTreeServices.getCheckBoxTreeItems().get(34).isSelected()) {
 							// Altitude en mètres
 							double altitude = wwd.getView().getEyePosition().getAltitude();
-							double spacing = (double) ((500*altitude)/(15000));
+							double spacing = (double) ((300*altitude)/(15000));
 							controller.setFreeHand(true);
 							controller.setFreeHandMinSpacing(spacing);
 							System.out.println("Eye altitude : " + wwd.getView().getEyePosition().getAltitude());
