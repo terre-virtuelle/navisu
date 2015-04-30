@@ -60,6 +60,41 @@ public class AIS05
         implements AISMessage05 {
 
     /**
+     * AIS05 default constructor
+     */
+    public AIS05() {
+    }
+
+    /**
+     * AISMessage 5 constructor
+     *
+     * @param content AIS content
+     * @param prov the provenance of the message
+     * @precondition validLength(content.length()) &&
+     * AISMessageBase.getMessageId(content)== 5
+     */
+    public AIS05(Sixbit content, VDMMessageProvenance prov) {
+        super(content, prov);
+        assert (validLength(content.length()));
+        assert (getMessageID() == 5);
+
+        aisVersionIndicator = content.getIntFromTo(AISVERSIONINDICATOR_FROM, AISVERSIONINDICATOR_TO);
+        imoNumber = content.getIntFromTo(IMONUMBER_FROM, IMONUMBER_TO);
+        callSign = UtilsString.stripAtSigns(content.getStringFromTo(CALLSIGN_FROM, CALLSIGN_TO));
+        name = UtilsString.stripAtSigns(content.getStringFromTo(NAME_FROM, NAME_TO));
+        typeOfShipAndCargoType = content.getIntFromTo(TYPEOFSHIPANDCARGOTYPE_FROM, TYPEOFSHIPANDCARGOTYPE_TO);
+        dimension = content.getBitVectorFromTo(DIMENSION_FROM, DIMENSION_TO);
+        typeOfElectronicPositionFixingDevice = content.getIntFromTo(TYPEOFELECTRONICPOSITIONFIXINGDEVICE_FROM, TYPEOFELECTRONICPOSITIONFIXINGDEVICE_TO);
+        eta = content.getBitVectorFromTo(ETA_FROM, ETA_TO);
+        maximumPresentStaticDraught = content.getIntFromTo(MAXIMUMPRESENTSTATICDRAUGHT_FROM, MAXIMUMPRESENTSTATICDRAUGHT_TO);
+        destination = UtilsString.stripAtSigns(content.getStringFromTo(DESTINATION_FROM, DESTINATION_TO));
+        dte = content.getBoolean(DTE_BITINDEX);
+        spare = content.getIntFromTo(SPARE_FROM, SPARE_TO);
+        if (!UtilsSpare.isSpareSemanticallyCorrect(spare)) {
+            annotations.add(new AISIllegalValueAnnotation("getSpare", spare, UtilsSpare.range));
+        }
+    }
+    /**
      *
      */
     public static final int LENGTH = 424;
@@ -376,7 +411,6 @@ public class AIS05
      * shown in the order and units as specified by the standard separated by
      * the SEPARATOR string.
      */
-    
     @Override
     public String toString() {
 
@@ -388,49 +422,13 @@ public class AIS05
         result += SEPARATOR + UtilsShipType8.shipTypeToString(typeOfShipAndCargoType);
         result += SEPARATOR + UtilsDimensions30.toString(dimension);
      //   String etaString = twoDigits.format(UtilsEta.getMonth(eta)) + "-" + twoDigits.format(UtilsEta.getDay(eta))
-     //           + "T" + twoDigits.format(UtilsEta.getHour(eta)) + ":" + twoDigits.format(UtilsEta.getMinute(eta));
-      //  result += SEPARATOR + etaString;
+        //           + "T" + twoDigits.format(UtilsEta.getHour(eta)) + ":" + twoDigits.format(UtilsEta.getMinute(eta));
+        //  result += SEPARATOR + etaString;
         result += SEPARATOR + maximumPresentStaticDraught;
         result += SEPARATOR + UtilsPositioningDevice.toString(typeOfElectronicPositionFixingDevice);
         result += SEPARATOR + destination;
         result += SEPARATOR + (dte ? "no DTE" : "with DTE");
         return result;
     }
-    
-   
-    /**
-     * AIS05 default constructor
-     */
-    public AIS05() {
-    }
 
-    /**
-     * AISMessage 5 constructor
-     *
-     * @param content AIS content
-     * @param prov the provenance of the message
-     * @precondition validLength(content.length()) &&
-     * AISMessageBase.getMessageId(content)== 5
-     */
-    public AIS05(Sixbit content, VDMMessageProvenance prov) {
-        super(content, prov);
-        assert (validLength(content.length()));
-        assert (getMessageID() == 5);
-
-        aisVersionIndicator = content.getIntFromTo(AISVERSIONINDICATOR_FROM, AISVERSIONINDICATOR_TO);
-        imoNumber = content.getIntFromTo(IMONUMBER_FROM, IMONUMBER_TO);
-        callSign = UtilsString.stripAtSigns(content.getStringFromTo(CALLSIGN_FROM, CALLSIGN_TO));
-        name = UtilsString.stripAtSigns(content.getStringFromTo(NAME_FROM, NAME_TO));
-        typeOfShipAndCargoType = content.getIntFromTo(TYPEOFSHIPANDCARGOTYPE_FROM, TYPEOFSHIPANDCARGOTYPE_TO);
-        dimension = content.getBitVectorFromTo(DIMENSION_FROM, DIMENSION_TO);
-        typeOfElectronicPositionFixingDevice = content.getIntFromTo(TYPEOFELECTRONICPOSITIONFIXINGDEVICE_FROM, TYPEOFELECTRONICPOSITIONFIXINGDEVICE_TO);
-        eta = content.getBitVectorFromTo(ETA_FROM, ETA_TO);
-        maximumPresentStaticDraught = content.getIntFromTo(MAXIMUMPRESENTSTATICDRAUGHT_FROM, MAXIMUMPRESENTSTATICDRAUGHT_TO);
-        destination = UtilsString.stripAtSigns(content.getStringFromTo(DESTINATION_FROM, DESTINATION_TO));
-        dte = content.getBoolean(DTE_BITINDEX);
-        spare = content.getIntFromTo(SPARE_FROM, SPARE_TO);
-        if (!UtilsSpare.isSpareSemanticallyCorrect(spare)) {
-            annotations.add(new AISIllegalValueAnnotation("getSpare", spare, UtilsSpare.range));
-        }
-    }
 }

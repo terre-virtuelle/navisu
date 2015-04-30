@@ -273,8 +273,8 @@ public class AisPlotterImpl
     }
 
     private void updateTarget(Ship target) {
-      //  System.out.println("updateTarget " + target.getShipType()+ "   ");
-    	GShip gShip = gShips.get(target.getMMSI());
+        //  System.out.println("updateTarget " + target.getShipType()+ "   ");
+        GShip gShip = gShips.get(target.getMMSI());
         gShip.update(target);
         wwd.redrawNow();
         // createTarget( target);

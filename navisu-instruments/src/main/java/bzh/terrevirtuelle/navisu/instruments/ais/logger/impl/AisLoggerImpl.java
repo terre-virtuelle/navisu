@@ -5,15 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.ais.logger.impl;
 
-import gov.nasa.worldwind.geom.Sector;
-import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.util.WWUtil;
-import gov.nasa.worldwindx.examples.util.SectorSelector;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
@@ -25,7 +17,6 @@ import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisUpdateStat
 import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisUpdateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.logger.AisLogger;
 import bzh.terrevirtuelle.navisu.instruments.ais.logger.AisLoggerServices;
-
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -40,12 +31,6 @@ public class AisLoggerImpl
 
     @UsedService
     AisServices aisServices;
-    
-    @UsedService
-    LayerTreeServices layerTreeServices;
-    
-    @UsedService
-    GeoViewServices geoViewServices;
 
     ComponentManager cm;
     ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
@@ -56,12 +41,9 @@ public class AisLoggerImpl
     ComponentEventSubscribe<AisUpdateTargetEvent> aisUTEvent;
     protected boolean on = false;
     private final String NAME = "AisLogger";
-    
-
 
     @Override
     public void componentInitiated() {
-
         cm = ComponentManager.componentManager;
         aisCSEvent = cm.getComponentEventSubscribe(AisCreateStationEvent.class);
         aisCTEvent = cm.getComponentEventSubscribe(AisCreateTargetEvent.class);
@@ -162,5 +144,4 @@ public class AisLoggerImpl
     public boolean isOn() {
         return on;
     }
-    
 }

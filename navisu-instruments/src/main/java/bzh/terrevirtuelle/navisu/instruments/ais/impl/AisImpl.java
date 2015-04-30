@@ -18,7 +18,6 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.instruments.ais.Ais;
 import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateStationEvent;
@@ -94,6 +93,7 @@ public class AisImpl
         ais3ES = cm.getComponentEventSubscribe(AIS03Event.class);
         ais4ES = cm.getComponentEventSubscribe(AIS04Event.class);
         ais5ES = cm.getComponentEventSubscribe(AIS05Event.class);
+        
         ships = new HashMap<>();
         stations = new HashMap<>();
         midMap = new HashMap<>();
@@ -117,9 +117,9 @@ public class AisImpl
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
 
-                try {
                     AIS01 ais = (AIS01) data;
                     int mmsi = ais.getMMSI();
+                    // System.out.println("ais "+ais);
                     if (!ships.containsKey(mmsi)) {
                         ship = ShipBuilder.create()
                                 .mmsi(ais.getMMSI())
@@ -143,9 +143,6 @@ public class AisImpl
                     }
                     timestamps.put(mmsi, Calendar.getInstance());
                     // TODO controle de la cible morte
-                } catch (Exception e) {
-                    System.out.println("ais1ES.subscribe " + e);
-                }
             }
         });
 
@@ -154,6 +151,7 @@ public class AisImpl
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 AIS02 ais = (AIS02) data;
+                //   System.out.println("ais "+ais);
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
@@ -174,7 +172,6 @@ public class AisImpl
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
                     ship.setNavigationalStatus(ais.getNavigationalStatus());
-
                     aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -187,6 +184,7 @@ public class AisImpl
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
 
                 AIS03 ais = (AIS03) data;
+                //   System.out.println("ais "+ais);
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
@@ -218,6 +216,7 @@ public class AisImpl
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
 
                 AIS04 ais = (AIS04) data;
+                //  System.out.println("ais "+ais);
                 int mmsi = ais.getMMSI();
 
                 if (!stations.containsKey(mmsi)) {
@@ -237,23 +236,25 @@ public class AisImpl
                 timestamps.put(mmsi, Calendar.getInstance());
             }
         });
+        
         ais5ES.subscribe(new AIS05Event() {
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                System.out.println("data "+data);
                 AIS05 ais = (AIS05) data;
+                System.out.println("ais "+ais);
                 int mmsi = ais.getMMSI();
-
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
                             .mmsi(ais.getMMSI())
                             .destination(ais.getDestination())
+                            .shipType(ais.getShipType())
                             .name(ais.getName())
                             .build();
                     ships.put(mmsi, ship);
-                    aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
-
+                    //System.out.println("ais "+ais);
                     ship = ships.get(mmsi);
                     ship.setShipType(ais.getShipType());
                     ship.setName(ais.getShipName());
@@ -264,7 +265,6 @@ public class AisImpl
                 timestamps.put(mmsi, Calendar.getInstance());
             }
         });
-
     }
 
     @Override

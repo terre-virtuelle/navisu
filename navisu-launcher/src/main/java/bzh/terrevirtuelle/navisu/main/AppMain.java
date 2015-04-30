@@ -64,6 +64,10 @@ import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
 import bzh.terrevirtuelle.navisu.instruments.template.impl.InstrumentTemplateImpl;
+import bzh.terrevirtuelle.navisu.instruments.compass.CompassServices;
+import bzh.terrevirtuelle.navisu.instruments.compass.impl.CompassImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -81,14 +85,11 @@ import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
-
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
-
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -138,15 +139,19 @@ public class AppMain extends Application {
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
+<<<<<<< HEAD
                         
                         GpsTrackPlotterImpl.class,
                         GpsTrackSectorImpl.class,
                         GpsTrackPolygonImpl.class,
                         
+=======
+>>>>>>> refs/remotes/origin/master
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
+                        CompassImpl.class,
                         KapChartImpl.class,
                         KmlObjectImpl.class,
                         MagneticImpl.class,
@@ -179,7 +184,7 @@ public class AppMain extends Application {
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
-                
+
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         
@@ -193,7 +198,7 @@ public class AppMain extends Application {
         guiAgentServices.showGui(stage, 1080, 700);
 
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
-
+        CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
@@ -220,7 +225,6 @@ public class AppMain extends Application {
         // DirectoryDriverManagerServices ddriverServices = componentManager.getComponentService(DirectoryDriverManagerServices.class);
         //    ddriverServices.init();
         //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
-        
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
@@ -248,16 +252,14 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsTrackSectorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
 
-        //instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
-
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
-        
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
@@ -304,11 +306,12 @@ public class AppMain extends Application {
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
-        nmeaClientServices.request(1000);
+        nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
-        //aisServices.on();
+        aisServices.on();
         //aisLoggerServices.on();
+<<<<<<< HEAD
 
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
@@ -319,12 +322,12 @@ public class AppMain extends Application {
 
 
 
+=======
+        aisPlotterServices.on();
+>>>>>>> refs/remotes/origin/master
     }
-        
- 
 
     public static void main(String[] args) throws Exception {
         Application.launch();
-        
     }
 }
