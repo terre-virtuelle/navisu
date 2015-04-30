@@ -139,14 +139,11 @@ public class AppMain extends Application {
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
-<<<<<<< HEAD
                         
                         GpsTrackPlotterImpl.class,
                         GpsTrackSectorImpl.class,
                         GpsTrackPolygonImpl.class,
                         
-=======
->>>>>>> refs/remotes/origin/master
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -311,20 +308,13 @@ public class AppMain extends Application {
         // Test clients à l'écoute des événements Nmea 
         aisServices.on();
         //aisLoggerServices.on();
-<<<<<<< HEAD
 
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
         gpsTrackSectorServices.on();
         gpsTrackPolygonServices.on();
         
-        
-
-
-
-=======
         aisPlotterServices.on();
->>>>>>> refs/remotes/origin/master
     }
 
     public static void main(String[] args) throws Exception {
