@@ -10,6 +10,7 @@ import gov.nasa.worldwind.SceneController;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -259,8 +260,10 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			System.err
 					.println("============ W A R N I N G ============ Ship with MMSI #"
 							+ target.getMMSI() + " is inside Sector#"+ (i+1));
+			
 			if (!(isTextOn.get(i))) {
 				textOn(sector, i);
+				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 15000));
 			}
 
 			if (!alarmOn) {
