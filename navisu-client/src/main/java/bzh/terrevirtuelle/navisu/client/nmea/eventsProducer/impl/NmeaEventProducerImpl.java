@@ -291,7 +291,7 @@ public class NmeaEventProducerImpl
     }
 
     public void notifyNMEAEvent(NMEA nmea) {
-        // System.out.println("nmea "+nmea.getClass().getName());
+         //System.out.println("nmea "+nmea.getClass().getName());
         // System.out.println("nmea "+ nmea);
         try {
             if (nmea != null) {
