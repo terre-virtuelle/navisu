@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.ais.impl;
+package bzh.terrevirtuelle.navisu.instruments.ais.base.impl;
 
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS01Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS02Event;
@@ -19,14 +19,14 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
-import bzh.terrevirtuelle.navisu.instruments.ais.Ais;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisCreateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisDeleteStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisDeleteTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisUpdateStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.controller.events.AisUpdateTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.Ais;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.controller.events.AisCreateStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.controller.events.AisCreateTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.controller.events.AisDeleteStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.controller.events.AisDeleteTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.controller.events.AisUpdateStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.controller.events.AisUpdateTargetEvent;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -241,7 +241,7 @@ public class AisImpl
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                // System.out.println("data "+data);
+                System.out.println("data "+data);
                 AIS05 ais = (AIS05) data;
                 //System.out.println("reception ais " + ais);
                 int mmsi = ais.getMMSI();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.aisradar.impl.view;
+package bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view;
 
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.ShipTypeColor;

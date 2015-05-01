@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.sonar.controller;
+package bzh.terrevirtuelle.navisu.instruments.sonar.impl.controller;
 
 import bzh.terrevirtuelle.navisu.bathymetry.controller.events.BathymetryEvent;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Bathymetry;

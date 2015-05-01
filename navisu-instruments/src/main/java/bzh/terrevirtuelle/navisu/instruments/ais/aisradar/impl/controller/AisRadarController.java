@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.instruments.aisradar.impl.controller;
+package bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller;
 
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS01Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS02Event;
@@ -21,9 +21,9 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.ShipTypeColor;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.view.GRShip;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.view.GRShipImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShip;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShipImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.FileInputStream;
 

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.aisradar.impl;
+package bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadar;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.controller.AisRadarController;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadar;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
