@@ -148,7 +148,7 @@ public class NmeaClientImpl
                 for (int i = 0; i < size; i++) {
                     nmea = queue.poll();
                     if (nmea != null) {
-                       // System.out.println("nmea " + nmea);
+                       // System.out.println("nmea emission client " + nmea);
                         eventProducer.notifyNMEAEvent(nmea);
                     }
                 }
