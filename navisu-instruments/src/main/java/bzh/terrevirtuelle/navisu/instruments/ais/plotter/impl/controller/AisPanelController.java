@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl;
+package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import static bzh.terrevirtuelle.navisu.domain.ship.view.ShipType.TYPE;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -16,13 +17,23 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 /**
  *
@@ -70,13 +81,19 @@ public class AisPanelController
     public Text country;
     @FXML
     public Text eta;
+    @FXML
+    public ImageView quit;
+    @FXML
+    public Slider slider;
   //  @FXML
-    //  public Button photo;
+   // public Button photo;
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
+    protected GuiAgentServices guiAgentServices;
 
-    public AisPanelController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public AisPanelController(GuiAgentServices guiAgentServices, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
+        this.guiAgentServices = guiAgentServices;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ais.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -85,25 +102,39 @@ public class AisPanelController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        /*
-         photo.setOnAction(new EventHandler<ActionEvent>() {
-         public void handle(ActionEvent event) {
-         Platform.runLater(() -> {
-         //  WebView webView = new WebView("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
-         // guiAgentServices.getRoot().getChildren().add(webView); 
-         });
-         }
-         });
-         */
+        quit.setOnMouseClicked((MouseEvent event) -> {
+            ais.setVisible(false);
+        });
+        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            Platform.runLater(() -> {
+                ais.setOpacity(slider.getValue());
+            });
+        });
+/*
+        // TODO, fournir un Stage
+        photo.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                Platform.runLater(() -> {
+                    WebView webView = new WebView();
+                    WebEngine webEngine = webView.getEngine();
+                    webEngine.load("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
+                    guiAgentServices.getRoot().getChildren().add(webView);
+                });
+            }
+        });
+        */
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO 
-          
+
     }
 
-    public void updateAisPanel(Ship ship, Map<Integer, Calendar> timestamps, Map<Integer, String> midMap) {
+    public void updateAisPanel(Ship ship,
+            Map<Integer, Calendar> timestamps,
+            Map<Integer, String> midMap) {
         setVisible(true);
         if (ship.getName() == null || "".equals(ship.getName())) {
             shipname.setText("Name not yet available");

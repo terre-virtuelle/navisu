@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.instruments.ais.base;
 
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import java.util.Calendar;
 import java.util.Map;
 import org.capcaval.c3.component.ComponentService;
 
@@ -27,4 +28,8 @@ public interface AisServices
     Map<Integer, Ship> getShips();
 
     Map<Integer, BaseStation> getStations();
+
+    Map<Integer, Calendar> getTimestamps();
+
+    Map<Integer, String> getMidMap();
 }

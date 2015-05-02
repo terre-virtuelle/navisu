@@ -24,6 +24,13 @@ import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.ShipTypeColor;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShipImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisDeleteStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisDeleteTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.FileInputStream;
 
@@ -43,12 +50,14 @@ import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -77,12 +86,17 @@ public class AisRadarController
     public double route = 0.0;
     @FXML
     public ImageView quit;
-
+    @FXML
+    public Slider slider;
+    
+    AisServices aisServices;
     boolean first = true;
     final Rotate rotationTransform = new Rotate(0, 0, 0);
     protected Timeline fiveSecondsWonder;
     protected final int CENTER_X = 525;//425 + 100 suite rajout pane
     protected final int CENTER_Y = 494;//429 + 65 et agrandissement faisceau
+    int centerX;
+    int centerY;
     protected double latOwner = 0.0;
     protected double lonOwner = 0.0;
     protected double posX = 0.0;
@@ -104,11 +118,6 @@ public class AisRadarController
     protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     protected AisRadarImpl aisRadar;
     ComponentManager cm = ComponentManager.componentManager;
-    ComponentEventSubscribe<AIS01Event> ais1ES = cm.getComponentEventSubscribe(AIS01Event.class);
-    ComponentEventSubscribe<AIS02Event> ais2ES = cm.getComponentEventSubscribe(AIS02Event.class);
-    ComponentEventSubscribe<AIS03Event> ais3ES = cm.getComponentEventSubscribe(AIS03Event.class);
-    ComponentEventSubscribe<AIS04Event> ais4ES = cm.getComponentEventSubscribe(AIS04Event.class);
-    ComponentEventSubscribe<AIS05Event> ais5ES = cm.getComponentEventSubscribe(AIS05Event.class);
     ComponentEventSubscribe<GGAEvent> ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
     ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
     ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
@@ -135,6 +144,11 @@ public class AisRadarController
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
         });
+        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            Platform.runLater(() -> {
+                radar.setOpacity(slider.getValue());
+            });
+        });
     }
 
     @Override
@@ -159,7 +173,7 @@ public class AisRadarController
         } catch (IOException ex) {
             Logger.getLogger(AisRadarController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // creation de l'objet metier
+        // creation de l'objet metier central
         ownerShip = ShipBuilder.create()
                 .mmsi(new Integer(properties.getProperty("mmsi")))
                 .name(properties.getProperty("name"))
@@ -178,164 +192,10 @@ public class AisRadarController
                 .callSign(properties.getProperty("callSign")).build();
         latOwner = new Float(properties.getProperty("latitude"));
         lonOwner = new Float(properties.getProperty("longitude"));
-        createTarget(ownerShip, (int) (CENTER_X - (lonOwner - ownerShip.getLongitude()) * RANGE),
-                (int) (CENTER_Y + (latOwner - ownerShip.getLatitude()) * RANGE));
+        createTarget(ownerShip);
     }
 
-    private void subscribe() {
-        ais1ES.subscribe(new AIS01Event() {
-
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                try {
-                    AIS01 ais = (AIS01) data;
-                    //System.out.println("ais "+ais);
-                    int mmsi = ais.getMMSI();
-                    if (!ships.containsKey(mmsi)) {
-                        ship = ShipBuilder.create()
-                                .mmsi(ais.getMMSI())
-                                .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
-                                .latitude(ais.getLatitude()).longitude(ais.getLongitude())
-                                .build();
-                        ships.put(mmsi, ship);
-                        createTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                                (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                    } else {
-                        ship = ships.get(mmsi);
-                        //  System.out.println("AIS01 mmsi "+mmsi +" lat "+ais.getLatitude());
-                        ship.setLatitude(ais.getLatitude());
-                        ship.setLongitude(ais.getLongitude());
-                        ship.setCog(ais.getCog());
-                        ship.setSog(ais.getSog());
-                        updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                                (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                    }
-                    timestamps.put(mmsi, Calendar.getInstance());
-                } catch (Exception e) {
-                    // System.out.println("ais1ES.subscribe " + e);
-                }
-            }
-        });
-
-        ais2ES.subscribe(new AIS02Event() {
-
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS02 ais = (AIS02) data;
-                int mmsi = ais.getMMSI();
-                if (!ships.containsKey(mmsi)) {
-                    ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI())
-                            .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
-                            .latitude(ais.getLatitude()).longitude(ais.getLongitude())
-                            .navigationalStatus(ais.getNavigationalStatus())
-                            .build();
-                    ships.put(mmsi, ship);
-                    createTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                } else {
-                    ship = ships.get(mmsi);
-                    // System.out.println("AIS02 mmsi "+mmsi +" lat "+ais.getLatitude());
-                    ship.setLatitude(ais.getLatitude());
-                    ship.setLongitude(ais.getLongitude());
-                    ship.setCog(ais.getCog());
-                    ship.setSog(ais.getSog());
-                    updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                }
-                timestamps.put(mmsi, Calendar.getInstance());
-            }
-        });
-
-        ais3ES.subscribe(new AIS03Event() {
-
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS03 ais = (AIS03) data;
-                int mmsi = ais.getMMSI();
-                if (!ships.containsKey(mmsi)) {
-                    ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI())
-                            .heading(ais.getHeading()).cog(ais.getCog()).sog(ais.getSog()).rot(ais.getRot())
-                            .latitude(ais.getLatitude()).longitude(ais.getLongitude())
-                            .build();
-                    ships.put(mmsi, ship);
-                    createTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                } else {
-                    ship = ships.get(mmsi);
-                    //  System.out.println("AIS03 mmsi "+mmsi +" lat "+ais.getLatitude());
-                    ship.setLatitude(ais.getLatitude());
-                    ship.setLongitude(ais.getLongitude());
-                    ship.setCog(ais.getCog());
-                    ship.setSog(ais.getSog());
-                    updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                }
-                timestamps.put(mmsi, Calendar.getInstance());
-            }
-        });
-
-        ais4ES.subscribe(new AIS04Event() {
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-                AIS04 ais = (AIS04) data;
-                int mmsi = ais.getMMSI();
-                /*
-                 if (!transceivers.containsKey(mmsi)) {
-                 transceiver = new Transceiver(
-                 ais.getMMSI(),
-                 ais.getLatitude(), ais.getLongitude());
-
-                 transceivers.put(mmsi, transceiver);
-                 setTarget(transceiver, (int) (CENTER_X - (lonOwner - ais.getLongitude()) * RANGE),
-                 (int) (CENTER_Y + (latOwner - ais.getLatitude()) * RANGE));
-                 } else {
-                 transceiver = transceivers.get(mmsi);
-                 transceiver.setLatitude(ais.getLatitude());
-                 transceiver.setLongitude(ais.getLongitude());
-                 updateTarget(transceiver, (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * RANGE),
-                 (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                 }
-                 */
-                timestamps.put(mmsi, Calendar.getInstance());
-            }
-
-        });
-
-        ais5ES.subscribe(new AIS05Event() {
-
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-               // System.out.println("ais "+data);
-                AIS05 ais = (AIS05) data;
-                int mmsi = ais.getMMSI();
-                if (!ships.containsKey(mmsi)) {
-                   //  System.out.println("ais "+ais);
-                    ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI())
-                            .destination(ais.getDestination())
-                            .shipType(ais.getShipType())
-                            .name(ais.getName())
-                            .build();
-                    ships.put(mmsi, ship);
-                    createTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                } else {
-                  //   System.out.println("ais "+ais);
-                    ship = ships.get(mmsi);
-                    ship.setShipType(ais.getShipType());
-                    
-                    ship.setName(ais.getShipName());
-                    ship.setETA(ais.getETA());
-                    ship.setDestination(ais.getDestination());
-                    updateTarget(ship, (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE),
-                            (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE));
-                }
-                timestamps.put(mmsi, Calendar.getInstance());
-            }
-        });
-
+    public final void subscribe() {
         // souscription aux événements GPS
         ggaES.subscribe(new GGAEvent() {
 
@@ -345,9 +205,6 @@ public class AisRadarController
                 GGA data = (GGA) d;
                 ownerShip.setLatitude(data.getLatitude());
                 ownerShip.setLongitude(data.getLongitude());
-
-                // mise à jour via le DPAgent
-                // dpAgentServices.update(ship);
             }
         });
 
@@ -361,8 +218,6 @@ public class AisRadarController
                 if (ownerShip.getSog() > 0.1) {
                     //   ship.setShapeId(0);
                 }
-                // mise à jour via la DPAgent
-                // dpAgentServices.update(ship);
             }
         });
         rmcES.subscribe(new RMCEvent() {
@@ -377,10 +232,9 @@ public class AisRadarController
                 if (ownerShip.getSog() > 0.1) {
                     //  ship.setShapeId(0);
                 }
-                // mise à jour via la DPAgent
-                // dpAgentServices.update(ship);
             }
         });
+
     }
 
     private void schedule() {
@@ -393,7 +247,9 @@ public class AisRadarController
         fiveSecondsWonder.play();
     }
 
-    private void createTarget(Ship ship, int centerX, int centerY) {
+    public void createTarget(Ship ship) {
+        centerX = (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE);
+        centerY = (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE);
         GRShipImpl grship = new GRShipImpl(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMMSI()));
         grship.setOnMouseClicked((MouseEvent me) -> {
@@ -424,9 +280,11 @@ public class AisRadarController
         }
     }
 
-    private void updateTarget(Ship ship, int centerX, int centerY) {
+    public void updateTarget(Ship ship) {
+        centerX = (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE);
+        centerY = (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE);
+
         Integer mmsiI = ship.getMMSI();
-        // System.out.println("radar "+ship.getShipType());
         if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
 
@@ -480,7 +338,9 @@ public class AisRadarController
         }
     }
 
-    private void setTarget(BaseStation transceiver, int centerX, int centerY) {
+    public void setTarget(BaseStation transceiver) {
+        centerX = (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * RANGE);
+        centerY = (int) (CENTER_Y + (latOwner - transceiver.getLatitude()) * RANGE);
         GRShipImpl grship = new GRShipImpl(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMMSI()));
         grship.setOnMouseClicked((MouseEvent me) -> {
@@ -505,8 +365,9 @@ public class AisRadarController
         }
     }
 
-    private void updateTarget(BaseStation transceiver, int centerX, int centerY) {
-
+    public void updateTarget(BaseStation transceiver) {
+        centerX = (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * RANGE);
+        centerY = (int) (CENTER_Y + (latOwner - transceiver.getLatitude()) * RANGE);
         if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
                 List<Node> nodes = radar.getChildren();

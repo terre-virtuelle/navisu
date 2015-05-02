@@ -3,7 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.ais.base.controller.events;
+
+package bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events;
 
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import org.capcaval.c3.component.ComponentEvent;
@@ -12,8 +13,8 @@ import org.capcaval.c3.component.ComponentEvent;
  * @date 2 mars 2015
  * @author Serge Morvan
  */
-public interface AisDeleteStationEvent extends ComponentEvent {
+public interface AisCreateStationEvent extends ComponentEvent{
 
-    public void notifyHelloMessageChanged(BaseStation updatedData);
+	public void notifyAisMessageChanged(BaseStation updatedData);
 
 }

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.instruments.ais.base.controller.events;
+package bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events;
 
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import org.capcaval.c3.component.ComponentEvent;
