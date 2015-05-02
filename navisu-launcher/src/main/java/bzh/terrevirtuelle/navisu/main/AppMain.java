@@ -278,10 +278,11 @@ public class AppMain extends Application {
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
-        // Test clients à l'écoute des événements Nmea 
+        //Clients à l'écoute des événements Nmea au debut de session
         aisServices.on();
         //aisLoggerServices.on();
         aisPlotterServices.on();
+        //aisRadarServices.on();
     }
 
     public static void main(String[] args) throws Exception {
