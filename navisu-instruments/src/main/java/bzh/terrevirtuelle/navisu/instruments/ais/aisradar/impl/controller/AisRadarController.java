@@ -122,6 +122,7 @@ public class AisRadarController
     ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
     ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
 
+    
     public AisRadarController(AisRadarImpl aisRadar, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.aisRadar = aisRadar;
