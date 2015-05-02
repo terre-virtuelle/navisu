@@ -30,9 +30,9 @@ public class ShipBuilder {
     private int shipType = 0;
     private int navigationalStatus = 15;
     private int electronicPositionDevice = 15;
-    private String callSign = "@@@@@@@";
+    private String callSign = "@@@@";
     private Calendar ETA = new GregorianCalendar(0, 0, 0, 0, 0);
-    private String destination = "@@@@@@@@@@@@@@@@@@@@";
+    private String destination = "@@@@";
 
     private ShipBuilder() {
     }

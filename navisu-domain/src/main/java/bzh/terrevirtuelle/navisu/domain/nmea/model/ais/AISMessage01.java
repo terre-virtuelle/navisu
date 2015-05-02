@@ -13,6 +13,7 @@ public interface AISMessage01 extends AISMessagePositionReport {
 	/** Returns the communication state.
 	 * @return the SOTDMA value of the communication state
 	 */
+        @Override
 	public Sotdma getCommunicationState();
 
 }
