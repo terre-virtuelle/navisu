@@ -1,0 +1,29 @@
+## les accronymes
+
+CLASSES
+
+CLASS T [_]					# terminal :_
+CLASS D (T|')					# début mot : _ ou '
+
+RULES
+
+## accronymes
+T [[ onu ]] T -> O E n y 
+T [[ edf ]] T -> 2 d e E f
+T [[ etc ]] T -> E k s e t e R a 
+T [[ usa ]] T -> y E s a 
+T [[ ptt ]] T -> p e t e t e
+T [[ cgt  ]] T -> s e Z e t e 
+T [[ pme ]] T -> p e E m 2
+T [[ pmi ]] T -> p e E m i 
+T [[ pib ]] T -> p e i b e 
+T [[ cfdt ]] T -> s e E f d e t e 
+T [[ sncf ]] T -> E s E n s e E f
+T [[ sncm ]] T -> E s E n s e E m
+D [[ inria ]] T -> i n R i a
+T [[ cnrs ]] T -> s e E n E R E s 
+T [[ fndv ]] T -> E f E n d e v e
+END
+
+
+
