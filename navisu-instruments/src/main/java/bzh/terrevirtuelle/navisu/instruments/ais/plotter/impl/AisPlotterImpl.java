@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller.AisPanelController;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -52,6 +53,8 @@ public class AisPlotterImpl
 
     @UsedService
     AisServices aisServices;
+    
+    
 
     ComponentManager cm;
     ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
@@ -63,16 +66,14 @@ public class AisPlotterImpl
 
     protected final String NAME = "AisPlotter";
     protected final String GROUP = "Devices";
-    protected AisPanelController aisPanelController;
-    protected Ship ship;
-    protected BaseStation station;
     protected Map<Integer, Ship> ships;
     protected Map<Integer, BaseStation> stations;
     protected boolean on = false;
     protected AisPlotterController controller;
+    protected AisPanelController aisPanelController;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
-
+   
     @Override
     public void componentInitiated() {
 
@@ -95,9 +96,7 @@ public class AisPlotterImpl
 
     @Override
     public void on(String... files) {
-        controller = new AisPlotterController(geoViewServices,
-                layerTreeServices,
-                guiAgentServices,
+        controller = new AisPlotterController(geoViewServices, layerTreeServices, guiAgentServices,
                 NAME, GROUP);
         if (!aisServices.isOn()) {
             aisServices.on();
@@ -111,6 +110,9 @@ public class AisPlotterImpl
             });
             stations = aisServices.getStations();
             Set<Integer> stationSet = stations.keySet();
+            stationSet.stream().forEach((i) -> {
+                controller.createTarget(stations.get(i));
+            });
             timestamps = aisServices.getTimestamps();
             controller.setTimestamps(timestamps);
             midMap = aisServices.getMidMap();
@@ -123,15 +125,19 @@ public class AisPlotterImpl
                 controller.updateTarget(updatedData);
             });
             aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship updatedData) -> {
-                System.out.println(updatedData);
+               // controller.deleteTarget(updatedData);
+               // ships.remove(updatedData.getMMSI());
             });
+
             aisCSEvent.subscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
+                controller.createTarget(updatedData);
             });
             aisUSEvent.subscribe((AisUpdateStationEvent) (BaseStation updatedData) -> {
-                //  System.out.println(updatedData);
+                controller.updateTarget(updatedData);
             });
             aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation updatedData) -> {
-                System.out.println(updatedData);
+               // controller.deleteTarget(updatedData);
+              //  stations.remove(updatedData.getMMSI());
             });
         }
     }

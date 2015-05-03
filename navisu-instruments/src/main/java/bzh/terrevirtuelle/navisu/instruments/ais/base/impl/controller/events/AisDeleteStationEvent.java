@@ -14,6 +14,6 @@ import org.capcaval.c3.component.ComponentEvent;
  */
 public interface AisDeleteStationEvent extends ComponentEvent {
 
-    public void notifyHelloMessageChanged(BaseStation updatedData);
+    public void notifyAisMessageChanged(BaseStation updatedData);
 
 }

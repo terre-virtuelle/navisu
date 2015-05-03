@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.ais.base.impl;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS01Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS02Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS03Event;
@@ -27,6 +28,7 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.Ais
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateStationEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
+import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -37,11 +39,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.ProducedEvent;
+import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -50,6 +56,11 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  */
 public class AisImpl
         implements Ais, AisServices, ComponentState {
+
+    @UsedService
+    InstrumentDriverManagerServices instrumentDriverManagerServices;
+    @UsedService
+    SpeakerServices speakerServices;
 
     @ProducedEvent
     protected AisCreateTargetEvent aisCreateTargetEvent;
@@ -72,8 +83,13 @@ public class AisImpl
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
     protected final String MID_MAP = "data/ais/mmsi.txt";
-    NumberFormat nf = new DecimalFormat("0.###");
-    SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
+    protected NumberFormat nf = new DecimalFormat("0.###");
+    protected SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
+    protected TimerTask task;
+    protected static final long TIME_OUT = 300000;
+    protected static final long DELAY = 300000;
+    protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
+    protected static final String DELETE_TARGET_SOUND = "/data/sounds/mechanic.wav";
 
     ComponentManager cm;
     ComponentEventSubscribe<AIS01Event> ais1ES;
@@ -119,7 +135,6 @@ public class AisImpl
 
                 AIS01 ais = (AIS01) data;
                 int mmsi = ais.getMMSI();
-                //System.out.println("reception ais " + ais);
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
                             .mmsi(ais.getMMSI())
@@ -142,7 +157,6 @@ public class AisImpl
                     aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
-                // TODO controle de la cible morte
             }
         });
 
@@ -151,7 +165,6 @@ public class AisImpl
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 AIS02 ais = (AIS02) data;
-                //System.out.println("reception ais " + ais);
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
@@ -241,9 +254,7 @@ public class AisImpl
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-               // System.out.println("data "+data);
                 AIS05 ais = (AIS05) data;
-                //System.out.println("reception ais " + ais);
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
@@ -254,7 +265,6 @@ public class AisImpl
                             .build();
                     ships.put(mmsi, ship);
                 } else {
-                    //System.out.println("emission ais "+ais);
                     ship = ships.get(mmsi);
                     ship.setShipType(ais.getShipType());
                     ship.setName(ais.getShipName());
@@ -265,6 +275,9 @@ public class AisImpl
                 timestamps.put(mmsi, Calendar.getInstance());
             }
         });
+        Timer timer = new Timer();
+        scheduleLostTarget();
+        timer.schedule(task, DELAY, TIME_OUT);
     }
 
     @Override
@@ -309,8 +322,7 @@ public class AisImpl
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(AisImpl.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AisImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -339,4 +351,42 @@ public class AisImpl
         return midMap;
     }
 
+    private void scheduleLostTarget() {
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                Set<Integer> targets = timestamps.keySet();
+                targets.stream().filter((i) -> ((Calendar.getInstance().getTimeInMillis() - timestamps.get(i).getTimeInMillis()) > TIME_OUT)).map((_item) -> {
+                    //   instrumentDriverManagerServices.open(DATA_PATH + DELETE_TARGET_SOUND, "true", "1");
+                    Ship ship = ships.get(_item);
+                    String name;
+                    if (ship != null) {
+                        name = ship.getName();
+                        if (name == null) {
+                            name = " ";
+                        } else {
+                            name = " navire " + name;
+                        }
+                        speakerServices.read("Perte d'une cible A I ES ! " + name);
+                    }
+                    return _item;
+                }).map((_item) -> {
+                    ships.keySet().stream().forEach((s) -> {
+                        Ship ship = ships.get(s);
+                        if (s == ship.getMMSI()) {
+                            aisDeleteTargetEvent.notifyAisMessageChanged(ship);
+                        }
+                    });
+                    return _item;
+                }).forEach((_item) -> {
+                    stations.keySet().stream().forEach((s) -> {
+                        BaseStation station = stations.get(s);
+                        if (s == station.getMMSI()) {
+                            aisDeleteStationEvent.notifyAisMessageChanged(station);
+                        }
+                    });
+                });
+            }
+        };
+    }
 }

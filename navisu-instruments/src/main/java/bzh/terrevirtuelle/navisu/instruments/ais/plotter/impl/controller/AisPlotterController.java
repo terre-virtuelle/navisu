@@ -10,8 +10,10 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.GShip;
+import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.GStation;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.Shape;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -36,6 +38,7 @@ public class AisPlotterController {
     protected String name;
     protected String group;
     protected Map<Integer, GShip> gShips;
+    protected Map<Integer, GStation> gStations;
     protected WorldWindow wwd;
     protected RenderableLayer aisLayer;
     protected RenderableLayer aisStationLayer;
@@ -57,6 +60,7 @@ public class AisPlotterController {
         this.name = name;
         this.group = group;
         gShips = new HashMap<>();
+        gStations = new HashMap<>();
         wwd = GeoWorldWindViewImpl.getWW();
         layerTreeServices.createGroup(group);
         geoViewServices.getLayerManager().createGroup(group);
@@ -80,14 +84,50 @@ public class AisPlotterController {
         }
     }
 
+    public void createTarget(BaseStation target) {
+
+        GStation gTarget = new GStation(target);
+        gStations.put(target.getMMSI(), gTarget);
+        if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
+            Renderable[] renderables = gTarget.getRenderables();
+            for (Renderable r : renderables) {
+                aisLayer.addRenderable(r);
+            }
+            wwd.redrawNow();
+        }
+    }
+
     public void updateTarget(Ship target) {
-        GShip gShip = gShips.get(target.getMMSI());
-        gShip.update();
+        GShip gTarget = gShips.get(target.getMMSI());
+        gTarget.update();
+        wwd.redrawNow();
+    }
+
+    public void updateTarget(BaseStation target) {
+        GStation gTarget = gStations.get(target.getMMSI());
+        gTarget.update();
         wwd.redrawNow();
     }
 
     public void deleteTarget(Ship target) {
+       // System.out.println("target " +target);
+        GShip gTarget = gShips.get(target.getMMSI());
+        //System.out.println("gTarget " + gTarget);
+        Renderable[] renderables = gTarget.getRenderables();
+        for (Renderable r : renderables) {
+            aisLayer.removeRenderable(r);
+        }
+        gShips.remove(target.getMMSI());
+        wwd.redrawNow();
+    }
 
+    public void deleteTarget(BaseStation target) {
+        GStation gTarget = gStations.get(target.getMMSI());
+        Renderable[] renderables = gTarget.getRenderables();
+        for (Renderable r : renderables) {
+            aisLayer.removeRenderable(r);
+        }
+        gStations.remove(target.getMMSI());
         wwd.redrawNow();
     }
 

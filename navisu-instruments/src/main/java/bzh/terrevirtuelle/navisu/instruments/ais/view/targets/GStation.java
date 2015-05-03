@@ -1,12 +1,12 @@
 package bzh.terrevirtuelle.navisu.instruments.ais.view.targets;
 
-
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.impl.Shape_4;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -18,17 +18,14 @@ import gov.nasa.worldwind.render.Renderable;
  * @author Serge
  * @date 01/04/2014 18:49
  */
-public class GStation
-        implements GObject {
+public class GStation {
 
-    protected final int id;
     protected BaseStation station;
     protected Shape_4 shape;
+    int i = 0;
 
-    public GStation(int id, BaseStation station) {
-        this.id = id;
+    public GStation(BaseStation station) {
         this.station = station;
-       // station.setGStation(this);
         shape = new Shape_4(Position.fromDegrees(station.getLatitude(), station.getLongitude()));
         shape.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
@@ -40,29 +37,20 @@ public class GStation
         shape.setAttributes(attrs);
     }
 
-    @Override
-    public int getID() {
-        return this.id;
-    }
-
-    @Override
-    public void setLocation(Location location) {
-        shape.setLocation(location);
-    }
-
-    @Override
     public Renderable[] getRenderables() {
         return shape.getRenderables();
     }
 
-    @Override
-    public Object getClone() {
-        return this;
+    public void update() {
+        shape.setPosition(new Position(Angle.fromDegrees(station.getLatitude()),
+                Angle.fromDegrees(station.getLongitude()), 15));
+        shape.getAttributes().setImageAddress("img/emetteur_" + i++ + ".png");
+        i %= 2;
     }
 
     @Override
     public String toString() {
-        return "GStation{" + "id=" + id + ", tStation=" + station + ", shape=" + shape + '}';
+        return "GStation{Station=" + station + ", shape=" + shape + '}';
     }
 
     public Shape_4 getShape() {
