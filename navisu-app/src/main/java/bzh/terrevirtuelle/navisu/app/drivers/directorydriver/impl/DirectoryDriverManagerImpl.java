@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import java.io.IOException;
