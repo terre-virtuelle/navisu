@@ -72,6 +72,8 @@ import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.shapefiles.impl.ShapefileObjectImpl;
+import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
+import bzh.terrevirtuelle.navisu.speech.impl.SpeakerImpl;
 import bzh.terrevirtuelle.navisu.system.files.FilesServices;
 import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
@@ -145,6 +147,7 @@ public class AppMain extends Application {
                         ShapefileObjectImpl.class,
                         SonarImpl.class,
                         SoundImpl.class,
+                        SpeakerImpl.class,
                         S57ChartImpl.class,
                         S57GlobalCatalogImpl.class,
                         WebDriverManagerImpl.class,
@@ -190,6 +193,7 @@ public class AppMain extends Application {
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
         SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
         SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
+        SpeakerServices speakerServices= componentManager.getComponentService(SpeakerServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);

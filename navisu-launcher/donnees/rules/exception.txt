@@ -1,0 +1,215 @@
+## les exceptions de prononciation
+
+CLASSES
+
+CLASS V [aeiouàâéèêëîïôöùûü]			# voyelles
+CLASS C [bcçdfghjklmnñpqrstvwxyz]		# consonnes
+CLASS L (V|C)					# toutes les lettres
+CLASS SH [bcçdfgjklmnñpqrstvwxyz]		# les consonnes sans h
+CLASS U [aeioàâéèêëîïôö]			# les voyelles sans u
+CLASS A (le|du|au|mon|ton|son)_			# articles
+CLASS PR (nous)					# pronom
+
+CLASS T [_]					# terminal :_
+CLASS F (T|s_)					# fin mot : _ ou pluriel s_
+CLASS D (T|')					# début mot : _ ou '
+
+RULES
+
+
+## exceptions
+
+## règle sur en 
+T [[ amen ]] T -> a m E n				## amen
+D [[ éden ]] T -> e d E n				## amen
+
+## règles sur ment en fin de mot
+T [[ ment ]] T -> m a~					## ment
+[[ ement ]] T -> 2 m a~					## convenablement
+(i|u|é) [[ ement ]] T -> m a~				## apitoiement
+[[ ément ]] T -> e m  a~				## précisément
+[[ emment ]] T -> a m a~				## prudemment 
+
+## règle sur ent en fin de mot
+## son AN
+T [[ comment ]] T -> k o m a~				## comment
+T [[ moment ]] F -> m o m a~				## moment
+T [[ accent ]] F -> a k s a~				## accent
+T [[ content ]] F -> k o~ t a~				## content
+A [[ président ]] F -> p R e z i d a~			## président
+[[ froment ]] F -> f R o m a~
+T [[ serpent ]] F -> s E R p a~ 
+[[ adolescent ]] -> a d o l e s a~
+
+## ment
+T [[ vraiment ]] T ->  v R E m a~ 			## vraiment
+T [[ document ]] T -> d o k y m a~			## comment
+T [[ absolument ]] T -> a b s o l y m a~ 
+T [[ crûment ]]  T -> k R y m a~ 
+T [[ éperdument ]]  T -> e p E R d y m a~ 
+T [[ gentiment ]]  T -> g a~ t i m a~ 
+[[ dûment ]]  T -> e~ d y m a~                          ## assidûment, indûment
+T [[ poliment ]]  T -> p o l i m a~ 
+T [[ prétendument ]]  T -> p R e t a~ d y m a~ 
+T [[ quasiment ]]  T -> k a z i m a~ 
+T [[ résolument ]]  T -> R e z o l y m a~ 
+T [[ argument ]] F ->  a R g y m a~ 
+T [[ blanchiment ]] T ->  b l a~ S i m a~ 
+T [[ testament ]] F ->  t E s t a m a~ 
+T [[ sentiment ]] F -> s a~ t i m a~
+T [[ segment ]] F -> s E g m a~
+T [[ joliment ]] T ->  Z o l i m a~ 
+T [[ goulûment ]] T -> g u l y m a~ 
+T [[ continûment ]] T ->  k o~ t i n y m a~ 
+
+## vent
+A [[ couvent ]] F -> k u v a~				## couvent
+T [[ vent ]] F -> v a~
+T [[ souvent ]] T -> s u v a~
+
+
+## règle sur s en fin de mot
+T [[ mars ]] T -> m a R s				## mars
+
+## règles sur ch
+T [[ psycho ]]  -> p s i k o				## psychologue
+T [[ psychia ]] -> p s i k j a				## psychiatre
+ [[ ichéen ]] -> i k E e~				## manichéen	
+
+## règles sur eur en fin de mot
+[[ onsieur ]] T -> 2 s i 2				## monsieur
+[[ essieurs ]] T  -> e s i 2				## monsieur
+
+## règles sur us en fin de mot
+T [[ processus ]] T -> p R o s E s y s
+T [[ argus ]] T -> a R g y s 
+T [[ cumulus ]] T -> k y m y l y s
+T [[ corpus ]] T -> k O R p y s
+T [[ campus ]] T -> k a~ p y s
+
+## règles sur as en fin de mot
+T [[ as ]] T -> a s 
+T [[ mas ]] T -> m a s
+T [[ sas ]] T -> s a s
+T [[ pataras ]] T -> p a t a R a s
+T [[ atlas ]] T -> a t l a s  
+[[ tu_as ]] -> t y a 
+[[ as_tu ]] -> a t y 
+
+## règles sur ch 
+T [[ archal ]] T -> a R S a l 
+T [[ archée ]] T -> a R S e
+T [[ écho ]] T -> e k o
+T [[ lichen ]] T -> l i k e~ n
+
+## règles sur ays
+T [[ pays ]] T -> p E i
+
+## t en fin de mot
+T [[ l'est ]] T -> l E s t  
+T [[ sabbat ]] F -> S a b a t
+
+## h aspiré
+[[ s_haricots ]] T -> a R i k o 	 		## 
+TC [[ es_haricots ]]  -> E a R i k o			## les des tes
+[[ s_ha ]] ch -> a					## haches
+TC [[ es_ha ]] ch  -> E a					## les des tes
+[[ s_haies ]] T -> E	 		## 
+TC [[ es_haies ]]  -> E E			## les des tes
+[[ s_handi ]]  -> a~ d i 	 		## 
+TC [[ es_handi ]]  -> E a~ d  i			## les des tes
+[[ s_hara ]]  -> a R a	 		## harassé
+TC [[ es_hara ]]  -> E a R a			## les des tes
+[[ s_har ]] c ->  a R 	 		## harcèlement
+TC [[ es_har ]] c  -> E a R		## 
+[[ s_har ]] gn ->  a R 	 		## hargne
+TC [[ es_har ]] gn  -> E a R		## 
+[[ s_har ]] n ->  a R 	 		## harnaché
+TC [[ es_har ]] n  -> E a R		## 
+[[ s_hau ]]  ->  o 	 		## harnaché
+TC [[ es_hau ]]   -> E o			## hauteur
+
+## ul en fin de mot
+T [[ cul ]] F -> k y					## cul 		
+
+## g en fin de mot
+T [[ sang ]] F -> s a~
+
+## x en fin de mot
+[[ prix_ ]]  -> p R i				## prix
+[[ prix_ ]] V -> p R i z			## prix liaison
+
+## e en milieu de mot
+[[ gaieté ]] F -> g e t e 
+
+## zz 
+[[ puzzle ]] F -> p 2 z @ l
+
+## il en fin de mot
+T [[ fusil ]] F  -> f y z i                  
+T [[ gentil ]] F  -> Z a~ t i                   
+T [[ outil ]] F  -> u t i                   
+
+## res en début de mot
+T [[ res ]] V -> R 2 s			## resaler, resurgir
+
+## f en fin
+T [[ nerf ]] F -> n E R 
+T [[ serf ]] F -> s E R 
+T [[ clef ]] F -> k l E 
+
+## sol en fin de mot
+T [[ parasol ]] F -> p a R a s O l 
+T [[ tournesol ]] F -> t u R n 2 s O l 
+
+## ens en fin
+T [[ sens ]] -> s a~ s 
+
+# liaison bien
+T [[ bien_ ]] V -> b i e~ n
+
+# tions en fin de mot
+PRT [[ portions ]] T -> p O R t i o~ 
+[[ partions ]] ->  p a R t i o~ 
+
+## quad en début de mot
+T [[ qua ]] dr -> k w a			## quadrature
+T [[ quadr ]] il -> k a d R            ## quadrillage
+T [[ quadrilobe ]] T -> k w a d R i l O b 
+T [[ quantum ]] F -> k w a~ t o m
+
+## s en fin de mot
+T [[ antipolis ]] T -> a~ t i p o l i s 
+T [[ tous_ ]] C -> t u 
+T [[ tous_ ]] -> t u s
+
+## er  en fin de mot
+A [[ reporter ]] T -> R 2 p O R t E R
+
+## ien
+[[ bienvenue ]] F -> b i e~ v 2 n y 
+
+## liste 112 orthographe.html
+D [[ alsac ]] (e|i) -> a l z a s
+D [[ amygda ]] -> a m i d a
+D [[ automne ]] -> o t O n  
+T [[ caoutchouc ]] -> k a u t S u 
+T [[ crescendo ]] -> k R e S e~ d o 
+T [[ fascisme ]] -> f a S i s m 
+D [[ estomac ]] -> E s t o m a
+A [[ fils ]] -> f i s                      ## ambiguité avec le fil à coudre
+T [[ gars ]] -> g a 
+T [[ oignon ]] F  -> o j o~ 
+T [[ pouls ]] -> p u 
+T [[ secon ]] d -> s 2 g o~ 
+T [[ susu ]] r -> s y s y			## susure
+T [[ transi ]] -> t R a~ z i 
+T [[ vraisembl ]] -> v R E s a~ b l  
+T [[ tranquill ]] -> t R a~ k i l  
+T [[ les ]] quel -> l e
+
+
+END
+
+
+

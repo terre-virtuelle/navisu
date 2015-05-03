@@ -1,0 +1,409 @@
+# les règles générales de prononciation
+
+CLASSES
+
+CLASS V [aeiouàâéèêëîïôöùûü]			# voyelles
+CLASS C [bcçdfghjklmnñpqrstvwxyz]		# consonnes
+CLASS L (V|C)					# toutes les lettres
+CLASS SH [bcçdfgjklmnñpqrstvwxyz]		# les consonnes sans h
+CLASS U [aeioàâéèêëîïôö]			# les voyelles sans u
+CLASS A (le|du|au|mon|ton|son)_			# articles
+CLASS PR (nous)					# pronom
+
+CLASS T [_]					# terminal :_
+CLASS F (T|s_)					# fin mot : _ ou pluriel s_
+CLASS D (T|')					# début mot : _ ou '
+
+RULES
+
+[[ _ ]] -> 	
+
+[[ à ]] -> a						## déja
+[[ â ]] -> a  						## pâte	
+[[ æ ]] -> a
+
+[[ ae ]]  -> a						## verhaeren
+[[ aen ]] (C|T)	-> a~					## caen
+[[ aî ]] -> E 						## maître
+[[ ai ]] -> E						## aile
+[[ aim ]] (C|T)	-> e~					## faim
+[[ ain ]] (C|T)	-> e~					## pain
+[[ ail ]] T -> a j					##  bail
+[[ aille ]] F -> a j					## paille 
+[[ ait_ ]] V -> E t				# liaison: il était une fois
+[[ aient_ ]] V -> E t			# liaison: ils étaient idiots
+[[ all ]] F -> o l						## hall
+[[ am ]] n -> a m						## amnistie
+[[ am ]] m -> a						## programmation
+[[ am ]] C -> a~						## camp
+[[ am ]] T -> a m					## tram
+[[ ann ]] V -> a n	 			## manne, anniversaire
+[[ an ]] (C|F)	-> a~					## ancien
+[[ anc ]] F -> a~					## banc
+[[ aon ]] (C|F) -> a~					## paon
+[[ août ]]  -> u t					## août
+D [[ arch ]] a -> a R k					## archange
+D [[ arché ]] -> a R k e 				## archétype 
+[[ au ]] -> o						## autruche
+[[ ay ]] (C|F) -> E					## aymé
+[[ ay ]] -> E j						## paye
+[[ a ]] -> a 						## bateau
+
+T [[ b ]] T -> b e			                ## lettre b
+[[ bb ]] -> b						## abbé 
+[[ b ]] -> b						## aube
+
+T [[ c ]] T -> s E			
+[[ ç ]] -> s						## rançon
+[[ c' ]] -> s 						## c'est
+[[ cc ]] -> k 						## occuper
+[[ cc ]] (e|è|é|ê|i|î|y) -> k s				## accéder
+[[ cent ]] F -> s a~					##  cent
+[[ cch ]] -> k 						## bacchanale
+T [[ chor ]]  -> k o R					## chorale
+[[ ch ]] (n|r|t|l|s|T) -> k 			## chrétien
+[[ ch ]] -> S						## chien, architecte
+T [[ chal ]] (c|d) -> k a l			## chaldéen, chalcosine
+T [[ chao ]] (s|t) -> k a o			## chaos, chaotique 
+T [[ charism ]]  -> k a R i s m			## charisme 
+T [[ ché ]] q -> S e				## chéquier
+T [[ chiro ]] (g|m|n|p)  -> k i R 		## chiromancie
+[[ ck ]] -> k						## nickel
+[[ cqu ]] -> k						## grecque
+[[ cq ]] -> k						## pecq
+[[ c ]] (e|è|é|ê|i|î|y) -> s 			## cède
+[[ c ]] -> k 						## recoin donc
+
+T [[ d ]] T -> d e			
+[[ d' ]] -> d 						## d'autres
+[[ dd ]] -> d						## addition
+[[ dt ]] T ->	 					## rembrandt
+[[ d ]] F -> 	 				## grand
+[[ d_ ]] V ->  t 				## grand ami liaison
+[[ d ]] -> d						## don bled
+
+T [[ e ]] T -> 2			
+[[ eau ]] -> o				## eau, manteau
+[[ ed ]] F -> E	d					## bled fred
+[[ ee ]] -> i						## meeting
+(T|Tin) [[ eff ]] -> E f 				## effet, ineffaçable
+[[ ei ]] -> E						## neige
+[[ eil ]] T -> E j					## vieil
+[[ eill ]] -> E	j					## marseille, vieille
+[[ ein ]] (C|T) -> e~					## peindre
+[[ eî ]] -> E						## 
+[[ el ]] F -> E l					## caramel
+[[ ell ]] -> E l l					## selle
+[[ em ]] T -> E m					## salem
+[[ em ]] m -> a						## femme
+[[ em ]] C -> a~					## décembre
+D [[ emm ]] V -> a~ m					## emmancher
+D [[ en ]] (h|V) -> a~ n			## enharmonique enivrer
+D [[ en ]] n -> a~					## ennui
+D [[ en ]] T -> a~					## en
+D [[ en_ ]] V -> a~ n 					## en : liaison
+[[ en ]] F -> e~					## examen
+[[ en ]] tT -> 					## terminaison verbe
+[[ ents ]]  -> a~   					## piments, couvents
+[[ enne ]]  -> E n					## penne, renne
+[[ en ]] C -> a~					## entre 
+c [[ ep ]]  -> E p					## concept, conception
+TC [[ er ]] F -> E R					## fer der
+TCh [[ er ]] F -> E R					## cher
+[[ er ]] F -> e		 				## parler léger
+[[ er ]] C -> E R					## verte
+[[ ers ]] T -> E R					## les reporters
+(i|u) [[ erie ]] F -> R i				## tuerie, soierie 
+T [[ es ]] T -> E s					## es sciences	
+D [[ es ]] C -> E s 					## espérer
+TC [[ es_ ]]  -> E					## les des tes
+TC [[ es_ ]] (V|h) -> E z		 		## les des tes liaison
+T [[ es_tu ]] T -> E t y				## es-tu	
+D [[ ess ]] -> E s				## essai
+D [[ est_ ]] -> E 				## est en dernier mot
+D [[ est_ ]] V -> E t				## est liaison
+[[ esd ]]  -> E	d	 				## mesdames
+Tr [[ e ]] ss -> 2					## ressembler
+[[ e ]] sC -> E		 				## inceste escroc
+[[ ett ]]  -> E t					## chaussette 
+[[ et ]] F -> e					## objet filets
+[[ cet ]] F -> s e t 					## objet filets
+T [[ eu ]] T -> y 					## eu
+[[ eu ]] il -> @ 					## veuillez
+[[ eu ]] (f|r|n|l) -> 9 		## meurtre peur jeune filleul neuf
+[[ eu ]] -> 2  				## peut meute tueuse meuh jeu gueuze
+D [[ eû ]] -> y 					## eût
+[[ eû ]] -> @ 						## jeûne
+[[ ey ]] (C|T) -> e					## dahomey ceylan
+[[ ey ]] -> E j						## asseye
+[[ ez ]] F  -> e					## nez, voulez
+[[ e ]] x -> E 						## exact
+[[ e ]] c(C|T) -> E			## infect tectonique grecque avec
+[[ e ]] z -> e						## mezzanine
+TC [[ e ]] T ->	2					## je te 
+[[ e ]] F ->						## montre
+[[ e ]] V ->	 					## mangeons
+[[ e ]] -> 2						## menue
+
+[[ ë ]] -> E           				 	## citroën
+[[ é ]] -> e 						## été
+[[ ée ]] F -> e 						## année, nettoyée
+[[ éen ]] T -> e e~					## manichéen
+[[ è ]] -> E 						## règle
+[[ ê ]] -> E 						## fête
+
+T [[ f ]] T -> E f					## lettre f
+[[ ff ]] -> f						## affaire
+[[ fais ]] V	-> f 2 z				## faisons faisan
+[[ f ]] -> f						## feu
+
+T [[ g ]] T -> Z E					## lettre g
+[[ gg ]] (e|é|è|ê|i) -> g Z				## suggérer
+[[ gg ]] -> g						## agglomérer
+[[ gni ]] -> n j				## craignions châtaignier
+[[ gn ]] -> n j						## agneau
+[[ gt ]] F -> 						## vingt
+[[ gt ]] -> t						## vingtaine
+[[ gt_ ]] (V|s) -> t	 			# liaison: vingt-ans vingt-six
+[[ g ]] (C|a|u|â|o|û) -> g				## langage
+[[ g ]] F -> g 						## bang grog gag goulag
+[[ oing ]] F -> w e~					## poing
+[[ ooing ]] F -> w e~					## shampooing
+[[ g ]] -> Z						## congé
+
+T [[ h ]] T -> a S					## lettre h
+(a|o) [[ h ]] T ->					## ah, oh
+T [[ h ]] (a|e|o|i)T ->	 				## ha, ho, hi
+T [[ he ]] T -> E					## he
+T [[ hep ]] T -> E p					## hep
+T [[ eh ]] T -> E					## eh
+(d|l) [[ _h ]] (u|o|ô) -> 			## l'huitre aujourd'hui l'hôte
+[[ h ]] ->						## ahuri
+
+T [[ i ]] T -> i					## lettre i
+[[ ied ]] F -> i e					## pied
+[[ ien ]] F -> i e~				## rien bien
+D [[ ill ]] -> i l l					## illégal
+Tm [[ ill ]] -> i l					## mille
+[[ vill ]] -> v i l					## village
+u [[ ill ]] -> i j					## cuillière cueillir
+U [[ ill ]] -> j					## caillou
+[[ ill ]] -> i j					## famille
+(u|e|a) [[ il ]] T -> j					## bail deuil
+[[ imm ]] -> i m m					## immaculé
+[[ im ]] T -> i m					## karim
+[[ im ]] C -> e~					## timbre
+[[ in ]] h -> i n					## inhumain
+[[ inct ]] F -> e~					## distinct
+D [[ inn ]] V -> i n n					## innombrable
+[[ in ]] (C|T) -> e~					## vin vingt
+[[ ing ]] F -> i n g				## ping, sterling, parking
+h [[ ier ]] T -> j E R					## hier
+[[ i ]] er -> j			## quincaillier fermier portier
+[[ i ]] é -> j				## crié
+[[ i ]] -> i						## cri
+
+[[ î ]] -> i						## abîme
+[[ în ]] (C|T) -> e~					## vînimes
+
+[[ ïn ]] (C|T) -> e~					## coïncider
+a [[ ï ]] -> j						## aïeul
+[[ ï ]] -> i						## ambiguïté
+
+T [[ j ]] T -> Z i					## lettre j
+[[ j' ]] -> Z						## j'habite	
+[[ j ]] -> Z						## adjoint
+
+T [[ k ]] T -> k a					## lettre k
+[[ k ]] -> k						## képi
+
+T [[ l ]] T -> E l	
+
+[[ l' ]] -> l 						## l'image
+[[ ll ]] -> l						## aller
+au [[ l ]] (d|t|x|n|q) ->				## hérault
+[[ l ]] -> l						## lit
+
+T [[ m ]] T -> E m			
+[[ m' ]] -> m 						## m'arrange
+[[ mm ]] -> m						## pomme
+[[ m ]] -> m						## film
+
+T [[ n ]] T -> E n			
+[[ n' ]] -> n 						## n'arrive
+[[ nn ]] -> n						## renne
+[[ n ]] -> n						## une
+[[ ñ ]] -> N i						## niño
+
+T [[ o ]] T -> o			
+[[ oc ]] F -> o 					## escroc
+[[ o ]] ch -> o 					## cochon
+[[ oe ]] ll -> w a 					## moelleux
+[[ oe ]] il -> @ 					## oeillet
+[[ oeu ]] -> @						## soeur
+[[ oe ]] -> 2						## oesophage
+[[ oin ]] (C|T) -> w e~					## coin
+[[ oi ]] -> w a 					## poil
+[[ oê ]] l -> w a 					## poêle
+[[ oî ]] -> w a 					## boîte
+[[ omm ]] -> O m					## comme
+dr [[ o ]] meF -> o 					## vélodrome
+[[ om ]] (C|T) -> o~					## bombe
+[[ omb ]] F ->	o~					## plomb applomb
+D [[ on_ ]]  -> o~					## on
+D [[ on_ ]] V -> o~ n 				## on aime : liaison
+D(m|t|s) [[ on_ ]]  -> o~				## mon parapluie
+D(m|t|s) [[ on_ ]] V -> o~ n 			## mon ami : liaison
+[[ on_ ]]  -> o~					## on
+[[ onn ]]  -> O	n					## bonne
+(g|z|chr) [[ o ]] neT -> o				## amazone
+[[ on ]] C -> o~					## donc
+c [[ oo ]] l -> O					## alcool
+[[ o ]] sT -> o						## gros dos
+[[ o ]] sV -> o						## poser
+D [[ orch ]] -> o R k 					## orchidée orchestre
+[[ ot ]] F -> o						## mots dépot
+[[ o ]] t -> O						## noter
+[[ oum ]] -> u m					## boum
+[[ oun ]] -> u n					## toundra
+[[ ou ]] il -> u					## brouillard
+[[ ou ]] -> u						## hibou
+[[ où ]] -> u 						## où
+[[ oû ]] -> u						## coûter
+[[ oyes ]] T -> w a 					## troyes
+[[ oy ]] V -> w a j					## noyer voyelles
+[[ oy ]] -> w a						## roy
+[[ o ]] zT -> o 					## berlioz
+[[ o ]] F -> o						## zorro zoo allégro
+[[ o ]] -> O 					## sobre notions émotions
+
+[[ ôt ]] F -> o						## rôt
+[[ ô ]] -> o 						## cône
+[[ ö ]] -> 2 						## angström
+
+T [[ p ]] T -> p e				
+[[ p ]] F ->						## camp
+[[ penta ]] -> p e~ t a					## pentathlon 
+com [[ p ]] t ->					## baptiser compte
+ba [[ p ]] t ->					## baptiser compte
+or [[ ps ]] T ->					## corps
+C [[ pt ]] T ->						## prompt exempt
+[[ ph ]] -> f						## phrase
+[[ pp ]] -> p						## appliquer
+[[ p ]] -> p						## pas
+
+T [[ q ]] T -> k y			
+[[ qu' ]] -> k						## qu'il
+[[ qu ]] -> k						## quatre
+T [[ que ]] T -> k 2				## que
+[[ que ]] l -> k E
+ n [[ q_ ]] c ->					## cinq cent
+[[ q ]] -> k						## coq
+
+T [[ r ]] T -> E R			
+Tsu [[ rr ]] -> R R					## surréaliste
+ou [[ rr ]] -> R R					## courrai 
+[[ rr ]] -> R						## erreur 
+[[ r ]] -> R						## rien
+
+T [[ s ]] T -> E s			
+[[ s' ]] -> s						## s'amène
+[[ sc ]] (e|è|é|ê|i|î|y) -> s				## scène
+[[ sç ]] -> s						## immisça
+[[ sch ]] (iz|ol) -> s k				## schizophrène
+[[ sch ]] -> S						## schéma
+T [[ sept ]] T -> s E t					## sept 
+V [[ sh ]] V -> z					## déshabiller
+[[ sh ]] -> S						## shérif
+[[ ss ]] -> s						## assez
+V [[ s ]] V -> z					## baiser
+[[ s ]] (b|d|g|j|v) -> z 				## sbire
+[[ spect ]] F -> s p e					## aspect suspect
+[[ s_ ]] (V|h|y) -> z					## pluriel liaison
+[[ s_ ]]  -> 						## pluriel pas liaison
+[[ s ]] -> s 						## verser sien
+
+T [[ t ]] T -> t e						
+[[ t' ]] -> t						## t'amène
+[[ t_ ]]  ->			 			## pas de liaison
+[[ t_ ]] (V|h) -> t					## liaison 
+[[ tt ]] -> t						## attitude
+(s|p|c) [[ t ]] F -> t					## test script
+s [[ thm ]]  ->	m					## asthme
+V [[ tie ]] F -> s i				## minutie
+[[ tie ]] F -> t i					## partie
+(T|re|dé) [[ tien ]] n -> t i E				## tienne
+(T|re|dé) [[ tien ]] (tT|F) -> t i e~			##  tien, retient, détient
+[[ tien ]] -> s i a~	                                ## patience
+[[ tié ]] F -> t i e			## amitié
+ui [[ t ]] T -> t					## huit
+[[ t ]] F ->					## fin de mot
+[[ t ]] (ième|ière|iers)F -> t			## amitié
+[[ t ]] (ierF|iezT) -> t		## partiez
+[[ t ]] ion -> s 			## partition portions attention
+s [[ t ]] iV -> t					## amnistie amnistié
+[[ t ]] ien -> t 					## retiens tienne
+T [[ t ]] iV -> t					## tiare
+[[ t ]] iV -> s						## ambition
+[[ t ]] -> t						## bataille
+
+T [[ u ]] T -> y			
+(c|g) [[ ueill ]] -> 9 j				## orgueilleux
+(c|g) [[ ueil ]] T -> 9 j				## orgueil
+[[ uë ]] ->  y						## ambiguë
+[[ um ]] F -> O m					## album
+[[ um ]] C -> e~					## humble
+[[ un_ ]] C -> e~ 					## un
+[[ un_ ]] V -> e~ n					## un ami liaison
+[[ un_ ]]  -> e~ 					## un ami liaison
+[[ un ]] C -> e~					## emprunt
+g [[ u ]] (a|e|i|o|î|â|é|è|ê|y) ->		## fatigue
+[[ uit_ ]] V -> y i t	 			# liaison: huit-ans
+[[ u ]] -> y				## cruel bruit huile nuage perpétuer
+T [[ us ]] T -> y s			   ## us et coutumes 
+[[ û ]] -> y						## fûtes
+[[ ü ]] -> y						## bülcher
+
+T [[ v ]] T -> v e			
+[[ v ]] T -> f						## olav
+[[ vien ]] tT -> v i e~ 				## revient
+[[ vien ]] n -> v i E					## vienne
+[[ vien ]] (C|T) -> v i e~				## viendra 
+[[ v ]] -> v						## cave
+
+T [[ w ]] T -> d u b l 2 v e			
+[[ w ]] -> w						## watt
+
+T [[ x ]] T -> i k s			
+[[ xs ]] -> k s						## exsuder
+e [[ x ]] (V|h) -> g z			## exagérer exemple exhumer exonérer
+oi [[ x_ ]]  ->						## voix
+oi [[ x_ ]] (V|h) -> z					## voix liaison
+oi [[ x ]] V ->	s					## soixante
+[[ xième ]] -> z i E m					## deuxième
+(a|e|o)u [[ x_ ]] (V|h) -> z				# liaison: foux en
+(a|e|o)u [[ x_ ]] ->				## faux toux beaux foux
+[[ aux ]] q -> o				# auxquels
+T(s|d) [[ ix_ ]] (V|h) -> i z			# liaison: six ans
+T(s|d) [[ ix_ ]] C ->  i 				## dix parties
+T(s|d) [[ ix_ ]]  ->  i s				## dix ou six
+[[ x ]] -> k s				## lexique lexical lexicaux vox 
+
+[[ ym ]] (C|T) -> e~					## tympan
+[[ yn ]] (C|T) -> e~					## laryngite
+[[ y ]] (C|T) -> i					## polytechnique
+[[ y' ]] -> i						## 
+[[ y ]] -> i						## cryogénique myope
+
+T [[ z ]] T -> z E d			
+[[ zz ]] -> t z						## razzia
+t [[ z ]] -> s 						## tzigane
+[[ z ]] -> z						## zéro
+
+[[ _'_ ]] ->						# apostrophe
+
+
+END
+
+
+
