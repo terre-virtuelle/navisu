@@ -50,9 +50,8 @@ import bzh.terrevirtuelle.navisu.instruments.ais.logger.AisLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.logger.impl.AisLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPlotterImpl;
-<<<<<<< HEAD
-import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
-import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
@@ -61,10 +60,8 @@ import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonSer
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl.GpsTrackPolygonImpl;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.impl.GpsTrackSectorImpl;
-=======
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
->>>>>>> refs/remotes/origin/master
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
@@ -85,8 +82,6 @@ import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.shapefiles.impl.ShapefileObjectImpl;
-import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
-import bzh.terrevirtuelle.navisu.speech.impl.SpeakerImpl;
 import bzh.terrevirtuelle.navisu.system.files.FilesServices;
 import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
