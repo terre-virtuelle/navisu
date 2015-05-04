@@ -319,6 +319,7 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		} else {
 			sectorLayers.get(i).setEnabled(true);
 			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
+			if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);}
 		    layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
 			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
 			sectorLayers.get(i).addRenderable(text.get(i));

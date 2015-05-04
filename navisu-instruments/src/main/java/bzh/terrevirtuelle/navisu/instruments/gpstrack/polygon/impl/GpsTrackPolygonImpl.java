@@ -130,6 +130,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected boolean polyShapeActivated = true;
 	protected LinkedList<Boolean> centered;
 	protected boolean centeredCurrent = false;
+	protected LinkedList<Boolean> isTextOn;
+	protected LinkedList<SurfaceText> text;
+	protected LinkedList<RenderableLayer> polygonLayers;
+	protected LinkedList<Position> centers; 
 
 	@Override
 	public void componentInitiated() {
@@ -186,6 +190,15 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 		if (on == false) {
 			on = true;
+			
+			isTextOn = new LinkedList<Boolean>();
+			for (int k=0; k<100; k++) {isTextOn.add(false);}
+			
+			text = new LinkedList<SurfaceText>();
+			for (int k=0; k<100; k++) {text.add(null);}
+			
+			polygonLayers = new LinkedList<RenderableLayer> ();
+			centers = new LinkedList<Position> ();
 			 
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -235,6 +248,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 							}
 						
 						if (layerTreeServices.getCheckBoxTreeItems().get(26).isSelected() && nbPolygon<=nbMax) {
+							centers.add(barycenter(measureTool.getPositions()));
+							System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
 							measureTool.setArmed(false);
 							controller.setArmed(false);
 							savedMeasureTool.add(measureTool);
@@ -251,6 +266,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 							measureTool.setFollowTerrain(true);
 							controller.setUseRubberBand(true);
 							polygonLayer = measureTool.getLayer();
+							polygonLayers.add(polygonLayer);
 							polygonLayer.setName("Polygon#" + nbPolygon);
 							geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
 							layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
@@ -458,6 +474,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				centered.set(i, true);
 			}
 			
+			if (!(isTextOn.get(i))) {
+				textOn(i);
+			}
+			
 			if (!alarmOn) {
 				MediaPlayer mediaPlayer;
 				javafx.scene.media.Media media;
@@ -478,7 +498,65 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			}
 			
 			}
+		
+		if (!(WWMath.isLocationInside(pos, list.get(i).getPositions())) && list.get(i) != null) {
+			textOff(i);
 		}
+		
+		}
+	}
+	
+	
+	private void textOn(int i) {
+		text.set(i, new SurfaceText("!", centers.get(i)));
+		// couleur du texte : orange
+		text.get(i).setColor(WWUtil.decodeColorRGBA("FF00FFFF"));
+		if (polygonLayers.get(i).isEnabled()) {
+			polygonLayers.get(i).addRenderable(text.get(i));
+		} else {
+			polygonLayers.get(i).setEnabled(true);
+			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
+			if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);}
+		    layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
+			layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(true);
+			polygonLayers.get(i).addRenderable(text.get(i));
+		}
+
+		isTextOn.set(i, true);
+	}
+	
+	private void textOff(int i) {
+		if (text.get(i) != null && polygonLayers.get(i).isEnabled()) {
+			polygonLayers.get(i).removeRenderable(text.get(i));
+		}
+		isTextOn.set(i, false);
+		}
+	
+	private Position barycenter(ArrayList<? extends Position> list) {
+		double latmax = list.get(0).getLatitude().getDegrees();
+		double longmax = list.get(0).getLongitude().getDegrees();
+		double latmin = list.get(0).getLatitude().getDegrees();
+		double longmin = list.get(0).getLongitude().getDegrees();
+		double altmax = list.get(0).getAltitude();
+		double latmoy = 0;
+		double longmoy = 0;
+		Position resu;
+		
+		for (Position pos : list) {
+			if (Math.abs(latmax)<Math.abs(pos.getLatitude().getDegrees())) {latmax = pos.getLatitude().getDegrees();}
+			if (Math.abs(latmin)>Math.abs(pos.getLatitude().getDegrees())) {latmin = pos.getLatitude().getDegrees();}
+			if (Math.abs(longmax)<Math.abs(pos.getLongitude().getDegrees())) {longmax = pos.getLongitude().getDegrees();}
+			if (Math.abs(longmin)>Math.abs(pos.getLongitude().getDegrees())) {longmin = pos.getLongitude().getDegrees();}
+			if (altmax<pos.getAltitude()) {altmax = pos.getAltitude();}
+		}
+		System.out.println(latmin +" "+ latmax+ " " + latmoy);
+		latmoy = (latmin+latmax)/2;
+		longmoy = (longmin+longmax)/2;
+		if (altmax<=0) {altmax=0;}
+		
+		resu = new Position(LatLon.fromDegrees(latmoy, longmoy), altmax);
+		
+		return resu;
 	}
 
 }
