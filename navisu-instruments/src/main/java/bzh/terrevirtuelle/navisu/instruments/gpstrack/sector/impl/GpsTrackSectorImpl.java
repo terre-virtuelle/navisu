@@ -31,6 +31,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -101,6 +103,7 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 	protected LinkedList<Boolean> isTextOn;
 	protected LinkedList<SurfaceText> text;
 	protected int nbSelector = 0;
+	//protected int nbMax = 0;
 
 	@Override
 	public void componentInitiated() {
@@ -137,10 +140,10 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			on = true;
 			
 			isTextOn = new LinkedList<Boolean>();
-			for (int k=0; k<5; k++) {isTextOn.add(false);}
+			for (int k=0; k<100; k++) {isTextOn.add(false);}
 			
 			text = new LinkedList<SurfaceText>();
-			for (int k=0; k<5; k++) {text.add(null);}
+			for (int k=0; k<100; k++) {text.add(null);}
 			
 			selectors = new LinkedList<SectorSelector>();
 			
@@ -163,28 +166,33 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 				public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
 
 					GGA data = (GGA) d;
-					if (on) {
 
+					if (on) {
+						
 						watchedShip.setLatitude(data.getLatitude());
 						watchedShip.setLongitude(data.getLongitude());
 
-						if (layerTreeServices.getCheckBoxTreeItems().get(22).isSelected()) {
-							
-							selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
-							selectors.getLast().enable();
-							nbSelector++;
-							// couleur du selector : bleu
-							selectors.getLast().setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
-							RenderableLayer TempLayer = (RenderableLayer) ((selectors.getLast()).getLayer());
-							TempLayer.setName("Watch sector#"+nbSelector);
-							sectorLayers.add(TempLayer);
-							geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
-							layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
-							System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
-							System.out.println("NbSelector = " + nbSelector + "\n");
-							layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
+							if (layerTreeServices.getCheckBoxTreeItems().get(22).isSelected() /*&& nbSelector<=nbMax*/) {
+								selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
+								selectors.getLast().enable();
+								nbSelector++;
+								// couleur du selector : bleu
+								selectors.getLast().setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
+								RenderableLayer TempLayer = (RenderableLayer) ((selectors.getLast()).getLayer());
+								TempLayer.setName("Watch sector#"+nbSelector);
+								sectorLayers.add(TempLayer);
+								geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+								layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+								System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
+								System.out.println("NbSelector = " + nbSelector + "\n");
+								layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
 							}
-						
+							
+						/*if (!(layerTreeServices.getCheckBoxTreeItems().get(22).isSelected()) && nbSelector!=nbMax) {
+							nbMax++;
+							System.out.println("Diselected");
+							}*/
+							
 						for (int j=0; j<selectors.size(); j++) {watchTarget(j, watchedShip);}
 
 					}
@@ -261,9 +269,14 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 					.println("============ W A R N I N G ============ Ship with MMSI #"
 							+ target.getMMSI() + " is inside Sector#"+ (i+1));
 			
+			if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);}
+			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
+			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
+			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
+			
 			if (!(isTextOn.get(i))) {
+				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
 				textOn(sector, i);
-				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 15000));
 			}
 
 			if (!alarmOn) {
@@ -320,5 +333,4 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		}
 		isTextOn.set(i, false);
 	}
-
 }
