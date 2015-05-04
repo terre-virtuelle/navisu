@@ -111,7 +111,7 @@ public class Ship implements Serializable, Cloneable {
     /**
      * 7 = 6 bit ASCII characters, @@@@@@@ = not available = default
      */
-    private String callSign = "@@@@@@@";
+    private String callSign = "@@@@";
     /**
      * Estimated time of arrival; MMDDHHMM UTC Bits 19-16: month; 1-12; 0 = not
      * available = default Bits 15-11: day; 1-31; 0 = not available = default
@@ -123,7 +123,7 @@ public class Ship implements Serializable, Cloneable {
      *
      * @@@@@@@@@@@@@@@@@@@@ = not available
      */
-    private String destination = "@@@@@@@@@@@@@@@@@@@@";
+    private String destination = "@@@@";
     /**
      * year, month, day of ETA
      */

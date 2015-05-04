@@ -4,8 +4,6 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.Sixbit;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.AISMessage05;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.UtilsDimensions30;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.UtilsEta;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.UtilsPositioningDevice;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.UtilsShipType8;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.UtilsSpare;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.UtilsString;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.annotations.impl.AISIllegalValueAnnotation;
@@ -13,6 +11,8 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.provenance.impl.VDMMessag
 import java.text.NumberFormat;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.BitVector;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.UtilsPositioningDevice;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.utils.UtilsShipType8;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * ------------------------------------------------------------------------
  *  1	messageID                               	   6	(   1,   6)
  *  2	repeatIndicator                         	   2	(   7,   8)
- *  3	mmsi                                  	  30	(   9,  38)
+ *  3	mmsi                                  	          30	(   9,  38)
  *  4	aisVersionIndicator                     	   2	(  39,  40)
  *  5	imoNumber                               	  30	(  41,  70)
  *  6	callSign                                	  42	(  71, 112)
@@ -60,6 +60,47 @@ public class AIS05
         implements AISMessage05 {
 
     /**
+     *
+     */
+    private static final int AISVERSIONINDICATOR_FROM = 39;
+    private static final int AISVERSIONINDICATOR_TO = 40;
+    private static final int IMONUMBER_FROM = 41;
+    private static final int IMONUMBER_TO = 70;
+    private static final int CALLSIGN_FROM = 71;
+    private static final int CALLSIGN_TO = 112;
+    private static final int NAME_FROM = 113;
+    private static final int NAME_TO = 232;
+    private static final int TYPEOFSHIPANDCARGOTYPE_FROM = 233;
+    private static final int TYPEOFSHIPANDCARGOTYPE_TO = 240;
+    private static final int DIMENSION_FROM = 241;
+    private static final int DIMENSION_TO = 270;
+    private static final int TYPEOFELECTRONICPOSITIONFIXINGDEVICE_FROM = 271;
+    private static final int TYPEOFELECTRONICPOSITIONFIXINGDEVICE_TO = 274;
+    private static final int ETA_FROM = 275;
+    private static final int ETA_TO = 294;
+    private static final int MAXIMUMPRESENTSTATICDRAUGHT_FROM = 295;
+    private static final int MAXIMUMPRESENTSTATICDRAUGHT_TO = 302;
+    private static final int DESTINATION_FROM = 303;
+    private static final int DESTINATION_TO = 422;
+    private static final int DTE_BITINDEX = 423;
+    public static final int LENGTH = 424;
+    private static final int SPARE_FROM = 424;
+    private static final int SPARE_TO = 424;
+
+    private int imoNumber;
+    private String name;
+    private String callSign;
+    private int aisVersionIndicator;
+    private int typeOfElectronicPositionFixingDevice;
+    private int maximumPresentStaticDraught;
+    private BitVector eta;
+    private String destination;
+    private BitVector dimension;
+    private boolean dte;
+    private int spare;
+    private int typeOfShipAndCargoType;
+
+    /**
      * AIS05 default constructor
      */
     public AIS05() {
@@ -80,24 +121,21 @@ public class AIS05
 
         aisVersionIndicator = content.getIntFromTo(AISVERSIONINDICATOR_FROM, AISVERSIONINDICATOR_TO);
         imoNumber = content.getIntFromTo(IMONUMBER_FROM, IMONUMBER_TO);
-        callSign = UtilsString.stripAtSigns(content.getStringFromTo(CALLSIGN_FROM, CALLSIGN_TO));
-        name = UtilsString.stripAtSigns(content.getStringFromTo(NAME_FROM, NAME_TO));
+        callSign = UtilsString.stripAtSigns(content.getStringFromTo(CALLSIGN_FROM, CALLSIGN_TO)).trim();
+        name = UtilsString.stripAtSigns(content.getStringFromTo(NAME_FROM, NAME_TO)).trim();
         typeOfShipAndCargoType = content.getIntFromTo(TYPEOFSHIPANDCARGOTYPE_FROM, TYPEOFSHIPANDCARGOTYPE_TO);
         dimension = content.getBitVectorFromTo(DIMENSION_FROM, DIMENSION_TO);
         typeOfElectronicPositionFixingDevice = content.getIntFromTo(TYPEOFELECTRONICPOSITIONFIXINGDEVICE_FROM, TYPEOFELECTRONICPOSITIONFIXINGDEVICE_TO);
         eta = content.getBitVectorFromTo(ETA_FROM, ETA_TO);
         maximumPresentStaticDraught = content.getIntFromTo(MAXIMUMPRESENTSTATICDRAUGHT_FROM, MAXIMUMPRESENTSTATICDRAUGHT_TO);
-        destination = UtilsString.stripAtSigns(content.getStringFromTo(DESTINATION_FROM, DESTINATION_TO));
+        destination = UtilsString.stripAtSigns(content.getStringFromTo(DESTINATION_FROM, DESTINATION_TO)).trim();
         dte = content.getBoolean(DTE_BITINDEX);
         spare = content.getIntFromTo(SPARE_FROM, SPARE_TO);
         if (!UtilsSpare.isSpareSemanticallyCorrect(spare)) {
             annotations.add(new AISIllegalValueAnnotation("getSpare", spare, UtilsSpare.range));
         }
+        //System.out.println("new AIS5 "+this);
     }
-    /**
-     *
-     */
-    public static final int LENGTH = 424;
 
     /**
      *
@@ -120,11 +158,6 @@ public class AIS05
         return (sb.available() - LENGTH);
     }
 
-    private static final int AISVERSIONINDICATOR_FROM = 39;
-    private static final int AISVERSIONINDICATOR_TO = 40;
-
-    private int aisVersionIndicator;
-
     /**
      * aisVersionIndicator
      *
@@ -134,11 +167,6 @@ public class AIS05
     public int getAisVersionIndicator() {
         return aisVersionIndicator;
     }
-
-    private static final int IMONUMBER_FROM = 41;
-    private static final int IMONUMBER_TO = 70;
-
-    private int imoNumber;
 
     /**
      * imoNumber
@@ -153,10 +181,6 @@ public class AIS05
     public int getIMO() {
         return imoNumber;
     }
-    private static final int CALLSIGN_FROM = 71;
-    private static final int CALLSIGN_TO = 112;
-
-    private String callSign;
 
     /**
      * callSign
@@ -167,11 +191,6 @@ public class AIS05
     public String getCallSign() {
         return callSign;
     }
-
-    private static final int NAME_FROM = 113;
-    private static final int NAME_TO = 232;
-
-    private String name;
 
     /**
      * name
@@ -186,10 +205,6 @@ public class AIS05
     public String getShipName() {
         return name;
     }
-    private static final int TYPEOFSHIPANDCARGOTYPE_FROM = 233;
-    private static final int TYPEOFSHIPANDCARGOTYPE_TO = 240;
-
-    private int typeOfShipAndCargoType;
 
     /**
      * typeOfShipAndCargoType
@@ -204,10 +219,6 @@ public class AIS05
     public int getShipType() {
         return typeOfShipAndCargoType;
     }
-    private static final int DIMENSION_FROM = 241;
-    private static final int DIMENSION_TO = 270;
-
-    private BitVector dimension;
 
     /**
      * dimension
@@ -243,11 +254,6 @@ public class AIS05
         return UtilsDimensions30.getStarboard(dimension);
     }
 
-    private static final int TYPEOFELECTRONICPOSITIONFIXINGDEVICE_FROM = 271;
-    private static final int TYPEOFELECTRONICPOSITIONFIXINGDEVICE_TO = 274;
-
-    private int typeOfElectronicPositionFixingDevice;
-
     /**
      * typeOfElectronicPositionFixingDevice
      *
@@ -258,11 +264,6 @@ public class AIS05
     public int getTypeOfElectronicPositionFixingDevice() {
         return typeOfElectronicPositionFixingDevice;
     }
-
-    private static final int ETA_FROM = 275;
-    private static final int ETA_TO = 294;
-
-    private BitVector eta;
 
     /**
      * eta
@@ -283,11 +284,6 @@ public class AIS05
                 + "T" + twoDigits.format(UtilsEta.getHour(eta)) + ":" + twoDigits.format(UtilsEta.getMinute(eta));
     }
 
-    private static final int MAXIMUMPRESENTSTATICDRAUGHT_FROM = 295;
-    private static final int MAXIMUMPRESENTSTATICDRAUGHT_TO = 302;
-
-    private int maximumPresentStaticDraught;
-
     /**
      * maximumPresentStaticDraught
      *
@@ -301,10 +297,6 @@ public class AIS05
     public int getDraught() {
         return maximumPresentStaticDraught;
     }
-    private static final int DESTINATION_FROM = 303;
-    private static final int DESTINATION_TO = 422;
-
-    private String destination;
 
     /**
      * destination
@@ -333,6 +325,10 @@ public class AIS05
     }
 
     public void setTypeOfShipAndCargoType(int typeOfShipAndCargoType) {
+        this.typeOfShipAndCargoType = typeOfShipAndCargoType;
+    }
+
+    public void setShipType(int typeOfShipAndCargoType) {
         this.typeOfShipAndCargoType = typeOfShipAndCargoType;
     }
 
@@ -368,10 +364,6 @@ public class AIS05
         AIS05.twoDigits = twoDigits;
     }
 
-    private static final int DTE_BITINDEX = 423;
-
-    private boolean dte;
-
     /**
      * dte
      *
@@ -381,11 +373,6 @@ public class AIS05
     public boolean getDte() {
         return dte;
     }
-
-    private static final int SPARE_FROM = 424;
-    private static final int SPARE_TO = 424;
-
-    private int spare;
 
     /**
      * spare
@@ -406,11 +393,14 @@ public class AIS05
         twoDigits.setMinimumIntegerDigits(2);
     }
 
+    
+
     /**
      * Generates a String representing the AIS message. Format: all fields are
      * shown in the order and units as specified by the standard separated by
      * the SEPARATOR string.
      */
+    
     @Override
     public String toString() {
 
@@ -419,15 +409,17 @@ public class AIS05
         result += SEPARATOR + Integer.toString(imoNumber);
         result += SEPARATOR + callSign;
         result += SEPARATOR + name;
+        
         result += SEPARATOR + UtilsShipType8.shipTypeToString(typeOfShipAndCargoType);
-        result += SEPARATOR + UtilsDimensions30.toString(dimension);
-     //   String etaString = twoDigits.format(UtilsEta.getMonth(eta)) + "-" + twoDigits.format(UtilsEta.getDay(eta))
+        //result += SEPARATOR + UtilsDimensions30.toString(dimension);
+        //   String etaString = twoDigits.format(UtilsEta.getMonth(eta)) + "-" + twoDigits.format(UtilsEta.getDay(eta))
         //           + "T" + twoDigits.format(UtilsEta.getHour(eta)) + ":" + twoDigits.format(UtilsEta.getMinute(eta));
         //  result += SEPARATOR + etaString;
         result += SEPARATOR + maximumPresentStaticDraught;
         result += SEPARATOR + UtilsPositioningDevice.toString(typeOfElectronicPositionFixingDevice);
         result += SEPARATOR + destination;
         result += SEPARATOR + (dte ? "no DTE" : "with DTE");
+        
         return result;
     }
 

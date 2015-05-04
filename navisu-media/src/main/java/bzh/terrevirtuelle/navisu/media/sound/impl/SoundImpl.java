@@ -6,14 +6,10 @@
 package bzh.terrevirtuelle.navisu.media.sound.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.media.sound.Sound;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
-import java.util.Date;
-import java.util.TimerTask;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.capcaval.c3.component.ComponentState;

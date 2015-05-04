@@ -11,6 +11,9 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS02;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS03;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS06;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS07;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS08;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS09;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS10;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS11;
@@ -129,9 +132,12 @@ public class Sentences {
         @XmlElement(name = "ais", type = AISMessageImpl.class),
         @XmlElement(name = "ais01", type = AIS01.class),
         @XmlElement(name = "ais02", type = AIS02.class),
-        @XmlElement(name = "ais30", type = AIS03.class),
+        @XmlElement(name = "ais03", type = AIS03.class),
         @XmlElement(name = "ais04", type = AIS04.class),
         @XmlElement(name = "ais05", type = AIS05.class),
+        @XmlElement(name = "ais06", type = AIS06.class),
+        @XmlElement(name = "ais07", type = AIS07.class),
+        @XmlElement(name = "ais08", type = AIS08.class),
         @XmlElement(name = "ais09", type = AIS09.class),
         @XmlElement(name = "ais10", type = AIS10.class),
         @XmlElement(name = "ais11", type = AIS11.class),

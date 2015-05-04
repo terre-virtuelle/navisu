@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.Sonar;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
-import bzh.terrevirtuelle.navisu.instruments.sonar.controller.SonarController;
+import bzh.terrevirtuelle.navisu.instruments.sonar.impl.controller.SonarController;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.capcaval.c3.component.ComponentState;

@@ -69,7 +69,6 @@ public class CompassController
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 view.setOpacity(slider.getValue());
-                // System.out.println(slider.getValue());
             });
         });
 

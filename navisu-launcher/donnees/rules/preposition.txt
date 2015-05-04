@@ -1,0 +1,117 @@
+PAUSE_COURTE
+# conjonctions de coordination
+
+mais ->  m E 
+ou ->  u 
+et ->  e 
+donc ->  d o~ k 
+or ->  O R 
+ni ->  n i 
+car ->  k a R
+
+# prépositions
+
+à ->  a 
+avec ->  a v E k 
+après ->  a p R E
+avant ->  a v a~
+chez ->  S e 
+# de ->  d 2
+dans ->  d a~
+dès ->  d E
+# en ->  a~
+en_avant -> a~ n a v a~
+entre ->  a~ t R  
+hormis ->  O R m i 
+par ->  p a R 
+pour ->  p u R 
+parmi ->  p a R m i 
+plein ->  p l e~ 
+sur ->  s y R 
+sans ->  s a~
+sous ->  s u
+sauf ->  s o f
+vers ->  v E R
+
+
+PAUSE_LONGUE
+# conjonctions de subordination
+
+si ->  s i
+comme ->  k O m 
+quand ->  k a~
+au_moment_où ->  o m O m a~ u
+
+# que et ses dérivés
+que ->   k 2 
+afin_que ->  a f e~ k 2 
+ainsi_que ->  e~ s i k 2 
+alors_que ->  a l o R k 2 
+à_moins_que ->  a m w e~ k 2  
+après_que ->  a p R E k 2 
+à_supposer_que ->  a s y p o z e k 2 
+aussitôt_que ->  o s i t o k 2 
+avant_que ->  a v a~ k 2 
+lorsque ->  l O R s k 2 
+bien_que ->  b i e~ k 2 
+pour_que ->  p u R k 2 
+parce_que ->  p a R s k 2 
+depuis_que ->  d 2 p y i k 2 
+en_attendant_que ->  a~ n a t a~ d a~ k 2 
+jusqu'à_ce_que ->  Z y s k a s 2 k 2 
+pendant_que ->  p a~ d a~ k 2 
+tandis_que ->  t a~ d i k 2 
+puisque ->  p y i s k 2 
+sous_prétexte_que ->  s u p R e t E k s k 2 
+d'autant_que ->  d o t a~ k 2 
+au_point_que ->  o p w e~ k 2 
+de_façon_que ->  d 2 f a s o~ k 2 
+tant_que ->  t a~ k 2 
+tellement_que ->  t E l e m a~ k 2 
+de_crainte_que ->  d 2 k R e~ t k 2 
+de_peur_que ->   d 2 p 9 R k 2 
+suivant_que ->  s y i v a~ k 2 
+pourvu_que ->  p u R v y k 2 
+selon_que ->  s 2 l o~ k 2 
+
+# dérivés de qu'
+qu' ->   k 
+afin_qu' ->  a f e~ k 
+ainsi_qu' ->  e~ s i k 
+alors_qu' ->  a l o R k 
+à_moins_qu' ->  a m w e~ k  
+après_qu' ->  a p R E k 
+à_supposer_qu' ->  a s y p o z e k 
+aussitôt_qu' ->  o s i t o k 
+avant_qu' ->  a v a~ k 
+lorsqu' ->  l O R s k 
+bien_qu' ->  b i e~ k 
+pour_qu' ->  p u R k 
+parce_qu' ->  p a R s k 
+depuis_qu' ->  d 2 p y i k 
+en_attendant_qu' ->  a~ n a t a~ d a~ k 
+jusqu'à_ce_qu' ->  Z y s k a s 2 k 
+pendant_qu' ->  p a~ d a~ k 
+tandis_qu' ->  t a~ d i k 
+puisqu' ->  p y i s k 
+sous_prétexte_qu' ->  s u p R e t E k s k 
+d'autant_qu' ->  d o t a~ k 
+au_point_qu' ->  o p w e~ k 
+de_façon_qu' ->  d 2 f a s o~ k 
+tant_qu' ->  t a~ k 
+tellement_qu' ->  t E l e m a~ k 
+de_crainte_qu' ->  d 2 k R e~ t k 
+de_peur_qu' ->   d 2 p 9 R k 
+suivant_qu' ->  s y i v a~ k 
+pourvu_qu' ->  p u R v y k 
+selon_qu' ->  s 2 l o~ k 
+
+
+#  adjectifs interrogatifs ou exclamatif
+
+quel  ->  k E l 
+quels  ->  k E l 
+quelle ->  k E l l 
+quelles ->  k e l l 
+
+END

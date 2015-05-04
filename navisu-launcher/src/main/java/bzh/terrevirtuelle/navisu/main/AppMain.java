@@ -44,12 +44,13 @@ import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
 import bzh.terrevirtuelle.navisu.gpx.impl.GpxObjectImpl;
 import bzh.terrevirtuelle.navisu.grib.GribServices;
 import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
-import bzh.terrevirtuelle.navisu.instruments.ais.AisServices;
-import bzh.terrevirtuelle.navisu.instruments.ais.impl.AisImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.AisImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.logger.AisLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.logger.impl.AisLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPlotterImpl;
+<<<<<<< HEAD
 import bzh.terrevirtuelle.navisu.instruments.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
@@ -60,6 +61,10 @@ import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonSer
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl.GpsTrackPolygonImpl;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.impl.GpsTrackSectorImpl;
+=======
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
+>>>>>>> refs/remotes/origin/master
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
@@ -80,6 +85,8 @@ import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import bzh.terrevirtuelle.navisu.shapefiles.impl.ShapefileObjectImpl;
+import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
+import bzh.terrevirtuelle.navisu.speech.impl.SpeakerImpl;
 import bzh.terrevirtuelle.navisu.system.files.FilesServices;
 import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
@@ -168,7 +175,7 @@ public class AppMain extends Application {
         AisServices aisServices = componentManager.getComponentService(AisServices.class);
         AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
         AisPlotterServices aisPlotterServices = componentManager.getComponentService(AisPlotterServices.class);
-        AisRadarServices radarServices = componentManager.getComponentService(AisRadarServices.class);
+        AisRadarServices aisRadarServices = componentManager.getComponentService(AisRadarServices.class);
 
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
@@ -242,7 +249,6 @@ public class AppMain extends Application {
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
         
-        instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
@@ -252,11 +258,11 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
@@ -294,7 +300,7 @@ public class AppMain extends Application {
         dataServerServices.openFile("data/nmea/test2.txt");
         //dataServerServices.openFile("data/nmea/test1.txt");
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        //dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
+        // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
 
@@ -303,18 +309,17 @@ public class AppMain extends Application {
         // Test instanciation d'un client 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
-        nmeaClientServices.request(1000);
+        nmeaClientServices.request(500);
 
         // Test clients à l'écoute des événements Nmea 
         aisServices.on();
         //aisLoggerServices.on();
-
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
         gpsTrackSectorServices.on();
         gpsTrackPolygonServices.on();
         
-        aisPlotterServices.on();
+        //aisRadarServices.on();
     }
 
     public static void main(String[] args) throws Exception {

@@ -45,6 +45,7 @@ public class NmeaClientImpl
     private int period;
     private boolean xml = false;
     private NMEA nmea;
+    StringBuilder stringBuilder;
     @SubComponent
     protected NmeaEventProducerImpl eventProducer;
 
@@ -89,28 +90,30 @@ public class NmeaClientImpl
 
     private void initVertx() {
         vertx = VertxFactory.newVertx();
-        try{
-        vertx.createHttpClient()
-                .setHost(hostName)
-                .setPort(port)
-                .connectWebsocket("/nmea", (WebSocket websocket) -> {
-                    websocket.dataHandler((Buffer data) -> {
-                        StringBuilder stringBuilder = new StringBuilder(data.getString(0, data.length()));
-                        try {
-                            if (xml == true) {
-                                response(stringBuilder); //xml data
-                            } else {
-                                //System.out.println(stringBuilder);
-                                sentences = (Sentences) unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())));
+        try {
+            vertx.createHttpClient()
+                    .setHost(hostName)
+                    .setPort(port)
+                    .connectWebsocket("/nmea", (WebSocket websocket) -> {
+                        websocket.dataHandler((Buffer data) -> {
+                            stringBuilder = new StringBuilder(data.getString(0, data.length()));
+                            //    xml=true;
+                            try {
+                                if (xml == true) {
+                                    response(stringBuilder); //xml data
+                                } else {
+                                  // System.out.println(stringBuilder);
+                                    sentences = (Sentences) unmarshaller.unmarshal(new StreamSource(new StringReader(stringBuilder.toString())));
+                                }
+                                response();
+                            } catch (JAXBException ex) {
+                               // System.out.print(ex);
+                               // System.out.println(stringBuilder);
                             }
-                            response();
-                        } catch (JAXBException ex) {
-                            // System.out.println(ex);
-                        }
+                        });
+                        ws = websocket;
                     });
-                    ws = websocket;
-                });
-        }catch(Exception e){
+        } catch (Exception e) {
             Logger.getLogger(NmeaEventProducerImpl.class.getName()).log(Level.SEVERE, "Erreur", e);
         }
     }
@@ -132,26 +135,31 @@ public class NmeaClientImpl
 
     private void response() {
         /* With new classe in the domain, create also new Event for diffusion */
-        notifyNMEAEvent();    
+        notifyNMEAEvent();
     }
 
-   
-
     private void notifyNMEAEvent() {
-
-        ConcurrentLinkedQueue<NMEA> queue = sentences.getNmeaQueue();
-        int size = queue.size();
-        for (int i = 0; i < size; i++) {
-             nmea = queue.poll();  
-            if (nmea != null) {
-               // System.out.println(nmea);
-                eventProducer.notifyNMEAEvent(nmea);
+        ConcurrentLinkedQueue<NMEA> queue = null;
+        try {
+            queue = sentences.getNmeaQueue();
+            // System.out.println("queue " + queue);
+            if (queue != null) {
+                int size = queue.size();
+                for (int i = 0; i < size; i++) {
+                    nmea = queue.poll();
+                    if (nmea != null) {
+                       // System.out.println("nmea emission client " + nmea);
+                        eventProducer.notifyNMEAEvent(nmea);
+                    }
+                }
             }
+        } catch (Exception e) {
+            System.out.println("e : " + e + "  " + queue);
         }
 
     }
 
     private void response(StringBuilder stringBuilder) {
-       // System.out.println(stringBuilder);
+        System.out.println(stringBuilder);
     }
 }

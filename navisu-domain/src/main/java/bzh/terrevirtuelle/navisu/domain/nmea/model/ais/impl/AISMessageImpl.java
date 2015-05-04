@@ -116,7 +116,7 @@ public class AISMessageImpl
      *
      * @return integer value of repeat indicator (2 bits [7,8])
      */
-    @Override
+   
     public int getRepeatIndicator() {
         return repeatIndicator;
     }
