@@ -164,7 +164,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 					GGA data = (GGA) d;
 					if (on) {
 						// Enlever les commentaires pour voir les messages NMEA
-						System.out.println(data);
+						//System.out.println(data);
 
 						ship.setLatitude(data.getLatitude());
 						ship.setLongitude(data.getLongitude());

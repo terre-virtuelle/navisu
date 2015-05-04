@@ -51,6 +51,13 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisDeleteStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisDeleteTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateStationEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSector;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.view.targets.GShip;
@@ -82,11 +89,17 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 
 	@UsedService
 	LayerTreeServices layerTreeServices;
+	
+    @UsedService
+    AisServices aisServices;
 
 	ComponentManager cm;
 	ComponentEventSubscribe<GGAEvent> ggaES;
 	ComponentEventSubscribe<RMCEvent> rmcES;
 	ComponentEventSubscribe<VTGEvent> vtgES;
+	
+	ComponentEventSubscribe<AisCreateTargetEvent> aisCTEvent;
+	ComponentEventSubscribe<AisUpdateTargetEvent> aisUTEvent;
 
 	protected WorldWindow wwd;
 
@@ -103,13 +116,14 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 	protected LinkedList<Boolean> isTextOn;
 	protected LinkedList<SurfaceText> text;
 	protected int nbSelector = 0;
-	//protected int nbMax = 0;
+	protected LinkedList<Ship> aisShips;
 
 	@Override
 	public void componentInitiated() {
 
 		watchedShip = new Ship();
 		watchedShip.setMMSI(999999999);
+		aisShips = new LinkedList<Ship>();
 		
 		wwd = GeoWorldWindViewImpl.getWW();
 		layerTreeServices.createGroup(GROUP);
@@ -122,6 +136,18 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
 		rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
 		vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
+		
+        aisCTEvent = cm.getComponentEventSubscribe(AisCreateTargetEvent.class);
+        aisUTEvent = cm.getComponentEventSubscribe(AisUpdateTargetEvent.class);
+        
+        isTextOn = new LinkedList<Boolean>();
+		for (int k=0; k<100; k++) {isTextOn.add(false);}
+		
+		text = new LinkedList<SurfaceText>();
+		for (int k=0; k<100; k++) {text.add(null);}
+		
+		selectors = new LinkedList<SectorSelector>();
+		sectorLayers = new LinkedList<RenderableLayer> ();
 
 	}
 
@@ -135,29 +161,9 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 
 	@Override
 	public void on(String ... files) {
-
-		if (on == false) {
+			
+			if (on == false) {
 			on = true;
-			
-			isTextOn = new LinkedList<Boolean>();
-			for (int k=0; k<100; k++) {isTextOn.add(false);}
-			
-			text = new LinkedList<SurfaceText>();
-			for (int k=0; k<100; k++) {text.add(null);}
-			
-			selectors = new LinkedList<SectorSelector>();
-			
-
-
-			/*
-			 * selector.addPropertyChangeListener(SectorSelector.SECTOR_PROPERTY,
-			 * new PropertyChangeListener() { public void
-			 * propertyChange(PropertyChangeEvent evt) { Sector sector = (Sector)
-			 * evt.getNewValue(); System.out.println(sector != null ? sector :
-			 * "no sector"); } });
-			 */
-
-			sectorLayers = new LinkedList<RenderableLayer> ();
 			
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -194,7 +200,11 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 							}*/
 							
 						for (int j=0; j<selectors.size(); j++) {watchTarget(j, watchedShip);}
-
+						for (int j=0; j<selectors.size(); j++) {
+							for (Ship s : aisShips) {
+								watchTargetAis(j, s);
+							}
+						}
 					}
 
 				}
@@ -230,9 +240,40 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			 * } });
 			 */
 		}
-
+			
+			if (aisServices.isOn()) {
+				aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
+	                createTarget(updatedData);
+	            });
+	            aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
+	                updateTarget(updatedData);
+	            });
+			}
 	}
 
+		private void createTarget(Ship target) {
+			Ship aisShip = new Ship();
+			aisShip.setMMSI(target.getMMSI());
+			aisShip.setLatitude(target.getLatitude());
+			aisShip.setLongitude(target.getLongitude());
+			aisShips.add(aisShip);
+			System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
+	    }
+
+	    private void updateTarget(Ship target) {
+	    	for (int i=0; i<aisShips.size(); i++) {
+	    		if (aisShips.get(i).getMMSI() == target.getMMSI()) {
+	    			Ship resu = new Ship();
+	    			resu.setLatitude(target.getLatitude());
+	    			resu.setLongitude(target.getLongitude());
+	    			resu.setMMSI(target.getMMSI());
+	    			aisShips.set(i, resu);
+	    			System.out.println("Ship with MMSI " + resu.getMMSI() + " updated - position lat " + resu.getLatitude() + " and lon " + resu.getLongitude());
+	    		}
+	    	}
+	    }
+		
+		
 	@Override
 	public void off() {
 		// Pb dans la lib C3 ? objet non retiré de la liste
@@ -308,6 +349,49 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 						target.getLongitude())) {
 			textOff(sector, i);
 		}
+	}
+	
+	private void watchTargetAis(int i, Ship target) {
+
+		Sector sector = selectors.get(i).getSector();
+				if (sector != null
+				&& target != null
+				&& sector.containsDegrees(target.getLatitude(),
+						target.getLongitude())) {
+			System.err
+					.println("============ W A R N I N G ============ Ship with MMSI #"
+							+ target.getMMSI() + " is inside Sector#"+ (i+1));
+			
+			if (!(isTextOn.get(i))) {
+				//wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
+				textOn(sector, i);
+			}
+
+			if (!alarmOn) {
+				MediaPlayer mediaPlayer;
+				javafx.scene.media.Media media;
+				String userDir = System.getProperty("user.dir");
+				userDir = userDir.replace("\\", "/");
+				String url = userDir + "/data/sounds/alarm10.wav";
+				media = new Media("file:///" + url);
+				mediaPlayer = new MediaPlayer(media);
+				mediaPlayer.setAutoPlay(true);
+				//mediaPlayer.setCycleCount(1);
+				alarmOn = true;
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					public void run() {
+						alarmOn = false;
+					}
+				}, 7500);
+			}
+		}
+		/*if (sector != null
+				&& target != null
+				&& !sector.containsDegrees(target.getLatitude(),
+						target.getLongitude())) {
+			textOff(sector, i);
+		}*/
 	}
 
 	private void textOn(Sector sector, int i) {
