@@ -200,11 +200,7 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 							}*/
 							
 						for (int j=0; j<selectors.size(); j++) {watchTarget(j, watchedShip);}
-						for (int j=0; j<selectors.size(); j++) {
-							for (Ship s : aisShips) {
-								watchTargetAis(j, s);
-							}
-						}
+
 					}
 
 				}
@@ -244,9 +240,19 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			if (aisServices.isOn()) {
 				aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
 	                createTarget(updatedData);
+					for (int j=0; j<selectors.size(); j++) {
+						for (Ship s : aisShips) {
+							watchTargetAis(j, s);
+						}
+					}
 	            });
 	            aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
 	                updateTarget(updatedData);
+					for (int j=0; j<selectors.size(); j++) {
+						for (Ship s : aisShips) {
+							watchTargetAis(j, s);
+						}
+					}
 	            });
 			}
 	}
