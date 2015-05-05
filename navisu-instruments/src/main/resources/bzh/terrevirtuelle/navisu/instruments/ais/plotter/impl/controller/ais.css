@@ -1,61 +1,67 @@
 @charset "utf-8";
 /* CSS Document */
 @font-face {
-    font-family: 'Roboto';
-    src: url('fonts/Roboto-Condensed.ttf');     
+    -fx-font-family: 'Navisu';
+    src: url('fonts/Roboto-Condensed.ttf');
 }
-@font-face {
-    font-family: 'Fantasy';
-    src: url('fonts/augie.ttf');     
-}
-@font-face {
-    font-family: 'Digital';
-    src: url('fonts/wwDigital.ttf');     
-}
+
 *{
-    -fx-base : #143b2860;
-    -fx-line-base : #04fff280;
+    -fx-base : #143b28;
+    -fx-line-base : #04fff2;
+    -fx-font-family: Navisu, "Roboto Cn" ;
+    -fx-color-typo: #c2f8c4;
+    -fx-color-contours: #70bbbf;
 }
-
-
 .aisvalue{
-    
     -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
     /*-fx-font-weight: bold;*/
 }
-.aisname{
-    
+.aislabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+    /*-fx-font-weight: bold;*/
+}
+.aisshipname{
     -fx-font: 18px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
     -fx-font-weight: bold;
     -fx-underline : true;
-}
+} 
 .webserverlist{
-   -fx-font: 18px "Roboto Cn"; 
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : #fff900; 
 }
 /*******************************************************************************
  *                                                                             *
  * cadre                                                                *
  *                                                                             *
  ******************************************************************************/
+.ais-panel{
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: -fx-base;
+    -fx-stroke: -fx-line-base;
+}
 .foot-pane {
     -fx-border-radius: 0 0 20 20;
     -fx-background-radius: 0 0 20 20;
-    -fx-background-color: #143b28;
+    -fx-background-color: -fx-base;
 }
 .top-pane {
     -fx-border-radius: 20 20 0 0;
     -fx-background-radius: 20 20 0 0;
-    -fx-background-color: #143b28;    
+    -fx-background-color: -fx-base;    
 }
 .left-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
-    -fx-background-color: #143b28;    
+    -fx-background-color: -fx-base;    
 }
 .right-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
-    -fx-background-color: #143b28;    
+    -fx-background-color: -fx-base;    
 }
 
 
@@ -65,7 +71,7 @@
  *                                                                             *
  ******************************************************************************/
 .scrolling-pane > .viewport {
-    -fx-background-color: #143b28;
+    -fx-background-color: -fx-base;
 }
 .scrolling-pane > .scroll-bar:horizontal {
     -fx-background-insets: 0 1 1 1, 1;
@@ -84,7 +90,7 @@
     -fx-padding: 1 0 1 0;
 }
 .scrolling-pane > .corner {
-    -fx-background-color: #143b28;
+    -fx-background-color: -fx-base;
     -fx-background-insets: 0 1 1 0;
 }
 /* new styleclass for edge to edge scrollpanes that don't want to draw a border */
@@ -137,14 +143,14 @@
 
 }
 .slider .track {
-    -fx-background-color:  #04fff2, -fx-line-base;
+    -fx-background-color:  -fx-color-typo, -fx-line-base;
     -fx-background-insets: 2, 1;
     -fx-background-radius: 0.25em, 0.166667em; /* 3 3 2 */
     -fx-padding: 0.25em; /* 3 */
 }
 .slider:vertical .track {
     -fx-background-color: -fx-line-base;
-        }
+}
 .slider .axis {
     -fx-tick-label-fill: derive(-fx-background, 30%);
     -fx-tick-length: 5px;

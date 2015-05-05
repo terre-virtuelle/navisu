@@ -97,6 +97,7 @@ public class AisPanelController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        ais.setOpacity(0.8);
         quit.setOnMouseClicked((MouseEvent event) -> {
             ais.setVisible(false);
         });
