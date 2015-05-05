@@ -63,6 +63,9 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSector;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.view.targets.GShip;
@@ -96,11 +99,17 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 	@UsedService
 	LayerTreeServices layerTreeServices;
+	
+    @UsedService
+    AisServices aisServices;
 
 	ComponentManager cm;
 	ComponentEventSubscribe<GGAEvent> ggaES;
 	ComponentEventSubscribe<RMCEvent> rmcES;
 	ComponentEventSubscribe<VTGEvent> vtgES;
+	
+	ComponentEventSubscribe<AisCreateTargetEvent> aisCTEvent;
+	ComponentEventSubscribe<AisUpdateTargetEvent> aisUTEvent;
 
 	protected WorldWindow wwd;
 
@@ -131,15 +140,20 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected LinkedList<Boolean> centered;
 	protected boolean centeredCurrent = false;
 	protected LinkedList<Boolean> isTextOn;
+	protected LinkedList<Boolean> isTextOnAis;
 	protected LinkedList<SurfaceText> text;
+	protected LinkedList<SurfaceText> textAis;
 	protected LinkedList<RenderableLayer> polygonLayers;
 	protected LinkedList<Position> centers; 
+	protected LinkedList<Ship> aisShips;
 
 	@Override
 	public void componentInitiated() {
 
 		watchedShip = new Ship();
 		watchedShip.setMMSI(999999999);
+		aisShips = new LinkedList<Ship>();
+		
 		wwd = GeoWorldWindViewImpl.getWW();
 		layerTreeServices.createGroup(GROUP);
 		geoViewServices.getLayerManager().createGroup(GROUP);
@@ -148,6 +162,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
 		rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
 		vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
+		
+        aisCTEvent = cm.getComponentEventSubscribe(AisCreateTargetEvent.class);
+        aisUTEvent = cm.getComponentEventSubscribe(AisUpdateTargetEvent.class);
 		
 		layerTreeServices.getCheckBoxTreeItems().get(24).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(25).setSelected(false);
@@ -174,6 +191,21 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
 		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
+		
+		isTextOn = new LinkedList<Boolean>();
+		for (int k=0; k<100; k++) {isTextOn.add(false);}
+		
+		isTextOnAis = new LinkedList<Boolean>();
+		for (int k=0; k<100; k++) {isTextOnAis.add(false);}
+		
+		text = new LinkedList<SurfaceText>();
+		for (int k=0; k<100; k++) {text.add(null);}
+		
+		textAis = new LinkedList<SurfaceText>();
+		for (int k=0; k<100; k++) {textAis.add(null);}
+		
+		polygonLayers = new LinkedList<RenderableLayer> ();
+		centers = new LinkedList<Position> ();
 
 	}
 
@@ -190,15 +222,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 		if (on == false) {
 			on = true;
-			
-			isTextOn = new LinkedList<Boolean>();
-			for (int k=0; k<100; k++) {isTextOn.add(false);}
-			
-			text = new LinkedList<SurfaceText>();
-			for (int k=0; k<100; k++) {text.add(null);}
-			
-			polygonLayers = new LinkedList<RenderableLayer> ();
-			centers = new LinkedList<Position> ();
 			 
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -387,8 +410,47 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			 * } });
 			 */
 		}
+		
+		if (aisServices.isOn()) {
+			aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
+                createTarget(updatedData);
+				for (int j=0; j<savedMeasureTool.size(); j++) {
+					watchTargetAis(aisShips, savedMeasureTool.get(j));
+				}
+            });
+            aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
+                updateTarget(updatedData);
+                for (int j=0; j<savedMeasureTool.size(); j++) {
+					watchTargetAis(aisShips, savedMeasureTool.get(j));
+				}
+            });
+		}
 
 	}
+	
+	private void createTarget(Ship target) {
+		Ship aisShip = new Ship();
+		aisShip.setMMSI(target.getMMSI());
+		aisShip.setLatitude(target.getLatitude());
+		aisShip.setLongitude(target.getLongitude());
+		aisShips.add(aisShip);
+		// Enlever les commentaires pour voir les messages AIS
+		//System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
+    }
+
+    private void updateTarget(Ship target) {
+    	for (int i=0; i<aisShips.size(); i++) {
+    		if (aisShips.get(i).getMMSI() == target.getMMSI()) {
+    			Ship resu = new Ship();
+    			resu.setLatitude(target.getLatitude());
+    			resu.setLongitude(target.getLongitude());
+    			resu.setMMSI(target.getMMSI());
+    			aisShips.set(i, resu);
+    			// Enlever les commentaires pour voir les messages AIS
+    			//System.out.println("Ship with MMSI " + resu.getMMSI() + " updated - position lat " + resu.getLatitude() + " and lon " + resu.getLongitude());
+    		}
+    	}
+    }
 
 	@Override
 	public void off() {
@@ -507,9 +569,55 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 	
 	
+	private void watchTargetAis(LinkedList<Ship> targets, MeasureTool tool) {
+		
+		int index = 0;
+		boolean putTextOn = false;
+		
+		for (Ship target : targets) {
+		
+			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions()) && tool != null) {
+				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside Polygon#" + (savedMeasureTool.indexOf(tool)+1) + "\n");
+				putTextOn = true;
+				index = targets.indexOf(target);
+				layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
+				layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(true);
+			}
+		}
+			
+		if (!(isTextOnAis.get(savedMeasureTool.indexOf(tool))) && putTextOn) {
+			wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(targets.get(index).getLatitude(), targets.get(index).getLongitude()), 20000));
+			textOnAis(savedMeasureTool.indexOf(tool));
+		}
+
+		if (!alarmOn && putTextOn) {
+			MediaPlayer mediaPlayer;
+			javafx.scene.media.Media media;
+			String userDir = System.getProperty("user.dir");
+			userDir = userDir.replace("\\", "/");
+			String url = userDir + "/data/sounds/alarm10.wav";
+			media = new Media("file:///" + url);
+			mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.setAutoPlay(true);
+			//mediaPlayer.setCycleCount(1);
+			alarmOn = true;
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				public void run() {
+					alarmOn = false;
+				}
+			}, 7500);
+		}
+
+	if (isTextOnAis.get(savedMeasureTool.indexOf(tool)) && !putTextOn) {
+		textOffAis(savedMeasureTool.indexOf(tool));
+	}	
+	}
+	
+	
 	private void textOn(int i) {
 		text.set(i, new SurfaceText("!", centers.get(i)));
-		// couleur du texte : orange
+		// couleur du texte : violet
 		text.get(i).setColor(WWUtil.decodeColorRGBA("FF00FFFF"));
 		if (polygonLayers.get(i).isEnabled()) {
 			polygonLayers.get(i).addRenderable(text.get(i));
@@ -531,6 +639,30 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		}
 		isTextOn.set(i, false);
 		}
+	
+	private void textOnAis(int i) {
+		textAis.set(i, new SurfaceText("!", centers.get(i)));
+		// couleur du texte : violet
+		textAis.get(i).setColor(WWUtil.decodeColorRGBA("FF00FFFF"));
+		if (polygonLayers.get(i).isEnabled()) {
+			polygonLayers.get(i).addRenderable(textAis.get(i));
+		} else {
+			polygonLayers.get(i).setEnabled(true);
+		    layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
+			layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(true);
+			polygonLayers.get(i).addRenderable(textAis.get(i));
+		}
+
+		isTextOnAis.set(i, true);
+	}
+	
+	private void textOffAis(int i) {
+		if (textAis.get(i) != null && polygonLayers.get(i).isEnabled()) {
+			polygonLayers.get(i).removeRenderable(textAis.get(i));
+		}
+		isTextOnAis.set(i, false);
+		}
+	
 	
 	private Position barycenter(ArrayList<? extends Position> list) {
 		double latmax = list.get(0).getLatitude().getDegrees();
