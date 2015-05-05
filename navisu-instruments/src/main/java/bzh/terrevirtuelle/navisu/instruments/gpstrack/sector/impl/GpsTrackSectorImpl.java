@@ -186,7 +186,8 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 						watchedShip.setLatitude(data.getLatitude());
 						watchedShip.setLongitude(data.getLongitude());
 
-						if (layerTreeServices.getCheckBoxTreeItems().get(22).isSelected() /*&& nbSelector<=nbMax*/) {
+						//code déplacé dans les évènements AIS
+						/*if (layerTreeServices.getCheckBoxTreeItems().get(22).isSelected()) {
 							selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
 							selectors.getLast().enable();
 							nbSelector++;
@@ -200,12 +201,7 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 							System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
 							System.out.println("NbSelector = " + nbSelector + "\n");
 							layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-						}
-
-						/*if (!(layerTreeServices.getCheckBoxTreeItems().get(22).isSelected()) && nbSelector!=nbMax) {
-							nbMax++;
-							System.out.println("Diselected");
-							}*/
+						}*/
 
 						for (int j=0; j<selectors.size(); j++) {watchTarget(j, watchedShip);}
 
@@ -245,20 +241,38 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 			 */
 		}
 
-		if (aisServices.isOn()) {
-			aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
-				createTarget(updatedData);
-				for (int j=0; j<selectors.size(); j++) {
-					watchTargetAis(j, aisShips);
+		if (!aisServices.isOn()) {aisServices.on();}
+			
+		aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
+			createTarget(updatedData);
+			for (int j=0; j<selectors.size(); j++) {
+				watchTargetAis(j, aisShips);
 				}
 			});
-			aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
-				updateTarget(updatedData);
-				for (int j=0; j<selectors.size(); j++) {
-					watchTargetAis(j, aisShips);
+		aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
+			updateTarget(updatedData);
+			for (int j=0; j<selectors.size(); j++) {
+				watchTargetAis(j, aisShips);
 				}
+			
+			if (layerTreeServices.getCheckBoxTreeItems().get(22).isSelected()) {
+				selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
+				selectors.getLast().enable();
+				nbSelector++;
+				// couleur du selector : bleu
+				selectors.getLast().setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
+				RenderableLayer TempLayer = (RenderableLayer) ((selectors.getLast()).getLayer());
+				TempLayer.setName("Watch sector#"+nbSelector);
+				sectorLayers.add(TempLayer);
+				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+				System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
+				System.out.println("NbSelector = " + nbSelector + "\n");
+				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
+			}
+			
 			});
-		}
+		
 	}
 
 	private void createTarget(Ship target) {
