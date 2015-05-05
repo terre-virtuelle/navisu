@@ -68,4 +68,5 @@ public class AIS04
         super(content, prov);
         assert (getMessageID() == 4);
     }
+    
 }
