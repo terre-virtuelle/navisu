@@ -37,10 +37,12 @@ public class NmeaStringParser {
     public void parse(final String s) {
 
         String source = new StringBuilder(s).toString().trim();
+        
         if ((source.startsWith("{") && source.endsWith("}")) // Gpsd well formatted
                 || source.startsWith("!") // AIS
                 || source.startsWith("$") // NMEA0183
                 || source.startsWith("PGN")) { // N2K
+            
             input = new ANTLRStringStream(source);
             lexer = new NMEALexer(input);
             lexer.setAISParser(aisParser);
