@@ -36,7 +36,7 @@
                         <Circle layoutX="250.0" layoutY="200.0" radius="50.0" strokeType="INSIDE" styleClass="radar-circle" />
                     </children>
                 </Group>
-                <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="125.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15" styleClass="screen-pane" visible="false">
+                <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="125.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15" styleClass="screen-pane" visible="true">
                     <image>
                         <Image url="@radarfaisceau600.png" />
                     </image>
