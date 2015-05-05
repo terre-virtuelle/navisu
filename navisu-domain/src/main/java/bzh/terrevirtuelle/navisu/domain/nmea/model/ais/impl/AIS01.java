@@ -62,12 +62,14 @@ public class AIS01 extends AISMessagePositionReportImpl implements AISMessage01 
 		super(content, prov);
 		assert(getMessageID() == 1);
     	communicationState = new Sotdma(COMMUNICATIONSTATE_FROM, content);
+        
 	}
 
     /**
      * AIS01 default constructor
      */
     public AIS01() {
+        
     }
 
    

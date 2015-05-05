@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g 2015-02-20 13:41:57
+// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g 2015-05-05 15:24:12
 
 package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl;
 
@@ -15,10 +15,11 @@ public class NMEAParser extends Parser {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "AAM", "ALR", "APB", "BEC", "BOD", 
 		"BWC", "BWR", "BWW", "CHECKSUM", "DBK", "DBS", "DBT", "DEV", "DEVICE", 
-		"DPT", "EXPONENT", "GGA", "GLL", "GSA", "GSV", "HDG", "HDM", "HDT", "LETTERS", 
-		"MSK", "MTA", "MTW", "MWD", "MWV", "NAME", "NUMBER", "PGN", "PRO", "RMB", 
-		"RMC", "RSD", "RTE", "SEP", "SIGN", "SIGNED", "TIME_STAMP", "TXT", "VBW", 
-		"VDM", "VHW", "VLW", "VPW", "VTG", "VWR", "VWT", "WS", "XTE", "ZDA"
+		"DPT", "EXPONENT", "GGA", "GLL", "GPSD_AIS", "GPSD_DEVICE", "GPSD_DEVICES", 
+		"GPSD_VERSION", "GPSD_WATCH", "GSA", "GSV", "HDG", "HDM", "HDT", "LETTERS", 
+		"MSK", "MTA", "MTW", "MWD", "MWV", "NAME", "NUMBER", "PRO", "RMB", "RMC", 
+		"RSD", "RTE", "SEP", "SIGN", "SIGNED", "TIME_STAMP", "TXT", "VBW", "VDM", 
+		"VHW", "VLW", "VPW", "VTG", "VWR", "VWT", "WS", "XTE", "ZDA"
 	};
 	public static final int EOF=-1;
 	public static final int AAM=4;
@@ -39,41 +40,45 @@ public class NMEAParser extends Parser {
 	public static final int EXPONENT=19;
 	public static final int GGA=20;
 	public static final int GLL=21;
-	public static final int GSA=22;
-	public static final int GSV=23;
-	public static final int HDG=24;
-	public static final int HDM=25;
-	public static final int HDT=26;
-	public static final int LETTERS=27;
-	public static final int MSK=28;
-	public static final int MTA=29;
-	public static final int MTW=30;
-	public static final int MWD=31;
-	public static final int MWV=32;
-	public static final int NAME=33;
-	public static final int NUMBER=34;
-	public static final int PGN=35;
-	public static final int PRO=36;
-	public static final int RMB=37;
-	public static final int RMC=38;
-	public static final int RSD=39;
-	public static final int RTE=40;
-	public static final int SEP=41;
-	public static final int SIGN=42;
-	public static final int SIGNED=43;
-	public static final int TIME_STAMP=44;
-	public static final int TXT=45;
-	public static final int VBW=46;
-	public static final int VDM=47;
-	public static final int VHW=48;
-	public static final int VLW=49;
-	public static final int VPW=50;
-	public static final int VTG=51;
-	public static final int VWR=52;
-	public static final int VWT=53;
-	public static final int WS=54;
-	public static final int XTE=55;
-	public static final int ZDA=56;
+	public static final int GPSD_AIS=22;
+	public static final int GPSD_DEVICE=23;
+	public static final int GPSD_DEVICES=24;
+	public static final int GPSD_VERSION=25;
+	public static final int GPSD_WATCH=26;
+	public static final int GSA=27;
+	public static final int GSV=28;
+	public static final int HDG=29;
+	public static final int HDM=30;
+	public static final int HDT=31;
+	public static final int LETTERS=32;
+	public static final int MSK=33;
+	public static final int MTA=34;
+	public static final int MTW=35;
+	public static final int MWD=36;
+	public static final int MWV=37;
+	public static final int NAME=38;
+	public static final int NUMBER=39;
+	public static final int PRO=40;
+	public static final int RMB=41;
+	public static final int RMC=42;
+	public static final int RSD=43;
+	public static final int RTE=44;
+	public static final int SEP=45;
+	public static final int SIGN=46;
+	public static final int SIGNED=47;
+	public static final int TIME_STAMP=48;
+	public static final int TXT=49;
+	public static final int VBW=50;
+	public static final int VDM=51;
+	public static final int VHW=52;
+	public static final int VLW=53;
+	public static final int VPW=54;
+	public static final int VTG=55;
+	public static final int VWR=56;
+	public static final int VWT=57;
+	public static final int WS=58;
+	public static final int XTE=59;
+	public static final int ZDA=60;
 
 	// delegates
 	public Parser[] getDelegates() {
@@ -96,13 +101,13 @@ public class NMEAParser extends Parser {
 
 
 	// $ANTLR start "entry"
-	// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:277:1: entry : ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | PRO )+ ;
+	// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:277:1: entry : ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | GPSD_AIS | GPSD_DEVICE | GPSD_DEVICES | GPSD_VERSION | GPSD_WATCH | PRO )+ ;
 	public final void entry() throws RecognitionException {
 		try {
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:277:8: ( ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | PRO )+ )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:277:13: ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | PRO )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:277:8: ( ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | GPSD_AIS | GPSD_DEVICE | GPSD_DEVICES | GPSD_VERSION | GPSD_WATCH | PRO )+ )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:277:13: ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | GPSD_AIS | GPSD_DEVICE | GPSD_DEVICES | GPSD_VERSION | GPSD_WATCH | PRO )+
 			{
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:277:13: ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | PRO )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:277:13: ( AAM | APB | BEC | BOD | BWC | BWR | DBS | DBT | DBK | DPT | GGA | GLL | GSA | GSV | HDG | HDM | HDT | MSK | MTA | MTW | MWD | MWV | RMB | RMC | RTE | VBW | VLW | VHW | VPW | VTG | VWR | VWT | XTE | ZDA | RSD | VDM | TXT | ALR | GPSD_AIS | GPSD_DEVICE | GPSD_DEVICES | GPSD_VERSION | GPSD_WATCH | PRO )+
 			int cnt1=0;
 			loop1:
 			while (true) {

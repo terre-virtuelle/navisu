@@ -281,7 +281,7 @@ entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT
 		//AIS
 		|VDM|TXT|ALR
 		//GPSD
-		//|GPSD_AIS|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH
+		|GPSD_AIS|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH
 		//PRO
 		|PRO)+;
 
@@ -1550,7 +1550,9 @@ GPSD_WATCH
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
     	;    
-    	*/	
+  */  	
+    	
+ /*   		
 PGN
     	:	
     	'{"timestamp":' timestamp=TIME_STAMP  SEP 
@@ -1604,7 +1606,8 @@ PGN
     	{
 	//System.out.println("PGN sentence : " + getText());
 	}
-    	;   	  	
+    	;   	
+    	*/  	
 /* $AITXT,01,01,91,FREQ,2087,2088*57 */
 TXT	: ('$') device=DEVICE 'TXT' SEP
 	('\u0021'..'\u007F' | SEP | ' ')*  
