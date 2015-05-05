@@ -114,6 +114,7 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 	protected LinkedList<RenderableLayer> sectorLayers;
 	protected boolean alarmOn = false;
 	protected LinkedList<Boolean> isTextOn;
+	protected LinkedList<Boolean> isTextOnAis;
 	protected LinkedList<SurfaceText> text;
 	protected int nbSelector = 0;
 	protected LinkedList<Ship> aisShips;
@@ -142,6 +143,9 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
         
         isTextOn = new LinkedList<Boolean>();
 		for (int k=0; k<100; k++) {isTextOn.add(false);}
+		
+		isTextOnAis = new LinkedList<Boolean>();
+		for (int k=0; k<100; k++) {isTextOnAis.add(false);}
 		
 		text = new LinkedList<SurfaceText>();
 		for (int k=0; k<100; k++) {text.add(null);}
@@ -241,17 +245,13 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 				aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
 	                createTarget(updatedData);
 					for (int j=0; j<selectors.size(); j++) {
-						for (Ship s : aisShips) {
-							watchTargetAis(j, s);
-						}
+						watchTargetAis(j, aisShips);
 					}
 	            });
 	            aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
 	                updateTarget(updatedData);
-					for (int j=0; j<selectors.size(); j++) {
-						for (Ship s : aisShips) {
-							watchTargetAis(j, s);
-						}
+	                for (int j=0; j<selectors.size(); j++) {
+						watchTargetAis(j, aisShips);
 					}
 	            });
 			}
@@ -357,23 +357,25 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 		}
 	}
 	
-	private void watchTargetAis(int i, Ship target) {
+	private void watchTargetAis(int i, LinkedList<Ship> targets) {
 
 		Sector sector = selectors.get(i).getSector();
-				if (sector != null
-				&& target != null
-				&& sector.containsDegrees(target.getLatitude(),
-						target.getLongitude())) {
-			System.err
-					.println("============ W A R N I N G ============ Ship with MMSI #"
-							+ target.getMMSI() + " is inside Sector#"+ (i+1));
+		boolean putTextOn = false;
+		int index = 0;
+		for (Ship target : targets) {
+			if (sector != null && target != null && sector.containsDegrees(target.getLatitude(), target.getLongitude())) {
+				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside Sector#"+ (i+1));
+				putTextOn = true;
+				index = targets.indexOf(target);
+			}
+		}
 			
-			if (!(isTextOn.get(i))) {
-				//wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
-				textOn(sector, i);
+			if (!(isTextOnAis.get(i)) && putTextOn) {
+				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(targets.get(index).getLatitude(), targets.get(index).getLongitude()), 20000));
+				textOnAis(sector, i);
 			}
 
-			if (!alarmOn) {
+			if (!alarmOn && putTextOn) {
 				MediaPlayer mediaPlayer;
 				javafx.scene.media.Media media;
 				String userDir = System.getProperty("user.dir");
@@ -391,13 +393,10 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 					}
 				}, 7500);
 			}
+
+		if (isTextOnAis.get(i) && !putTextOn) {
+			textOffAis(sector, i);
 		}
-		/*if (sector != null
-				&& target != null
-				&& !sector.containsDegrees(target.getLatitude(),
-						target.getLongitude())) {
-			textOff(sector, i);
-		}*/
 	}
 
 	private void textOn(Sector sector, int i) {
@@ -423,5 +422,29 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 			sectorLayers.get(i).removeRenderable(text.get(i));
 		}
 		isTextOn.set(i, false);
+	}
+	
+	
+	private void textOnAis(Sector sector, int i) {
+		text.set(i, new SurfaceText("!", new Position(sector.getCentroid(), 0)));
+		// couleur du texte : jaune
+		text.get(i).setColor(WWUtil.decodeColorRGBA("FFFF00FF"));
+		if (sectorLayers.get(i).isEnabled()) {
+			sectorLayers.get(i).addRenderable(text.get(i));
+		} else {
+			sectorLayers.get(i).setEnabled(true);
+		    layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
+			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
+			sectorLayers.get(i).addRenderable(text.get(i));
+		}
+
+		isTextOnAis.set(i, true);
+	}
+
+	private void textOffAis(Sector sector, int i) {
+		if (text.get(i) != null && sectorLayers.get(i).isEnabled()) {
+			sectorLayers.get(i).removeRenderable(text.get(i));
+		}
+		isTextOnAis.set(i, false);
 	}
 }
