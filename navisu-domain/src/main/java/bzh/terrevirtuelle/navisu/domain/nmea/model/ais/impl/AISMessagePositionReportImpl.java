@@ -515,6 +515,54 @@ abstract class AISMessagePositionReportImpl
         raimFlag = content.getBoolean(RAIMFLAG_BITINDEX);
     }
 
+    public void setNavigationalStatus(int navigationalStatus) {
+        this.navigationalStatus = navigationalStatus;
+    }
+
+    public void setRateOfTurn(int rateOfTurn) {
+        this.rateOfTurn = rateOfTurn;
+    }
+
+    public void setSpeedOverGround(int speedOverGround) {
+        this.speedOverGround = speedOverGround;
+    }
+
+    public void setPositionAccuracy(boolean positionAccuracy) {
+        this.positionAccuracy = positionAccuracy;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setCourseOverGround(int courseOverGround) {
+        this.courseOverGround = courseOverGround;
+    }
+
+    public void setTrueHeading(int trueHeading) {
+        this.trueHeading = trueHeading;
+    }
+
+    public void setTimeStamp(int timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public void setSpecialManoeuvreIndicator(int specialManoeuvreIndicator) {
+        this.specialManoeuvreIndicator = specialManoeuvreIndicator;
+    }
+
+    public void setSpare(int spare) {
+        this.spare = spare;
+    }
+
+    public void setRaimFlag(boolean raimFlag) {
+        this.raimFlag = raimFlag;
+    }
+
     /**
      * Generates a String representing the AIS message. Format: all fields are
      * shown in the order as specified by the standard separated by the
