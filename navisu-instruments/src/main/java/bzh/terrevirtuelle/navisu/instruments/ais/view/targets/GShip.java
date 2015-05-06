@@ -16,38 +16,21 @@ import java.util.List;
 /**
  * NaVisu
  *
- * @author tibus
- * @date 19/02/2014 18:49
+ * @author Serge Morvan
+ * @date 05/05/2015 18:49
  */
 public class GShip {
 
     protected Ship ship;
     protected Shape shape;
+    private static final double YY = 0.00083;// 0.00150/1.8;
+    private static final double Y = 0.00041; //0.00075/1.8;
+    private static final double X = 0.00041;//0.0005/1.2;
 
     public GShip(Ship ship) {
 
         this.ship = ship;
-        switch (ship.getNavigationalStatus()) {
-
-            case 0:
-                shape = new Shape_0(this.ship, makeAttributes(),
-                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
-                        40.0);
-                break;
-            case 1:
-                shape = new Shape_1(this.ship, makeAttributes(),
-                        makePositionList(initShape(this.ship.getLatitude(), this.ship.getLongitude())));
-                break;
-            case 36:
-                shape = new Shape3D_0(this.ship, "data/collada/sail01.dae",
-                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
-                        40.0);
-                break;
-            default:
-                shape = new Shape_0(this.ship, makeAttributes(),
-                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
-                        40.0);
-        }
+        makeShape(ship.getNavigationalStatus());
     }
 
     public Shape getShape() {
@@ -89,11 +72,40 @@ public class GShip {
     }
 
     public void update() {
-      //  this.ship = ship;
         shape.setPosition(new Position(Angle.fromDegrees(ship.getLatitude()),
                 Angle.fromDegrees(ship.getLongitude()), 15));
         shape.setRotation(ship.getCog());
         shape.setAttributes(makeAttributes());
+    }
+
+    public void update(int navigationalStatus) {
+        makeShape(navigationalStatus);
+        update();
+    }
+
+    protected final void makeShape(int navigationalStatus) {
+
+        switch (navigationalStatus) {
+
+            case 0:
+                shape = new Shape_0(this.ship, makeAttributes(),
+                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
+                        40.0);
+                break;
+            case 15:
+                shape = new Shape_1(this.ship, makeAttributes(),
+                        makePositionList(initShape(this.ship.getLatitude(), this.ship.getLongitude())));
+                break;
+            case 36:
+                shape = new Shape3D_0(this.ship, "data/collada/sail01.dae",
+                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
+                        40.0);
+                break;
+            default:
+                shape = new Shape_0(this.ship, makeAttributes(),
+                        new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
+                        40.0);
+        }
     }
 
     protected final ShapeAttributes makeAttributes() {
@@ -111,15 +123,15 @@ public class GShip {
 
         double[] shipShape = new double[10];
         shipShape[0] = longitude;
-        shipShape[1] = latitude + 0.00150;
+        shipShape[1] = latitude + YY;
         shipShape[2] = longitude;
-        shipShape[3] = latitude + 0.00075;
-        shipShape[4] = longitude + 0.0005;
-        shipShape[5] = latitude - 0.00075;
-        shipShape[6] = longitude - 0.0005;
-        shipShape[7] = latitude - 0.00075;
+        shipShape[3] = latitude + Y;
+        shipShape[4] = longitude + X;
+        shipShape[5] = latitude - Y;
+        shipShape[6] = longitude - X;
+        shipShape[7] = latitude - Y;
         shipShape[8] = longitude;
-        shipShape[9] = latitude + 0.00075;
+        shipShape[9] = latitude + Y;
         return shipShape;
     }
 

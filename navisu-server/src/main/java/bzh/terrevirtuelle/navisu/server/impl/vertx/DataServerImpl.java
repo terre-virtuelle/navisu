@@ -135,7 +135,7 @@ public class DataServerImpl
             sentences.clear();
             try {
                 sentenceQueues.get(currentReader).stream().forEach((s) -> {
-                    // LOGGER.info(s);
+                   // LOGGER.info(s);
                     parser.parse(s.trim());
                 });
                 stringWriter = new StringWriter();
@@ -148,7 +148,7 @@ public class DataServerImpl
                 //  System.out.println("DataServerImpl Exception" + sentences);
             }
         }
-        //System.out.println("DataServerImpl " + stringWriter);
+       // System.out.println("DataServerImpl " + stringWriter);
         return stringWriter;
     }
 

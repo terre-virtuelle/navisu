@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller.AisPanelController;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -54,8 +53,6 @@ public class AisPlotterImpl
     @UsedService
     AisServices aisServices;
     
-    
-
     ComponentManager cm;
     ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
     ComponentEventSubscribe<AisCreateTargetEvent> aisCTEvent;
