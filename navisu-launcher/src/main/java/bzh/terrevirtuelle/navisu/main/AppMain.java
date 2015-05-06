@@ -6,7 +6,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManage
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.impl.DatabaseDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.driver.driver.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.impl.InstrumentDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;

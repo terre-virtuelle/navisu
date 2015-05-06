@@ -420,7 +420,7 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 	}
 
 	private void textOn(Sector sector, int i) {
-		text.set(i, new SurfaceText("!", new Position(sector.getCentroid(), 0)));
+		text.set(i, new SurfaceText("S" + (i+1), new Position(sector.getCentroid(), 0)));
 		// couleur du texte : jaune
 		text.get(i).setColor(WWUtil.decodeColorRGBA("FFFF00FF"));
 		if (sectorLayers.get(i).isEnabled()) {
@@ -446,7 +446,7 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 
 
 	private void textOnAis(Sector sector, int i) {
-		textAis.set(i, new SurfaceText("!", new Position(sector.getCentroid(), 0)));
+		textAis.set(i, new SurfaceText("S" + (i+1), new Position(sector.getCentroid(), 0)));
 		// couleur du texte : jaune
 		textAis.get(i).setColor(WWUtil.decodeColorRGBA("FFFF00FF"));
 		if (sectorLayers.get(i).isEnabled()) {

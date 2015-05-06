@@ -757,7 +757,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	
 	private void textOn(int i) {
-		text.set(i, new SurfaceText("!", centers.get(i)));
+		text.set(i, new SurfaceText("P" + (i+1), centers.get(i)));
 		// couleur du texte : violet
 		text.get(i).setColor(WWUtil.decodeColorRGBA("FF00FFFF"));
 		if (polygonLayers.get(i).isEnabled()) {
@@ -782,7 +782,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		}
 	
 	private void textOnAis(int i) {
-		textAis.set(i, new SurfaceText("!", centers.get(i)));
+		textAis.set(i, new SurfaceText("P" + (i+1), centers.get(i)));
 		// couleur du texte : violet
 		textAis.get(i).setColor(WWUtil.decodeColorRGBA("FF00FFFF"));
 		if (polygonLayers.get(i).isEnabled()) {
