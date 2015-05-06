@@ -30,8 +30,5 @@ public interface GuiAgentServices extends ComponentService {
     JobsManager getJobsManager();
 
     Stage getStage();
-
-   
-
     
 }
