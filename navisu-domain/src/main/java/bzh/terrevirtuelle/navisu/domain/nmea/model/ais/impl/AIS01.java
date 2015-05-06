@@ -73,5 +73,11 @@ public class AIS01 extends AISMessagePositionReportImpl implements AISMessage01 
     }
 
    
+
+    public void setCommunicationState(Sotdma communicationState) {
+        this.communicationState = communicationState;
+    }
+
+   
         
 }

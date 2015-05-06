@@ -126,6 +126,7 @@ public class AisRadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        radar.setOpacity(0.8);
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
         });

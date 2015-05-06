@@ -4,8 +4,9 @@ import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.impl.DirectoryDrive
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.impl.DatabaseDriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.impl.InstrumentDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
@@ -235,12 +236,12 @@ public class AppMain extends Application {
         driverServices.init();
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
         driverServices.registerNewDriver(bathymetryServices.getDriver());
-        driverServices.registerNewDriver(chartsServices.getDriver());
+        driverServices.registerNewDriver((Driver) chartsServices.getDriver());
         driverServices.registerNewDriver(chartS57Services.getDriver());
         driverServices.registerNewDriver(currentsServices.getDriver());
-        driverServices.registerNewDriver(geoTiffChartServices.getDriver());
+        driverServices.registerNewDriver((Driver) geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
-        driverServices.registerNewDriver(gribServices.getDriver());
+        driverServices.registerNewDriver((Driver) gribServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());

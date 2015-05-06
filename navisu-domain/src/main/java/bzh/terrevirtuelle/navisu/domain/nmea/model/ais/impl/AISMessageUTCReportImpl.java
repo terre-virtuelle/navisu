@@ -308,6 +308,62 @@ abstract class AISMessageUTCReportImpl
         communicationState = new Sotdma(COMMUNICATIONSTATE_FROM, content);
     }
 
+    public void setUtcYear(int utcYear) {
+        this.utcYear = utcYear;
+    }
+
+    public void setUtcMonth(int utcMonth) {
+        this.utcMonth = utcMonth;
+    }
+
+    public void setUtcDay(int utcDay) {
+        this.utcDay = utcDay;
+    }
+
+    public void setUtcHour(int utcHour) {
+        this.utcHour = utcHour;
+    }
+
+    public void setUtcMinute(int utcMinute) {
+        this.utcMinute = utcMinute;
+    }
+
+    public void setUtcSecond(int utcSecond) {
+        this.utcSecond = utcSecond;
+    }
+
+    public void setPositionAccuracy(boolean positionAccuracy) {
+        this.positionAccuracy = positionAccuracy;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setTypeOfElectronicPositionFixingDevice(int typeOfElectronicPositionFixingDevice) {
+        this.typeOfElectronicPositionFixingDevice = typeOfElectronicPositionFixingDevice;
+    }
+
+    public void setTransmissionControlForLongRangeBroadcastMessage(boolean transmissionControlForLongRangeBroadcastMessage) {
+        this.transmissionControlForLongRangeBroadcastMessage = transmissionControlForLongRangeBroadcastMessage;
+    }
+
+    public void setSpare(int spare) {
+        this.spare = spare;
+    }
+
+    public void setRaimFlag(boolean raimFlag) {
+        this.raimFlag = raimFlag;
+    }
+
+    public void setCommunicationState(Sotdma communicationState) {
+        this.communicationState = communicationState;
+    }
+
     /**
      * Generates a String representing the AIS message. Format: all fields are
      * shown in the order as specified by the standard separated by the
