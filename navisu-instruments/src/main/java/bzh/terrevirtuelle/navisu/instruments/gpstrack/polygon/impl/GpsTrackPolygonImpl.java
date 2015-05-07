@@ -148,12 +148,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected LinkedList<RenderableLayer> polygonLayers;
 	protected LinkedList<Position> centers; 
 	protected LinkedList<Ship> aisShips;
-	protected MeasureTool DMP;
+	protected MeasureTool dmp;
 	protected RenderableLayer dmpLayer;
 	protected boolean dmpCreated = false;
 	protected MeasureToolController dmpController;
 	protected boolean dmpActivated = false;
-	protected ArrayList<Position> points;
+	protected double diameter;
 
 	@Override
 	public void componentInitiated() {
@@ -217,11 +217,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		polygonLayers = new LinkedList<RenderableLayer> ();
 		centers = new LinkedList<Position> ();
 		
-		DMP = new MeasureTool(GeoWorldWindViewImpl.getWW());
+		dmp = new MeasureTool(GeoWorldWindViewImpl.getWW());
 		dmpLayer = new RenderableLayer();
 		dmpController = new MeasureToolController();
-		DMP.setController(dmpController);
-		points = new ArrayList<Position>();
+		dmp.setController(dmpController);
 
 	}
 
@@ -437,6 +436,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			for (int j=0; j<savedMeasureTool.size(); j++) {
 				watchTargetAis(aisShips, savedMeasureTool.get(j));
 				}
+			if (dmpActivated) {
+				watchTargetDmp(aisShips);
+				}
             });
         aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
         	updateTarget(updatedData);
@@ -444,6 +446,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             for (int j=0; j<savedMeasureTool.size(); j++) {
 				watchTargetAis(aisShips, savedMeasureTool.get(j));
 				}
+            
+            if (dmpActivated){
+            	watchTargetDmp(aisShips);
+            	}
             
 			if (layerTreeServices.getCheckBoxTreeItems().get(24).isSelected()) {
 				measureTool.setArmed(true);
@@ -585,27 +591,26 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			
 			if (layerTreeServices.getCheckBoxTreeItems().get(31).isSelected()) {
 				
-				DMP.setController(dmpController);
-				DMP.setFollowTerrain(true);
+				dmp.setController(dmpController);
+				dmp.setFollowTerrain(true);
 				dmpController.setUseRubberBand(true);
-				DMP.setArmed(true);
+				dmp.setArmed(true);
 				dmpController.setArmed(true);
-			    DMP.setMeasureShapeType(MeasureTool.SHAPE_SQUARE);
-			    //layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
+			    dmp.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
 			}
 			
 			if (layerTreeServices.getCheckBoxTreeItems().get(32).isSelected() && !dmpActivated) {
 				dmpActivated = true;
+				//couleur de la DMP : vert
+				dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
 				layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
-				dmpLayer = DMP.getLayer();
+				diameter = dmp.getWidth();
+				dmpLayer = dmp.getLayer();
 				dmpLayer.setEnabled(true);
-				dmpLayer.setName("DMP");
+				dmpLayer.setName("CPA zone");
 				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
 				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-				for (Position pos : DMP.getPositions()) {
-					points.add(pos);
-					}
-			    DMP.setArmed(false);
+			    dmp.setArmed(false);
 			    dmpController.setArmed(false);
 			    
 			}
@@ -878,55 +883,51 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 	
 	private void translatePolygon(double lat, double lon) {
-		//ArrayList<Position> points = new ArrayList<Position>();
-		/*for (Position pos : DMP.getPositions()) {
-			points.add(pos);
-			}*/
-		System.out.println("Points list before translation :");
-		for (Position pos : points) {
-			System.out.println(pos.getLatitude().getDegrees() + " " + pos.getLongitude().getDegrees() + " " + pos.getAltitude() + "\n");
+		dmp.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE, new Position(LatLon.fromDegrees(lat, lon), 0), diameter/2);
+		// couleur : blanc transparent a 016/256
+		dmp.setFillColor(WWUtil.decodeColorRGBA("FFFFFF10"));
+		dmp.setShowControlPoints(false);
+	}
+	
+	private void watchTargetDmp(LinkedList<Ship> targets) {
+		int index = 0;
+		boolean detection = false;
+		for (Ship target : targets) {
+		
+			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null) {
+				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside CPA zone" + "\n");
+				detection = true;
+				//couleur de la DMP passe en rouge
+				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
+				index = targets.indexOf(target);
+				layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(false);
+				layerTreeServices.getCheckBoxTreeItems().get(23).setSelected(true);
 			}
-		double latc = barycenter(points).getLatitude().getDegrees();
-		double lonc = barycenter(points).getLongitude().getDegrees();
-		double dlat = lat-latc;
-		double dlon = lon-lonc;
-		for (Position pos : points) {
-			Position resu = new Position(LatLon.fromDegrees(pos.getLatitude().getDegrees()+dlat, pos.getLongitude().getDegrees()+dlon), 0);
-			int index = points.indexOf(pos);
-			points.set(index, resu);
+		}
+
+		if (!alarmOn && detection) {
+			MediaPlayer mediaPlayer;
+			javafx.scene.media.Media media;
+			String userDir = System.getProperty("user.dir");
+			userDir = userDir.replace("\\", "/");
+			String url = userDir + "/data/sounds/alarm10.wav";
+			media = new Media("file:///" + url);
+			mediaPlayer = new MediaPlayer(media);
+			mediaPlayer.setAutoPlay(true);
+			//mediaPlayer.setCycleCount(1);
+			alarmOn = true;
+			Timer timer = new Timer();
+			timer.schedule(new TimerTask() {
+				public void run() {
+					alarmOn = false;
+				}
+			}, 7500);
+		}
+		
+		if (!detection) {
+			//couleur de la DMP repasse en vert
+			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
 			}
-		System.out.println("Points list after translation :");
-		for (Position pos : points) {
-			System.out.println(pos.getLatitude().getDegrees() + " " + pos.getLongitude().getDegrees() + " " + pos.getAltitude() + "\n");
-			}
-		ArrayList<Position> res = new ArrayList<Position>();
-		for (Position pos : points) {res.add(pos);}
-		
-		
-		//DMP = new MeasureTool(wwd);
-		//dmpController = new MeasureToolController();
-		//DMP.setController(dmpController);
-		//dmpLayer.setEnabled(false);
-		//DMP.setFollowTerrain(true);
-		//dmpController.setUseRubberBand(true);
-		//DMP.setArmed(true);
-		//dmpController.setArmed(true);
-		DMP.setPositions(res);
-		//DMP.setArmed(false);
-		//dmpController.setArmed(false);
-		//dmpLayer = DMP.getLayer();
-		//dmpLayer.setEnabled(true);
-		
-		
-		/*if (!dmpCreated) {
-			dmpLayer.setName("DMP");
-			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			dmpCreated = true;
-			}*/
-		
-		//dmpLayer.setEnabled(true);
-		
 		
 	}
 	

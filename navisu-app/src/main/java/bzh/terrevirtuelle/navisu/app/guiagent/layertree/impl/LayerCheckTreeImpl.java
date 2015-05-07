@@ -132,9 +132,9 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Toggle free hand", null);
         rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Create DMP", null);
+        tmp = createNode(targetDisplay, "Create CPA zone", null);
         rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Activate DMP", null);
+        tmp = createNode(targetDisplay, "Activate CPA zone", null);
         rootItems.add(tmp);
         treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
 
