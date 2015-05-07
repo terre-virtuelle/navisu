@@ -81,7 +81,7 @@ public class AisPanelController
     @FXML
     public Slider slider;
   //  @FXML
-   // public Button photo;
+    // public Button photo;
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
     protected GuiAgentServices guiAgentServices;
@@ -106,19 +106,19 @@ public class AisPanelController
                 ais.setOpacity(slider.getValue());
             });
         });
-/*
-        // TODO, fournir un Stage
-        photo.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent event) {
-                Platform.runLater(() -> {
-                    WebView webView = new WebView();
-                    WebEngine webEngine = webView.getEngine();
-                    webEngine.load("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
-                    guiAgentServices.getRoot().getChildren().add(webView);
-                });
-            }
-        });
-        */
+        /*
+         // TODO, fournir un Stage
+         photo.setOnAction(new EventHandler<ActionEvent>() {
+         public void handle(ActionEvent event) {
+         Platform.runLater(() -> {
+         WebView webView = new WebView();
+         WebEngine webEngine = webView.getEngine();
+         webEngine.load("http://www.shipspotting.com/gallery/photo.php?lid=2137261");
+         guiAgentServices.getRoot().getChildren().add(webView);
+         });
+         }
+         });
+         */
 
     }
 
@@ -150,10 +150,12 @@ public class AisPanelController
             callSign.setText("---");
         }
         if (ship.getMMSI() != 0) {
-            mmsi.setText(Integer.toString(ship.getMMSI()));
-            long seconds = Calendar.getInstance().getTimeInMillis()
-                    - timestamps.get(ship.getMMSI()).getTimeInMillis();
-            ageReport.setText(Long.toString(seconds / 1000) + " s");
+            if (timestamps.get(ship.getMMSI()) != null) {
+                mmsi.setText(Integer.toString(ship.getMMSI()));
+                long seconds = Calendar.getInstance().getTimeInMillis()
+                        - timestamps.get(ship.getMMSI()).getTimeInMillis();
+                ageReport.setText(Long.toString(seconds / 1000) + " s");
+            }
         } else {
             mmsi.setText("---");
         }

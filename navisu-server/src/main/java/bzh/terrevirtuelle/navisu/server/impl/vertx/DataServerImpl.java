@@ -145,7 +145,7 @@ public class DataServerImpl
                 }
             } catch (Exception e) {
                 // System.out.println("sentenceQueues "+ sentenceQueues);
-                //  System.out.println("DataServerImpl Exception" + sentences);
+                 // System.out.println("DataServerImpl Exception" + sentences);
             }
         }
        // System.out.println("DataServerImpl " + stringWriter);
