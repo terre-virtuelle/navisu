@@ -28,6 +28,7 @@ public class GRShipImpl
         setFill(ShipTypeColor.COLOR.get(ship.getShipType()));
     }
 
+    @Override
     public Ship getShip() {
         return ship;
     }

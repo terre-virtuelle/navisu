@@ -1,4 +1,4 @@
-@charset "utf-8";
+/* @charset "utf-8";*/
 /* CSS Document */
 @font-face {
     -fx-font-family: 'Navisu';
@@ -178,7 +178,7 @@
 }
 .radar-degrees{
   -fx-font: 20pt "Roboto Cn";
-  -fx-font-weight: bold;
+ /* -fx-font-weight: bold;*/
   -fx-fill:-fx-line-base; 
 }
 .radar-screen {
