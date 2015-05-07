@@ -22,6 +22,7 @@ import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceShape;
 import gov.nasa.worldwind.render.SurfaceText;
+import gov.nasa.worldwind.render.airspaces.Polygon;
 import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
@@ -36,6 +37,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -146,6 +148,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected LinkedList<RenderableLayer> polygonLayers;
 	protected LinkedList<Position> centers; 
 	protected LinkedList<Ship> aisShips;
+	protected MeasureTool DMP;
+	protected RenderableLayer dmpLayer;
+	protected boolean dmpCreated = false;
+	protected MeasureToolController dmpController;
+	protected boolean dmpActivated = false;
+	protected ArrayList<Position> points;
 
 	@Override
 	public void componentInitiated() {
@@ -173,6 +181,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
 		layerTreeServices.getCheckBoxTreeItems().get(30).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(32).setSelected(false);
 		
         measureTool = new MeasureTool(GeoWorldWindViewImpl.getWW());
         savedMeasureTool = new LinkedList<MeasureTool>();
@@ -206,6 +216,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		polygonLayers = new LinkedList<RenderableLayer> ();
 		centers = new LinkedList<Position> ();
+		
+		DMP = new MeasureTool(GeoWorldWindViewImpl.getWW());
+		dmpLayer = new RenderableLayer();
+		dmpController = new MeasureToolController();
+		DMP.setController(dmpController);
+		points = new ArrayList<Position>();
 
 	}
 
@@ -234,6 +250,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 						watchedShip.setLatitude(data.getLatitude());
 						watchedShip.setLongitude(data.getLongitude());
+						
+						if (dmpActivated) {translatePolygon(watchedShip.getLatitude(), watchedShip.getLongitude());}
 						
 						watchTarget(watchedShip, savedMeasureTool);
 						
@@ -422,6 +440,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             });
         aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
         	updateTarget(updatedData);
+        	
             for (int j=0; j<savedMeasureTool.size(); j++) {
 				watchTargetAis(aisShips, savedMeasureTool.get(j));
 				}
@@ -563,6 +582,33 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					System.out.println("Circle shape activated.\n");
 					}
 			} else circleShapeActivated = false;
+			
+			if (layerTreeServices.getCheckBoxTreeItems().get(31).isSelected()) {
+				
+				DMP.setController(dmpController);
+				DMP.setFollowTerrain(true);
+				dmpController.setUseRubberBand(true);
+				DMP.setArmed(true);
+				dmpController.setArmed(true);
+			    DMP.setMeasureShapeType(MeasureTool.SHAPE_SQUARE);
+			    //layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
+			}
+			
+			if (layerTreeServices.getCheckBoxTreeItems().get(32).isSelected() && !dmpActivated) {
+				dmpActivated = true;
+				layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
+				dmpLayer = DMP.getLayer();
+				dmpLayer.setEnabled(true);
+				dmpLayer.setName("DMP");
+				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+				for (Position pos : DMP.getPositions()) {
+					points.add(pos);
+					}
+			    DMP.setArmed(false);
+			    dmpController.setArmed(false);
+			    
+			}
             
             });
 		
@@ -663,7 +709,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		pos = LatLon.fromDegrees(target.getLatitude(), target.getLongitude());
 		
 		for (int i=0; i<list.size(); i++) {
-		
+
 		if (WWMath.isLocationInside(pos, list.get(i).getPositions()) && list.get(i) != null) {
 			System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside Polygon#" + (i+1) + "\n");
 			
@@ -714,7 +760,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		int index = 0;
 		boolean putTextOn = false;
-		
 		for (Ship target : targets) {
 		
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions()) && tool != null) {
@@ -831,5 +876,58 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		return resu;
 	}
-
+	
+	private void translatePolygon(double lat, double lon) {
+		//ArrayList<Position> points = new ArrayList<Position>();
+		/*for (Position pos : DMP.getPositions()) {
+			points.add(pos);
+			}*/
+		System.out.println("Points list before translation :");
+		for (Position pos : points) {
+			System.out.println(pos.getLatitude().getDegrees() + " " + pos.getLongitude().getDegrees() + " " + pos.getAltitude() + "\n");
+			}
+		double latc = barycenter(points).getLatitude().getDegrees();
+		double lonc = barycenter(points).getLongitude().getDegrees();
+		double dlat = lat-latc;
+		double dlon = lon-lonc;
+		for (Position pos : points) {
+			Position resu = new Position(LatLon.fromDegrees(pos.getLatitude().getDegrees()+dlat, pos.getLongitude().getDegrees()+dlon), 0);
+			int index = points.indexOf(pos);
+			points.set(index, resu);
+			}
+		System.out.println("Points list after translation :");
+		for (Position pos : points) {
+			System.out.println(pos.getLatitude().getDegrees() + " " + pos.getLongitude().getDegrees() + " " + pos.getAltitude() + "\n");
+			}
+		ArrayList<Position> res = new ArrayList<Position>();
+		for (Position pos : points) {res.add(pos);}
+		
+		
+		//DMP = new MeasureTool(wwd);
+		//dmpController = new MeasureToolController();
+		//DMP.setController(dmpController);
+		//dmpLayer.setEnabled(false);
+		//DMP.setFollowTerrain(true);
+		//dmpController.setUseRubberBand(true);
+		//DMP.setArmed(true);
+		//dmpController.setArmed(true);
+		DMP.setPositions(res);
+		//DMP.setArmed(false);
+		//dmpController.setArmed(false);
+		//dmpLayer = DMP.getLayer();
+		//dmpLayer.setEnabled(true);
+		
+		
+		/*if (!dmpCreated) {
+			dmpLayer.setName("DMP");
+			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+			dmpCreated = true;
+			}*/
+		
+		//dmpLayer.setEnabled(true);
+		
+		
+	}
+	
 }

@@ -21,6 +21,7 @@ import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceText;
 import gov.nasa.worldwind.util.WWUtil;
+import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwindx.examples.util.SectorSelector;
 
 import java.beans.PropertyChangeEvent;
@@ -28,6 +29,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -467,4 +469,5 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 		}
 		isTextOnAis.set(i, false);
 	}
+	
 }

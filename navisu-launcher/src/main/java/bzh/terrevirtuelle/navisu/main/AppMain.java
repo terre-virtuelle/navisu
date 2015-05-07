@@ -53,6 +53,7 @@ import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLogger;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
@@ -323,6 +324,7 @@ public class AppMain extends Application {
         gpsTrackPolygonServices.on();
         
         //aisRadarServices.on();
+        //gpsLoggerServices.on("data/nmea/test2.txt");
     }
 
     public static void main(String[] args) throws Exception {

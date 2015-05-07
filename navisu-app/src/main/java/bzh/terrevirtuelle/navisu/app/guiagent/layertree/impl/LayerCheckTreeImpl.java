@@ -132,6 +132,10 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Toggle free hand", null);
         rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Create DMP", null);
+        rootItems.add(tmp);
+        tmp = createNode(targetDisplay, "Activate DMP", null);
+        rootItems.add(tmp);
         treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
 
     }
