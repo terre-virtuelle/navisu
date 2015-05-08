@@ -14,10 +14,10 @@
 
 <fx:root fx:id="radar" stylesheets="@aisradar.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" />
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" styleClass="ais-panel" />
         <Group layoutX="100.0" layoutY="65.0">
             <children>
-                <Pane prefHeight="860.0" prefWidth="1050.0" styleClass="ais-panel" />
+                <Pane opacity="0.0" prefHeight="860.0" prefWidth="1050.0" styleClass="ais-panel" />
                 <Group layoutX="-25.0">
                     <children>
                         <Group>
@@ -1313,14 +1313,23 @@
                 </Group>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" height="700.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
                 </Rectangle>
-                <Text fontSmoothingType="LCD" layoutX="800.0" layoutY="130.0" styleClass="info-text" text="Press Ctrl-Click Left to scale" textAlignment="CENTER" wrappingWidth="200"> 
+                <Text fontSmoothingType="LCD" layoutX="800.0" layoutY="130.0" styleClass="info-text" text="Infos AIS" textAlignment="CENTER" wrappingWidth="200"> 
                 </Text>
                 <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="100.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15" styleClass="screen-pane" visible="true">
                     <image>
                         <Image url="@radarfaisceau600.png" />
                     </image>
                 </ImageView>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            </children>
+        </Group>
+      <Group>
+         <children>
+                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="1091.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5">
+                    <image>
+                        <Image url="@quit.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" visible="false">
                     <image>
                         <Image url="@logoTV64AIS.png" />
                     </image>
@@ -1328,18 +1337,16 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="985.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5">
-                    <image>
-                        <Image url="@quit.png" />
-                    </image>
-                </ImageView>
-                <Slider fx:id="opacitySlider" layoutX="1017.0" layoutY="150.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="0.6">
+            <Text layoutX="1123.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Opacity" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
+                <Slider fx:id="opacitySlider" layoutX="1123.0" layoutY="200.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="0.6">
                 </Slider>
-                <Slider fx:id="dimensionSlider" layoutX="1017.0" layoutY="400.0" max="2.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="0.4">
+            <Text layoutX="1123.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Scale" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
+               <Slider fx:id="scaleSlider" blockIncrement="100.0" layoutX="1123.0" layoutY="450.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="1000">
                 </Slider>
-               <Slider fx:id="scaleSlider" layoutX="1017.0" layoutY="650.0" max="3490" min="1000" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="1000">
+            <Text layoutX="1123.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Dimension" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
+                <Slider fx:id="dimensionSlider" blockIncrement="0.1" layoutX="1123.0" layoutY="750.0" max="1.0" min="0.2" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="0.5">
                 </Slider>
-            </children>
-        </Group>
+         </children>
+      </Group>
     </children>
 </fx:root>

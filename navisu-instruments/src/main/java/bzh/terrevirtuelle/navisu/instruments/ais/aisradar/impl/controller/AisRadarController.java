@@ -129,7 +129,9 @@ public class AisRadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        radar.setOpacity(0.8);
+        radar.setOpacity(0.6);
+        radar.setScaleX(0.5);
+        radar.setScaleY(0.5);
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
         });
@@ -243,6 +245,8 @@ public class AisRadarController
 
     private void schedule() {
         fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(DURATION), (ActionEvent event) -> {
+            //faisceau.setPivotX(50.0);
+            //faisceau.setPivotY(50.0);
             faisceau.setRotate(route);
             route++;
             route %= 360;
