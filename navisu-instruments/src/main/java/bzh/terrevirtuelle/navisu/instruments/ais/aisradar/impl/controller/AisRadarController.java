@@ -12,7 +12,7 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShipImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
-import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller.AisPanelController;
+import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.FileInputStream;
 
@@ -106,7 +106,7 @@ public class AisRadarController
     protected NumberFormat formatter = new DecimalFormat("#0");
     protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     protected AisRadarImpl aisRadar;
-    protected AisPanelController aisPanelController;
+    protected TargetPanel aisPanelController;
 
     protected GuiAgentServices guiAgentServices;
     protected Map<Integer, String> midMap;
@@ -222,7 +222,7 @@ public class AisRadarController
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         if (ownerShip.getSog() > 0.1) {
-            //   ship.setShapeId(0);
+             //  ship.setShapeId(0);
         }
     }
 
@@ -440,7 +440,7 @@ public class AisRadarController
 
     private void addPanelController() {
         Platform.runLater(() -> {
-            aisPanelController = new AisPanelController(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
+            aisPanelController = new TargetPanel(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
             aisPanelController.setTranslateX(100);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisPanelController);
             guiAgentServices.getRoot().getChildren().add(aisPanelController); //Par defaut le radar n'est pas visible Ctrl-A

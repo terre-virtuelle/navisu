@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller;
+package bzh.terrevirtuelle.navisu.instruments.common.view;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
@@ -34,7 +34,7 @@ import javafx.scene.text.Text;
  *
  * @author Serge
  */
-public class AisPanelController
+public class TargetPanel
         extends Widget2DController
         implements Initializable {
 
@@ -80,13 +80,13 @@ public class AisPanelController
     public ImageView quit;
     @FXML
     public Slider slider;
-  //  @FXML
+    //  @FXML
     // public Button photo;
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
     protected GuiAgentServices guiAgentServices;
 
-    public AisPanelController(GuiAgentServices guiAgentServices, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public TargetPanel(GuiAgentServices guiAgentServices, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.guiAgentServices = guiAgentServices;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ais.fxml"));
@@ -128,6 +128,10 @@ public class AisPanelController
 
     }
 
+    public void updateAisPanel(Ship ship) {
+        updateAisPanel(ship, null, null);
+    }
+
     public void updateAisPanel(Ship ship,
             Map<Integer, Calendar> timestamps,
             Map<Integer, String> midMap) {
@@ -150,7 +154,7 @@ public class AisPanelController
             callSign.setText("---");
         }
         if (ship.getMMSI() != 0) {
-            if (timestamps.get(ship.getMMSI()) != null) {
+            if (timestamps != null && timestamps.get(ship.getMMSI()) != null) {
                 mmsi.setText(Integer.toString(ship.getMMSI()));
                 long seconds = Calendar.getInstance().getTimeInMillis()
                         - timestamps.get(ship.getMMSI()).getTimeInMillis();
@@ -217,7 +221,9 @@ public class AisPanelController
         if (ship.getMMSI() != 0) {
             String mmsiStr = Integer.toString(ship.getMMSI());
             String mid = mmsiStr.substring(0, 3);
-            country.setText(midMap.get(new Integer(mid)));
+            if (midMap != null) {
+                country.setText(midMap.get(new Integer(mid)));
+            }
         } else {
             country.setText("---");
         }
