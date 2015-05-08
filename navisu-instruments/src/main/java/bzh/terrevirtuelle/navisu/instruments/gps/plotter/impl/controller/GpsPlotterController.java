@@ -49,7 +49,7 @@ public class GpsPlotterController {
     protected GeoViewServices geoViewServices;
     protected LayerTreeServices layerTreeServices;
     protected GuiAgentServices guiAgentServices;
-    KmlObjectServices kmlObjectServices;
+    protected KmlObjectServices kmlObjectServices;
     protected TargetPanel targetPanel;
     protected Ship ownerShip;
     protected final String OWNER_SHIP_NAME = "data/collada/ownerShip.dae";

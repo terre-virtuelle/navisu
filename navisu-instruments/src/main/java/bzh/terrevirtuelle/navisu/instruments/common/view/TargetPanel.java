@@ -155,11 +155,15 @@ public class TargetPanel
         }
         if (ship.getMMSI() != 0) {
             if (timestamps != null && timestamps.get(ship.getMMSI()) != null) {
-                mmsi.setText(Integer.toString(ship.getMMSI()));
                 long seconds = Calendar.getInstance().getTimeInMillis()
                         - timestamps.get(ship.getMMSI()).getTimeInMillis();
                 ageReport.setText(Long.toString(seconds / 1000) + " s");
             }
+        } else {
+            ageReport.setText("---");
+        }
+        if (ship.getMMSI() != 0) {
+            mmsi.setText(Integer.toString(ship.getMMSI()));
         } else {
             mmsi.setText("---");
         }
