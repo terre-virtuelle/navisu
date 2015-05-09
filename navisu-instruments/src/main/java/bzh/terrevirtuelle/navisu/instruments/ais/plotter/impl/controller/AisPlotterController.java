@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller;
 
+import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -45,7 +46,7 @@ public class AisPlotterController {
     protected GeoViewServices geoViewServices;
     protected LayerTreeServices layerTreeServices;
     protected GuiAgentServices guiAgentServices;
-    protected AisPanelController aisPanelController;
+    protected TargetPanel targetPanel;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
 
@@ -62,8 +63,10 @@ public class AisPlotterController {
         gShips = new HashMap<>();
         gStations = new HashMap<>();
         wwd = GeoWorldWindViewImpl.getWW();
+
         layerTreeServices.createGroup(group);
         geoViewServices.getLayerManager().createGroup(group);
+
         this.aisLayer = new RenderableLayer();
         aisLayer.setName(name);
         geoViewServices.getLayerManager().insertGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(aisLayer));
@@ -110,7 +113,7 @@ public class AisPlotterController {
     }
 
     public void deleteTarget(Ship target) {
-       // System.out.println("target " +target);
+        // System.out.println("target " +target);
         GShip gTarget = gShips.get(target.getMMSI());
         //System.out.println("gTarget " + gTarget);
         Renderable[] renderables = gTarget.getRenderables();
@@ -132,16 +135,6 @@ public class AisPlotterController {
     }
 
     private void addListeners() {
-        /*
-         wwd.addPositionListener((PositionEvent event) -> {
-         float altitude = ((int) wwd.getView().getCurrentEyePosition().getAltitude());
-         if (altitude >= 30000) {
-         clip();
-         } else {
-         unClip();
-         }
-         });
-         */
         wwd.addSelectListener((SelectEvent event) -> {
             Object o = event.getTopObject();
             if (event.isLeftClick() && o != null) {
@@ -157,17 +150,17 @@ public class AisPlotterController {
 
     private void addPanelController() {
         Platform.runLater(() -> {
-            aisPanelController = new AisPanelController(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
-            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisPanelController);
-            guiAgentServices.getRoot().getChildren().add(aisPanelController); //Par defaut le radar n'est pas visible Ctrl-A
-            aisPanelController.setScale(1.0);
-            aisPanelController.setVisible(false);
+            targetPanel = new TargetPanel(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, targetPanel);
+            guiAgentServices.getRoot().getChildren().add(targetPanel); //Par defaut le radar n'est pas visible Ctrl-A
+            targetPanel.setScale(1.0);
+            targetPanel.setVisible(false);
         });
     }
 
     protected final void updateAisPanel(Ship ship) {
         Platform.runLater(() -> {
-            aisPanelController.updateAisPanel(ship, timestamps, midMap);
+            targetPanel.updateAisPanel(ship, timestamps, midMap);
         });
     }
 

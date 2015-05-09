@@ -61,6 +61,8 @@ import bzh.terrevirtuelle.navisu.instruments.compass.CompassServices;
 import bzh.terrevirtuelle.navisu.instruments.compass.impl.CompassImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -134,6 +136,7 @@ public class AppMain extends Application {
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
+                        GpsPlotterImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -175,6 +178,7 @@ public class AppMain extends Application {
 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
+        GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
@@ -194,7 +198,7 @@ public class AppMain extends Application {
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
         SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
         SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
-        SpeakerServices speakerServices= componentManager.getComponentService(SpeakerServices.class);
+        SpeakerServices speakerServices = componentManager.getComponentService(SpeakerServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
@@ -288,6 +292,7 @@ public class AppMain extends Application {
         //aisLoggerServices.on();
         aisPlotterServices.on();
         //aisRadarServices.on();
+        gpsPlotterServices.on();
     }
 
     public static void main(String[] args) throws Exception {

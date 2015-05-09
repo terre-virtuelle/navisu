@@ -49,6 +49,7 @@ public class AisRadarImpl
 
     @UsedService
     AisServices aisServices;
+    
     ComponentManager cm;
     ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
     ComponentEventSubscribe<AisCreateTargetEvent> aisCTEvent;
@@ -96,7 +97,7 @@ public class AisRadarImpl
     @Override
     public void on(String... files) {
         controller = new AisRadarController(this, KeyCode.A, KeyCombination.CONTROL_DOWN);
-        controller.setScale(0.7);
+        controller.setScale(0.6);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
         guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
         controller.setVisible(true);
@@ -125,7 +126,7 @@ public class AisRadarImpl
                 controller.updateTarget(updatedData);
             });
             aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship updatedData) -> {
-                System.out.println(updatedData);
+             //   System.out.println(updatedData);
             });
             aisCSEvent.subscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
             });
@@ -133,7 +134,7 @@ public class AisRadarImpl
                 //  System.out.println(updatedData);
             });
             aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation updatedData) -> {
-                System.out.println(updatedData);
+               // System.out.println(updatedData);
             });
             ggaES.subscribe(new GGAEvent() {
                 @Override

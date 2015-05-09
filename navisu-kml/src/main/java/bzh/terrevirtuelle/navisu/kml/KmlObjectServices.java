@@ -1,6 +1,8 @@
 package bzh.terrevirtuelle.navisu.kml;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -15,6 +17,7 @@ public interface KmlObjectServices
     Driver getDriver();
 
     void openFile(String file);
-
+    
+    ColladaRoot openColladaFile(RenderableLayer layer, String filename);
     
 }
