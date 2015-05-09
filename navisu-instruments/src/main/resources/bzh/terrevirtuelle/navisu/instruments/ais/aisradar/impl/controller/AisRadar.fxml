@@ -1311,10 +1311,93 @@
                         </Group>
                     </children>
                 </Group>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" height="700.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
+            <Group layoutY="-100.0">
+               <children>
+                      <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
                 </Rectangle>
-                <Text fontSmoothingType="LCD" layoutX="800.0" layoutY="130.0" styleClass="info-text" text="Infos AIS" textAlignment="CENTER" wrappingWidth="200"> 
+                  <Text fx:id="imo" fill="#c2f8c4" layoutX="800.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="imo" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fx:id="type" fill="#c2f8c4" layoutX="800.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="passenger" textAlignment="CENTER" wrappingWidth="200.0" />
+                      <Text fontSmoothingType="LCD" layoutX="800.0" layoutY="130.0" styleClass="info-text" text="Infos AIS" textAlignment="CENTER" wrappingWidth="200"> 
                 </Text>
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="IMO" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="shipname" fill="#c2f8c4" layoutX="800.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisshipname" text="name not yet available" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Country" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="MMSI" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Type" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="570.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="COG" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="country" fill="#c2f8c4" layoutX="800.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="pavillon" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="690.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Length" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="mmsi" fill="#c2f8c4" layoutX="800.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="000000000" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fx:id="length" fill="#c2f8c4" layoutX="800.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="length" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fx:id="draught" fill="#c2f8c4" layoutX="800.0" layoutY="780.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="draught" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Call sign" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="SOG" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="750.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Draught" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="cog" fill="#c2f8c4" layoutX="800.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="cog" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="630.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Width" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="930.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Destination" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="sog" fill="#c2f8c4" layoutX="800.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="speed" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fx:id="destination" fill="#c2f8c4" layoutX="800.0" layoutY="960.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="PORT ALFRED-CROZET" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fx:id="callSign" fill="#c2f8c4" layoutX="800.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="callsign" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fx:id="width" fill="#c2f8c4" layoutX="800.0" layoutY="660.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="width" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="810.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Latitude" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#04fff2" layoutX="800.0" layoutY="870.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Longitude" wrappingWidth="195.0" x="5.0">
+                     <font>
+                        <Font name="Roboto Regular" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="latitude" fill="#c2f8c4" layoutX="800.0" layoutY="840.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="latitude" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Text fx:id="longitude" fill="#c2f8c4" layoutX="800.0" layoutY="900.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="longitude" textAlignment="CENTER" wrappingWidth="200.0" />
+               </children>
+            </Group>
                 <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="100.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15" styleClass="screen-pane" visible="true">
                     <image>
                         <Image url="@radarfaisceau600.png" />
