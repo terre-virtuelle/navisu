@@ -75,6 +75,10 @@ public class AisRadarController
     public Slider dimensionSlider;
     @FXML
     public Slider scaleSlider;
+    @FXML
+    public Group aisbuttonpanel;
+    @FXML
+    public Group aisinfopanel;
 
     AisServices aisServices;
     boolean first = true;
@@ -129,6 +133,8 @@ public class AisRadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        aisinfopanel.setVisible(false);
+        aisbuttonpanel.setVisible(true);
         radar.setOpacity(0.6);
         radar.setScaleX(0.5);
         radar.setScaleY(0.5);
@@ -224,7 +230,7 @@ public class AisRadarController
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         if (ownerShip.getSog() > 0.1) {
-             //  ship.setShapeId(0);
+            //  ship.setShapeId(0);
         }
     }
 
