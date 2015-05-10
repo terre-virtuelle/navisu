@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.impl.NmeaEventProducerImpl;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
@@ -148,7 +149,7 @@ public class NmeaClientImpl
                 for (int i = 0; i < size; i++) {
                     nmea = queue.poll();
                     if (nmea != null) {
-                       // System.out.println("nmea emission client " + nmea);
+                        //System.out.println("nmea emission client " + nmea);
                         eventProducer.notifyNMEAEvent(nmea);
                     }
                 }
