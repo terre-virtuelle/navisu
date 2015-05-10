@@ -115,6 +115,10 @@ public class AisRadarController
     protected GuiAgentServices guiAgentServices;
     protected Map<Integer, String> midMap;
 
+    public AisRadarController(AisRadarImpl aisRadar) {
+        this(aisRadar, null, null);
+    }
+
     public AisRadarController(AisRadarImpl aisRadar, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.aisRadar = aisRadar;
@@ -136,8 +140,6 @@ public class AisRadarController
         aisinfopanel.setVisible(false);
         aisbuttonpanel.setVisible(true);
         radar.setOpacity(0.6);
-        radar.setScaleX(0.5);
-        radar.setScaleY(0.5);
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
         });
