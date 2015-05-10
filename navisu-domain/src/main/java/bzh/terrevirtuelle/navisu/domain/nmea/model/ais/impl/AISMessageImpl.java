@@ -215,4 +215,18 @@ public class AISMessageImpl
                 + Integer.toString(repeatIndicator) + SEPARATOR
                 + Integer.toString(mmsi);
     }
+
+    public void setMmsi(int mmsi) {
+        this.mmsi = mmsi;
+    }
+
+    public void setMessageID(int messageID) {
+        this.messageID = messageID;
+    }
+
+    public void setRepeatIndicator(int repeatIndicator) {
+        this.repeatIndicator = repeatIndicator;
+    }
+    
+    
 }

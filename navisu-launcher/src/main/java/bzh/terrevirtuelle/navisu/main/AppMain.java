@@ -276,7 +276,7 @@ public class AppMain extends Application {
         // Test connexion fichier 
         dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
+        // dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
 
@@ -287,9 +287,9 @@ public class AppMain extends Application {
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
-        //Clients à l'écoute des événements Nmea au debut de session
+        //Clients à l'écoute des événements Nmea en debut de session
         aisServices.on();
-        //aisLoggerServices.on();
+       // aisLoggerServices.on();
         aisPlotterServices.on();
         //aisRadarServices.on();
         gpsPlotterServices.on();

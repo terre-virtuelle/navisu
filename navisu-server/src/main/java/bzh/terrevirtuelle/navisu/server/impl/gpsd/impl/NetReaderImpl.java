@@ -28,12 +28,14 @@ public class NetReaderImpl
                     NetSocket socket = asyncResult.result();
                     socket.dataHandler((Buffer buffer) -> {
                         String source = buffer.toString().trim();
+                       // System.out.println("source " + source);
                         if ((source.startsWith("{") && source.endsWith("}")) // Gpsd well formatted
                                 || source.startsWith("!") // AIS
                                 || source.startsWith("$") // NMEA0183
                                 || source.startsWith("PGN")) { // N2K
-                            if (!source.contains("class")) {//Revoir le parser GPSD, supprimer la negation
+                            if (source.contains("class")) {//Revoir le parser GPSD, supprimer la negation
                                 vertx.eventBus().send("comm-address" + index, source);
+                                //System.out.println("source "+ source);
                             }
                         }
                     });

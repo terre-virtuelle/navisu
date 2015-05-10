@@ -97,7 +97,7 @@ public class AisRadarImpl
     @Override
     public void on(String... files) {
         controller = new AisRadarController(this, KeyCode.A, KeyCombination.CONTROL_DOWN);
-        controller.setScale(0.6);
+        controller.setScale(0.4);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
         guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
         controller.setVisible(true);
