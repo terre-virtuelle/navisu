@@ -227,7 +227,7 @@ abstract class AISMessagePositionReportImpl
     }
 
     public double getLongitude() {
-        return  longitude;
+        return longitude;
     }
     /**
      * The position of the first bit of the latitude.
@@ -570,7 +570,9 @@ abstract class AISMessagePositionReportImpl
      */
     @Override
     public String toString() {
+
         String result = super.toString();
+
         result += SEPARATOR + UtilsNavStatus.toString(navigationalStatus);
         result += SEPARATOR + UtilsRateOfTurn8.toString(rateOfTurn);
         result += SEPARATOR + getSpeedOverGroundString();
@@ -579,10 +581,9 @@ abstract class AISMessagePositionReportImpl
         result += SEPARATOR + UtilsPositionInfo.latitudeToString(latitude);
         result += SEPARATOR + UtilsAngle12.toString(courseOverGround);
         result += SEPARATOR + UtilsAngle9.toString(trueHeading);
-        result += SEPARATOR + UtilsTimeStamp.toString(timeStamp);
+        //  result += SEPARATOR + UtilsTimeStamp.toString(timeStamp);
         result += SEPARATOR + UtilsSpecialManoeuvreIndicator2.toString(specialManoeuvreIndicator);
         result += SEPARATOR + "RAIM " + (raimFlag ? "in use" : "not in use");
-        result += SEPARATOR + getCommunicationState().toString();
         return result;
     }
 }
