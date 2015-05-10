@@ -25,10 +25,11 @@ public class NmeaHandler extends Handler{
     }
 
     @Override
-    public <T extends NMEA> void doIt(T t) {
+    public <T extends NMEA> void doIt(T t) {  
         sentences.add(t);
     }
 
+     @Override
     public Sentences getSentences() {
         return sentences;
     }
