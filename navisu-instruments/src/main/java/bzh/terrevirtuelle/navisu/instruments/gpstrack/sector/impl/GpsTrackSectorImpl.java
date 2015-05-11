@@ -470,4 +470,20 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 		isTextOnAis.set(i, false);
 	}
 	
+	@Override
+	public void newSector() {
+		selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
+		selectors.getLast().enable();
+		nbSelector++;
+		// couleur du selector : bleu
+		selectors.getLast().setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
+		RenderableLayer TempLayer = (RenderableLayer) ((selectors.getLast()).getLayer());
+		TempLayer.setName("Watch sector#"+nbSelector);
+		sectorLayers.add(TempLayer);
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
+		System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
+		System.out.println("NbSelector = " + nbSelector + "\n");
+	}
+	
 }

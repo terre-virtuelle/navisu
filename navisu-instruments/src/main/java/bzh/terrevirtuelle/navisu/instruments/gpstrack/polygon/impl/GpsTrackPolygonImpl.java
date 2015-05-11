@@ -222,6 +222,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		dmpLayer = new RenderableLayer();
 		dmpController = new MeasureToolController();
 		dmp.setController(dmpController);
+		
+		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
 
 	}
 
@@ -452,172 +454,172 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             	watchTargetDmp(aisShips);
             	}
             
-			if (layerTreeServices.getCheckBoxTreeItems().get(24).isSelected()) {
-				measureTool.setArmed(true);
-				controller.setArmed(true);
-				if (!drawerActivated) {
-					drawerActivated = true;
-					System.out.println("Drawer ready.\n");
-					}
-				}
-			
-			else {
-				measureTool.setArmed(false);
-				controller.setArmed(false);
-				if (drawerActivated) {
-					drawerActivated = false;
-					System.out.println("Drawer deactivated.\n");
-					}
-				}
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(25).isSelected()) {
-				watchTarget(watchedShip);
-				if (!polygonActivated) {
-					System.out.println("Watch polygon activated.\n");
-					polygonActivated = true;
-					}
-				}
-			
-			else {
-				if (polygonActivated) {
-					System.out.println("Watch polygon deactivated.\n");
-					polygonActivated = false;
-					}
-				}
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(26).isSelected() && nbPolygon<=nbMax) {
-				centers.add(barycenter(measureTool.getPositions()));
-				System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
-				measureTool.setArmed(false);
-				controller.setArmed(false);
-				savedMeasureTool.add(measureTool);
-				nbPolygon++;
-				controller = new MeasureToolController();
-				measureTool = new MeasureTool(wwd);
-				measureTool.setController(controller);
-				
-				if (layerTreeServices.getCheckBoxTreeItems().get(27).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);}
-				if (layerTreeServices.getCheckBoxTreeItems().get(28).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);}
-				if (layerTreeServices.getCheckBoxTreeItems().get(29).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);}
-				if (layerTreeServices.getCheckBoxTreeItems().get(30).isSelected()) {controller.setFreeHand(true);}
-
-				measureTool.setFollowTerrain(true);
-				controller.setUseRubberBand(true);
-				polygonLayer = measureTool.getLayer();
-				polygonLayers.add(polygonLayer);
-				polygonLayer.setName("Polygon#" + nbPolygon);
-				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
-				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
-				layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(24).setSelected(false);
-				System.out.println("New polygon (polygon#" + nbPolygon +") ready to be drawn.\n");
-				}
-			
-			if (!(layerTreeServices.getCheckBoxTreeItems().get(26).isSelected()) && nbPolygon!=nbMax) {
-				nbMax++;
-				System.out.println("Diselected");
-				}
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(30).isSelected()) {
-				// Altitude en mètres
-				double altitude = wwd.getView().getEyePosition().getAltitude();
-				double spacing = (double) ((200*altitude)/(15000));
-				controller.setFreeHand(true);
-				controller.setFreeHandMinSpacing(spacing);
-				if (altitude != savedAltitude) {
-					savedAltitude = altitude;
-					System.out.println("Eye altitude : " + altitude);
-					System.out.println("Points spacing : " + spacing + "\n");
-				}
-				measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-				if (!freeHandActivated) {
-					freeHandActivated = true;
-					polyShapeActivated = false;
-					circleShapeActivated = false;
-					ellipseShapeActivated = false;
-					layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
-					layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
-					layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(true);
-					System.out.println("Free hand mode activated.\n");
-					}
-			}
-			else {
-				controller.setFreeHand(false);
-				if (freeHandActivated) {
-					freeHandActivated = false;
-					polyShapeActivated = true;
-					circleShapeActivated = false;
-					ellipseShapeActivated = false;
-					System.out.println("Free hand mode deactivated.\n");
-					}
-			}
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(27).isSelected()) {
-				measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-				if (!polyShapeActivated) {
-					polyShapeActivated = true;
-					circleShapeActivated = false;
-					ellipseShapeActivated = false;
-					freeHandActivated = false;
-					layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
-					layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
-					System.out.println("Polygon shape activated.\n");
-					}
-			} else polyShapeActivated = false;
-			
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(28).isSelected()) {
-				measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);
-				if (!ellipseShapeActivated) {
-					polyShapeActivated = false;
-					circleShapeActivated = false;
-					ellipseShapeActivated = true;
-					freeHandActivated = false;
-					layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(false);
-					layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
-					System.out.println("Ellipse shape activated.\n");
-					}
-			} else ellipseShapeActivated = false;
-			
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(29).isSelected()) {
-				measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
-				if (!circleShapeActivated) {
-					polyShapeActivated = false;
-					circleShapeActivated = true;
-					ellipseShapeActivated = false;
-					freeHandActivated = false;
-					layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
-					layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(false);
-					System.out.println("Circle shape activated.\n");
-					}
-			} else circleShapeActivated = false;
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(31).isSelected()) {
-				
-				dmp.setController(dmpController);
-				dmp.setFollowTerrain(true);
-				dmpController.setUseRubberBand(true);
-				dmp.setArmed(true);
-				dmpController.setArmed(true);
-			    dmp.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
-			}
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(32).isSelected() && !dmpActivated) {
-				dmpActivated = true;
-				//couleur de la DMP : vert
-				dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
-				layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
-				diameter = dmp.getWidth();
-				dmpLayer = dmp.getLayer();
-				dmpLayer.setEnabled(true);
-				dmpLayer.setName("CPA zone");
-				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			    dmp.setArmed(false);
-			    dmpController.setArmed(false);
-			    
-			}
+//			if (layerTreeServices.getCheckBoxTreeItems().get(24).isSelected()) {
+//				measureTool.setArmed(true);
+//				controller.setArmed(true);
+//				if (!drawerActivated) {
+//					drawerActivated = true;
+//					System.out.println("Drawer ready.\n");
+//					}
+//				}
+//			
+//			else {
+//				measureTool.setArmed(false);
+//				controller.setArmed(false);
+//				if (drawerActivated) {
+//					drawerActivated = false;
+//					System.out.println("Drawer deactivated.\n");
+//					}
+//				}
+//			
+//			if (layerTreeServices.getCheckBoxTreeItems().get(25).isSelected()) {
+//				watchTarget(watchedShip);
+//				if (!polygonActivated) {
+//					System.out.println("Watch polygon activated.\n");
+//					polygonActivated = true;
+//					}
+//				}
+//			
+//			else {
+//				if (polygonActivated) {
+//					System.out.println("Watch polygon deactivated.\n");
+//					polygonActivated = false;
+//					}
+//				}
+//			
+//			if (layerTreeServices.getCheckBoxTreeItems().get(26).isSelected() && nbPolygon<=nbMax) {
+//				centers.add(barycenter(measureTool.getPositions()));
+//				System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
+//				measureTool.setArmed(false);
+//				controller.setArmed(false);
+//				savedMeasureTool.add(measureTool);
+//				nbPolygon++;
+//				controller = new MeasureToolController();
+//				measureTool = new MeasureTool(wwd);
+//				measureTool.setController(controller);
+//				
+//				if (layerTreeServices.getCheckBoxTreeItems().get(27).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);}
+//				if (layerTreeServices.getCheckBoxTreeItems().get(28).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);}
+//				if (layerTreeServices.getCheckBoxTreeItems().get(29).isSelected()) {measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);}
+//				if (layerTreeServices.getCheckBoxTreeItems().get(30).isSelected()) {controller.setFreeHand(true);}
+//
+//				measureTool.setFollowTerrain(true);
+//				controller.setUseRubberBand(true);
+//				polygonLayer = measureTool.getLayer();
+//				polygonLayers.add(polygonLayer);
+//				polygonLayer.setName("Polygon#" + nbPolygon);
+//				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
+//				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
+//				layerTreeServices.getCheckBoxTreeItems().get(26).setSelected(false);
+//				layerTreeServices.getCheckBoxTreeItems().get(24).setSelected(false);
+//				System.out.println("New polygon (polygon#" + nbPolygon +") ready to be drawn.\n");
+//				}
+//			
+//			if (!(layerTreeServices.getCheckBoxTreeItems().get(26).isSelected()) && nbPolygon!=nbMax) {
+//				nbMax++;
+//				System.out.println("Diselected");
+//				}
+//			
+//			if (layerTreeServices.getCheckBoxTreeItems().get(30).isSelected()) {
+//				// Altitude en mètres
+//				double altitude = wwd.getView().getEyePosition().getAltitude();
+//				double spacing = (double) ((200*altitude)/(15000));
+//				controller.setFreeHand(true);
+//				controller.setFreeHandMinSpacing(spacing);
+//				if (altitude != savedAltitude) {
+//					savedAltitude = altitude;
+//					System.out.println("Eye altitude : " + altitude);
+//					System.out.println("Points spacing : " + spacing + "\n");
+//				}
+//				measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+//				if (!freeHandActivated) {
+//					freeHandActivated = true;
+//					polyShapeActivated = false;
+//					circleShapeActivated = false;
+//					ellipseShapeActivated = false;
+//					layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
+//					layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
+//					layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(true);
+//					System.out.println("Free hand mode activated.\n");
+//					}
+//			}
+//			else {
+//				controller.setFreeHand(false);
+//				if (freeHandActivated) {
+//					freeHandActivated = false;
+//					polyShapeActivated = true;
+//					circleShapeActivated = false;
+//					ellipseShapeActivated = false;
+//					System.out.println("Free hand mode deactivated.\n");
+//					}
+//			}
+//			
+//			if (layerTreeServices.getCheckBoxTreeItems().get(27).isSelected()) {
+//				measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+//				if (!polyShapeActivated) {
+//					polyShapeActivated = true;
+//					circleShapeActivated = false;
+//					ellipseShapeActivated = false;
+//					freeHandActivated = false;
+//					layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
+//					layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
+//					System.out.println("Polygon shape activated.\n");
+//					}
+//			} else polyShapeActivated = false;
+//			
+//			
+//			if (layerTreeServices.getCheckBoxTreeItems().get(28).isSelected()) {
+//				measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);
+//				if (!ellipseShapeActivated) {
+//					polyShapeActivated = false;
+//					circleShapeActivated = false;
+//					ellipseShapeActivated = true;
+//					freeHandActivated = false;
+//					layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(false);
+//					layerTreeServices.getCheckBoxTreeItems().get(29).setSelected(false);
+//					System.out.println("Ellipse shape activated.\n");
+//					}
+//			} else ellipseShapeActivated = false;
+//			
+//			
+//			if (layerTreeServices.getCheckBoxTreeItems().get(29).isSelected()) {
+//				measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
+//				if (!circleShapeActivated) {
+//					polyShapeActivated = false;
+//					circleShapeActivated = true;
+//					ellipseShapeActivated = false;
+//					freeHandActivated = false;
+//					layerTreeServices.getCheckBoxTreeItems().get(28).setSelected(false);
+//					layerTreeServices.getCheckBoxTreeItems().get(27).setSelected(false);
+//					System.out.println("Circle shape activated.\n");
+//					}
+//			} else circleShapeActivated = false;
+//			
+//			if (layerTreeServices.getCheckBoxTreeItems().get(31).isSelected()) {
+//				
+//				dmp.setController(dmpController);
+//				dmp.setFollowTerrain(true);
+//				dmpController.setUseRubberBand(true);
+//				dmp.setArmed(true);
+//				dmpController.setArmed(true);
+//			    dmp.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
+//			}
+//			
+//			if (layerTreeServices.getCheckBoxTreeItems().get(32).isSelected() && !dmpActivated) {
+//				dmpActivated = true;
+//				//couleur de la DMP : vert
+//				dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
+//				layerTreeServices.getCheckBoxTreeItems().get(31).setSelected(false);
+//				diameter = dmp.getWidth();
+//				dmpLayer = dmp.getLayer();
+//				dmpLayer.setEnabled(true);
+//				dmpLayer.setName("CPA zone");
+//				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+//				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+//			    dmp.setArmed(false);
+//			    dmpController.setArmed(false);
+//			    
+//			}
             
             });
 		
@@ -932,6 +934,65 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			//couleur de la DMP repasse en vert
 			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
 			}
+		
+	}
+	
+	@Override
+	public void drawerOn() {
+			measureTool.setArmed(true);
+			controller.setArmed(true);
+			System.out.println("Drawer ready.\n");
+	}
+	
+	@Override
+	public void savePolygon() {
+		centers.add(barycenter(measureTool.getPositions()));
+		System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
+		measureTool.setArmed(false);
+		controller.setArmed(false);
+		savedMeasureTool.add(measureTool);
+		nbPolygon++;
+		controller = new MeasureToolController();
+		measureTool = new MeasureTool(wwd);
+		measureTool.setController(controller);
+		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+		measureTool.setFollowTerrain(true);
+		controller.setUseRubberBand(true);
+		polygonLayer = measureTool.getLayer();
+		polygonLayers.add(polygonLayer);
+		polygonLayer.setName("Polygon#" + nbPolygon);
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
+		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
+		System.out.println("New polygon (polygon#" + nbPolygon +") ready to be drawn.\n");
+	}
+	
+	@Override
+	public void polyShapeOn() {
+		
+	}
+	
+	@Override
+	public void ellipseShapeOn() {
+		
+	}
+	
+	@Override
+	public void circleShapeOn() {
+		
+	}
+	
+	@Override
+	public void freeHandOn() {
+		
+	}
+	
+	@Override
+	public void createCpaZone() {
+		
+	}
+	
+	@Override
+	public void activateCpaZone() {
 		
 	}
 	

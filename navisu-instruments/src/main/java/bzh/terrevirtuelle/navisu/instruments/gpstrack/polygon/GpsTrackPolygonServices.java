@@ -25,4 +25,20 @@ public interface GpsTrackPolygonServices extends ComponentService {
     boolean canOpen(String category);
 
     InstrumentDriver getDriver();
+    
+    void drawerOn();
+    
+    void savePolygon();
+    
+    void polyShapeOn();
+    
+    void ellipseShapeOn();
+    
+    void circleShapeOn();
+    
+    void freeHandOn();
+    
+    void createCpaZone();
+    
+    void activateCpaZone();
 }

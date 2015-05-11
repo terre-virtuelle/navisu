@@ -25,4 +25,6 @@ public interface GpsTrackSectorServices extends ComponentService {
     boolean canOpen(String category);
 
     InstrumentDriver getDriver();
+    
+    void newSector();
 }

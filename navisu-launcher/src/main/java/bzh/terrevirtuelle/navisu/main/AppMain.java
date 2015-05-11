@@ -326,8 +326,8 @@ public class AppMain extends Application {
        // aisLoggerServices.on();
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
-        gpsTrackSectorServices.on();
-        gpsTrackPolygonServices.on();
+        //gpsTrackSectorServices.on();
+        //gpsTrackPolygonServices.on();
         
         //aisRadarServices.on();
         //gpsLoggerServices.on("data/nmea/test2.txt");
