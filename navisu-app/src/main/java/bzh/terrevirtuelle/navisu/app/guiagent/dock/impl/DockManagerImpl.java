@@ -214,8 +214,10 @@ public class DockManagerImpl
                 .createNode(0, "navigation.png", 0, "ais.png", 1, "aisPlotOff.png", (e) -> close("AisPlotter"))
                 .createNode(0, "navigation.png", 0, "ais.png", 2, "aisLogOn.png", (e) -> open("AisLogger"))
                 .createNode(0, "navigation.png", 0, "ais.png", 3, "aisLogOff.png", (e) -> close("AisLogger"))
-                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOn.png", (e) -> open("GpsLogger"))
-                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsLogOff.png", (e) -> close("GpsLogger"))
+                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsPlotOn.png", (e) -> open("GpsPlotter"))
+                .createNode(0, "navigation.png", 1, "gps.png", 1, "gpsPlotOff.png", (e) -> close("GpsPlotter"))
+                .createNode(0, "navigation.png", 1, "gps.png", 2, "gpsLogOn.png", (e) -> open("GpsLogger"))
+                .createNode(0, "navigation.png", 1, "gps.png", 3, "gpsLogOff.png", (e) -> close("GpsLogger"))
                 .createNode(0, "navigation.png", 2, "compass.png", 0, "compass.png", (e) -> open("Compass"))
                 .createNode(0, "navigation.png", 3, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
                 .build();
