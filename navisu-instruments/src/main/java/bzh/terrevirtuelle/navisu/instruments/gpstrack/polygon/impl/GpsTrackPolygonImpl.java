@@ -154,6 +154,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected MeasureToolController dmpController;
 	protected boolean dmpActivated = false;
 	protected double diameter;
+	protected double savedAltitude = 0;
 
 	@Override
 	public void componentInitiated() {
@@ -523,8 +524,11 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				double spacing = (double) ((200*altitude)/(15000));
 				controller.setFreeHand(true);
 				controller.setFreeHandMinSpacing(spacing);
-				System.out.println("Eye altitude : " + wwd.getView().getEyePosition().getAltitude());
-				System.out.println("Points spacing : " + spacing + "\n");
+				if (altitude != savedAltitude) {
+					savedAltitude = altitude;
+					System.out.println("Eye altitude : " + altitude);
+					System.out.println("Points spacing : " + spacing + "\n");
+				}
 				measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
 				if (!freeHandActivated) {
 					freeHandActivated = true;
