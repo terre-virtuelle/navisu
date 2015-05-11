@@ -150,15 +150,12 @@ public class AppMain extends Application {
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
-<<<<<<< HEAD
                         
                         GpsTrackPlotterImpl.class,
                         GpsTrackSectorImpl.class,
                         GpsTrackPolygonImpl.class,
                         
-=======
                         GpsPlotterImpl.class,
->>>>>>> refs/remotes/origin/master
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -200,15 +197,12 @@ public class AppMain extends Application {
 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
-<<<<<<< HEAD
         
         GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
         GpsTrackSectorServices gpsTrackSectorServices = componentManager.getComponentService(GpsTrackSectorServices.class);
         GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
         
-=======
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
->>>>>>> refs/remotes/origin/master
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
@@ -303,21 +297,18 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // Test connexion Gpsd 
-        //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+       dataServerServices.openGpsd("fridu.net", 2947); // ou "fridu.net"
         // dataServerServices.openGpsd("sinagot.net", 4001); 
         // dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
-<<<<<<< HEAD
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/nmea/test2.txt");
         //dataServerServices.openFile("data/nmea/test1.txt");
-=======
-        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
->>>>>>> refs/remotes/origin/master
-        dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
@@ -329,11 +320,8 @@ public class AppMain extends Application {
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
-<<<<<<< HEAD
         // Test clients à l'écoute des événements Nmea 
-=======
         //Clients à l'écoute des événements Nmea en debut de session
->>>>>>> refs/remotes/origin/master
         aisServices.on();
        // aisLoggerServices.on();
         aisPlotterServices.on();
@@ -342,11 +330,8 @@ public class AppMain extends Application {
         gpsTrackPolygonServices.on();
         
         //aisRadarServices.on();
-<<<<<<< HEAD
         //gpsLoggerServices.on("data/nmea/test2.txt");
-=======
-        gpsPlotterServices.on();
->>>>>>> refs/remotes/origin/master
+        //gpsPlotterServices.on();
     }
 
     public static void main(String[] args) throws Exception {

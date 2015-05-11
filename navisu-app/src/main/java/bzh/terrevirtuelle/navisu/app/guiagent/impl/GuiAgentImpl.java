@@ -126,8 +126,8 @@ public class GuiAgentImpl
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
 
         // Initialize menu
-        //  this.menuServices.setMenuComponent(ctrl.menuBar);
-        //  this.initializeMenuItems(this.menuServices);
+         // this.menuServices.setMenuComponent(ctrl.menuBar);
+         // this.initializeMenuItems(this.menuServices);
         stage.setTitle(TITLE);
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application");

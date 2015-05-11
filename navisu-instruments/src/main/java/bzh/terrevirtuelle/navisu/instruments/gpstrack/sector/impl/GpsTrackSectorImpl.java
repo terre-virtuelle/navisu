@@ -284,7 +284,7 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 		aisShip.setLongitude(target.getLongitude());
 		aisShips.add(aisShip);
 		// Enlever les commentaires pour voir les messages AIS
-		//System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
+		System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
 	}
 
 	private void updateTarget(Ship target) {
@@ -296,7 +296,7 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 				resu.setMMSI(target.getMMSI());
 				aisShips.set(i, resu);
 				// Enlever les commentaires pour voir les messages AIS
-				//System.out.println("Ship with MMSI " + resu.getMMSI() + " updated - position lat " + resu.getLatitude() + " and lon " + resu.getLongitude());
+				System.out.println("Ship with MMSI " + resu.getMMSI() + " updated - position lat " + resu.getLatitude() + " and lon " + resu.getLongitude());
 			}
 		}
 	}
