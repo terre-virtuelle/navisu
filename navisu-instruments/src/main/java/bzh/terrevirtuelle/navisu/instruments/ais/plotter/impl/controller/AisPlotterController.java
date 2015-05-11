@@ -22,6 +22,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
@@ -63,10 +64,11 @@ public class AisPlotterController {
         gShips = new HashMap<>();
         gStations = new HashMap<>();
         wwd = GeoWorldWindViewImpl.getWW();
-
-        layerTreeServices.createGroup(group);
-        geoViewServices.getLayerManager().createGroup(group);
-
+        List<String> groups = layerTreeServices.getGroupNames();
+        if (!groups.contains(group)) {
+            layerTreeServices.createGroup(group);
+            geoViewServices.getLayerManager().createGroup(group);
+        }
         this.aisLayer = new RenderableLayer();
         aisLayer.setName(name);
         geoViewServices.getLayerManager().insertGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(aisLayer));
