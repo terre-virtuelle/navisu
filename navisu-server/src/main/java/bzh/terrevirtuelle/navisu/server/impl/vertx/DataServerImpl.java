@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.server.impl.vertx;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.server.impl.serial.impl.jssc.SerialPortReaderImpl;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 import bzh.terrevirtuelle.navisu.server.DataServer;
@@ -104,6 +103,7 @@ public class DataServerImpl
                             readers.get(currentReaderIndex).read();
                         }
                         response = response(currentReaderIndex);
+                       // System.out.println("response "+ response);
                         if (response != null) {
                             ws.writeTextFrame(response.toString());
                         }
@@ -135,7 +135,7 @@ public class DataServerImpl
             sentences.clear();
             try {
                 sentenceQueues.get(currentReader).stream().forEach((s) -> {
-                   // LOGGER.info(s);
+                  // LOGGER.info(s);
                     parser.parse(s.trim());
                 });
                 stringWriter = new StringWriter();
@@ -145,7 +145,7 @@ public class DataServerImpl
                 }
             } catch (Exception e) {
                 // System.out.println("sentenceQueues "+ sentenceQueues);
-                //  System.out.println("DataServerImpl Exception" + sentences);
+                 // System.out.println("DataServerImpl Exception" + sentences);
             }
         }
        // System.out.println("DataServerImpl " + stringWriter);
@@ -221,5 +221,4 @@ class MyFormatter extends Formatter {
     public String format(LogRecord record) {
         return record.getMessage() + "\n";
     }
-
 }

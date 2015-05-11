@@ -41,13 +41,14 @@ public class Widget2DController
     }
 
     public Widget2DController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
-        keyComb = new KeyCodeCombination(keyCode, keyCombination);
+        if (keyCode != null && keyCombination != null) {
+            keyComb = new KeyCodeCombination(keyCode, keyCombination);
+        }
         initEvt();
     }
 
     @Override
     public void handle(KeyEvent event) {
-        System.out.println("event " + event);
         if (keyComb.match(event)) {
             if (isVisible()) {
                 setVisible(false);

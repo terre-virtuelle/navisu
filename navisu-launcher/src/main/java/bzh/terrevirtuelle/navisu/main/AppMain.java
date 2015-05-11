@@ -72,6 +72,8 @@ import bzh.terrevirtuelle.navisu.instruments.compass.CompassServices;
 import bzh.terrevirtuelle.navisu.instruments.compass.impl.CompassImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -148,11 +150,15 @@ public class AppMain extends Application {
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
+<<<<<<< HEAD
                         
                         GpsTrackPlotterImpl.class,
                         GpsTrackSectorImpl.class,
                         GpsTrackPolygonImpl.class,
                         
+=======
+                        GpsPlotterImpl.class,
+>>>>>>> refs/remotes/origin/master
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -194,11 +200,15 @@ public class AppMain extends Application {
 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
+<<<<<<< HEAD
         
         GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
         GpsTrackSectorServices gpsTrackSectorServices = componentManager.getComponentService(GpsTrackSectorServices.class);
         GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
         
+=======
+        GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
+>>>>>>> refs/remotes/origin/master
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
@@ -218,7 +228,7 @@ public class AppMain extends Application {
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
         SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
         SoundServices soundServices = componentManager.getComponentService(SoundServices.class);
-        SpeakerServices speakerServices= componentManager.getComponentService(SpeakerServices.class);
+        SpeakerServices speakerServices = componentManager.getComponentService(SpeakerServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
@@ -300,11 +310,15 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS 
         // Test connexion fichier 
+<<<<<<< HEAD
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/nmea/test2.txt");
         //dataServerServices.openFile("data/nmea/test1.txt");
+=======
+        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+>>>>>>> refs/remotes/origin/master
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        // dataServerServices.openFile("data/gpsd/gpsd.txt");//AIS Gpsd
+        // dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
 
@@ -315,16 +329,24 @@ public class AppMain extends Application {
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
+<<<<<<< HEAD
         // Test clients à l'écoute des événements Nmea 
+=======
+        //Clients à l'écoute des événements Nmea en debut de session
+>>>>>>> refs/remotes/origin/master
         aisServices.on();
-        //aisLoggerServices.on();
+       // aisLoggerServices.on();
         aisPlotterServices.on();
         gpsTrackPlotterServices.on();
         gpsTrackSectorServices.on();
         gpsTrackPolygonServices.on();
         
         //aisRadarServices.on();
+<<<<<<< HEAD
         //gpsLoggerServices.on("data/nmea/test2.txt");
+=======
+        gpsPlotterServices.on();
+>>>>>>> refs/remotes/origin/master
     }
 
     public static void main(String[] args) throws Exception {

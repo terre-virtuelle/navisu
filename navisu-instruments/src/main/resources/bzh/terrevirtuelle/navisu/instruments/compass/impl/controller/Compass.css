@@ -1,21 +1,21 @@
-@charset "utf-8";
+
 /* CSS Document */
 @font-face {
-    -fx-font-family: 'Navisu';
+    -fx-font-family: 'Roboto Cn';
     src: url('fonts/Roboto-Condensed.ttf');
 }
 
 *{
     -fx-base : #143b28;
     -fx-line-base : #04fff2;
-    -fx-font-family: Navisu, "Roboto Cn" ;
+    -fx-font-family: "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
     -fx-color-contours: #70bbbf;
 }
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
     -fx-fill : -fx-color-typo;
-    -fx-font-weight: bold;
+    /*-fx-font-weight: bold;*/
    /* -fx-underline : true;*/
 }
 .infotittle{

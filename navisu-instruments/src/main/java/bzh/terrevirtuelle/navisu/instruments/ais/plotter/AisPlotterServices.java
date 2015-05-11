@@ -12,7 +12,8 @@ import org.capcaval.c3.component.ComponentService;
  * @date 3 mars 2015
  * @author Serge Morvan
  */
-public interface AisPlotterServices extends ComponentService {
+public interface AisPlotterServices
+        extends ComponentService {
 
     void on();
 

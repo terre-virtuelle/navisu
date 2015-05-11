@@ -49,6 +49,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.ZDA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GPSSatellite;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS02;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS03;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS04;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS05;
@@ -120,6 +121,7 @@ import java.util.StringTokenizer;
    protected ZDA zda = null;
    
    protected AIS01 ais01 = null;
+   protected AIS02 ais02 = null;
    protected AIS03 ais03 = null;
    protected AIS04 ais04 = null;
    protected AIS05 ais05 = null;
@@ -281,7 +283,8 @@ entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT
 		//AIS
 		|VDM|TXT|ALR
 		//GPSD
-		|GPSD_AIS|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH
+		|GPSD_AIS
+		//|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH
 		//PRO
 		|PRO)+;
 
@@ -1303,8 +1306,8 @@ VDM 	: '!' device=DEVICE 'VDM' SEP
 /** 
 * SECTION GPSD 
 */
-/*
-GPSD_AIS : '{''"class":"AIS"' SEP 
+
+GPSD_AIS : '{"class":"AIS"' SEP 
     	'"device":' dev= DEV SEP 
     	'"type":' type = NUMBER SEP
     	'"repeat":' repeat = NUMBER SEP
@@ -1323,7 +1326,8 @@ GPSD_AIS : '{''"class":"AIS"' SEP
     	 '"maneuver":' maneuvrer=NUMBER SEP 
     	 '"raim":' raim=LETTERS SEP 
     	 '"radio":' radio=NUMBER
-    	|
+    	 '}'
+      	|
     	//Type 4
     	'"timestamp":' timestamp=TIME_STAMP  SEP
     	'"accuracy":' accuracy=LETTERS SEP 
@@ -1433,23 +1437,70 @@ GPSD_AIS : '{''"class":"AIS"' SEP
     	'"to_starboard":' to_starboard=NUMBER 
     	)
          ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
-       // {System.out.println(getText());}
-    	{
+        {
+        //System.out.println(getText());
     	switch(type.getText()){
 	case "1" :
-	case "2" :
-	case "3" :
 	  if(dev != null && mmsi != null && status != null && turn != null 
 	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
-	     
-	     ais01 = new AIS01(new Float(turn.getText()), (new Float(course.getText()))/10.0f, (new Float(speed.getText()))/10.0f,
-	                         new Integer(status.getText()), new Float(heading.getText()), 
-	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
-	                         new Integer(second.getText()), new Integer(mmsi.getText()), dev.getText()); 
-	  //System.out.println(ais1);
-	   aisHandler.doIt(ais01);
+            ais01 = new AIS01();
+                        ais01.setRateOfTurn(new Integer(turn.getText()));
+                        ais01.setCourseOverGround((int)((new Float(course.getText()))/10.0f));
+                        ais01.setSpeedOverGround((int)((new Float(speed.getText()))/10.0f));
+                        ais01.setNavigationalStatus(new Integer(status.getText()));
+                        ais01.setTrueHeading(new Integer(heading.getText()));
+                        ais01.setLatitude(degConvert(new Float(latitude.getText())));
+                        ais01.setLongitude(degConvert(new Float(longitude.getText())));
+                        ais01.setMmsi(new Integer(mmsi.getText()));
+                        ais01.setDevice(dev.getText()); 
+                        ais01.setSpecialManoeuvreIndicator(new Integer(maneuvrer.getText()));
+                        ais01.setRaimFlag(Boolean.getBoolean(raim.getText())); 
+                        ais01.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
+             // System.out.println(ais01);                                    
+            handler.doIt(ais01);
+           
+        }
+           break;
+           
+        case "2" :
+         if(dev != null && mmsi != null && status != null && turn != null 
+	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
+            ais02 = new AIS02();
+                        ais02.setRateOfTurn(new Integer(turn.getText()));
+                        ais02.setCourseOverGround((int)((new Float(course.getText()))/10.0f));
+                        ais02.setSpeedOverGround((int)((new Float(speed.getText()))/10.0f));
+                        ais02.setNavigationalStatus(new Integer(status.getText()));
+                        ais02.setTrueHeading(new Integer(heading.getText()));
+                        ais02.setLatitude(degConvert(new Float(latitude.getText())));
+                        ais02.setLongitude(degConvert(new Float(longitude.getText())));
+                        ais02.setMmsi(new Integer(mmsi.getText()));
+                        ais02.setDevice(dev.getText());
+                        ais02.setSpecialManoeuvreIndicator(new Integer(maneuvrer.getText()));
+                        ais02.setRaimFlag(Boolean.getBoolean(raim.getText())); 
+                        ais02.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
+            handler.doIt(ais02);
 	  }
            break;
+	case "3" :
+         if(dev != null && mmsi != null && status != null && turn != null 
+	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
+            ais03 = new AIS03();
+                        ais03.setRateOfTurn(new Integer(turn.getText()));
+                        ais03.setCourseOverGround((int)((new Float(course.getText()))/10.0f));
+                        ais03.setSpeedOverGround((int)((new Float(speed.getText()))/10.0f));
+                        ais03.setNavigationalStatus(new Integer(status.getText()));
+                        ais03.setTrueHeading(new Integer(heading.getText()));
+                        ais03.setLatitude(degConvert(new Float(latitude.getText())));
+                        ais03.setLongitude(degConvert(new Float(longitude.getText())));
+                        ais03.setMmsi(new Integer(mmsi.getText()));
+                        ais03.setDevice(dev.getText());
+                        ais03.setSpecialManoeuvreIndicator(new Integer(maneuvrer.getText()));
+                        ais03.setRaimFlag(Boolean.getBoolean(raim.getText())); 
+                        ais03.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
+            handler.doIt(ais03);
+	  }
+           break;
+           
 	case "4" :
 	  if(dev != null && mmsi != null && timestamp != null && longitude != null && latitude != null){
 	  
@@ -1465,14 +1516,16 @@ GPSD_AIS : '{''"class":"AIS"' SEP
 	    hours = new Integer(tmp3[0]);
 	    minutes  = new Integer(tmp3[1]);
 	    seconds = new Integer(tmp3[2].substring(0, 2));
-	  
+	  /*
 	    ais04 = new AIS04(new Integer(mmsi.getText()), device,
 	                         new GregorianCalendar(year, month, day, hours, minutes, seconds),
 	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText()))
 	                        );  
 	                                         
-	    //System.out.println(ais4);
-	    aisHandler.doIt(ais04);
+	    
+	    handler.doIt(ais04);
+	    */
+         // System.out.println("ais4");
 	 }
 	   break;
 	case "5" :
@@ -1495,33 +1548,41 @@ GPSD_AIS : '{''"class":"AIS"' SEP
 	  date.set(Calendar.HOUR, hours);
 	  date.set(Calendar.MINUTE, minutes);
 	  
-	  
-	  ais05 = new AIS05(new Integer(mmsi.getText()), device, 
-	                        new Integer(imo.getText()), shipname.getText(), new Integer(shiptype.getText()),
-	                        new Integer(to_starboard.getText())*2, new Integer(to_bow.getText())+ new Integer(to_stern.getText()),
-	                        new Integer(draught.getText()), callsign.getText(), date, destination.getText());
-	  aisHandler.doIt(ais05);
+	  AIS05 ais05=new AIS05();
+	  ais05.setMmsi(new Integer(mmsi.getText()));
+          ais05.setCallSign(callsign.getText());
+          ais05.setDestination(destination.getText());
+          ais05.setImoNumber(new Integer(imo.getText()));
+          ais05.setName(shipname.getText());
+          ais05.setShipType(new Integer(shiptype.getText()));
+          handler.doIt(ais05);
+        //  System.out.println("ais05");
 	  }
 	  
 	   break;
 	case "8" :
-	   System.out.println("ais08");
+	  // System.out.println("ais08");
 	   break;
 	case "18":
           if(dev != null && mmsi != null && speed != null && longitude != null && latitude != null &&
              course != null && heading != null && second != null){
-              
+          /*    
            ais18 = new AIS18(new Integer(mmsi.getText()), dev.getText(),
                    new Float(speed.getText()), new Float(course.getText()), new Float(heading.getText()), 
                    degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
                    new Integer(second.getText()));
                    
-            //System.out.println(ais18); 
-            aisHandler.doIt(ais18);                       
-         }
+            
+            handler.doIt(ais18);
+           */ 
+          // System.out.println("ais18"); 
+                                 
+          }
+          
     	}
 	}
     	;
+   	
 GPSD_DEVICE 
         :	
     	'{''"class":"DEVICE"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
@@ -1549,8 +1610,7 @@ GPSD_WATCH
     	{
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
-    	;    
-  */  	
+    	;      	
     	
  /*   		
 PGN

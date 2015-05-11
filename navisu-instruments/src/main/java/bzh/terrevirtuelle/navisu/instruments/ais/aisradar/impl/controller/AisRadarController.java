@@ -1,11 +1,8 @@
 package bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller;
 
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
-import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
@@ -15,6 +12,7 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShipImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.FileInputStream;
 
@@ -29,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
@@ -46,13 +45,13 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import org.capcaval.c3.component.ComponentEventSubscribe;
-import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
  *
@@ -71,26 +70,36 @@ public class AisRadarController
     @FXML
     public ImageView quit;
     @FXML
-    public Slider slider;
-    
+    public Slider opacitySlider;
+    @FXML
+    public Slider dimensionSlider;
+    @FXML
+    public Slider scaleSlider;
+    @FXML
+    public Group aisbuttonpanel;
+    @FXML
+    public Group aisinfopanel;
+
     AisServices aisServices;
     boolean first = true;
     final Rotate rotationTransform = new Rotate(0, 0, 0);
     protected Timeline fiveSecondsWonder;
-    protected final int CENTER_X = 525;//425 + 100 suite rajout pane
+    protected final int CENTER_X = 500;//425 + 100 suite rajout pane//-25 Serge
     protected final int CENTER_Y = 494;//429 + 65 et agrandissement faisceau
+
     int centerX;
     int centerY;
     protected double latOwner = 0.0;
     protected double lonOwner = 0.0;
     protected double posX = 0.0;
     protected double posY = 0.0;
-    protected final int RANGE = 5000;
+    protected double radarScale = 1000.0;//MAX=1/3490
     protected final double RADIUS = 4.;
+    protected final int RADIUS_LIMIT = 350;
     protected final double DURATION = .03;
-    protected final int MAX = 700;
-    protected final int MIN = 100;
-    protected Map<Integer, Ship> ships;
+    protected final int MAX = 840;
+    protected final int MIN = 50;
+    protected Map<Integer, GRShip> ships;
     protected Map<Integer, GRShip> outOfRangeShips;
     protected Map<Integer, GRShip> outOfRangeTransceivers;
     protected Map<Integer, BaseStation> transceivers;
@@ -101,22 +110,24 @@ public class AisRadarController
     protected NumberFormat formatter = new DecimalFormat("#0");
     protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     protected AisRadarImpl aisRadar;
-    ComponentManager cm = ComponentManager.componentManager;
-    ComponentEventSubscribe<GGAEvent> ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
-    ComponentEventSubscribe<RMCEvent> rmcES = cm.getComponentEventSubscribe(RMCEvent.class);
-    ComponentEventSubscribe<VTGEvent> vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
+    protected TargetPanel aisPanelController;
 
-    
+    protected GuiAgentServices guiAgentServices;
+    protected Map<Integer, String> midMap;
+
+    public AisRadarController(AisRadarImpl aisRadar) {
+        this(aisRadar, null, null);
+    }
+
     public AisRadarController(AisRadarImpl aisRadar, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.aisRadar = aisRadar;
+        guiAgentServices = aisRadar.getGuiAgentServices();
         ships = new HashMap<>();
         outOfRangeShips = new HashMap<>();
         outOfRangeTransceivers = new HashMap<>();
-        transceivers = new HashMap<>();
-        timestamps = new HashMap<>();
         createOwnerShip();
-        subscribe();
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AisRadar.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -126,15 +137,41 @@ public class AisRadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        radar.setOpacity(0.8);
+        aisinfopanel.setVisible(false);
+        aisbuttonpanel.setVisible(true);
+        radar.setOpacity(0.6);
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
         });
-        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+        opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                radar.setOpacity(slider.getValue());
+                radar.setOpacity(opacitySlider.getValue());
             });
         });
+        dimensionSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            Platform.runLater(() -> {
+                radar.setScaleX(dimensionSlider.getValue());
+                radar.setScaleY(dimensionSlider.getValue());
+            });
+        });
+        scaleSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            Platform.runLater(() -> {
+                radarScale = scaleSlider.getValue();
+                updateTargets();
+            });
+        });
+        GhostLine ghostLine = new GhostLine(CENTER_X, CENTER_Y, 1, RADIUS_LIMIT);
+        getChildren().add(ghostLine);
+
+        radar.setOnMouseClicked(press -> {
+            if (press.getButton() == MouseButton.PRIMARY) {
+                ghostLine.show(press.getX(), press.getY());
+            } else {
+                ghostLine.clear();
+            }
+        });
+
+        addPanelController();
     }
 
     @Override
@@ -181,50 +218,43 @@ public class AisRadarController
         createTarget(ownerShip);
     }
 
-    public final void subscribe() {
-        // souscription aux événements GPS
-        ggaES.subscribe(new GGAEvent() {
+    public void notifyNmeaMessageChanged(GGA data) {
+        latOwner = data.getLatitude();
+        lonOwner = data.getLongitude();
+        ownerShip.setLatitude(latOwner);
+        ownerShip.setLongitude(lonOwner);
+        updateTargets();
 
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+    }
 
-                GGA data = (GGA) d;
-                ownerShip.setLatitude(data.getLatitude());
-                ownerShip.setLongitude(data.getLongitude());
-            }
-        });
+    public void notifyNmeaMessageChanged(VTG data) {
 
-        vtgES.subscribe(new VTGEvent() {
+        ownerShip.setCog(data.getCog());
+        ownerShip.setSog(data.getSog());
+        if (ownerShip.getSog() > 0.1) {
+            //  ship.setShapeId(0);
+        }
+    }
 
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                VTG data = (VTG) d;
-                ownerShip.setCog(data.getCog());
-                ownerShip.setSog(data.getSog());
-                if (ownerShip.getSog() > 0.1) {
-                    //   ship.setShapeId(0);
-                }
-            }
-        });
-        rmcES.subscribe(new RMCEvent() {
-
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                RMC data = (RMC) d;
-                ownerShip.setLatitude(data.getLatitude());
-                ownerShip.setLongitude(data.getLongitude());
-                ownerShip.setCog(data.getCog());
-                ownerShip.setSog(data.getSog());
-                if (ownerShip.getSog() > 0.1) {
-                    //  ship.setShapeId(0);
-                }
-            }
-        });
+    public void notifyNmeaMessageChanged(RMC data) {
+        latOwner = data.getLatitude();
+        lonOwner = data.getLongitude();
+        ownerShip.setLatitude(latOwner);
+        ownerShip.setLongitude(lonOwner);
+        ownerShip.setLongitude(data.getLongitude());
+        ownerShip.setCog(data.getCog());
+        ownerShip.setSog(data.getSog());
+        if (ownerShip.getSog() > 0.1) {
+            //  ship.setShapeId(0);
+        }
+        updateTargets();
 
     }
 
     private void schedule() {
         fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(DURATION), (ActionEvent event) -> {
+            //faisceau.setPivotX(50.0);
+            //faisceau.setPivotY(50.0);
             faisceau.setRotate(route);
             route++;
             route %= 360;
@@ -234,13 +264,14 @@ public class AisRadarController
     }
 
     public void createTarget(Ship ship) {
-        centerX = (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE);
-        centerY = (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE);
+        centerX = (int) (CENTER_X - (lonOwner - ship.getLongitude()) * radarScale);
+        centerY = (int) (CENTER_Y + (latOwner - ship.getLatitude()) * radarScale);
         GRShipImpl grship = new GRShipImpl(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMMSI()));
         grship.setOnMouseClicked((MouseEvent me) -> {
             if (first) {
                 grship.setRadius(RADIUS * 1.5);
+                updateAisPanel(grship.getShip());
                 first = false;
             } else {
                 grship.setRadius(RADIUS);
@@ -253,8 +284,17 @@ public class AisRadarController
 
         if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
+                ships.put(ship.getMMSI(), grship);
                 radar.getChildren().add(grship);
-                String label = "Name : " + ship.getName() + "\n"
+                String dest = ship.getDestination();
+                if (dest == null) {
+                    dest = "";
+                }
+                String name = ship.getName();
+                if (name == null) {
+                    name = "Not yet available";
+                }
+                String label = "Name : " + name + "\n"
                         + "MMSI : " + ship.getMMSI() + "\n"
                         + "Sog : " + formatter.format(ship.getSog()) + "\n"
                         + "Cog : " + formatter.format(ship.getCog());
@@ -267,9 +307,8 @@ public class AisRadarController
     }
 
     public void updateTarget(Ship ship) {
-        centerX = (int) (CENTER_X - (lonOwner - ship.getLongitude()) * RANGE);
-        centerY = (int) (CENTER_Y + (latOwner - ship.getLatitude()) * RANGE);
-
+        centerX = (int) (CENTER_X - (lonOwner - ship.getLongitude()) * radarScale);
+        centerY = (int) (CENTER_Y + (latOwner - ship.getLatitude()) * radarScale);
         Integer mmsiI = ship.getMMSI();
         if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
@@ -281,7 +320,6 @@ public class AisRadarController
                 }
                 List<Node> nodes = radar.getChildren();
                 String mmsi = Integer.toString(mmsiI);
-
                 nodes.stream().filter((n) -> (n.getId() != null)).filter((n) -> (n.getId().contains(mmsi))).map((n) -> (Circle) n).map((circle) -> {
                     circle.setCenterX(centerX);
                     return circle;
@@ -299,7 +337,11 @@ public class AisRadarController
                     if (dest == null) {
                         dest = "";
                     }
-                    label = "Name : " + ship.getName() + "\n"
+                    String name = ship.getName();
+                    if (name == null) {
+                        name = "Not yet available";
+                    }
+                    label = "Name : " + name + "\n"
                             + "MMSI : " + ship.getMMSI() + "\n"
                             + "Sog : " + formatter.format(ship.getSog()) + "\n"
                             + "Cog : " + formatter.format(ship.getCog()) + "\n"
@@ -313,25 +355,62 @@ public class AisRadarController
                 });
             });
         } else {
+
             List<Node> nodes = radar.getChildren();//Ship out of range
-            String mmsi = Integer.toString(mmsiI);
-            nodes.stream().filter((n) -> (n.getId().contains(mmsi))).map((n) -> {
-                nodes.remove(n);
-                return n;
-            }).forEach((n) -> {
-                outOfRangeShips.put(ship.getMMSI(), (GRShip) n);
+            if (nodes != null) {
+                String mmsi = Integer.toString(mmsiI);
+                nodes.stream().filter((n) -> (n.getId().contains(mmsi))).map((n) -> {
+                    nodes.remove(n);
+                    return n;
+                }).forEach((n) -> {
+                    outOfRangeShips.put(ship.getMMSI(), (GRShip) n);
+                });
+            }
+        }
+    }
+
+    private void updateTargets() {
+        Platform.runLater(() -> {
+            Set<Integer> s = ships.keySet();
+            s.stream().forEach((i) -> {
+                //updateTarget(ships.get(i).getShip());
+                maj(ships.get(i).getShip());
             });
+        });
+    }
+
+    private void maj(Ship target) {
+        List<Node> nodes = radar.getChildren();
+        String mmsi = Integer.toString(target.getMMSI());
+        for (Node n : nodes) {
+            if (n.getId() != null && n.getId().equals(mmsi)) {
+                int cX = (int) (CENTER_X - (lonOwner - target.getLongitude()) * radarScale);
+                int cY = (int) (CENTER_Y + (latOwner - target.getLatitude()) * radarScale);
+                if (cX <= MAX && cX >= MIN && cY <= MAX && cY >= MIN) {
+                    Platform.runLater(() -> {
+
+                        if (outOfRangeShips.containsKey(target.getMMSI())) {//Ships In range
+                            GRShipImpl grship = (GRShipImpl) outOfRangeShips.get(target.getMMSI());
+                            radar.getChildren().add(grship);
+                            outOfRangeShips.remove(mmsi, grship);
+                        }
+                        ((Circle) n).setCenterX(cX);
+                        ((Circle) n).setCenterY(cY);
+                    });
+                }
+            }
         }
     }
 
     public void setTarget(BaseStation transceiver) {
-        centerX = (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * RANGE);
-        centerY = (int) (CENTER_Y + (latOwner - transceiver.getLatitude()) * RANGE);
+        centerX = (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * radarScale);
+        centerY = (int) (CENTER_Y + (latOwner - transceiver.getLatitude()) * radarScale);
         GRShipImpl grship = new GRShipImpl(ship, centerX, centerY, RADIUS);
         grship.setId(Integer.toString(ship.getMMSI()));
         grship.setOnMouseClicked((MouseEvent me) -> {
             if (first) {
                 grship.setRadius(RADIUS * 1.5);
+                // updateAisPanel(grship.getShip());
                 first = false;
             } else {
                 grship.setRadius(RADIUS);
@@ -352,8 +431,8 @@ public class AisRadarController
     }
 
     public void updateTarget(BaseStation transceiver) {
-        centerX = (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * RANGE);
-        centerY = (int) (CENTER_Y + (latOwner - transceiver.getLatitude()) * RANGE);
+        centerX = (int) (CENTER_X - (lonOwner - transceiver.getLongitude()) * radarScale);
+        centerY = (int) (CENTER_Y + (latOwner - transceiver.getLatitude()) * radarScale);
         if (centerX <= MAX && centerX >= MIN && centerY <= MAX && centerY >= MIN) {
             Platform.runLater(() -> {
                 List<Node> nodes = radar.getChildren();
@@ -371,4 +450,28 @@ public class AisRadarController
         }
     }
 
+    private void addPanelController() {
+        Platform.runLater(() -> {
+            aisPanelController = new TargetPanel(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
+            aisPanelController.setTranslateX(100);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisPanelController);
+            guiAgentServices.getRoot().getChildren().add(aisPanelController); //Par defaut le radar n'est pas visible Ctrl-A
+            aisPanelController.setScale(1.0);
+            aisPanelController.setVisible(false);
+        });
+    }
+
+    protected final void updateAisPanel(Ship ship) {
+        Platform.runLater(() -> {
+            aisPanelController.updateAisPanel(ship, timestamps, midMap);
+        });
+    }
+
+    public void setTimestamps(Map<Integer, Calendar> timestamps) {
+        this.timestamps = timestamps;
+    }
+
+    public void setMidMap(Map<Integer, String> midMap) {
+        this.midMap = midMap;
+    }
 }

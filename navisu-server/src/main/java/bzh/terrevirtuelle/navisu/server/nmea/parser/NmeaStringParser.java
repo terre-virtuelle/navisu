@@ -10,11 +10,9 @@ import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl.NMEALexer;
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl.NMEAParser;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
 
 /**
  *
@@ -35,7 +33,7 @@ public class NmeaStringParser {
     }
 
     public void parse(final String s) {
-
+       // System.out.println("s "+s);
         String source = new StringBuilder(s).toString().trim();
         
         if ((source.startsWith("{") && source.endsWith("}")) // Gpsd well formatted
@@ -51,7 +49,8 @@ public class NmeaStringParser {
             try {
                 parser.entry();
             } catch (Exception ex) {
-                Logger.getLogger(NmeaStringParser.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(NmeaStringParser.class.getName()).log(Level.SEVERE, null, ex);
+                //System.out.println("ex  " + ex );
             }
         }
     }

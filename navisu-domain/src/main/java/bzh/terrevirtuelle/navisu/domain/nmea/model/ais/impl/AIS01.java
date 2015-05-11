@@ -69,7 +69,7 @@ public class AIS01 extends AISMessagePositionReportImpl implements AISMessage01 
      * AIS01 default constructor
      */
     public AIS01() {
-        
+       
     }
 
    

@@ -31,7 +31,6 @@ public interface GuiAgentServices extends ComponentService {
 
     Stage getStage();
 
-   
-
+    
     
 }

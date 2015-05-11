@@ -1,7 +1,6 @@
 package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl;
 
-import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller.AisPanelController;
-import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
+import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
@@ -37,9 +36,6 @@ public class AisPlotterImpl
     GeoViewServices geoViewServices;
 
     @UsedService
-    DpAgentServices dpAgentServices;
-
-    @UsedService
     GuiAgentServices guiAgentServices;
 
     @UsedService
@@ -62,7 +58,7 @@ public class AisPlotterImpl
     protected Map<Integer, BaseStation> stations;
     protected boolean on = false;
     protected AisPlotterController controller;
-    protected AisPanelController aisPanelController;
+    protected TargetPanel aisPanelController;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
    

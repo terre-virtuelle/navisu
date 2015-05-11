@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view;
 
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 
@@ -12,10 +13,12 @@ import javafx.scene.input.KeyEvent;
  *
  * @author Serge
  */
-public interface GRShip 
-extends EventHandler<KeyEvent>{
+public interface GRShip
+        extends EventHandler<KeyEvent> {
 
     @Override
     default void handle(KeyEvent event) {
     }
+
+    public Ship getShip();
 }
