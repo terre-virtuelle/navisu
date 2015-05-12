@@ -293,7 +293,7 @@ public class AppMain extends Application {
         //Clients à l'écoute des événements Nmea en debut de session
         aisServices.on();
        // aisLoggerServices.on();
-        aisPlotterServices.on();
+       // aisPlotterServices.on();
         //aisRadarServices.on();
         //gpsPlotterServices.on();
     }
