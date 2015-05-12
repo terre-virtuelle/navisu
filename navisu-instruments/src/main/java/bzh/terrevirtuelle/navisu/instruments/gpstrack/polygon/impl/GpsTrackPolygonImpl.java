@@ -222,6 +222,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		dmpLayer = new RenderableLayer();
 		dmpController = new MeasureToolController();
 		dmp.setController(dmpController);
+		dmp.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
+		dmp.setFollowTerrain(true);
+		dmpController.setUseRubberBand(true);
 		
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
 
@@ -633,7 +636,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		aisShip.setLongitude(target.getLongitude());
 		aisShips.add(aisShip);
 		// Enlever les commentaires pour voir les messages AIS
-		//System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
+		System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
     }
 
     private void updateTarget(Ship target) {
@@ -645,7 +648,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			resu.setMMSI(target.getMMSI());
     			aisShips.set(i, resu);
     			// Enlever les commentaires pour voir les messages AIS
-    			//System.out.println("Ship with MMSI " + resu.getMMSI() + " updated - position lat " + resu.getLatitude() + " and lon " + resu.getLongitude());
+    			System.out.println("Ship with MMSI " + resu.getMMSI() + " updated - position lat " + resu.getLatitude() + " and lon " + resu.getLongitude());
     		}
     	}
     }
@@ -939,9 +942,18 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	@Override
 	public void drawerOn() {
-			measureTool.setArmed(true);
-			controller.setArmed(true);
-			System.out.println("Drawer ready.\n");
+			if (!drawerActivated) {
+				measureTool.setArmed(true);
+				controller.setArmed(true);
+				System.out.println("Drawer ready.\n");
+				drawerActivated = true;
+				}
+			else {
+				measureTool.setArmed(false);
+				controller.setArmed(false);
+				System.out.println("Drawer deactivated.\n");
+				drawerActivated = false;
+				}
 	}
 	
 	@Override
@@ -950,6 +962,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
 		measureTool.setArmed(false);
 		controller.setArmed(false);
+		drawerActivated = false;
+		System.out.println("Drawer deactivated.\n");
 		savedMeasureTool.add(measureTool);
 		nbPolygon++;
 		controller = new MeasureToolController();
@@ -968,32 +982,70 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	@Override
 	public void polyShapeOn() {
-		
+		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+		System.out.println("Polygon shape activated.\n");
 	}
 	
 	@Override
 	public void ellipseShapeOn() {
-		
+		measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);
+		System.out.println("Ellipse shape activated.\n");
 	}
 	
 	@Override
 	public void circleShapeOn() {
-		
+		measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
+		System.out.println("Circle shape activated.\n");
 	}
 	
 	@Override
 	public void freeHandOn() {
+		if (!freeHandActivated) {
+			// Altitude en mètres
+			double altitude = wwd.getView().getEyePosition().getAltitude();
+			double spacing = (double) ((200*altitude)/(15000));
+			controller.setFreeHand(true);
+			controller.setFreeHandMinSpacing(spacing);
+			measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+			freeHandActivated = true;
+			System.out.println("Free hand mode activated.\n");
+			if (altitude != savedAltitude) {
+				savedAltitude = altitude;
+				System.out.println("Eye altitude : " + altitude);
+				System.out.println("Points spacing : " + spacing + "\n");
+			}
+		}
 		
+		else {
+			controller.setFreeHand(false);
+			freeHandActivated = false;
+			System.out.println("Free hand mode deactivated.\n");
+		}	
 	}
 	
 	@Override
 	public void createCpaZone() {
-		
+		dmp.setArmed(true);
+		dmpController.setArmed(true);
+		System.out.println("CPA zone ready to be drawn.\n");
 	}
 	
 	@Override
 	public void activateCpaZone() {
-		
+		if (!dmpActivated) {
+			dmpActivated = true;
+			//couleur de la DMP : vert
+			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
+			diameter = dmp.getWidth();
+			dmpLayer = dmp.getLayer();
+			dmpLayer.setEnabled(true);
+			dmpLayer.setName("CPA zone");
+			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+			dmp.setArmed(false);
+			dmpController.setArmed(false);
+			System.out.println("CPA zone activated.\n");
+		}
 	}
 	
 }
