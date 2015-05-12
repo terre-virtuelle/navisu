@@ -277,25 +277,10 @@ public class DockManagerImpl
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-                //.createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
-                //.createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
-                .createNode(0, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
-                .createNode(0, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
-                .createNode(1, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
-                .createNode(1, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
-                
-                .createNode(2, "polygon.png", 0, "polygon.png", 6, "freeHandOn.png", (e) -> freeHandOn())
-                .createNode(2, "polygon.png", 0, "polygon.png", 5, "circleShapeOn.png", (e) -> circleShapeOn())
-                .createNode(2, "polygon.png", 0, "polygon.png", 4, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
-                .createNode(2, "polygon.png", 0, "polygon.png", 3, "polyShapeOn.png", (e) -> polyShapeOn()) 
-                .createNode(2, "polygon.png", 0, "polygon.png", 2, "savePolygon.png", (e) -> savePolygon())
-                .createNode(2, "polygon.png", 0, "polygon.png", 1, "drawerOn.png", (e) -> drawerOn())
-                .createNode(2, "polygon.png", 0, "polygon.png", 0, "polygonOn.png", (e) -> open("GpsTrackPolygon"))
-                
-                .createNode(3, "cpa.png", 0, "cpa.png", 0, "createCpaZone.png", (e) -> createCpaZone())
-                .createNode(3, "cpa.png", 0, "cpa.png", 1, "activateCpaZone.png", (e) -> activateCpaZone())
-                                                                                                                
-                
+                .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
+                .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
+                .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
+                .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
                 .build();
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);
@@ -319,7 +304,19 @@ public class DockManagerImpl
     private void createTracksRadialWidget() {
         tracksRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chantier.png")
-                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
+                .createNode(0, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
+                .createNode(0, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
+                
+                .createNode(1, "polygon.png", 0, "polygon.png", 6, "freeHandOn.png", (e) -> freeHandOn())
+                .createNode(1, "polygon.png", 0, "polygon.png", 5, "circleShapeOn.png", (e) -> circleShapeOn())
+                .createNode(1, "polygon.png", 0, "polygon.png", 4, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
+                .createNode(1, "polygon.png", 0, "polygon.png", 3, "polyShapeOn.png", (e) -> polyShapeOn()) 
+                .createNode(1, "polygon.png", 0, "polygon.png", 2, "savePolygon.png", (e) -> savePolygon())
+                .createNode(1, "polygon.png", 0, "polygon.png", 1, "drawerOn.png", (e) -> drawerOn())
+                .createNode(1, "polygon.png", 0, "polygon.png", 0, "polygonOn.png", (e) -> open("GpsTrackPolygon"))
+                
+                .createNode(2, "cpa.png", 0, "cpa.png", 0, "createCpaZone.png", (e) -> createCpaZone())
+                .createNode(2, "cpa.png", 0, "cpa.png", 1, "activateCpaZone.png", (e) -> activateCpaZone())
                 .build();
         tracksRadialMenu.setLayoutX((width / 2));
         tracksRadialMenu.setLayoutY(height / 2);

@@ -147,6 +147,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected boolean dmpActivated = false;
 	protected double diameter;
 	protected double savedAltitude = 0;
+	protected boolean firstDetection = false;
 
 	@Override
 	public void componentInitiated() {
@@ -502,7 +503,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		boolean detection = false;
 		for (Ship target : targets) {
 		
-			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null) {
+			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null && !firstDetection) {
+				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside CPA zone" + "\n");
+				detection = true;
+				//couleur de la DMP passe en rouge
+				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
+				index = targets.indexOf(target);
+				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
+				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(targets.get(index).getLatitude(), targets.get(index).getLongitude()), 20000));
+				firstDetection = true;
+			}
+			
+			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null && firstDetection) {
 				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside CPA zone" + "\n");
 				detection = true;
 				//couleur de la DMP passe en rouge
@@ -511,6 +524,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
 				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
 			}
+			
 		}
 
 		if (!alarmOn && detection) {
@@ -535,6 +549,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		if (!detection) {
 			//couleur de la DMP repasse en vert
 			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
+			firstDetection = false;
 			}
 		
 	}
