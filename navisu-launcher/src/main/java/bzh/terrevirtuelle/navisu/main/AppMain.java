@@ -6,7 +6,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManage
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.impl.DatabaseDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.driver.driver.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.impl.InstrumentDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
@@ -238,6 +238,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
@@ -266,6 +267,7 @@ public class AppMain extends Application {
         // Test connexion GPS 
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
+        
         // Test connexion Gpsd 
         //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // dataServerServices.openGpsd("sinagot.net", 4001); 
@@ -273,8 +275,9 @@ public class AppMain extends Application {
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS 
+        
         // Test connexion fichier 
-        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        //ataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
@@ -290,9 +293,9 @@ public class AppMain extends Application {
         //Clients à l'écoute des événements Nmea en debut de session
         aisServices.on();
        // aisLoggerServices.on();
-        aisPlotterServices.on();
+       // aisPlotterServices.on();
         //aisRadarServices.on();
-        gpsPlotterServices.on();
+        //gpsPlotterServices.on();
     }
 
     public static void main(String[] args) throws Exception {

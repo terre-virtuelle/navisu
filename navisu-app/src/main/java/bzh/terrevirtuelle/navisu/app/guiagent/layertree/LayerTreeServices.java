@@ -28,4 +28,6 @@ public interface LayerTreeServices extends ComponentService {
     CheckBoxTreeItem<GeoLayer> search(String name);
 
     GeoLayer getLayer(String name);
+
+    List<String> getGroupNames();
 }

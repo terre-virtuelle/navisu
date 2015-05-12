@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.drivers.driver.driver.impl;
+package bzh.terrevirtuelle.navisu.app.drivers.driver.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManager;
