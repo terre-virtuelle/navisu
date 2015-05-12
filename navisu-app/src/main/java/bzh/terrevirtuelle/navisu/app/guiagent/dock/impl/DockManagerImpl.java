@@ -72,6 +72,7 @@ public class DockManagerImpl
     protected RadialMenu toolsRadialMenu;
     protected RadialMenu navigationRadialMenu;
     protected RadialMenu systemRadialMenu;
+    protected RadialMenu tracksRadialMenu;
     protected ImageView centerImg;
     protected int width;
     protected int height;
@@ -82,6 +83,10 @@ public class DockManagerImpl
     private InstrumentDriver instrumentDriver;
 
     public final DockItem[] ICONS = new DockItem[]{
+        DockItemFactory.newImageItem("tracks", ICON_PATH + "dock_icons/chantier.png",
+        (e) -> {
+            tracksRadialMenu.setVisible(!tracksRadialMenu.isVisible());
+        }),
         DockItemFactory.newImageItem("system I/O", ICON_PATH + "dock_icons/system.png",
         (e) -> {
             systemRadialMenu.setVisible(!systemRadialMenu.isVisible());
@@ -142,6 +147,7 @@ public class DockManagerImpl
         createToolsRadialWidget();
         createNavigationRadialWidget();
         createSystemRadialWidget();
+        createTracksRadialWidget();
     }
 
     private void createDockWidget(Scene scene) {
@@ -293,6 +299,17 @@ public class DockManagerImpl
         systemRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(systemRadialMenu);
         radialMenus.add(systemRadialMenu);
+    }
+     //--------------Tracks------------------
+    private void createTracksRadialWidget() {
+        tracksRadialMenu = RadialMenuBuilder.create()
+                .centralImage("chantier.png")
+                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
+                .build();
+        tracksRadialMenu.setLayoutX((width / 2));
+        tracksRadialMenu.setLayoutY(height / 2);
+        root.getChildren().add(tracksRadialMenu);
+        radialMenus.add(tracksRadialMenu);
     }
 
     private void open() {
