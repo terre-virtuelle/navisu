@@ -187,60 +187,11 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 
 						watchedShip.setLatitude(data.getLatitude());
 						watchedShip.setLongitude(data.getLongitude());
-
-						//code déplacé dans les évènements AIS
-						/*if (layerTreeServices.getCheckBoxTreeItems().get(22).isSelected()) {
-							selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
-							selectors.getLast().enable();
-							nbSelector++;
-							// couleur du selector : bleu
-							selectors.getLast().setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
-							RenderableLayer TempLayer = (RenderableLayer) ((selectors.getLast()).getLayer());
-							TempLayer.setName("Watch sector#"+nbSelector);
-							sectorLayers.add(TempLayer);
-							geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
-							layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
-							System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
-							System.out.println("NbSelector = " + nbSelector + "\n");
-							layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-						}*/
-
 						for (int j=0; j<selectors.size(); j++) {watchTarget(j, watchedShip);}
-
 					}
 
 				}
 			});
-
-			/*
-			 * vtgES.subscribe(new VTGEvent() {
-			 * 
-			 * @Override public <T extends NMEA> void notifyNmeaMessageChanged(T
-			 * d) { VTG data = (VTG) d; if (on) { System.out.println(data);
-			 * ship.setSog(10*data.getSog()); ship.setCog(10*data.getCog());
-			 * createTarget(ship); if (gShipCreated) { updateTarget(ship);} else
-			 * {createTarget(ship); gShipCreated = true;}
-			 * 
-			 * 
-			 * }
-			 * 
-			 * } });
-			 */
-			/*
-			 * rmcES.subscribe(new RMCEvent() {
-			 * 
-			 * @Override public <T extends NMEA> void notifyNmeaMessageChanged(T
-			 * d) { RMC data = (RMC) d; if (on) { System.out.println(data);
-			 * ship.setLatitude(data.getLatitude());
-			 * ship.setLongitude(data.getLongitude());
-			 * ship.setSog(10*data.getSog()); ship.setCog(10*data.getCog()); if
-			 * (gShipCreated) { updateTarget(ship);} else {createTarget(ship);
-			 * gShipCreated = true;}
-			 * 
-			 * }
-			 * 
-			 * } });
-			 */
 		}
 
 		if (!aisServices.isOn()) {aisServices.on();}
@@ -256,23 +207,6 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 			for (int j=0; j<selectors.size(); j++) {
 				watchTargetAis(j, aisShips);
 				}
-			
-			if (layerTreeServices.getCheckBoxTreeItems().get(22).isSelected()) {
-				selectors.add(new SectorSelector(GeoWorldWindViewImpl.getWW()));
-				selectors.getLast().enable();
-				nbSelector++;
-				// couleur du selector : bleu
-				selectors.getLast().setBorderColor(WWUtil.decodeColorRGBA("0000FFFF"));
-				RenderableLayer TempLayer = (RenderableLayer) ((selectors.getLast()).getLayer());
-				TempLayer.setName("Watch sector#"+nbSelector);
-				sectorLayers.add(TempLayer);
-				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
-				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(sectorLayers.getLast()));
-				System.out.println(sectorLayers.getLast().getName()+" created successfully."+"\n");
-				System.out.println("NbSelector = " + nbSelector + "\n");
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-			}
-			
 			});
 		
 	}
@@ -338,13 +272,12 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 			.println("============ W A R N I N G ============ Ship with MMSI #"
 					+ target.getMMSI() + " is inside Sector#"+ (i+1));
 
-			if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);}
-			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
-			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
-			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
-
 			if (!(isTextOn.get(i))) {
 				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
+				if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);}
+				if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
+				layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
+				layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
 				textOn(sector, i);
 			}
 
@@ -365,10 +298,6 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 						alarmOn = false;
 					}
 				}, 7500);
-			}
-
-			if (!layerTreeServices.getCheckBoxTreeItems().get(21).isSelected()) {
-				layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
 			}
 		}
 		if (sector != null
@@ -429,13 +358,8 @@ GpsTrackSectorServices, InstrumentDriver, ComponentState {
 			sectorLayers.get(i).addRenderable(text.get(i));
 		} else {
 			sectorLayers.get(i).setEnabled(true);
-			if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
-			if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);}
-			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
-			layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
 			sectorLayers.get(i).addRenderable(text.get(i));
 		}
-
 		isTextOn.set(i, true);
 	}
 

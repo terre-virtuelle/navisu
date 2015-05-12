@@ -114,27 +114,7 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Watch sectors", null);
         rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "New watch sector", null);
-        rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Watch polygons", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Toggle drawer", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Activate current polygon", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Save & activate current polygon", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Toggle polygon shape", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Toggle ellipse shape", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Toggle circle shape", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Toggle free hand", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Create CPA zone", null);
-        rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Activate CPA zone", null);
         rootItems.add(tmp);
         treeView.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEventHandle);
 
