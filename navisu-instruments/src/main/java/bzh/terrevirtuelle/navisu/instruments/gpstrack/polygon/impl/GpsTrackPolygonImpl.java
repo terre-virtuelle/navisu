@@ -153,6 +153,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected double savedAltitude = 0;
 	protected boolean firstDetection = false;
 	protected String[][] shipMatrix=new String[4][100];
+	protected int count = 1;
 
 	@Override
 	public void componentInitiated() {
@@ -293,14 +294,16 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		// Enlever les commentaires pour voir les messages AIS
 		System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
 		System.err.println(aisShips.size() + " ships in sight");
-    	
-		if (aisShips.size()>20 && aisShips.size()%5==0) {
-			saveShips();
-			System.err.println("List of AIS ships saved.");
-			}
+		count++;
 	}
 
     private void updateTarget(Ship target) {
+    	
+		if (count%100==0) {
+			saveShips();
+			System.err.println("List of AIS ships saved.");
+			}
+    	
     	for (int i=0; i<aisShips.size(); i++) {
     		if (aisShips.get(i).getMMSI() == target.getMMSI()) {
     			Ship resu = new Ship();
@@ -315,7 +318,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			shipMatrix[2][i] = Double.toString(resu.getLatitude());
     			shipMatrix[3][i] = Double.toString(resu.getLongitude());
     			// Enlever les commentaires pour voir les messages AIS
-    			System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + target.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude());
+    			System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude());
+    			count++;
     		}
     	}
     }
