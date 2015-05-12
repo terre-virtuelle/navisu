@@ -34,6 +34,10 @@ import gov.nasa.worldwind.util.WWMath;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -148,6 +152,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected double diameter;
 	protected double savedAltitude = 0;
 	protected boolean firstDetection = false;
+	protected String[][] shipMatrix=new String[4][100];
 
 	@Override
 	public void componentInitiated() {
@@ -281,9 +286,18 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		aisShip.setLongitude(target.getLongitude());
 		if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {aisShip.setName(target.getName());}
 		aisShips.add(aisShip);
+		shipMatrix[0][aisShips.size()-1] = Integer.toString(aisShip.getMMSI());
+		shipMatrix[1][aisShips.size()-1] = aisShip.getName();
+		shipMatrix[2][aisShips.size()-1] = Double.toString(aisShip.getLatitude());
+		shipMatrix[3][aisShips.size()-1] = Double.toString(aisShip.getLongitude());
 		// Enlever les commentaires pour voir les messages AIS
 		System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
 		System.err.println(aisShips.size() + " ships in sight");
+    	
+		if (aisShips.size()>20 && aisShips.size()%5==0) {
+			saveShips();
+			System.err.println("List of AIS ships saved.");
+			}
 	}
 
     private void updateTarget(Ship target) {
@@ -296,6 +310,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {resu.setName(target.getName());}
     			else {resu.setName(aisShips.get(i).getName());}
     			aisShips.set(i, resu);
+    			shipMatrix[0][i] = Integer.toString(resu.getMMSI());
+    			shipMatrix[1][i] = resu.getName();
+    			shipMatrix[2][i] = Double.toString(resu.getLatitude());
+    			shipMatrix[3][i] = Double.toString(resu.getLongitude());
     			// Enlever les commentaires pour voir les messages AIS
     			System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + target.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude());
     		}
@@ -663,6 +681,36 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			dmp.setArmed(false);
 			dmpController.setArmed(false);
 			System.out.println("CPA zone activated.\n");
+		}
+	}
+	
+	private void saveShips() {
+		//declare output stream
+		BufferedWriter writer = null;
+		//define headers
+		String[] CSVHeaders = {"MMSI","name","lat","lon"};
+		
+		try {
+		    // open file for writing
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savedAisShips.csv"), "utf-8"));
+		    // put headers in CSV file
+			for (int i=0;i<CSVHeaders.length-1;i++){
+			writer.write(CSVHeaders[i]+";");
+			}
+			writer.write(CSVHeaders[CSVHeaders.length-1]+"\n");
+			
+			//Put data - if needed put the loop around more than orw of records
+			for (int j=0;j<aisShips.size();j++){
+				for (int i=0;i<4;i++) {
+			writer.write(shipMatrix[i][j]+";");}
+				writer.write("\r\n");
+			}
+			
+		} catch (IOException ex) {
+		  // report
+		} finally {
+		//close file
+		   try {writer.close();} catch (Exception ex) {}
 		}
 	}
 	
