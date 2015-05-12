@@ -279,10 +279,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		aisShip.setMMSI(target.getMMSI());
 		aisShip.setLatitude(target.getLatitude());
 		aisShip.setLongitude(target.getLongitude());
+		if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {aisShip.setName(target.getName());}
 		aisShips.add(aisShip);
 		// Enlever les commentaires pour voir les messages AIS
-		System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
-    }
+		System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
+		System.err.println(aisShips.size() + " ships in sight");
+	}
 
     private void updateTarget(Ship target) {
     	for (int i=0; i<aisShips.size(); i++) {
@@ -291,9 +293,11 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			resu.setLatitude(target.getLatitude());
     			resu.setLongitude(target.getLongitude());
     			resu.setMMSI(target.getMMSI());
+    			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {resu.setName(target.getName());}
+    			else {resu.setName(aisShips.get(i).getName());}
     			aisShips.set(i, resu);
     			// Enlever les commentaires pour voir les messages AIS
-    			System.out.println("Ship with MMSI " + resu.getMMSI() + " updated - position lat " + resu.getLatitude() + " and lon " + resu.getLongitude());
+    			System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + target.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude());
     		}
     	}
     }
