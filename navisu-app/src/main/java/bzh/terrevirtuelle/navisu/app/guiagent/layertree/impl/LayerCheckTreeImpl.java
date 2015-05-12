@@ -43,17 +43,18 @@ public class LayerCheckTreeImpl
     private List<CheckBoxTreeItem<GeoLayer>> rootItems;
     private GeoLayer layer;
     private String value;
+    private List<String> groupNames;
 
     @Override
     public void componentInitiated() {
 
         this.rootItem0 = new CheckBoxTreeItem<>();
         this.treeView = new TreeView<>(rootItem0);
-        rootItems = new ArrayList<>();
+        this.rootItems = new ArrayList<>();
+        this.groupNames = new ArrayList<>();
         this.geoView = bzh.terrevirtuelle.navisu.core.view.geoview.GeoView.factory.newWorldWindGeo3DView();
         this.layerManager = this.geoView.getLayerManager();
         this.rootItem0.setExpanded(true);
-
         this.treeView.setShowRoot(false);
         this.treeView.setCellFactory(CheckBoxTreeCell.<GeoLayer>forTreeView((TreeItem<GeoLayer> objectTreeItem) -> new SimpleBooleanProperty(objectTreeItem.getValue().isVisible()), new StringConverter<TreeItem<GeoLayer>>() {
             @Override
@@ -65,7 +66,6 @@ public class LayerCheckTreeImpl
             public TreeItem<GeoLayer> fromString(String s) {
                 return null;
             }
-
         }));
         EventHandler<MouseEvent> mouseEventHandle = (MouseEvent event) -> {
             handleMouseClicked(event);
@@ -75,7 +75,6 @@ public class LayerCheckTreeImpl
         rootItems.add(createNode(rootItem0, "On-screen layers", "boussole.png"));
         CheckBoxTreeItem<GeoLayer> charts = createNode(rootItem0, "Charts", "charts-16x16.png");
         rootItems.add(charts);
-        
         CheckBoxTreeItem<GeoLayer> raster = createNode(charts, "Raster charts", null);
         rootItems.add(raster);
         CheckBoxTreeItem<GeoLayer> tmp = createNode(raster, "BSB/KAP charts", null);
@@ -142,6 +141,7 @@ public class LayerCheckTreeImpl
 
     @Override
     public void createGroup(String groupName, GeoLayer<?>... layers) {
+        groupNames.add(groupName);
         for (GeoLayer geoLayer : layers) {
             CheckBoxTreeItem<GeoLayer> treeItem;
             treeItem = new CheckBoxTreeItem<>(geoLayer);
@@ -222,4 +222,10 @@ public class LayerCheckTreeImpl
         });
         return layer;
     }
+
+    @Override
+    public List<String> getGroupNames() {
+        return groupNames;
+    }
+    
 }

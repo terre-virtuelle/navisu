@@ -26,6 +26,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,10 +69,11 @@ public class GpsPlotterController {
         this.name = name;
         this.group = group;
         wwd = GeoWorldWindViewImpl.getWW();
-        // TODO tester si le group Devices existe deja ou pas
-        //  layerTreeServices.createGroup(group);
-        //  geoViewServices.getLayerManager().createGroup(group);
-
+        List<String> groups = layerTreeServices.getGroupNames();
+        if (!groups.contains(group)) {
+            layerTreeServices.createGroup(group);
+            geoViewServices.getLayerManager().createGroup(group);
+        }
         this.gpsLayer = new RenderableLayer();
         gpsLayer.setName(name);
         geoViewServices.getLayerManager().insertGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(gpsLayer));
