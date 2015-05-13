@@ -302,6 +302,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		if (count%100==0) {
 			saveShips();
 			System.err.println("List of AIS ships saved.");
+			System.err.println(aisShips.size() + " ships in database");
 			}
     	
     	for (int i=0; i<aisShips.size(); i++) {
