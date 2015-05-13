@@ -34,11 +34,17 @@ import gov.nasa.worldwind.util.WWMath;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -152,7 +158,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected double diameter;
 	protected double savedAltitude = 0;
 	protected boolean firstDetection = false;
-	protected String[][] shipMatrix=new String[4][100];
+	protected String[][] shipMatrix=new String[6][500];
 	protected int count = 1;
 
 	@Override
@@ -216,6 +222,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		dmpController.setUseRubberBand(true);
 		
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+
+		readShips();
 
 	}
 
@@ -281,6 +289,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 	
 	private void createTarget(Ship target) {
+		boolean shipExists = false;
+		for (int i=0; i<aisShips.size(); i++) {
+    		if (aisShips.get(i).getMMSI() == target.getMMSI()) {
+    			shipExists = true;
+    			}
+    		}
+		
+		if (shipExists) {updateTarget(target);} else {
+		
+		
+		DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
+		Date date = new Date();
 		Ship aisShip = new Ship();
 		aisShip.setMMSI(target.getMMSI());
 		aisShip.setLatitude(target.getLatitude());
@@ -291,15 +312,21 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		shipMatrix[1][aisShips.size()-1] = aisShip.getName();
 		shipMatrix[2][aisShips.size()-1] = Double.toString(aisShip.getLatitude());
 		shipMatrix[3][aisShips.size()-1] = Double.toString(aisShip.getLongitude());
+		shipMatrix[4][aisShips.size()-1] = dateFormatDate.format(date);
+		shipMatrix[5][aisShips.size()-1] = dateFormatTime.format(date);
 		// Enlever les commentaires pour voir les messages AIS
-		System.out.println("Ship with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude());
-		System.err.println(aisShips.size() + " ships in sight");
+		System.err.println("Ship#" + aisShips.size() + " with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude() + " at " + dateFormatTime.format(date));
 		count++;
+		}
 	}
 
     private void updateTarget(Ship target) {
     	
-		if (count%100==0) {
+		DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
+		Date date = new Date();
+		
+		if (count%50==0) {
 			saveShips();
 			System.err.println("List of AIS ships saved.");
 			System.err.println(aisShips.size() + " ships in database");
@@ -318,8 +345,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			shipMatrix[1][i] = resu.getName();
     			shipMatrix[2][i] = Double.toString(resu.getLatitude());
     			shipMatrix[3][i] = Double.toString(resu.getLongitude());
+    			shipMatrix[4][i] = dateFormatDate.format(date);
+    			shipMatrix[5][i] = dateFormatTime.format(date);
     			// Enlever les commentaires pour voir les messages AIS
-    			System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude());
+    			System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date));
     			count++;
     		}
     	}
@@ -677,7 +706,11 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			dmpActivated = true;
 			//couleur de la DMP : vert
 			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
+			//diamètre dynamique (commenter/décommenter la ligne suivante)
 			diameter = dmp.getWidth();
+			//ou : rayon statique de x yards (commenter/décommenter les 2 lignes suivantes)
+			//double x = 1000;
+			//diameter = 2*x*0.9144;
 			dmpLayer = dmp.getLayer();
 			dmpLayer.setEnabled(true);
 			dmpLayer.setName("CPA zone");
@@ -693,7 +726,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		//declare output stream
 		BufferedWriter writer = null;
 		//define headers
-		String[] CSVHeaders = {"MMSI","name","lat","lon"};
+		String[] CSVHeaders = {"MMSI","Name","Last known latitude","Last known longitude","Date","Time"};
 		
 		try {
 		    // open file for writing
@@ -706,7 +739,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			
 			//Put data - if needed put the loop around more than orw of records
 			for (int j=0;j<aisShips.size();j++){
-				for (int i=0;i<4;i++) {
+				for (int i=0;i<6;i++) {
 			writer.write(shipMatrix[i][j]+";");}
 				writer.write("\r\n");
 			}
@@ -717,6 +750,62 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		//close file
 		   try {writer.close();} catch (Exception ex) {}
 		}
+	}
+	
+	private void readShips() {
+		boolean firstLine = true;
+		int i = 0;
+		String csvFile = "savedAisShips.csv";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ";";
+	 
+		try {
+	 
+			br = new BufferedReader(new FileReader(csvFile));
+			while ((line = br.readLine()) != null) {
+	 
+				if (firstLine) {
+					firstLine = false;
+					continue;
+					}
+				// use separator
+				String[] ship = line.split(cvsSplitBy);
+	 
+				shipMatrix[0][i] = ship[0];
+    			shipMatrix[1][i] = ship[1];
+    			shipMatrix[2][i] = ship[2];
+    			shipMatrix[3][i] = ship[3];
+    			shipMatrix[4][i] = ship[4];
+    			shipMatrix[5][i] = ship[5];
+    			
+    			//System.out.println("Ship [MMSI= " + ship[0] + " , name=" + ship[1] + " , lat=" + ship[2] + " , lon=" + ship[3] + " , date=" + ship[4] + " , time=" + ship[5] + " , i=" + i + "]");
+    			
+    			Ship s = new Ship();
+    			s.setMMSI(Integer.parseInt(ship[0]));
+    			s.setName(ship[1]);
+    			s.setLatitude(Double.parseDouble(ship[2]));
+    			s.setLongitude(Double.parseDouble(ship[3]));
+    			aisShips.add(s);
+    			i++;
+	 
+			}
+	 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println("Reading file done. " + aisShips.size() + " ships in database." );
+		//for (Ship s : aisShips) {System.out.println(s.toString());}
 	}
 	
 }
