@@ -304,7 +304,19 @@ public class DockManagerImpl
     private void createTracksRadialWidget() {
         tracksRadialMenu = RadialMenuBuilder.create()
                 .centralImage("chantier.png")
-                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
+                .createNode(0, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
+                .createNode(0, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
+                
+                .createNode(1, "polygon.png", 0, "polygon.png", 6, "freeHandOn.png", (e) -> freeHandOn())
+                .createNode(1, "polygon.png", 0, "polygon.png", 5, "circleShapeOn.png", (e) -> circleShapeOn())
+                .createNode(1, "polygon.png", 0, "polygon.png", 4, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
+                .createNode(1, "polygon.png", 0, "polygon.png", 3, "polyShapeOn.png", (e) -> polyShapeOn()) 
+                .createNode(1, "polygon.png", 0, "polygon.png", 2, "savePolygon.png", (e) -> savePolygon())
+                .createNode(1, "polygon.png", 0, "polygon.png", 1, "drawerOn.png", (e) -> drawerOn())
+                .createNode(1, "polygon.png", 0, "polygon.png", 0, "polygonOn.png", (e) -> open("GpsTrackPolygon"))
+                
+                .createNode(2, "cpa.png", 0, "cpa.png", 0, "createCpaZone.png", (e) -> createCpaZone())
+                .createNode(2, "cpa.png", 0, "cpa.png", 1, "activateCpaZone.png", (e) -> activateCpaZone())
                 .build();
         tracksRadialMenu.setLayoutX((width / 2));
         tracksRadialMenu.setLayoutY(height / 2);
@@ -339,6 +351,96 @@ public class DockManagerImpl
         if (instrumentDriver != null) {
             instrumentDriver.off();
         }
+    }
+    
+    private void newSector() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackSector");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.newSector();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void drawerOn() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.drawerOn();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void savePolygon() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.savePolygon();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void polyShapeOn() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.polyShapeOn();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void ellipseShapeOn() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.ellipseShapeOn();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void circleShapeOn() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.circleShapeOn();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void freeHandOn() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.freeHandOn();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void createCpaZone() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.createCpaZone();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void activateCpaZone() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.activateCpaZone();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
     }
 
     private void openWMS(String description, String url) {

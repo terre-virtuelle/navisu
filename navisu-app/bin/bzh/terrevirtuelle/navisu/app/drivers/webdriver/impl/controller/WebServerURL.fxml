@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="web"  type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   
+   <children>
+      <Group>
+         <children>
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#00524e99" height="240.0" stroke="#005450" strokeType="INSIDE" width="400.0" />
+            <Line endX="400.0" endY="105.0" layoutY="-3.0" startY="105.0" stroke="#04fff2" strokeWidth="0.5" />
+            <Line endX="400.0" endY="78.0" layoutY="80.0" startY="78.0" stroke="#04fff2" strokeWidth="0.5" />
+            <Group layoutX="9.0">
+               <children>
+                  <Text fx:id="serverName" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisname" text="Web Server URL" textAlignment="CENTER" wrappingWidth="149.0"> 
+                  </Text>
+               </children>
+            </Group>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bzh/terrevirtuelle/navisu/app/drivers/webdriver/controller/logoTV64AIS.png" />
+               </image>
+               <effect>
+                  <Glow />
+               </effect>
+            </ImageView>
+            <TextField fx:id="server" layoutX="14.0" layoutY="120.0" prefHeight="25.0" prefWidth="379.0" />
+         </children>
+      </Group>
+   </children>
+
+</fx:root>

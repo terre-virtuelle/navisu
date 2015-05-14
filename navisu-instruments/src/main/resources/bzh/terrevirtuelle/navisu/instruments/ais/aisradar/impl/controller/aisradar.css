@@ -1,4 +1,4 @@
-/* @charset "utf-8";*/
+/* @charset "utf-8"; */
 /* CSS Document */
 @font-face {
     -fx-font-family: 'Navisu';
@@ -26,7 +26,7 @@
     -fx-underline : true;
 }
 .info-text{
-    -fx-font: 20px "Roboto Cn";
+    -fx-font: 16px "Roboto Cn";
     -fx-fill : #fff900;
 }
 /*******************************************************************************
@@ -158,10 +158,6 @@
     -fx-minor-tick-length: 3px;
     -fx-border-color: null;
 }
-.sliderlabel{
-    -fx-font: 12px "Roboto Cn";
-    -fx-fill : -fx-line-base;   
-}
 /*******************************************************************************
  *                                                                             *
  * radar circles and lines                                                     *
@@ -182,7 +178,7 @@
 }
 .radar-degrees{
   -fx-font: 20pt "Roboto Cn";
- /* -fx-font-weight: bold;*/
+  -fx-font-weight: bold;
   -fx-fill:-fx-line-base; 
 }
 .radar-screen {

@@ -53,6 +53,17 @@ import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.AisPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLogger;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl.GpsTrackPlotterImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl.GpsTrackPolygonImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.impl.GpsTrackSectorImpl;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
@@ -82,11 +93,14 @@ import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
+
 import java.io.FileInputStream;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -136,6 +150,11 @@ public class AppMain extends Application {
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
+                        
+                        GpsTrackPlotterImpl.class,
+                        GpsTrackSectorImpl.class,
+                        GpsTrackPolygonImpl.class,
+                        
                         GpsPlotterImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
@@ -178,6 +197,11 @@ public class AppMain extends Application {
 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
+        
+        GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
+        GpsTrackSectorServices gpsTrackSectorServices = componentManager.getComponentService(GpsTrackSectorServices.class);
+        GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
+        
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
@@ -232,11 +256,17 @@ public class AppMain extends Application {
 
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
+        
+        instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
+        
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackSectorServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
 
+        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
@@ -269,7 +299,7 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         
         // Test connexion Gpsd 
-        //dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+        dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
         // dataServerServices.openGpsd("sinagot.net", 4001); 
         // dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
@@ -277,8 +307,13 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4003 AIS 
         
         // Test connexion fichier 
+        //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        //dataServerServices.openFile("data/nmea/test2.txt");
+        //dataServerServices.openFile("data/nmea/test1.txt");
+        //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         //ataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
@@ -290,11 +325,16 @@ public class AppMain extends Application {
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
+        // Test clients à l'écoute des événements Nmea 
         //Clients à l'écoute des événements Nmea en debut de session
         aisServices.on();
        // aisLoggerServices.on();
-       // aisPlotterServices.on();
+        aisPlotterServices.on();
+        //gpsTrackPlotterServices.on();
+        //gpsTrackSectorServices.on();
+        //gpsTrackPolygonServices.on();
         //aisRadarServices.on();
+        //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
     }
 

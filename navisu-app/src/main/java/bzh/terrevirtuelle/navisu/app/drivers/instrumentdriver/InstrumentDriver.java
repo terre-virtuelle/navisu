@@ -15,4 +15,22 @@ public interface InstrumentDriver {
     void on(String ... files);
 
     void off();
+    
+    default void newSector() {return;};
+    
+    default void drawerOn() {return;};
+    
+    default void savePolygon() {return;};
+    
+    default void polyShapeOn() {return;};
+    
+    default void ellipseShapeOn() {return;};
+    
+    default void circleShapeOn() {return;};
+    
+    default void freeHandOn() {return;};
+    
+    default void createCpaZone() {return;};
+    
+    default void activateCpaZone() {return;};
 }

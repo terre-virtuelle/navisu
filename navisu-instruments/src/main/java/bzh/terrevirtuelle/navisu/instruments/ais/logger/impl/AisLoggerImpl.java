@@ -74,25 +74,40 @@ public class AisLoggerImpl
         if (!aisServices.isOn()) {
             aisServices.on();
         }
-            aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedDate) ->{
+        if (on == false) {
+            on = false;
+            aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedDate) -> {
+                if (on) {
                     System.out.println(updatedDate);
+                }
             });
             aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedDate) -> {
+                if (on) {
                     System.out.println(updatedDate);
+                }
             });
             aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship updatedDate) -> {
+                if (on) {
                     System.out.println(updatedDate);
+                }
             });
 
             aisCSEvent.subscribe((AisCreateStationEvent) (BaseStation updatedDate) -> {
+                if (on) {
                     System.out.println(updatedDate);
+                }
             });
             aisUSEvent.subscribe((AisUpdateStationEvent) (BaseStation updatedDate) -> {
+                if (on) {
                     System.out.println(updatedDate);
+                }
             });
             aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation updatedDate) -> {
+                if (on) {
                     System.out.println(updatedDate);
+                }
             });
+        }
     }
 
     @Override
