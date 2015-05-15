@@ -83,7 +83,7 @@ public class DockManagerImpl
     private InstrumentDriver instrumentDriver;
 
     public final DockItem[] ICONS = new DockItem[]{
-        DockItemFactory.newImageItem("tracks", ICON_PATH + "dock_icons/chantier.png",
+        DockItemFactory.newImageItem("tracks", ICON_PATH + "dock_icons/tracks.png",
         (e) -> {
             tracksRadialMenu.setVisible(!tracksRadialMenu.isVisible());
         }),
@@ -303,7 +303,7 @@ public class DockManagerImpl
      //--------------Tracks------------------
     private void createTracksRadialWidget() {
         tracksRadialMenu = RadialMenuBuilder.create()
-                .centralImage("chantier.png")
+                .centralImage("tracksradialmenu150.png")
                 .createNode(0, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
                 .createNode(0, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
                 
