@@ -19,6 +19,11 @@
     -fx-fill : #fff900;
     /*-fx-font-weight: bold;*/
 }
+.aislabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+    /*-fx-font-weight: bold;*/
+}
 .aisname{
     -fx-font: 18px "Roboto Cn";
     -fx-fill : #fff900;
@@ -157,6 +162,11 @@
     -fx-tick-length: 5px;
     -fx-minor-tick-length: 3px;
     -fx-border-color: null;
+}
+.sliderlabel{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+    /*-fx-font-weight: bold;*/
 }
 /*******************************************************************************
  *                                                                             *
