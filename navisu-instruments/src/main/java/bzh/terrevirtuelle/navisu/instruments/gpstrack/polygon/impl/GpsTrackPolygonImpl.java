@@ -787,8 +787,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			Ship s = new Ship();
     			s.setMMSI(Integer.parseInt(ship[0]));
     			s.setName(ship[1]);
-    			s.setLatitude(Double.parseDouble(ship[2]));
-    			s.setLongitude(Double.parseDouble(ship[3]));
+    			//s.setLatitude(Double.parseDouble(ship[2]));
+    			//s.setLongitude(Double.parseDouble(ship[3]));
     			aisShips.add(s);
     			i++;
 	 

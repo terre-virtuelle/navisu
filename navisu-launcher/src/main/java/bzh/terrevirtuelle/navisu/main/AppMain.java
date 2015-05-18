@@ -299,16 +299,17 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         
         // Test connexion Gpsd 
-        dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+       dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+        //dataServerServices.openGpsd("fridu.net", 2947);
         // dataServerServices.openGpsd("sinagot.net", 4001); 
-        // dataServerServices.openGpsd("hd-sf.com", 9009);
+        //dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
-        //tcp://sinagot.net:4003 AIS 
+        //tcp://sinagot.net:4003 AIS
         
         // Test connexion fichier 
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        //dataServerServices.openFile("data/nmea/test2.txt");
+        //dataServerServices.openFile("data/nmea/test3.txt");
         //dataServerServices.openFile("data/nmea/test1.txt");
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
@@ -330,7 +331,7 @@ public class AppMain extends Application {
         aisServices.on();
        // aisLoggerServices.on();
         aisPlotterServices.on();
-        //gpsTrackPlotterServices.on();
+        gpsTrackPlotterServices.on();
         //gpsTrackSectorServices.on();
         //gpsTrackPolygonServices.on();
         //aisRadarServices.on();
