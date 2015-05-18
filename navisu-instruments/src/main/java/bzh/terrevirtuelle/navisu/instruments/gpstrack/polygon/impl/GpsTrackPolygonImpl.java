@@ -158,8 +158,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected double diameter;
 	protected double savedAltitude = 0;
 	protected boolean firstDetection = false;
-	protected String[][] shipMatrix=new String[6][500];
+	protected String[][] shipMatrix=new String[6][1000];
 	protected int count = 1;
+	protected int inSight = 0;
 
 	@Override
 	public void componentInitiated() {
@@ -290,6 +291,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	private void createTarget(Ship target) {
 		boolean shipExists = false;
+		inSight++;
 		for (int i=0; i<aisShips.size(); i++) {
     		if (aisShips.get(i).getMMSI() == target.getMMSI()) {
     			shipExists = true;
@@ -330,6 +332,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			saveShips();
 			System.err.println("List of AIS ships saved.");
 			System.err.println(aisShips.size() + " ships in database");
+			System.err.println(inSight + " ships in sight at " + dateFormatTime.format(date));
 			}
     	
     	for (int i=0; i<aisShips.size(); i++) {
