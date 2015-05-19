@@ -705,6 +705,42 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 	
 	@Override
+	public void createCpaZone500() {
+		if (!dmpActivated) {
+			dmpActivated = true;
+			//couleur de la DMP : vert
+			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
+			//rayon statique de 500 yards
+			double x = 500;
+			diameter = 2*x*0.9144;
+			dmpLayer = dmp.getLayer();
+			dmpLayer.setEnabled(true);
+			dmpLayer.setName("CPA zone 500 yards");
+			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+			System.out.println("CPA zone 500 yards activated.\n");
+		}
+	}
+	
+	@Override
+	public void createCpaZone1000() {
+		if (!dmpActivated) {
+			dmpActivated = true;
+			//couleur de la DMP : vert
+			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
+			//rayon statique de 500 yards
+			double x = 1000;
+			diameter = 2*x*0.9144;
+			dmpLayer = dmp.getLayer();
+			dmpLayer.setEnabled(true);
+			dmpLayer.setName("CPA zone 1000 yards");
+			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
+			System.out.println("CPA zone 1000 yards activated.\n");
+		}
+	}
+	
+	@Override
 	public void activateCpaZone() {
 		if (!dmpActivated) {
 			dmpActivated = true;
