@@ -317,6 +317,8 @@ public class DockManagerImpl
                 
                 .createNode(2, "cpa.png", 0, "cpa.png", 0, "createCpaZone.png", (e) -> createCpaZone())
                 .createNode(2, "cpa.png", 0, "cpa.png", 1, "activateCpaZone.png", (e) -> activateCpaZone())
+                .createNode(2, "cpa.png", 0, "cpa.png", 2, "createCpaZone500.png", (e) -> createCpaZone500())
+                .createNode(2, "cpa.png", 0, "cpa.png", 3, "createCpaZone1000.png", (e) -> createCpaZone1000())
                 .build();
         tracksRadialMenu.setLayoutX((width / 2));
         tracksRadialMenu.setLayoutY(height / 2);
@@ -427,6 +429,26 @@ public class DockManagerImpl
     	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
     	if (instrumentDriver != null) {
     		instrumentDriver.createCpaZone();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void createCpaZone500() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.createCpaZone500();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void createCpaZone1000() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.createCpaZone1000();
         }
     	else {
     		System.out.println("ça plante");

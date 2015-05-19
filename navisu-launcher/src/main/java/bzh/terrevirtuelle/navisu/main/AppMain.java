@@ -294,22 +294,20 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         
         // Test connexion Gpsd 
-        dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+        //dataServerServices.openGpsd("sinagot.net", 2947);
+        //dataServerServices.openGpsd("fridu.net", 2947);
         // dataServerServices.openGpsd("sinagot.net", 4001); 
-        // dataServerServices.openGpsd("hd-sf.com", 9009);
+        //dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
-        //tcp://sinagot.net:4003 AIS 
+        //tcp://sinagot.net:4003 AIS
         
         // Test connexion fichier 
-        //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        //dataServerServices.openFile("data/nmea/test2.txt");
-        //dataServerServices.openFile("data/nmea/test1.txt");
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         //ataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        // dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
+        //dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
 
@@ -323,14 +321,21 @@ public class AppMain extends Application {
         // Test clients à l'écoute des événements Nmea 
         //Clients à l'écoute des événements Nmea en debut de session
         aisServices.on();
-       // aisLoggerServices.on();
+        //aisLoggerServices.on();
         aisPlotterServices.on();
-        //gpsTrackPlotterServices.on();
         //gpsTrackSectorServices.on();
         //gpsTrackPolygonServices.on();
         //aisRadarServices.on();
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
+        
+        // Test CPA zone
+        //gpsTrackPlotterServices.on(); //plotter cible GPS
+        //dataServerServices.openFile("data/nmea/test5.txt"); //NMEA0183
+        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        
+        // Test cibles AIS en direct
+        dataServerServices.openGpsd("sinagot.net", 2947);        
     }
 
     public static void main(String[] args) throws Exception {

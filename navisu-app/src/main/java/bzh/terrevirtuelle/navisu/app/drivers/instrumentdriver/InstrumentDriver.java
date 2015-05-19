@@ -30,6 +30,10 @@ public interface InstrumentDriver {
     
     default void freeHandOn() {return;};
     
+    default void createCpaZone500() {return;};
+    
+    default void createCpaZone1000() {return;};
+    
     default void createCpaZone() {return;};
     
     default void activateCpaZone() {return;};
