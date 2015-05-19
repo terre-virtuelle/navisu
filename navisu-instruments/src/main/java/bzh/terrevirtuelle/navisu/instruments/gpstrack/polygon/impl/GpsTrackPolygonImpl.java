@@ -167,6 +167,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 		watchedShip = new Ship();
 		watchedShip.setMMSI(999999999);
+		watchedShip.setName("PLASTRON");
 		aisShips = new LinkedList<Ship>();
 		
 		wwd = GeoWorldWindViewImpl.getWW();
@@ -390,7 +391,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (int i=0; i<list.size(); i++) {
 
 		if (WWMath.isLocationInside(pos, list.get(i).getPositions()) && list.get(i) != null) {
-			System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside Polygon#" + (i+1) + "\n");
+			System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside Polygon#" + (i+1) + "\n");
 			
 			if (!(centered.get(i))) {
 				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
@@ -441,7 +442,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (Ship target : targets) {
 		
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions()) && tool != null) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside Polygon#" + (savedMeasureTool.indexOf(tool)+1) + "\n");
+				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside Polygon#" + (savedMeasureTool.indexOf(tool)+1) + "\n");
 				putTextOn = true;
 				index = targets.indexOf(target);
 
@@ -563,7 +564,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (Ship target : targets) {
 		
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null && !firstDetection) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside CPA zone" + "\n");
+				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside CPA zone" + "\n");
 				detection = true;
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
@@ -575,7 +576,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			}
 			
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null && firstDetection) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " is inside CPA zone" + "\n");
+				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside CPA zone" + "\n");
 				detection = true;
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));

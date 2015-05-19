@@ -299,7 +299,7 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         
         // Test connexion Gpsd 
-       dataServerServices.openGpsd("sinagot.net", 2947); // ou "fridu.net"
+       dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
         // dataServerServices.openGpsd("sinagot.net", 4001); 
         //dataServerServices.openGpsd("hd-sf.com", 9009);
