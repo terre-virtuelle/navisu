@@ -40,6 +40,8 @@ public interface GpsTrackPolygonServices extends ComponentService {
     
     void circleShapeOn();
     
+    void quadShapeOn();
+    
     void freeHandOn();
     
     void createCpaZone();

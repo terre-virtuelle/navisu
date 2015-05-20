@@ -32,6 +32,8 @@ public interface InstrumentDriver {
     
     default void circleShapeOn() {return;};
     
+    default void quadShapeOn() {return;};
+    
     default void freeHandOn() {return;};
     
     default void createCpaZone500() {return;};

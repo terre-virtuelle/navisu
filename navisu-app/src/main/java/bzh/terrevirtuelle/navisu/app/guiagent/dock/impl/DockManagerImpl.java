@@ -310,7 +310,8 @@ public class DockManagerImpl
                 .createNode(1, "shape.png", 0, "shape.png", 0, "polyShapeOn.png", (e) -> polyShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 1, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 2, "circleShapeOn.png", (e) -> circleShapeOn())
-                .createNode(1, "shape.png", 0, "shape.png", 3, "freeHandOn.png", (e) -> freeHandOn())
+                .createNode(1, "shape.png", 0, "shape.png", 3, "quadShapeOn.png", (e) -> quadShapeOn())
+                .createNode(1, "shape.png", 0, "shape.png", 4, "freeHandOn.png", (e) -> freeHandOn())
                 
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 4, "load.png", (e) -> loadPolygons())
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 3, "saveAll.png", (e) -> saveAllPolygons())
@@ -432,6 +433,16 @@ public class DockManagerImpl
     	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
     	if (instrumentDriver != null) {
     		instrumentDriver.circleShapeOn();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void quadShapeOn() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.quadShapeOn();
         }
     	else {
     		System.out.println("ça plante");

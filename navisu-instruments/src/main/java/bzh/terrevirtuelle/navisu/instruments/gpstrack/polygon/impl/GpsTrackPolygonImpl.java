@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -164,6 +165,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected String[][] shipMatrix=new String[6][1000];
 	protected int count = 1;
 	protected int inSight = 0;
+	protected LinkedList<ArrayList<Position>> savedPolygons;
+	
 
 	@Override
 	public void componentInitiated() {
@@ -187,6 +190,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
         measureTool = new MeasureTool(GeoWorldWindViewImpl.getWW());
         savedMeasureTool = new LinkedList<MeasureTool>();
+        savedPolygons = new LinkedList<ArrayList<Position>>();
         centered = new LinkedList<Boolean>();
         for (int k=0; k<100; k++) {centered.add(false);}
 		
@@ -637,11 +641,16 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void savePolygon() {
 		centers.add(barycenter(measureTool.getPositions()));
 		System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
+		
+		ArrayList<Position> list = new ArrayList<Position>();
+		list = (ArrayList<Position>) measureTool.getPositions();
+		savedPolygons.add(list);
+		
 		measureTool.setArmed(false);
 		controller.setArmed(false);
 		drawerActivated = false;
 		System.out.println("Drawer deactivated.\n");
-		savedMeasureTool.add(measureTool);
+		savedMeasureTool.add(measureTool);	
 		nbPolygon++;
 		controller = new MeasureToolController();
 		measureTool = new MeasureTool(wwd);
@@ -660,17 +669,27 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	@Override
 	public void saveAllPolygons() {
 		// sauvegarde des polygons
+		//declare output stream
+				BufferedWriter writer = null;
+				
 				try {
-					FileOutputStream fos = new FileOutputStream("save.data");
-					ObjectOutputStream oos = new ObjectOutputStream(fos);
-					for (MeasureTool m : savedMeasureTool) {
-						oos.writeObject(m);
+				    // open file for writing
+					writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savedPolygons.csv"), "utf-8"));
+					//Put data - if needed put the loop around more than orw of records
+					for (int j=0;j<savedPolygons.size();j++){
+						int size = savedPolygons.get(j).size();
+						for (int i=0; i<size-1; i++) {
+							writer.write(savedPolygons.get(j).get(i).getLatitude().getDegrees()+";"+savedPolygons.get(j).get(i).getLongitude().getDegrees()+";");
+						}
+						writer.write(savedPolygons.get(j).get(size-1).getLatitude().getDegrees()+";"+savedPolygons.get(j).get(size-1).getLongitude().getDegrees()+"\r\n");
 					}
-					oos.close();
-					fos.close();
-					System.out.println("Polygons saved succesfully.\n");
+					
 				} catch (IOException ex) {
-					System.out.println("Erreur IO");
+				  // report
+				} finally {
+				//close file
+				   try {writer.close();} catch (Exception ex) {}
+				   System.err.println(savedPolygons.size()+" polygons saved successfully.");
 				}
 
 	}
@@ -678,44 +697,63 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	@Override
 	public void loadPolygons() {
 		// chargement des polygons sauvegardés
-				try {
-
-					FileInputStream fis = new FileInputStream("save.data");
-					ObjectInputStream ois = new ObjectInputStream(fis);
-					Object o = null;
-					o = /*(Object)*/ ois.readObject();
-					while (o != null) {
-						if (o instanceof MeasureTool) {
-							nbPolygon++;
-							MeasureToolController mtc = new MeasureToolController();
-							MeasureTool mt = new MeasureTool(wwd);
-							mt = (MeasureTool)o;
-							mt.setController(mtc);
-							mt.setFollowTerrain(true);
-							mt.setArmed(true);
-							mtc.setArmed(true);
-							RenderableLayer loadLayer = mt.getLayer();
-							loadLayer.setName("Polygon#" + nbPolygon);
-							geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(loadLayer));
-							layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(loadLayer));
-							System.out.println("Adding polygon#" + nbPolygon +" to database.\n");
-							savedMeasureTool.add(mt);
-							polygonLayers.add(loadLayer);
-							mt.setArmed(false);
-							mtc.setArmed(false);
-							o = /*(Object)*/ ois.readObject();
-						}
-					}
-					ois.close();
-					fis.close();
-					System.out.println("Loading done.\n");
-				} catch (IOException ex) {
-					System.out.println("Erreur IO");
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					System.out.println("ClassNotFound");
-					// e.printStackTrace();
+		int i = 0;
+		String csvFile = "savedPolygons.csv";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ";";
+	 
+		try {
+	 
+			br = new BufferedReader(new FileReader(csvFile));
+			while ((line = br.readLine()) != null) {
+				ArrayList<Position> list = new ArrayList<Position>();
+				// use separator
+				String[] positions = line.split(cvsSplitBy);
+				for (int j=0; j<positions.length-1; j=j+2) {
+					Position pos = new Position(LatLon.fromDegrees(Double.parseDouble(positions[j]), Double.parseDouble(positions[j+1])), 0);
+					list.add(pos);
 				}
+				nbPolygon++;
+				MeasureTool mt = new MeasureTool(wwd);
+				MeasureToolController mtc = new MeasureToolController();
+				mt.setController(mtc);
+				mt.setArmed(true);
+				mtc.setArmed(true);
+				mtc.setUseRubberBand(true);
+				mt.setPositions(list);
+				mt.setFollowTerrain(true);
+				RenderableLayer layer = mt.getLayer();
+				polygonLayers.add(layer);
+				layer.setName("Polygon#" + nbPolygon);
+				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+				savedMeasureTool.add(mt);
+				centers.add(barycenter(mt.getPositions()));
+				System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");
+				ArrayList<Position> list1 = new ArrayList<Position>();
+				list1 = (ArrayList<Position>) mt.getPositions();
+				savedPolygons.add(list1);
+				mt.setArmed(false);
+				mtc.setArmed(false);
+				System.out.println("New polygon (polygon#" + nbPolygon +") loaded.\n");
+				i++;
+			}
+	 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.err.println(i + " polygons loaded successfully.");	
 	}
 	
 	
@@ -735,6 +773,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void circleShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
 		System.out.println("Circle shape activated.\n");
+	}
+	
+	@Override
+	public void quadShapeOn() {
+		measureTool.setMeasureShapeType(MeasureTool.SHAPE_QUAD);
+		System.out.println("Quad shape activated.\n");
 	}
 	
 	@Override
