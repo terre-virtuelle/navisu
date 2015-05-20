@@ -307,18 +307,21 @@ public class DockManagerImpl
                 .createNode(0, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
                 .createNode(0, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
                 
-                .createNode(1, "polygon.png", 0, "polygon.png", 6, "freeHandOn.png", (e) -> freeHandOn())
-                .createNode(1, "polygon.png", 0, "polygon.png", 5, "circleShapeOn.png", (e) -> circleShapeOn())
-                .createNode(1, "polygon.png", 0, "polygon.png", 4, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
-                .createNode(1, "polygon.png", 0, "polygon.png", 3, "polyShapeOn.png", (e) -> polyShapeOn()) 
-                .createNode(1, "polygon.png", 0, "polygon.png", 2, "savePolygon.png", (e) -> savePolygon())
-                .createNode(1, "polygon.png", 0, "polygon.png", 1, "drawerOn.png", (e) -> drawerOn())
-                .createNode(1, "polygon.png", 0, "polygon.png", 0, "polygonOn.png", (e) -> open("GpsTrackPolygon"))
+                .createNode(1, "shape.png", 0, "shape.png", 0, "polyShapeOn.png", (e) -> polyShapeOn())
+                .createNode(1, "shape.png", 0, "shape.png", 1, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
+                .createNode(1, "shape.png", 0, "shape.png", 2, "circleShapeOn.png", (e) -> circleShapeOn())
+                .createNode(1, "shape.png", 0, "shape.png", 3, "freeHandOn.png", (e) -> freeHandOn())
                 
-                .createNode(2, "cpa.png", 0, "cpa.png", 0, "createCpaZone.png", (e) -> createCpaZone())
-                .createNode(2, "cpa.png", 0, "cpa.png", 1, "activateCpaZone.png", (e) -> activateCpaZone())
-                .createNode(2, "cpa.png", 0, "cpa.png", 2, "createCpaZone500.png", (e) -> createCpaZone500())
-                .createNode(2, "cpa.png", 0, "cpa.png", 3, "createCpaZone1000.png", (e) -> createCpaZone1000())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 4, "load.png", (e) -> loadPolygons())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 3, "saveAll.png", (e) -> saveAllPolygons())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 2, "savePolygon.png", (e) -> savePolygon())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 1, "drawerOn.png", (e) -> drawerOn())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 0, "polygonOn.png", (e) -> open("GpsTrackPolygon"))
+                
+                .createNode(3, "cpa.png", 1, "custom.png", 0, "createCpaZone.png", (e) -> createCpaZone())
+                .createNode(3, "cpa.png", 1, "custom.png", 1, "activateCpaZone.png", (e) -> activateCpaZone())
+                .createNode(3, "cpa.png", 0, "classic.png", 0, "createCpaZone500.png", (e) -> createCpaZone500())
+                .createNode(3, "cpa.png", 0, "classic.png", 1, "createCpaZone1000.png", (e) -> createCpaZone1000())
                 .build();
         tracksRadialMenu.setLayoutX((width / 2));
         tracksRadialMenu.setLayoutY(height / 2);
@@ -379,6 +382,26 @@ public class DockManagerImpl
     	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
     	if (instrumentDriver != null) {
     		instrumentDriver.savePolygon();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void saveAllPolygons() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.saveAllPolygons();
+        }
+    	else {
+    		System.out.println("ça plante");
+    	}
+    }
+    
+    private void loadPolygons() {
+    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
+    	if (instrumentDriver != null) {
+    		instrumentDriver.loadPolygons();
         }
     	else {
     		System.out.println("ça plante");

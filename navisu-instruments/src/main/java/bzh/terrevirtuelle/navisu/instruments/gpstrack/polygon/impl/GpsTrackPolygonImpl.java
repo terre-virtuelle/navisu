@@ -36,10 +36,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -653,6 +656,68 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
 		System.out.println("New polygon (polygon#" + nbPolygon +") ready to be drawn.\n");
 	}
+	
+	@Override
+	public void saveAllPolygons() {
+		// sauvegarde des polygons
+				try {
+					FileOutputStream fos = new FileOutputStream("save.data");
+					ObjectOutputStream oos = new ObjectOutputStream(fos);
+					for (MeasureTool m : savedMeasureTool) {
+						oos.writeObject(m);
+					}
+					oos.close();
+					fos.close();
+					System.out.println("Polygons saved succesfully.\n");
+				} catch (IOException ex) {
+					System.out.println("Erreur IO");
+				}
+
+	}
+	
+	@Override
+	public void loadPolygons() {
+		// chargement des polygons sauvegardés
+				try {
+
+					FileInputStream fis = new FileInputStream("save.data");
+					ObjectInputStream ois = new ObjectInputStream(fis);
+					Object o = null;
+					o = /*(Object)*/ ois.readObject();
+					while (o != null) {
+						if (o instanceof MeasureTool) {
+							nbPolygon++;
+							MeasureToolController mtc = new MeasureToolController();
+							MeasureTool mt = new MeasureTool(wwd);
+							mt = (MeasureTool)o;
+							mt.setController(mtc);
+							mt.setFollowTerrain(true);
+							mt.setArmed(true);
+							mtc.setArmed(true);
+							RenderableLayer loadLayer = mt.getLayer();
+							loadLayer.setName("Polygon#" + nbPolygon);
+							geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(loadLayer));
+							layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(loadLayer));
+							System.out.println("Adding polygon#" + nbPolygon +" to database.\n");
+							savedMeasureTool.add(mt);
+							polygonLayers.add(loadLayer);
+							mt.setArmed(false);
+							mtc.setArmed(false);
+							o = /*(Object)*/ ois.readObject();
+						}
+					}
+					ois.close();
+					fis.close();
+					System.out.println("Loading done.\n");
+				} catch (IOException ex) {
+					System.out.println("Erreur IO");
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					System.out.println("ClassNotFound");
+					// e.printStackTrace();
+				}
+	}
+	
 	
 	@Override
 	public void polyShapeOn() {
