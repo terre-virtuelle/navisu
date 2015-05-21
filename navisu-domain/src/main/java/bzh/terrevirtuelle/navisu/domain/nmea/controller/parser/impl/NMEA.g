@@ -818,7 +818,8 @@ GSV	:   	'$' device=DEVICE 'GSV'
            handler.doIt(gsv);
           }
           ;
-  /** Magnetic heading, deviation, variation */
+  /** Magnetic heading, deviation, variation 
+      $HCHDG,18,06,2.0,E,12.6,W*57*/
   HDG	:	'$' device=DEVICE 'HDG' SEP
   		heading = NUMBER SEP+
   		(dev = NUMBER SEP we = LETTERS SEP)*
