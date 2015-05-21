@@ -305,8 +305,9 @@ public class AppMain extends Application {
         // Test connexion fichier 
         //dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        //ataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
-        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        dataServerServices.openFile("data/nmea/hcgdg.txt"); //test compas
+       // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         //dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
