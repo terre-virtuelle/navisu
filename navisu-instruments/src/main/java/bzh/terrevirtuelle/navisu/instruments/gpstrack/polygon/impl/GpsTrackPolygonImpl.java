@@ -36,11 +36,15 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -161,6 +165,21 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected String[][] shipMatrix=new String[6][1000];
 	protected int count = 1;
 	protected int inSight = 0;
+	protected LinkedList<ArrayList<Position>> savedPolygons;
+	protected MeasureTool pmt;
+	protected MeasureToolController pmtc;
+	protected RenderableLayer pLayer = new RenderableLayer();
+	protected RenderableLayer tLayer = new RenderableLayer();
+	protected ArrayList<Position> path = new ArrayList<Position>();
+	protected static final String GROUP1 = "Target";
+	protected static final String GROUP2 = "Path";
+	protected Ship pShip;
+	protected GShip gShip;
+	protected boolean pShipCreated = false;
+	protected int etape = 0;
+	protected Date t0;
+	protected boolean verrou = false;
+	protected boolean pathActivated = false;
 
 	@Override
 	public void componentInitiated() {
@@ -184,6 +203,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
         measureTool = new MeasureTool(GeoWorldWindViewImpl.getWW());
         savedMeasureTool = new LinkedList<MeasureTool>();
+        savedPolygons = new LinkedList<ArrayList<Position>>();
         centered = new LinkedList<Boolean>();
         for (int k=0; k<100; k++) {centered.add(false);}
 		
@@ -224,9 +244,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		dmpController.setUseRubberBand(true);
 		
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-
-		readShips();
-
+		
+		pmt = new MeasureTool(wwd);
+		pmtc = new MeasureToolController();
+		pmt.setController(pmtc);
+		pmt.setFollowTerrain(true);
+		pmt.setMeasureShapeType(MeasureTool.SHAPE_PATH);
+		// couleur de la trajectoire perso : vert
+		pmt.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
+		pmtc.setFreeHand(true);
+		pmtc.setFreeHandMinSpacing(70);
+		tLayer.setName("Custom target");
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
+		layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
 	}
 
 	@Override
@@ -242,6 +272,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 		if (on == false) {
 			on = true;
+			readShips();
 			 
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -277,6 +308,24 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             });
         aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
         	updateTarget(updatedData);
+        	
+        	Date t = new Date();
+        	if (pShipCreated && !verrou && (int)(t.getTime()-t0.getTime())%5==0 && etape<path.size()-1) {
+        		verrou = true;
+        		etape++;
+        		pShip.setLatitude(path.get(etape).getLatitude().getDegrees());
+        		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
+        		updatePathTarget(pShip);
+        		watchTarget(pShip, savedMeasureTool);
+        		if (dmpActivated) {translatePolygon(pShip.getLatitude(), pShip.getLongitude());}
+        		
+        		Timer timer = new Timer();
+    			timer.schedule(new TimerTask() {
+    				public void run() {
+    					verrou = false;
+    				}
+    			}, 1050);
+        	}
         	
             for (int j=0; j<savedMeasureTool.size(); j++) {
 				watchTargetAis(aisShips, savedMeasureTool.get(j));
@@ -631,14 +680,65 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 	
 	@Override
+	public void createPath() {
+		pmt.setArmed(true);
+		pmtc.setArmed(true);
+	}
+	
+	@Override
+	public void activatePath() {
+		// masquage des points de contrôle de la trajectoire
+		pmt.setShowControlPoints(false);
+		path = (ArrayList<Position>) pmt.getPositions();
+		pLayer = pmt.getLayer();
+		pLayer.setName("Custom path");
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(pLayer));
+		layerTreeServices.addGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(pLayer));
+		pmt.setArmed(false);
+		pmtc.setArmed(false);
+		pShip = new Ship();
+		pShip.setMMSI(999999998);
+		pShip.setName("PLASTRON2");
+		pShip.setLatitude(path.get(etape).getLatitude().getDegrees());
+		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
+		createPathTarget(pShip);
+		pathActivated = true;
+	}
+	
+	private void createPathTarget(Ship target) {
+		gShip = new GShip(target);
+		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
+			Renderable[] renderables = gShip.getRenderables();
+			for (Renderable r : renderables) {
+				tLayer.addRenderable(r);
+			}
+			wwd.redrawNow();
+		}
+		pShipCreated = true;
+		t0 = new Date();
+		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
+		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
+	}
+
+	private void updatePathTarget(Ship target) {
+		gShip.update(target);
+		wwd.redrawNow();
+	}
+	
+	@Override
 	public void savePolygon() {
 		centers.add(barycenter(measureTool.getPositions()));
 		System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
+		
+		ArrayList<Position> list = new ArrayList<Position>();
+		list = (ArrayList<Position>) measureTool.getPositions();
+		savedPolygons.add(list);
+		
 		measureTool.setArmed(false);
 		controller.setArmed(false);
 		drawerActivated = false;
 		System.out.println("Drawer deactivated.\n");
-		savedMeasureTool.add(measureTool);
+		savedMeasureTool.add(measureTool);	
 		nbPolygon++;
 		controller = new MeasureToolController();
 		measureTool = new MeasureTool(wwd);
@@ -653,6 +753,171 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
 		System.out.println("New polygon (polygon#" + nbPolygon +") ready to be drawn.\n");
 	}
+	
+	@Override
+	public void saveAllPolygons() {
+		// sauvegarde des polygons
+		//declare output stream
+				BufferedWriter writer = null;
+				
+				try {
+				    // open file for writing
+					writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("data/saved/savedPolygons.csv"), "utf-8"));
+					//Put data - if needed put the loop around more than orw of records
+					for (int j=0;j<savedPolygons.size();j++){
+						int size = savedPolygons.get(j).size();
+						for (int i=0; i<size-1; i++) {
+							writer.write(savedPolygons.get(j).get(i).getLatitude().getDegrees()+";"+savedPolygons.get(j).get(i).getLongitude().getDegrees()+";");
+						}
+						writer.write(savedPolygons.get(j).get(size-1).getLatitude().getDegrees()+";"+savedPolygons.get(j).get(size-1).getLongitude().getDegrees()+"\r\n");
+					}
+					
+				} catch (IOException ex) {
+				  // report
+				} finally {
+				//close file
+				   try {writer.close();} catch (Exception ex) {}
+				   System.err.println(savedPolygons.size()+" polygons saved successfully.");
+				}
+
+	}
+	
+	@Override
+	public void loadPolygons() {
+		// chargement des polygons sauvegardés
+		int i = 0;
+		String csvFile = "data/saved/savedPolygons.csv";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ";";
+	 
+		try {
+	 
+			br = new BufferedReader(new FileReader(csvFile));
+			while ((line = br.readLine()) != null) {
+				ArrayList<Position> list = new ArrayList<Position>();
+				// use separator
+				String[] positions = line.split(cvsSplitBy);
+				for (int j=0; j<positions.length-1; j=j+2) {
+					Position pos = new Position(LatLon.fromDegrees(Double.parseDouble(positions[j]), Double.parseDouble(positions[j+1])), 0);
+					list.add(pos);
+				}
+				nbPolygon++;
+				MeasureTool mt = new MeasureTool(wwd);
+				MeasureToolController mtc = new MeasureToolController();
+				mt.setController(mtc);
+				mt.setArmed(true);
+				mtc.setArmed(true);
+				mtc.setUseRubberBand(true);
+				mt.setPositions(list);
+				mt.setFollowTerrain(true);
+				RenderableLayer layer = mt.getLayer();
+				polygonLayers.add(layer);
+				layer.setName("Polygon#" + nbPolygon);
+				geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+				savedMeasureTool.add(mt);
+				centers.add(barycenter(mt.getPositions()));
+				System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");
+				ArrayList<Position> list1 = new ArrayList<Position>();
+				list1 = (ArrayList<Position>) mt.getPositions();
+				savedPolygons.add(list1);
+				mt.setArmed(false);
+				mtc.setArmed(false);
+				System.out.println("New polygon (polygon#" + nbPolygon +") loaded.\n");
+				i++;
+			}
+	 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.err.println(i + " polygons loaded successfully.");	
+	}
+	
+	@Override
+	public void savePath() {
+		if (pathActivated) {
+			// sauvegarde de la trajectoire path tracée
+			//declare output stream
+				BufferedWriter writer = null;
+				
+				try {
+				    // open file for writing
+					writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("data/saved/savedPath.csv"), "utf-8"));
+					//Put data - if needed put the loop around more than orw of records
+					for (int k=0; k<path.size()-1; k++) {
+						writer.write(path.get(k).getLatitude().getDegrees()+";"+path.get(k).getLongitude().getDegrees()+";");
+					}
+					writer.write(path.get(path.size()-1).getLatitude().getDegrees()+";"+path.get(path.size()-1).getLongitude().getDegrees()+"\r\n");					
+				} catch (IOException ex) {
+				  // report
+				} finally {
+				//close file
+				   try {writer.close();} catch (Exception ex) {}
+				   System.err.println("Custom path saved successfully.");
+				}
+				
+		} 
+		
+		else {
+			System.err.println("Please activate path before saving it.");
+		}
+
+	}
+	
+	@Override
+	public void loadPath() {
+		// chargement de la trajectoire path sauveagrdée
+		String csvFile = "data/saved/savedPath.csv";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ";";
+	 
+		try {
+	 
+			br = new BufferedReader(new FileReader(csvFile));
+			while ((line = br.readLine()) != null) {
+				// use separator
+				String[] positions = line.split(cvsSplitBy);
+				for (int j=0; j<positions.length-1; j=j+2) {
+					Position pos = new Position(LatLon.fromDegrees(Double.parseDouble(positions[j]), Double.parseDouble(positions[j+1])), 0);
+					path.add(pos);
+				}
+				pmt.setArmed(true);
+				pmtc.setArmed(true);
+				pmt.setPositions(path);
+				pmt.setFollowTerrain(true);
+				pLayer = pmt.getLayer();
+				pmt.setArmed(false);
+				pmtc.setArmed(false);
+			}
+	 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.err.println("Path loaded successfully.\n");	
+	}
+	
 	
 	@Override
 	public void polyShapeOn() {
@@ -670,6 +935,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void circleShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
 		System.out.println("Circle shape activated.\n");
+	}
+	
+	@Override
+	public void quadShapeOn() {
+		measureTool.setMeasureShapeType(MeasureTool.SHAPE_QUAD);
+		System.out.println("Quad shape activated.\n");
 	}
 	
 	@Override
@@ -770,7 +1041,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		try {
 		    // open file for writing
-			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savedAisShips.csv"), "utf-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("data/saved/savedAisShips.csv"), "utf-8"));
 		    // put headers in CSV file
 			for (int i=0;i<CSVHeaders.length-1;i++){
 			writer.write(CSVHeaders[i]+";");
@@ -795,7 +1066,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	private void readShips() {
 		boolean firstLine = true;
 		int i = 0;
-		String csvFile = "savedAisShips.csv";
+		String csvFile = "data/saved/savedAisShips.csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ";";
@@ -844,7 +1115,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.out.println("Reading file done. " + aisShips.size() + " ships in database." );
+		System.err.println("Reading file done. " + aisShips.size() + " ships in database." );
 		//for (Ship s : aisShips) {System.out.println(s.toString());}
 	}
 	

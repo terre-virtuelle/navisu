@@ -30,11 +30,17 @@ public interface GpsTrackPolygonServices extends ComponentService {
     
     void savePolygon();
     
+    void saveAllPolygons();
+    
+    void loadPolygons();
+    
     void polyShapeOn();
     
     void ellipseShapeOn();
     
     void circleShapeOn();
+    
+    void quadShapeOn();
     
     void freeHandOn();
     
@@ -45,4 +51,12 @@ public interface GpsTrackPolygonServices extends ComponentService {
     void createCpaZone1000();
     
     void activateCpaZone();
+    
+    void createPath();
+    
+    void activatePath();
+    
+    void savePath();
+    
+    void loadPath();
 }

@@ -50,39 +50,38 @@
                         <Pane prefHeight="200.0" prefWidth="200.0">
                             <children>
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="245.0" strokeType="INSIDE" styleClass="instrumentcadres" width="245.0" />
-                        <ImageView fitHeight="225.0" fitWidth="225.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" rotate="-175.3">
-                           <image>
-                              <Image url="@couronne.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="101.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@navirecompass.png" />
-                           </image>
-                        </ImageView>
-                        <Text fx:id="headingValue" layoutX="95.0" layoutY="175.0" styleClass="instrumentvalue" text="175" textAlignment="CENTER" wrappingWidth="50.0" x="4.0" />
-                        
+                                <ImageView fx:id="couronne" fitHeight="225.0" fitWidth="225.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" rotate="0.0">
+                                    <image>
+                                        <Image  url="@couronne.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="101.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@navirecompass.png" />
+                                    </image>
+                                </ImageView>
+                                <Text fx:id="headingValue" layoutX="95.0" layoutY="175.0" styleClass="instrumentvalue" text="175" textAlignment="CENTER" wrappingWidth="50.0" x="4.0" />
                             </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                             <children>
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="80.0" layoutX="65.0" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Text layoutX="85.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Deviation" />
-                        <Text fx:id="headingdeviation" layoutX="102.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="2.9" textAlignment="CENTER" />
+                                <Text layoutX="85.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Deviation" />
+                                <Text fx:id="headingDeviation" layoutX="102.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="2.9" textAlignment="CENTER" />
                             </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="80.0" layoutX="65.0" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Text layoutX="87.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Variation" />
-                        <Text fx:id="headingvariation" layoutX="102.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="2.0" textAlignment="CENTER" />
+                                <Text layoutX="87.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Variation" />
+                                <Text fx:id="headingVariation" layoutX="102.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="2.0" textAlignment="CENTER" />
                             </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                             <children>
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="80.0" layoutX="65.0" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Text layoutX="89.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Heading" />
-                        <Text fx:id="headingValue2" layoutX="99.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="177" textAlignment="CENTER" />
+                                <Text layoutX="89.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Heading" />
+                                <Text fx:id="headingValue2" layoutX="99.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="177" textAlignment="CENTER" />
                             </children>
                         </Pane>
                     </children>
@@ -91,11 +90,11 @@
                     <children>
                         <Slider fx:id="slider" layoutX="-5.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                         </Slider>
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="-10.0" layoutY="125.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@journuit.png" />
-                     </image>
-                  </ImageView>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="-10.0" layoutY="125.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@journuit.png" />
+                            </image>
+                        </ImageView>
                     </children>
                 </Pane>
             </children>
