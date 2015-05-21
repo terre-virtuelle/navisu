@@ -7,14 +7,19 @@ package bzh.terrevirtuelle.navisu.instruments.compass.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.HDGEvent;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.HDG;
 import bzh.terrevirtuelle.navisu.instruments.compass.Compass;
 import bzh.terrevirtuelle.navisu.instruments.compass.CompassServices;
 import bzh.terrevirtuelle.navisu.instruments.compass.impl.controller.CompassController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
+import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
  * NaVisu
@@ -28,11 +33,16 @@ public class CompassImpl
     private final String KEY_NAME = "Compass";
     @UsedService
     GuiAgentServices guiAgentServices;
+    ComponentManager cm;
+    ComponentEventSubscribe<HDGEvent> hdgEvent;
+
     private CompassController controller;
 
     @Override
     public void componentInitiated() {
         controller = new CompassController(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
+        cm = ComponentManager.componentManager;
+        hdgEvent = cm.getComponentEventSubscribe(HDGEvent.class);
     }
 
     @Override
@@ -47,11 +57,18 @@ public class CompassImpl
     }
 
     @Override
-    public void on(String ... files) {
+    public void on(String... files) {
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
         guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
         controller.setVisible(true);
-        controller.start();
+        hdgEvent.subscribe(new HDGEvent() {
+            
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+                HDG data = (HDG) d;
+                controller.notifyNmeaMessageChanged(data);
+            }
+        });
     }
 
     @Override
