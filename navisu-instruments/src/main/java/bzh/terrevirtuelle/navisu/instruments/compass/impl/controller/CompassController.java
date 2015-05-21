@@ -5,11 +5,13 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.compass.impl.controller;
 
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.HDG;
 import bzh.terrevirtuelle.navisu.instruments.compass.impl.CompassImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.RotateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -21,6 +23,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
@@ -40,9 +44,20 @@ public class CompassController
     public ImageView quit;
     @FXML
     public Slider slider;
+    @FXML
+    public Text headingValue;
+    @FXML
+    public Text headingValue2;
+    @FXML
+    public Text headingDeviation;
+    @FXML
+    public Text headingVariation;
+    @FXML
+    public ImageView couronne;
 
     protected CompassImpl instrument;
     protected ComponentManager cm = ComponentManager.componentManager;
+    double org = 0;
     /*
      Events subscribe zone
     
@@ -65,13 +80,29 @@ public class CompassController
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
-        
+
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 view.setOpacity(slider.getValue());
             });
         });
 
+    }
+
+    public void notifyNmeaMessageChanged(HDG data) {
+        HDG hdg = (HDG) data;
+
+        Platform.runLater(() -> {
+            headingValue2.setText(Float.toString(hdg.getHeading()));
+            headingValue.setText(Integer.toString((int) hdg.getHeading()));
+            headingDeviation.setText(Float.toString(hdg.getMagneticDeviation()));
+            headingVariation.setText(Float.toString(hdg.getMagneticVariation()));
+          //  RotateTransition rt = new RotateTransition(Duration.millis(10), couronne);
+            // rt.setByAngle((hdg.getHeading() - org));
+            //  rt.play();
+            couronne.setRotate(360 - hdg.getHeading());
+        });
+        org = hdg.getHeading();
     }
 
     @Override
