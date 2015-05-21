@@ -51,4 +51,8 @@ public interface GpsTrackPolygonServices extends ComponentService {
     void createCpaZone1000();
     
     void activateCpaZone();
+    
+    void createPath();
+    
+    void activatePath();
 }

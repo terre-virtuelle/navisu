@@ -166,7 +166,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int count = 1;
 	protected int inSight = 0;
 	protected LinkedList<ArrayList<Position>> savedPolygons;
-	
+	protected MeasureTool pmt;
+	protected MeasureToolController pmtc;
+	protected RenderableLayer pLayer = new RenderableLayer();
+	protected RenderableLayer tLayer = new RenderableLayer();
+	protected ArrayList<Position> path = new ArrayList<Position>();
+	protected static final String GROUP1 = "Target";
+	protected static final String GROUP2 = "Path";
+	protected Ship pShip;
+	protected GShip gShip;
+	protected boolean pShipCreated = false;
+	protected int etape = 0;
+	protected Date t0;
+	protected boolean verrou = false;
 
 	@Override
 	public void componentInitiated() {
@@ -233,6 +245,17 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
 
 		readShips();
+		
+		pmt = new MeasureTool(wwd);
+		pmtc = new MeasureToolController();
+		pmt.setController(pmtc);
+		pmt.setFollowTerrain(true);
+		pmt.setMeasureShapeType(MeasureTool.SHAPE_PATH);
+		pmtc.setFreeHand(true);
+		pmtc.setFreeHandMinSpacing(70);
+		tLayer.setName("Custom target");
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
+		layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
 
 	}
 
@@ -284,6 +307,22 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             });
         aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
         	updateTarget(updatedData);
+        	
+        	Date t = new Date();
+        	if (pShipCreated && !verrou && (int)(t.getTime()-t0.getTime())%5==0 && etape<path.size()-1) {
+        		verrou = true;
+        		etape++;
+        		pShip.setLatitude(path.get(etape).getLatitude().getDegrees());
+        		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
+        		updatePathTarget(pShip);
+        		watchTarget(pShip, savedMeasureTool);
+        		Timer timer = new Timer();
+    			timer.schedule(new TimerTask() {
+    				public void run() {
+    					verrou = false;
+    				}
+    			}, 1050);
+        	}
         	
             for (int j=0; j<savedMeasureTool.size(); j++) {
 				watchTargetAis(aisShips, savedMeasureTool.get(j));
@@ -638,6 +677,49 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 	
 	@Override
+	public void createPath() {
+		pmt.setArmed(true);
+		pmtc.setArmed(true);
+	}
+	
+	@Override
+	public void activatePath() {
+		path = (ArrayList<Position>) pmt.getPositions();
+		pLayer = pmt.getLayer();
+		pLayer.setName("Custom path");
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(pLayer));
+		layerTreeServices.addGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(pLayer));
+		pmt.setArmed(false);
+		pmtc.setArmed(false);
+		pShip = new Ship();
+		pShip.setMMSI(999999998);
+		pShip.setName("PLASTRON2");
+		pShip.setLatitude(path.get(etape).getLatitude().getDegrees());
+		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
+		createPathTarget(pShip);
+	}
+	
+	private void createPathTarget(Ship target) {
+		gShip = new GShip(target);
+		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
+			Renderable[] renderables = gShip.getRenderables();
+			for (Renderable r : renderables) {
+				tLayer.addRenderable(r);
+			}
+			wwd.redrawNow();
+		}
+		pShipCreated = true;
+		t0 = new Date();
+		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
+		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
+	}
+
+	private void updatePathTarget(Ship target) {
+		gShip.update(target);
+		wwd.redrawNow();
+	}
+	
+	@Override
 	public void savePolygon() {
 		centers.add(barycenter(measureTool.getPositions()));
 		System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
@@ -674,7 +756,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				
 				try {
 				    // open file for writing
-					writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savedPolygons.csv"), "utf-8"));
+					writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("data/saved/savedPolygons.csv"), "utf-8"));
 					//Put data - if needed put the loop around more than orw of records
 					for (int j=0;j<savedPolygons.size();j++){
 						int size = savedPolygons.get(j).size();
@@ -698,7 +780,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void loadPolygons() {
 		// chargement des polygons sauvegardés
 		int i = 0;
-		String csvFile = "savedPolygons.csv";
+		String csvFile = "data/saved/savedPolygons.csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ";";
@@ -879,7 +961,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		try {
 		    // open file for writing
-			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("savedAisShips.csv"), "utf-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("data/saved/savedAisShips.csv"), "utf-8"));
 		    // put headers in CSV file
 			for (int i=0;i<CSVHeaders.length-1;i++){
 			writer.write(CSVHeaders[i]+";");
@@ -904,7 +986,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	private void readShips() {
 		boolean firstLine = true;
 		int i = 0;
-		String csvFile = "savedAisShips.csv";
+		String csvFile = "data/saved/savedAisShips.csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ";";

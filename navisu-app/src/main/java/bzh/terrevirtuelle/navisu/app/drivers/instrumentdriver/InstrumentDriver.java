@@ -43,4 +43,8 @@ public interface InstrumentDriver {
     default void createCpaZone() {return;};
     
     default void activateCpaZone() {return;};
+    
+    default void createPath() {return;};
+    
+    default void activatePath() {return;};
 }
