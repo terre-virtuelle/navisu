@@ -22,11 +22,17 @@ public interface InstrumentDriver {
     
     default void savePolygon() {return;};
     
+    default void saveAllPolygons() {return;};
+    
+    default void loadPolygons() {return;};
+    
     default void polyShapeOn() {return;};
     
     default void ellipseShapeOn() {return;};
     
     default void circleShapeOn() {return;};
+    
+    default void quadShapeOn() {return;};
     
     default void freeHandOn() {return;};
     
