@@ -55,4 +55,8 @@ public interface GpsTrackPolygonServices extends ComponentService {
     void createPath();
     
     void activatePath();
+    
+    void savePath();
+    
+    void loadPath();
 }

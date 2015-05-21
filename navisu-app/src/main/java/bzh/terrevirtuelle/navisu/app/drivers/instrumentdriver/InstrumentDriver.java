@@ -47,4 +47,8 @@ public interface InstrumentDriver {
     default void createPath() {return;};
     
     default void activatePath() {return;};
+    
+    default void savePath() {return;};
+    
+    default void loadPath() {return;};
 }

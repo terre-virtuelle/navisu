@@ -179,6 +179,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int etape = 0;
 	protected Date t0;
 	protected boolean verrou = false;
+	protected boolean pathActivated = false;
 
 	@Override
 	public void componentInitiated() {
@@ -243,20 +244,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		dmpController.setUseRubberBand(true);
 		
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-
-		readShips();
 		
 		pmt = new MeasureTool(wwd);
 		pmtc = new MeasureToolController();
 		pmt.setController(pmtc);
 		pmt.setFollowTerrain(true);
 		pmt.setMeasureShapeType(MeasureTool.SHAPE_PATH);
+		// couleur de la trajectoire perso : vert
+		pmt.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
 		pmtc.setFreeHand(true);
 		pmtc.setFreeHandMinSpacing(70);
 		tLayer.setName("Custom target");
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
 		layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
-
 	}
 
 	@Override
@@ -272,6 +272,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 		if (on == false) {
 			on = true;
+			readShips();
 			 
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -316,6 +317,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
         		updatePathTarget(pShip);
         		watchTarget(pShip, savedMeasureTool);
+        		if (dmpActivated) {translatePolygon(pShip.getLatitude(), pShip.getLongitude());}
+        		
         		Timer timer = new Timer();
     			timer.schedule(new TimerTask() {
     				public void run() {
@@ -684,6 +687,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	@Override
 	public void activatePath() {
+		// masquage des points de contrôle de la trajectoire
+		pmt.setShowControlPoints(false);
 		path = (ArrayList<Position>) pmt.getPositions();
 		pLayer = pmt.getLayer();
 		pLayer.setName("Custom path");
@@ -697,6 +702,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		pShip.setLatitude(path.get(etape).getLatitude().getDegrees());
 		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
 		createPathTarget(pShip);
+		pathActivated = true;
 	}
 	
 	private void createPathTarget(Ship target) {
@@ -836,6 +842,80 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			}
 		}
 		System.err.println(i + " polygons loaded successfully.");	
+	}
+	
+	@Override
+	public void savePath() {
+		if (pathActivated) {
+			// sauvegarde de la trajectoire path tracée
+			//declare output stream
+				BufferedWriter writer = null;
+				
+				try {
+				    // open file for writing
+					writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("data/saved/savedPath.csv"), "utf-8"));
+					//Put data - if needed put the loop around more than orw of records
+					for (int k=0; k<path.size()-1; k++) {
+						writer.write(path.get(k).getLatitude().getDegrees()+";"+path.get(k).getLongitude().getDegrees()+";");
+					}
+					writer.write(path.get(path.size()-1).getLatitude().getDegrees()+";"+path.get(path.size()-1).getLongitude().getDegrees()+"\r\n");					
+				} catch (IOException ex) {
+				  // report
+				} finally {
+				//close file
+				   try {writer.close();} catch (Exception ex) {}
+				   System.err.println("Custom path saved successfully.");
+				}
+				
+		} 
+		
+		else {
+			System.err.println("Please activate path before saving it.");
+		}
+
+	}
+	
+	@Override
+	public void loadPath() {
+		// chargement de la trajectoire path sauveagrdée
+		String csvFile = "data/saved/savedPath.csv";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ";";
+	 
+		try {
+	 
+			br = new BufferedReader(new FileReader(csvFile));
+			while ((line = br.readLine()) != null) {
+				// use separator
+				String[] positions = line.split(cvsSplitBy);
+				for (int j=0; j<positions.length-1; j=j+2) {
+					Position pos = new Position(LatLon.fromDegrees(Double.parseDouble(positions[j]), Double.parseDouble(positions[j+1])), 0);
+					path.add(pos);
+				}
+				pmt.setArmed(true);
+				pmtc.setArmed(true);
+				pmt.setPositions(path);
+				pmt.setFollowTerrain(true);
+				pLayer = pmt.getLayer();
+				pmt.setArmed(false);
+				pmtc.setArmed(false);
+			}
+	 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.err.println("Path loaded successfully.\n");	
 	}
 	
 	
@@ -1035,7 +1115,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.out.println("Reading file done. " + aisShips.size() + " ships in database." );
+		System.err.println("Reading file done. " + aisShips.size() + " ships in database." );
 		//for (Ship s : aisShips) {System.out.println(s.toString());}
 	}
 	
