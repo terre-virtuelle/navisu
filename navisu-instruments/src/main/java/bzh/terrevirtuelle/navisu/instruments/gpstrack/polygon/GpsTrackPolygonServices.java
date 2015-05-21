@@ -30,11 +30,17 @@ public interface GpsTrackPolygonServices extends ComponentService {
     
     void savePolygon();
     
+    void saveAllPolygons();
+    
+    void loadPolygons();
+    
     void polyShapeOn();
     
     void ellipseShapeOn();
     
     void circleShapeOn();
+    
+    void quadShapeOn();
     
     void freeHandOn();
     
