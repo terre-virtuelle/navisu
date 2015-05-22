@@ -1,22 +1,22 @@
+@charset "utf-8";
 /* CSS Document */
 @font-face {
-    -fx-font-family: 'Roboto Cn';
+    -fx-font-family: 'Navisu';
     src: url('fonts/Roboto-Condensed.ttf');
 }
 
 *{
-    -fx-base : #143b28;
-    -fx-line-base : #04fff2;
-    -fx-font-family: "Roboto Cn" ;
-    -fx-color-typo: #c2f8c4;
-    -fx-color-contours: #70bbbf;
-    -fx-color-backround-value: #143b2800;
+    -fx-base : #3b1410;
+    -fx-line-base : #bb000080;
+    -fx-font-family: Navisu, "Roboto Cn" ;
+    -fx-color-typo: #bb0000;
+    -fx-color-contours: #bb0000;
 }
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
     -fx-fill : -fx-color-typo;
-    /*-fx-font-weight: bold;*/
-   /* -fx-underline : true;*/
+    /*-fx-font-weight: bold;
+    -fx-underline : true;*/
 }
 .infotittle{
     -fx-font: 16px "Roboto Cn";
@@ -27,12 +27,21 @@
 .instrumentvalue{
     -fx-font: 20px "Roboto Cn";
     -fx-fill: -fx-color-typo;
-    -fx-font-weight: bold; 
+    /*-fx-font-weight: bold;*/   
 }
 .instrumentcadres{
-    -fx-stroke:-fx-color-contours;
-    -fx-stroke-width: 2;
-    -fx-fill:-fx-color-backround-value; 
+    -fx-stroke:-fx-color-contours; 
+}
+.aisvalue{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : #c2f8c4;
+    /*-fx-font-weight: bold;*/
+}
+.aisname{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : #c2f8c4;
+    /*-fx-font-weight: bold;*/
+    -fx-underline : true;
 }
 /*******************************************************************************
  *                                                                             *
@@ -121,10 +130,7 @@
  *                                                                             *
  ******************************************************************************/
 .grid-pane {
-   -fx-background-color: transparent;  
-}
-.grid-instruments {
-   -fx-background-color: -fx-base; 
+    -fx-background-color: -fx-base;  
 }
 
 
@@ -162,4 +168,26 @@
     -fx-tick-length: 5px;
     -fx-minor-tick-length: 3px;
     -fx-border-color: null;
+}
+/*******************************************************************************
+ *                                                                             *
+ * compass                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+
+.compass-ticks{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 5px;
+    -fx-fill: -fx-base;
+}
+.compass-ticks-quarter{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 10px;
+    -fx-fill: -fx-base;
+}
+.instrumentvalue{
+    -fx-font: 20px "Roboto Cn";
+    -fx-fill: -fx-color-typo;
+    /*-fx-font-weight: bold;*/   
 }

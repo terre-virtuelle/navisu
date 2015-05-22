@@ -1,3 +1,4 @@
+
 /* CSS Document */
 @font-face {
     -fx-font-family: 'Roboto Cn';
@@ -10,7 +11,6 @@
     -fx-font-family: "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
     -fx-color-contours: #70bbbf;
-    -fx-color-backround-value: #143b2800;
 }
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
@@ -32,7 +32,17 @@
 .instrumentcadres{
     -fx-stroke:-fx-color-contours;
     -fx-stroke-width: 2;
-    -fx-fill:-fx-color-backround-value; 
+}
+.aisvalue{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : #c2f8c4;
+    /*-fx-font-weight: bold;*/
+}
+.aisname{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : #c2f8c4;
+    /*-fx-font-weight: bold;*/
+    -fx-underline : true;
 }
 /*******************************************************************************
  *                                                                             *
@@ -42,27 +52,27 @@
 .foot-pane {
     -fx-border-radius: 0 0 20 20;
     -fx-background-radius: 0 0 20 20;
-    -fx-background-color: -fx-base;
+    -fx-background-color: #143b28;
 }
 .top-pane {
     -fx-border-radius: 20 20 0 0;
     -fx-background-radius: 20 20 0 0;
-    -fx-background-color: -fx-base;    
+    -fx-background-color: #143b28;    
 }
 .left-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
+    -fx-background-color: #143b28;    
 }
 .right-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
+    -fx-background-color: #143b28;    
 }
 .center-pane {
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
+    -fx-background-color: #143b28;    
 }
 
 /*******************************************************************************
@@ -71,7 +81,7 @@
  *                                                                             *
  ******************************************************************************/
 .scrolling-pane > .viewport {
-    -fx-background-color: -fx-base;
+    -fx-background-color: #143b28;
 }
 .scrolling-pane > .scroll-bar:horizontal {
     -fx-background-insets: 0 1 1 1, 1;
@@ -90,7 +100,7 @@
     -fx-padding: 1 0 1 0;
 }
 .scrolling-pane > .corner {
-    -fx-background-color: -fx-base;
+    -fx-background-color: #143b28;
     -fx-background-insets: 0 1 1 0;
 }
 /* new styleclass for edge to edge scrollpanes that don't want to draw a border */
@@ -121,10 +131,7 @@
  *                                                                             *
  ******************************************************************************/
 .grid-pane {
-   -fx-background-color: transparent;  
-}
-.grid-instruments {
-   -fx-background-color: -fx-base; 
+    -fx-background-color: #143b28;  
 }
 
 
@@ -162,4 +169,26 @@
     -fx-tick-length: 5px;
     -fx-minor-tick-length: 3px;
     -fx-border-color: null;
+}
+/*******************************************************************************
+ *                                                                             *
+ * compass                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+
+.compass-ticks{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 5px;
+    -fx-fill: #143b28;
+}
+.compass-ticks-quarter{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width : 10px;
+    -fx-fill: #143b28;
+}
+.instrumentvalue{
+    -fx-font: 20px "Roboto Cn";
+    -fx-fill: -fx-color-typo;
+    /*-fx-font-weight: bold;*/   
 }

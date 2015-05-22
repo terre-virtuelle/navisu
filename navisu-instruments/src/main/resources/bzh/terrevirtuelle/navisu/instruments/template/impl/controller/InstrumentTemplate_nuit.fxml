@@ -9,13 +9,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="textListPanel" stylesheets="@InstrumentTemplate.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="textListPanel" stylesheets="@InstrumentTemplate_nuit.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Group>
             <children>
                 <Pane prefHeight="50.0" prefWidth="450.0" styleClass="top-pane">
                     <children>
-                        <Text fx:id="title" layoutX="150.0" layoutY="31.0" styleClass="instrumentvalue" text="INSTRUMENT" textAlignment="CENTER" wrappingWidth="150.0">
+                        <Text fx:id="title" layoutX="150.0" layoutY="31.0" styleClass="instrumentvalue" text="COMPASS" textAlignment="CENTER" wrappingWidth="150.0">
                         </Text>
                     </children>
                 </Pane>
@@ -33,10 +33,10 @@
                 </ImageView>
                 <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="397.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
                     <image>
-                        <Image url="@quit.png" />
+                        <Image url="@quit_nuit.png" />
                     </image>
                 </ImageView>
-                <GridPane layoutX="30.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="390.0" styleClass="grid-instruments">
+                <GridPane layoutX="15.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="375.0" styleClass="grid-instruments">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -49,9 +49,9 @@
                     <children>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="139.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="250.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
+                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="139.0" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="250.0" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
                         <Text layoutX="44.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="valeur1">
                            <font>
                               <Font size="24.0" />
@@ -62,17 +62,17 @@
                         <Pane prefHeight="200.0" prefWidth="200.0" styleClass="grid-instruments" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="335.0" />
+                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" strokeType="INSIDE" styleClass="instrumentcadres" width="325.0" />
                      </children>
                   </Pane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
+                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="200.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Pane prefHeight="200.0" prefWidth="200.0" styleClass="grid-instruments" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="10.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="10.0" styleClass="instrumentcadres" width="150.0" />
                      </children>
                   </Pane>
                     </children>
@@ -83,7 +83,7 @@
                         </Slider>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="3.0" layoutY="125.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@journuit.png" />
+                                <Image url="@journuit_nuit.png" />
                             </image>
                         </ImageView>
                     </children>

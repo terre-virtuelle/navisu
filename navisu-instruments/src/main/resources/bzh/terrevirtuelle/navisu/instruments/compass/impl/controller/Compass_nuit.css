@@ -11,6 +11,7 @@
     -fx-font-family: Navisu, "Roboto Cn" ;
     -fx-color-typo: #bb0000;
     -fx-color-contours: #bb0000;
+    -fx-color-backround-value: #3b141000;
 }
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
@@ -30,7 +31,9 @@
     /*-fx-font-weight: bold;*/   
 }
 .instrumentcadres{
-    -fx-stroke:-fx-color-contours; 
+    -fx-stroke:-fx-color-contours;
+    -fx-stroke-width: 2;
+    -fx-fill : -fx-color-backround-value;
 }
 .aisvalue{
     -fx-font: 14px "Roboto Cn";

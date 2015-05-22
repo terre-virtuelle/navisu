@@ -11,6 +11,7 @@
     -fx-font-family: "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
     -fx-color-contours: #70bbbf;
+    -fx-color-backround-value: #143b2800;
 }
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
@@ -32,6 +33,7 @@
 .instrumentcadres{
     -fx-stroke:-fx-color-contours;
     -fx-stroke-width: 2;
+    -fx-fill : -fx-color-backround-value;
 }
 .aisvalue{
     -fx-font: 14px "Roboto Cn";
@@ -44,6 +46,7 @@
     /*-fx-font-weight: bold;*/
     -fx-underline : true;
 }
+
 /*******************************************************************************
  *                                                                             *
  * cadre                                                                *
