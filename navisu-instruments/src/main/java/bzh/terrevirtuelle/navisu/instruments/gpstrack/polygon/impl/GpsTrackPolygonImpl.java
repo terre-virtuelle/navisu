@@ -65,6 +65,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.zone.Zone;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -102,7 +103,7 @@ import com.vividsolutions.jts.operation.valid.IsValidOp;
  * @author Serge Morvan
  */
 public class GpsTrackPolygonImpl implements GpsTrackPolygon,
-		GpsTrackPolygonServices, InstrumentDriver, ComponentState {
+		GpsTrackPolygonServices, Zone, ComponentState {
 
 	@UsedService
 	GeoViewServices geoViewServices;
@@ -976,38 +977,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 	
 	@Override
-	public void createCpaZone500() {
+	public void createCpaZone(double yards) {
 		if (!dmpActivated) {
 			dmpActivated = true;
 			//couleur de la DMP : vert
 			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
 			//rayon statique de 500 yards
-			double x = 500;
-			diameter = 2*x*0.9144;
+			diameter = 2*yards*0.9144;
 			dmpLayer = dmp.getLayer();
 			dmpLayer.setEnabled(true);
-			dmpLayer.setName("CPA zone 500 yards");
+			dmpLayer.setName("CPA zone " + yards + " yards");
 			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
 			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			System.out.println("CPA zone 500 yards activated.\n");
-		}
-	}
-	
-	@Override
-	public void createCpaZone1000() {
-		if (!dmpActivated) {
-			dmpActivated = true;
-			//couleur de la DMP : vert
-			dmp.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
-			//rayon statique de 500 yards
-			double x = 1000;
-			diameter = 2*x*0.9144;
-			dmpLayer = dmp.getLayer();
-			dmpLayer.setEnabled(true);
-			dmpLayer.setName("CPA zone 1000 yards");
-			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			System.out.println("CPA zone 1000 yards activated.\n");
+			System.out.println("CPA zone " + yards + " yards activated.\n");
 		}
 	}
 	
