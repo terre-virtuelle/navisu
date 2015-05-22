@@ -5,10 +5,12 @@ import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.zone.Zone;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
+
 import org.capcaval.c3.component.ComponentState;
 
 import java.util.logging.Logger;
@@ -18,10 +20,12 @@ import bzh.terrevirtuelle.navisu.widgets.dock.DockItem;
 import bzh.terrevirtuelle.navisu.widgets.dock.DockItemFactory;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenu;
 import bzh.terrevirtuelle.navisu.widgets.radialmenu.menu.RadialMenuBuilder;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javafx.animation.Animation;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -31,6 +35,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+
 import org.capcaval.c3.component.annotation.UsedService;
 
 /*
@@ -39,7 +44,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @date 23 mars 2015
  * @author Serge Morvan
  */
-public class DockManagerImpl
+public class DockManagerImpl<TrackTool>
         implements DockManager, DockManagerServices, ComponentState {
 
     @UsedService
@@ -81,6 +86,7 @@ public class DockManagerImpl
     private List<RadialMenu> radialMenus;
     private Map<String, InstrumentDriver> instrumentDrivers;
     private InstrumentDriver instrumentDriver;
+    private Zone zone;
 
     public final DockItem[] ICONS = new DockItem[]{
         DockItemFactory.newImageItem("tracks", ICON_PATH + "dock_icons/tracks.png",
@@ -365,9 +371,9 @@ public class DockManagerImpl
     }
     
     private void newSector() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackSector");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.newSector();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackSector");
+    	if (zone != null) {
+    		zone.newSector();
         }
     	else {
     		System.out.println("ça plante");
@@ -375,9 +381,9 @@ public class DockManagerImpl
     }
     
     private void drawerOn() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.drawerOn();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.drawerOn();
         }
     	else {
     		System.out.println("ça plante");
@@ -385,9 +391,9 @@ public class DockManagerImpl
     }
     
     private void savePolygon() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.savePolygon();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.savePolygon();
         }
     	else {
     		System.out.println("ça plante");
@@ -395,9 +401,9 @@ public class DockManagerImpl
     }
     
     private void saveAllPolygons() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.saveAllPolygons();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.saveAllPolygons();
         }
     	else {
     		System.out.println("ça plante");
@@ -405,9 +411,9 @@ public class DockManagerImpl
     }
     
     private void loadPolygons() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.loadPolygons();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.loadPolygons();
         }
     	else {
     		System.out.println("ça plante");
@@ -415,9 +421,9 @@ public class DockManagerImpl
     }
     
     private void polyShapeOn() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.polyShapeOn();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.polyShapeOn();
         }
     	else {
     		System.out.println("ça plante");
@@ -425,9 +431,9 @@ public class DockManagerImpl
     }
     
     private void ellipseShapeOn() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.ellipseShapeOn();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.ellipseShapeOn();
         }
     	else {
     		System.out.println("ça plante");
@@ -435,9 +441,9 @@ public class DockManagerImpl
     }
     
     private void circleShapeOn() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.circleShapeOn();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.circleShapeOn();
         }
     	else {
     		System.out.println("ça plante");
@@ -445,9 +451,9 @@ public class DockManagerImpl
     }
     
     private void quadShapeOn() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.quadShapeOn();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.quadShapeOn();
         }
     	else {
     		System.out.println("ça plante");
@@ -455,9 +461,9 @@ public class DockManagerImpl
     }
     
     private void freeHandOn() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.freeHandOn();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.freeHandOn();
         }
     	else {
     		System.out.println("ça plante");
@@ -465,9 +471,9 @@ public class DockManagerImpl
     }
     
     private void createCpaZone() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.createCpaZone();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.createCpaZone();
         }
     	else {
     		System.out.println("ça plante");
@@ -475,9 +481,9 @@ public class DockManagerImpl
     }
     
     private void createPath() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.createPath();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.createPath();
         }
     	else {
     		System.out.println("ça plante");
@@ -485,9 +491,9 @@ public class DockManagerImpl
     }
     
     private void activatePath() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.activatePath();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.activatePath();
         }
     	else {
     		System.out.println("ça plante");
@@ -495,9 +501,9 @@ public class DockManagerImpl
     }
     
     private void savePath() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.savePath();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.savePath();
         }
     	else {
     		System.out.println("ça plante");
@@ -505,9 +511,9 @@ public class DockManagerImpl
     }
     
     private void loadPath() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.loadPath();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.loadPath();
         }
     	else {
     		System.out.println("ça plante");
@@ -515,9 +521,9 @@ public class DockManagerImpl
     }
     
     private void createCpaZone500() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.createCpaZone500();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.createCpaZone(500);
         }
     	else {
     		System.out.println("ça plante");
@@ -525,9 +531,9 @@ public class DockManagerImpl
     }
     
     private void createCpaZone1000() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.createCpaZone1000();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.createCpaZone(1000);
         }
     	else {
     		System.out.println("ça plante");
@@ -535,9 +541,9 @@ public class DockManagerImpl
     }
     
     private void activateCpaZone() {
-    	instrumentDriver = instrumentDrivers.get("GpsTrackPolygon");
-    	if (instrumentDriver != null) {
-    		instrumentDriver.activateCpaZone();
+    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	if (zone != null) {
+    		zone.activateCpaZone();
         }
     	else {
     		System.out.println("ça plante");
