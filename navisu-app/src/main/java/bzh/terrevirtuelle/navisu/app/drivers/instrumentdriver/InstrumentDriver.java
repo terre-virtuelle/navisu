@@ -16,39 +16,39 @@ public interface InstrumentDriver {
 
     void off();
     
-    default void newSector() {return;};
+    default void newSector() {};
     
-    default void drawerOn() {return;};
+    default void drawerOn() {};
     
-    default void savePolygon() {return;};
+    default void savePolygon() {};
     
-    default void saveAllPolygons() {return;};
+    default void saveAllPolygons() {};
     
-    default void loadPolygons() {return;};
+    default void loadPolygons() {};
     
-    default void polyShapeOn() {return;};
+    default void polyShapeOn() {};
     
-    default void ellipseShapeOn() {return;};
+    default void ellipseShapeOn() {};
     
-    default void circleShapeOn() {return;};
+    default void circleShapeOn() {};
     
-    default void quadShapeOn() {return;};
+    default void quadShapeOn() {};
     
-    default void freeHandOn() {return;};
+    default void freeHandOn() {};
     
-    default void createCpaZone500() {return;};
+    default void createCpaZone500() {};
     
-    default void createCpaZone1000() {return;};
+    default void createCpaZone1000() {};
     
-    default void createCpaZone() {return;};
+    default void createCpaZone() {};
     
-    default void activateCpaZone() {return;};
+    default void activateCpaZone() {};
     
-    default void createPath() {return;};
+    default void createPath() {};
     
-    default void activatePath() {return;};
+    default void activatePath() {};
     
-    default void savePath() {return;};
+    default void savePath() {};
     
-    default void loadPath() {return;};
+    default void loadPath() {};
 }
