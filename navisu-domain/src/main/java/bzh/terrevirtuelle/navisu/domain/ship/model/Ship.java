@@ -5,6 +5,10 @@
 package bzh.terrevirtuelle.navisu.domain.ship.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -124,14 +128,8 @@ public class Ship implements Serializable, Cloneable {
      * @@@@@@@@@@@@@@@@@@@@ = not available
      */
     private String destination = "@@@@";
-    /**
-     * year, month, day of ETA
-     */
-    private int year, month, day;
-    /**
-     * hour, minute of ETA
-     */
-    private int hour, minute;
+
+    private LocalDateTime localDateTime;
 
     /**
      * Creates a new instance of Ship
@@ -209,8 +207,24 @@ public class Ship implements Serializable, Cloneable {
         this.country = country;
     }
 
+    public Ship(int mmsi, String name, double lat, double lon, LocalDate date, LocalTime time) {
+        this.mmsi = mmsi;
+        this.name = name;
+        this.latitude = lat;
+        this.longitude = lon;
+        localDateTime = LocalDateTime.of(date, time);
+    }
+
+    public int getMmsi() {
+        return mmsi;
+    }
+
     public int getMMSI() {
         return mmsi;
+    }
+
+    public int getImo() {
+        return imo;
     }
 
     public void setMMSI(int mmsi) {
@@ -369,49 +383,58 @@ public class Ship implements Serializable, Cloneable {
         this.destination = destination;
     }
 
-    public int getYear() {
-        return year;
+    /**
+     * Get the value of localDateTime
+     *
+     * @return the value of localDateTime
+     */
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public LocalDate getLocalDate() {
+        return localDateTime.toLocalDate();
     }
 
-    public int getMonth() {
-        return month;
+    public LocalTime getLocalTime() {
+        return localDateTime.toLocalTime();
     }
 
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getHour() {
-        return hour;
-    }
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public int getMinute() {
-        return minute;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
+    /**
+     * Set the value of localDateTime
+     *
+     * @param localDateTime new value of localDateTime
+     */
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     @Override
     public String toString() {
-        return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country + ", latitude=" + latitude + ", longitude=" + longitude + ", heading=" + heading + ", cog=" + cog + ", sog=" + sog + ", rot=" + rot + ", width=" + width + ", length=" + length + ", draught=" + draught + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus + ", electronicPositionDevice=" + electronicPositionDevice + ", callSign=" + callSign + ", ETA=" + ETA + ", destination=" + destination + ", year=" + year + ", month=" + month + ", day=" + day + ", hour=" + hour + ", minute=" + minute + '}';
+        return "Ship{" + "mmsi=" + mmsi + ", imo=" + imo + ", name=" + name + ", country=" + country + ", latitude=" + latitude + ", longitude=" + longitude + ", heading=" + heading + ", cog=" + cog + ", sog=" + sog + ", rot=" + rot + ", width=" + width + ", length=" + length + ", draught=" + draught + ", shipType=" + shipType + ", navigationalStatus=" + navigationalStatus + ", electronicPositionDevice=" + electronicPositionDevice + ", callSign=" + callSign + ", ETA=" + ETA + ", destination=" + destination + ", localDateTime=" + localDateTime + '}';
     }
 
+    //228114000;"F/V AZKARRA";48.21091842651367;-4.760861873626709;18/05/2015;14:14:53;
+    public String toCsv() {
+        return (mmsi + ";"
+                + name + ";"
+                + latitude + ";"
+                + longitude + ";"
+                + localDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";"
+                + localDateTime.toLocalTime() + ";");
+    }
+
+    //228114000;"F/V AZKARRA";48.21091842651367;-4.760861873626709;18/05/2015;14:14:53;
+    public static Ship parseCsv(String line) {
+        String tab[] = line.split(";");
+        if (tab != null && tab.length >= 6) {
+            return new Ship(Integer.parseInt(tab[0]),
+                    tab[1],
+                    Double.parseDouble(tab[2]),
+                    Double.parseDouble(tab[3]),
+                    LocalDate.parse(tab[4], DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    LocalTime.parse(tab[5], DateTimeFormatter.ISO_LOCAL_TIME));
+        }
+        return null;
+    }
 }
