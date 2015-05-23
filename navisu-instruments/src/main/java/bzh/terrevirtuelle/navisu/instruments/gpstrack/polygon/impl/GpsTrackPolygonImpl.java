@@ -65,7 +65,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.app.drivers.zone.Zone;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.ZoneDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -103,7 +103,7 @@ import com.vividsolutions.jts.operation.valid.IsValidOp;
  * @author Serge Morvan
  */
 public class GpsTrackPolygonImpl implements GpsTrackPolygon,
-		GpsTrackPolygonServices, Zone, ComponentState {
+		GpsTrackPolygonServices, ZoneDriver, ComponentState {
 
 	@UsedService
 	GeoViewServices geoViewServices;
