@@ -11,16 +11,20 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author morvan
  */
+@Entity
 public class Ship implements Serializable, Cloneable {
 
     /**
      * MMSI number :1-999999999; 0 = not available = default
      */
+    @Id
     private int mmsi = 0;
     /**
      * IMO number :1-999999999; 0 = not available = default
