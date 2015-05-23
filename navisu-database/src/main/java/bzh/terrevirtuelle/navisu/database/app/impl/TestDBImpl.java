@@ -63,8 +63,8 @@ public class TestDBImpl
     private final String retrieveQuery = "SELECT * FROM " + SHIP;
 
     @Override
-    public Connection connect(String dbName, String passwd) {
-        connection = databaseServices.connect(dbName, passwd);
+    public Connection connect(String dbName, String user, String passwd) {
+        connection = databaseServices.connect(dbName, user, passwd);
         return connection;
 
     }
@@ -98,7 +98,7 @@ public class TestDBImpl
     }
 
     @Override
-    public void onJDBC() {
+    public void runJDBC() {
         Stream<String> lines = null;
         try {
             lines = Files.lines(Paths.get("data/saved", "savedAisShips.csv"));

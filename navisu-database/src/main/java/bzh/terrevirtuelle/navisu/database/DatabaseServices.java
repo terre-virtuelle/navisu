@@ -20,7 +20,7 @@ public interface DatabaseServices
 
     Connection connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd);
 
-    Connection connect(String driverName, String passwd);
+    Connection connect(String driverName, String user, String passwd);
 
     boolean isConnect();
 

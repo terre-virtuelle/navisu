@@ -56,16 +56,19 @@ public class DatabaseImpl
 
     /**
      * Cas particulier de Derby
+     *
      * @param dbName
      * @param passwd
      * @return
      */
     @Override
-    public Connection connect(String dbName, String passwd) {
+    public Connection connect(String dbName, String user, String passwd) {
         //Le mot de passe doit faire plus de huit caracteres
         String url = "jdbc:derby:" + dbName
-                + ";create=true;dataEncryption=true;bootPassword="
-                + passwd;
+                + ";create=true;"
+                + "dataEncryption=true"
+                + ";user=" + user
+                + ";bootPassword=" + passwd;
         try {
             connection = DriverManager.getConnection(url);
         } catch (SQLException ex) {

@@ -18,11 +18,11 @@ import org.capcaval.c3.component.ComponentService;
 public interface TestDBServices
         extends ComponentService {
 
-    Connection connect(String dbName, String passwd);
+    Connection connect(String dbName, String user, String passwd);
 
     void close();
 
     DatabaseDriver getDriver();
 
-    void onJDBC();
+    void runJDBC();
 }
