@@ -5,7 +5,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
-import bzh.terrevirtuelle.navisu.app.drivers.zone.Zone;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.ZoneDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManager;
 import bzh.terrevirtuelle.navisu.app.guiagent.dock.DockManagerServices;
@@ -86,7 +86,7 @@ public class DockManagerImpl<TrackTool>
     private List<RadialMenu> radialMenus;
     private Map<String, InstrumentDriver> instrumentDrivers;
     private InstrumentDriver instrumentDriver;
-    private Zone zone;
+    private ZoneDriver zone;
 
     public final DockItem[] ICONS = new DockItem[]{
         DockItemFactory.newImageItem("tracks", ICON_PATH + "dock_icons/tracks.png",
@@ -371,7 +371,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void newSector() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackSector");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackSector");
     	if (zone != null) {
     		zone.newSector();
         }
@@ -381,7 +381,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void drawerOn() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.drawerOn();
         }
@@ -391,7 +391,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void savePolygon() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.savePolygon();
         }
@@ -401,7 +401,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void saveAllPolygons() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.saveAllPolygons();
         }
@@ -411,7 +411,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void loadPolygons() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.loadPolygons();
         }
@@ -421,7 +421,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void polyShapeOn() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.polyShapeOn();
         }
@@ -431,7 +431,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void ellipseShapeOn() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.ellipseShapeOn();
         }
@@ -441,7 +441,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void circleShapeOn() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.circleShapeOn();
         }
@@ -451,7 +451,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void quadShapeOn() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.quadShapeOn();
         }
@@ -461,7 +461,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void freeHandOn() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.freeHandOn();
         }
@@ -471,7 +471,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void createCpaZone() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.createCpaZone();
         }
@@ -481,7 +481,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void createPath() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.createPath();
         }
@@ -491,7 +491,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void activatePath() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.activatePath();
         }
@@ -501,7 +501,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void savePath() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.savePath();
         }
@@ -511,7 +511,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void loadPath() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.loadPath();
         }
@@ -521,7 +521,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void createCpaZone500() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.createCpaZone(500);
         }
@@ -531,7 +531,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void createCpaZone1000() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.createCpaZone(1000);
         }
@@ -541,7 +541,7 @@ public class DockManagerImpl<TrackTool>
     }
     
     private void activateCpaZone() {
-    	zone = (Zone)instrumentDrivers.get("GpsTrackPolygon");
+    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
     	if (zone != null) {
     		zone.activateCpaZone();
         }

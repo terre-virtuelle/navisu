@@ -12,8 +12,14 @@ public interface DatabaseDriver {
 
     boolean canOpen(String dbName);
 
-    public Connection connect(String dbName, String hostName, String protocol, String port,
-            String driverName, String userName, String passwd);
+    default Connection connect(String dbName, String hostName, String protocol, String port,
+            String driverName, String userName, String passwd) {
+        return null;
+    }
+
+    default Connection connect(String dbName, String passwd) {
+        return null;
+    }
 
     void close();
 }

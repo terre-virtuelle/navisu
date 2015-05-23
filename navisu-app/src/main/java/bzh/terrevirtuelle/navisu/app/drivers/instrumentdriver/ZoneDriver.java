@@ -1,8 +1,6 @@
-package bzh.terrevirtuelle.navisu.app.drivers.zone;
+package bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver;
 
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-
-public interface Zone extends InstrumentDriver {
+public interface ZoneDriver extends InstrumentDriver {
 default void newSector() {};
     
     default void drawerOn() {};
