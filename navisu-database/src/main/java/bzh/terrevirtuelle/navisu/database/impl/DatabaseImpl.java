@@ -45,9 +45,30 @@ public class DatabaseImpl
         try {
             Class.forName(driverName);
             String url = protocol + hostName + ":" + port + "/" + dbName;
+            System.out.println("url : " + url);
             connection = DriverManager.getConnection(url, userName, passwd);
             statement = connection.createStatement();
         } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return connection;
+    }
+
+    /**
+     * Cas particulier de Derby
+     * @param dbName
+     * @param passwd
+     * @return
+     */
+    @Override
+    public Connection connect(String dbName, String passwd) {
+        //Le mot de passe doit faire plus de huit caracteres
+        String url = "jdbc:derby:" + dbName
+                + ";create=true;dataEncryption=true;bootPassword="
+                + passwd;
+        try {
+            connection = DriverManager.getConnection(url);
+        } catch (SQLException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return connection;
@@ -126,5 +147,5 @@ public class DatabaseImpl
     @Override
     public boolean isConnect() {
         return connection != null;
-   }
+    }
 }
