@@ -338,8 +338,8 @@ public class AppMain extends Application {
         // Test cibles AIS en direct
         dataServerServices.openGpsd("sinagot.net", 2947);
         
-        testDBServices.connect("testDB", "!!lithops??");
-        testDBServices.onJDBC();
+        testDBServices.connect("DbTest", "navisu", "!!navisu??");
+        testDBServices.runJDBC();
     }
 
     public static void main(String[] args) throws Exception {
