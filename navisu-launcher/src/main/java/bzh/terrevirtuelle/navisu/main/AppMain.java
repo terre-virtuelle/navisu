@@ -338,8 +338,11 @@ public class AppMain extends Application {
         // Test cibles AIS en direct
         dataServerServices.openGpsd("sinagot.net", 2947);
         
-        testDBServices.connect("DbTest", "navisu", "!!navisu??");
-        testDBServices.runJDBC();
+       // testDBServices.connect("data/databases/TestJDBC", "navisu", "!!navisu??");
+       // testDBServices.runJDBC();//OK
+        
+        //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
+       // testDBServices.runJPA();//OK
     }
 
     public static void main(String[] args) throws Exception {
