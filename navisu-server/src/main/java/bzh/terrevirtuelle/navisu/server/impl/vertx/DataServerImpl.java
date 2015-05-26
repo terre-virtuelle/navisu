@@ -135,13 +135,14 @@ public class DataServerImpl
             sentences.clear();
             try {
                 sentenceQueues.get(currentReader).stream().forEach((s) -> {
-                  // LOGGER.info(s);
+                   //LOGGER.info(s);
+                    System.out.println(s);
                     parser.parse(s.trim());
                 });
                 stringWriter = new StringWriter();
                 if (!sentences.isEmpty()) {
                     marshaller.marshal(sentences, stringWriter);
-                    //  System.out.println("DataServerImpl stringWriter " + stringWriter);
+                   // System.out.println("DataServerImpl stringWriter " + stringWriter);
                 }
             } catch (Exception e) {
                 // System.out.println("sentenceQueues "+ sentenceQueues);
