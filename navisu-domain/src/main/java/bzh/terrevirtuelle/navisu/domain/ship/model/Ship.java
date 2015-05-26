@@ -11,8 +11,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -125,6 +128,7 @@ public class Ship implements Serializable, Cloneable {
      * available = default Bits 15-11: day; 1-31; 0 = not available = default
      * Bits 10-6: hour; 0-23; 24 = not available = default
      */
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar ETA = new GregorianCalendar(0, 0, 0, 0, 0);
     /**
      * Maximum 20 characters using 6-bit ASCII;
@@ -133,6 +137,7 @@ public class Ship implements Serializable, Cloneable {
      */
     private String destination = "@@@@";
 
+    @Convert(converter = LocalDateTimePersistenceConverter.class)
     private LocalDateTime localDateTime;
 
     /**
@@ -425,7 +430,8 @@ public class Ship implements Serializable, Cloneable {
                 + latitude + ";"
                 + longitude + ";"
                 + localDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";"
-                + localDateTime.toLocalTime() + ";");
+                + localDateTime.toLocalTime() 
+                + ";");
     }
 
     //228114000;"F/V AZKARRA";48.21091842651367;-4.760861873626709;18/05/2015;14:14:53;
@@ -441,4 +447,5 @@ public class Ship implements Serializable, Cloneable {
         }
         return null;
     }
+
 }
