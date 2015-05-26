@@ -1,8 +1,7 @@
-\chapter*{Architecture et fonctionnalités du serveur de données}
+\chapter{Architecture et fonctionnalités du serveur de données}
 
-Ref : TV080114\_TU\_SM \hfill Rédacteur : Serge  Morvan \\
 
-\section*{Présentation}
+\section{Présentation}
 Le module d'acquisition de données de \nav\  est distribué. Un serveur reçoit les données des différents capteurs
 les analyse, les traite puis les distribue au format XML [ou JSON (option)] aux différents clients. Dans la version la plus compacte serveur et client se trouvent sur une même machine.
  Le protocole de communication utilisé sont les WebSockets. \footnote{\href{http://fr.wikipedia.org/wiki/WebSocket}{http://fr.wikipedia.org/wiki/WebSocket}} ce protocole permet les actions bidirectionnelles, {\em push} et {\em pull}, avec les clients. Actuellement seules les requêtes {\em pull} venant des clients sont prises en compte, mais il est simple d'introduire des actions {\em push} de la part du serveur pour des remontées d'alarmes par exemple.
@@ -32,7 +31,7 @@ les analyse, les traite puis les distribue au format XML [ou JSON (option)] aux 
  \end{figure}
  \end{center}
 
- \section*{Les données en entrée}
+ \section{Les données en entrée}
  Les données sont envoyées au serveur via les ports série, USB ou Internet.
  Il est aussi possible d'avoir des données à partir de fichiers, pour un rejeu de parcours par exemple.
  L'acquisition de données est réalisée par des objets {\bf\tt Reader}, 
@@ -64,7 +63,7 @@ les analyse, les traite puis les distribue au format XML [ou JSON (option)] aux 
  NMEA 2000 : <0x18eeff01> [8] 05 a0 be 1c 00 a0 a0 c0
     \end{verbatim}
     }
-\section*{L'architecture\footnote{Dans les figures qui suivent les flux de données dynamiques sont coloriés en turquoise, les canaux de communication en gris clair.}}
+\section{L'architecture}\footnote{Dans les figures qui suivent les flux de données dynamiques sont coloriés en turquoise, les canaux de communication en gris clair.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{center}
@@ -86,7 +85,7 @@ Le parseur choisi traite les données, génère des objets NMEA, les transforme au 
 Les données sont donc analysées ({\em parsées}) deux fois, une première fois par le parseur NMEA spécialisé, une deuxième fois par le client à partir de d'un format XML. Ceci se justifie par le fait que l'écriture du premier parseur est complexe du fait de la grande variabilité des formats NMEA, les connexions électriques avec les capteurs peuvent aussi engendrer  
 un bruitage des données, ces données sont ensuite mises en forme suivant un schéma XML unique, les clients n'ont aucune difficultés à les transformer en objets à partir de l'API JAXB. Dès que le format JSON sera bien intégré à JEE, ce
 format sera préféré à XML. D'autres protocoles, tel que CoAP sont envisageables dans l'avenir.
-\section*{La dynamique}
+\section{La dynamique}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{center}
 \framebox[1\width]{
@@ -97,7 +96,7 @@ format sera préféré à XML. D'autres protocoles, tel que CoAP sont envisageables 
 \end{figure}
 \end{center}
 
-\subsection*{Performances}
+\subsection{Performances}
 En test, le serveur supporte une requête client toutes les milisecondes, dans la pratique, un navire naviguant à 15 n\oe uds 
 parcourt 7.5m en une seconde, un barreur va régler le débit d'affichage des données à 2 ou 3 secondes. Une période de 
 1 seconde pour les requêtes semble raisonnable.
@@ -111,8 +110,7 @@ parcourt 7.5m en une seconde, un barreur va régler le débit d'affichage des donn
 \end{figure}
 \end{center}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Les données en sortie (extrait)}
-Extrait
+\section{Les données en sortie (extrait)}
 {\small
  \begin{verbatim}
 <?xml version="1.0" encoding="UTF-8" standalone="true"?>

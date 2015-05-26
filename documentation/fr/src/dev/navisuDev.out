@@ -1,58 +1,65 @@
-\BOOKMARK [0][-]{chapter.1}{Installation et personnalisation du serveur de donn\351es NaVisu}{}% 1
+\BOOKMARK [0][-]{chapter.1}{Architecture et fonctionnalit\351s du serveur de donn\351es}{}% 1
 \BOOKMARK [1][-]{section.1.1}{Pr\351sentation}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{Le projet}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.3}{T\351l\351chargement}{chapter.1}% 4
-\BOOKMARK [1][-]{section.1.4}{Param\351trisation}{chapter.1}% 5
-\BOOKMARK [1][-]{section.1.5}{Lancement}{chapter.1}% 6
-\BOOKMARK [1][-]{section.1.6}{D\351veloppement}{chapter.1}% 7
-\BOOKMARK [0][-]{chapter.2}{Les donn\351es NMEA 0183}{}% 8
-\BOOKMARK [1][-]{section.2.1}{Le standard NMEA}{chapter.2}% 9
-\BOOKMARK [1][-]{section.2.2}{Mod\350le NMEA0183}{chapter.2}% 10
-\BOOKMARK [2][-]{subsection.2.2.1}{Ensemble des phrases analys\351es}{section.2.2}% 11
-\BOOKMARK [2][-]{subsection.2.2.2}{Minimun d'information pour la navigation}{section.2.2}% 12
-\BOOKMARK [2][-]{subsection.2.2.3}{Date et heure}{section.2.2}% 13
-\BOOKMARK [2][-]{subsection.2.2.4}{Position : latitude, longitude}{section.2.2}% 14
-\BOOKMARK [2][-]{subsection.2.2.5}{Informations de vitesse et de distance}{section.2.2}% 15
-\BOOKMARK [2][-]{subsection.2.2.6}{Informations sur les waypoints}{section.2.2}% 16
-\BOOKMARK [2][-]{subsection.2.2.7}{Informations sur les satellites}{section.2.2}% 17
-\BOOKMARK [2][-]{subsection.2.2.8}{Informations sur le vent}{section.2.2}% 18
-\BOOKMARK [2][-]{subsection.2.2.9}{Bathym\351trie}{section.2.2}% 19
-\BOOKMARK [1][-]{section.2.3}{Pr\351sentation de l'API}{chapter.2}% 20
-\BOOKMARK [2][-]{subsection.2.3.1}{L'analyseur lexical et syntaxique}{section.2.3}% 21
-\BOOKMARK [1][-]{section.2.4}{Glossaire}{chapter.2}% 22
-\BOOKMARK [0][-]{chapter.3}{Architecture et fonctionnalit\351s du client NMEA}{}% 23
-\BOOKMARK [1][-]{section.3.1}{Les connexions au serveur}{chapter.3}% 24
-\BOOKMARK [1][-]{section.3.2}{Les donn\351es en entr\351e}{chapter.3}% 25
-\BOOKMARK [2][-]{subsection.3.2.1}{Extrait du sch\351ma nmea.xsd}{section.3.2}% 26
-\BOOKMARK [2][-]{subsection.3.2.2}{Extrait d'un fichier de donn\351es conforme au sch\351ma nmea.xsd}{section.3.2}% 27
-\BOOKMARK [1][-]{section.3.3}{Le projet NaVisuSimpleClient}{chapter.3}% 28
-\BOOKMARK [1][-]{section.3.4}{T\351l\351chargement}{chapter.3}% 29
-\BOOKMARK [1][-]{section.3.5}{Param\351trisation}{chapter.3}% 30
-\BOOKMARK [1][-]{section.3.6}{Lancement}{chapter.3}% 31
-\BOOKMARK [1][-]{section.3.7}{D\351veloppement}{chapter.3}% 32
-\BOOKMARK [1][-]{section.3.8}{Diffusion de donn\351es}{chapter.3}% 33
-\BOOKMARK [1][-]{section.3.9}{Ecriture d'un souscripteur \340 un \351v\351nement}{chapter.3}% 34
-\BOOKMARK [2][-]{subsection.3.9.1}{Exemple de souscription et de traitement apr\350s r\351ception d'un \351v\351nement type GGA}{section.3.9}% 35
-\BOOKMARK [1][-]{section.3.10}{Autre d\351veloppement possible}{chapter.3}% 36
-\BOOKMARK [0][-]{chapter.4}{Cr\351ation d'un nouveau Display}{}% 37
-\BOOKMARK [1][-]{section.4.1}{Architecture}{chapter.4}% 38
-\BOOKMARK [2][-]{subsection.4.1.1}{Principes}{section.4.1}% 39
-\BOOKMARK [2][-]{subsection.4.1.2}{Diagramme UML}{section.4.1}% 40
-\BOOKMARK [1][-]{section.4.2}{Cr\351er un nouveau Display : Compass}{chapter.4}% 41
-\BOOKMARK [0][-]{chapter.5}{Cr\351ation des menus}{}% 42
-\BOOKMARK [1][-]{section.5.1}{Objet}{chapter.5}% 43
-\BOOKMARK [1][-]{section.5.2}{Le graphisme}{chapter.5}% 44
-\BOOKMARK [2][-]{subsection.5.2.1}{Module navisu-app}{section.5.2}% 45
-\BOOKMARK [2][-]{subsection.5.2.2}{Module navisu-widgets}{section.5.2}% 46
-\BOOKMARK [1][-]{section.5.3}{Le code}{chapter.5}% 47
-\BOOKMARK [2][-]{subsection.5.3.1}{Module navisu-app}{section.5.3}% 48
-\BOOKMARK [2][-]{subsection.5.3.2}{Choix des callbacks}{section.5.3}% 49
-\BOOKMARK [2][-]{subsection.5.3.3}{Module navisu-widgets}{section.5.3}% 50
-\BOOKMARK [1][-]{section.5.4}{Principe des DriverManager}{chapter.5}% 51
-\BOOKMARK [0][-]{chapter.6}{Cartographie}{}% 52
-\BOOKMARK [1][-]{section.6.1}{Pr\351sentation}{chapter.6}% 53
-\BOOKMARK [2][-]{subsection.6.1.1}{La projection Equirectangulaire}{section.6.1}% 54
-\BOOKMARK [2][-]{subsection.6.1.2}{Tuilage}{section.6.1}% 55
-\BOOKMARK [1][-]{section.6.2}{Cartographie raster}{chapter.6}% 56
-\BOOKMARK [2][-]{subsection.6.2.1}{Les cartes BSB/KAP}{section.6.2}% 57
-\BOOKMARK [2][-]{subsection.6.2.2}{Acquisition}{section.6.2}% 58
+\BOOKMARK [1][-]{section.1.2}{Les donn\351es en entr\351e}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{L'architecture}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{La dynamique}{chapter.1}% 5
+\BOOKMARK [2][-]{subsection.1.4.1}{Performances}{section.1.4}% 6
+\BOOKMARK [1][-]{section.1.5}{Les donn\351es en sortie \(extrait\)}{chapter.1}% 7
+\BOOKMARK [0][-]{chapter.2}{Installation et personnalisation du serveur de donn\351es NaVisu}{}% 8
+\BOOKMARK [1][-]{section.2.1}{Pr\351sentation}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.2}{Le projet}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.3}{T\351l\351chargement}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.4}{Param\351trisation}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.5}{Lancement}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.6}{D\351veloppement}{chapter.2}% 14
+\BOOKMARK [0][-]{chapter.3}{Les donn\351es NMEA 0183}{}% 15
+\BOOKMARK [1][-]{section.3.1}{Le standard NMEA}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.2}{Mod\350le NMEA0183}{chapter.3}% 17
+\BOOKMARK [2][-]{subsection.3.2.1}{Ensemble des phrases analys\351es}{section.3.2}% 18
+\BOOKMARK [2][-]{subsection.3.2.2}{Minimun d'information pour la navigation}{section.3.2}% 19
+\BOOKMARK [2][-]{subsection.3.2.3}{Date et heure}{section.3.2}% 20
+\BOOKMARK [2][-]{subsection.3.2.4}{Position : latitude, longitude}{section.3.2}% 21
+\BOOKMARK [2][-]{subsection.3.2.5}{Informations de vitesse et de distance}{section.3.2}% 22
+\BOOKMARK [2][-]{subsection.3.2.6}{Informations sur les waypoints}{section.3.2}% 23
+\BOOKMARK [2][-]{subsection.3.2.7}{Informations sur les satellites}{section.3.2}% 24
+\BOOKMARK [2][-]{subsection.3.2.8}{Informations sur le vent}{section.3.2}% 25
+\BOOKMARK [2][-]{subsection.3.2.9}{Bathym\351trie}{section.3.2}% 26
+\BOOKMARK [1][-]{section.3.3}{Pr\351sentation de l'API}{chapter.3}% 27
+\BOOKMARK [2][-]{subsection.3.3.1}{L'analyseur lexical et syntaxique}{section.3.3}% 28
+\BOOKMARK [1][-]{section.3.4}{Glossaire}{chapter.3}% 29
+\BOOKMARK [0][-]{chapter.4}{Architecture et fonctionnalit\351s du client NMEA}{}% 30
+\BOOKMARK [1][-]{section.4.1}{Les connexions au serveur}{chapter.4}% 31
+\BOOKMARK [1][-]{section.4.2}{Les donn\351es en entr\351e}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.2.1}{Extrait du sch\351ma nmea.xsd}{section.4.2}% 33
+\BOOKMARK [2][-]{subsection.4.2.2}{Extrait d'un fichier de donn\351es conforme au sch\351ma nmea.xsd}{section.4.2}% 34
+\BOOKMARK [1][-]{section.4.3}{Le projet NaVisuSimpleClient}{chapter.4}% 35
+\BOOKMARK [1][-]{section.4.4}{T\351l\351chargement}{chapter.4}% 36
+\BOOKMARK [1][-]{section.4.5}{Param\351trisation}{chapter.4}% 37
+\BOOKMARK [1][-]{section.4.6}{Lancement}{chapter.4}% 38
+\BOOKMARK [1][-]{section.4.7}{D\351veloppement}{chapter.4}% 39
+\BOOKMARK [1][-]{section.4.8}{Diffusion de donn\351es}{chapter.4}% 40
+\BOOKMARK [1][-]{section.4.9}{Ecriture d'un souscripteur \340 un \351v\351nement}{chapter.4}% 41
+\BOOKMARK [2][-]{subsection.4.9.1}{Exemple de souscription et de traitement apr\350s r\351ception d'un \351v\351nement type GGA}{section.4.9}% 42
+\BOOKMARK [1][-]{section.4.10}{Autre d\351veloppement possible}{chapter.4}% 43
+\BOOKMARK [0][-]{chapter.5}{Cr\351ation d'un nouveau Display}{}% 44
+\BOOKMARK [1][-]{section.5.1}{Architecture}{chapter.5}% 45
+\BOOKMARK [2][-]{subsection.5.1.1}{Principes}{section.5.1}% 46
+\BOOKMARK [2][-]{subsection.5.1.2}{Diagramme UML}{section.5.1}% 47
+\BOOKMARK [1][-]{section.5.2}{Cr\351er un nouveau Display : Compass}{chapter.5}% 48
+\BOOKMARK [0][-]{chapter.6}{Cr\351ation des menus}{}% 49
+\BOOKMARK [1][-]{section.6.1}{Objet}{chapter.6}% 50
+\BOOKMARK [1][-]{section.6.2}{Le graphisme}{chapter.6}% 51
+\BOOKMARK [2][-]{subsection.6.2.1}{Module navisu-app}{section.6.2}% 52
+\BOOKMARK [2][-]{subsection.6.2.2}{Module navisu-widgets}{section.6.2}% 53
+\BOOKMARK [1][-]{section.6.3}{Le code}{chapter.6}% 54
+\BOOKMARK [2][-]{subsection.6.3.1}{Module navisu-app}{section.6.3}% 55
+\BOOKMARK [2][-]{subsection.6.3.2}{Choix des callbacks}{section.6.3}% 56
+\BOOKMARK [2][-]{subsection.6.3.3}{Module navisu-widgets}{section.6.3}% 57
+\BOOKMARK [1][-]{section.6.4}{Principe des DriverManager}{chapter.6}% 58
+\BOOKMARK [0][-]{chapter.7}{Cartographie}{}% 59
+\BOOKMARK [1][-]{section.7.1}{Pr\351sentation}{chapter.7}% 60
+\BOOKMARK [2][-]{subsection.7.1.1}{La projection Equirectangulaire}{section.7.1}% 61
+\BOOKMARK [2][-]{subsection.7.1.2}{Tuilage}{section.7.1}% 62
+\BOOKMARK [1][-]{section.7.2}{Cartographie raster}{chapter.7}% 63
+\BOOKMARK [2][-]{subsection.7.2.1}{Les cartes BSB/KAP}{section.7.2}% 64
+\BOOKMARK [2][-]{subsection.7.2.2}{Acquisition}{section.7.2}% 65

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.4.29)  26 MAY 2015 18:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.4.29)  26 MAY 2015 20:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -815,7 +815,7 @@ Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             ! on input line 162.
 
 (./body.tex (./commandes.tex) (./titre.tex
-<images/leMinou.png, id=245, 839.38594pt x 562.35094pt>
+<images/leMinou.png, id=273, 839.38594pt x 562.35094pt>
 File: images/leMinou.png Graphic file (type png)
 
 <use images/leMinou.png>
@@ -831,7 +831,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-<images/bas-page-masterPPT_RVB_final.png, id=255, 722.7pt x 48.9027pt>
+<images/bas-page-masterPPT_RVB_final.png, id=283, 722.7pt x 48.9027pt>
 File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
 
 <use images/bas-page-masterPPT_RVB_final.png>
@@ -915,13 +915,13 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[6] (./navisuDev.lof)
+[6] (./navisuDev.lof [7
+
+])
 \tf@lof=\write6
 \openout6 = `navisuDev.lof'.
 
- [7
 
-]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -975,27 +975,24 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
 [10
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 3--4
-
- []
-
-<images/dataserver/deploiement_0.png, id=445, 776.9025pt x 352.31625pt>
+Chapitre 1.
+<images/dataserver/deploiement_0.png, id=480, 776.9025pt x 352.31625pt>
 File: images/dataserver/deploiement_0.png Graphic file (type png)
 
 <use images/dataserver/deploiement_0.png>
 Package pdftex.def Info: images/dataserver/deploiement_0.png used on input line
- 20.
+ 19.
 (pdftex.def)             Requested size: 455.25075pt x 284.5252pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11]
-<images/dataserver/deploiement_1.png, id=456, 784.9325pt x 672.5125pt>
+<images/dataserver/deploiement_1.png, id=489, 784.9325pt x 672.5125pt>
 File: images/dataserver/deploiement_1.png Graphic file (type png)
 
 <use images/dataserver/deploiement_1.png>
 Package pdftex.def Info: images/dataserver/deploiement_1.png used on input line
- 29.
+ 28.
 (pdftex.def)             Requested size: 455.24919pt x 284.52618pt.
 
 
@@ -1007,7 +1004,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
 <use images/bas-page-masterPPT_RVB_final.png>
 Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
-line 39.
+line 38.
 (pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
 
 Overfull \hbox (28.45276pt too wide) has occurred while \output is active
@@ -1015,13 +1012,16 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  []
 
 [12 <./images/dataserver/deploiement_0.png> <./images/dataserver/deploiement_1.
-png>] <images/dataserver/dataServer_0.png, id=463, 845.40843pt x 597.73312pt>
+png>] <images/dataserver/dataServer_0.png, id=496, 845.40843pt x 597.73312pt>
 File: images/dataserver/dataServer_0.png Graphic file (type png)
 
 <use images/dataserver/dataServer_0.png>
 Package pdftex.def Info: images/dataserver/dataServer_0.png used on input line 
-73.
+72.
 (pdftex.def)             Requested size: 455.23666pt x 341.43195pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1032,21 +1032,23 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
 <use images/bas-page-masterPPT_RVB_final.png>
 Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
-line 89.
+line 76.
 (pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
 
 Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[13 <./images/dataserver/dataServer_0.png>]
-<images/dataserver/dataServer_1.png, id=474, 845.40843pt x 597.73312pt>
+[13] <images/dataserver/dataServer_1.png, id=506, 845.40843pt x 597.73312pt>
 File: images/dataserver/dataServer_1.png Graphic file (type png)
 
 <use images/dataserver/dataServer_1.png>
 Package pdftex.def Info: images/dataserver/dataServer_1.png used on input line 
-94.
+93.
 (pdftex.def)             Requested size: 455.23666pt x 341.43195pt.
+
+Underfull \vbox (badness 3058) has occurred while \output is active []
+
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1057,21 +1059,24 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
 <use images/bas-page-masterPPT_RVB_final.png>
 Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
-line 105.
+line 97.
 (pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
 
 Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[14 <./images/dataserver/dataServer_1.png>]
-<images/dataserver/dataServer_2.png, id=481, 845.40843pt x 597.73312pt>
+[14 <./images/dataserver/dataServer_0.png>]
+<images/dataserver/dataServer_2.png, id=512, 845.40843pt x 597.73312pt>
 File: images/dataserver/dataServer_2.png Graphic file (type png)
 
 <use images/dataserver/dataServer_2.png>
 Package pdftex.def Info: images/dataserver/dataServer_2.png used on input line 
-108.
+107.
 (pdftex.def)             Requested size: 455.23666pt x 341.43195pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1082,14 +1087,31 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
 <use images/bas-page-masterPPT_RVB_final.png>
 Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
-line 125.
+line 111.
 (pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
 
 Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[15 <./images/dataserver/dataServer_2.png>]) (./dataServerInstall.tex
+[15 <./images/dataserver/dataServer_1.png>]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 61.25554pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
+<use images/bas-page-masterPPT_RVB_final.png>
+Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
+line 134.
+(pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
+
+Overfull \hbox (28.45276pt too wide) has occurred while \output is active
+ [][]| 
+ []
+
+[16 <./images/dataserver/dataServer_2.png>]) (./dataServerInstall.tex
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1106,18 +1128,35 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[16]
-Chapitre 1.
-<images/server/deploiement_2.png, id=495, 795.98788pt x 681.98451pt>
+[17]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 61.25554pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
+<use images/bas-page-masterPPT_RVB_final.png>
+Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
+line 1.
+(pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
+
+Overfull \hbox (28.45276pt too wide) has occurred while \output is active
+ [][]| 
+ []
+
+[18
+
+]
+Chapitre 2.
+<images/server/deploiement_2.png, id=533, 795.98788pt x 681.98451pt>
 File: images/server/deploiement_2.png Graphic file (type png)
 
 <use images/server/deploiement_2.png>
 Package pdftex.def Info: images/server/deploiement_2.png used on input line 11.
 
 (pdftex.def)             Requested size: 455.24817pt x 284.52719pt.
- [17
-
- <./images/server/deploiement_2.png>]
+ [19 <./images/server/deploiement_2.png>]
 Overfull \hbox (7.44376pt too wide) in paragraph at lines 47--49
 []\OT1/cmr/m/n/12 Modifier les pa-ram^^Retres en fonc-tion de votre confi-gu-ra
 -tion. At-ten-tion ^^Ra la d^^Senomination diff^^Serente
@@ -1139,7 +1178,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[18]
+[20]
 Underfull \hbox (badness 10000) in paragraph at lines 56--57
 
  []
@@ -1167,7 +1206,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[19]
+[21]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1184,16 +1223,16 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[20
+[22
 
 ]
-Chapitre 2.
+Chapitre 3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 8--17
 
  []
 
-[21] <images/nmea/nmea.png, id=526, 835.12pt x 780.9175pt>
+[23] <images/nmea/nmea.png, id=564, 835.12pt x 780.9175pt>
 File: images/nmea/nmea.png Graphic file (type png)
 
 <use images/nmea/nmea.png>
@@ -1204,7 +1243,7 @@ Overfull \hbox (22.05963pt too wide) in paragraph at lines 24--28
  [] 
  []
 
-<images/nmea/nmea_comment.png, id=527, 835.12pt x 780.9175pt>
+<images/nmea/nmea_comment.png, id=565, 835.12pt x 780.9175pt>
 File: images/nmea/nmea_comment.png Graphic file (type png)
 
 <use images/nmea/nmea_comment.png>
@@ -1230,8 +1269,8 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[22 <./images/nmea/nmea.png>]
-<images/nmea/gps_minimum.png, id=533, 550.055pt x 370.38374pt>
+[24 <./images/nmea/nmea.png>]
+<images/nmea/gps_minimum.png, id=571, 550.055pt x 370.38374pt>
 File: images/nmea/gps_minimum.png Graphic file (type png)
 
 <use images/nmea/gps_minimum.png>
@@ -1257,15 +1296,15 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[23 <./images/nmea/nmea_comment.png>]
-<images/nmea/date.png, id=539, 106.3975pt x 260.975pt>
+[25 <./images/nmea/nmea_comment.png>]
+<images/nmea/date.png, id=578, 106.3975pt x 260.975pt>
 File: images/nmea/date.png Graphic file (type png)
 
 <use images/nmea/date.png>
 Package pdftex.def Info: images/nmea/date.png used on input line 56.
 (pdftex.def)             Requested size: 85.35826pt x 209.38159pt.
 
-<images/nmea/position.png, id=540, 515.9275pt x 355.3275pt>
+<images/nmea/position.png, id=579, 515.9275pt x 355.3275pt>
 File: images/nmea/position.png Graphic file (type png)
 
 <use images/nmea/position.png>
@@ -1288,8 +1327,8 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[24 <./images/nmea/gps_minimum.png> <./images/nmea/date.png>]
-<images/nmea/speedLog.png, id=546, 583.17876pt x 390.45876pt>
+[26 <./images/nmea/gps_minimum.png> <./images/nmea/date.png>]
+<images/nmea/speedLog.png, id=585, 583.17876pt x 390.45876pt>
 File: images/nmea/speedLog.png Graphic file (type png)
 
 <use images/nmea/speedLog.png>
@@ -1315,8 +1354,8 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[25 <./images/nmea/position.png>]
-<images/nmea/waypoint.png, id=553, 659.46375pt x 569.12625pt>
+[27 <./images/nmea/position.png>]
+<images/nmea/waypoint.png, id=591, 659.46375pt x 569.12625pt>
 File: images/nmea/waypoint.png Graphic file (type png)
 
 <use images/nmea/waypoint.png>
@@ -1342,8 +1381,8 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[26 <./images/nmea/speedLog.png>]
-<images/nmea/satellite.png, id=559, 520.94624pt x 351.3125pt>
+[28 <./images/nmea/speedLog.png>]
+<images/nmea/satellite.png, id=597, 520.94624pt x 351.3125pt>
 File: images/nmea/satellite.png Graphic file (type png)
 
 <use images/nmea/satellite.png>
@@ -1369,15 +1408,15 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[27 <./images/nmea/waypoint.png>]
-<images/nmea/anemometer.png, id=565, 648.4225pt x 326.21875pt>
+[29 <./images/nmea/waypoint.png>]
+<images/nmea/anemometer.png, id=604, 648.4225pt x 326.21875pt>
 File: images/nmea/anemometer.png Graphic file (type png)
 
 <use images/nmea/anemometer.png>
 Package pdftex.def Info: images/nmea/anemometer.png used on input line 112.
 (pdftex.def)             Requested size: 455.24408pt x 229.0335pt.
 
-<images/nmea/depth.png, id=566, 592.2125pt x 280.04625pt>
+<images/nmea/depth.png, id=605, 592.2125pt x 280.04625pt>
 File: images/nmea/depth.png Graphic file (type png)
 
 <use images/nmea/depth.png>
@@ -1400,7 +1439,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[28 <./images/nmea/satellite.png> <./images/nmea/anemometer.png>]
+[30 <./images/nmea/satellite.png> <./images/nmea/anemometer.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 138--143
 
  []
@@ -1421,15 +1460,15 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[29 <./images/nmea/depth.png>]
-<images/nmea/gsv.png, id=579, 719.68875pt x 83.31125pt>
+[31 <./images/nmea/depth.png>]
+<images/nmea/gsv.png, id=619, 719.68875pt x 83.31125pt>
 File: images/nmea/gsv.png Graphic file (type png)
 
 <use images/nmea/gsv.png>
 Package pdftex.def Info: images/nmea/gsv.png used on input line 159.
 (pdftex.def)             Requested size: 341.43306pt x 39.52493pt.
 
-<images/nmea/rmb.png, id=580, 1113.15875pt x 378.41376pt>
+<images/nmea/rmb.png, id=620, 1113.15875pt x 378.41376pt>
 File: images/nmea/rmb.png Graphic file (type png)
 
 <use images/nmea/rmb.png>
@@ -1452,7 +1491,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[30 <./images/nmea/gsv.png> <./images/nmea/rmb.png>]
+[32 <./images/nmea/gsv.png> <./images/nmea/rmb.png>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1469,7 +1508,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[31]
+[33]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1486,17 +1525,17 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[32
+[34
 
 ]
-Chapitre 3.
-<images/dataServer_3.png, id=601, 809.57776pt x 328.29031pt>
+Chapitre 4.
+<images/dataServer_3.png, id=639, 809.57776pt x 328.29031pt>
 File: images/dataServer_3.png Graphic file (type png)
 
 <use images/dataServer_3.png>
 Package pdftex.def Info: images/dataServer_3.png used on input line 14.
 (pdftex.def)             Requested size: 455.24408pt x 184.60774pt.
- [33 <./images/dataServer_3.png>]
+ [35 <./images/dataServer_3.png>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1513,7 +1552,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[34]
+[36]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1530,7 +1569,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[35]
+[37]
 Underfull \hbox (badness 10000) in paragraph at lines 102--103
 
  []
@@ -1551,7 +1590,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[36]
+[38]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1568,7 +1607,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[37] <images/jsClient.png, id=647, 804.00375pt x 536.0025pt>
+[39] <images/jsClient.png, id=685, 804.00375pt x 536.0025pt>
 File: images/jsClient.png Graphic file (type png)
 
 <use images/jsClient.png>
@@ -1591,8 +1630,8 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[38 <./images/jsClient.png>]
-Chapitre 4.
+[40 <./images/jsClient.png>]
+Chapitre 5.
 
 Underfull \hbox (badness 10000) in paragraph at lines 3--4
 
@@ -1623,9 +1662,9 @@ e pour un \OT1/cmtt/m/n/12 Display \OT1/cmr/m/n/12 ap-pel^^Se \OT1/cmtt/m/n/12
 InstrumentTemplate\OT1/cmr/m/n/12 , 
  []
 
-[39
+[41
 
-] <images/display/InstrumentTemplate.png, id=657, 618.31pt x 373.395pt>
+] <images/display/InstrumentTemplate.png, id=696, 618.31pt x 373.395pt>
 File: images/display/InstrumentTemplate.png Graphic file (type png)
 
 <use images/display/InstrumentTemplate.png>
@@ -1655,8 +1694,8 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[40 <./images/display/InstrumentTemplate.png>]
-Chapitre 5.
+[42 <./images/display/InstrumentTemplate.png>]
+Chapitre 6.
 
 Underfull \hbox (badness 10000) in paragraph at lines 3--4
 
@@ -1672,16 +1711,16 @@ Overfull \hbox (15.14005pt too wide) in paragraph at lines 46--49
 [][]
  []
 
-[41
+[43
 
-] <images/instruments.png, id=668, 82.3075pt x 82.3075pt>
+] <images/instruments.png, id=708, 82.3075pt x 82.3075pt>
 File: images/instruments.png Graphic file (type png)
 
 <use images/instruments.png>
 Package pdftex.def Info: images/instruments.png used on input line 58.
 (pdftex.def)             Requested size: 113.81102pt x 113.81427pt.
 
-<images/instrumentsradialmenu.png, id=669, 150.5625pt x 150.5625pt>
+<images/instrumentsradialmenu.png, id=709, 150.5625pt x 150.5625pt>
 File: images/instrumentsradialmenu.png Graphic file (type png)
 
 <use images/instrumentsradialmenu.png>
@@ -1689,25 +1728,25 @@ Package pdftex.def Info: images/instrumentsradialmenu.png used on input line 72
 .
 (pdftex.def)             Requested size: 113.81102pt x 113.81526pt.
 
-<images/navigation.png, id=670, 41.4047pt x 41.4047pt>
+<images/navigation.png, id=710, 41.4047pt x 41.4047pt>
 File: images/navigation.png Graphic file (type png)
 
 <use images/navigation.png>
 Package pdftex.def Info: images/navigation.png used on input line 75.
 (pdftex.def)             Requested size: 56.9055pt x 56.90854pt.
- <images/ais.png, id=671, 41.4047pt x 41.4047pt>
+ <images/ais.png, id=711, 41.4047pt x 41.4047pt>
 File: images/ais.png Graphic file (type png)
 
 <use images/ais.png>
 Package pdftex.def Info: images/ais.png used on input line 78.
 (pdftex.def)             Requested size: 56.9055pt x 56.90854pt.
- <images/aisradar.png, id=672, 41.4047pt x 41.4047pt>
+ <images/aisradar.png, id=712, 41.4047pt x 41.4047pt>
 File: images/aisradar.png Graphic file (type png)
 
 <use images/aisradar.png>
 Package pdftex.def Info: images/aisradar.png used on input line 81.
 (pdftex.def)             Requested size: 56.9055pt x 56.90854pt.
- <images/bathy.png, id=673, 41.4047pt x 41.4047pt>
+ <images/bathy.png, id=713, 41.4047pt x 41.4047pt>
 File: images/bathy.png Graphic file (type png)
 
 <use images/bathy.png>
@@ -1730,7 +1769,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[42 <./images/instruments.png> <./images/instrumentsradialmenu.png> <./images/n
+[44 <./images/instruments.png> <./images/instrumentsradialmenu.png> <./images/n
 avigation.png> <./images/ais.png> <./images/aisradar.png> <./images/bathy.png>]
 
 Overfull \hbox (15.44183pt too wide) in paragraph at lines 111--115
@@ -1759,7 +1798,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[43] <images/menu.png, id=692, 989.67389pt x 678.16151pt>
+[45] <images/menu.png, id=730, 989.67389pt x 678.16151pt>
 File: images/menu.png Graphic file (type png)
 
 <use images/menu.png>
@@ -1782,12 +1821,12 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[44 <./images/menu.png>]
+[46 <./images/menu.png>]
 Overfull \hbox (9.77011pt too wide) in paragraph at lines 243--245
 [][] 
  []
 
-<images/dip_0.png, id=699, 386.44376pt x 208.78pt>
+<images/dip_0.png, id=737, 386.44376pt x 208.78pt>
 File: images/dip_0.png Graphic file (type png)
  <use images/dip_0.png>
 Package pdftex.def Info: images/dip_0.png used on input line 261.
@@ -1812,13 +1851,13 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[45] <images/dip_1.png, id=705, 380.42125pt x 209.78375pt>
+[47] <images/dip_1.png, id=743, 380.42125pt x 209.78375pt>
 File: images/dip_1.png Graphic file (type png)
 
 <use images/dip_1.png>
 Package pdftex.def Info: images/dip_1.png used on input line 272.
 (pdftex.def)             Requested size: 256.0748pt x 141.21698pt.
- <images/adp_1.png, id=706, 431.6125pt x 299.1175pt>
+ <images/adp_1.png, id=744, 431.6125pt x 299.1175pt>
 File: images/adp_1.png Graphic file (type png)
 
 <use images/adp_1.png>
@@ -1841,7 +1880,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[46 <./images/dip_0.png> <./images/dip_1.png> <./images/adp_1.png>]
+[48 <./images/dip_0.png> <./images/dip_1.png> <./images/adp_1.png>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1858,7 +1897,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[47]) (./cartographie.tex
+[49]) (./cartographie.tex
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -1875,9 +1914,9 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[48]
-Chapitre 6.
-<images/carto/Equirectangular-projection.png, id=723, 642.4pt x 321.2pt>
+[50]
+Chapitre 7.
+<images/carto/Equirectangular-projection.png, id=762, 642.4pt x 321.2pt>
 File: images/carto/Equirectangular-projection.png Graphic file (type png)
 
 <use images/carto/Equirectangular-projection.png>
@@ -1889,14 +1928,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 36--38
 
  []
 
-[49
+[51
 
  <./images/carto/Equirectangular-projection.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 41--42
 
  []
 
-<images/carto/Worldwind_tile_system.png, id=731, 1027.84pt x 770.88pt>
+<images/carto/Worldwind_tile_system.png, id=769, 1027.84pt x 770.88pt>
 File: images/carto/Worldwind_tile_system.png Graphic file (type png)
 
 <use images/carto/Worldwind_tile_system.png>
@@ -1920,15 +1959,15 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[50 <./images/carto/Worldwind_tile_system.png>]
-<images/carto/0.png, id=740, 757.32938pt x 447.17062pt>
+[52 <./images/carto/Worldwind_tile_system.png>]
+<images/carto/0.png, id=778, 757.32938pt x 447.17062pt>
 File: images/carto/0.png Graphic file (type png)
 
 <use images/carto/0.png>
 Package pdftex.def Info: images/carto/0.png used on input line 96.
 (pdftex.def)             Requested size: 455.24408pt x 268.80254pt.
 
-<images/carto/3.png, id=741, 809.27344pt x 480.29437pt>
+<images/carto/3.png, id=779, 809.27344pt x 480.29437pt>
 File: images/carto/3.png Graphic file (type png)
 
 <use images/carto/3.png>
@@ -1954,14 +1993,14 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[51 <./images/carto/0.png>]
-<images/carto/1.png, id=747, 757.32938pt x 447.17062pt>
+[53 <./images/carto/0.png>]
+<images/carto/1.png, id=785, 757.32938pt x 447.17062pt>
 File: images/carto/1.png Graphic file (type png)
 
 <use images/carto/1.png>
 Package pdftex.def Info: images/carto/1.png used on input line 119.
 (pdftex.def)             Requested size: 455.24408pt x 268.80254pt.
- <images/carto/2.png, id=748, 963.6pt x 746.79pt>
+ <images/carto/2.png, id=786, 963.6pt x 746.79pt>
 File: images/carto/2.png Graphic file (type png)
 
 <use images/carto/2.png>
@@ -1984,7 +2023,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[52 <./images/carto/3.png> <./images/carto/1.png>]
+[54 <./images/carto/3.png> <./images/carto/1.png>]
 Overfull \hbox (22.36685pt too wide) in paragraph at lines 150--151
 [][]\OT1/cmtt/m/n/10.95 https://www.mar.mil.br/dhn/chm/cartas/download/cartasbs
 b/cartas[]eletronicas[]Internet.htm[] 
@@ -2007,7 +2046,7 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[53 <./images/carto/2.png>]
+[55 <./images/carto/2.png>]
 \tf@thm=\write7
 \openout7 = `navisuDev.thm'.
 
@@ -2019,7 +2058,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 168.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 168.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 168.
 Package rerunfilecheck Info: File `navisuDev.out' has not changed.
-(rerunfilecheck)             Checksum: E4F69943CB1C2EEEDC8B4E4FAB68F3B7;4212.
+(rerunfilecheck)             Checksum: 8967579046349BAFA6AFFD0FD8695642;4712.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -2028,12 +2067,12 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 168.
  ) 
 Here is how much of TeX's memory you used:
  19579 strings out of 493105
- 353966 string characters out of 6137072
- 433136 words of memory out of 5000000
- 22449 multiletter control sequences out of 15000+600000
- 15118 words of font info for 61 fonts, out of 8000000 for 9000
+ 353940 string characters out of 6137072
+ 433140 words of memory out of 5000000
+ 22447 multiletter control sequences out of 15000+600000
+ 13251 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,14n,54p,629b,562s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,14n,54p,629b,576s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texl
@@ -2042,10 +2081,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmtt12.pfb>
-Output written on navisuDev.pdf (53 pages, 6941738 bytes).
+Output written on navisuDev.pdf (55 pages, 6943644 bytes).
 PDF statistics:
- 832 PDF objects out of 1000 (max. 8388607)
- 709 compressed objects within 8 object streams
- 175 named destinations out of 1000 (max. 500000)
- 681 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 871 PDF objects out of 1000 (max. 8388607)
+ 746 compressed objects within 8 object streams
+ 177 named destinations out of 1000 (max. 500000)
+ 737 words of extra memory for PDF output out of 10000 (max. 10000000)
 
