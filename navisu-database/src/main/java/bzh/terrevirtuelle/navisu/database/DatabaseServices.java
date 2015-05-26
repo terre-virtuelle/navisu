@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.persistence.EntityManager;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -21,6 +22,8 @@ public interface DatabaseServices
     Connection connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd);
 
     Connection connect(String driverName, String user, String passwd);
+
+    EntityManager getEntityManager();
 
     boolean isConnect();
 

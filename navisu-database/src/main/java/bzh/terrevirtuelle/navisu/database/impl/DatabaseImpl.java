@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -27,6 +30,8 @@ public class DatabaseImpl
     private Statement statement;
     private PreparedStatement preparedStatement;
     private Connection connection;
+    private EntityManager entityManager = null;
+    private final String PERSISTENCE_UNIT = "navisuPU";
 
     @Override
     public void componentInitiated() {
@@ -150,5 +155,14 @@ public class DatabaseImpl
     @Override
     public boolean isConnect() {
         return connection != null;
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        if (entityManager == null) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+            entityManager = emf.createEntityManager();
+        }
+        return entityManager;
     }
 }
