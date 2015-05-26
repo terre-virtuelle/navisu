@@ -392,7 +392,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			resu.setLatitude(target.getLatitude());
     			resu.setLongitude(target.getLongitude());
     			resu.setMMSI(target.getMMSI());
-    			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {resu.setName(target.getName());}
+    			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {
+    				resu.setName(target.getName());
+    				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
+    					System.err.println("New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI());
+    					}
+    			}
     			else {resu.setName(aisShips.get(i).getName());}
     			aisShips.set(i, resu);
     			shipMatrix[0][i] = Integer.toString(resu.getMMSI());
@@ -1077,6 +1082,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			Ship s = new Ship();
     			s.setMMSI(Integer.parseInt(ship[0]));
     			s.setName(ship[1]);
+    			//on ne charge pas les dernières positions connues des bateaux car ceux-ci ne sont peut-être plus actifs, les positions seront mises à jour à la réception de nouveaux signaux AIS (pour les bateaux actifs)
     			//s.setLatitude(Double.parseDouble(ship[2]));
     			//s.setLongitude(Double.parseDouble(ship[3]));
     			aisShips.add(s);
