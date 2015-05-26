@@ -22,11 +22,16 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -61,12 +66,13 @@ public class TestDBImpl
     private final String insertQuery = "INSERT INTO " + SHIP + " (mmsi, shipName,latitude,longitude,date,time)"
             + " VALUES(?,?,?,?,?,?)";
     private final String retrieveQuery = "SELECT * FROM " + SHIP;
+    private EntityManager em;
+    private Query query;
 
     @Override
     public Connection connect(String dbName, String user, String passwd) {
         connection = databaseServices.connect(dbName, user, passwd);
         return connection;
-
     }
 
     @Override
@@ -96,9 +102,13 @@ public class TestDBImpl
     public DatabaseDriver getDriver() {
         return this;
     }
+    /*
+     *
+     * Recuperation des Ship dans un fichier csv
+     *
+     */
 
-    @Override
-    public void runJDBC() {
+    public void readAllShips() {
         Stream<String> lines = null;
         try {
             lines = Files.lines(Paths.get("data/saved", "savedAisShips.csv"));
@@ -109,11 +119,22 @@ public class TestDBImpl
         if (lines != null) {
             lines.close();
         }
-        // System.out.println(ships);
-       guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
+    }
+    /*
+     *
+     Section SQL-API JDBC
+     *
+     */
+
+    @Override
+    public void runJDBC() {
+        guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
+            readAllShips();
             createTable();
             populateTable();
-            retrieveAll();
+            ships.clear();
+            ships.addAll(retrieveAll());
+            System.out.println(ships);
         });
     }
 
@@ -147,10 +168,17 @@ public class TestDBImpl
         }
     }
 
+    /**
+     * Populate a table into the database
+     */
     public void populateTable() {
+        try {
+            preparedStatement = connection.prepareStatement(insertQuery);
+        } catch (SQLException ex) {
+            Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         ships.stream().forEach((ship) -> {
             try {
-                preparedStatement = connection.prepareStatement(insertQuery);
                 preparedStatement.setInt(1, ship.getMMSI());
                 preparedStatement.setString(2, ship.getName());
                 preparedStatement.setDouble(3, ship.getLatitude());
@@ -164,22 +192,58 @@ public class TestDBImpl
         });
     }
 
-    public void retrieveAll() {
-        ships.clear();
-        try {
-            ResultSet rs = statement.executeQuery(retrieveQuery);
-            while (rs.next()) {
-                ships.add(new Ship(rs.getInt("mmsi"),
-                        rs.getString("shipName"),
-                        rs.getDouble("latitude"),
-                        rs.getDouble("longitude"),
-                        LocalDate.parse(rs.getString("date")),
-                        LocalTime.parse(rs.getString("time"))));
+    /**
+     * Retrieve all data in a table into the database
+     *
+     * @return
+     */
+    public List<Ship> retrieveAll() {
+        List<Ship> tmp = new ArrayList<>();
+            try {
+                ResultSet rs = statement.executeQuery(retrieveQuery);
+                while (rs.next()) {
+                    tmp.add(new Ship(rs.getInt("mmsi"),
+                            rs.getString("shipName"),
+                            rs.getDouble("latitude"),
+                            rs.getDouble("longitude"),
+                            LocalDate.parse(rs.getString("date")),
+                            LocalTime.parse(rs.getString("time"))));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println(ships);
-        System.out.println(ships.size());
+        return tmp;
+    }
+    /*
+     *
+     Section JPA
+     *
+     */
+
+    @Override
+    public void runJPA() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("navisuPU");
+        em = emf.createEntityManager();
+
+        guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
+            readAllShips();
+            persistAllShips();
+            ships.clear();
+            ships.addAll(findAllShips());
+            System.out.println(ships);
+        });
+    }
+
+    public void persistAllShips() {
+        em.getTransaction().begin();
+        ships.stream().forEach((s) -> {
+            em.persist(s);
+        });
+        em.getTransaction().commit();
+    }
+
+    public Collection<Ship> findAllShips() {
+        query = em.createQuery("SELECT s FROM Ship s");
+        return (Collection<Ship>) query.getResultList();
     }
 }

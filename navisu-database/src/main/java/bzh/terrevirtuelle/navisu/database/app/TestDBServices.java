@@ -25,4 +25,6 @@ public interface TestDBServices
     DatabaseDriver getDriver();
 
     void runJDBC();
+
+    void runJPA();
 }
