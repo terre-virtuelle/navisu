@@ -25,7 +25,7 @@
 /navisu-launcher/data/databases/
 /navisu-launcher/data/bathymetry/shom
 /navisu-launcher/errors.txt
-#/navisu-launcher/derby.log
+/navisu-launcher/derby.log
 /navisu-launcher/properties/
 /navisu-launcher/donnees/
 /navisu-agents/.nb-gradle/private/
