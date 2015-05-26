@@ -1,0 +1,62 @@
+\select@language {french}
+\contentsline {chapter}{\numberline {1}Installation et personnalisation du serveur de donn\'ees {\sc NaVisu}}{17}{chapter.1}
+\contentsline {section}{\numberline {1.1}Pr\'esentation}{17}{section.1.1}
+\contentsline {section}{\numberline {1.2}Le projet}{18}{section.1.2}
+\contentsline {section}{\numberline {1.3}T\'el\'echargement}{18}{section.1.3}
+\contentsline {section}{\numberline {1.4}Param\'etrisation}{18}{section.1.4}
+\contentsline {section}{\numberline {1.5}Lancement}{18}{section.1.5}
+\contentsline {section}{\numberline {1.6}D\'eveloppement}{19}{section.1.6}
+\contentsline {chapter}{\numberline {2}Les donn\'ees NMEA 0183}{21}{chapter.2}
+\contentsline {section}{\numberline {2.1}Le standard NMEA}{21}{section.2.1}
+\contentsline {section}{\numberline {2.2}Mod\`ele NMEA0183}{22}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Ensemble des phrases analys\'ees}{22}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Minimun d'information pour la navigation}{24}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Date et heure}{24}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}Position : latitude, longitude}{25}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}Informations de vitesse et de distance}{26}{subsection.2.2.5}
+\contentsline {subsection}{\numberline {2.2.6}Informations sur les waypoints}{27}{subsection.2.2.6}
+\contentsline {subsection}{\numberline {2.2.7}Informations sur les satellites}{28}{subsection.2.2.7}
+\contentsline {subsection}{\numberline {2.2.8}Informations sur le vent}{28}{subsection.2.2.8}
+\contentsline {subsection}{\numberline {2.2.9}Bathym\'etrie}{29}{subsection.2.2.9}
+\contentsline {section}{\numberline {2.3}Pr\'esentation de l'API}{29}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}L'analyseur lexical et syntaxique}{29}{subsection.2.3.1}
+\contentsline {subsubsection}{Un exemple simple}{30}{section*.14}
+\contentsline {subsubsection}{Un exemple plus complexe}{30}{section*.15}
+\contentsline {section}{\numberline {2.4}Glossaire}{31}{section.2.4}
+\contentsline {chapter}{\numberline {3}Architecture et fonctionnalit\'es du client NMEA}{33}{chapter.3}
+\contentsline {section}{\numberline {3.1}Les connexions au serveur}{33}{section.3.1}
+\contentsline {section}{\numberline {3.2}Les donn\'ees en entr\'ee}{33}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Extrait du sch\'ema {\tt nmea.xsd}}{34}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Extrait d'un fichier de donn\'ees conforme au sch\'ema {\tt nmea.xsd}}{34}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}Le projet {\tt NaVisuSimpleClient}}{35}{section.3.3}
+\contentsline {section}{\numberline {3.4}T\'el\'echargement}{35}{section.3.4}
+\contentsline {section}{\numberline {3.5}Param\'etrisation}{35}{section.3.5}
+\contentsline {section}{\numberline {3.6}Lancement}{35}{section.3.6}
+\contentsline {section}{\numberline {3.7}D\'eveloppement}{35}{section.3.7}
+\contentsline {section}{\numberline {3.8}Diffusion de donn\'ees}{36}{section.3.8}
+\contentsline {section}{\numberline {3.9}Ecriture d'un souscripteur \`a un \'ev\'enement}{36}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}Exemple de souscription et de traitement apr\`es r\'eception d'un \'ev\'enement type {\tt GGA}}{37}{subsection.3.9.1}
+\contentsline {section}{\numberline {3.10}Autre d\'eveloppement possible}{37}{section.3.10}
+\contentsline {chapter}{\numberline {4}Cr\'eation d'un nouveau Display}{39}{chapter.4}
+\contentsline {section}{\numberline {4.1}Architecture}{39}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Principes}{39}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Diagramme UML}{40}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}Cr\'eer un nouveau {\tt Display} : {\tt Compass}}{40}{section.4.2}
+\contentsline {chapter}{\numberline {5}Cr\'eation des menus}{41}{chapter.5}
+\contentsline {section}{\numberline {5.1}Objet}{41}{section.5.1}
+\contentsline {section}{\numberline {5.2}Le graphisme}{42}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Module \tt navisu-app}{42}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Module \tt navisu-widgets}{42}{subsection.5.2.2}
+\contentsline {section}{\numberline {5.3}Le code}{42}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Module \tt navisu-app}{42}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Choix des {\tt callbacks}}{44}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Module \tt navisu-widgets}{45}{subsection.5.3.3}
+\contentsline {section}{\numberline {5.4}Principe des {\tt DriverManager}}{45}{section.5.4}
+\contentsline {chapter}{\numberline {6}Cartographie}{49}{chapter.6}
+\contentsline {section}{\numberline {6.1}Pr\'esentation}{49}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}La projection Equirectangulaire}{49}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}Tuilage}{50}{subsection.6.1.2}
+\contentsline {subsubsection}{Le principe}{50}{section*.16}
+\contentsline {section}{\numberline {6.2}Cartographie raster}{51}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Les cartes BSB/KAP}{51}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Acquisition}{53}{subsection.6.2.2}

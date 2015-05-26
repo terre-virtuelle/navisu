@@ -1,0 +1,225 @@
+\chapter{Architecture et fonctionnalités du client NMEA}
+
+%Ref : TV240114\_TU\_SM \hfill Rédacteur : Serge  Morvan \\
+
+
+\section{Les connexions au serveur}
+Les différents périphériques et capteurs fournissent les données de navigation au serveur, suivant différents
+protocoles. Ces données sont multiplexées par le serveur. Sur requête des clients elles sont analysées, transformées dans un format XML standard et envoyées aux différents clients. Ces clients peuvent être sur la même machine dans
+le cas le plus simple ou sur d'autres ordinateurs, tablettes ou smartphones. \nav\ est le client le plus riche.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\framebox[1\width]{
+	\includegraphics[width=16cm]{images/dataServer_3.png}
+}
+\begin{figure}[ht]
+\caption{\label{0}\textit{Schéma général des entrées/sorties}}
+\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Les données en entrée}
+Il n'existe pas, à notre connaissance, de schéma XML bien défini pour l'ensemble des données NMEA.
+A l'exception de quelques cas particuliers comme : GPX  \footnote{\href{http://www.topografix.com/gpx.asp}{http://www.topografix.com/gpx.asp}}
+ou AIS  \footnote{\href{http://www.thsoa.org/hy07/04P\?_10.pdf}{http://www.thsoa.org/hy07/04P\_10.pdf}} par exemple.
+Nous avons donc défini notre propre modèle NMEA \footnote{Voir article Modèle NMEA} associé à un schéma nmea.xsd structurant les données
+sans ambiguïtés et permettant leur validation.
+\subsection{Extrait du schéma {\tt nmea.xsd}}
+{\small
+ \begin{verbatim}
+<xs:complexType name="gga">
+  <xs:sequence>
+    <xs:element name="device" type="xs:string" minOccurs="0"/>
+    <xs:element name="sentence" type="xs:string" minOccurs="0"/>
+    <xs:element name="utc" type="xs:dateTime" minOccurs="0"/>
+    <xs:element name="latitude" type="xs:float"/>
+    <xs:element name="longitude" type="xs:float"/>
+    <xs:element name="gpsQualityIndicator" type="xs:int"/>
+    <xs:element name="numberOfSatellitesInView" type="xs:int"/>
+    <xs:element name="horizontalDilutionOfPrecision" type="xs:float"/>
+    <xs:element name="antennaAltitude" type="xs:float"/>
+    <xs:element name="unitsOfAntennaAltitude" type="xs:string" minOccurs="0"/>
+    <xs:element name="geoidAltitude" type="xs:float"/>
+    <xs:element name="unitsOfGeoidAltitude" type="xs:string" minOccurs="0"/>
+  </xs:sequence>
+</xs:complexType>
+\end{verbatim}
+}
+\subsection{Extrait d'un fichier de données conforme au schéma {\tt nmea.xsd}}
+{\small
+ \begin{verbatim}
+<?xml version="1.0" encoding="UTF-8" standalone="true"?>
+-<sentences>
+  -<gga>
+    <device>GP</device>
+    <sentence>
+      $GPGGA,191138.000,4826.2632,N,00429.8614,W,2,05,1.2,72.4,M,52.1,M,0.8,0000*50
+    </sentence>
+    <utc>2014-01-05T19:11:38.973+01:00</utc>
+    <latitude>48.43772</latitude>
+    <longitude>-4.4976897</longitude>
+    <gpsQualityIndicator>2</gpsQualityIndicator>
+    <numberOfSatellitesInView>5</numberOfSatellitesInView>
+    <horizontalDilutionOfPrecision>1.2</horizontalDilutionOfPrecision>
+    <antennaAltitude>72.4</antennaAltitude>
+    <unitsOfAntennaAltitude>M</unitsOfAntennaAltitude>
+    <geoidAltitude>52.1</geoidAltitude>
+    <unitsOfGeoidAltitude>M</unitsOfGeoidAltitude>
+ </gga>
+</sentences>
+\end{verbatim}
+}
+\newpage
+\section{Le projet {\tt NaVisuSimpleClient}}
+
+   Le projet \nav est divisé en sous-projets, chaque sous-projet possède une architecture type composants.
+ La plupart des  sous-projets sont développés sous forme d'API, ayant le minimun de dépendance avec les autres sous-projets.
+ C'est le cas de l'API {\tt navisu-client}, qui ne dépend que du module {\tt navisu-domain} : description des modèles d'objets utilisés. Il est donc simple de présenter le serveur sous forme d'un projet indépendant : {\tt NaVisuSimpleClient}
+ 
+\section{Téléchargement}
+\href{https://github.com/terre-virtuelle/NaVisu-client.git}{https://github.com/terre-virtuelle/NaVisu-client.git}
+\section{Paramétrisation}
+l'API NaVisu-client ne fourni pas d'IHM, pour la paramétrisation, celle ci se fait à l'aide du fichier de propriétés : {\tt properties/client.properties} 
+\begin{verbatim}
+# Web client parameters
+hostName = localhost
+port = 8080
+period = 1000
+\end{verbatim}
+
+La variable {\tt port} correspondant au numéro du port de communication avec les clients, attention de n'avoir pas déjà des applications utilisant ce port. 
+
+\section{Lancement}
+ A partir du fichier jar : {\tt java -jar NaVisuSimpleClient.jar}
+
+ \section{Développement}
+ Le serveur fourni les données à l'aide du protocole WebSocket, le client doit donc se
+ conformer à ce protocole. La propriété  period permet de modifier la fréquence d'acquisition des données sur le client. Le protocole WebSocket permet des actions en pull ou en push. Nous avons fait le choix de faire l'acquisition uniquement 
+ en mode pull. Le client décide d'envoyer une requête : {\tt nmea} au serveur qui lui renvoie un paquet de données. Entre deux requêtes les données arrivées sur le serveur peuvent être perdues. Pour le client \nav, présenté ici nous avons choisi d'utiliser le framework {\tt Vert.x }, comme pour le serveur, mais tout autre solution est possible.
+ \footnote{\href{http://vertx.io/}{http://vertx.io/}}
+ 
+ 
+ \hbox{}\newpage
+ La classe de test est : {\tt bzh.terrevirtuelle.navisu.client.app.ClientMain }\\
+ 
+ \begin{verbatim}
+  ComponentManager componentManager = ComponentManager.componentManager;
+  // deploy components
+  LOGGER.log(Level.INFO, "\n Start", componentManager.startApplication(
+          NmeaClientImpl.class
+  ));
+  NmeaClientServices nmeaClientServices = 
+         componentManager.getComponentService(NmeaClientServices.class);
+           
+ nmeaClientServices.open("localhost", 8080);
+ nmeaClientServices.request(100); 
+\end{verbatim}
+La première partie est relative aux composants, ensuite le client se connecte sur le serveur, sur le port 8080 puis fait des requêtes
+toutes les 100 millisecondes.
+
+\section{Diffusion de données}
+ Dans l'exemple présenté, les données reçues sont parsées à 
+l'aide de l'API JAXB \footnote{\href{https://jaxb.java.net/}{https://jaxb.java.net/}}. Nous utilisons le support
+de la programmation événementielle de \ccc. A chaque objet NMEA 
+instancié, l'événement correspondant est émis et diffusé auprès des abonnés. 
+{\small
+ \begin{verbatim}
+ public interface NMEAEvent
+         extends ComponentEvent {
+     public <T extends NMEA> void notifyNmeaMessageChanged(T data);
+ }
+ 
+ public interface GGAEvent
+         extends NMEAEvent {
+ } 
+ \end{verbatim}
+ }
+\section{Ecriture d'un souscripteur à un événement}
+L'inscription à la réception d'événements d'un type particulier suit la démarche de \ccc :
+  \begin{enumerate}
+  \item Recherche du {\tt componentManager}
+  \item Recherche de l'objet de souscription à un événement particulier {\tt ggaES }
+  \item Souscription et sur-définition de la méthode réponse {\tt notifyNmeaMessageChanged(T data)}
+  \item La méthode étant générique, l'héritage des événements NMEA, n'étant pas un véritable héritage, 
+  il convient d'appliquer une coercition de type afin d'analyser les données reçues.
+  \item Traitement des données.
+  \end{enumerate}
+  
+  \subsection{Exemple de souscription et de traitement après réception d'un événement type {\tt GGA}}
+  {\small
+ \begin{verbatim}
+public class Locator {
+
+    ComponentManager cm = ComponentManager.componentManager;
+    ComponentEventSubscribe<GGAEvent> ggaES = 
+                cm.getComponentEventSubscribe(GGAEvent.class);
+
+    public Locator() {
+        ggaES.subscribe(new GGAEvent() {
+
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
+                GGA gga = (GGA) data;
+                System.out.println("Latitude : " + gga.getLatitude()
+                              + "   Longitude : " + gga.getLongitude());
+            }
+        });
+    }
+}
+\end{verbatim}
+}
+
+\section{Autre développement possible}
+L'écriture d'un client n'impose que le respect du protocole WebSocket, il est donc tout à fait possible d'écrire des clients dans un autre langage que java et avec une philosophie de diffusion que la programmation événementielle.
+Un exemple de client élémentaire écrit en Javascript :
+\begin{verbatim}
+<html>
+<head><title>Web Socket Test</title></head>
+<body>
+<script>
+    var socket;
+    if (window.WebSocket) {
+        socket = new WebSocket("ws://localhost:8080/nmea");
+        socket.onmessage = function(event) {
+            alert("Received data from websocket: " + event.data);
+        }
+        socket.onopen = function(event) {
+            alert("Web Socket opened!");
+        };
+        socket.onclose = function(event) {
+            alert("Web Socket closed.");
+        };
+    } else {
+        alert("Your browser does not support Websockets. (Use Chrome)");
+    }
+\end{verbatim}
+\newpage
+\begin{verbatim}
+    function send(message) {
+        if (!window.WebSocket) {
+            return;
+        }
+        if (socket.readyState == WebSocket.OPEN) {
+             socket.send(message);
+        } else {
+            alert("The socket is not open.");
+        }
+    }
+</script>
+<form onsubmit="return false;">
+    <input type="text" name="message" value="Nmea"/>
+    <input type="button" value="Send Web Socket Data" 
+                onclick="send(this.form.message.value)"/>
+</form>
+</body>
+</html>
+\end{verbatim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\framebox[1\width]{
+	\includegraphics[width=16cm]{images/jsClient.png}
+}
+\begin{figure}[ht]
+\caption{\label{0}\textit{Un client élémentaire en javascript}}
+\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
