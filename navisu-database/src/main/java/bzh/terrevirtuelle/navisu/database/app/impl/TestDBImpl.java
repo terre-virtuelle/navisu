@@ -199,19 +199,19 @@ public class TestDBImpl
      */
     public List<Ship> retrieveAll() {
         List<Ship> tmp = new ArrayList<>();
-            try {
-                ResultSet rs = statement.executeQuery(retrieveQuery);
-                while (rs.next()) {
-                    tmp.add(new Ship(rs.getInt("mmsi"),
-                            rs.getString("shipName"),
-                            rs.getDouble("latitude"),
-                            rs.getDouble("longitude"),
-                            LocalDate.parse(rs.getString("date")),
-                            LocalTime.parse(rs.getString("time"))));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            ResultSet rs = statement.executeQuery(retrieveQuery);
+            while (rs.next()) {
+                tmp.add(new Ship(rs.getInt("mmsi"),
+                        rs.getString("shipName"),
+                        rs.getDouble("latitude"),
+                        rs.getDouble("longitude"),
+                        LocalDate.parse(rs.getString("date")),
+                        LocalTime.parse(rs.getString("time"))));
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return tmp;
     }
     /*
@@ -222,9 +222,7 @@ public class TestDBImpl
 
     @Override
     public void runJPA() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("navisuPU");
-        em = emf.createEntityManager();
-
+        em = databaseServices.getEntityManager();
         guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
             readAllShips();
             persistAllShips();

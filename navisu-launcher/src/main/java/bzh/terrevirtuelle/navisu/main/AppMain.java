@@ -343,7 +343,7 @@ public class AppMain extends Application {
        // testDBServices.runJDBC();//OK
         
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
-       // testDBServices.runJPA();//OK
+        testDBServices.runJPA();//OK
     }
 
     public static void main(String[] args) throws Exception {
