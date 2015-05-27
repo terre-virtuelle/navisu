@@ -1,0 +1,372 @@
+\chapter{Création des menus}
+
+Ref : TV110415\_TU\_SM \hfill Rédacteur : Serge  Morvan \\
+
+
+\section{Objet}
+Le but de cette section est d'expliquer la façon de rajouter un menu et ses sous-menus au Dock.
+Un certain nombre de services doivent être activés, ou désactivés par l'utilisateur, pour cela, le menu
+du Dock est privilégié. Le service à activer devra faire partie du groupe des {\tt Driver}: 
+\hbox{}\vspace{0.2cm}
+
+\begin{itemize}
+ \item { \tt Driver } : pour l'ouverture de fichiers
+ \item { \tt DDriver } : pour le parcours de répertoires   
+ \item { \tt InstrumentDriver } : pour le choix d'un instrument   
+ \item { \tt DatabaseDriver } : pour la connexion  à une base de données
+ \item { \tt WebDriver } : pour la connexion à un site web via un URL
+ \item  \ldots autres à venir
+\end{itemize}
+Ce service doit être enregistré dans le module {\tt navisu-launcher} :
+
+\hbox{}\vspace{0.2cm}
+{\small
+\begin{boxedverbatim}
+	
+InstrumentDriverManagerServices instrumentDriverManagerServices =
+         componentManager.getComponentService(InstrumentDriverManagerServices.class);
+instrumentDriverManagerServices.init();
+instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
+instrumentDriverManagerServices.registerNewDriver(radarServices.getDriver());
+
+\end{boxedverbatim}
+}
+\vspace{0.2cm}
+
+
+Ensuite {\color{red}deux modules} sont concernés, le module {\tt navisu-app} pour spécifier le nouvel item dans le Dock (icônes et code) et le module {\tt navisu-widgets} (icônes) car les {\tt RadialMenu} sont des widgets. Dans les deux cas les images sont placées dans les ressources, correspondant à l'arborescence des classes {\tt DockManagerImpl} et {\tt RadialMenu} respectivement. Dans la suite nous prendrons l'exemple de l'instanciation, du démarrage ou de l'arrêt d'un {\tt Instrument}. Bien entendu cet {\tt Instrument} doit être implémenté au préalable.
+\hbox{}\vspace{0.2cm}
+
+{\small
+	\begin{boxedverbatim}
+		
+public class SonarImpl
+                  implements Sonar, SonarServices, InstrumentDriver, ComponentState {
+	
+\end{boxedverbatim}
+}
+\vspace{0.2cm}
+
+\section{Le graphisme}
+\subsection{Module \tt navisu-app}
+	Dessiner l'icône de l'item : à placer dans : \\
+	{\tt bzh/terrevirtuelle/navisu/app/guiagent/dock/impl/dock\_icons} des ressources
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{center}
+		\framebox[1\width]{
+			\includegraphics[width=4cm]{images/instruments.png}
+		}
+		\begin{figure}[ht]
+			\caption{\label{0}\textit{L'item Instruments}}
+		\end{figure}
+	\end{center}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\subsection{Module \tt navisu-widgets}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	Dessiner les icônes de l'item central du {\tt RadialMenu} et de ses sous-items : à placer dans : \\
+	{\tt bzh.terrevirtuelle.navisu.widgets.radialmenu.menu} des ressources.
+	\begin{center}
+		\framebox[1\width]{
+			\includegraphics[width=4cm]{images/instrumentsradialmenu.png}
+		}
+			\framebox[1\width]{
+				\includegraphics[width=2cm]{images/navigation.png}
+			}
+			\framebox[1\width]{
+				\includegraphics[width=2cm]{images/ais.png}
+			}
+			\framebox[1\width]{
+				\includegraphics[width=2cm]{images/aisradar.png}
+			}
+			\framebox[1\width]{
+				\includegraphics[width=2cm]{images/bathy.png}
+			}
+		\begin{figure}[ht]
+			\caption{\label{0}\textit{L'icône centrale de Instruments et les sous-items}}
+		\end{figure}
+	\end{center}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Le code}	
+\subsection{Module \tt navisu-app}
+ Dans la classe {\tt DockManagerImpl} du module {\tt navisu-app}, ajouter un item au Dock  :
+\hbox{}\vspace{0.2cm}
+
+{\small
+	\begin{boxedverbatim}
+		
+public final DockItem[] ICONS = new DockItem[]{
+	DockItemFactory.newImageItem("instruments", 
+	     ICON_PATH + "dock_icons/instruments.png",
+    	(e) -> {
+        	instrumentsRadialMenu.setVisible(!instrumentsRadialMenu.isVisible());
+    	}),
+    	...
+    	
+\end{boxedverbatim}
+}
+
+\hbox{}\vspace{0.2cm}
+		Ici {\tt "instruments"} correspond à l'infobulle associée, {\tt ICON\_PATH+"dock\_icons/instruments.png"} 
+		est le chemin de l'image dans le répertoire {\tt resources}. Le dernier argument du constructeur est le
+		callback associé, généralement celui là.
+Appeler la méthode de création du {\tt RadialMenu} associé :
+
+\hbox{}\vspace{0.2cm}
+{\small
+	\begin{boxedverbatim}
+		
+@Override
+public void makeDock() {
+    createDockWidget(scene);
+    createBooksRadialWidget();
+    createChartsRadialWidget();
+		
+    createInstrumentsRadialWidget();
+	
+    createMeteoRadialWidget();
+    createTidesRadialWidget();
+    createToolsRadialWidget();
+    createNavigationRadialWidget();
+}
+
+\end{boxedverbatim}
+}
+
+\hbox{}\vspace{0.2cm}
+Coder cette méthode : le menu radial est créé à l'aide d'un {\tt RadialMenuBuilder}
+
+\hbox{}\vspace{0.2cm}
+{\small
+	\begin{boxedverbatim}
+		
+	//--------------INSTRUMENTS------------------
+private void createInstrumentsRadialWidget() {
+    instrumentsRadialMenu = RadialMenuBuilder.create()
+    .centralImage("instrumentsradialmenu.png")
+    .createNode(0, "navigation.png", 0, "ais.png", 0, "aisradar.png", 
+		                                                (e) -> open("AisRadar"))
+    .createNode(0, "navigation.png", 1, "bathy.png", 0, "sonarOn.png",
+		                                                (e) -> open("Sonar"))
+    .build();
+		
+    instrumentsRadialMenu.setLayoutX((width / 2) - 40);
+    instrumentsRadialMenu.setLayoutY(height / 2);
+    root.getChildren().add(instrumentsRadialMenu);
+	
+    radialMenus.add(instrumentsRadialMenu);
+	}
+	
+\end{boxedverbatim}
+}
+
+\hbox{}\vspace{0.2cm}
+\begin{itemize}
+	\item La méthode {\tt createNode} va préciser pour chaque item, son placement, ses images associées et son callback.
+	\begin{itemize}
+		\item Un choix d'ergonomie a été fait, les menus radiaux ont deux couches de sous-menus puis des feuilles, les feuilles correspondent aux actions.
+		\item Dans la première couche les segments sont numérotés : 0, 1, 2, ... Dans l'exemple un seul segment,
+		son icône est {\tt navigation.png"}
+		\item Dans la deuxième couche, idem, les segments sont numérotés : 0, 1, 2, ...Dans l'exemple deux
+		segments, les icônes {\tt ais.png} et {\tt bathy.png}
+		\item Chaque segment reçoit les feuilles correspondant aux items, ici un item par segment. 
+		les images {\tt aisradar.png} et {\tt sonarOn.png} respectivement.
+		\item Enfin, le dernier argument correspond au callback associé à cet item.
+	\end{itemize}
+\end{itemize}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{center}
+		\framebox[1\width]{
+			\includegraphics[width=16cm]{images/menu.png}
+		}
+		\begin{figure}[ht]
+			\caption{\label{0}\textit{Le menu Instruments}}
+		\end{figure}
+	\end{center}
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+ 	\subsection{Choix des {\tt callbacks}}	
+ 	La plupart du temps les callbacks associés aux items n'ont pas besoin d'être codés, il sont fournis par \nav
+ 	. Ci après la liste non exhaustive des calbacks et des cas d'utilisation.
+ 	\begin{itemize}
+\item Cas d'un instrument : l'argument correspond au nom de l'instrument à activer.
+
+	\hbox{}\vspace{0.2cm}
+	{\small
+		\begin{boxedverbatim}
+		
+private void open(String keyName) {
+    instrumentDriverManagerServices.open(keyName);
+    clear();
+}
+
+\end{boxedverbatim}
+}
+
+\newpage 
+\item Cas d'ouverture d'un fichier : le premier argument est le {\tt KEY\_NAME} du {\tt Driver} sachant interpréter ces fichiers : Sedimentology, Currents, \ldots Le deuxième argument le ou les extensions des fichiers : {\tt .shp, .SHP} ou {\tt .000} par exemple.
+
+\hbox{}\vspace{0.2cm}
+	{\small
+		\begin{boxedverbatim}
+			
+private void open(String description, String... des) {
+    String[] tab = new String[des.length];	
+    int i = 0;
+    for (String s : des) {
+        tab[i] = "*" + s;
+        i++;
+    }
+    driverManagerServices.open(description, tab);
+    clear();
+}
+
+\end{boxedverbatim}
+}
+
+\hbox{}\vspace{0.2cm}
+\item Connexion à une base de données :
+
+\hbox{}\vspace{0.2cm}
+{\small
+	\begin{boxedverbatim}
+		
+private void openDB(String dbName, String hostName, String protocol, String port,
+String driverName, String userName, String passwd) {
+    databaseDriverManagerServices.connect(dbName, hostName, protocol, 
+                                            port, driverName, userName, passwd);
+    clear();
+}
+		
+	\end{boxedverbatim}
+}
+
+	\hbox{}\vspace{0.2cm}
+\nav\ gère autant de bases de données qu'il est nécessaire, elles doivent être installées au préalable, sauf pour une base embarquée. C'est l'API JDBC qui est exhibée comme un ensemble de services.
+
+\end{itemize}
+\hbox{}\vspace{0.2cm}
+
+	\subsection{Module  \tt navisu-widgets}
+	Pas de code à écrire, il faut simplement placer les images correspondant au menu et à ses items, dans le fichier {\tt resources}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Principe des {\tt DriverManager}}
+Comme il a été dit dans la préface, les services accessibles à partir du menu doivent s'enregistrer, voici l'explication. Le premier principe respecté est {\color{red} l'inversion de dépendance} : la logique de l'application, contenue dans le module {\tt navisu-app} ne doit pas dépendre des modules quelle active :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\framebox[1\width]{
+		\includegraphics[width=9cm]{images/dip_0.png}
+	}
+	\begin{figure}[ht]
+		\caption{\label{0}\textit{Une modification de l'IHM va impacter l'application}}
+	\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+La logique de l'application  doit s'appuyer sur des services :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\framebox[1\width]{
+		\includegraphics[width=9cm]{images/dip_1.png}
+	}
+	\begin{figure}[ht]
+		\caption{\label{0}\textit{Si les contrats de services sont respectés, un changement du code de l'IHM ne concerne pas l'application}}
+	\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+Le deuxième principe est celui de  {\color{red}pas de dépendances cycliques} :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\framebox[1\width]{
+		\includegraphics[width=9cm]{images/adp_1.png}
+	}
+	\begin{figure}[ht]
+		\caption{\label{0}\textit{Gradle détectera un tel problème}}
+	\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+
+Dans chaque fichier {\tt build.gradle} on trouve les dépendances du  module, par exemple dans le sous-projet {\tt navisu-intruments}  
+
+\hbox{}\vspace{0.2cm}
+{\small
+	\begin{boxedverbatim}
+		
+dependencies {
+    compile project(':navisu-core')
+    compile project(':navisu-client')
+    compile project(':navisu-domain')
+    compile project(':navisu-app')
+    compile project(':navisu-bathymetry')
+    compile fileTree(dir: 'lib', include: '*.jar')
+}
+
+	\end{boxedverbatim}
+}
+\hbox{}\vspace{0.2cm}
+
+Si le module {\tt navisu-app} devait instancier un {\tt Intrument} directement, il devrait connaitre, donc dépendre du module {\tt navisu-intruments} ce qui constitue une rupture du principe numéro deux.
+Au lieu de cela les différents {\tt Driver} s'inscrivent auprès de leur {\tt DriverManager} spécifique, 
+ensuite lors d'une requête lancée par les callbacks du dock, le {\tt Driver} répondant aux critères de sélection est activé.
+
+\hbox{}\vspace{0.2cm}
+{\small
+	\begin{boxedverbatim}
+		
+// class InstrumentDriverManagerImpl
+	
+protected List<InstrumentDriver> availableDriverList = new ArrayList<>();
+	
+@Override
+public void registerNewDriver(InstrumentDriver driver) {
+    Checker.notNull(driver, "Driver must not be null.");
+    this.availableDriverList.add(driver);
+}
+
+@Override
+public void open(String category) {
+    InstrumentDriver driver = findDriver(category);
+    if (driver != null) {
+        driver.on();
+    }else{
+        System.out.println("Unrecognized instrument");
+    }
+}
+
+protected InstrumentDriver findDriver(String category) {
+    InstrumentDriver compatibleDriver = null;
+    for (InstrumentDriver driver : this.availableDriverList) {
+        if (driver.canOpen(category)) {
+            compatibleDriver = driver;
+            break;
+        }
+    }
+    return compatibleDriver;
+}
+					
+	\end{boxedverbatim}
+}
+
+\newpage
+Exemple pour la classe {\tt Sonar} les méthodes répondant au {\tt DriverManager}
+
+\hbox{}\vspace{0.2cm}
+{\small
+	\begin{boxedverbatim}
+		
+// public class SonarImpl
+              implements Sonar, SonarServices, InstrumentDriver, ComponentState {
+              	
+ private final String NAME = "Sonar";
+ 		
+@Override
+public boolean canOpen(String category) {
+    return category.equals(NAME);
+}
+@Override
+    public void on() {
+        ...
+}					
+\end{boxedverbatim}
+}

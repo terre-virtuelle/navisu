@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g 2015-05-10 17:34:14
+// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g 2015-05-26 17:24:58
 
 package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl;
 
@@ -5601,8 +5601,8 @@ public class NMEALexer extends Lexer {
 			CommonToken ew=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:823:7: ( '$' device= DEVICE 'HDG' SEP heading= NUMBER ( SEP )+ (dev= NUMBER SEP we= LETTERS SEP )* var= NUMBER SEP ew= LETTERS checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:823:9: '$' device= DEVICE 'HDG' SEP heading= NUMBER ( SEP )+ (dev= NUMBER SEP we= LETTERS SEP )* var= NUMBER SEP ew= LETTERS checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:825:7: ( '$' device= DEVICE 'HDG' SEP heading= NUMBER ( SEP )+ (dev= NUMBER SEP we= LETTERS SEP )* var= NUMBER SEP ew= LETTERS checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:825:9: '$' device= DEVICE 'HDG' SEP heading= NUMBER ( SEP )+ (dev= NUMBER SEP we= LETTERS SEP )* var= NUMBER SEP ew= LETTERS checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3082 = getCharIndex();
@@ -5625,7 +5625,7 @@ public class NMEALexer extends Lexer {
 			heading.setLine(headingStartLine3096);
 			heading.setCharPositionInLine(headingStartCharPos3096);
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:824:22: ( SEP )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:826:22: ( SEP )+
 			int cnt125=0;
 			loop125:
 			while (true) {
@@ -5658,14 +5658,14 @@ public class NMEALexer extends Lexer {
 				cnt125++;
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:825:5: (dev= NUMBER SEP we= LETTERS SEP )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:827:5: (dev= NUMBER SEP we= LETTERS SEP )*
 			loop126:
 			while (true) {
 				int alt126=2;
 				alt126 = dfa126.predict(input);
 				switch (alt126) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:825:6: dev= NUMBER SEP we= LETTERS SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:827:6: dev= NUMBER SEP we= LETTERS SEP
 					{
 					int devStart3110 = getCharIndex();
 					int devStartLine3110 = getLine();
@@ -5749,8 +5749,8 @@ public class NMEALexer extends Lexer {
 			CommonToken heading=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:839:8: ( '$' device= DEVICE 'HDM' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:839:11: '$' device= DEVICE 'HDM' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:840:8: ( '$' device= DEVICE 'HDM' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:840:11: '$' device= DEVICE 'HDM' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3176 = getCharIndex();
@@ -5775,7 +5775,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:841:15: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:842:15: ( LETTERS )*
 			loop127:
 			while (true) {
 				int alt127=2;
@@ -5786,7 +5786,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt127) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:841:17: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:842:17: LETTERS
 					{
 					mLETTERS(); 
 
@@ -5832,8 +5832,8 @@ public class NMEALexer extends Lexer {
 			CommonToken heading=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:855:7: ( '$' device= DEVICE 'HDT' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:855:8: '$' device= DEVICE 'HDT' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:856:7: ( '$' device= DEVICE 'HDT' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:856:8: '$' device= DEVICE 'HDT' SEP heading= NUMBER SEP ( LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3258 = getCharIndex();
@@ -5858,7 +5858,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:857:15: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:858:15: ( LETTERS )*
 			loop128:
 			while (true) {
 				int alt128=2;
@@ -5869,7 +5869,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt128) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:857:16: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:858:16: LETTERS
 					{
 					mLETTERS(); 
 
@@ -5918,8 +5918,8 @@ public class NMEALexer extends Lexer {
 			CommonToken frequencyForMSS=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:864:6: ( '$' device= DEVICE 'MSK' SEP frequencyToUse= NUMBER SEP frequencyMode= LETTERS SEP beaconBitRate= NUMBER SEP bitRateMode= LETTERS SEP (frequencyForMSS= NUMBER )* ( SEP )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:864:8: '$' device= DEVICE 'MSK' SEP frequencyToUse= NUMBER SEP frequencyMode= LETTERS SEP beaconBitRate= NUMBER SEP bitRateMode= LETTERS SEP (frequencyForMSS= NUMBER )* ( SEP )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:865:6: ( '$' device= DEVICE 'MSK' SEP frequencyToUse= NUMBER SEP frequencyMode= LETTERS SEP beaconBitRate= NUMBER SEP bitRateMode= LETTERS SEP (frequencyForMSS= NUMBER )* ( SEP )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:865:8: '$' device= DEVICE 'MSK' SEP frequencyToUse= NUMBER SEP frequencyMode= LETTERS SEP beaconBitRate= NUMBER SEP bitRateMode= LETTERS SEP (frequencyForMSS= NUMBER )* ( SEP )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3343 = getCharIndex();
@@ -5974,7 +5974,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:869:29: (frequencyForMSS= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:870:29: (frequencyForMSS= NUMBER )*
 			loop129:
 			while (true) {
 				int alt129=2;
@@ -5985,7 +5985,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt129) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:869:29: frequencyForMSS= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:870:29: frequencyForMSS= NUMBER
 					{
 					int frequencyForMSSStart3438 = getCharIndex();
 					int frequencyForMSSStartLine3438 = getLine();
@@ -6003,7 +6003,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:869:39: ( SEP )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:870:39: ( SEP )*
 			loop130:
 			while (true) {
 				int alt130=2;
@@ -6071,8 +6071,8 @@ public class NMEALexer extends Lexer {
 			CommonToken unit=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:887:5: ( '$' device= DEVICE 'MTA' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:887:7: '$' device= DEVICE 'MTA' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:888:5: ( '$' device= DEVICE 'MTA' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:888:7: '$' device= DEVICE 'MTA' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3476 = getCharIndex();
@@ -6087,7 +6087,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:888:4: (temperature= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:889:4: (temperature= NUMBER )*
 			loop131:
 			while (true) {
 				int alt131=2;
@@ -6098,7 +6098,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt131) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:888:5: temperature= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:889:5: temperature= NUMBER
 					{
 					int temperatureStart3490 = getCharIndex();
 					int temperatureStartLine3490 = getLine();
@@ -6162,8 +6162,8 @@ public class NMEALexer extends Lexer {
 			CommonToken unit=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:904:6: ( '$' device= DEVICE 'MTW' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:904:8: '$' device= DEVICE 'MTW' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:905:6: ( '$' device= DEVICE 'MTW' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:905:8: '$' device= DEVICE 'MTW' SEP (temperature= NUMBER )* SEP unit= LETTERS checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3544 = getCharIndex();
@@ -6178,7 +6178,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:905:4: (temperature= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:906:4: (temperature= NUMBER )*
 			loop132:
 			while (true) {
 				int alt132=2;
@@ -6189,7 +6189,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt132) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:905:5: temperature= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:906:5: temperature= NUMBER
 					{
 					int temperatureStart3558 = getCharIndex();
 					int temperatureStartLine3558 = getLine();
@@ -6254,8 +6254,8 @@ public class NMEALexer extends Lexer {
 			CommonToken windSpeed=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:916:7: ( '$' device= DEVICE 'MWD' SEP (windDirectionTrue= NUMBER )* SEP LETTERS SEP (windDirectionMagnetic= NUMBER )* SEP LETTERS SEP (windSpeed= NUMBER )* SEP LETTERS SEP NUMBER SEP LETTERS checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:916:9: '$' device= DEVICE 'MWD' SEP (windDirectionTrue= NUMBER )* SEP LETTERS SEP (windDirectionMagnetic= NUMBER )* SEP LETTERS SEP (windSpeed= NUMBER )* SEP LETTERS SEP NUMBER SEP LETTERS checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:917:7: ( '$' device= DEVICE 'MWD' SEP (windDirectionTrue= NUMBER )* SEP LETTERS SEP (windDirectionMagnetic= NUMBER )* SEP LETTERS SEP (windSpeed= NUMBER )* SEP LETTERS SEP NUMBER SEP LETTERS checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:917:9: '$' device= DEVICE 'MWD' SEP (windDirectionTrue= NUMBER )* SEP LETTERS SEP (windDirectionMagnetic= NUMBER )* SEP LETTERS SEP (windSpeed= NUMBER )* SEP LETTERS SEP NUMBER SEP LETTERS checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3616 = getCharIndex();
@@ -6270,7 +6270,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:917:22: (windDirectionTrue= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:918:22: (windDirectionTrue= NUMBER )*
 			loop133:
 			while (true) {
 				int alt133=2;
@@ -6281,7 +6281,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt133) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:917:22: windDirectionTrue= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:918:22: windDirectionTrue= NUMBER
 					{
 					int windDirectionTrueStart3629 = getCharIndex();
 					int windDirectionTrueStartLine3629 = getLine();
@@ -6305,7 +6305,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:919:36: (windDirectionMagnetic= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:920:36: (windDirectionMagnetic= NUMBER )*
 			loop134:
 			while (true) {
 				int alt134=2;
@@ -6316,7 +6316,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt134) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:919:36: windDirectionMagnetic= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:920:36: windDirectionMagnetic= NUMBER
 					{
 					int windDirectionMagneticStart3668 = getCharIndex();
 					int windDirectionMagneticStartLine3668 = getLine();
@@ -6340,7 +6340,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:921:13: (windSpeed= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:922:13: (windSpeed= NUMBER )*
 			loop135:
 			while (true) {
 				int alt135=2;
@@ -6351,7 +6351,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt135) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:921:13: windSpeed= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:922:13: windSpeed= NUMBER
 					{
 					int windSpeedStart3696 = getCharIndex();
 					int windSpeedStartLine3696 = getLine();
@@ -6420,8 +6420,8 @@ public class NMEALexer extends Lexer {
 			CommonToken status=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:935:6: ( '$' device= DEVICE 'MWV' SEP windAngle= NUMBER SEP reference= LETTERS SEP windSpeed= NUMBER SEP unit= LETTERS SEP status= LETTERS checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:935:8: '$' device= DEVICE 'MWV' SEP windAngle= NUMBER SEP reference= LETTERS SEP windSpeed= NUMBER SEP unit= LETTERS SEP status= LETTERS checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:936:6: ( '$' device= DEVICE 'MWV' SEP windAngle= NUMBER SEP reference= LETTERS SEP windSpeed= NUMBER SEP unit= LETTERS SEP status= LETTERS checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:936:8: '$' device= DEVICE 'MWV' SEP windAngle= NUMBER SEP reference= LETTERS SEP windSpeed= NUMBER SEP unit= LETTERS SEP status= LETTERS checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3787 = getCharIndex();
@@ -6534,8 +6534,8 @@ public class NMEALexer extends Lexer {
 			CommonToken arrivalStatus=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:959:8: ( '$' device= DEVICE 'RMB' SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (fromWaypointId= LETTERS |fromWaypointId= NUMBER )* SEP (toWaypointId= LETTERS |toWaypointId= NUMBER )* SEP (destinationWaypointLatitude= NUMBER )* SEP (ns= LETTERS )* SEP (destinationWaypointLongitude= NUMBER )* SEP (ew= LETTERS )* SEP (rangeToDestination= NUMBER )* SEP (bearingToDestination= NUMBER )* SEP (destinationClosingVelocity= NUMBER )* SEP ( LETTERS SEP )* (arrivalStatus= LETTERS | '\\u0000' )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:959:10: '$' device= DEVICE 'RMB' SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (fromWaypointId= LETTERS |fromWaypointId= NUMBER )* SEP (toWaypointId= LETTERS |toWaypointId= NUMBER )* SEP (destinationWaypointLatitude= NUMBER )* SEP (ns= LETTERS )* SEP (destinationWaypointLongitude= NUMBER )* SEP (ew= LETTERS )* SEP (rangeToDestination= NUMBER )* SEP (bearingToDestination= NUMBER )* SEP (destinationClosingVelocity= NUMBER )* SEP ( LETTERS SEP )* (arrivalStatus= LETTERS | '\\u0000' )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:960:8: ( '$' device= DEVICE 'RMB' SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (fromWaypointId= LETTERS |fromWaypointId= NUMBER )* SEP (toWaypointId= LETTERS |toWaypointId= NUMBER )* SEP (destinationWaypointLatitude= NUMBER )* SEP (ns= LETTERS )* SEP (destinationWaypointLongitude= NUMBER )* SEP (ew= LETTERS )* SEP (rangeToDestination= NUMBER )* SEP (bearingToDestination= NUMBER )* SEP (destinationClosingVelocity= NUMBER )* SEP ( LETTERS SEP )* (arrivalStatus= LETTERS | '\\u0000' )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:960:10: '$' device= DEVICE 'RMB' SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP (directionToSteer= LETTERS )* SEP (fromWaypointId= LETTERS |fromWaypointId= NUMBER )* SEP (toWaypointId= LETTERS |toWaypointId= NUMBER )* SEP (destinationWaypointLatitude= NUMBER )* SEP (ns= LETTERS )* SEP (destinationWaypointLongitude= NUMBER )* SEP (ew= LETTERS )* SEP (rangeToDestination= NUMBER )* SEP (bearingToDestination= NUMBER )* SEP (destinationClosingVelocity= NUMBER )* SEP ( LETTERS SEP )* (arrivalStatus= LETTERS | '\\u0000' )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart3934 = getCharIndex();
@@ -6560,7 +6560,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:961:11: (crossTrackError= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:962:11: (crossTrackError= NUMBER )*
 			loop136:
 			while (true) {
 				int alt136=2;
@@ -6571,7 +6571,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt136) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:961:12: crossTrackError= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:962:12: crossTrackError= NUMBER
 					{
 					int crossTrackErrorStart3977 = getCharIndex();
 					int crossTrackErrorStartLine3977 = getLine();
@@ -6591,7 +6591,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:962:11: (directionToSteer= LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:963:11: (directionToSteer= LETTERS )*
 			loop137:
 			while (true) {
 				int alt137=2;
@@ -6602,7 +6602,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt137) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:962:12: directionToSteer= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:963:12: directionToSteer= LETTERS
 					{
 					int directionToSteerStart3998 = getCharIndex();
 					int directionToSteerStartLine3998 = getLine();
@@ -6622,7 +6622,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:963:11: (fromWaypointId= LETTERS |fromWaypointId= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:964:11: (fromWaypointId= LETTERS |fromWaypointId= NUMBER )*
 			loop138:
 			while (true) {
 				int alt138=3;
@@ -6636,7 +6636,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt138) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:963:12: fromWaypointId= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:964:12: fromWaypointId= LETTERS
 					{
 					int fromWaypointIdStart4019 = getCharIndex();
 					int fromWaypointIdStartLine4019 = getLine();
@@ -6649,7 +6649,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:963:38: fromWaypointId= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:964:38: fromWaypointId= NUMBER
 					{
 					int fromWaypointIdStart4026 = getCharIndex();
 					int fromWaypointIdStartLine4026 = getLine();
@@ -6669,7 +6669,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:964:11: (toWaypointId= LETTERS |toWaypointId= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:965:11: (toWaypointId= LETTERS |toWaypointId= NUMBER )*
 			loop139:
 			while (true) {
 				int alt139=3;
@@ -6683,7 +6683,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt139) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:964:12: toWaypointId= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:965:12: toWaypointId= LETTERS
 					{
 					int toWaypointIdStart4049 = getCharIndex();
 					int toWaypointIdStartLine4049 = getLine();
@@ -6696,7 +6696,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:964:38: toWaypointId= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:965:38: toWaypointId= NUMBER
 					{
 					int toWaypointIdStart4057 = getCharIndex();
 					int toWaypointIdStartLine4057 = getLine();
@@ -6716,7 +6716,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:965:11: (destinationWaypointLatitude= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:966:11: (destinationWaypointLatitude= NUMBER )*
 			loop140:
 			while (true) {
 				int alt140=2;
@@ -6727,7 +6727,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt140) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:965:12: destinationWaypointLatitude= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:966:12: destinationWaypointLatitude= NUMBER
 					{
 					int destinationWaypointLatitudeStart4079 = getCharIndex();
 					int destinationWaypointLatitudeStartLine4079 = getLine();
@@ -6747,7 +6747,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:965:56: (ns= LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:966:56: (ns= LETTERS )*
 			loop141:
 			while (true) {
 				int alt141=2;
@@ -6758,7 +6758,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt141) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:965:57: ns= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:966:57: ns= LETTERS
 					{
 					int nsStart4090 = getCharIndex();
 					int nsStartLine4090 = getLine();
@@ -6778,7 +6778,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:966:11: (destinationWaypointLongitude= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:967:11: (destinationWaypointLongitude= NUMBER )*
 			loop142:
 			while (true) {
 				int alt142=2;
@@ -6789,7 +6789,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt142) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:966:12: destinationWaypointLongitude= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:967:12: destinationWaypointLongitude= NUMBER
 					{
 					int destinationWaypointLongitudeStart4113 = getCharIndex();
 					int destinationWaypointLongitudeStartLine4113 = getLine();
@@ -6809,7 +6809,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:966:58: (ew= LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:967:58: (ew= LETTERS )*
 			loop143:
 			while (true) {
 				int alt143=2;
@@ -6820,7 +6820,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt143) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:966:59: ew= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:967:59: ew= LETTERS
 					{
 					int ewStart4125 = getCharIndex();
 					int ewStartLine4125 = getLine();
@@ -6840,7 +6840,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:967:11: (rangeToDestination= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:968:11: (rangeToDestination= NUMBER )*
 			loop144:
 			while (true) {
 				int alt144=2;
@@ -6851,7 +6851,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt144) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:967:12: rangeToDestination= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:968:12: rangeToDestination= NUMBER
 					{
 					int rangeToDestinationStart4147 = getCharIndex();
 					int rangeToDestinationStartLine4147 = getLine();
@@ -6871,7 +6871,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:968:11: (bearingToDestination= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:969:11: (bearingToDestination= NUMBER )*
 			loop145:
 			while (true) {
 				int alt145=2;
@@ -6882,7 +6882,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt145) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:968:12: bearingToDestination= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:969:12: bearingToDestination= NUMBER
 					{
 					int bearingToDestinationStart4169 = getCharIndex();
 					int bearingToDestinationStartLine4169 = getLine();
@@ -6902,7 +6902,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:969:11: (destinationClosingVelocity= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:970:11: (destinationClosingVelocity= NUMBER )*
 			loop146:
 			while (true) {
 				int alt146=2;
@@ -6913,7 +6913,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt146) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:969:12: destinationClosingVelocity= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:970:12: destinationClosingVelocity= NUMBER
 					{
 					int destinationClosingVelocityStart4191 = getCharIndex();
 					int destinationClosingVelocityStartLine4191 = getLine();
@@ -6933,14 +6933,14 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:970:11: ( LETTERS SEP )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:971:11: ( LETTERS SEP )*
 			loop147:
 			while (true) {
 				int alt147=2;
 				alt147 = dfa147.predict(input);
 				switch (alt147) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:970:12: LETTERS SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:971:12: LETTERS SEP
 					{
 					mLETTERS(); 
 
@@ -6954,7 +6954,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:971:11: (arrivalStatus= LETTERS | '\\u0000' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:972:11: (arrivalStatus= LETTERS | '\\u0000' )*
 			loop148:
 			while (true) {
 				int alt148=3;
@@ -6968,7 +6968,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt148) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:971:12: arrivalStatus= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:972:12: arrivalStatus= LETTERS
 					{
 					int arrivalStatusStart4244 = getCharIndex();
 					int arrivalStatusStartLine4244 = getLine();
@@ -6981,7 +6981,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:971:38: '\\u0000'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:972:38: '\\u0000'
 					{
 					match('\u0000'); 
 					}
@@ -7048,8 +7048,8 @@ public class NMEALexer extends Lexer {
 			CommonToken nsew=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1022:6: ( '$' device= DEVICE 'RMC' SEP (utc= NUMBER )* SEP status= LETTERS SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( SIGN )* (sog= NUMBER )* SEP (track= NUMBER )* SEP (yymmdd= NUMBER )* SEP (magneticVariation= NUMBER )* SEP (nsew= LETTERS )* ( SEP LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1022:8: '$' device= DEVICE 'RMC' SEP (utc= NUMBER )* SEP status= LETTERS SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( SIGN )* (sog= NUMBER )* SEP (track= NUMBER )* SEP (yymmdd= NUMBER )* SEP (magneticVariation= NUMBER )* SEP (nsew= LETTERS )* ( SEP LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1023:6: ( '$' device= DEVICE 'RMC' SEP (utc= NUMBER )* SEP status= LETTERS SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( SIGN )* (sog= NUMBER )* SEP (track= NUMBER )* SEP (yymmdd= NUMBER )* SEP (magneticVariation= NUMBER )* SEP (nsew= LETTERS )* ( SEP LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1023:8: '$' device= DEVICE 'RMC' SEP (utc= NUMBER )* SEP status= LETTERS SEP (latitude= NUMBER )* SEP (ns= LETTERS )* SEP (longitude= NUMBER )* SEP (ew= LETTERS )* SEP ( SIGN )* (sog= NUMBER )* SEP (track= NUMBER )* SEP (yymmdd= NUMBER )* SEP (magneticVariation= NUMBER )* SEP (nsew= LETTERS )* ( SEP LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart4297 = getCharIndex();
@@ -7064,7 +7064,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1023:16: (utc= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1024:16: (utc= NUMBER )*
 			loop149:
 			while (true) {
 				int alt149=2;
@@ -7075,7 +7075,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt149) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1023:16: utc= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1024:16: utc= NUMBER
 					{
 					int utcStart4318 = getCharIndex();
 					int utcStartLine4318 = getLine();
@@ -7105,7 +7105,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1025:20: (latitude= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:20: (latitude= NUMBER )*
 			loop150:
 			while (true) {
 				int alt150=2;
@@ -7116,7 +7116,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt150) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1025:20: latitude= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:20: latitude= NUMBER
 					{
 					int latitudeStart4355 = getCharIndex();
 					int latitudeStartLine4355 = getLine();
@@ -7136,7 +7136,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1025:36: (ns= LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:36: (ns= LETTERS )*
 			loop151:
 			while (true) {
 				int alt151=2;
@@ -7147,7 +7147,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt151) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1025:36: ns= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:36: ns= LETTERS
 					{
 					int nsStart4364 = getCharIndex();
 					int nsStartLine4364 = getLine();
@@ -7167,7 +7167,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1025:60: (longitude= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:60: (longitude= NUMBER )*
 			loop152:
 			while (true) {
 				int alt152=2;
@@ -7178,7 +7178,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt152) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1025:60: longitude= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:60: longitude= NUMBER
 					{
 					int longitudeStart4371 = getCharIndex();
 					int longitudeStartLine4371 = getLine();
@@ -7198,7 +7198,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1025:75: (ew= LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:75: (ew= LETTERS )*
 			loop153:
 			while (true) {
 				int alt153=2;
@@ -7209,7 +7209,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt153) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1025:75: ew= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:75: ew= LETTERS
 					{
 					int ewStart4378 = getCharIndex();
 					int ewStartLine4378 = getLine();
@@ -7229,7 +7229,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:12: ( SIGN )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1027:12: ( SIGN )*
 			loop154:
 			while (true) {
 				int alt154=2;
@@ -7258,7 +7258,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:18: (sog= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1027:18: (sog= NUMBER )*
 			loop155:
 			while (true) {
 				int alt155=2;
@@ -7269,7 +7269,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt155) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1026:19: sog= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1027:19: sog= NUMBER
 					{
 					int sogStart4402 = getCharIndex();
 					int sogStartLine4402 = getLine();
@@ -7289,7 +7289,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1027:12: (track= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1028:12: (track= NUMBER )*
 			loop156:
 			while (true) {
 				int alt156=2;
@@ -7300,7 +7300,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt156) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1027:13: track= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1028:13: track= NUMBER
 					{
 					int trackStart4424 = getCharIndex();
 					int trackStartLine4424 = getLine();
@@ -7320,7 +7320,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1028:13: (yymmdd= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1029:13: (yymmdd= NUMBER )*
 			loop157:
 			while (true) {
 				int alt157=2;
@@ -7331,7 +7331,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt157) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1028:14: yymmdd= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1029:14: yymmdd= NUMBER
 					{
 					int yymmddStart4447 = getCharIndex();
 					int yymmddStartLine4447 = getLine();
@@ -7351,7 +7351,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1029:31: (magneticVariation= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1030:31: (magneticVariation= NUMBER )*
 			loop158:
 			while (true) {
 				int alt158=2;
@@ -7362,7 +7362,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt158) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1029:31: magneticVariation= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1030:31: magneticVariation= NUMBER
 					{
 					int magneticVariationStart4469 = getCharIndex();
 					int magneticVariationStartLine4469 = getLine();
@@ -7382,7 +7382,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1030:18: (nsew= LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1031:18: (nsew= LETTERS )*
 			loop159:
 			while (true) {
 				int alt159=2;
@@ -7393,7 +7393,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt159) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1030:18: nsew= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1031:18: nsew= LETTERS
 					{
 					int nsewStart4491 = getCharIndex();
 					int nsewStartLine4491 = getLine();
@@ -7411,7 +7411,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1031:13: ( SEP LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1032:13: ( SEP LETTERS )*
 			loop160:
 			while (true) {
 				int alt160=2;
@@ -7422,7 +7422,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt160) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1031:14: SEP LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1032:14: SEP LETTERS
 					{
 					mSEP(); 
 
@@ -7490,8 +7490,8 @@ public class NMEALexer extends Lexer {
 			CommonToken device=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1047:6: ( '$' device= DEVICE 'RSD' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1047:9: '$' device= DEVICE 'RSD' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1048:6: ( '$' device= DEVICE 'RSD' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1048:9: '$' device= DEVICE 'RSD' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart4556 = getCharIndex();
@@ -7506,7 +7506,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1048:3: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1049:3: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
 			loop161:
 			while (true) {
 				int alt161=2;
@@ -7564,8 +7564,8 @@ public class NMEALexer extends Lexer {
 			CommonToken type=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1061:5: ( '$' device= DEVICE 'RTE' SEP totalNumberOfsentence= NUMBER SEP sentenceNumber= NUMBER SEP type= LETTERS SEP ( LETTERS | NUMBER | '-' | '_' | SEP )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1061:7: '$' device= DEVICE 'RTE' SEP totalNumberOfsentence= NUMBER SEP sentenceNumber= NUMBER SEP type= LETTERS SEP ( LETTERS | NUMBER | '-' | '_' | SEP )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1062:5: ( '$' device= DEVICE 'RTE' SEP totalNumberOfsentence= NUMBER SEP sentenceNumber= NUMBER SEP type= LETTERS SEP ( LETTERS | NUMBER | '-' | '_' | SEP )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1062:7: '$' device= DEVICE 'RTE' SEP totalNumberOfsentence= NUMBER SEP sentenceNumber= NUMBER SEP type= LETTERS SEP ( LETTERS | NUMBER | '-' | '_' | SEP )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart4605 = getCharIndex();
@@ -7610,7 +7610,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1065:2: ( LETTERS | NUMBER | '-' | '_' | SEP )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1066:2: ( LETTERS | NUMBER | '-' | '_' | SEP )*
 			loop162:
 			while (true) {
 				int alt162=6;
@@ -7705,33 +7705,33 @@ public class NMEALexer extends Lexer {
 				}
 				switch (alt162) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1065:3: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1066:3: LETTERS
 					{
 					mLETTERS(); 
 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1065:13: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1066:13: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1065:22: '-'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1066:22: '-'
 					{
 					match('-'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1065:28: '_'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1066:28: '_'
 					{
 					match('_'); 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1065:34: SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1066:34: SEP
 					{
 					mSEP(); 
 
@@ -7789,8 +7789,8 @@ public class NMEALexer extends Lexer {
 			CommonToken gstatus=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1080:6: ( '$' device= DEVICE 'VBW' SEP ( ' ' )* ( SIGN )* longitudinalWaterSpeed= NUMBER SEP ( ' ' )* ( SIGN )* transverseWaterSpeed= NUMBER SEP wstatus= LETTERS ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1080:8: '$' device= DEVICE 'VBW' SEP ( ' ' )* ( SIGN )* longitudinalWaterSpeed= NUMBER SEP ( ' ' )* ( SIGN )* transverseWaterSpeed= NUMBER SEP wstatus= LETTERS ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1081:6: ( '$' device= DEVICE 'VBW' SEP ( ' ' )* ( SIGN )* longitudinalWaterSpeed= NUMBER SEP ( ' ' )* ( SIGN )* transverseWaterSpeed= NUMBER SEP wstatus= LETTERS ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1081:8: '$' device= DEVICE 'VBW' SEP ( ' ' )* ( SIGN )* longitudinalWaterSpeed= NUMBER SEP ( ' ' )* ( SIGN )* transverseWaterSpeed= NUMBER SEP wstatus= LETTERS ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart4683 = getCharIndex();
@@ -7805,7 +7805,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1081:2: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1082:2: ( ' ' )*
 			loop163:
 			while (true) {
 				int alt163=2;
@@ -7816,7 +7816,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt163) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1081:2: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1082:2: ' '
 					{
 					match(' '); 
 					}
@@ -7827,7 +7827,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1081:7: ( SIGN )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1082:7: ( SIGN )*
 			loop164:
 			while (true) {
 				int alt164=2;
@@ -7866,7 +7866,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1082:2: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1083:2: ( ' ' )*
 			loop165:
 			while (true) {
 				int alt165=2;
@@ -7877,7 +7877,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt165) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1082:2: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1083:2: ' '
 					{
 					match(' '); 
 					}
@@ -7888,7 +7888,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1082:7: ( SIGN )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1083:7: ( SIGN )*
 			loop166:
 			while (true) {
 				int alt166=2;
@@ -7935,7 +7935,7 @@ public class NMEALexer extends Lexer {
 			wstatus.setLine(wstatusStartLine4724);
 			wstatus.setCharPositionInLine(wstatusStartCharPos4724);
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1084:2: ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:2: ( SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS )*
 			loop173:
 			while (true) {
 				int alt173=2;
@@ -7946,11 +7946,11 @@ public class NMEALexer extends Lexer {
 
 				switch (alt173) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1084:3: SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:3: SEP ( ' ' )* ( SIGN )* (longitudinalGroundSpeed= NUMBER )* SEP ( ' ' )* ( SIGN )* (transverseGroundSpeed= NUMBER )* SEP gstatus= LETTERS
 					{
 					mSEP(); 
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1084:7: ( ' ' )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:7: ( ' ' )*
 					loop167:
 					while (true) {
 						int alt167=2;
@@ -7961,7 +7961,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt167) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1084:7: ' '
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:7: ' '
 							{
 							match(' '); 
 							}
@@ -7972,7 +7972,7 @@ public class NMEALexer extends Lexer {
 						}
 					}
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1084:12: ( SIGN )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:12: ( SIGN )*
 					loop168:
 					while (true) {
 						int alt168=2;
@@ -8001,7 +8001,7 @@ public class NMEALexer extends Lexer {
 						}
 					}
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1084:18: (longitudinalGroundSpeed= NUMBER )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:18: (longitudinalGroundSpeed= NUMBER )*
 					loop169:
 					while (true) {
 						int alt169=2;
@@ -8012,7 +8012,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt169) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1084:19: longitudinalGroundSpeed= NUMBER
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:19: longitudinalGroundSpeed= NUMBER
 							{
 							int longitudinalGroundSpeedStart4741 = getCharIndex();
 							int longitudinalGroundSpeedStartLine4741 = getLine();
@@ -8032,7 +8032,7 @@ public class NMEALexer extends Lexer {
 
 					mSEP(); 
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:2: ( ' ' )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1086:2: ( ' ' )*
 					loop170:
 					while (true) {
 						int alt170=2;
@@ -8043,7 +8043,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt170) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:2: ' '
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1086:2: ' '
 							{
 							match(' '); 
 							}
@@ -8054,7 +8054,7 @@ public class NMEALexer extends Lexer {
 						}
 					}
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:7: ( SIGN )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1086:7: ( SIGN )*
 					loop171:
 					while (true) {
 						int alt171=2;
@@ -8083,7 +8083,7 @@ public class NMEALexer extends Lexer {
 						}
 					}
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:13: (transverseGroundSpeed= NUMBER )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1086:13: (transverseGroundSpeed= NUMBER )*
 					loop172:
 					while (true) {
 						int alt172=2;
@@ -8094,7 +8094,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt172) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1085:14: transverseGroundSpeed= NUMBER
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1086:14: transverseGroundSpeed= NUMBER
 							{
 							int transverseGroundSpeedStart4759 = getCharIndex();
 							int transverseGroundSpeedStartLine4759 = getLine();
@@ -8171,8 +8171,8 @@ public class NMEALexer extends Lexer {
 			CommonToken dataTripGroundDistance=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1102:5: ( '$' device= DEVICE 'VLW' SEP ( ' ' )* (dataTotalWaterDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripWaterDistance= NUMBER )* SEP LETTERS ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1102:7: '$' device= DEVICE 'VLW' SEP ( ' ' )* (dataTotalWaterDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripWaterDistance= NUMBER )* SEP LETTERS ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1103:5: ( '$' device= DEVICE 'VLW' SEP ( ' ' )* (dataTotalWaterDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripWaterDistance= NUMBER )* SEP LETTERS ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1103:7: '$' device= DEVICE 'VLW' SEP ( ' ' )* (dataTotalWaterDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripWaterDistance= NUMBER )* SEP LETTERS ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart4798 = getCharIndex();
@@ -8187,7 +8187,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1103:6: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1104:6: ( ' ' )*
 			loop174:
 			while (true) {
 				int alt174=2;
@@ -8198,7 +8198,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt174) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1103:6: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1104:6: ' '
 					{
 					match(' '); 
 					}
@@ -8209,7 +8209,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1103:11: (dataTotalWaterDistance= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1104:11: (dataTotalWaterDistance= NUMBER )*
 			loop175:
 			while (true) {
 				int alt175=2;
@@ -8220,7 +8220,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt175) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1103:12: dataTotalWaterDistance= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1104:12: dataTotalWaterDistance= NUMBER
 					{
 					int dataTotalWaterDistanceStart4817 = getCharIndex();
 					int dataTotalWaterDistanceStartLine4817 = getLine();
@@ -8244,7 +8244,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1105:6: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1106:6: ( ' ' )*
 			loop176:
 			while (true) {
 				int alt176=2;
@@ -8255,7 +8255,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt176) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1105:6: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1106:6: ' '
 					{
 					match(' '); 
 					}
@@ -8266,7 +8266,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1105:11: (dataTripWaterDistance= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1106:11: (dataTripWaterDistance= NUMBER )*
 			loop177:
 			while (true) {
 				int alt177=2;
@@ -8277,7 +8277,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt177) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1105:12: dataTripWaterDistance= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1106:12: dataTripWaterDistance= NUMBER
 					{
 					int dataTripWaterDistanceStart4845 = getCharIndex();
 					int dataTripWaterDistanceStartLine4845 = getLine();
@@ -8299,7 +8299,7 @@ public class NMEALexer extends Lexer {
 
 			mLETTERS(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1107:6: ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1108:6: ( SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS )*
 			loop182:
 			while (true) {
 				int alt182=2;
@@ -8310,11 +8310,11 @@ public class NMEALexer extends Lexer {
 
 				switch (alt182) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1107:7: SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1108:7: SEP ( ' ' )* (dataTotalGroundDistance= NUMBER )* SEP LETTERS SEP ( ' ' )* (dataTripGroundDistance= NUMBER )* SEP LETTERS
 					{
 					mSEP(); 
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1107:11: ( ' ' )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1108:11: ( ' ' )*
 					loop178:
 					while (true) {
 						int alt178=2;
@@ -8325,7 +8325,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt178) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1107:11: ' '
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1108:11: ' '
 							{
 							match(' '); 
 							}
@@ -8336,7 +8336,7 @@ public class NMEALexer extends Lexer {
 						}
 					}
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1107:16: (dataTotalGroundDistance= NUMBER )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1108:16: (dataTotalGroundDistance= NUMBER )*
 					loop179:
 					while (true) {
 						int alt179=2;
@@ -8347,7 +8347,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt179) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1107:17: dataTotalGroundDistance= NUMBER
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1108:17: dataTotalGroundDistance= NUMBER
 							{
 							int dataTotalGroundDistanceStart4875 = getCharIndex();
 							int dataTotalGroundDistanceStartLine4875 = getLine();
@@ -8371,7 +8371,7 @@ public class NMEALexer extends Lexer {
 
 					mSEP(); 
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1109:6: ( ' ' )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1110:6: ( ' ' )*
 					loop180:
 					while (true) {
 						int alt180=2;
@@ -8382,7 +8382,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt180) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1109:6: ' '
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1110:6: ' '
 							{
 							match(' '); 
 							}
@@ -8393,7 +8393,7 @@ public class NMEALexer extends Lexer {
 						}
 					}
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1109:11: (dataTripGroundDistance= NUMBER )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1110:11: (dataTripGroundDistance= NUMBER )*
 					loop181:
 					while (true) {
 						int alt181=2;
@@ -8404,7 +8404,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt181) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1109:12: dataTripGroundDistance= NUMBER
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1110:12: dataTripGroundDistance= NUMBER
 							{
 							int dataTripGroundDistanceStart4903 = getCharIndex();
 							int dataTripGroundDistanceStartLine4903 = getLine();
@@ -8473,8 +8473,8 @@ public class NMEALexer extends Lexer {
 			CommonToken speedInKilometers=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1130:5: ( '$' device= DEVICE 'VHW' SEP ( ' ' )* (degreesTrue= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (degreesMagnetic= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKnots= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKilometers= NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1130:8: '$' device= DEVICE 'VHW' SEP ( ' ' )* (degreesTrue= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (degreesMagnetic= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKnots= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKilometers= NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1131:5: ( '$' device= DEVICE 'VHW' SEP ( ' ' )* (degreesTrue= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (degreesMagnetic= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKnots= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKilometers= NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1131:8: '$' device= DEVICE 'VHW' SEP ( ' ' )* (degreesTrue= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (degreesMagnetic= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKnots= NUMBER )* SEP ( LETTERS )* SEP ( ' ' )* (speedInKilometers= NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart4955 = getCharIndex();
@@ -8489,7 +8489,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1131:6: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1132:6: ( ' ' )*
 			loop183:
 			while (true) {
 				int alt183=2;
@@ -8500,7 +8500,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt183) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1131:6: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1132:6: ' '
 					{
 					match(' '); 
 					}
@@ -8511,7 +8511,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1131:11: (degreesTrue= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1132:11: (degreesTrue= NUMBER )*
 			loop184:
 			while (true) {
 				int alt184=2;
@@ -8522,7 +8522,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt184) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1131:12: degreesTrue= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1132:12: degreesTrue= NUMBER
 					{
 					int degreesTrueStart4974 = getCharIndex();
 					int degreesTrueStartLine4974 = getLine();
@@ -8542,7 +8542,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1132:13: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1133:13: ( LETTERS )*
 			loop185:
 			while (true) {
 				int alt185=2;
@@ -8553,7 +8553,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt185) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1132:13: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1133:13: LETTERS
 					{
 					mLETTERS(); 
 
@@ -8567,7 +8567,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1133:13: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1134:13: ( ' ' )*
 			loop186:
 			while (true) {
 				int alt186=2;
@@ -8578,7 +8578,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt186) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1133:13: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1134:13: ' '
 					{
 					match(' '); 
 					}
@@ -8589,7 +8589,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1133:18: (degreesMagnetic= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1134:18: (degreesMagnetic= NUMBER )*
 			loop187:
 			while (true) {
 				int alt187=2;
@@ -8600,7 +8600,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt187) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1133:19: degreesMagnetic= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1134:19: degreesMagnetic= NUMBER
 					{
 					int degreesMagneticStart5017 = getCharIndex();
 					int degreesMagneticStartLine5017 = getLine();
@@ -8620,7 +8620,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1134:13: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1135:13: ( LETTERS )*
 			loop188:
 			while (true) {
 				int alt188=2;
@@ -8631,7 +8631,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt188) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1134:13: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1135:13: LETTERS
 					{
 					mLETTERS(); 
 
@@ -8645,7 +8645,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1135:13: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1136:13: ( ' ' )*
 			loop189:
 			while (true) {
 				int alt189=2;
@@ -8656,7 +8656,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt189) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1135:13: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1136:13: ' '
 					{
 					match(' '); 
 					}
@@ -8667,7 +8667,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1135:18: (speedInKnots= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1136:18: (speedInKnots= NUMBER )*
 			loop190:
 			while (true) {
 				int alt190=2;
@@ -8678,7 +8678,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt190) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1135:19: speedInKnots= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1136:19: speedInKnots= NUMBER
 					{
 					int speedInKnotsStart5060 = getCharIndex();
 					int speedInKnotsStartLine5060 = getLine();
@@ -8698,7 +8698,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1136:13: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1137:13: ( LETTERS )*
 			loop191:
 			while (true) {
 				int alt191=2;
@@ -8709,7 +8709,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt191) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1136:13: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1137:13: LETTERS
 					{
 					mLETTERS(); 
 
@@ -8723,7 +8723,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1137:13: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1138:13: ( ' ' )*
 			loop192:
 			while (true) {
 				int alt192=2;
@@ -8734,7 +8734,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt192) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1137:13: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1138:13: ' '
 					{
 					match(' '); 
 					}
@@ -8745,7 +8745,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1137:18: (speedInKilometers= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1138:18: (speedInKilometers= NUMBER )*
 			loop193:
 			while (true) {
 				int alt193=2;
@@ -8756,7 +8756,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt193) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1137:19: speedInKilometers= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1138:19: speedInKilometers= NUMBER
 					{
 					int speedInKilometersStart5103 = getCharIndex();
 					int speedInKilometersStartLine5103 = getLine();
@@ -8776,7 +8776,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1138:13: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1139:13: ( LETTERS )*
 			loop194:
 			while (true) {
 				int alt194=2;
@@ -8787,7 +8787,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt194) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1138:13: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1139:13: LETTERS
 					{
 					mLETTERS(); 
 
@@ -8835,8 +8835,8 @@ public class NMEALexer extends Lexer {
 			CommonToken speed=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1156:6: ( '$' device= DEVICE 'VPW' SEP ( ' ' )* (speed= NUMBER |speed= SIGN )* SEP LETTERS SEP ( ' ' )* ( NUMBER | '-' )* SEP ( LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1156:9: '$' device= DEVICE 'VPW' SEP ( ' ' )* (speed= NUMBER |speed= SIGN )* SEP LETTERS SEP ( ' ' )* ( NUMBER | '-' )* SEP ( LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1157:6: ( '$' device= DEVICE 'VPW' SEP ( ' ' )* (speed= NUMBER |speed= SIGN )* SEP LETTERS SEP ( ' ' )* ( NUMBER | '-' )* SEP ( LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1157:9: '$' device= DEVICE 'VPW' SEP ( ' ' )* (speed= NUMBER |speed= SIGN )* SEP LETTERS SEP ( ' ' )* ( NUMBER | '-' )* SEP ( LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart5167 = getCharIndex();
@@ -8851,7 +8851,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1157:2: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1158:2: ( ' ' )*
 			loop195:
 			while (true) {
 				int alt195=2;
@@ -8862,7 +8862,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt195) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1157:2: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1158:2: ' '
 					{
 					match(' '); 
 					}
@@ -8873,7 +8873,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1157:7: (speed= NUMBER |speed= SIGN )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1158:7: (speed= NUMBER |speed= SIGN )*
 			loop196:
 			while (true) {
 				int alt196=3;
@@ -8887,7 +8887,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt196) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1157:8: speed= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1158:8: speed= NUMBER
 					{
 					int speedStart5182 = getCharIndex();
 					int speedStartLine5182 = getLine();
@@ -8900,7 +8900,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1157:25: speed= SIGN
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1158:25: speed= SIGN
 					{
 					int speedStart5190 = getCharIndex();
 					int speedStartLine5190 = getLine();
@@ -8924,7 +8924,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1159:3: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1160:3: ( ' ' )*
 			loop197:
 			while (true) {
 				int alt197=2;
@@ -8935,7 +8935,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt197) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1159:3: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1160:3: ' '
 					{
 					match(' '); 
 					}
@@ -8946,7 +8946,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1159:8: ( NUMBER | '-' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1160:8: ( NUMBER | '-' )*
 			loop198:
 			while (true) {
 				int alt198=3;
@@ -8960,14 +8960,14 @@ public class NMEALexer extends Lexer {
 
 				switch (alt198) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1159:9: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1160:9: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1159:18: '-'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1160:18: '-'
 					{
 					match('-'); 
 					}
@@ -8980,7 +8980,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1160:10: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1161:10: ( LETTERS )*
 			loop199:
 			while (true) {
 				int alt199=2;
@@ -8991,7 +8991,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt199) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1160:10: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1161:10: LETTERS
 					{
 					mLETTERS(); 
 
@@ -9040,8 +9040,8 @@ public class NMEALexer extends Lexer {
 			CommonToken groundSpeedKph=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1172:6: ( '$' device= DEVICE 'VTG' SEP ( ' ' )* (trueTrackMadeGoodDegrees= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (magneticTrackMadeGood= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKnots= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKph= NUMBER )* SEP ( LETTERS SEP )* ( LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1172:9: '$' device= DEVICE 'VTG' SEP ( ' ' )* (trueTrackMadeGoodDegrees= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (magneticTrackMadeGood= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKnots= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKph= NUMBER )* SEP ( LETTERS SEP )* ( LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1173:6: ( '$' device= DEVICE 'VTG' SEP ( ' ' )* (trueTrackMadeGoodDegrees= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (magneticTrackMadeGood= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKnots= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKph= NUMBER )* SEP ( LETTERS SEP )* ( LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1173:9: '$' device= DEVICE 'VTG' SEP ( ' ' )* (trueTrackMadeGoodDegrees= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (magneticTrackMadeGood= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKnots= NUMBER )* SEP ( LETTERS ) SEP ( ' ' )* (groundSpeedKph= NUMBER )* SEP ( LETTERS SEP )* ( LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart5261 = getCharIndex();
@@ -9056,7 +9056,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1173:13: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1174:13: ( ' ' )*
 			loop200:
 			while (true) {
 				int alt200=2;
@@ -9067,7 +9067,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt200) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1173:13: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1174:13: ' '
 					{
 					match(' '); 
 					}
@@ -9078,7 +9078,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1173:18: (trueTrackMadeGoodDegrees= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1174:18: (trueTrackMadeGoodDegrees= NUMBER )*
 			loop201:
 			while (true) {
 				int alt201=2;
@@ -9089,7 +9089,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt201) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1173:19: trueTrackMadeGoodDegrees= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1174:19: trueTrackMadeGoodDegrees= NUMBER
 					{
 					int trueTrackMadeGoodDegreesStart5287 = getCharIndex();
 					int trueTrackMadeGoodDegreesStartLine5287 = getLine();
@@ -9109,8 +9109,8 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1174:13: ( LETTERS )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1174:14: LETTERS
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1175:13: ( LETTERS )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1175:14: LETTERS
 			{
 			mLETTERS(); 
 
@@ -9118,7 +9118,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1175:13: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1176:13: ( ' ' )*
 			loop202:
 			while (true) {
 				int alt202=2;
@@ -9129,7 +9129,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt202) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1175:13: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1176:13: ' '
 					{
 					match(' '); 
 					}
@@ -9140,7 +9140,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1175:18: (magneticTrackMadeGood= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1176:18: (magneticTrackMadeGood= NUMBER )*
 			loop203:
 			while (true) {
 				int alt203=2;
@@ -9151,7 +9151,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt203) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1175:19: magneticTrackMadeGood= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1176:19: magneticTrackMadeGood= NUMBER
 					{
 					int magneticTrackMadeGoodStart5331 = getCharIndex();
 					int magneticTrackMadeGoodStartLine5331 = getLine();
@@ -9171,8 +9171,8 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1176:13: ( LETTERS )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1176:14: LETTERS
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1177:13: ( LETTERS )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1177:14: LETTERS
 			{
 			mLETTERS(); 
 
@@ -9180,7 +9180,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1177:13: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1178:13: ( ' ' )*
 			loop204:
 			while (true) {
 				int alt204=2;
@@ -9191,7 +9191,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt204) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1177:13: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1178:13: ' '
 					{
 					match(' '); 
 					}
@@ -9202,7 +9202,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1177:18: (groundSpeedKnots= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1178:18: (groundSpeedKnots= NUMBER )*
 			loop205:
 			while (true) {
 				int alt205=2;
@@ -9213,7 +9213,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt205) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1177:19: groundSpeedKnots= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1178:19: groundSpeedKnots= NUMBER
 					{
 					int groundSpeedKnotsStart5375 = getCharIndex();
 					int groundSpeedKnotsStartLine5375 = getLine();
@@ -9233,8 +9233,8 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1178:13: ( LETTERS )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1178:14: LETTERS
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1179:13: ( LETTERS )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1179:14: LETTERS
 			{
 			mLETTERS(); 
 
@@ -9242,7 +9242,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1179:13: ( ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1180:13: ( ' ' )*
 			loop206:
 			while (true) {
 				int alt206=2;
@@ -9253,7 +9253,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt206) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1179:13: ' '
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1180:13: ' '
 					{
 					match(' '); 
 					}
@@ -9264,7 +9264,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1179:18: (groundSpeedKph= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1180:18: (groundSpeedKph= NUMBER )*
 			loop207:
 			while (true) {
 				int alt207=2;
@@ -9275,7 +9275,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt207) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1179:19: groundSpeedKph= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1180:19: groundSpeedKph= NUMBER
 					{
 					int groundSpeedKphStart5419 = getCharIndex();
 					int groundSpeedKphStartLine5419 = getLine();
@@ -9295,14 +9295,14 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1180:13: ( LETTERS SEP )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1181:13: ( LETTERS SEP )*
 			loop208:
 			while (true) {
 				int alt208=2;
 				alt208 = dfa208.predict(input);
 				switch (alt208) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1180:14: LETTERS SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1181:14: LETTERS SEP
 					{
 					mLETTERS(); 
 
@@ -9316,7 +9316,7 @@ public class NMEALexer extends Lexer {
 				}
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1181:13: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1182:13: ( LETTERS )*
 			loop209:
 			while (true) {
 				int alt209=2;
@@ -9327,7 +9327,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt209) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1181:13: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1182:13: LETTERS
 					{
 					mLETTERS(); 
 
@@ -9377,8 +9377,8 @@ public class NMEALexer extends Lexer {
 			CommonToken speedInKnots=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1198:6: ( '$' device= DEVICE 'VWR' SEP (windDirectionMagnitude= NUMBER )* SEP windDirectionOfBow= LETTERS SEP (speedInKnots= NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1198:8: '$' device= DEVICE 'VWR' SEP (windDirectionMagnitude= NUMBER )* SEP windDirectionOfBow= LETTERS SEP (speedInKnots= NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1199:6: ( '$' device= DEVICE 'VWR' SEP (windDirectionMagnitude= NUMBER )* SEP windDirectionOfBow= LETTERS SEP (speedInKnots= NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1199:8: '$' device= DEVICE 'VWR' SEP (windDirectionMagnitude= NUMBER )* SEP windDirectionOfBow= LETTERS SEP (speedInKnots= NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP LETTERS SEP ( NUMBER )* SEP ( LETTERS )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart5503 = getCharIndex();
@@ -9393,7 +9393,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1199:27: (windDirectionMagnitude= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1200:27: (windDirectionMagnitude= NUMBER )*
 			loop210:
 			while (true) {
 				int alt210=2;
@@ -9404,7 +9404,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt210) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1199:27: windDirectionMagnitude= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1200:27: windDirectionMagnitude= NUMBER
 					{
 					int windDirectionMagnitudeStart5516 = getCharIndex();
 					int windDirectionMagnitudeStartLine5516 = getLine();
@@ -9434,7 +9434,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1201:16: (speedInKnots= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1202:16: (speedInKnots= NUMBER )*
 			loop211:
 			while (true) {
 				int alt211=2;
@@ -9445,7 +9445,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt211) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1201:16: speedInKnots= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1202:16: speedInKnots= NUMBER
 					{
 					int speedInKnotsStart5538 = getCharIndex();
 					int speedInKnotsStartLine5538 = getLine();
@@ -9469,7 +9469,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1203:3: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1204:3: ( NUMBER )*
 			loop212:
 			while (true) {
 				int alt212=2;
@@ -9480,7 +9480,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt212) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1203:3: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1204:3: NUMBER
 					{
 					mNUMBER(); 
 
@@ -9498,7 +9498,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1205:3: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1206:3: ( NUMBER )*
 			loop213:
 			while (true) {
 				int alt213=2;
@@ -9509,7 +9509,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt213) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1205:3: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1206:3: NUMBER
 					{
 					mNUMBER(); 
 
@@ -9523,7 +9523,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1206:3: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1207:3: ( LETTERS )*
 			loop214:
 			while (true) {
 				int alt214=2;
@@ -9534,7 +9534,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt214) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1206:3: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1207:3: LETTERS
 					{
 					mLETTERS(); 
 
@@ -9580,8 +9580,8 @@ public class NMEALexer extends Lexer {
 			CommonToken device=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1223:5: ( '$' device= DEVICE 'VWT' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1223:7: '$' device= DEVICE 'VWT' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1224:5: ( '$' device= DEVICE 'VWT' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1224:7: '$' device= DEVICE 'VWT' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart5602 = getCharIndex();
@@ -9596,7 +9596,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1224:2: ( '\\u0021' .. '\\u007F' )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1225:2: ( '\\u0021' .. '\\u007F' )+
 			int cnt215=0;
 			loop215:
 			while (true) {
@@ -9627,7 +9627,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1225:5: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1226:5: ( NUMBER )*
 			loop216:
 			while (true) {
 				int alt216=2;
@@ -9638,7 +9638,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt216) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1225:5: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1226:5: NUMBER
 					{
 					mNUMBER(); 
 
@@ -9683,8 +9683,8 @@ public class NMEALexer extends Lexer {
 			CommonToken directionToSteer=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1263:6: ( '$' device= DEVICE 'XTE' SEP generalWarning= LETTERS SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP directionToSteer= LETTERS SEP LETTERS checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1263:8: '$' device= DEVICE 'XTE' SEP generalWarning= LETTERS SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP directionToSteer= LETTERS SEP LETTERS checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1264:6: ( '$' device= DEVICE 'XTE' SEP generalWarning= LETTERS SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP directionToSteer= LETTERS SEP LETTERS checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1264:8: '$' device= DEVICE 'XTE' SEP generalWarning= LETTERS SEP status= LETTERS SEP (crossTrackError= NUMBER )* SEP directionToSteer= LETTERS SEP LETTERS checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart5651 = getCharIndex();
@@ -9719,7 +9719,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1266:17: (crossTrackError= NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1267:17: (crossTrackError= NUMBER )*
 			loop217:
 			while (true) {
 				int alt217=2;
@@ -9730,7 +9730,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt217) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1266:17: crossTrackError= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1267:17: crossTrackError= NUMBER
 					{
 					int crossTrackErrorStart5674 = getCharIndex();
 					int crossTrackErrorStartLine5674 = getLine();
@@ -9801,8 +9801,8 @@ public class NMEALexer extends Lexer {
 			CommonToken yy=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1266:6: ( '$' device= DEVICE 'ZDA' SEP utc= NUMBER SEP dd= NUMBER SEP mm= NUMBER SEP yy= NUMBER SEP ( NUMBER )* SEP ( NUMBER )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1266:9: '$' device= DEVICE 'ZDA' SEP utc= NUMBER SEP dd= NUMBER SEP mm= NUMBER SEP yy= NUMBER SEP ( NUMBER )* SEP ( NUMBER )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1267:6: ( '$' device= DEVICE 'ZDA' SEP utc= NUMBER SEP dd= NUMBER SEP mm= NUMBER SEP yy= NUMBER SEP ( NUMBER )* SEP ( NUMBER )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1267:9: '$' device= DEVICE 'ZDA' SEP utc= NUMBER SEP dd= NUMBER SEP mm= NUMBER SEP yy= NUMBER SEP ( NUMBER )* SEP ( NUMBER )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart5715 = getCharIndex();
@@ -9857,7 +9857,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1271:3: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1272:3: ( NUMBER )*
 			loop218:
 			while (true) {
 				int alt218=2;
@@ -9868,7 +9868,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt218) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1271:3: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1272:3: NUMBER
 					{
 					mNUMBER(); 
 
@@ -9882,7 +9882,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1272:3: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1273:3: ( NUMBER )*
 			loop219:
 			while (true) {
 				int alt219=2;
@@ -9893,7 +9893,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt219) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1272:3: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1273:3: NUMBER
 					{
 					mNUMBER(); 
 
@@ -9942,8 +9942,8 @@ public class NMEALexer extends Lexer {
 			CommonToken device=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1288:5: ( '$' device= DEVICE 'ALR' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1288:7: '$' device= DEVICE 'ALR' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1289:5: ( '$' device= DEVICE 'ALR' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1289:7: '$' device= DEVICE 'ALR' SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
 			{
 			match('$'); 
 			int deviceStart5796 = getCharIndex();
@@ -9958,7 +9958,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1289:2: ( '\\u0021' .. '\\u007F' )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1290:2: ( '\\u0021' .. '\\u007F' )+
 			int cnt220=0;
 			loop220:
 			while (true) {
@@ -9989,7 +9989,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1290:5: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1291:5: ( NUMBER )*
 			loop221:
 			while (true) {
 				int alt221=2;
@@ -10000,7 +10000,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt221) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1290:5: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1291:5: NUMBER
 					{
 					mNUMBER(); 
 
@@ -10041,8 +10041,8 @@ public class NMEALexer extends Lexer {
 			CommonToken device=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1293:6: ( '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1293:8: '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1294:6: ( '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1294:8: '!' device= DEVICE 'VDM' SEP ( NUMBER )* SEP ( NUMBER )* SEP ( NUMBER )* SEP ( LETTERS )* SEP ( '\\u0021' .. '\\u007F' )+ SEP ( NUMBER )* checksum= CHECKSUM
 			{
 			match('!'); 
 			int deviceStart5843 = getCharIndex();
@@ -10057,7 +10057,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1294:4: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1295:4: ( NUMBER )*
 			loop222:
 			while (true) {
 				int alt222=2;
@@ -10068,7 +10068,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt222) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1294:4: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1295:4: NUMBER
 					{
 					mNUMBER(); 
 
@@ -10082,7 +10082,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1295:4: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1296:4: ( NUMBER )*
 			loop223:
 			while (true) {
 				int alt223=2;
@@ -10093,7 +10093,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt223) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1295:4: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1296:4: NUMBER
 					{
 					mNUMBER(); 
 
@@ -10107,7 +10107,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1296:4: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1297:4: ( NUMBER )*
 			loop224:
 			while (true) {
 				int alt224=2;
@@ -10118,7 +10118,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt224) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1296:4: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1297:4: NUMBER
 					{
 					mNUMBER(); 
 
@@ -10132,7 +10132,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1297:4: ( LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1298:4: ( LETTERS )*
 			loop225:
 			while (true) {
 				int alt225=2;
@@ -10143,7 +10143,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt225) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1297:4: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1298:4: LETTERS
 					{
 					mLETTERS(); 
 
@@ -10157,7 +10157,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1298:4: ( '\\u0021' .. '\\u007F' )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1299:4: ( '\\u0021' .. '\\u007F' )+
 			int cnt226=0;
 			loop226:
 			while (true) {
@@ -10188,7 +10188,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1299:5: ( NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1300:5: ( NUMBER )*
 			loop227:
 			while (true) {
 				int alt227=2;
@@ -10199,7 +10199,7 @@ public class NMEALexer extends Lexer {
 
 				switch (alt227) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1299:5: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1300:5: NUMBER
 					{
 					mNUMBER(); 
 
@@ -10313,8 +10313,8 @@ public class NMEALexer extends Lexer {
 			CommonToken msg22=null;
 			CommonToken vendorid=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1314:10: ( '{\"class\":\"AIS\"' SEP '\"device\":' dev= DEV SEP '\"type\":' type= NUMBER SEP '\"repeat\":' repeat= NUMBER SEP '\"mmsi\":' mmsi= NUMBER SEP '\"scaled\":' scaled= LETTERS SEP ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER '}' | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER ) ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )* )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1314:12: '{\"class\":\"AIS\"' SEP '\"device\":' dev= DEV SEP '\"type\":' type= NUMBER SEP '\"repeat\":' repeat= NUMBER SEP '\"mmsi\":' mmsi= NUMBER SEP '\"scaled\":' scaled= LETTERS SEP ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER '}' | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER ) ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1315:10: ( '{\"class\":\"AIS\"' SEP '\"device\":' dev= DEV SEP '\"type\":' type= NUMBER SEP '\"repeat\":' repeat= NUMBER SEP '\"mmsi\":' mmsi= NUMBER SEP '\"scaled\":' scaled= LETTERS SEP ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER '}' | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER ) ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )* )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1315:12: '{\"class\":\"AIS\"' SEP '\"device\":' dev= DEV SEP '\"type\":' type= NUMBER SEP '\"repeat\":' repeat= NUMBER SEP '\"mmsi\":' mmsi= NUMBER SEP '\"scaled\":' scaled= LETTERS SEP ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER '}' | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER ) ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
 			{
 			match("{\"class\":\"AIS\""); 
 
@@ -10380,7 +10380,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1321:6: ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER '}' | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1322:6: ( '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER '}' | '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER | '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER | '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER | '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER | '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER )
 			int alt230=7;
 			int LA230_0 = input.LA(1);
 			if ( (LA230_0=='\"') ) {
@@ -10459,7 +10459,7 @@ public class NMEALexer extends Lexer {
 
 			switch (alt230) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1321:7: '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER '}'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1322:7: '\"status\":' status= NUMBER SEP '\"turn\":' turn= SIGNED SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"maneuver\":' maneuvrer= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER '}'
 					{
 					match("\"status\":"); 
 
@@ -10607,7 +10607,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1336:6: '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1337:6: '\"timestamp\":' timestamp= TIME_STAMP SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"epfd\":' epfd= NUMBER SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
 					{
 					match("\"timestamp\":"); 
 
@@ -10694,7 +10694,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1345:6: '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1346:6: '\"imo\":' imo= NUMBER SEP '\"ais_version\":' ais_version= NUMBER SEP '\"callsign\":' callsign= NAME SEP '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER SEP '\"epfd\":' epfd= NUMBER SEP '\"eta\":' eta= TIME_STAMP SEP '\"draught\":' draught= NUMBER SEP '\"destination\":' destination= NAME SEP '\"dte\":' dte= NUMBER
 					{
 					match("\"imo\":"); 
 
@@ -10865,7 +10865,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1361:6: '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1362:6: '\"seqno\":' NUMBER SEP '\"dest_mmsi\":' NUMBER SEP '\"retransmit\":' LETTERS SEP '\"dac\":' NUMBER SEP '\"fid\":' NUMBER SEP '\"off_pos\":' LETTERS SEP '\"alarm\":' LETTERS SEP '\"stat_ext\":' NUMBER SEP '\"ana_int\":' NUMBER SEP '\"ana_ext1\":' NUMBER SEP '\"ana_ext2\":' NUMBER SEP '\"racon\":' NUMBER SEP '\"light\":' NUMBER
 					{
 					match("\"seqno\":"); 
 
@@ -10946,7 +10946,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1376:6: '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1377:6: '\"dac\":' dac= NUMBER SEP '\"fid\":' fid= NUMBER SEP '\"lat\":' latitude= SIGNED SEP '\"lon\":' longitude= SIGNED SEP '\"accuracy\":' accuracy= LETTERS SEP '\"timestamp\":' timestamp= TIME_STAMP SEP '\"wspeed\":' wspeed= NUMBER SEP '\"wgust\":' wgust= NUMBER SEP '\"wdir\":' wdir= NUMBER SEP '\"wgustdir\":' wgustdir= NUMBER SEP '\"humidity\":' humidity= NUMBER SEP '\"airtemp\":' airtemp= SIGNED SEP '\"dewpoint\":' dewpoint= SIGNED SEP '\"pressure\":' pressure= NUMBER SEP '\"pressuretend\":' pressuretend= NUMBER SEP '\"visgreater\":' visgreater= LETTERS SEP '\"visibility\":' visibility= NUMBER SEP '\"waterlevel\":' waterlevel= SIGNED SEP '\"leveltrend\":' leveltrend= NUMBER SEP '\"cspeed\":' cspeed= NUMBER SEP '\"cdir\":' cdir= NUMBER SEP '\"cspeed2\":' cspeed2= NUMBER SEP '\"cdir2\":' cdir2= NUMBER SEP '\"cdepth2\":' cdepth2= NUMBER SEP '\"cspeed3\":' cspeed3= NUMBER SEP '\"cdir3\":' cdir3= NUMBER SEP '\"cdepth3\":' (cdepth3= NUMBER | '\\n' ) SEP '\"waveheight\":' waveheight= NUMBER SEP '\"waveperiod\":' waveperiod= NUMBER SEP '\"wavedir\":' wavedir= NUMBER SEP '\"swellheight\":' swellheight= NUMBER SEP '\"swellperiod\":' swellperiod= NUMBER SEP '\"swelldir\":' swelldir= NUMBER SEP '\"seastate\":' seastate= NUMBER SEP '\"watertemp\":' watertemp= SIGNED SEP '\"preciptype\":' preciptype= NUMBER SEP '\"salinity\":' salinity= NUMBER SEP '\"ice\":' ice= NUMBER
 					{
 					match("\"dac\":"); 
 
@@ -11262,7 +11262,7 @@ public class NMEALexer extends Lexer {
 
 					match("\"cdepth3\":"); 
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1402:19: (cdepth3= NUMBER | '\\n' )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1403:19: (cdepth3= NUMBER | '\\n' )
 					int alt228=2;
 					int LA228_0 = input.LA(1);
 					if ( (LA228_0=='.'||(LA228_0 >= '0' && LA228_0 <= '9')) ) {
@@ -11280,7 +11280,7 @@ public class NMEALexer extends Lexer {
 
 					switch (alt228) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1402:20: cdepth3= NUMBER
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1403:20: cdepth3= NUMBER
 							{
 							int cdepth3Start7043 = getCharIndex();
 							int cdepth3StartLine7043 = getLine();
@@ -11293,7 +11293,7 @@ public class NMEALexer extends Lexer {
 							}
 							break;
 						case 2 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1402:36: '\\n'
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1403:36: '\\n'
 							{
 							match('\n'); 
 							}
@@ -11436,11 +11436,11 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 6 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1416:6: '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1417:6: '\"reserved\":' (reserved= NUMBER )* SEP '\"speed\":' speed= NUMBER SEP '\"accuracy\":' accuracy= LETTERS SEP '\"lon\":' longitude= SIGNED SEP '\"lat\":' latitude= SIGNED SEP '\"course\":' course= NUMBER SEP '\"heading\":' heading= NUMBER SEP '\"second\":' second= NUMBER SEP '\"regional\":' regional= NUMBER SEP '\"cs\":' cs= LETTERS SEP '\"display\":' display= LETTERS SEP '\"dsc\":' dsc= LETTERS SEP '\"band\":' band= LETTERS SEP '\"msg22\":' msg22= LETTERS SEP '\"raim\":' raim= LETTERS SEP '\"radio\":' radio= NUMBER
 					{
 					match("\"reserved\":"); 
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1416:28: (reserved= NUMBER )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1417:28: (reserved= NUMBER )*
 					loop229:
 					while (true) {
 						int alt229=2;
@@ -11451,7 +11451,7 @@ public class NMEALexer extends Lexer {
 
 						switch (alt229) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1416:28: reserved= NUMBER
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1417:28: reserved= NUMBER
 							{
 							int reservedStart7226 = getCharIndex();
 							int reservedStartLine7226 = getLine();
@@ -11652,7 +11652,7 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 7 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1434:6: '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1435:6: '\"shipname\":' shipname= NAME SEP '\"shiptype\":' shiptype= NUMBER SEP '\"vendorid\":' vendorid= NAME SEP '\"callsign\":' callsign= NAME SEP '\"to_bow\":' to_bow= NUMBER SEP '\"to_stern\":' to_stern= NUMBER SEP '\"to_port\":' to_port= NUMBER SEP '\"to_starboard\":' to_starboard= NUMBER
 					{
 					match("\"shipname\":"); 
 
@@ -11753,7 +11753,7 @@ public class NMEALexer extends Lexer {
 
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:10: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:10: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
 			loop231:
 			while (true) {
 				int alt231=12;
@@ -11879,69 +11879,69 @@ public class NMEALexer extends Lexer {
 				}
 				switch (alt231) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:11: '\"'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:11: '\"'
 					{
 					match('\"'); 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:17: '['
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:17: '['
 					{
 					match('['); 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:23: ']'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:23: ']'
 					{
 					match(']'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:29: ':'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:29: ':'
 					{
 					match(':'); 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:35: '/'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:35: '/'
 					{
 					match('/'); 
 					}
 					break;
 				case 6 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:42: '}'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:42: '}'
 					{
 					match('}'); 
 					}
 					break;
 				case 7 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:48: '_'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:48: '_'
 					{
 					match('_'); 
 					}
 					break;
 				case 8 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:54: '#'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:54: '#'
 					{
 					match('#'); 
 					}
 					break;
 				case 9 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:60: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:60: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 10 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:69: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:69: LETTERS
 					{
 					mLETTERS(); 
 
 					}
 					break;
 				case 11 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1443:79: SIGN
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1444:79: SIGN
 					{
 					mSIGN(); 
 
@@ -12113,13 +12113,13 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = GPSD_DEVICE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1587:9: ( '{' '\"class\":\"DEVICE\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:6: '{' '\"class\":\"DEVICE\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:9: ( '{' '\"class\":\"DEVICE\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:6: '{' '\"class\":\"DEVICE\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
 			{
 			match('{'); 
 			match("\"class\":\"DEVICE\""); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:28: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:28: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
 			loop232:
 			while (true) {
 				int alt232=13;
@@ -12250,76 +12250,76 @@ public class NMEALexer extends Lexer {
 				}
 				switch (alt232) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:29: '\"'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:29: '\"'
 					{
 					match('\"'); 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:35: '['
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:35: '['
 					{
 					match('['); 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:41: ']'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:41: ']'
 					{
 					match(']'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:47: ':'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:47: ':'
 					{
 					match(':'); 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:53: '/'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:53: '/'
 					{
 					match('/'); 
 					}
 					break;
 				case 6 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:60: '}'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:60: '}'
 					{
 					match('}'); 
 					}
 					break;
 				case 7 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:66: '_'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:66: '_'
 					{
 					match('_'); 
 					}
 					break;
 				case 8 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:72: '#'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:72: '#'
 					{
 					match('#'); 
 					}
 					break;
 				case 9 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:79: SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:79: SEP
 					{
 					mSEP(); 
 
 					}
 					break;
 				case 10 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:85: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:85: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 11 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:94: SIGN
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:94: SIGN
 					{
 					mSIGN(); 
 
 					}
 					break;
 				case 12 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1588:101: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1589:101: LETTERS
 					{
 					mLETTERS(); 
 
@@ -12350,13 +12350,13 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = GPSD_DEVICES;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1594:9: ( '{' '\"class\":\"DEVICES\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:6: '{' '\"class\":\"DEVICES\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:9: ( '{' '\"class\":\"DEVICES\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:6: '{' '\"class\":\"DEVICES\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
 			{
 			match('{'); 
 			match("\"class\":\"DEVICES\""); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:29: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:29: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
 			loop233:
 			while (true) {
 				int alt233=13;
@@ -12487,76 +12487,76 @@ public class NMEALexer extends Lexer {
 				}
 				switch (alt233) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:30: '\"'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:30: '\"'
 					{
 					match('\"'); 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:36: '['
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:36: '['
 					{
 					match('['); 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:42: ']'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:42: ']'
 					{
 					match(']'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:48: ':'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:48: ':'
 					{
 					match(':'); 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:54: '/'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:54: '/'
 					{
 					match('/'); 
 					}
 					break;
 				case 6 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:61: '}'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:61: '}'
 					{
 					match('}'); 
 					}
 					break;
 				case 7 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:67: '_'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:67: '_'
 					{
 					match('_'); 
 					}
 					break;
 				case 8 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:73: '#'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:73: '#'
 					{
 					match('#'); 
 					}
 					break;
 				case 9 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:80: SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:80: SEP
 					{
 					mSEP(); 
 
 					}
 					break;
 				case 10 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:86: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:86: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 11 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:95: SIGN
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:95: SIGN
 					{
 					mSIGN(); 
 
 					}
 					break;
 				case 12 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1595:102: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1596:102: LETTERS
 					{
 					mLETTERS(); 
 
@@ -12587,13 +12587,13 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = GPSD_VERSION;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1601:6: ( '{' '\"class\":\"VERSION\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:6: '{' '\"class\":\"VERSION\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:6: ( '{' '\"class\":\"VERSION\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:6: '{' '\"class\":\"VERSION\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
 			{
 			match('{'); 
 			match("\"class\":\"VERSION\""); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:29: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:29: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
 			loop234:
 			while (true) {
 				int alt234=13;
@@ -12724,76 +12724,76 @@ public class NMEALexer extends Lexer {
 				}
 				switch (alt234) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:30: '\"'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:30: '\"'
 					{
 					match('\"'); 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:36: '['
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:36: '['
 					{
 					match('['); 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:42: ']'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:42: ']'
 					{
 					match(']'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:48: ':'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:48: ':'
 					{
 					match(':'); 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:54: '/'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:54: '/'
 					{
 					match('/'); 
 					}
 					break;
 				case 6 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:61: '}'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:61: '}'
 					{
 					match('}'); 
 					}
 					break;
 				case 7 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:67: '_'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:67: '_'
 					{
 					match('_'); 
 					}
 					break;
 				case 8 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:73: '#'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:73: '#'
 					{
 					match('#'); 
 					}
 					break;
 				case 9 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:80: SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:80: SEP
 					{
 					mSEP(); 
 
 					}
 					break;
 				case 10 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:86: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:86: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 11 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:95: SIGN
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:95: SIGN
 					{
 					mSIGN(); 
 
 					}
 					break;
 				case 12 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1602:102: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1603:102: LETTERS
 					{
 					mLETTERS(); 
 
@@ -12824,13 +12824,13 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = GPSD_WATCH;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1608:6: ( '{' '\"class\":\"WATCH\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:6: '{' '\"class\":\"WATCH\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:6: ( '{' '\"class\":\"WATCH\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )* )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:6: '{' '\"class\":\"WATCH\"' ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
 			{
 			match('{'); 
 			match("\"class\":\"WATCH\""); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:27: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:27: ( '\"' | '[' | ']' | ':' | '/' | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS )*
 			loop235:
 			while (true) {
 				int alt235=13;
@@ -12961,76 +12961,76 @@ public class NMEALexer extends Lexer {
 				}
 				switch (alt235) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:28: '\"'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:28: '\"'
 					{
 					match('\"'); 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:34: '['
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:34: '['
 					{
 					match('['); 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:40: ']'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:40: ']'
 					{
 					match(']'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:46: ':'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:46: ':'
 					{
 					match(':'); 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:52: '/'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:52: '/'
 					{
 					match('/'); 
 					}
 					break;
 				case 6 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:59: '}'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:59: '}'
 					{
 					match('}'); 
 					}
 					break;
 				case 7 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:65: '_'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:65: '_'
 					{
 					match('_'); 
 					}
 					break;
 				case 8 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:71: '#'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:71: '#'
 					{
 					match('#'); 
 					}
 					break;
 				case 9 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:78: SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:78: SEP
 					{
 					mSEP(); 
 
 					}
 					break;
 				case 10 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:84: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:84: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 11 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:93: SIGN
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:93: SIGN
 					{
 					mSIGN(); 
 
 					}
 					break;
 				case 12 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1609:100: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1610:100: LETTERS
 					{
 					mLETTERS(); 
 
@@ -13064,11 +13064,11 @@ public class NMEALexer extends Lexer {
 			CommonToken device=null;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1672:5: ( ( '$' ) device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1672:7: ( '$' ) device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1673:5: ( ( '$' ) device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1673:7: ( '$' ) device= DEVICE 'TXT' SEP ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
 			{
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1672:7: ( '$' )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1672:8: '$'
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1673:7: ( '$' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1673:8: '$'
 			{
 			match('$'); 
 			}
@@ -13085,7 +13085,7 @@ public class NMEALexer extends Lexer {
 
 			mSEP(); 
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1673:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1674:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
 			loop236:
 			while (true) {
 				int alt236=2;
@@ -13138,10 +13138,10 @@ public class NMEALexer extends Lexer {
 			int _channel = DEFAULT_TOKEN_CHANNEL;
 			CommonToken checksum=null;
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1685:5: ( ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1685:7: ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1686:5: ( ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1686:7: ( '$PR' | '$PG' | '$PS' ) ( '\\u0021' .. '\\u007F' | SEP | ' ' )* checksum= CHECKSUM
 			{
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1685:7: ( '$PR' | '$PG' | '$PS' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1686:7: ( '$PR' | '$PG' | '$PS' )
 			int alt237=3;
 			int LA237_0 = input.LA(1);
 			if ( (LA237_0=='$') ) {
@@ -13200,21 +13200,21 @@ public class NMEALexer extends Lexer {
 
 			switch (alt237) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1685:8: '$PR'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1686:8: '$PR'
 					{
 					match("$PR"); 
 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1685:15: '$PG'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1686:15: '$PG'
 					{
 					match("$PG"); 
 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1685:22: '$PS'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1686:22: '$PS'
 					{
 					match("$PS"); 
 
@@ -13223,7 +13223,7 @@ public class NMEALexer extends Lexer {
 
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1685:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1686:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*
 			loop238:
 			while (true) {
 				int alt238=2;
@@ -13275,10 +13275,10 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = DEVICE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1689:9: ( ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' ) )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:9: ( ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' ) )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
 			{
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:4: ( 'GP' | 'II' | 'AG' | 'AI' | 'AP' | 'CC' | 'CD' | 'CS' | 'CT' | 'CV' | 'CX' | 'DF' | 'EC' | 'EP' | 'ER' | 'HC' | 'HE' | 'HN' | 'IN' | 'RA' | 'SD' | 'SM' | 'SN' | 'SS' | 'TI' | 'TR' | 'VD' | 'DM' | 'VW' | 'WI' | 'YX' | 'ZA' | 'ZC' | 'ZQ' | 'ZV' )
 			int alt239=35;
 			switch ( input.LA(1) ) {
 			case 'G':
@@ -13615,245 +13615,245 @@ public class NMEALexer extends Lexer {
 			}
 			switch (alt239) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:5: 'GP'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:5: 'GP'
 					{
 					match("GP"); 
 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:10: 'II'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:10: 'II'
 					{
 					match("II"); 
 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:15: 'AG'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:15: 'AG'
 					{
 					match("AG"); 
 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:20: 'AI'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:20: 'AI'
 					{
 					match("AI"); 
 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:25: 'AP'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:25: 'AP'
 					{
 					match("AP"); 
 
 					}
 					break;
 				case 6 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:30: 'CC'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:30: 'CC'
 					{
 					match("CC"); 
 
 					}
 					break;
 				case 7 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:35: 'CD'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:35: 'CD'
 					{
 					match("CD"); 
 
 					}
 					break;
 				case 8 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:40: 'CS'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:40: 'CS'
 					{
 					match("CS"); 
 
 					}
 					break;
 				case 9 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:45: 'CT'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:45: 'CT'
 					{
 					match("CT"); 
 
 					}
 					break;
 				case 10 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:50: 'CV'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:50: 'CV'
 					{
 					match("CV"); 
 
 					}
 					break;
 				case 11 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:55: 'CX'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:55: 'CX'
 					{
 					match("CX"); 
 
 					}
 					break;
 				case 12 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:60: 'DF'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:60: 'DF'
 					{
 					match("DF"); 
 
 					}
 					break;
 				case 13 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:65: 'EC'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:65: 'EC'
 					{
 					match("EC"); 
 
 					}
 					break;
 				case 14 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:70: 'EP'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:70: 'EP'
 					{
 					match("EP"); 
 
 					}
 					break;
 				case 15 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:75: 'ER'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:75: 'ER'
 					{
 					match("ER"); 
 
 					}
 					break;
 				case 16 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:80: 'HC'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:80: 'HC'
 					{
 					match("HC"); 
 
 					}
 					break;
 				case 17 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:85: 'HE'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:85: 'HE'
 					{
 					match("HE"); 
 
 					}
 					break;
 				case 18 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:90: 'HN'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:90: 'HN'
 					{
 					match("HN"); 
 
 					}
 					break;
 				case 19 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:95: 'IN'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:95: 'IN'
 					{
 					match("IN"); 
 
 					}
 					break;
 				case 20 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:100: 'RA'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:100: 'RA'
 					{
 					match("RA"); 
 
 					}
 					break;
 				case 21 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:105: 'SD'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:105: 'SD'
 					{
 					match("SD"); 
 
 					}
 					break;
 				case 22 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:110: 'SM'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:110: 'SM'
 					{
 					match("SM"); 
 
 					}
 					break;
 				case 23 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:115: 'SN'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:115: 'SN'
 					{
 					match("SN"); 
 
 					}
 					break;
 				case 24 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:120: 'SS'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:120: 'SS'
 					{
 					match("SS"); 
 
 					}
 					break;
 				case 25 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:125: 'TI'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:125: 'TI'
 					{
 					match("TI"); 
 
 					}
 					break;
 				case 26 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:130: 'TR'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:130: 'TR'
 					{
 					match("TR"); 
 
 					}
 					break;
 				case 27 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:135: 'VD'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:135: 'VD'
 					{
 					match("VD"); 
 
 					}
 					break;
 				case 28 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:140: 'DM'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:140: 'DM'
 					{
 					match("DM"); 
 
 					}
 					break;
 				case 29 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:145: 'VW'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:145: 'VW'
 					{
 					match("VW"); 
 
 					}
 					break;
 				case 30 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:150: 'WI'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:150: 'WI'
 					{
 					match("WI"); 
 
 					}
 					break;
 				case 31 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:155: 'YX'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:155: 'YX'
 					{
 					match("YX"); 
 
 					}
 					break;
 				case 32 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:160: 'ZA'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:160: 'ZA'
 					{
 					match("ZA"); 
 
 					}
 					break;
 				case 33 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:165: 'ZC'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:165: 'ZC'
 					{
 					match("ZC"); 
 
 					}
 					break;
 				case 34 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:170: 'ZQ'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:170: 'ZQ'
 					{
 					match("ZQ"); 
 
 					}
 					break;
 				case 35 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1690:175: 'ZV'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1691:175: 'ZV'
 					{
 					match("ZV"); 
 
@@ -13881,11 +13881,11 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = DEV;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1695:9: ( '\"' ( LETTERS | '/' | ':' | '#' | NUMBER )* '\"' )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1696:2: '\"' ( LETTERS | '/' | ':' | '#' | NUMBER )* '\"'
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1696:9: ( '\"' ( LETTERS | '/' | ':' | '#' | NUMBER )* '\"' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1697:2: '\"' ( LETTERS | '/' | ':' | '#' | NUMBER )* '\"'
 			{
 			match('\"'); 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1696:5: ( LETTERS | '/' | ':' | '#' | NUMBER )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1697:5: ( LETTERS | '/' | ':' | '#' | NUMBER )*
 			loop240:
 			while (true) {
 				int alt240=6;
@@ -13980,32 +13980,32 @@ public class NMEALexer extends Lexer {
 				}
 				switch (alt240) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1696:7: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1697:7: LETTERS
 					{
 					mLETTERS(); 
 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1696:16: '/'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1697:16: '/'
 					{
 					match('/'); 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1696:22: ':'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1697:22: ':'
 					{
 					match(':'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1696:28: '#'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1697:28: '#'
 					{
 					match('#'); 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1696:34: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1697:34: NUMBER
 					{
 					mNUMBER(); 
 
@@ -14034,14 +14034,14 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = NUMBER;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1700:5: ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )* ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1701:5: ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )* ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT )
 			int alt248=4;
 			alt248 = dfa248.predict(input);
 			switch (alt248) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1701:5: ( '0' .. '9' )+
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1702:5: ( '0' .. '9' )+
 					{
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1701:5: ( '0' .. '9' )+
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1702:5: ( '0' .. '9' )+
 					int cnt241=0;
 					loop241:
 					while (true) {
@@ -14077,9 +14077,9 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1703:5: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:5: ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )?
 					{
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1703:5: ( '0' .. '9' )+
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:5: ( '0' .. '9' )+
 					int cnt242=0;
 					loop242:
 					while (true) {
@@ -14113,7 +14113,7 @@ public class NMEALexer extends Lexer {
 					}
 
 					match('.'); 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1703:21: ( '0' .. '9' )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:21: ( '0' .. '9' )*
 					loop243:
 					while (true) {
 						int alt243=2;
@@ -14142,7 +14142,7 @@ public class NMEALexer extends Lexer {
 						}
 					}
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1703:33: ( EXPONENT )?
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:33: ( EXPONENT )?
 					int alt244=2;
 					int LA244_0 = input.LA(1);
 					if ( (LA244_0=='E'||LA244_0=='e') ) {
@@ -14150,7 +14150,7 @@ public class NMEALexer extends Lexer {
 					}
 					switch (alt244) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1703:33: EXPONENT
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:33: EXPONENT
 							{
 							mEXPONENT(); 
 
@@ -14162,10 +14162,10 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:9: '.' ( '0' .. '9' )* ( EXPONENT )?
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1705:9: '.' ( '0' .. '9' )* ( EXPONENT )?
 					{
 					match('.'); 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:13: ( '0' .. '9' )*
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1705:13: ( '0' .. '9' )*
 					loop245:
 					while (true) {
 						int alt245=2;
@@ -14194,7 +14194,7 @@ public class NMEALexer extends Lexer {
 						}
 					}
 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:25: ( EXPONENT )?
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1705:25: ( EXPONENT )?
 					int alt246=2;
 					int LA246_0 = input.LA(1);
 					if ( (LA246_0=='E'||LA246_0=='e') ) {
@@ -14202,7 +14202,7 @@ public class NMEALexer extends Lexer {
 					}
 					switch (alt246) {
 						case 1 :
-							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1704:25: EXPONENT
+							// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1705:25: EXPONENT
 							{
 							mEXPONENT(); 
 
@@ -14214,9 +14214,9 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1705:9: ( '0' .. '9' )+ EXPONENT
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1706:9: ( '0' .. '9' )+ EXPONENT
 					{
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1705:9: ( '0' .. '9' )+
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1706:9: ( '0' .. '9' )+
 					int cnt247=0;
 					loop247:
 					while (true) {
@@ -14269,8 +14269,8 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1708:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1708:9: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1709:5: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1709:9: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -14297,8 +14297,8 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = SEP;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1715:5: ( ( ',' ) )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1715:7: ( ',' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1716:5: ( ( ',' ) )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1716:7: ( ',' )
 			{
 			if ( input.LA(1)==',' ) {
 				input.consume();
@@ -14324,7 +14324,7 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = SIGN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1719:6: ( ( '+' | '-' ) )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1720:6: ( ( '+' | '-' ) )
 			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:
 			{
 			if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
@@ -14351,10 +14351,10 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = SIGNED;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1722:8: ( ( SIGN )? NUMBER )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1723:5: ( SIGN )? NUMBER
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1723:8: ( ( SIGN )? NUMBER )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1724:5: ( SIGN )? NUMBER
 			{
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1723:5: ( SIGN )?
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1724:5: ( SIGN )?
 			int alt249=2;
 			int LA249_0 = input.LA(1);
 			if ( (LA249_0=='+'||LA249_0=='-') ) {
@@ -14395,11 +14395,11 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = TIME_STAMP;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1727:2: ( '\"' ( LETTERS | NUMBER | ':' | SIGN )+ '\"' )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1728:2: '\"' ( LETTERS | NUMBER | ':' | SIGN )+ '\"'
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1728:2: ( '\"' ( LETTERS | NUMBER | ':' | SIGN )+ '\"' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1729:2: '\"' ( LETTERS | NUMBER | ':' | SIGN )+ '\"'
 			{
 			match('\"'); 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1728:6: ( LETTERS | NUMBER | ':' | SIGN )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1729:6: ( LETTERS | NUMBER | ':' | SIGN )+
 			int cnt250=0;
 			loop250:
 			while (true) {
@@ -14491,27 +14491,27 @@ public class NMEALexer extends Lexer {
 				}
 				switch (alt250) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1728:7: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1729:7: LETTERS
 					{
 					mLETTERS(); 
 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1728:17: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1729:17: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1728:27: ':'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1729:27: ':'
 					{
 					match(':'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1728:33: SIGN
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1729:33: SIGN
 					{
 					mSIGN(); 
 
@@ -14543,10 +14543,10 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = CHECKSUM;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1730:10: ( ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) ) )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1730:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:10: ( ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) ) )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
 			{
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1730:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:12: ( ( '*' ( '0' .. '9' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) ) | ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) ) | ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) ) )
 			int alt252=4;
 			int LA252_0 = input.LA(1);
 			if ( (LA252_0=='*') ) {
@@ -14630,10 +14630,10 @@ public class NMEALexer extends Lexer {
 
 			switch (alt252) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1730:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
 					{
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1730:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1730:14: '*' ( '0' .. '9' ) ( '0' .. '9' )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:13: ( '*' ( '0' .. '9' ) ( '0' .. '9' ) )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:14: '*' ( '0' .. '9' ) ( '0' .. '9' )
 					{
 					match('*'); 
 					if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
@@ -14657,10 +14657,10 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1732:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
 					{
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1731:14: '*' ( 'A' .. 'F' ) ( '0' .. '9' )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1732:13: ( '*' ( 'A' .. 'F' ) ( '0' .. '9' ) )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1732:14: '*' ( 'A' .. 'F' ) ( '0' .. '9' )
 					{
 					match('*'); 
 					if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
@@ -14684,10 +14684,10 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1732:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1733:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
 					{
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1732:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1732:14: '*' ( 'A' .. 'F' ) ( 'A' .. 'F' )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1733:13: ( '*' ( 'A' .. 'F' ) ( 'A' .. 'F' ) )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1733:14: '*' ( 'A' .. 'F' ) ( 'A' .. 'F' )
 					{
 					match('*'); 
 					if ( (input.LA(1) >= 'A' && input.LA(1) <= 'F') ) {
@@ -14711,13 +14711,13 @@ public class NMEALexer extends Lexer {
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1733:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1734:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
 					{
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1733:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1733:14: '*' ( '0' .. '9' )+ ( 'A' .. 'F' )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1734:13: ( '*' ( '0' .. '9' )+ ( 'A' .. 'F' ) )
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1734:14: '*' ( '0' .. '9' )+ ( 'A' .. 'F' )
 					{
 					match('*'); 
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1733:17: ( '0' .. '9' )+
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1734:17: ( '0' .. '9' )+
 					int cnt251=0;
 					loop251:
 					while (true) {
@@ -14781,14 +14781,14 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = NAME;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1736:3: ( '\"' ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' )* '\"' )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:3: '\"' ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' )* '\"'
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:3: ( '\"' ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' | ']' )* '\"' )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:3: '\"' ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' | ']' )* '\"'
 			{
 			match('\"'); 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:7: ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' )*
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:7: ( LETTERS | NUMBER | ':' | SIGN | '/' | '\\'' | SEP | '%' | '!' | '#' | ']' )*
 			loop253:
 			while (true) {
-				int alt253=11;
+				int alt253=12;
 				switch ( input.LA(1) ) {
 				case ' ':
 				case 'A':
@@ -14903,70 +14903,81 @@ public class NMEALexer extends Lexer {
 					alt253=10;
 					}
 					break;
+				case ']':
+					{
+					alt253=11;
+					}
+					break;
 				}
 				switch (alt253) {
 				case 1 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:8: LETTERS
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:8: LETTERS
 					{
 					mLETTERS(); 
 
 					}
 					break;
 				case 2 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:18: NUMBER
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:18: NUMBER
 					{
 					mNUMBER(); 
 
 					}
 					break;
 				case 3 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:28: ':'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:28: ':'
 					{
 					match(':'); 
 					}
 					break;
 				case 4 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:34: SIGN
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:34: SIGN
 					{
 					mSIGN(); 
 
 					}
 					break;
 				case 5 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:41: '/'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:41: '/'
 					{
 					match('/'); 
 					}
 					break;
 				case 6 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:47: '\\''
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:47: '\\''
 					{
 					match('\''); 
 					}
 					break;
 				case 7 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:54: SEP
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:54: SEP
 					{
 					mSEP(); 
 
 					}
 					break;
 				case 8 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:60: '%'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:60: '%'
 					{
 					match('%'); 
 					}
 					break;
 				case 9 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:66: '!'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:66: '!'
 					{
 					match('!'); 
 					}
 					break;
 				case 10 :
-					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1737:72: '#'
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:72: '#'
 					{
 					match('#'); 
+					}
+					break;
+				case 11 :
+					// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1738:78: ']'
+					{
+					match(']'); 
 					}
 					break;
 
@@ -14992,10 +15003,10 @@ public class NMEALexer extends Lexer {
 		try {
 			int _type = LETTERS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1739:9: ( ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+ )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1739:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1740:9: ( ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+ )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1740:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
 			{
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1739:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1740:11: ( ( 'A' .. 'Z' ) | ( 'a' .. 'z' ) | ' ' )+
 			int cnt254=0;
 			loop254:
 			while (true) {
@@ -15042,8 +15053,8 @@ public class NMEALexer extends Lexer {
 	// $ANTLR start "EXPONENT"
 	public final void mEXPONENT() throws RecognitionException {
 		try {
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1745:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1745:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1746:10: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1746:12: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
 			{
 			if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
 				input.consume();
@@ -15053,7 +15064,7 @@ public class NMEALexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1745:22: ( '+' | '-' )?
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1746:22: ( '+' | '-' )?
 			int alt255=2;
 			int LA255_0 = input.LA(1);
 			if ( (LA255_0=='+'||LA255_0=='-') ) {
@@ -15076,7 +15087,7 @@ public class NMEALexer extends Lexer {
 
 			}
 
-			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1745:33: ( '0' .. '9' )+
+			// /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g:1746:33: ( '0' .. '9' )+
 			int cnt256=0;
 			loop256:
 			while (true) {
@@ -15769,7 +15780,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()* loopback of 825:5: (dev= NUMBER SEP we= LETTERS SEP )*";
+			return "()* loopback of 827:5: (dev= NUMBER SEP we= LETTERS SEP )*";
 		}
 	}
 
@@ -15824,7 +15835,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()* loopback of 970:11: ( LETTERS SEP )*";
+			return "()* loopback of 971:11: ( LETTERS SEP )*";
 		}
 	}
 
@@ -15885,7 +15896,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()* loopback of 1048:3: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
+			return "()* loopback of 1049:3: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
 		}
 	}
 
@@ -15939,7 +15950,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()* loopback of 1180:13: ( LETTERS SEP )*";
+			return "()* loopback of 1181:13: ( LETTERS SEP )*";
 		}
 	}
 
@@ -16026,7 +16037,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()+ loopback of 1224:2: ( '\\u0021' .. '\\u007F' )+";
+			return "()+ loopback of 1225:2: ( '\\u0021' .. '\\u007F' )+";
 		}
 	}
 
@@ -16113,7 +16124,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()+ loopback of 1289:2: ( '\\u0021' .. '\\u007F' )+";
+			return "()+ loopback of 1290:2: ( '\\u0021' .. '\\u007F' )+";
 		}
 	}
 
@@ -16200,7 +16211,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()+ loopback of 1298:4: ( '\\u0021' .. '\\u007F' )+";
+			return "()+ loopback of 1299:4: ( '\\u0021' .. '\\u007F' )+";
 		}
 	}
 
@@ -16261,7 +16272,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()* loopback of 1673:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
+			return "()* loopback of 1674:2: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
 		}
 	}
 
@@ -16322,7 +16333,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "()* loopback of 1685:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
+			return "()* loopback of 1686:29: ( '\\u0021' .. '\\u007F' | SEP | ' ' )*";
 		}
 	}
 
@@ -16378,7 +16389,7 @@ public class NMEALexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "1699:1: NUMBER : ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )* ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
+			return "1700:1: NUMBER : ( ( '0' .. '9' )+ | ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( EXPONENT )? | '.' ( '0' .. '9' )* ( EXPONENT )? | ( '0' .. '9' )+ EXPONENT );";
 		}
 	}
 
@@ -16444,7 +16455,8 @@ public class NMEALexer extends Lexer {
 			"\1\111",
 			"\1\112\1\uffff\1\113\15\uffff\1\114\4\uffff\1\115",
 			"\1\116\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125\1"+
-			"\126\1\125\1\123\1\117\12\122\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\126\1\125\1\123\1\117\12\122\1\120\6\uffff\32\116\2\uffff\1\126\3\uffff"+
+			"\32\116",
 			"\1\130\1\uffff\12\23\13\uffff\1\131\37\uffff\1\131",
 			"\12\132\13\uffff\1\133\37\uffff\1\133",
 			"\1\32\40\uffff\32\32\6\uffff\32\32",
@@ -16505,23 +16517,27 @@ public class NMEALexer extends Lexer {
 			"\1\32\40\uffff\32\32\6\uffff\32\32",
 			"\1\32\40\uffff\32\32\6\uffff\32\32",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\123\1\117\12\122\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\125\1\123\1\117\12\122\1\120\6\uffff\32\116\2\uffff\1\126\3"+
+			"\uffff\32\116",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\6\uffff\32\u0084",
+			"\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\2\uffff\1\126\3\uffff"+
+			"\32\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\123\1\117\12\122\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\125\1\123\1\117\12\122\1\120\6\uffff\32\116\2\uffff\1\126\3"+
+			"\uffff\32\116",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\6\uffff\32\u0084",
+			"\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\2\uffff\1\126\3\uffff"+
+			"\32\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\122\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\123\1\117\12\u008a\1\120\6\uffff\4\116\1\u008b\25\116"+
-			"\6\uffff\4\116\1\u008b\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u008b\25\116",
 			"",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"",
 			"",
 			"\12\u0092\13\uffff\1\u0093\37\uffff\1\u0093",
@@ -16639,39 +16655,43 @@ public class NMEALexer extends Lexer {
 			"",
 			"",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\6\uffff\32\u0084",
+			"\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\2\uffff\1\126\3\uffff"+
+			"\32\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\6\uffff\32\u0084",
+			"\1\u0087\1\117\12\u0086\1\u0085\6\uffff\32\u0084\2\uffff\1\126\3\uffff"+
+			"\32\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u0086\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u0086\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u0087\1\117\12\u00a6\1\u0085\6\uffff\4\u0084\1\u00a7\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a7\25\u0084",
+			"\1\u0087\1\117\12\u00a6\1\u0085\6\uffff\4\u0084\1\u00a7\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a7\25\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00a9"+
-			"\1\126\1\u00a9\1\123\1\117\12\u00a8\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\u00a9\1\123\1\117\12\u00a8\1\120\6\uffff\32\116\2\uffff\1\126"+
+			"\3\uffff\32\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\123\1\117\12\u00aa\1\120\6\uffff\4\116\1\u00ab\25\116"+
-			"\6\uffff\4\116\1\u00ab\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ab\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u008a\1\120\6\uffff\4\116\1\u00ac\25\116"+
-			"\6\uffff\4\116\1\u00ac\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ac\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00ad"+
-			"\1\126\1\u00ad\1\123\1\117\12\u00ae\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\u00ad\1\123\1\117\12\u00ae\1\120\6\uffff\32\116\2\uffff\1\126"+
+			"\3\uffff\32\116",
 			"",
 			"",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u00b1\1\126\12\u008f\1\u0091\6\uffff\4\u008e\1\u00b0\25"+
-			"\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00b0\25\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0090\1\126\12\u00b2\1\u0091\6\uffff\4\u008e\1\u00b3\25"+
-			"\u008e\6\uffff\4\u008e\1\u00b3\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00b3\25\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u008f\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\12\u0092\13\uffff\1\u0093\37\uffff\1\u0093",
 			"\1\u00b4\1\uffff\1\u00b4\2\uffff\12\u00b5",
 			"\12\u0095",
@@ -16692,49 +16712,51 @@ public class NMEALexer extends Lexer {
 			"",
 			"\1\u00ce",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00d0"+
-			"\1\126\1\u00d0\1\u0087\1\117\12\u00cf\1\u0085\6\uffff\32\u0084\6\uffff"+
-			"\32\u0084",
+			"\1\126\1\u00d0\1\u0087\1\117\12\u00cf\1\u0085\6\uffff\32\u0084\2\uffff"+
+			"\1\126\3\uffff\32\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u0087\1\117\12\u00d1\1\u0085\6\uffff\4\u0084\1\u00d2\25\u0084\6\uffff"+
-			"\4\u0084\1\u00d2\25\u0084",
+			"\1\u0087\1\117\12\u00d1\1\u0085\6\uffff\4\u0084\1\u00d2\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00d2\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u00a6\1\u0085\6\uffff\4\u0084\1\u00d3\25\u0084\6\uffff"+
-			"\4\u0084\1\u00d3\25\u0084",
+			"\1\u00a5\1\117\12\u00a6\1\u0085\6\uffff\4\u0084\1\u00d3\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00d3\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00d4"+
-			"\1\126\1\u00d4\1\u0087\1\117\12\u00d5\1\u0085\6\uffff\32\u0084\6\uffff"+
-			"\32\u0084",
+			"\1\126\1\u00d4\1\u0087\1\117\12\u00d5\1\u0085\6\uffff\32\u0084\2\uffff"+
+			"\1\126\3\uffff\32\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u00a8\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u00d6\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u00d6\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u00aa\1\120\6\uffff\4\116\1\u00d7\25\116"+
-			"\6\uffff\4\116\1\u00d7\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00d7\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00d8"+
-			"\1\126\1\u00d8\1\123\1\117\12\u00d9\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\u00d8\1\123\1\117\12\u00d9\1\120\6\uffff\32\116\2\uffff\1\126"+
+			"\3\uffff\32\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00da"+
-			"\1\126\1\u00da\1\123\1\117\12\u00db\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\u00da\1\123\1\117\12\u00db\1\120\6\uffff\32\116\2\uffff\1\126"+
+			"\3\uffff\32\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u00dc\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u00dc\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u00ae\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00de"+
-			"\1\126\1\u00de\1\u0090\1\126\12\u00dd\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\u00de\1\u0090\1\126\12\u00dd\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0090\1\126\12\u00df\1\u0091\6\uffff\4\u008e\1\u00e0\25"+
-			"\u008e\6\uffff\4\u008e\1\u00e0\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00e0\25\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u00b1\1\126\12\u00b2\1\u0091\6\uffff\4\u008e\1\u00e1\25"+
-			"\u008e\6\uffff\4\u008e\1\u00e1\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00e1\25\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00e2"+
-			"\1\126\1\u00e2\1\u0090\1\126\12\u00e3\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\u00e2\1\u0090\1\126\12\u00e3\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\12\u00b5",
 			"\12\u00b5",
 			"",
@@ -16763,65 +16785,66 @@ public class NMEALexer extends Lexer {
 			"\1\u00f5\1\uffff\1\u00f6",
 			"\1\u00f7",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u00cf\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u00cf\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u00f8\1\126\6\uffff"+
-			"\32\126\6\uffff\32\126",
+			"\32\126\2\uffff\1\126\3\uffff\32\126",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u00d1\1\u0085\6\uffff\4\u0084\1\u00f9\25\u0084\6\uffff"+
-			"\4\u0084\1\u00f9\25\u0084",
+			"\1\u00a5\1\117\12\u00d1\1\u0085\6\uffff\4\u0084\1\u00f9\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00f9\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00fa"+
-			"\1\126\1\u00fa\1\u0087\1\117\12\u00fb\1\u0085\6\uffff\32\u0084\6\uffff"+
-			"\32\u0084",
+			"\1\126\1\u00fa\1\u0087\1\117\12\u00fb\1\u0085\6\uffff\32\u0084\2\uffff"+
+			"\1\126\3\uffff\32\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00fc"+
-			"\1\126\1\u00fc\1\u0087\1\117\12\u00fd\1\u0085\6\uffff\32\u0084\6\uffff"+
-			"\32\u0084",
+			"\1\126\1\u00fc\1\u0087\1\117\12\u00fd\1\u0085\6\uffff\32\u0084\2\uffff"+
+			"\1\126\3\uffff\32\u0084",
 			"\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u00fe\1\126\6\uffff"+
-			"\32\126\6\uffff\32\126",
+			"\32\126\2\uffff\1\126\3\uffff\32\126",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u00d5\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u00d5\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0100\1\117\12\u00a8\1\120\6\uffff\4\116\1\u00ff\25\116"+
-			"\6\uffff\4\116\1\u00ff\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ff\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u0101"+
-			"\1\126\1\u0101\1\123\1\117\12\u0102\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\u0101\1\123\1\117\12\u0102\1\120\6\uffff\32\116\2\uffff\1\126"+
+			"\3\uffff\32\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u0103\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u0103\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u00d9\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u0104\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u0104\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u00db\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0100\1\117\12\u00ae\1\120\6\uffff\4\116\1\u00ff\25\116"+
-			"\6\uffff\4\116\1\u00ff\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ff\25\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u00b1\1\126\12\u00dd\1\u0091\6\uffff\4\u008e\1\u00b0\25"+
-			"\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00b0\25\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u00dd\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u00dd\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u00b1\1\126\12\u00df\1\u0091\6\uffff\4\u008e\1\u0105\25"+
-			"\u008e\6\uffff\4\u008e\1\u0105\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u0105\25\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u0106"+
-			"\1\126\1\u0106\1\u0090\1\126\12\u0107\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\u0106\1\u0090\1\126\12\u0107\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u0108"+
-			"\1\126\1\u0108\1\u0090\1\126\12\u0109\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\u0108\1\u0090\1\126\12\u0109\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u00e3\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u00e3\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u00b1\1\126\12\u00e3\1\u0091\6\uffff\4\u008e\1\u00b0\25"+
-			"\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00b0\25\u008e",
 			"",
 			"",
 			"",
@@ -16843,148 +16866,152 @@ public class NMEALexer extends Lexer {
 			"",
 			"\1\u010a",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u010c\1\117\12\u00cf\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\6\uffff"+
-			"\4\u0084\1\u010b\25\u0084",
+			"\1\u010c\1\117\12\u00cf\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u010b\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u010d"+
-			"\1\126\1\u010d\1\u0087\1\117\12\u010e\1\u0085\6\uffff\32\u0084\6\uffff"+
-			"\32\u0084",
+			"\1\126\1\u010d\1\u0087\1\117\12\u010e\1\u0085\6\uffff\32\u0084\2\uffff"+
+			"\1\126\3\uffff\32\u0084",
 			"\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u010f\1\126\6\uffff"+
-			"\32\126\6\uffff\32\126",
+			"\32\126\2\uffff\1\126\3\uffff\32\126",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u00fb\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u00fb\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u0110\1\126\6\uffff"+
-			"\32\126\6\uffff\32\126",
+			"\32\126\2\uffff\1\126\3\uffff\32\126",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u00fd\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u00fd\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u010c\1\117\12\u00d5\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\6\uffff"+
-			"\4\u0084\1\u010b\25\u0084",
+			"\1\u010c\1\117\12\u00d5\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u010b\25\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u00de"+
-			"\1\126\1\u00de\1\123\1\117\12\u0111\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\u00de\1\123\1\117\12\u0111\1\120\6\uffff\32\116\2\uffff\1\126"+
+			"\3\uffff\32\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\123\1\117\12\u0112\1\120\6\uffff\4\116\1\u0113\25\116"+
-			"\6\uffff\4\116\1\u0113\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0113\25\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u0114\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u0114\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u0102\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0100\1\117\12\u00d9\1\120\6\uffff\4\116\1\u00ff\25\116"+
-			"\6\uffff\4\116\1\u00ff\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ff\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0100\1\117\12\u00db\1\120\6\uffff\4\116\1\u00ff\25\116"+
-			"\6\uffff\4\116\1\u00ff\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ff\25\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u0115"+
-			"\1\126\1\u0115\1\u0090\1\126\12\u0116\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\u0115\1\u0090\1\126\12\u0116\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u0107\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u0107\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u00b1\1\126\12\u0107\1\u0091\6\uffff\4\u008e\1\u00b0\25"+
-			"\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00b0\25\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u0109\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u0109\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u00b1\1\126\12\u0109\1\u0091\6\uffff\4\u008e\1\u00b0\25"+
-			"\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00b0\25\u008e",
 			"\1\u0117",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u0087\1\117\12\u0118\1\u0085\6\uffff\32\u0084\6\uffff\32\u0084",
+			"\1\u0087\1\117\12\u0118\1\u0085\6\uffff\32\u0084\2\uffff\1\126\3\uffff"+
+			"\32\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u0087\1\117\12\u0119\1\u0085\6\uffff\4\u0084\1\u011a\25\u0084\6\uffff"+
-			"\4\u0084\1\u011a\25\u0084",
+			"\1\u0087\1\117\12\u0119\1\u0085\6\uffff\4\u0084\1\u011a\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u011a\25\u0084",
 			"\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u011b\1\126\6\uffff"+
-			"\32\126\6\uffff\32\126",
+			"\32\126\2\uffff\1\126\3\uffff\32\126",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u010e\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u010e\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u010c\1\117\12\u00fb\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\6\uffff"+
-			"\4\u0084\1\u010b\25\u0084",
+			"\1\u010c\1\117\12\u00fb\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u010b\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u010c\1\117\12\u00fd\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\6\uffff"+
-			"\4\u0084\1\u010b\25\u0084",
+			"\1\u010c\1\117\12\u00fd\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u010b\25\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u0111\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u0112\1\120\6\uffff\4\116\1\u011c\25\116"+
-			"\6\uffff\4\116\1\u011c\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u011c\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u011d"+
-			"\1\126\1\u011d\1\123\1\117\12\u011e\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\u011d\1\123\1\117\12\u011e\1\120\6\uffff\32\116\2\uffff\1\126"+
+			"\3\uffff\32\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0100\1\117\12\u0102\1\120\6\uffff\4\116\1\u00ff\25\116"+
-			"\6\uffff\4\116\1\u00ff\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ff\25\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u0116\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u0116\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u00b1\1\126\12\u0116\1\u0091\6\uffff\4\u008e\1\u00b0\25"+
-			"\u008e\6\uffff\4\u008e\1\u00b0\25\u008e",
+			"\u008e\2\uffff\1\126\3\uffff\4\u008e\1\u00b0\25\u008e",
 			"\1\u011f",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u0118\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u0118\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u0119\1\u0085\6\uffff\4\u0084\1\u0120\25\u0084\6\uffff"+
-			"\4\u0084\1\u0120\25\u0084",
+			"\1\u00a5\1\117\12\u0119\1\u0085\6\uffff\4\u0084\1\u0120\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u0120\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u0121"+
-			"\1\126\1\u0121\1\u0087\1\117\12\u0122\1\u0085\6\uffff\32\u0084\6\uffff"+
-			"\32\u0084",
+			"\1\126\1\u0121\1\u0087\1\117\12\u0122\1\u0085\6\uffff\32\u0084\2\uffff"+
+			"\1\126\3\uffff\32\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u010c\1\117\12\u010e\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\6\uffff"+
-			"\4\u0084\1\u010b\25\u0084",
+			"\1\u010c\1\117\12\u010e\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u010b\25\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u0123"+
-			"\1\126\1\u0123\1\123\1\117\12\u0124\1\120\6\uffff\32\116\6\uffff\32\116",
+			"\1\126\1\u0123\1\123\1\117\12\u0124\1\120\6\uffff\32\116\2\uffff\1\126"+
+			"\3\uffff\32\116",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u0125\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u0125\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u011e\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"\1\u0126",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\u0127"+
-			"\1\126\1\u0127\1\u0087\1\117\12\u0128\1\u0085\6\uffff\32\u0084\6\uffff"+
-			"\32\u0084",
+			"\1\126\1\u0127\1\u0087\1\117\12\u0128\1\u0085\6\uffff\32\u0084\2\uffff"+
+			"\1\126\3\uffff\32\u0084",
 			"\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u0129\1\126\6\uffff"+
-			"\32\126\6\uffff\32\126",
+			"\32\126\2\uffff\1\126\3\uffff\32\126",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u0122\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u0122\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\1\u008e\1\126\1\u008d\1\126\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
-			"\1\126\1\125\1\u0090\1\126\12\u012a\1\u0091\6\uffff\32\u008e\6\uffff"+
-			"\32\u008e",
+			"\1\126\1\125\1\u0090\1\126\12\u012a\1\u0091\6\uffff\32\u008e\2\uffff"+
+			"\1\126\3\uffff\32\u008e",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0089\1\117\12\u0124\1\120\6\uffff\4\116\1\u0088\25\116"+
-			"\6\uffff\4\116\1\u0088\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u0088\25\116",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0100\1\117\12\u011e\1\120\6\uffff\4\116\1\u00ff\25\116"+
-			"\6\uffff\4\116\1\u00ff\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ff\25\116",
 			"\1\u012b\2\uffff\1\u012c\21\uffff\1\u012d\1\u012e",
 			"\4\126\1\uffff\1\126\1\uffff\1\126\3\uffff\5\126\12\u012f\1\126\6\uffff"+
-			"\32\126\6\uffff\32\126",
+			"\32\126\2\uffff\1\126\3\uffff\32\126",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u00a5\1\117\12\u0128\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\6\uffff"+
-			"\4\u0084\1\u00a4\25\u0084",
+			"\1\u00a5\1\117\12\u0128\1\u0085\6\uffff\4\u0084\1\u00a4\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u00a4\25\u0084",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u010c\1\117\12\u0122\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\6\uffff"+
-			"\4\u0084\1\u010b\25\u0084",
+			"\1\u010c\1\117\12\u0122\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u010b\25\u0084",
 			"\1\116\1\126\1\u0083\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\1\125"+
 			"\1\126\1\125\1\u0100\1\117\12\u0124\1\120\6\uffff\4\116\1\u00ff\25\116"+
-			"\6\uffff\4\116\1\u00ff\25\116",
+			"\2\uffff\1\126\3\uffff\4\116\1\u00ff\25\116",
 			"",
 			"\1\u0130",
 			"",
 			"",
 			"\1\u0084\1\126\1\124\1\121\1\uffff\1\126\1\uffff\1\126\3\uffff\3\126"+
-			"\1\u010c\1\117\12\u0128\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\6\uffff"+
-			"\4\u0084\1\u010b\25\u0084",
+			"\1\u010c\1\117\12\u0128\1\u0085\6\uffff\4\u0084\1\u010b\25\u0084\2\uffff"+
+			"\1\126\3\uffff\4\u0084\1\u010b\25\u0084",
 			"\1\u0131",
 			"\1\u0132",
 			"\1\u0133",

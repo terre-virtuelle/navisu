@@ -1,0 +1,41 @@
+\select@language {french}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces \textit {D\'eploiement centralis\'e}}}{12}{figure.1.1}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces \textit {D\'eploiement distribu\'e}}}{12}{figure.1.2}
+\contentsline {figure}{\numberline {1.3}{\ignorespaces \textit {Aucune requ\^ete client, les donn\'ees dynamiques venant des capteurs sont perdues}}}{14}{figure.1.3}
+\contentsline {figure}{\numberline {1.4}{\ignorespaces \textit {Exemple de requ\^ete client, suivie d'une r\'eponse asynchrone \`a partir du premier port s\'erie enregistr\'e.}}}{15}{figure.1.4}
+\contentsline {figure}{\numberline {1.5}{\ignorespaces \textit {Exemple de requ\^ete client, suivie d'une r\'eponse synchrone \`a partir de donn\'ees provenant d'un fichier.}}}{16}{figure.1.5}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces \textit {D\'eploiement distribu\'e}}}{19}{figure.2.1}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces \textit {Ensemble des classes de l'API NMEA}}}{24}{figure.3.1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces \textit {Cat\'egorisation des informations NMEA}}}{25}{figure.3.2}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces \textit {Minimun d'information pour la navigation}}}{26}{figure.3.3}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces \textit {Date}}}{26}{figure.3.4}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces \textit {Informations de position}}}{27}{figure.3.5}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces \textit {Informations de vitesse et de distance}}}{28}{figure.3.6}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces \textit {Informations sur les waypoints}}}{29}{figure.3.7}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces \textit {Informations sur les satellites}}}{30}{figure.3.8}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces \textit {Informations sur le vent}}}{30}{figure.3.9}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces \textit {Bathym\'etrie}}}{31}{figure.3.10}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces \textit {Analyse de la phrase GSV}}}{32}{figure.3.11}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces \textit {Analyse de la phrase RMB}}}{32}{figure.3.12}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces \textit {Sch\'ema g\'en\'eral des entr\'ees/sorties}}}{35}{figure.4.1}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces \textit {Un client \'el\'ementaire en javascript}}}{40}{figure.4.2}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces \textit {Diagramme UML simplifi\'e d'un Display}}}{42}{figure.5.1}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces \textit {L'item Instruments}}}{44}{figure.6.1}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces \textit {L'ic\^one centrale de Instruments et les sous-items}}}{44}{figure.6.2}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces \textit {Le menu Instruments}}}{46}{figure.6.3}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces \textit {Une modification de l'IHM va impacter l'application}}}{48}{figure.6.4}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces \textit {Si les contrats de services sont respect\'es, un changement du code de l'IHM ne concerne pas l'application}}}{48}{figure.6.5}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces \textit {Gradle d\'etectera un tel probl\`eme}}}{48}{figure.6.6}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces \textit {Projection \'equirectangulaire}}}{51}{figure.7.1}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces \textit {Conventions de la num\'erotation des tuiles WorldWind}}}{52}{figure.7.2}
+\contentsline {figure}{\numberline {7.3}{\ignorespaces \textit {Fronti\`eres d'une carte}}}{53}{figure.7.3}
+\contentsline {figure}{\numberline {7.4}{\ignorespaces \textit {Les Etats Unis}}}{54}{figure.7.4}
+\contentsline {figure}{\numberline {7.5}{\ignorespaces \textit {Affichage de la carte}}}{54}{figure.7.5}
+\contentsline {figure}{\numberline {7.6}{\ignorespaces \textit {Niveaux de d\'etail et la 3D}}}{55}{figure.7.6}
