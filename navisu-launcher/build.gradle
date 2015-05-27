@@ -15,7 +15,7 @@ dependencies {
     compile project(':navisu-currents')
     compile project(':navisu-server')
     compile project(':navisu-gpx')
-    compile project(':navisu-grib')
+    compile project(':navisu-netcdf')
     compile project(':navisu-instruments')
     compile project(':navisu-kml')
     compile project(':navisu-magnetic')
