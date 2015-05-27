@@ -181,6 +181,15 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected Date t0;
 	protected boolean verrou = false;
 	protected boolean pathActivated = false;
+	protected static final String ANSI_RESET = "\u001B[0m";
+	protected static final String ANSI_BLACK = "\u001B[30m";
+	protected static final String ANSI_RED = "\u001B[31m";
+	protected static final String ANSI_GREEN = "\u001B[32m";
+	protected static final String ANSI_YELLOW = "\u001B[33m";
+	protected static final String ANSI_BLUE = "\u001B[34m";
+	protected static final String ANSI_PURPLE = "\u001B[35m";
+	protected static final String ANSI_CYAN = "\u001B[36m";
+	protected static final String ANSI_WHITE = "\u001B[37m";
 
 	@Override
 	public void componentInitiated() {
@@ -379,11 +388,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		
+		if (count%49==0) {
+			System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
+			}
+		
 		if (count%100==0) {
 			saveShips();
-			System.out.println("List of AIS ships saved.");
-			System.out.println(aisShips.size() + " ships in database");
-			System.err.println(inSight + " ships in sight at " + dateFormatTime.format(date));
+			System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
 			}
     	
     	for (int i=0; i<aisShips.size(); i++) {
@@ -395,7 +406,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {
     				resu.setName(target.getName());
     				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
-    					System.err.println("New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI());
+    					System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
     					}
     			}
     			else {resu.setName(aisShips.get(i).getName());}
@@ -1103,7 +1114,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.err.println("Reading file done. " + aisShips.size() + " ships in database." );
+		System.err.println("Reading file done (" + aisShips.size() + " ships in database)" );
 		//for (Ship s : aisShips) {System.out.println(s.toString());}
 	}
 	
