@@ -244,6 +244,7 @@ public class DockManagerImpl<TrackTool>
     private void createMeteoRadialWidget() {
         meteoRadialMenu = RadialMenuBuilder.create()
                 .centralImage("meteoradialmenu150.png")
+                .createNode(0, "file.png", 0, "vector.png", 0, "grib.png", (e) -> open("Grib", ".grb"))
                 .build();
 
         meteoRadialMenu.setLayoutX((width / 2) - 30);
