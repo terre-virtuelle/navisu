@@ -379,10 +379,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		
-		if (count%50==0) {
+		if (count%100==0) {
 			saveShips();
-			System.err.println("List of AIS ships saved.");
-			System.err.println(aisShips.size() + " ships in database");
+			System.out.println("List of AIS ships saved.");
+			System.out.println(aisShips.size() + " ships in database");
 			System.err.println(inSight + " ships in sight at " + dateFormatTime.format(date));
 			}
     	
@@ -407,7 +407,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			shipMatrix[4][i] = dateFormatDate.format(date);
     			shipMatrix[5][i] = dateFormatTime.format(date);
     			// Enlever les commentaires pour voir les messages AIS
-    			System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date));
+    			//System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date));
     			count++;
     		}
     	}
