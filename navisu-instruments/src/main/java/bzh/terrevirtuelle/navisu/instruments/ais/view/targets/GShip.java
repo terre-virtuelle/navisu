@@ -23,9 +23,9 @@ public class GShip {
 
     protected Ship ship;
     protected Shape shape;
-    private static final double YY = 0.00083;// 0.00150/1.8;
-    private static final double Y = 0.00041; //0.00075/1.8;
-    private static final double X = 0.00041;//0.0005/1.2;
+    private static final double YY = 0.00083;
+    private static final double Y = 0.00041; 
+    private static final double X = 0.00041;
 
     public GShip(Ship ship) {
 
