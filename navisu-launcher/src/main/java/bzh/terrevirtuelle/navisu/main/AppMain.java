@@ -45,8 +45,8 @@ import bzh.terrevirtuelle.navisu.database.app.impl.TestDBImpl;
 import bzh.terrevirtuelle.navisu.database.impl.DatabaseImpl;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
 import bzh.terrevirtuelle.navisu.gpx.impl.GpxObjectImpl;
-import bzh.terrevirtuelle.navisu.grib.GribServices;
-import bzh.terrevirtuelle.navisu.grib.impl.GribImpl;
+import bzh.terrevirtuelle.navisu.netcdf.grib.GribServices;
+import bzh.terrevirtuelle.navisu.netcdf.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.AisImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.logger.AisLoggerServices;
@@ -212,7 +212,7 @@ public class AppMain extends Application {
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
 
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
-        // optionsManagerServices.show();
+        //optionsManagerServices.show();
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
