@@ -6,6 +6,8 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.MarkerLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.markers.*;
+import gov.nasa.worldwind.util.WWUtil;
+import java.awt.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,7 @@ public class GribLayer extends MarkerLayer {
 
         List<Marker> markers = new ArrayList<>();
         Marker marker;
-        MarkerAttributes attr = new BasicMarkerAttributes(Material.WHITE, BasicMarkerShape.HEADING_LINE, 1d, 10, 10);
+        MarkerAttributes attr = new BasicMarkerAttributes(new Material(WWUtil.makeColorBrighter(Color.RED)), BasicMarkerShape.HEADING_LINE, 1d, 10, 10);
         for (double lat = this.model.getBottomRightLatitude(); lat < this.model.getTopLeftLatitude(); lat += this.model.getLatitudeGap()) {
             for (double lon = this.model.getTopLeftLongitude(); lon < this.model.getBottomRightLongitude(); lon += this.model.getLongitudeGap()) {
                 // LOGGUER.info("---------- lat = " + lat + ", lon = " + lon);
