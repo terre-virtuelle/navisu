@@ -81,9 +81,9 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     public void loadFile(String path) {
         this.gribController = new GribController(path);
 
-        LOGGER.info(this.gribController.getModel().toString());
+       // LOGGER.info(this.gribController.getModel().toString());
 
-        LOGGER.info("######################################## CREATE LAYER #############################################");
+      //  LOGGER.info("######################################## CREATE LAYER #############################################");
        // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
         this.layerLayerManager = (LayerManager<Layer>) ((GeoView)this.geoViewServices.getDisplayService()).getLayerManager();
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));

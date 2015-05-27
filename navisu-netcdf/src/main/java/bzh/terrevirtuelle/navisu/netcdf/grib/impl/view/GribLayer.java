@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 /**
- * User: jordan
- * Date: 24/11/2013
+ * User: jordan Date: 24/11/2013
  */
 public class GribLayer extends MarkerLayer {
 
@@ -31,13 +30,14 @@ public class GribLayer extends MarkerLayer {
     private void init() {
 
         List<Marker> markers = new ArrayList<>();
-        for(double lat = this.model.getBottomRightLatitude(); lat < this.model.getTopLeftLatitude(); lat += this.model.getLatitudeGap()) {
-            for(double lon = this.model.getTopLeftLongitude(); lon < this.model.getBottomRightLongitude(); lon += this.model.getLongitudeGap()) {
-                LOGGUER.info("---------- lat = " + lat + ", lon = " + lon);
+        Marker marker;
+        MarkerAttributes attr = new BasicMarkerAttributes(Material.WHITE, BasicMarkerShape.HEADING_LINE, 1d, 10, 10);
+        for (double lat = this.model.getBottomRightLatitude(); lat < this.model.getTopLeftLatitude(); lat += this.model.getLatitudeGap()) {
+            for (double lon = this.model.getTopLeftLongitude(); lon < this.model.getBottomRightLongitude(); lon += this.model.getLongitudeGap()) {
+                // LOGGUER.info("---------- lat = " + lat + ", lon = " + lon);
                 double[] vector = this.model.getVelocityVectorFromLatLon(lat, lon, 10);
-                LOGGUER.info("---------- x = " + vector[0] +" , y = " + vector[1]);
-                MarkerAttributes attr = new BasicMarkerAttributes(Material.YELLOW, BasicMarkerShape.HEADING_LINE, 1d, 10, 10);
-                Marker marker = new BasicMarker(Position.fromDegrees(lat, lon, 0), attr);
+                // LOGGUER.info("---------- x = " + vector[0] +" , y = " + vector[1]);
+                marker = new BasicMarker(Position.fromDegrees(lat, lon, 0), attr);
                 marker.setPosition(Position.fromDegrees(lat, lon, 0));
                 marker.setHeading(Angle.fromDegrees(Math.toDegrees(vector[1])));
                 markers.add(marker);

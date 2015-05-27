@@ -100,8 +100,8 @@ public class GribModel {
         int[] uIndex = this.uGrid.getCoordinateSystem().findXYindexFromLatLon(latitude, longitude, null);
         int[] vIndex = this.vGrid.getCoordinateSystem().findXYindexFromLatLon(latitude, longitude, null);
 
-        LOGGUER.info("#####" + uIndex[0] + "#####" + uIndex[1]);
-        LOGGUER.info("#####" + vIndex[0] + "#####" + vIndex[1]);
+      //  LOGGUER.info("#####" + uIndex[0] + "#####" + uIndex[1]);
+      //  LOGGUER.info("#####" + vIndex[0] + "#####" + vIndex[1]);
 
         double uValue = uGridArray.getDouble(uIndex[1] * longitudeDimension + uIndex[0]);
         double vValue = vGridArray.getDouble(vIndex[1] * longitudeDimension + vIndex[0]);
