@@ -336,8 +336,8 @@ public class AppMain extends Application {
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         
         // Test cibles AIS en direct
-        dataServerServices.openGpsd("sinagot.net", 2947);
-        //dataServerServices.openGpsd("fridu.net", 2947);
+      dataServerServices.openGpsd("sinagot.net", 2947);
+      //  dataServerServices.openGpsd("fridu.net", 2947);
         
        // testDBServices.connect("data/databases/TestJDBC", "navisu", "!!navisu??");
        // testDBServices.runJDBC();//OK
