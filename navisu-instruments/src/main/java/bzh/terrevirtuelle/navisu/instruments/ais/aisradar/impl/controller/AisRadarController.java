@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShipImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.TrackPanel;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.FileInputStream;
 
@@ -110,7 +111,8 @@ public class AisRadarController
     protected NumberFormat formatter = new DecimalFormat("#0");
     protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
     protected AisRadarImpl aisRadar;
-    protected TargetPanel aisPanelController;
+    protected TargetPanel aisTargetPanel;
+    protected TrackPanel aisTrackPanel;
 
     protected GuiAgentServices guiAgentServices;
     protected Map<Integer, String> midMap;
@@ -452,18 +454,25 @@ public class AisRadarController
 
     private void addPanelController() {
         Platform.runLater(() -> {
-            aisPanelController = new TargetPanel(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
-            aisPanelController.setTranslateX(100);
-            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisPanelController);
-            guiAgentServices.getRoot().getChildren().add(aisPanelController); //Par defaut le radar n'est pas visible Ctrl-A
-            aisPanelController.setScale(1.0);
-            aisPanelController.setVisible(false);
+            aisTargetPanel = new TargetPanel(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
+            aisTargetPanel.setTranslateX(100);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTargetPanel);
+            guiAgentServices.getRoot().getChildren().add(aisTargetPanel); //Par defaut le radar n'est pas visible Ctrl-A
+            aisTargetPanel.setScale(1.0);
+            aisTargetPanel.setVisible(false);
+            
+            aisTrackPanel = new TrackPanel(guiAgentServices, KeyCode.T, KeyCombination.CONTROL_DOWN);
+            aisTrackPanel.setTranslateX(150);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTrackPanel);
+            guiAgentServices.getRoot().getChildren().add(aisTrackPanel);
+            aisTrackPanel.setScale(1.0);
+            aisTrackPanel.setVisible(true);
         });
     }
 
     protected final void updateAisPanel(Ship ship) {
         Platform.runLater(() -> {
-            aisPanelController.updateAisPanel(ship, timestamps, midMap);
+            aisTargetPanel.updateAisPanel(ship, timestamps, midMap);
         });
     }
 
