@@ -426,7 +426,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			shipMatrix[4][i] = dateFormatDate.format(date);
     			shipMatrix[5][i] = dateFormatTime.format(date);
     			// Enlever les commentaires pour voir les messages AIS
-    			System.out.println(ANSI_CYAN + "Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date) + ANSI_RESET);
+    			//System.out.println(ANSI_CYAN + "Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date) + ANSI_RESET);
     			count++;
     		}
     	}
