@@ -164,8 +164,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected double savedAltitude = 0;
 	protected boolean firstDetection = false;
 	protected String[][] shipMatrix=new String[6][2000];
-	protected int count = 1;
-	protected int inSight = 0;
+	protected long count = 1;
+	protected long inSight = 0;
 	protected LinkedList<ArrayList<Position>> savedPolygons;
 	protected MeasureTool pmt;
 	protected MeasureToolController pmtc;
@@ -418,7 +418,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			shipMatrix[4][i] = dateFormatDate.format(date);
     			shipMatrix[5][i] = dateFormatTime.format(date);
     			// Enlever les commentaires pour voir les messages AIS
-    			//System.out.println("Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date));
+    			//System.out.println(ANSI_CYAN + "Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date) + ANSI_RESET);
     			count++;
     		}
     	}
