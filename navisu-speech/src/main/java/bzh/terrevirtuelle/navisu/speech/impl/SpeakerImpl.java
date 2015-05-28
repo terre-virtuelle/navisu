@@ -43,7 +43,7 @@ public class SpeakerImpl
     @Override
     public void componentStopped() {
     }
-
+/*
     public class Reader extends Thread {
 
         private final String str;
@@ -58,4 +58,5 @@ public class SpeakerImpl
             lecteur.playAll();
         }
     }
+    */
 }
