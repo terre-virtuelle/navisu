@@ -392,7 +392,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
 			}
 		
-		if (count%100==0) {
+		if (count%200==0) {
 			saveShips();
 			System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
 			}
@@ -407,6 +407,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     				resu.setName(target.getName());
     				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
     					System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
+    					MediaPlayer mediaPlayer;
+    					javafx.scene.media.Media media;
+    					String userDir = System.getProperty("user.dir");
+    					userDir = userDir.replace("\\", "/");
+    					String url = userDir + "/data/sounds/beep-07.wav";
+    					media = new Media("file:///" + url);
+    					mediaPlayer = new MediaPlayer(media);
+    					mediaPlayer.setAutoPlay(true);
     					}
     			}
     			else {resu.setName(aisShips.get(i).getName());}
@@ -418,7 +426,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			shipMatrix[4][i] = dateFormatDate.format(date);
     			shipMatrix[5][i] = dateFormatTime.format(date);
     			// Enlever les commentaires pour voir les messages AIS
-    			//System.out.println(ANSI_CYAN + "Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date) + ANSI_RESET);
+    			System.out.println(ANSI_CYAN + "Ship#" + (i+1) + " with MMSI " + target.getMMSI() + " updated - name " + resu.getName() + " - position lat " + target.getLatitude() + " and lon " + target.getLongitude() + " at " + dateFormatTime.format(date) + ANSI_RESET);
     			count++;
     		}
     	}
