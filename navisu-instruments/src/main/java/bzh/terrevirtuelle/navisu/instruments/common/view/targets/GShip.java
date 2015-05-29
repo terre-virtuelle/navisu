@@ -1,9 +1,9 @@
-package bzh.terrevirtuelle.navisu.instruments.ais.view.targets;
+package bzh.terrevirtuelle.navisu.instruments.common.view.targets;
 
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.impl.Shape3D_0;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.impl.Shape_1;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.impl.Shape_0;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.impl.Shape3D_0;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.impl.Shape_1;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.impl.Shape_0;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -110,10 +110,10 @@ public class GShip {
 
     protected final ShapeAttributes makeAttributes() {
         final ShapeAttributes pathAttrs = new BasicShapeAttributes();
-        pathAttrs.setOutlineMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
+        pathAttrs.setOutlineMaterial(ShipTypeColor.getMaterial(ship.getShipType()));
         pathAttrs.setOutlineOpacity(0.8);
         pathAttrs.setOutlineWidth(1);
-        pathAttrs.setInteriorMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
+        pathAttrs.setInteriorMaterial(ShipTypeColor.getMaterial(ship.getShipType()));
         pathAttrs.setDrawInterior(true);
         pathAttrs.setInteriorOpacity(1.0);
         return pathAttrs;

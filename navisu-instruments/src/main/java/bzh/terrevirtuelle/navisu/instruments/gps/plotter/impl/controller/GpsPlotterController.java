@@ -16,7 +16,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
-import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;

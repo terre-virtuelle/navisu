@@ -95,7 +95,9 @@ public class GShip {
                 Angle.fromDegrees(ship.getLongitude()), 15));
         shape.setRotation(ship.getCog());
         ShapeAttributes pathAttrs = shape.getAttributes();
+        System.out.println("2 "+ShipTypeColor.MATERIAL.get(ship.getShipType())+" "+ship.getShipType());
         pathAttrs.setOutlineMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
+        
         pathAttrs.setInteriorMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
       //  System.out.println(ShipTypeColor.MATERIAL.get(ship.getShipType()));
      //   pathAttrs.setInteriorMaterial(Material.BLUE);
@@ -105,6 +107,7 @@ public class GShip {
 
     protected final ShapeAttributes makeAttributes() {
         final ShapeAttributes pathAttrs = new BasicShapeAttributes();
+        System.out.println("3 "+ShipTypeColor.MATERIAL.get(ship.getShipType())+" "+ship.getShipType());
         pathAttrs.setOutlineMaterial(ShipTypeColor.MATERIAL.get(ship.getShipType()));
         pathAttrs.setOutlineOpacity(0.8);
         pathAttrs.setOutlineWidth(1);

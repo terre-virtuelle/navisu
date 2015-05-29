@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.ais.view.targets.impl;
+package bzh.terrevirtuelle.navisu.instruments.common.view.targets.impl;
 
 import bzh.terrevirtuelle.navisu.geodesy.Location;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.StationShape;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.StationShape;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.PointPlacemark;

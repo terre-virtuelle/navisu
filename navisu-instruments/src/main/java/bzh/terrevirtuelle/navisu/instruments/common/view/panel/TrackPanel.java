@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.common.view;
+package bzh.terrevirtuelle.navisu.instruments.common.view.panel;
 
-import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Map;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -41,7 +38,7 @@ public class TrackPanel
     @FXML
     public Group trackPanel;
     @FXML
-    TextArea newNames;
+    TextArea names;
     @FXML
     public Text timeStamp;
     @FXML
@@ -52,15 +49,12 @@ public class TrackPanel
     public ImageView quit;
     @FXML
     public Slider slider;
-    //  @FXML
-    // public Button photo;
+
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
-    protected GuiAgentServices guiAgentServices;
 
-    public TrackPanel(GuiAgentServices guiAgentServices, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public TrackPanel(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
-        this.guiAgentServices = guiAgentServices;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("aisTracks.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -86,13 +80,10 @@ public class TrackPanel
 
     }
 
-    public void updateAisPanel(Ship ship) {
-        updateAisPanel(ship, null);
-    }
-
-    public void updateAisPanel(Ship ship,
-            Map<Integer, Calendar> timestamps) {
-        setVisible(true);
-        
+    public void updateAisPanel(LocalTime time, int ships, int count, String name) {
+        timeStamp.setText(time.toString());
+        shipsInSight.setText(Integer.toString(ships));
+        countOfAisShipsReceived.setText(Integer.toString(count));
+        names.appendText(name+"\n");
     }
 }

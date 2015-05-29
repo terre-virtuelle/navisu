@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.ais.view.targets.impl;
+package bzh.terrevirtuelle.navisu.instruments.common.view.targets.impl;
 
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.Shape;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.Shape;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;

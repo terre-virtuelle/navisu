@@ -7,13 +7,13 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.ShipTypeColor;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.ShipTypeColor;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShipImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
-import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
-import bzh.terrevirtuelle.navisu.instruments.common.view.TrackPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.FileInputStream;
 
@@ -22,6 +22,7 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -353,7 +354,7 @@ public class AisRadarController
                     Tooltip.install(circle, t);
                     return circle;
                 }).forEach((circle) -> {
-                    circle.setFill(ShipTypeColor.COLOR.get(ship.getShipType()));
+                    circle.setFill(ShipTypeColor.getColor(ship.getShipType()));
                 });
             });
         } else {
@@ -461,13 +462,16 @@ public class AisRadarController
             aisTargetPanel.setScale(1.0);
             aisTargetPanel.setVisible(false);
             
-            aisTrackPanel = new TrackPanel(guiAgentServices, KeyCode.T, KeyCombination.CONTROL_DOWN);
+            aisTrackPanel = new TrackPanel(KeyCode.T, KeyCombination.CONTROL_DOWN);
             aisTrackPanel.setTranslateX(150);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTrackPanel);
             guiAgentServices.getRoot().getChildren().add(aisTrackPanel);
             aisTrackPanel.setScale(1.0);
             aisTrackPanel.setVisible(true);
+            
+            aisTrackPanel.updateAisPanel(LocalTime.now(), 10, 120, "LITHOPS");    
         });
+        
     }
 
     protected final void updateAisPanel(Ship ship) {

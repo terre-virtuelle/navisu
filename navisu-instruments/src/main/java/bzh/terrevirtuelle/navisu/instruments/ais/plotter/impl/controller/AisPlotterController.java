@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller;
 
-import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -13,9 +13,9 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.GShip;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.GStation;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.Shape;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GStation;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.Shape;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.layers.RenderableLayer;
