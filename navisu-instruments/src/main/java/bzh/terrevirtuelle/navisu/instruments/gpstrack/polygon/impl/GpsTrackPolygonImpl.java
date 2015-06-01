@@ -159,6 +159,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected static final String ANSI_PURPLE = "\u001B[35m";
 	protected static final String ANSI_CYAN = "\u001B[36m";
 	protected static final String ANSI_WHITE = "\u001B[37m";
+	protected TrackPanel aisTrackPanel;
 
 	@Override
 	public void componentInitiated() {
@@ -248,10 +249,11 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 	@Override
 	public void on(String ... files) {
-
+		
 		if (on == false) {
 			on = true;
 			readShips();
+			addPanelController();
 			 
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -359,11 +361,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		if (count%49==0) {
 			System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
+			aisTrackPanel.updateAisPanelShips(LocalTime.now(), (int)inSight);
 			}
 		
 		if (count%200==0) {
 			saveShips();
 			System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
+			aisTrackPanel.updateAisPanelCount(LocalTime.now(), (int)inSight, aisShips.size());
 			}
     	
     	for (int i=0; i<aisShips.size(); i++) {
@@ -376,6 +380,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     				resu.setName(target.getName());
     				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
     					System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
+    					aisTrackPanel.updateAisPanelName(LocalTime.now(), (int)inSight, aisShips.size(), target.getName());
     					MediaPlayer mediaPlayer;
     					javafx.scene.media.Media media;
     					String userDir = System.getProperty("user.dir");
@@ -1096,5 +1101,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		System.err.println("Reading file done (" + aisShips.size() + " ships in database)" );
 		//for (Ship s : aisShips) {System.out.println(s.toString());}
 	}
+	
+	private void addPanelController() {
+        Platform.runLater(() -> {
+            aisTrackPanel = new TrackPanel(KeyCode.T, KeyCombination.CONTROL_DOWN);
+            aisTrackPanel.setTranslateX(150);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTrackPanel);
+            guiAgentServices.getRoot().getChildren().add(aisTrackPanel);
+            aisTrackPanel.setScale(1.0);
+            aisTrackPanel.setVisible(true);
+            
+            aisTrackPanel.updateAisPanelCount(LocalTime.now(), 0, aisShips.size());    
+        });
+        
+    }
 	
 }

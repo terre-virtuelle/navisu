@@ -80,7 +80,18 @@ public class TrackPanel
 
     }
 
-    public void updateAisPanel(LocalTime time, int ships, int count, String name) {
+    public void updateAisPanelShips(LocalTime time, int ships) {
+        timeStamp.setText(time.toString());
+        shipsInSight.setText(Integer.toString(ships));
+    }
+    
+    public void updateAisPanelCount(LocalTime time, int ships, int count) {
+        timeStamp.setText(time.toString());
+        shipsInSight.setText(Integer.toString(ships));
+        countOfAisShipsReceived.setText(Integer.toString(count));
+    }
+    
+    public void updateAisPanelName(LocalTime time, int ships, int count, String name) {
         timeStamp.setText(time.toString());
         shipsInSight.setText(Integer.toString(ships));
         countOfAisShipsReceived.setText(Integer.toString(count));

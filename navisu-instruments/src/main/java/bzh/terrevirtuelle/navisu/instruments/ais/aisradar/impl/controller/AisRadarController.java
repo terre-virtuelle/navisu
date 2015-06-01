@@ -460,16 +460,7 @@ public class AisRadarController
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTargetPanel);
             guiAgentServices.getRoot().getChildren().add(aisTargetPanel); //Par defaut le radar n'est pas visible Ctrl-A
             aisTargetPanel.setScale(1.0);
-            aisTargetPanel.setVisible(false);
-            
-            aisTrackPanel = new TrackPanel(KeyCode.T, KeyCombination.CONTROL_DOWN);
-            aisTrackPanel.setTranslateX(150);
-            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTrackPanel);
-            guiAgentServices.getRoot().getChildren().add(aisTrackPanel);
-            aisTrackPanel.setScale(1.0);
-            aisTrackPanel.setVisible(true);
-            
-            aisTrackPanel.updateAisPanel(LocalTime.now(), 10, 120, "LITHOPS");    
+            aisTargetPanel.setVisible(false); 
         });
         
     }
