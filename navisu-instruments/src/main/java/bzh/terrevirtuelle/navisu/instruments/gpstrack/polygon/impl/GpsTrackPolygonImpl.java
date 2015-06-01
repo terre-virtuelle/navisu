@@ -25,13 +25,17 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+import javafx.application.Platform;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
@@ -51,7 +55,9 @@ import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.view.targets.GShip;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
 
@@ -695,6 +701,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	private void createPathTarget(Ship target) {
 		gShip = new GShip(target);
+		gShip.update(0);
+		target.setShipType(80);
 		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
 			Renderable[] renderables = gShip.getRenderables();
 			for (Renderable r : renderables) {
@@ -709,7 +717,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 
 	private void updatePathTarget(Ship target) {
-		gShip.update(target);
+		gShip.update();
 		wwd.redrawNow();
 	}
 	
