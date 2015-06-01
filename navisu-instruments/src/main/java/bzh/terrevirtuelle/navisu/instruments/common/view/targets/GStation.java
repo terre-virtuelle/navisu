@@ -1,9 +1,9 @@
-package bzh.terrevirtuelle.navisu.instruments.ais.view.targets;
+package bzh.terrevirtuelle.navisu.instruments.common.view.targets;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
-import bzh.terrevirtuelle.navisu.instruments.ais.view.targets.impl.Shape_4;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.impl.Shape_4;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;

@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl;
 
-import bzh.terrevirtuelle.navisu.instruments.common.view.TargetPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;

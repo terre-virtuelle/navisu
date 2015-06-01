@@ -5,61 +5,32 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
 
-import gov.nasa.worldwind.AbstractSceneController;
-import gov.nasa.worldwind.SceneController;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.layers.TerrainProfileLayer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfaceShape;
 import gov.nasa.worldwind.render.SurfaceText;
-import gov.nasa.worldwind.render.airspaces.Polygon;
 import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
-import gov.nasa.worldwindx.examples.ApplicationTemplate;
-import gov.nasa.worldwindx.examples.MeasureToolPanel;
-import gov.nasa.worldwindx.examples.util.SectorSelector;
 import gov.nasa.worldwind.util.WWMath;
 
-import java.awt.BorderLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -73,21 +44,14 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayers;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSector;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.view.targets.GShip;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotter;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
 
@@ -96,7 +60,6 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
-import com.vividsolutions.jts.operation.valid.IsValidOp;
 
 /**
  * @date 3 mars 2015

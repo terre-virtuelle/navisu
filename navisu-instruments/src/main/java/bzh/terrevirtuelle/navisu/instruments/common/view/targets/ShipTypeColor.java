@@ -1,5 +1,4 @@
-package bzh.terrevirtuelle.navisu.instruments.ais.view.targets;
-
+package bzh.terrevirtuelle.navisu.instruments.common.view.targets;
 
 import gov.nasa.worldwind.render.Material;
 import java.awt.Color;
@@ -10,7 +9,7 @@ import java.util.Set;
 
 public class ShipTypeColor {
 
-    public static final Map<Integer, Material> MATERIAL = Collections.unmodifiableMap(new HashMap<Integer, Material>() {
+    private static final Map<Integer, Material> MATERIAL = Collections.unmodifiableMap(new HashMap<Integer, Material>() {
         {
             put(0, Material.YELLOW);
             put(20, Material.ORANGE);
@@ -29,8 +28,7 @@ public class ShipTypeColor {
             put(33, Material.WHITE);
             put(34, Material.WHITE);
             put(35, Material.GRAY);
-          //  put(36, new Material(new Color(0xFF00FF)));
-           put(36, Material.BLUE);
+            put(36, Material.BLUE);
             put(37, new Material(new Color(0xFF00FF)));
             put(38, Material.WHITE);
             put(39, Material.WHITE);
@@ -96,7 +94,7 @@ public class ShipTypeColor {
             put(99, Material.WHITE);
         }
     });
-    public static final Map<Integer, javafx.scene.paint.Color> COLOR = Collections.unmodifiableMap(new HashMap<Integer, javafx.scene.paint.Color>() {
+    private static final Map<Integer, javafx.scene.paint.Color> COLOR = Collections.unmodifiableMap(new HashMap<Integer, javafx.scene.paint.Color>() {
         {
             put(0, javafx.scene.paint.Color.YELLOW);
             put(20, javafx.scene.paint.Color.ORANGE);
@@ -194,4 +192,23 @@ public class ShipTypeColor {
         return buffer.toString();
     }
 
+    public static Material getMaterial(int type) {
+        if (type > 0 && type < 20) {
+            return Material.WHITE;
+        }
+        if (type > 99) {
+            return Material.WHITE;
+        }
+        return MATERIAL.get(type);
+    }
+
+    public static javafx.scene.paint.Color getColor(int type) {
+        if (type > 0 && type < 20) {
+            return javafx.scene.paint.Color.WHITE;
+        }
+        if (type > 99) {
+            return javafx.scene.paint.Color.WHITE;
+        }
+        return COLOR.get(type);
+    }
 }

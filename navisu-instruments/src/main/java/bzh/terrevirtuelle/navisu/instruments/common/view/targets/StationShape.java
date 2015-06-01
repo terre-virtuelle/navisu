@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.ais.view.targets;
+package bzh.terrevirtuelle.navisu.instruments.common.view.targets;
 
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;

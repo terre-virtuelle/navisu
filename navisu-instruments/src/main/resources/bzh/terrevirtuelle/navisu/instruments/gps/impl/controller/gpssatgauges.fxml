@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="textListPanel" stylesheets="@InstrumentTemplate.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Group>
+            <children>
+                <Pane prefHeight="50.0" prefWidth="450.0" styleClass="top-pane">
+                    <children>
+                        <Text fx:id="title" layoutX="30.0" layoutY="31.0" styleClass="instrumentvalue" text="GPS Satellites gauges" textAlignment="CENTER" wrappingWidth="300.0">
+                        </Text>
+                    </children>
+                </Pane>
+                <Pane layoutX="0" layoutY="50" prefHeight="250.0" prefWidth="50.0" styleClass="left-pane" />   
+                <Pane layoutY="300" prefHeight="40.0" prefWidth="450.0" styleClass="foot-pane" />
+                <Pane layoutX="50.0" layoutY="50.0" prefHeight="250.0" prefWidth="370.0" styleClass="center-pane">
+               <children>
+                  <Group layoutX="20.0" layoutY="-24.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="60.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                        </Rectangle>
+                        <Group fx:id="satpos" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="1" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="70.0" layoutY="-24.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos1" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId1" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="2" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="120.0" layoutY="-24.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="20.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="40.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos11" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId11" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="3" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="170.0" layoutY="-24.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos111" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId111" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="4" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="220.0" layoutY="-24.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos1111" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId1111" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="5" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="-24.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos11111" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId11111" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="6" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="120.0" layoutY="87.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos112" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId112" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="9" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="70.0" layoutY="87.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos12" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId12" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="8" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="220.0" layoutY="87.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos11112" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId11112" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="11" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="270.0" layoutY="87.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="30.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="30.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos111111" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId111111" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="12" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="170.0" layoutY="87.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos1112" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId1112" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="10" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+                  <Group layoutX="20.0" layoutY="87.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d72f" height="45.0" layoutX="25.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="30.0" y="15.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="10.0" height="65.0" layoutX="23.0" layoutY="48.0" strokeType="INSIDE" styleClass="gps-line" width="35.0">
+                           <fill>
+                              <RadialGradient centerX="0.6222222222222222" centerY="0.2333333333333333" focusAngle="-69.78" focusDistance="-0.37209302325581395" radius="0.9651162790697674">
+                                 <stops>
+                                    <Stop color="TRANSPARENT" />
+                                    <Stop color="#000000b0" offset="1.0" />
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop color="WHITE" />
+                                    <Stop color="WHITE" offset="0.007662835249042145" />
+                                    <Stop color="#000000c6" offset="1.0" />
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Rectangle>
+                        <Group fx:id="satpos2" layoutX="40.0" layoutY="137.0">
+                           <children>
+                              <Circle fill="DODGERBLUE" radius="12.0" stroke="BLACK" strokeType="INSIDE" styleClass="gps-sat" />
+                              <Text fx:id="SatId2" layoutX="-10.0" layoutY="5.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="gpsvalue" text="7" textAlignment="CENTER" wrappingWidth="20.0" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Group>
+               </children></Pane>
+                <Group layoutX="10.0" />
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                    <image>
+                        <Image url="@logoTV64AIS.png" />
+                    </image>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </ImageView>
+                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="397.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                    <image>
+                        <Image url="@quit.png" />
+                    </image>
+                </ImageView>
+                <Pane layoutX="400.0" layoutY="50" prefHeight="250.0" prefWidth="50.0" styleClass="right-pane">
+                    <children>
+                        <Slider fx:id="slider" layoutX="25.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                        </Slider>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="22.0" layoutY="125.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@journuit.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+            </children>
+        </Group>
+    </children>
+</fx:root>
