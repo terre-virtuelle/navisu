@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.common.view.panel;
 
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+
 import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -13,6 +14,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -25,6 +27,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 
 /**
@@ -51,6 +55,11 @@ public class TrackPanel
     public Slider slider;
     @FXML
     TextArea mmsis;
+    
+    private int nbNames = 0;
+    private int nbMmsis = 0;
+    private Paint color;
+    private boolean debut = true;
 
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
@@ -84,24 +93,54 @@ public class TrackPanel
 
     public void updateAisPanelShips(String time, int ships) {
         timeStamp.setText(time);
+        timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
     }
     
     public void updateAisPanelCount(String time, int ships, int count) {
         timeStamp.setText(time);
+        if (debut) {
+        	color = timeStamp.getFill();
+        	debut = false;
+        } 
+        else {
+        	timeStamp.setFill(Color.RED);
+        }
         shipsInSight.setText(Integer.toString(ships));
         countOfAisShipsReceived.setText(Integer.toString(count));
     }
     
     public void updateAisPanelName(String time, int ships, String name) {
         timeStamp.setText(time);
+        timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
-        names.appendText(name+"\n");
+        if (nbNames==3) {
+        	String[] tabNames = names.getText().split("\n");
+        	String resu = "";
+        	for (int i=1;i<tabNames.length;i++) {
+        		resu = resu + tabNames[i] + "\n";
+        	}
+        	names.setText(resu);
+        	nbNames--;
+        }
+        names.appendText(name + "\n");
+        nbNames++;
     }
     
     public void updateAisPanelMmsi(String time, int ships, int mmsi) {
         timeStamp.setText(time);
+        timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
-        mmsis.appendText(mmsi+"\n");
+        if (nbMmsis==3) {
+        	String[] tabMmsis = mmsis.getText().split("\n");
+        	String resu = "";
+        	for (int i=1;i<tabMmsis.length;i++) {
+        		resu = resu + tabMmsis[i] + "\n";
+        	}
+        	mmsis.setText(resu);
+        	nbMmsis--;
+        }
+        mmsis.appendText(mmsi + "\n");
+        nbMmsis++;
     }
 }
