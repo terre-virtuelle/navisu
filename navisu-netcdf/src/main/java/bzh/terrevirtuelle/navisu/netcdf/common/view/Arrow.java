@@ -52,7 +52,6 @@ public class Arrow
     public Arrow(double lat, double lon, double v) {
 
         int velocity = getSymbol(v);
-        System.out.println("v " + velocity);
         switch (velocity) {
             case 0:
             case 1:
