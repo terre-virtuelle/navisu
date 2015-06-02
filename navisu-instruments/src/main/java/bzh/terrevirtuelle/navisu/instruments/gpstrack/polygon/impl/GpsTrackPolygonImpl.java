@@ -133,7 +133,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected boolean firstDetection = false;
 	protected String[][] shipMatrix=new String[6][5000];
 	protected long count = 1;
-	protected long inSight = 0;
+	protected int inSight = 0;
 	protected LinkedList<ArrayList<Position>> savedPolygons;
 	protected MeasureTool pmt;
 	protected MeasureToolController pmtc;
@@ -346,8 +346,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		shipMatrix[4][aisShips.size()-1] = dateFormatDate.format(date);
 		shipMatrix[5][aisShips.size()-1] = dateFormatTime.format(date);
 		// Enlever les commentaires pour voir les messages AIS
-		System.err.println("Ship#" + aisShips.size() + " with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude() + " at " + dateFormatTime.format(date));
-		aisTrackPanel.updateAisPanelMmsi(dateFormatTime.format(date), (int)inSight, aisShip.getMMSI());
+		//System.err.println("Ship#" + aisShips.size() + " with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude() + " at " + dateFormatTime.format(date));
+		aisTrackPanel.updateAisPanelMmsi(dateFormatTime.format(date), inSight, aisShip.getMMSI());
 		count++;
 		}
 	}
@@ -357,14 +357,18 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		Date date = new Date();
 		
 		if (count%49==0) {
-			System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
-			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), (int)inSight);
+			//System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
+			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
 			}
 		
 		if (count%200==0) {
 			saveShips();
-			System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
-			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), (int)inSight, aisShips.size());
+			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
+			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
+			}
+		
+		if (count%1001==0) {
+			System.gc();
 			}
     	
     	for (int i=0; i<aisShips.size(); i++) {
@@ -376,8 +380,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {
     				resu.setName(target.getName());
     				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
-    					System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
-    					aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), (int)inSight, target.getName());
+    					//System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
+    					aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), inSight, target.getName());
     					MediaPlayer mediaPlayer;
     					javafx.scene.media.Media media;
     					String userDir = System.getProperty("user.dir");
@@ -1095,7 +1099,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.err.println("Reading file done (" + aisShips.size() + " ships in database)" );
+		//System.err.println("Reading file done (" + aisShips.size() + " ships in database)" );
 		//for (Ship s : aisShips) {System.out.println(s.toString());}
 	}
 	
