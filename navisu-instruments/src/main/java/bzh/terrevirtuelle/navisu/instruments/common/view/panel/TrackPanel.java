@@ -49,6 +49,8 @@ public class TrackPanel
     public ImageView quit;
     @FXML
     public Slider slider;
+    @FXML
+    TextArea mmsis;
 
     NumberFormat nf = new DecimalFormat("0.###");
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
@@ -80,21 +82,26 @@ public class TrackPanel
 
     }
 
-    public void updateAisPanelShips(LocalTime time, int ships) {
-        timeStamp.setText(time.toString());
+    public void updateAisPanelShips(String time, int ships) {
+        timeStamp.setText(time);
         shipsInSight.setText(Integer.toString(ships));
     }
     
-    public void updateAisPanelCount(LocalTime time, int ships, int count) {
-        timeStamp.setText(time.toString());
+    public void updateAisPanelCount(String time, int ships, int count) {
+        timeStamp.setText(time);
         shipsInSight.setText(Integer.toString(ships));
         countOfAisShipsReceived.setText(Integer.toString(count));
     }
     
-    public void updateAisPanelName(LocalTime time, int ships, int count, String name) {
-        timeStamp.setText(time.toString());
+    public void updateAisPanelName(String time, int ships, String name) {
+        timeStamp.setText(time);
         shipsInSight.setText(Integer.toString(ships));
-        countOfAisShipsReceived.setText(Integer.toString(count));
         names.appendText(name+"\n");
+    }
+    
+    public void updateAisPanelMmsi(String time, int ships, int mmsi) {
+        timeStamp.setText(time);
+        shipsInSight.setText(Integer.toString(ships));
+        mmsis.appendText(mmsi+"\n");
     }
 }

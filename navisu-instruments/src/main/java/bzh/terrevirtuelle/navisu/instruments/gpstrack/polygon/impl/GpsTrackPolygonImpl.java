@@ -55,7 +55,6 @@ import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
@@ -160,6 +159,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected static final String ANSI_CYAN = "\u001B[36m";
 	protected static final String ANSI_WHITE = "\u001B[37m";
 	protected TrackPanel aisTrackPanel;
+	protected DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
+	protected DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
 
 	@Override
 	public void componentInitiated() {
@@ -330,10 +331,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     		}
 		
 		if (shipExists) {updateTarget(target);} else {
-		
-		
-		DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
-		DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
+
 		Date date = new Date();
 		Ship aisShip = new Ship();
 		aisShip.setMMSI(target.getMMSI());
@@ -349,25 +347,24 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		shipMatrix[5][aisShips.size()-1] = dateFormatTime.format(date);
 		// Enlever les commentaires pour voir les messages AIS
 		System.err.println("Ship#" + aisShips.size() + " with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude() + " at " + dateFormatTime.format(date));
+		aisTrackPanel.updateAisPanelMmsi(dateFormatTime.format(date), (int)inSight, aisShip.getMMSI());
 		count++;
 		}
 	}
 
     private void updateTarget(Ship target) {
     	
-		DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
-		DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		
 		if (count%49==0) {
 			System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
-			aisTrackPanel.updateAisPanelShips(LocalTime.now(), (int)inSight);
+			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), (int)inSight);
 			}
 		
 		if (count%200==0) {
 			saveShips();
 			System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
-			aisTrackPanel.updateAisPanelCount(LocalTime.now(), (int)inSight, aisShips.size());
+			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), (int)inSight, aisShips.size());
 			}
     	
     	for (int i=0; i<aisShips.size(); i++) {
@@ -380,7 +377,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     				resu.setName(target.getName());
     				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
     					System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
-    					aisTrackPanel.updateAisPanelName(LocalTime.now(), (int)inSight, aisShips.size(), target.getName());
+    					aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), (int)inSight, target.getName());
     					MediaPlayer mediaPlayer;
     					javafx.scene.media.Media media;
     					String userDir = System.getProperty("user.dir");
@@ -1104,14 +1101,15 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	private void addPanelController() {
         Platform.runLater(() -> {
-            aisTrackPanel = new TrackPanel(KeyCode.T, KeyCombination.CONTROL_DOWN);
+        	Date date = new Date();
+        	aisTrackPanel = new TrackPanel(KeyCode.T, KeyCombination.CONTROL_DOWN);
             aisTrackPanel.setTranslateX(150);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTrackPanel);
             guiAgentServices.getRoot().getChildren().add(aisTrackPanel);
             aisTrackPanel.setScale(1.0);
             aisTrackPanel.setVisible(true);
             
-            aisTrackPanel.updateAisPanelCount(LocalTime.now(), 0, aisShips.size());    
+            aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size());    
         });
         
     }
