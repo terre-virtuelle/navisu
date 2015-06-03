@@ -22,7 +22,6 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -140,7 +139,7 @@ public class AisRadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        aisinfopanel.setVisible(false);
+        aisinfopanel.setVisible(true);
         aisbuttonpanel.setVisible(true);
         radar.setOpacity(0.6);
         quit.setOnMouseClicked((MouseEvent event) -> {
