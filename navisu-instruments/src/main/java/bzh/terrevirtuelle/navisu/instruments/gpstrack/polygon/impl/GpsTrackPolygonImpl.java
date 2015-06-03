@@ -59,6 +59,7 @@ import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
+import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
@@ -87,7 +88,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
     @UsedService
     AisServices aisServices;
-
+    
 	ComponentManager cm;
 	ComponentEventSubscribe<GGAEvent> ggaES;
 	ComponentEventSubscribe<RMCEvent> rmcES;
@@ -367,7 +368,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
 			}
 		
-		if (count%1001==0) {
+		if (count%5001==0) {
 			System.gc();
 			}
     	
@@ -590,7 +591,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			if (Math.abs(longmin)>Math.abs(pos.getLongitude().getDegrees())) {longmin = pos.getLongitude().getDegrees();}
 			if (altmax<pos.getAltitude()) {altmax = pos.getAltitude();}
 		}
-		System.out.println(latmin +" "+ latmax+ " " + latmoy);
+		//System.out.println(latmin +" "+ latmax+ " " + latmoy);
 		latmoy = (latmin+latmax)/2;
 		longmoy = (longmin+longmax)/2;
 		if (altmax<=0) {altmax=0;}
@@ -668,13 +669,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			if (!drawerActivated) {
 				measureTool.setArmed(true);
 				controller.setArmed(true);
-				System.out.println("Drawer ready.\n");
+				aisTrackPanel.updateAisPanelStatus("Drawer ready");
 				drawerActivated = true;
 				}
 			else {
 				measureTool.setArmed(false);
 				controller.setArmed(false);
-				System.out.println("Drawer deactivated.\n");
+				aisTrackPanel.updateAisPanelStatus("Drawer deactivated");
 				drawerActivated = false;
 				}
 	}
@@ -683,6 +684,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void createPath() {
 		pmt.setArmed(true);
 		pmtc.setArmed(true);
+		aisTrackPanel.updateAisPanelStatus("Custom path ready to be drawn");
 	}
 	
 	@Override
@@ -703,6 +705,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
 		createPathTarget(pShip);
 		pathActivated = true;
+		aisTrackPanel.updateAisPanelStatus("Custom path activated");
 	}
 	
 	private void createPathTarget(Ship target) {
@@ -730,7 +733,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	@Override
 	public void savePolygon() {
 		centers.add(barycenter(measureTool.getPositions()));
-		System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
+		//System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
 		
 		ArrayList<Position> list = new ArrayList<Position>();
 		list = (ArrayList<Position>) measureTool.getPositions();
@@ -739,7 +742,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		measureTool.setArmed(false);
 		controller.setArmed(false);
 		drawerActivated = false;
-		System.out.println("Drawer deactivated.\n");
+		aisTrackPanel.updateAisPanelStatus("Drawer deactivated");
 		savedMeasureTool.add(measureTool);	
 		nbPolygon++;
 		controller = new MeasureToolController();
@@ -753,7 +756,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		polygonLayer.setName("Polygon#" + nbPolygon);
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
 		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
-		System.out.println("New polygon (polygon#" + nbPolygon +") ready to be drawn.\n");
+		aisTrackPanel.updateAisPanelStatus("New polygon (polygon#" + nbPolygon +") ready to be drawn");
 	}
 	
 	@Override
@@ -779,7 +782,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				} finally {
 				//close file
 				   try {writer.close();} catch (Exception ex) {}
-				   System.err.println(savedPolygons.size()+" polygons saved successfully.");
+				   aisTrackPanel.updateAisPanelStatus(savedPolygons.size()+" polygons saved successfully");
 				}
 
 	}
@@ -820,13 +823,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
 				savedMeasureTool.add(mt);
 				centers.add(barycenter(mt.getPositions()));
-				System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");
+				//System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");
 				ArrayList<Position> list1 = new ArrayList<Position>();
 				list1 = (ArrayList<Position>) mt.getPositions();
 				savedPolygons.add(list1);
 				mt.setArmed(false);
 				mtc.setArmed(false);
-				System.out.println("New polygon (polygon#" + nbPolygon +") loaded.\n");
+				aisTrackPanel.updateAisPanelStatus("New polygon (polygon#" + nbPolygon +") loaded");
 				i++;
 			}
 	 
@@ -843,7 +846,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.err.println(i + " polygons loaded successfully.");	
+		aisTrackPanel.updateAisPanelStatus(i + " polygons loaded successfully");	
 	}
 	
 	@Override
@@ -866,20 +869,20 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				} finally {
 				//close file
 				   try {writer.close();} catch (Exception ex) {}
-				   System.err.println("Custom path saved successfully.");
+				   aisTrackPanel.updateAisPanelStatus("Custom path saved successfully");
 				}
 				
 		} 
 		
 		else {
-			System.err.println("Please activate path before saving it.");
+			aisTrackPanel.updateAisPanelStatus("Please activate path before saving it");
 		}
 
 	}
 	
 	@Override
 	public void loadPath() {
-		// chargement de la trajectoire path sauveagrdée
+		// chargement de la trajectoire path sauvegardée
 		String csvFile = "data/saved/savedPath.csv";
 		BufferedReader br = null;
 		String line = "";
@@ -917,32 +920,32 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.err.println("Path loaded successfully.\n");	
+		aisTrackPanel.updateAisPanelStatus("Path loaded successfully");	
 	}
 	
 	
 	@Override
 	public void polyShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-		System.out.println("Polygon shape activated.\n");
+		aisTrackPanel.updateAisPanelStatus("Polygon shape activated");
 	}
 	
 	@Override
 	public void ellipseShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);
-		System.out.println("Ellipse shape activated.\n");
+		aisTrackPanel.updateAisPanelStatus("Ellipse shape activated");
 	}
 	
 	@Override
 	public void circleShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
-		System.out.println("Circle shape activated.\n");
+		aisTrackPanel.updateAisPanelStatus("Circle shape activated");
 	}
 	
 	@Override
 	public void quadShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_QUAD);
-		System.out.println("Quad shape activated.\n");
+		aisTrackPanel.updateAisPanelStatus("Quad shape activated");
 	}
 	
 	@Override
@@ -955,18 +958,18 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			controller.setFreeHandMinSpacing(spacing);
 			measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
 			freeHandActivated = true;
-			System.out.println("Free hand mode activated.\n");
+			aisTrackPanel.updateAisPanelStatus("Free hand mode activated");
 			if (altitude != savedAltitude) {
 				savedAltitude = altitude;
-				System.out.println("Eye altitude : " + altitude);
-				System.out.println("Points spacing : " + spacing + "\n");
+				aisTrackPanel.updateAisPanelStatus("Eye altitude : " + altitude);
+				aisTrackPanel.updateAisPanelStatus("Points spacing : " + spacing);
 			}
 		}
 		
 		else {
 			controller.setFreeHand(false);
 			freeHandActivated = false;
-			System.out.println("Free hand mode deactivated.\n");
+			aisTrackPanel.updateAisPanelStatus("Free hand mode deactivated");
 		}	
 	}
 	
@@ -974,7 +977,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void createCpaZone() {
 		dmp.setArmed(true);
 		dmpController.setArmed(true);
-		System.out.println("CPA zone ready to be drawn.\n");
+		aisTrackPanel.updateAisPanelStatus("CPA zone ready to be drawn");
 	}
 	
 	@Override
@@ -990,7 +993,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			dmpLayer.setName("CPA zone " + yards + " yards");
 			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
 			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			System.out.println("CPA zone " + yards + " yards activated.\n");
+			aisTrackPanel.updateAisPanelStatus("CPA zone " + yards + " yards activated");
 		}
 	}
 	
@@ -1012,7 +1015,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
 			dmp.setArmed(false);
 			dmpController.setArmed(false);
-			System.out.println("CPA zone activated.\n");
+			aisTrackPanel.updateAisPanelStatus("CPA zone activated");
 		}
 	}
 	
@@ -1099,7 +1102,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		//System.err.println("Reading file done (" + aisShips.size() + " ships in database)" );
 		//for (Ship s : aisShips) {System.out.println(s.toString());}
 	}
 	
@@ -1113,7 +1115,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             aisTrackPanel.setScale(1.0);
             aisTrackPanel.setVisible(true);
             
-            aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size());    
+            aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size());
+            aisTrackPanel.updateAisPanelStatus("Reading file done (" + aisShips.size() + " ships in database)");
         });
         
     }

@@ -55,6 +55,8 @@ public class TrackPanel
     public Slider slider;
     @FXML
     TextArea mmsis;
+    @FXML
+    TextArea status;
     
     private int nbNames = 0;
     private int nbMmsis = 0;
@@ -143,4 +145,10 @@ public class TrackPanel
         mmsis.appendText(mmsi + "\n");
         nbMmsis++;
     }
+    
+    public void updateAisPanelStatus(String message) {
+        timeStamp.setFill(color);
+        status.appendText(message + "\n");
+    }
+    
 }
