@@ -43,7 +43,6 @@ public class GribModel {
         this.pressureGrid = pressureGrid;
         this.uGrid = uGrid;
         this.vGrid = vGrid;
-
         this.initDimensions();
 
         this.initBoundingBox();
@@ -102,11 +101,8 @@ public class GribModel {
         module = Math.sqrt((uValue * uValue) + (vValue * vValue));
         angle = Math.atan(vValue / uValue);
 
-        if (uValue < 0 && vValue > 0) {
-            angle = 180 - angle;
-        }
-        if (uValue < 0 && vValue < 0) {
-            angle = 180 + angle;
+        if ((uValue < 0 && vValue > 0) || (uValue < 0 && vValue < 0)) {
+            angle += 180;
         }
 
         return new double[]{module, angle};

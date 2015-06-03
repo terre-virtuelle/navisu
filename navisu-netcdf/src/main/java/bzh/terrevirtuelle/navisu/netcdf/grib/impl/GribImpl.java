@@ -25,7 +25,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
 
     @UsedService GeoViewServices geoViewServices;
 
-    protected Logger LOGGER = Logger.getLogger(GribImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(GribImpl.class.getName());
 
     protected Driver driver;
 
