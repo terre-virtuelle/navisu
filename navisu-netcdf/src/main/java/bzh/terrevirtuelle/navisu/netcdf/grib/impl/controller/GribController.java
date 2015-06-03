@@ -35,7 +35,7 @@ public class GribController {
         } catch (IOException ex) {
             Logger.getLogger(GribController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        viewGridDataSet(gridDataset);
+        dumpMetaDataGribDataSet(gridDataset);
         //check grid dimension
         //TODO Check if all grib have the same titleText of grid !
         GeoGrid pressureGrid = this.gridDataset.findGridByName(GribConstants.PRESSURE_GRID_NAME);
@@ -66,15 +66,18 @@ public class GribController {
         return this.layer;
     }
 
-    public void viewGridDataSet(GridDataset gridDataset) {
-        System.out.println("Title : "+gridDataset.getTitle());
+    public void dumpMetaDataGribDataSet(GridDataset gridDataset) {
+        System.out.println("Title : " + gridDataset.getTitle());
         System.out.println("Description : " + gridDataset.getDescription());
         System.out.println("DetailInfo : " + gridDataset.getDetailInfo());
         System.out.println("ImplementationName : " + gridDataset.getImplementationName());
         System.out.println("CalendarDateStart : " + gridDataset.getCalendarDateStart().toDate());
-        System.out.println("CalendarDateEnd() : " + gridDataset.getCalendarDateEnd().toDate());
+        System.out.println("CalendarDateEnd : " + gridDataset.getCalendarDateEnd().toDate());
+        System.out.println("GlobalAttributes :" + gridDataset.getGlobalAttributes());
+        System.out.println("Grids :" + gridDataset.getGrids());
+        System.out.println("Gridsets :" + gridDataset.getGridsets());
         System.out.println("CalendarDateRange : " + gridDataset.getCalendarDateRange().getDuration());
         System.out.println("Variables : " + gridDataset.getDataVariables());
-        
+
     }
 }
