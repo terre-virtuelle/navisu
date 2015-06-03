@@ -23,12 +23,13 @@
 /dest/
 /navisu-launcher/data/shp/*
 /navisu-launcher/data/databases/*
-/navisu-launcher/data/saved/*
+/navisu-launcher/data/saved/*.csv
 /navisu-launcher/data/bathymetry/shom/*
 /navisu-launcher/errors.txt
 /navisu-launcher/derby.log
 /navisu-launcher/properties/*
-/navisu-launcher/donnees/*
+/navisu-launcher/donnees/pho_wav/*.pho
+/navisu-launcher/donnees/pho_wav/*.wav
 /navisu-agents/.nb-gradle/private/
 /navisu-app/.nb-gradle/private/
 /navisu-charts/.nb-gradle/private/
