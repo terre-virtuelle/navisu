@@ -132,7 +132,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected double diameter;
 	protected double savedAltitude = 0;
 	protected boolean firstDetection = false;
-	protected String[][] shipMatrix=new String[6][5000];
+	protected String[][] shipMatrix = new String[6][5000];
 	protected long count = 1;
 	protected int inSight = 0;
 	protected LinkedList<ArrayList<Position>> savedPolygons;
@@ -162,6 +162,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected TrackPanel aisTrackPanel;
 	protected DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
 	protected DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
+	protected Boolean[][] detected = new Boolean[1000][5000];
+	protected Boolean[] shipDetected = new Boolean[1000];
+	protected Boolean[] aisShipDetected = new Boolean[5000];
+	protected int nbSave = 0;
 
 	@Override
 	public void componentInitiated() {
@@ -213,6 +217,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		textAis = new LinkedList<SurfaceText>();
 		for (int k=0; k<100; k++) {textAis.add(null);}
+		
+		for (int i=0; i<1000; i++) {for (int j=0; j<5000; j++) {detected[i][j] = false;}}
+		
+		for (int i=0; i<1000; i++) {shipDetected[i] = false;}
+		
+		for (int i=0; i<5000; i++) {aisShipDetected[i] = false;}
 		
 		polygonLayers = new LinkedList<RenderableLayer> ();
 		centers = new LinkedList<Position> ();
@@ -364,7 +374,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		if (count%200==0) {
 			saveShips();
+			nbSave++;
 			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
+			aisTrackPanel.updateAisPanelStatus("Database saved (save n°" + nbSave + ")");
 			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
 			}
 		
@@ -441,8 +453,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (int i=0; i<list.size(); i++) {
 
 		if (WWMath.isLocationInside(pos, list.get(i).getPositions()) && list.get(i) != null) {
-			System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside Polygon#" + (i+1) + "\n");
 			
+			if (!shipDetected[i]) {
+				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside P" + (i+1));
+				shipDetected[i] = true;
+				}
+					
 			if (!(centered.get(i))) {
 				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
 				centered.set(i, true);
@@ -492,10 +508,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (Ship target : targets) {
 		
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions()) && tool != null) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside Polygon#" + (savedMeasureTool.indexOf(tool)+1) + "\n");
+				if (!detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)]) {
+					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside P" + (savedMeasureTool.indexOf(tool)+1));
+					detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)] = true;
+					}
 				putTextOn = true;
 				index = targets.indexOf(target);
-
 			}
 		}
 			
@@ -614,7 +632,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (Ship target : targets) {
 		
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null && !firstDetection) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside CPA zone" + "\n");
+				if (!aisShipDetected[targets.indexOf(target)]) {
+					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside CPA zone");
+					aisShipDetected[targets.indexOf(target)] = true;
+					}
 				detection = true;
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
@@ -626,7 +647,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			}
 			
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null && firstDetection) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside CPA zone" + "\n");
+				if (!aisShipDetected[targets.indexOf(target)]) {
+					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside CPA zone");
+					aisShipDetected[targets.indexOf(target)] = true;
+					}
 				detection = true;
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
