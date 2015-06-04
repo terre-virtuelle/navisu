@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.netcdf.grib.impl.view;
 
-import bzh.terrevirtuelle.navisu.netcdf.common.view.Arrow;
+import bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.meteorology.Arrow;
 import bzh.terrevirtuelle.navisu.netcdf.grib.impl.model.GribModel;
 import gov.nasa.worldwind.layers.RenderableLayer;
 
