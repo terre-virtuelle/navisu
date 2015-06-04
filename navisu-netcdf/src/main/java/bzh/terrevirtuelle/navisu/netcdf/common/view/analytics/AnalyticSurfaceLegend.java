@@ -3,7 +3,7 @@
  * National Aeronautics and Space Administration.
  * All Rights Reserved.
  */
-package  bzh.terrevirtuelle.navisu.netcdf.grib.impl.view.analytics;
+package  bzh.terrevirtuelle.navisu.netcdf.common.view.analytics;
 
 import com.jogamp.opengl.util.awt.TextRenderer;
 import gov.nasa.worldwind.avlist.AVKey;
