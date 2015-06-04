@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
@@ -168,6 +169,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int nbSave = 0;
 	protected int nbMmsiReceived = 0;
 	protected int nbNamesReceived = 0;
+	protected Date startTime;
 
 	@Override
 	public void componentInitiated() {
@@ -268,6 +270,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			on = true;
 			readShips();
 			addPanelController();
+			startTime = new Date();
 			 
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -375,12 +378,18 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
 			}
 		
-		if (count%300==0) {
+		if (count%200==0) {
 			saveShips();
 			nbSave++;
+			Date now = new Date();
+			long diff  = now.getTime() - startTime.getTime();
+			long diffSeconds = diff / 1000 % 60;
+			long diffMinutes = diff / (60 * 1000) % 60;
+			long diffHours = diff / (60 * 60 * 1000) % 24;
 			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
 			aisTrackPanel.updateAisPanelStatus("Database saved (save #" + nbSave + ")");
 			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships and " + nbNamesReceived + " new names in database");
+			aisTrackPanel.updateAisPanelStatus("Running for " + diffHours + " hours " + diffMinutes + " minutes " + diffSeconds + " seconds");
 			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
 			}
 		
