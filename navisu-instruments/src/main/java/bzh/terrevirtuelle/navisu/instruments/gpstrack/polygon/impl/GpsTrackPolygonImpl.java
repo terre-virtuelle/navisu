@@ -375,7 +375,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
 			}
 		
-		if (count%200==0) {
+		if (count%300==0) {
 			saveShips();
 			nbSave++;
 			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
@@ -394,7 +394,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			resu.setLatitude(target.getLatitude());
     			resu.setLongitude(target.getLongitude());
     			resu.setMMSI(target.getMMSI());
-    			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {
+    			if (target.getName() != null && !target.getName().equals(aisShips.get(i).getName())) {
     				resu.setName(target.getName());
     				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
     					nbNamesReceived++;
