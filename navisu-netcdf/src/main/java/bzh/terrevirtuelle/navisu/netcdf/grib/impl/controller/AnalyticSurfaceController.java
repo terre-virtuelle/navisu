@@ -3,8 +3,11 @@
  * National Aeronautics and Space Administration.
  * All Rights Reserved.
  */
-package  bzh.terrevirtuelle.navisu.netcdf.common.view.analytics;
+package bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller;
 
+import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurface;
+import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurfaceAttributes;
+import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurfaceLegend;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Extent;
 import gov.nasa.worldwind.geom.Sector;
@@ -38,49 +41,38 @@ import java.util.ArrayList;
  * @author dcollins
  * @version $Id: AnalyticSurfaceDemo.java 1171 2013-02-11 21:45:02Z dcollins $
  */
-public class AnalyticSurfaceTest extends ApplicationTemplate {
+public class AnalyticSurfaceController {
 
-    public static class AppFrame extends ApplicationTemplate.AppFrame {
+    protected static final double HUE_BLUE = 240d / 360d;
+    protected static final double HUE_RED = 0d / 360d;
+    protected RenderableLayer analyticSurfaceLayer;
 
-        protected static final double HUE_BLUE = 240d / 360d;
-        protected static final double HUE_RED = 0d / 360d;
-        protected RenderableLayer analyticSurfaceLayer;
+    public AnalyticSurfaceController() {
 
-        public AppFrame() {
-            this.initAnalyticSurfaceLayer();
-        }
+        this.analyticSurfaceLayer = new RenderableLayer();
+        this.analyticSurfaceLayer.setPickEnabled(false);
+        this.analyticSurfaceLayer.setName("Analytic Surfaces");
 
-        final void initAnalyticSurfaceLayer() {
-            this.analyticSurfaceLayer = new RenderableLayer();
-            this.analyticSurfaceLayer.setPickEnabled(false);
-            this.analyticSurfaceLayer.setName("Analytic Surfaces");
-            insertBeforePlacenames(this.getWwd(), this.analyticSurfaceLayer);
-            this.getLayerPanel().update(this.getWwd());
-
-            createSurface(HUE_BLUE, HUE_RED,
-                    40, 40,
-                    -200e3, 200e3,
-                    Sector.fromDegrees(25, 35, -90, -80),
-                    this.analyticSurfaceLayer);
-        }
+        createSurface(HUE_BLUE, HUE_RED,
+                40, 40,
+                0.0, 100.0,
+                Sector.fromDegrees(50.000003814697266, 
+                        46.000003814697266,1.0, -8.0),
+                this.analyticSurfaceLayer);
     }
 
-    protected static Renderable createLegendRenderable(final AnalyticSurface surface, final double surfaceMinScreenSize,
+    protected static Renderable createLegendRenderable(final AnalyticSurface surface,
+            final double surfaceMinScreenSize,
             final AnalyticSurfaceLegend legend) {
-        return new Renderable() {
-            @Override
-            public void render(DrawContext dc) {
-                Extent extent = surface.getExtent(dc);
-                if (!extent.intersects(dc.getView().getFrustumInModelCoordinates())) {
-                    return;
-                }
-
-                if (WWMath.computeSizeInWindowCoordinates(dc, extent) < surfaceMinScreenSize) {
-                    return;
-                }
-
-                legend.render(dc);
+        return (DrawContext dc) -> {
+            Extent extent = surface.getExtent(dc);
+            if (!extent.intersects(dc.getView().getFrustumInModelCoordinates())) {
+                return;
             }
+            if (WWMath.computeSizeInWindowCoordinates(dc, extent) < surfaceMinScreenSize) {
+                return;
+            }
+            legend.render(dc);
         };
     }
 
@@ -107,58 +99,45 @@ public class AnalyticSurfaceTest extends ApplicationTemplate {
 
         AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
         attr.setShadowOpacity(1.0);
+        attr.setInteriorOpacity(0.5);
         attr.setDrawOutline(true);
         attr.setOutlineMaterial(Material.BLACK);
         surface.setSurfaceAttributes(attr);
 
-        final double altitude = surface.getAltitude();
-        final double verticalScale = surface.getVerticalScale();
-        Format legendLabelFormat = new DecimalFormat("# km") {
+        Format legendLabelFormat = new DecimalFormat("##.# Kt") {
             @Override
             public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition) {
-                double altitudeMeters = altitude + verticalScale * number;
-                double altitudeKm = altitudeMeters * WWMath.METERS_TO_KILOMETERS;
-                return super.format(altitudeKm, result, fieldPosition);
+
+                return super.format(number, result, fieldPosition);
             }
         };
 
         AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, maxValue, minHue, maxHue,
                 AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, maxValue, legendLabelFormat),
-                AnalyticSurfaceLegend.createDefaultTitle("Random Altitudes"));
+                AnalyticSurfaceLegend.createDefaultTitle("Wind"));
         legend.setOpacity(0.8);
-        legend.setScreenLocation(new Point(650, 300));
+        legend.setScreenLocation(new Point(950, 300));
         outLayer.addRenderable(createLegendRenderable(surface, 300, legend));
     }
 
     protected static void mixValuesOverTime(
-          //  final long timeToMix,
-            final BufferWrapper firstBuffer, final BufferWrapper secondBuffer,
-            final double minValue, final double maxValue, final double minHue, final double maxHue,
+            final BufferWrapper firstBuffer,
+            final BufferWrapper secondBuffer,
+            final double minValue, final double maxValue,
+            final double minHue, final double maxHue,
             final AnalyticSurface surface) {
+        double t = 10.0;
+        int ti = (int) Math.floor(t);
+        double a = t - ti;
+        if ((ti % 2) == 0) {
+            a = 1d - a;
+        }
+        surface.setValues(createMixedColorGradientGridValues(
+                a, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue));
+        if (surface.getClientLayer() != null) {
+            surface.getClientLayer().firePropertyChange(AVKey.LAYER, null, surface.getClientLayer());
+        }
 
-       // Timer timer = new Timer(20, new ActionListener() {
-             long startTime = -1;
-
-        //    @Override
-        //    public void actionPerformed(ActionEvent e) {
-             //   if (startTime < 0) {
-              //      startTime = System.currentTimeMillis();
-              //  }
-            //    double t = (double) (e.getWhen() - startTime) / (double) timeToMix;
-                double t =10.0;
-                int ti = (int) Math.floor(t);
-                double a = t - ti;
-                if ((ti % 2) == 0) {
-                    a = 1d - a;
-                }
-                surface.setValues(createMixedColorGradientGridValues(
-                        a, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue));
-                if (surface.getClientLayer() != null) {
-                   surface.getClientLayer().firePropertyChange(AVKey.LAYER, null, surface.getClientLayer());
-                }
-            
-      //  });
-      //  timer.start();
     }
 
     public static Iterable<? extends AnalyticSurface.GridPointAttributes> createMixedColorGradientGridValues(double a,
@@ -183,8 +162,10 @@ public class AnalyticSurfaceTest extends ApplicationTemplate {
     protected static final int DEFAULT_RANDOM_ITERATIONS = 1000;
     protected static final double DEFAULT_RANDOM_SMOOTHING = 0.5d;
 
-    public static BufferWrapper randomGridValues(int width, int height, double min, double max, int numIterations,
-            double smoothness, BufferFactory factory) {
+    public static BufferWrapper randomGridValues(int width, int height,
+            double min, double max, int numIterations,
+            double smoothness,
+            BufferFactory factory) {
         int numValues = width * height;
         double[] values = new double[numValues];
 
@@ -218,12 +199,14 @@ public class AnalyticSurfaceTest extends ApplicationTemplate {
         return buffer;
     }
 
-    public static BufferWrapper randomGridValues(int width, int height, double min, double max) {
+    public static BufferWrapper randomGridValues(int width, int height,
+            double min, double max) {
         return randomGridValues(width, height, min, max, DEFAULT_RANDOM_ITERATIONS, DEFAULT_RANDOM_SMOOTHING,
                 new BufferFactory.DoubleBufferFactory());
     }
 
-    protected static void scaleValues(double[] values, int count, double minValue, double maxValue) {
+    protected static void scaleValues(double[] values, int count,
+            double minValue, double maxValue) {
         double min = Double.MAX_VALUE;
         double max = -Double.MAX_VALUE;
         for (int i = 0; i < count; i++) {
@@ -241,7 +224,8 @@ public class AnalyticSurfaceTest extends ApplicationTemplate {
         }
     }
 
-    protected static void smoothValues(int width, int height, double[] values, double smoothness) {
+    protected static void smoothValues(int width, int height,
+            double[] values, double smoothness) {
         // top to bottom
         for (int x = 0; x < width; x++) {
             smoothBand(values, x, width, height, smoothness);
@@ -265,7 +249,9 @@ public class AnalyticSurfaceTest extends ApplicationTemplate {
         }
     }
 
-    protected static void smoothBand(double[] values, int start, int stride, int count, double smoothness) {
+    protected static void smoothBand(double[] values,
+            int start, int stride, int count,
+            double smoothness) {
         double prevValue = values[start];
         int j = start + stride;
 
@@ -276,7 +262,8 @@ public class AnalyticSurfaceTest extends ApplicationTemplate {
         }
     }
 
-    public static void main(String[] args) {
-        ApplicationTemplate.start("World Wind Analytic Surface", AppFrame.class);
+    public RenderableLayer getLayer() {
+        return analyticSurfaceLayer;
     }
+
 }

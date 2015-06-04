@@ -1,4 +1,4 @@
- package bzh.terrevirtuelle.navisu.netcdf.grib.impl;
+package bzh.terrevirtuelle.navisu.netcdf.grib.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
@@ -8,6 +8,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.netcdf.grib.Grib;
 import bzh.terrevirtuelle.navisu.netcdf.grib.GribServices;
+import bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller.AnalyticSurfaceController;
 import bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller.GribController;
 import bzh.terrevirtuelle.navisu.netcdf.grib.impl.view.GribLayer;
 import gov.nasa.worldwind.layers.Layer;
@@ -18,19 +19,19 @@ import org.capcaval.c3.component.annotation.UsedService;
 import java.util.logging.Logger;
 
 /**
- * User: jordan
- * Date: 23/11/2013
+ * User: jordan Date: 23/11/2013
  */
 public class GribImpl implements Grib, GribServices, ComponentState {
 
-    @UsedService GeoViewServices geoViewServices;
+    @UsedService
+    GeoViewServices geoViewServices;
 
     protected static final Logger LOGGER = Logger.getLogger(GribImpl.class.getName());
 
     protected Driver driver;
 
     protected GribController gribController;
-
+    protected AnalyticSurfaceController analyticSurfaceController;
     protected LayerManager<Layer> layerLayerManager;
 
     @Override
@@ -48,7 +49,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
 
             @Override
             public void open(ProgressHandle pHandle, String... files) {
-                for(String file : files) {
+                for (String file : files) {
                     LOGGER.log(Level.INFO, "Opening {0} ...", file);
                     loadFile(file); //Todo Make stuff for all files
                 }
@@ -61,16 +62,18 @@ public class GribImpl implements Grib, GribServices, ComponentState {
 
             @Override
             public String[] getExtensions() {
-                return new String[] { "*" + EXTENSION };
+                return new String[]{"*" + EXTENSION};
             }
         };
     }
 
     @Override
-    public void componentStarted() {}
+    public void componentStarted() {
+    }
 
     @Override
-    public void componentStopped() {}
+    public void componentStopped() {
+    }
 
     @Override
     public Driver getDriver() {
@@ -80,13 +83,15 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     @Override
     public void loadFile(String path) {
         this.gribController = new GribController(path);
-
-       // LOGGER.info(this.gribController.getModel().toString());
-
-      //  LOGGER.info("######################################## CREATE LAYER #############################################");
-       // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
-        this.layerLayerManager = (LayerManager<Layer>) ((GeoView)this.geoViewServices.getDisplayService()).getLayerManager();
+        analyticSurfaceController = new AnalyticSurfaceController();
+        System.out.println(gribController.getModel());
+        
+        // LOGGER.info(this.gribController.getModel().toString());
+        //  LOGGER.info("######################################## CREATE LAYER #############################################");
+        // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
+        this.layerLayerManager = (LayerManager<Layer>) ((GeoView) this.geoViewServices.getDisplayService()).getLayerManager();
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));
+        this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.analyticSurfaceController.getLayer()));
     }
 
     @Override
@@ -102,6 +107,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
 
     @Override
     public double getLatitudeDimension() {
+        
         return this.gribController.getModel().getLatitudeDimension();
     }
 
