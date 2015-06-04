@@ -166,6 +166,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected Boolean[] shipDetected = new Boolean[1000];
 	protected Boolean[] aisShipDetected = new Boolean[5000];
 	protected int nbSave = 0;
+	protected int nbMmsiReceived = 0;
+	protected int nbNamesReceived = 0;
 
 	@Override
 	public void componentInitiated() {
@@ -343,6 +345,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		if (shipExists) {updateTarget(target);} else {
 
+		nbMmsiReceived++;
 		Date date = new Date();
 		Ship aisShip = new Ship();
 		aisShip.setMMSI(target.getMMSI());
@@ -376,7 +379,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			saveShips();
 			nbSave++;
 			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
-			aisTrackPanel.updateAisPanelStatus("Database saved (save n°" + nbSave + ")");
+			aisTrackPanel.updateAisPanelStatus("Database saved (save #" + nbSave + ")");
+			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships and " + nbNamesReceived + " new names in database");
 			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
 			}
 		
@@ -393,6 +397,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {
     				resu.setName(target.getName());
     				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
+    					nbNamesReceived++;
     					//System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
     					aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), inSight, target.getName());
     					MediaPlayer mediaPlayer;
