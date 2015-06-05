@@ -142,7 +142,7 @@ public class TrackPanel
     	String[] tabNames = names.getText().split("\n");
     	int nbNames = tabNames.length;
     	String resu = "";
-        if (nbNames==20) {
+        if (nbNames==50) {
         	for (int i=1;i<nbNames;i++) {
         		resu = resu + tabNames[i] + "\n";
         	}
@@ -158,7 +158,7 @@ public class TrackPanel
     	String[] tabMmsis = mmsis.getText().split("\n");
     	int nbMmsis = tabMmsis.length;
     	String resu = "";
-        if (nbMmsis==20) {
+        if (nbMmsis==50) {
         	for (int i=1;i<nbMmsis;i++) {
         		resu = resu + tabMmsis[i] + "\n";
         	}
@@ -172,7 +172,7 @@ public class TrackPanel
         int nbLines = status.getText().split("\n").length;
         String[] tabLines = status.getText().split("\n");
         String resu = "";
-        if (nbLines==20) {
+        if (nbLines==100) {
         	for (int i=1;i<nbLines;i++) {
         		resu = resu + tabLines[i] + "\n";
         	}
