@@ -1121,7 +1121,9 @@ public class AnalyticSurface implements Renderable, PreRenderable {
         // We need cartesian vertices if the surface's altitude mode is absolute or relative-to-ground.
         if (this.getAltitudeMode() != WorldWind.CLAMP_TO_GROUND) // WorldWind.ABSOLUTE or WorldWind.RELATIVE_TO_GROUND
         {
-            Vec4 point = this.computeSurfacePoint(dc, lat, lon, (attr != null ? attr.getValue() : DEFAULT_VALUE));
+          //  Vec4 point = this.computeSurfacePoint(dc, lat, lon, (attr != null ? attr.getValue() : DEFAULT_VALUE));
+            Vec4 point = this.computeSurfacePoint(dc, lat, lon, DEFAULT_VALUE);
+          
             outRenderInfo.cartesianVertexBuffer.put((float) (point.x - this.referencePoint.x));
             outRenderInfo.cartesianVertexBuffer.put((float) (point.y - this.referencePoint.y));
             outRenderInfo.cartesianVertexBuffer.put((float) (point.z - this.referencePoint.z));
