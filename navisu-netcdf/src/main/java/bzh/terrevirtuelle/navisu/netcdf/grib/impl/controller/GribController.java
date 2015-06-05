@@ -35,7 +35,7 @@ public class GribController {
         } catch (IOException ex) {
             Logger.getLogger(GribController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dumpMetaDataGribDataSet(gridDataset);
+      //  dumpMetaDataGribDataSet(gridDataset);
         //check grid dimension
         //TODO Check if all grib have the same titleText of grid !
         GeoGrid pressureGrid = this.gridDataset.findGridByName(GribConstants.PRESSURE_GRID_NAME);

@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.meteorology;
 
 import com.google.common.collect.Range;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -50,8 +51,9 @@ public class Arrow
     }
 
     public Arrow(double lat, double lon, double v) {
-
+        
         int velocity = getSymbol(v);
+        setValue(AVKey.DISPLAY_NAME, Integer.toString((int)v)+" Kt");
         switch (velocity) {
             case 0:
             case 1:
@@ -107,6 +109,7 @@ public class Arrow
         pathAttrs.setOutlineWidth(2);
         pathAttrs.setDrawInterior(isDrawInterior);
         pathAttrs.setInteriorMaterial(material);
+        
         return pathAttrs;
     }
 

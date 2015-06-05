@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.netcdf.grib.Grib;
 import bzh.terrevirtuelle.navisu.netcdf.grib.GribServices;
 import bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller.AnalyticSurfaceController;
 import bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller.GribController;
+import bzh.terrevirtuelle.navisu.netcdf.grib.impl.model.GribModel;
 import bzh.terrevirtuelle.navisu.netcdf.grib.impl.view.GribLayer;
 import gov.nasa.worldwind.layers.Layer;
 import java.util.logging.Level;
@@ -31,6 +32,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     protected Driver driver;
 
     protected GribController gribController;
+    protected GribModel gribModel;
     protected AnalyticSurfaceController analyticSurfaceController;
     protected LayerManager<Layer> layerLayerManager;
 
@@ -83,9 +85,14 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     @Override
     public void loadFile(String path) {
         this.gribController = new GribController(path);
-        analyticSurfaceController = new AnalyticSurfaceController();
-        System.out.println(gribController.getModel());
-        
+        this.gribModel = this.gribController.getModel();
+        analyticSurfaceController 
+                = new AnalyticSurfaceController(gribController.getModel().getVelocityField(),
+                getLongitudeDimension(), getLatitudeDimension(),
+                getMinLatitude(), getMaxLatitude(),
+                getMinLongitude(), getMaxLongitude(), 
+                0.0, 15.0);
+
         // LOGGER.info(this.gribController.getModel().toString());
         //  LOGGER.info("######################################## CREATE LAYER #############################################");
         // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
@@ -106,23 +113,39 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     }
 
     @Override
-    public double getLatitudeDimension() {
-        
-        return this.gribController.getModel().getLatitudeDimension();
+    public int getLatitudeDimension() {
+
+        return this.gribModel.getLatitudeDimension();
     }
 
     @Override
-    public double getLongitudeDimension() {
-        return this.gribController.getModel().getLongitudeDimension();
+    public int getLongitudeDimension() {
+        return this.gribModel.getLongitudeDimension();
     }
 
     @Override
-    public double getTimeDimension() {
-        return this.gribController.getModel().getTimeDimension();
+    public int getTimeDimension() {
+        return this.gribModel.getTimeDimension();
     }
 
     @Override
     public GribLayer getGribLayer() {
         return this.gribController.getLayer();
+    }
+
+    public double getMaxLatitude() {
+        return this.gribModel.getMaxLatitude();
+    }
+
+    public double getMaxLongitude() {
+        return this.gribModel.getMaxLongitude();
+    }
+
+    public double getMinLatitude() {
+        return this.gribModel.getMinLatitude();
+    }
+
+    public double getMinLongitude() {
+        return gribModel.getMinLongitude();
     }
 }

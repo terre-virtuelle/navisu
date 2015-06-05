@@ -18,7 +18,6 @@ import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;
 import gov.nasa.worldwind.util.WWMath;
-import gov.nasa.worldwindx.examples.ApplicationTemplate;
 import java.awt.Point;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
@@ -46,22 +45,24 @@ public class AnalyticSurfaceController {
     protected static final double HUE_BLUE = 240d / 360d;
     protected static final double HUE_RED = 0d / 360d;
     protected RenderableLayer analyticSurfaceLayer;
+    protected double[] velocityField;
 
-    public AnalyticSurfaceController() {
-
+    public AnalyticSurfaceController(double[] values, int lonDimension, int latDimension,
+            double minLat, double maxLat, double minLon, double maxLon,
+            double minValue, double maxValue) {
+        this.velocityField = values;
         this.analyticSurfaceLayer = new RenderableLayer();
         this.analyticSurfaceLayer.setPickEnabled(false);
-        this.analyticSurfaceLayer.setName("Analytic Surfaces");
-
+        this.analyticSurfaceLayer.setName("Meteorology");
+      
         createSurface(HUE_BLUE, HUE_RED,
-                40, 40,
-                0.0, 100.0,
-                Sector.fromDegrees(50.000003814697266, 
-                        46.000003814697266,1.0, -8.0),
+                lonDimension, latDimension,
+                minValue, maxValue,
+                Sector.fromDegrees(minLat, maxLat, minLon, maxLon),
                 this.analyticSurfaceLayer);
     }
 
-    protected static Renderable createLegendRenderable(final AnalyticSurface surface,
+    protected Renderable createLegendRenderable(final AnalyticSurface surface,
             final double surfaceMinScreenSize,
             final AnalyticSurfaceLegend legend) {
         return (DrawContext dc) -> {
@@ -79,7 +80,7 @@ public class AnalyticSurfaceController {
     //**************************************************************//
     //********************  Surface  ***************//
     //**************************************************************//
-    protected static void createSurface(double minHue, double maxHue,
+    final void createSurface(double minHue, double maxHue,
             int width, int height,
             double minValue,
             double maxValue,
@@ -93,8 +94,9 @@ public class AnalyticSurfaceController {
         surface.setClientLayer(outLayer);
         outLayer.addRenderable(surface);
 
-        BufferWrapper firstBuffer = randomGridValues(width, height, minValue, maxValue);
-        BufferWrapper secondBuffer = randomGridValues(width, height, minValue * 2d, maxValue / 2d);
+        BufferWrapper firstBuffer = AnalyticSurfaceController.this.gridValues(width, height, minValue, maxValue);
+        BufferWrapper secondBuffer = AnalyticSurfaceController.this.gridValues(width, height, minValue, maxValue);
+
         mixValuesOverTime(firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue, surface);
 
         AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
@@ -107,7 +109,6 @@ public class AnalyticSurfaceController {
         Format legendLabelFormat = new DecimalFormat("##.# Kt") {
             @Override
             public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition) {
-
                 return super.format(number, result, fieldPosition);
             }
         };
@@ -157,55 +158,33 @@ public class AnalyticSurfaceController {
     }
 
     //**************************************************************//
-    //********************  Random Grid Construction  **************//
+    //********************  Grid Construction  **************//
     //**************************************************************//
-    protected static final int DEFAULT_RANDOM_ITERATIONS = 1000;
-    protected static final double DEFAULT_RANDOM_SMOOTHING = 0.5d;
+    protected static final double DEFAULT_SMOOTHING = 0.5d;
 
-    public static BufferWrapper randomGridValues(int width, int height,
-            double min, double max, int numIterations,
+    public BufferWrapper gridValues(
+            int width, int height,
+            double min, double max,
             double smoothness,
             BufferFactory factory) {
-        int numValues = width * height;
-        double[] values = new double[numValues];
+        int numValues = velocityField.length;
 
-        for (int i = 0; i < numIterations; i++) {
-            double offset = 1d - (i / (double) numIterations);
-
-            int x1 = (int) Math.round(Math.random() * (width - 1));
-            int x2 = (int) Math.round(Math.random() * (width - 1));
-            int y1 = (int) Math.round(Math.random() * (height - 1));
-            int y2 = (int) Math.round(Math.random() * (height - 1));
-            int dx1 = x2 - x1;
-            int dy1 = y2 - y1;
-
-            for (int y = 0; y < height; y++) {
-                int dy2 = y - y1;
-                for (int x = 0; x < width; x++) {
-                    int dx2 = x - x1;
-
-                    if ((dx2 * dy1 - dx1 * dy2) >= 0) {
-                        values[x + y * width] += offset;
-                    }
-                }
-            }
-        }
-
-        smoothValues(width, height, values, smoothness);
-        scaleValues(values, numValues, min, max);
+        smoothValues(width, height, velocityField, smoothness);
+        scaleValues(velocityField, numValues, min, max);
         BufferWrapper buffer = factory.newBuffer(numValues);
-        buffer.putDouble(0, values, 0, numValues);
+        buffer.putDouble(0, velocityField, 0, numValues);
 
         return buffer;
     }
 
-    public static BufferWrapper randomGridValues(int width, int height,
+    public BufferWrapper gridValues(int width, int height,
             double min, double max) {
-        return randomGridValues(width, height, min, max, DEFAULT_RANDOM_ITERATIONS, DEFAULT_RANDOM_SMOOTHING,
+        return gridValues(width, height, min, max,
+                DEFAULT_SMOOTHING,
                 new BufferFactory.DoubleBufferFactory());
     }
 
-    protected static void scaleValues(double[] values, int count,
+    protected void scaleValues(double[] values, int count,
             double minValue, double maxValue) {
         double min = Double.MAX_VALUE;
         double max = -Double.MAX_VALUE;
@@ -224,7 +203,7 @@ public class AnalyticSurfaceController {
         }
     }
 
-    protected static void smoothValues(int width, int height,
+    protected void smoothValues(int width, int height,
             double[] values, double smoothness) {
         // top to bottom
         for (int x = 0; x < width; x++) {
@@ -249,7 +228,7 @@ public class AnalyticSurfaceController {
         }
     }
 
-    protected static void smoothBand(double[] values,
+    protected void smoothBand(double[] values,
             int start, int stride, int count,
             double smoothness) {
         double prevValue = values[start];
