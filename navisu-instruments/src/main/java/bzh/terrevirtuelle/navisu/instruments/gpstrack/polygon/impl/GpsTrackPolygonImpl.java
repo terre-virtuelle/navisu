@@ -366,6 +366,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		//System.err.println("Ship#" + aisShips.size() + " with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude() + " at " + dateFormatTime.format(date));
 		aisTrackPanel.updateAisPanelMmsi(dateFormatTime.format(date), inSight, aisShip.getMMSI());
 		count++;
+		MediaPlayer mediaPlayer;
+		javafx.scene.media.Media media;
+		String userDir = System.getProperty("user.dir");
+		userDir = userDir.replace("\\", "/");
+		String url = userDir + "/data/sounds/pling.wav";
+		media = new Media("file:///" + url);
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setAutoPlay(true);
 		}
 	}
 
