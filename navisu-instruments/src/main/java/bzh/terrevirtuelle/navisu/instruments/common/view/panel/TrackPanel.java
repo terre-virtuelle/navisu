@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -77,6 +78,30 @@ public class TrackPanel
         trackPanel.setOpacity(0.8);
         quit.setOnMouseClicked((MouseEvent event) -> {
             trackPanel.setVisible(false);
+        });
+        status.textProperty().addListener(new ChangeListener<Object>() {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue,
+                    Object newValue) {
+                status.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
+                //use Double.MIN_VALUE to scroll to the top
+            }
+        });
+        names.textProperty().addListener(new ChangeListener<Object>() {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue,
+                    Object newValue) {
+                names.setScrollTop(Double.MIN_VALUE); //this will scroll to the top
+                //use Double.MAX_VALUE to scroll to the bottom
+            }
+        });
+        mmsis.textProperty().addListener(new ChangeListener<Object>() {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue,
+                    Object newValue) {
+                mmsis.setScrollTop(Double.MIN_VALUE); //this will scroll to the top
+                //use Double.MIN_VALUE to scroll to the bottom
+            }
         });
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
