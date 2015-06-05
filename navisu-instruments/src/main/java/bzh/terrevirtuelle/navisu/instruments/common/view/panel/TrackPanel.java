@@ -91,16 +91,16 @@ public class TrackPanel
             @Override
             public void changed(ObservableValue<?> observable, Object oldValue,
                     Object newValue) {
-                names.setScrollTop(Double.MIN_VALUE); //this will scroll to the top
-                //use Double.MAX_VALUE to scroll to the bottom
+                names.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
+                //use Double.MIN_VALUE to scroll to the top
             }
         });
         mmsis.textProperty().addListener(new ChangeListener<Object>() {
             @Override
             public void changed(ObservableValue<?> observable, Object oldValue,
                     Object newValue) {
-                mmsis.setScrollTop(Double.MIN_VALUE); //this will scroll to the top
-                //use Double.MIN_VALUE to scroll to the bottom
+                mmsis.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
+                //use Double.MIN_VALUE to scroll to the top
             }
         });
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
@@ -142,7 +142,7 @@ public class TrackPanel
     	String[] tabNames = names.getText().split("\n");
     	int nbNames = tabNames.length;
     	String resu = "";
-        if (nbNames==3) {
+        if (nbNames==20) {
         	for (int i=1;i<nbNames;i++) {
         		resu = resu + tabNames[i] + "\n";
         	}
@@ -158,7 +158,7 @@ public class TrackPanel
     	String[] tabMmsis = mmsis.getText().split("\n");
     	int nbMmsis = tabMmsis.length;
     	String resu = "";
-        if (nbMmsis==3) {
+        if (nbMmsis==20) {
         	for (int i=1;i<nbMmsis;i++) {
         		resu = resu + tabMmsis[i] + "\n";
         	}
@@ -172,7 +172,7 @@ public class TrackPanel
         int nbLines = status.getText().split("\n").length;
         String[] tabLines = status.getText().split("\n");
         String resu = "";
-        if (nbLines==10) {
+        if (nbLines==20) {
         	for (int i=1;i<nbLines;i++) {
         		resu = resu + tabLines[i] + "\n";
         	}
