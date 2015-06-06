@@ -18,11 +18,11 @@ public interface GribServices extends ComponentService {
 
     double getPressionAtPoint(double latitude, double longitude);
 
-    double getLatitudeDimension();
+    int getLatitudeDimension();
 
-    double getLongitudeDimension();
+    int getLongitudeDimension();
 
-    double getTimeDimension();
+    int getTimeDimension();
 
     GribLayer getGribLayer();
 }

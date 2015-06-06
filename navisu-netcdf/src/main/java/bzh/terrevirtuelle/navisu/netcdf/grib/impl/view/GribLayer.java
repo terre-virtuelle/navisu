@@ -1,13 +1,8 @@
 package bzh.terrevirtuelle.navisu.netcdf.grib.impl.view;
 
+import bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.meteorology.Arrow;
 import bzh.terrevirtuelle.navisu.netcdf.grib.impl.model.GribModel;
-import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.MarkerLayer;
-import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.markers.*;
-import gov.nasa.worldwind.util.WWUtil;
-import java.awt.Color;
+import gov.nasa.worldwind.layers.RenderableLayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,38 +11,40 @@ import java.util.logging.Logger;
 /**
  * User: jordan Date: 24/11/2013
  */
-public class GribLayer extends MarkerLayer {
+public class GribLayer
+        extends RenderableLayer {
 
     protected final static Logger LOGGUER = Logger.getLogger(GribLayer.class.getName());
-
     protected GribModel model;
-
     public GribLayer(GribModel model) {
 
         this.model = model;
-
         this.init();
+        
     }
 
     private void init() {
+        double latInit = this.model.getMinLatitude();
+        double latMax = this.model.getMaxLatitude();
+        double latGap = this.model.getLatitudeGap();
+        double lonInit = this.model.getMinLongitude();
+        double lonMax = this.model.getMaxLongitude();
+        double lonGap = this.model.getLongitudeGap();
+        int timeDimension = model.getTimeDimension();
 
-        List<Marker> markers = new ArrayList<>();
-        Marker marker;
-        MarkerAttributes attr = new BasicMarkerAttributes(new Material(WWUtil.makeColorBrighter(Color.RED)), BasicMarkerShape.HEADING_LINE, 1d, 10, 10);
-        for (double lat = this.model.getBottomRightLatitude(); lat < this.model.getTopLeftLatitude(); lat += this.model.getLatitudeGap()) {
-            for (double lon = this.model.getTopLeftLongitude(); lon < this.model.getBottomRightLongitude(); lon += this.model.getLongitudeGap()) {
-                // LOGGUER.info("---------- lat = " + lat + ", lon = " + lon);
-                double[] vector = this.model.getVelocityVectorFromLatLon(lat, lon, 10);
-                // LOGGUER.info("---------- x = " + vector[0] +" , y = " + vector[1]);
-                marker = new BasicMarker(Position.fromDegrees(lat, lon, 0), attr);
-                marker.setPosition(Position.fromDegrees(lat, lon, 0));
-                marker.setHeading(Angle.fromDegrees(Math.toDegrees(vector[1])));
-                markers.add(marker);
+        List<Arrow> arrows = new ArrayList<>();
+      //  for (int i = 0; i < timeDimension; i++) {
+        int i = 19;
+            for (double lat = latInit; lat <= latMax; lat += latGap) {
+                for (double lon = lonInit; lon <= lonMax; lon += lonGap) {
+                    Arrow arrow = new Arrow(lat, lon, model.getVelocity(lat, lon, i));
+                    arrow.setRotation(Math.toDegrees(model.getDirection(lat, lon, i)));
+                    arrows.add(arrow);
+                }
             }
-        }
-        this.setOverrideMarkerElevation(true);
-        this.setKeepSeparated(false);
-        this.setElevation(1000d);
-        this.setMarkers(markers);
+      //  }
+
+        addRenderables(arrows);
     }
+
 }

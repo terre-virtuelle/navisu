@@ -5,62 +5,38 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
 
-import gov.nasa.worldwind.AbstractSceneController;
-import gov.nasa.worldwind.SceneController;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.layers.TerrainProfileLayer;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfaceShape;
 import gov.nasa.worldwind.render.SurfaceText;
-import gov.nasa.worldwind.render.airspaces.Polygon;
 import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
-import gov.nasa.worldwindx.examples.ApplicationTemplate;
-import gov.nasa.worldwindx.examples.MeasureToolPanel;
-import gov.nasa.worldwindx.examples.util.SectorSelector;
 import gov.nasa.worldwind.util.WWMath;
 
-import java.awt.BorderLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
+import javafx.application.Platform;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
@@ -73,30 +49,24 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.GGAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.RMCEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VTGEvent;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayers;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSector;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.sector.GpsTrackSectorServices;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.view.targets.GShip;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotter;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
+import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
-import com.vividsolutions.jts.operation.valid.IsValidOp;
 
 /**
  * @date 3 mars 2015
@@ -119,7 +89,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
     @UsedService
     AisServices aisServices;
-
+    
 	ComponentManager cm;
 	ComponentEventSubscribe<GGAEvent> ggaES;
 	ComponentEventSubscribe<RMCEvent> rmcES;
@@ -163,9 +133,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected double diameter;
 	protected double savedAltitude = 0;
 	protected boolean firstDetection = false;
-	protected String[][] shipMatrix=new String[6][2000];
+	protected String[][] shipMatrix = new String[6][5000];
 	protected long count = 1;
-	protected long inSight = 0;
+	protected int inSight = 0;
 	protected LinkedList<ArrayList<Position>> savedPolygons;
 	protected MeasureTool pmt;
 	protected MeasureToolController pmtc;
@@ -190,6 +160,16 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected static final String ANSI_PURPLE = "\u001B[35m";
 	protected static final String ANSI_CYAN = "\u001B[36m";
 	protected static final String ANSI_WHITE = "\u001B[37m";
+	protected TrackPanel aisTrackPanel;
+	protected DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
+	protected DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
+	protected Boolean[][] detected = new Boolean[1000][5000];
+	protected Boolean[] shipDetected = new Boolean[1000];
+	protected Boolean[] aisShipDetected = new Boolean[5000];
+	protected int nbSave = 0;
+	protected int nbMmsiReceived = 0;
+	protected int nbNamesReceived = 0;
+	protected Date startTime;
 
 	@Override
 	public void componentInitiated() {
@@ -242,6 +222,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		textAis = new LinkedList<SurfaceText>();
 		for (int k=0; k<100; k++) {textAis.add(null);}
 		
+		for (int i=0; i<1000; i++) {for (int j=0; j<5000; j++) {detected[i][j] = false;}}
+		
+		for (int i=0; i<1000; i++) {shipDetected[i] = false;}
+		
+		for (int i=0; i<5000; i++) {aisShipDetected[i] = false;}
+		
 		polygonLayers = new LinkedList<RenderableLayer> ();
 		centers = new LinkedList<Position> ();
 		
@@ -279,10 +265,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
 	@Override
 	public void on(String ... files) {
-
+		
 		if (on == false) {
 			on = true;
 			readShips();
+			addPanelController();
+			startTime = new Date();
 			 
 			// souscription aux événements GPS
 			ggaES.subscribe(new GGAEvent() {
@@ -359,10 +347,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     		}
 		
 		if (shipExists) {updateTarget(target);} else {
-		
-		
-		DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
-		DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
+
+		nbMmsiReceived++;
 		Date date = new Date();
 		Ship aisShip = new Ship();
 		aisShip.setMMSI(target.getMMSI());
@@ -377,24 +363,46 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		shipMatrix[4][aisShips.size()-1] = dateFormatDate.format(date);
 		shipMatrix[5][aisShips.size()-1] = dateFormatTime.format(date);
 		// Enlever les commentaires pour voir les messages AIS
-		System.err.println("Ship#" + aisShips.size() + " with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude() + " at " + dateFormatTime.format(date));
+		//System.err.println("Ship#" + aisShips.size() + " with MMSI " + aisShip.getMMSI() + " created - name " + aisShip.getName() + " - position lat " + aisShip.getLatitude() + " and lon " + aisShip.getLongitude() + " at " + dateFormatTime.format(date));
+		aisTrackPanel.updateAisPanelMmsi(dateFormatTime.format(date), inSight, aisShip.getMMSI());
 		count++;
+		MediaPlayer mediaPlayer;
+		javafx.scene.media.Media media;
+		String userDir = System.getProperty("user.dir");
+		userDir = userDir.replace("\\", "/");
+		String url = userDir + "/data/sounds/pling.wav";
+		media = new Media("file:///" + url);
+		mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.setAutoPlay(true);
 		}
 	}
 
     private void updateTarget(Ship target) {
     	
-		DateFormat dateFormatDate = new SimpleDateFormat("dd/MM/yyyy");
-		DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
 		Date date = new Date();
 		
 		if (count%49==0) {
-			System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
+			//System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
+			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
 			}
 		
 		if (count%200==0) {
 			saveShips();
-			System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
+			nbSave++;
+			Date now = new Date();
+			long diff  = now.getTime() - startTime.getTime();
+			long diffSeconds = diff / 1000 % 60;
+			long diffMinutes = diff / (60 * 1000) % 60;
+			long diffHours = diff / (60 * 60 * 1000) % 24;
+			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
+			aisTrackPanel.updateAisPanelStatus("Database saved (save #" + nbSave + ")");
+			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships and " + nbNamesReceived + " new names in database");
+			aisTrackPanel.updateAisPanelStatus("Running for " + diffHours + " hours " + diffMinutes + " minutes " + diffSeconds + " seconds");
+			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
+			}
+		
+		if (count%5001==0) {
+			System.gc();
 			}
     	
     	for (int i=0; i<aisShips.size(); i++) {
@@ -403,10 +411,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			resu.setLatitude(target.getLatitude());
     			resu.setLongitude(target.getLongitude());
     			resu.setMMSI(target.getMMSI());
-    			if (target.getName() != null && !target.getName().equals("") && !target.getName().equals(" ") && !target.getName().equals("  ")) {
+    			if (target.getName() != null && !target.getName().equals(aisShips.get(i).getName())) {
     				resu.setName(target.getName());
     				if (!((target.getName()).equals(aisShips.get(i).getName()))) {
-    					System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
+    					nbNamesReceived++;
+    					//System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
+    					aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), inSight, target.getName());
     					MediaPlayer mediaPlayer;
     					javafx.scene.media.Media media;
     					String userDir = System.getProperty("user.dir");
@@ -465,8 +475,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (int i=0; i<list.size(); i++) {
 
 		if (WWMath.isLocationInside(pos, list.get(i).getPositions()) && list.get(i) != null) {
-			System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside Polygon#" + (i+1) + "\n");
 			
+			if (!shipDetected[i]) {
+				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside P" + (i+1));
+				shipDetected[i] = true;
+				}
+					
 			if (!(centered.get(i))) {
 				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
 				centered.set(i, true);
@@ -516,10 +530,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (Ship target : targets) {
 		
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions()) && tool != null) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside Polygon#" + (savedMeasureTool.indexOf(tool)+1) + "\n");
+				if (!detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)]) {
+					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside P" + (savedMeasureTool.indexOf(tool)+1));
+					detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)] = true;
+					}
 				putTextOn = true;
 				index = targets.indexOf(target);
-
 			}
 		}
 			
@@ -615,7 +631,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			if (Math.abs(longmin)>Math.abs(pos.getLongitude().getDegrees())) {longmin = pos.getLongitude().getDegrees();}
 			if (altmax<pos.getAltitude()) {altmax = pos.getAltitude();}
 		}
-		System.out.println(latmin +" "+ latmax+ " " + latmoy);
+		//System.out.println(latmin +" "+ latmax+ " " + latmoy);
 		latmoy = (latmin+latmax)/2;
 		longmoy = (longmin+longmax)/2;
 		if (altmax<=0) {altmax=0;}
@@ -638,7 +654,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		for (Ship target : targets) {
 		
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null && !firstDetection) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside CPA zone" + "\n");
+				if (!aisShipDetected[targets.indexOf(target)]) {
+					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside CPA zone");
+					aisShipDetected[targets.indexOf(target)] = true;
+					}
 				detection = true;
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
@@ -650,7 +669,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			}
 			
 			if (WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions()) && dmp != null && firstDetection) {
-				System.err.println("============ W A R N I N G ============ Ship with MMSI #" + target.getMMSI() + " - name " + target.getName() + " is inside CPA zone" + "\n");
+				if (!aisShipDetected[targets.indexOf(target)]) {
+					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside CPA zone");
+					aisShipDetected[targets.indexOf(target)] = true;
+					}
 				detection = true;
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
@@ -693,13 +715,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			if (!drawerActivated) {
 				measureTool.setArmed(true);
 				controller.setArmed(true);
-				System.out.println("Drawer ready.\n");
+				aisTrackPanel.updateAisPanelStatus("Drawer ready");
 				drawerActivated = true;
 				}
 			else {
 				measureTool.setArmed(false);
 				controller.setArmed(false);
-				System.out.println("Drawer deactivated.\n");
+				aisTrackPanel.updateAisPanelStatus("Drawer deactivated");
 				drawerActivated = false;
 				}
 	}
@@ -708,6 +730,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void createPath() {
 		pmt.setArmed(true);
 		pmtc.setArmed(true);
+		aisTrackPanel.updateAisPanelStatus("Custom path ready to be drawn");
 	}
 	
 	@Override
@@ -728,10 +751,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
 		createPathTarget(pShip);
 		pathActivated = true;
+		aisTrackPanel.updateAisPanelStatus("Custom path activated");
 	}
 	
 	private void createPathTarget(Ship target) {
 		gShip = new GShip(target);
+		gShip.update(0);
+		target.setShipType(80);
 		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
 			Renderable[] renderables = gShip.getRenderables();
 			for (Renderable r : renderables) {
@@ -746,14 +772,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	}
 
 	private void updatePathTarget(Ship target) {
-		gShip.update(target);
+		gShip.update();
 		wwd.redrawNow();
 	}
 	
 	@Override
 	public void savePolygon() {
 		centers.add(barycenter(measureTool.getPositions()));
-		System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
+		//System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");							
 		
 		ArrayList<Position> list = new ArrayList<Position>();
 		list = (ArrayList<Position>) measureTool.getPositions();
@@ -762,7 +788,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		measureTool.setArmed(false);
 		controller.setArmed(false);
 		drawerActivated = false;
-		System.out.println("Drawer deactivated.\n");
+		aisTrackPanel.updateAisPanelStatus("Drawer deactivated");
 		savedMeasureTool.add(measureTool);	
 		nbPolygon++;
 		controller = new MeasureToolController();
@@ -776,7 +802,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		polygonLayer.setName("Polygon#" + nbPolygon);
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
 		layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
-		System.out.println("New polygon (polygon#" + nbPolygon +") ready to be drawn.\n");
+		aisTrackPanel.updateAisPanelStatus("New polygon (polygon#" + nbPolygon +") ready to be drawn");
 	}
 	
 	@Override
@@ -802,7 +828,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				} finally {
 				//close file
 				   try {writer.close();} catch (Exception ex) {}
-				   System.err.println(savedPolygons.size()+" polygons saved successfully.");
+				   aisTrackPanel.updateAisPanelStatus(savedPolygons.size()+" polygons saved successfully");
 				}
 
 	}
@@ -843,13 +869,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
 				savedMeasureTool.add(mt);
 				centers.add(barycenter(mt.getPositions()));
-				System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");
+				//System.out.println("Polygon center position is lat : " + centers.getLast().getLatitude().getDegrees() + " lon : " + centers.getLast().getLongitude().getDegrees() + " alt : " + centers.getLast().getAltitude() +"\n");
 				ArrayList<Position> list1 = new ArrayList<Position>();
 				list1 = (ArrayList<Position>) mt.getPositions();
 				savedPolygons.add(list1);
 				mt.setArmed(false);
 				mtc.setArmed(false);
-				System.out.println("New polygon (polygon#" + nbPolygon +") loaded.\n");
+				aisTrackPanel.updateAisPanelStatus("New polygon (polygon#" + nbPolygon +") loaded");
 				i++;
 			}
 	 
@@ -866,7 +892,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.err.println(i + " polygons loaded successfully.");	
+		aisTrackPanel.updateAisPanelStatus(i + " polygons loaded successfully");	
 	}
 	
 	@Override
@@ -889,20 +915,20 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				} finally {
 				//close file
 				   try {writer.close();} catch (Exception ex) {}
-				   System.err.println("Custom path saved successfully.");
+				   aisTrackPanel.updateAisPanelStatus("Custom path saved successfully");
 				}
 				
 		} 
 		
 		else {
-			System.err.println("Please activate path before saving it.");
+			aisTrackPanel.updateAisPanelStatus("Please activate path before saving it");
 		}
 
 	}
 	
 	@Override
 	public void loadPath() {
-		// chargement de la trajectoire path sauveagrdée
+		// chargement de la trajectoire path sauvegardée
 		String csvFile = "data/saved/savedPath.csv";
 		BufferedReader br = null;
 		String line = "";
@@ -940,32 +966,32 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.err.println("Path loaded successfully.\n");	
+		aisTrackPanel.updateAisPanelStatus("Path loaded successfully");	
 	}
 	
 	
 	@Override
 	public void polyShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-		System.out.println("Polygon shape activated.\n");
+		aisTrackPanel.updateAisPanelStatus("Polygon shape activated");
 	}
 	
 	@Override
 	public void ellipseShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_ELLIPSE);
-		System.out.println("Ellipse shape activated.\n");
+		aisTrackPanel.updateAisPanelStatus("Ellipse shape activated");
 	}
 	
 	@Override
 	public void circleShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE);
-		System.out.println("Circle shape activated.\n");
+		aisTrackPanel.updateAisPanelStatus("Circle shape activated");
 	}
 	
 	@Override
 	public void quadShapeOn() {
 		measureTool.setMeasureShapeType(MeasureTool.SHAPE_QUAD);
-		System.out.println("Quad shape activated.\n");
+		aisTrackPanel.updateAisPanelStatus("Quad shape activated");
 	}
 	
 	@Override
@@ -978,18 +1004,18 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			controller.setFreeHandMinSpacing(spacing);
 			measureTool.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
 			freeHandActivated = true;
-			System.out.println("Free hand mode activated.\n");
+			aisTrackPanel.updateAisPanelStatus("Free hand mode activated");
 			if (altitude != savedAltitude) {
 				savedAltitude = altitude;
-				System.out.println("Eye altitude : " + altitude);
-				System.out.println("Points spacing : " + spacing + "\n");
+				aisTrackPanel.updateAisPanelStatus("Eye altitude : " + altitude);
+				aisTrackPanel.updateAisPanelStatus("Points spacing : " + spacing);
 			}
 		}
 		
 		else {
 			controller.setFreeHand(false);
 			freeHandActivated = false;
-			System.out.println("Free hand mode deactivated.\n");
+			aisTrackPanel.updateAisPanelStatus("Free hand mode deactivated");
 		}	
 	}
 	
@@ -997,7 +1023,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void createCpaZone() {
 		dmp.setArmed(true);
 		dmpController.setArmed(true);
-		System.out.println("CPA zone ready to be drawn.\n");
+		aisTrackPanel.updateAisPanelStatus("CPA zone ready to be drawn");
 	}
 	
 	@Override
@@ -1013,7 +1039,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			dmpLayer.setName("CPA zone " + yards + " yards");
 			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
 			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			System.out.println("CPA zone " + yards + " yards activated.\n");
+			aisTrackPanel.updateAisPanelStatus("CPA zone " + yards + " yards activated");
 		}
 	}
 	
@@ -1035,7 +1061,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
 			dmp.setArmed(false);
 			dmpController.setArmed(false);
-			System.out.println("CPA zone activated.\n");
+			aisTrackPanel.updateAisPanelStatus("CPA zone activated");
 		}
 	}
 	
@@ -1122,8 +1148,23 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				}
 			}
 		}
-		System.err.println("Reading file done (" + aisShips.size() + " ships in database)" );
 		//for (Ship s : aisShips) {System.out.println(s.toString());}
 	}
+	
+	private void addPanelController() {
+        Platform.runLater(() -> {
+        	Date date = new Date();
+        	aisTrackPanel = new TrackPanel(KeyCode.T, KeyCombination.CONTROL_DOWN);
+            aisTrackPanel.setTranslateX(150);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTrackPanel);
+            guiAgentServices.getRoot().getChildren().add(aisTrackPanel);
+            aisTrackPanel.setScale(1.0);
+            aisTrackPanel.setVisible(true);
+            
+            aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size());
+            aisTrackPanel.updateAisPanelStatus("Reading file done (" + aisShips.size() + " ships in database)");
+        });
+        
+    }
 	
 }

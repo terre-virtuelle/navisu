@@ -5,33 +5,21 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl;
 
-import gov.nasa.worldwind.AbstractSceneController;
-import gov.nasa.worldwind.SceneController;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfaceText;
 import gov.nasa.worldwind.util.WWUtil;
-import gov.nasa.worldwindx.examples.util.SectorSelector;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -44,10 +32,10 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.view.targets.GShip;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.Shape;
+import bzh.terrevirtuelle.navisu.instruments.common.view.targets.impl.Shape_4;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotter;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
 
@@ -225,6 +213,8 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 	private void createTarget(Ship target) {
 		gShip = new GShip(target);
+		gShip.update(0);
+		target.setShipType(80);
 		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
 			Renderable[] renderables = gShip.getRenderables();
 			for (Renderable r : renderables) {
@@ -237,7 +227,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 	}
 
 	private void updateTarget(Ship target) {
-		gShip.update(target);
+		gShip.update();
 		wwd.redrawNow();
 	}
 

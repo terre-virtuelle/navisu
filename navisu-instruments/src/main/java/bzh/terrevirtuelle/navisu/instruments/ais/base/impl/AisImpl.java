@@ -97,6 +97,7 @@ public class AisImpl
     ComponentEventSubscribe<AIS03Event> ais3ES;
     ComponentEventSubscribe<AIS04Event> ais4ES;
     ComponentEventSubscribe<AIS05Event> ais5ES;
+    int i = 0;
 
     public AisImpl() {
     }
@@ -367,7 +368,10 @@ public class AisImpl
                         } else {
                             name = " navire " + name;
                         }
-                        speakerServices.read("Perte d'une cible A I ES ! " + name);
+                        if (i < 1000) {
+                            speakerServices.read("Perte d'une cible A I ES ! " + name);
+                            i++;
+                        }  
                     }
                     return _item;
                 }).map((_item) -> {

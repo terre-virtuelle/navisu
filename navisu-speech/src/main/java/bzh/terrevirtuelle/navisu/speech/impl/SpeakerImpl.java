@@ -20,20 +20,24 @@ import t2s.son.LecteurTexte;
 public class SpeakerImpl
         implements Speaker, SpeakerServices, ComponentState {
 
-    LecteurTexte lecteur;
+    LecteurTexte reader;
+    String text;
 
     @Override
     public void componentInitiated() {
-        lecteur = new LecteurTexte();
+        reader = new LecteurTexte();
     }
 
     @Override
     public void read(String text) {
+        this.text = text;
+        if (this.text.contains("/")) {
+            this.text = text.replace("/", "");
+        }
         Executors.newSingleThreadExecutor().execute(() -> {
-            lecteur.setTexte(text);
-            lecteur.playAll();
+            reader.setTexte(this.text);
+            reader.playAll();
         });
-        // new Reader(text).start();
     }
 
     @Override
@@ -42,20 +46,5 @@ public class SpeakerImpl
 
     @Override
     public void componentStopped() {
-    }
-
-    public class Reader extends Thread {
-
-        private final String str;
-
-        public Reader(String str) {
-            this.str = str;
-        }
-
-        @Override
-        public void run() {
-            lecteur.setTexte(str);
-            lecteur.playAll();
-        }
     }
 }
