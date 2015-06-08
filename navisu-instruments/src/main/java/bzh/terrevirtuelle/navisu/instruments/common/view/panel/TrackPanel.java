@@ -139,44 +139,47 @@ public class TrackPanel
         timeStamp.setText(time);
         timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
-    	String[] tabNames = names.getText().split("\n");
-    	int nbNames = tabNames.length;
-    	String resu = "";
+        String[] tabNames = null;
+        tabNames = names.getText().split("\n");
+        int nbNames = tabNames.length;
+        String resu = "";
         if (nbNames==50) {
-        	for (int i=1;i<nbNames;i++) {
-        		resu = resu + tabNames[i] + "\n";
-        	}
-        	names.setText(resu);
+            for (int i=1;i<nbNames;i++) {
+                resu = resu + tabNames[i] + "\n";
+            }
+            names.setText(resu);
         }
         names.appendText(name + "\n");
     }
-    
+   
     public void updateAisPanelMmsi(String time, int ships, int mmsi) {
         timeStamp.setText(time);
         timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
-    	String[] tabMmsis = mmsis.getText().split("\n");
-    	int nbMmsis = tabMmsis.length;
-    	String resu = "";
+        String[] tabMmsis = null;
+        tabMmsis = mmsis.getText().split("\n");
+        int nbMmsis = tabMmsis.length;
+        String resu = "";
         if (nbMmsis==50) {
-        	for (int i=1;i<nbMmsis;i++) {
-        		resu = resu + tabMmsis[i] + "\n";
-        	}
-        	mmsis.setText(resu);
+            for (int i=1;i<nbMmsis;i++) {
+                resu = resu + tabMmsis[i] + "\n";
+            }
+            mmsis.setText(resu);
         }
         mmsis.appendText(mmsi + "\n");
     }
-    
+   
     public void updateAisPanelStatus(String message) {
         timeStamp.setFill(color);
-        int nbLines = status.getText().split("\n").length;
-        String[] tabLines = status.getText().split("\n");
+        String[] tabLines = null;
+        tabLines = status.getText().split("\n");
+        int nbLines = tabLines.length;
         String resu = "";
         if (nbLines==100) {
-        	for (int i=1;i<nbLines;i++) {
-        		resu = resu + tabLines[i] + "\n";
-        	}
-        	status.setText(resu);
+            for (int i=1;i<nbLines;i++) {
+                resu = resu + tabLines[i] + "\n";
+            }
+            status.setText(resu);
         }
         status.appendText(message + "\n");
     }
