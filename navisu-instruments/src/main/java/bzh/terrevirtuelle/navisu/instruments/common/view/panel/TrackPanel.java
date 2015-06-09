@@ -117,13 +117,16 @@ public class TrackPanel
     }
 
     public void updateAisPanelShips(String time, int ships) {
-        timeStamp.setText(time);
+    	Platform.runLater(() -> {
+    	timeStamp.setText(time);
         timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
+    	});
     }
     
     public void updateAisPanelCount(String time, int ships, int count) {
-        timeStamp.setText(time);
+    	Platform.runLater(() -> {
+    	timeStamp.setText(time);
         if (debut) {
         	color = timeStamp.getFill();
         	debut = false;
@@ -133,10 +136,12 @@ public class TrackPanel
         }
         shipsInSight.setText(Integer.toString(ships));
         countOfAisShipsReceived.setText(Integer.toString(count));
+    	});
     }
     
     public void updateAisPanelName(String time, int ships, String name) {
-        timeStamp.setText(time);
+    	Platform.runLater(() -> {
+    	timeStamp.setText(time);
         timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
         String[] tabNames = null;
@@ -150,10 +155,12 @@ public class TrackPanel
             names.setText(resu);
         }
         names.appendText(name + "\n");
+    	});
     }
    
     public void updateAisPanelMmsi(String time, int ships, int mmsi) {
-        timeStamp.setText(time);
+    	Platform.runLater(() -> {
+    	timeStamp.setText(time);
         timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
         String[] tabMmsis = null;
@@ -167,10 +174,12 @@ public class TrackPanel
             mmsis.setText(resu);
         }
         mmsis.appendText(mmsi + "\n");
+    	});
     }
    
     public void updateAisPanelStatus(String message) {
-        timeStamp.setFill(color);
+    	Platform.runLater(() -> {
+    	timeStamp.setFill(color);
         String[] tabLines = null;
         tabLines = status.getText().split("\n");
         int nbLines = tabLines.length;
@@ -182,6 +191,7 @@ public class TrackPanel
             status.setText(resu);
         }
         status.appendText(message + "\n");
+    	});
     }
     
 }
