@@ -91,16 +91,16 @@ public class TrackPanel
             @Override
             public void changed(ObservableValue<?> observable, Object oldValue,
                     Object newValue) {
-                names.setScrollTop(Double.MIN_VALUE); //this will scroll to the top
-                //use Double.MAX_VALUE to scroll to the bottom
+                names.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
+                //use Double.MIN_VALUE to scroll to the top
             }
         });
         mmsis.textProperty().addListener(new ChangeListener<Object>() {
             @Override
             public void changed(ObservableValue<?> observable, Object oldValue,
                     Object newValue) {
-                mmsis.setScrollTop(Double.MIN_VALUE); //this will scroll to the top
-                //use Double.MIN_VALUE to scroll to the bottom
+                mmsis.setScrollTop(Double.MAX_VALUE); //this will scroll to the bottom
+                //use Double.MIN_VALUE to scroll to the top
             }
         });
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
@@ -117,13 +117,16 @@ public class TrackPanel
     }
 
     public void updateAisPanelShips(String time, int ships) {
-        timeStamp.setText(time);
+    	Platform.runLater(() -> {
+    	timeStamp.setText(time);
         timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
+    	});
     }
     
     public void updateAisPanelCount(String time, int ships, int count) {
-        timeStamp.setText(time);
+    	Platform.runLater(() -> {
+    	timeStamp.setText(time);
         if (debut) {
         	color = timeStamp.getFill();
         	debut = false;
@@ -133,52 +136,62 @@ public class TrackPanel
         }
         shipsInSight.setText(Integer.toString(ships));
         countOfAisShipsReceived.setText(Integer.toString(count));
+    	});
     }
     
     public void updateAisPanelName(String time, int ships, String name) {
-        timeStamp.setText(time);
+    	Platform.runLater(() -> {
+    	timeStamp.setText(time);
         timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
-    	String[] tabNames = names.getText().split("\n");
-    	int nbNames = tabNames.length;
-    	String resu = "";
-        if (nbNames==3) {
-        	for (int i=1;i<nbNames;i++) {
-        		resu = resu + tabNames[i] + "\n";
-        	}
-        	names.setText(resu);
+        String[] tabNames = null;
+        tabNames = names.getText().split("\n");
+        int nbNames = tabNames.length;
+        String resu = "";
+        if (nbNames==50) {
+            for (int i=1;i<nbNames;i++) {
+                resu = resu + tabNames[i] + "\n";
+            }
+            names.setText(resu);
         }
         names.appendText(name + "\n");
+    	});
     }
-    
+   
     public void updateAisPanelMmsi(String time, int ships, int mmsi) {
-        timeStamp.setText(time);
+    	Platform.runLater(() -> {
+    	timeStamp.setText(time);
         timeStamp.setFill(color);
         shipsInSight.setText(Integer.toString(ships));
-    	String[] tabMmsis = mmsis.getText().split("\n");
-    	int nbMmsis = tabMmsis.length;
-    	String resu = "";
-        if (nbMmsis==3) {
-        	for (int i=1;i<nbMmsis;i++) {
-        		resu = resu + tabMmsis[i] + "\n";
-        	}
-        	mmsis.setText(resu);
+        String[] tabMmsis = null;
+        tabMmsis = mmsis.getText().split("\n");
+        int nbMmsis = tabMmsis.length;
+        String resu = "";
+        if (nbMmsis==50) {
+            for (int i=1;i<nbMmsis;i++) {
+                resu = resu + tabMmsis[i] + "\n";
+            }
+            mmsis.setText(resu);
         }
         mmsis.appendText(mmsi + "\n");
+    	});
     }
-    
+   
     public void updateAisPanelStatus(String message) {
-        timeStamp.setFill(color);
-        int nbLines = status.getText().split("\n").length;
-        String[] tabLines = status.getText().split("\n");
+    	Platform.runLater(() -> {
+    	timeStamp.setFill(color);
+        String[] tabLines = null;
+        tabLines = status.getText().split("\n");
+        int nbLines = tabLines.length;
         String resu = "";
-        if (nbLines==10) {
-        	for (int i=1;i<nbLines;i++) {
-        		resu = resu + tabLines[i] + "\n";
-        	}
-        	status.setText(resu);
+        if (nbLines==100) {
+            for (int i=1;i<nbLines;i++) {
+                resu = resu + tabLines[i] + "\n";
+            }
+            status.setText(resu);
         }
         status.appendText(message + "\n");
+    	});
     }
     
 }

@@ -1311,7 +1311,7 @@
                         </Group>
                     </children>
                 </Group>
-            <Group fx:id="aisinfopanel" layoutY="-100.0" visible="false">
+            <Group fx:id="aisinfopanel" layoutY="-100.0">
                <children>
                       <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
                 </Rectangle>
@@ -1407,46 +1407,13 @@
             <Group fx:id="aisbuttonpanel" layoutY="-100.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0" />
-                  <Text layoutX="800.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="MENU" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Button layoutX="810.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="Button1" />
-                  <Button layoutX="900.0" layoutY="150.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="CUSTOM" />
-                  <Button layoutX="810.0" layoutY="670.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
-                  <Button layoutX="900.0" layoutY="670.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="OFF&#10;CENTER" textAlignment="CENTER" />
-                  <Button layoutX="810.0" layoutY="740.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
-                  <Button layoutX="900.0" layoutY="740.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
-                  <Button layoutX="810.0" layoutY="810.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
-                  <Button layoutX="900.0" layoutY="810.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="CANCEL" textAlignment="CENTER" />
-                  <Button layoutX="810.0" layoutY="880.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" styleClass="radar-buttonlabel" text="ENTER" textAlignment="CENTER" />
-                  <MenuButton layoutX="810.0" layoutY="360.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="EBL" textAlignment="CENTER">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="1" />
-                      <MenuItem mnemonicParsing="false" text="2" />
-                    </items>
-                  </MenuButton>
-                  <MenuButton contentDisplay="RIGHT" layoutX="900.0" layoutY="360.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="VRM" textAlignment="CENTER">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="1" />
-                        <MenuItem mnemonicParsing="false" text="2" />
-                     </items>
-                  </MenuButton>
-                  <MenuButton layoutX="810.0" layoutY="500.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="TARGET ALARM" textAlignment="CENTER">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="1" />
-                        <MenuItem mnemonicParsing="false" text="2" />
-                     </items>
-                  </MenuButton>
-                  <MenuButton layoutX="900.0" layoutY="500.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="TARGET TYPE" textAlignment="CENTER">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="IN" />
-                        <MenuItem mnemonicParsing="false" text="OUT" />
-                     </items>
-                  </MenuButton>
+                  <ToggleButton fx:id="toggle2info" contentDisplay="CENTER" layoutX="940.0" layoutY="110.0" mnemonicParsing="false" styleClass="aisvalue" text="toggle" />
+                  <Text layoutX="800.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="BUTTONS" textAlignment="CENTER" wrappingWidth="200.0" />
+                  <Button layoutX="850.0" layoutY="200.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="aisname" text="Button1" />
+                  <Button layoutX="850.0" layoutY="280.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="aisname" text="Button2" />
+                  <Button layoutX="850.0" layoutY="360.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" styleClass="aisname" text="Button1" />
                </children>
             </Group>
-            <Slider fx:id="scaleSlider1" blockIncrement="100.0" layoutX="845.0" layoutY="140.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
-            <Text layoutX="810.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="RANGE" textAlignment="CENTER" wrappingWidth="80.0" />
-            <Slider fx:id="scaleSlider11" blockIncrement="100.0" layoutX="940.0" layoutY="140.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
-            <Text layoutX="900.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="ZOOM" textAlignment="CENTER" wrappingWidth="80.0" />
             </children>
         </Group>
       <Group>
