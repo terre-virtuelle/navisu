@@ -139,7 +139,7 @@ public class AisRadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        aisinfopanel.setVisible(true);
+        aisinfopanel.setVisible(false);
         aisbuttonpanel.setVisible(true);
         radar.setOpacity(0.6);
         quit.setOnMouseClicked((MouseEvent event) -> {

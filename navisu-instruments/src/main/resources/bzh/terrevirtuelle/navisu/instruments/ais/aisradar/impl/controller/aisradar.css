@@ -7,27 +7,39 @@
 
 *{
     -fx-base : #143b28;
+    -fx-toggle-color: #254b88;
     -fx-base-trans10 : #143b2810;
     -fx-base-trans20 : #143b2820;
     -fx-line-base : #04fff2;
     -fx-font-family: Navisu, "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
     -fx-color-contours: #70bbbf;
+    /*-fx-toggle-body-color: linear-gradient(to bottom,
+            ladder(
+                -fx-color,
+                derive(-fx-color,8%) 75%,
+                derive(-fx-color,10%) 80%
+            ),
+            derive(-fx-color,-8%));
+    */
+
 }
+/*******************************************************************************
+ *                                                                             *
+ * Infos et valeurs AIS                                                        *
+ *                                                                             *
+ ******************************************************************************/
 .aisvalue{
     -fx-font: 14px "Roboto Cn";
     -fx-fill : #fff900;
-    /*-fx-font-weight: bold;*/
 }
 .aislabel{
     -fx-font: 14px "Roboto Cn";
     -fx-fill : -fx-line-base;
-    /*-fx-font-weight: bold;*/
 }
 .aisname{
     -fx-font: 18px "Roboto Cn";
     -fx-fill : #fff900;
-    /*-fx-font-weight: bold;*/
     -fx-underline : true;
 }
 .info-text{
@@ -39,12 +51,12 @@
  * cadre                                                                *
  *                                                                             *
  ******************************************************************************/
- .ais-panel{
+.ais-panel{
     -fx-border-radius: 20 20 20 20;
     -fx-background-radius: 20 20 20 20;
     -fx-background-color: -fx-base;
     -fx-stroke: -fx-line-base;
-    }
+}
 .foot-pane {
     -fx-border-radius: 0 0 20 20;
     -fx-background-radius: 0 0 20 20;
@@ -69,6 +81,105 @@
     -fx-border-radius: 0 0 0 0;
     -fx-background-radius: 0 0 0 0;
     -fx-background-color: -fx-base;    
+}
+/*******************************************************************************
+ *                                                                             *
+ * radar circles and lines                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.radar-circle, .radar-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: -fx-base-trans10;  
+}
+.radar-line, .radar-ticks {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 2;
+}
+.radar-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.radar-degrees{
+    -fx-font: 20pt "Roboto Cn";
+    -fx-fill:-fx-line-base;
+}
+.radar-screen {
+    /*
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 4px;
+    */
+    -fx-arc-height:30;
+    -fx-arc-width:30;
+    -fx-fill: #143b28;    
+}
+.radar-info-pane {
+    -fx-stroke: -fx-line-base;
+    -fx-arc-height:20;
+    -fx-arc-width:20;
+    -fx-fill: -fx-base-trans20;
+}
+.radar-buttonlabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.radar-buttonlabel-nlines{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.radar-togglebutton{
+    -fx-background-color: linear-gradient(to bottom,
+        ladder(
+        -fx-toggle-color,
+        derive(-fx-toggle-color,8%) 75%,
+        derive(-fx-toggle-color,10%) 80%
+        ),
+        derive(-fx-toggle-color,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : whitesmoke;
+    -fx-alignment: CENTER;
+}
+/*******************************************************************************
+ *                                                                             *
+ * Slider                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+.slider .thumb {
+    -fx-background-color:   -fx-line-base;
+    -fx-background-insets: 2;
+    -fx-background-radius: 1.0em; /* makes sure this remains circular */
+    -fx-padding: 0.583333em;  /* 7 */
+    -fx-effect: dropshadow(two-pass-box , rgba(0, 0, 0, 0.1), 5, 0.0 , 0, 2);
+}
+.slider:focused .thumb {
+    -fx-background-radius: 1.0em; /* makes sure this remains circular */
+
+}
+.slider .track {
+    -fx-background-color:  #04fff2, -fx-line-base;
+    -fx-background-insets: 2, 1;
+    -fx-background-radius: 0.25em, 0.166667em; /* 3 3 2 */
+    -fx-padding: 0.25em; /* 3 */
+}
+.slider:vertical .track {
+    -fx-background-color: -fx-line-base;
+}
+.slider .axis {
+    -fx-tick-label-fill: derive(-fx-background, 30%);
+    -fx-tick-length: 5px;
+    -fx-minor-tick-length: 3px;
+    -fx-border-color: null;
+}
+.sliderlabel{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+    /*-fx-font-weight: bold;*/
 }
 
 /*******************************************************************************
@@ -128,81 +239,4 @@
  ******************************************************************************/
 .grid-pane {
     -fx-background-color: -fx-base;  
-}
-
-
-/*******************************************************************************
- *                                                                             *
- * Slider                                                                      *
- *                                                                             *
- ******************************************************************************/
-
-.slider .thumb {
-    -fx-background-color:   -fx-line-base;
-    -fx-background-insets: 2;
-    -fx-background-radius: 1.0em; /* makes sure this remains circular */
-    -fx-padding: 0.583333em;  /* 7 */
-    -fx-effect: dropshadow(two-pass-box , rgba(0, 0, 0, 0.1), 5, 0.0 , 0, 2);
-}
-.slider:focused .thumb {
-    -fx-background-radius: 1.0em; /* makes sure this remains circular */
-
-}
-.slider .track {
-    -fx-background-color:  #04fff2, -fx-line-base;
-    -fx-background-insets: 2, 1;
-    -fx-background-radius: 0.25em, 0.166667em; /* 3 3 2 */
-    -fx-padding: 0.25em; /* 3 */
-}
-.slider:vertical .track {
-    -fx-background-color: -fx-line-base;
-}
-.slider .axis {
-    -fx-tick-label-fill: derive(-fx-background, 30%);
-    -fx-tick-length: 5px;
-    -fx-minor-tick-length: 3px;
-    -fx-border-color: null;
-}
-.sliderlabel{
-    -fx-font: 12px "Roboto Cn";
-    -fx-fill : -fx-line-base;
-    /*-fx-font-weight: bold;*/
-}
-/*******************************************************************************
- *                                                                             *
- * radar circles and lines                                                     *
- *                                                                             *
- ******************************************************************************/
-
-.radar-circle, .radar-line{
-    -fx-stroke: -fx-line-base;
-    -fx-fill: -fx-base-trans10;  
-}
-.radar-line, .radar-ticks {
-    -fx-stroke: -fx-line-base;
-    -fx-stroke-width: 2;
-}
-.radar-ticks10{
-    -fx-stroke: -fx-line-base;
-    -fx-stroke-width: 3;
-}
-.radar-degrees{
-  -fx-font: 20pt "Roboto Cn";
-  -fx-font-weight: bold;
-  -fx-fill:-fx-line-base; 
-}
-.radar-screen {
-    /*
-    -fx-stroke: -fx-line-base;
-    -fx-stroke-width: 4px;
-    */
-    -fx-arc-height:30;
-    -fx-arc-width:30;
-    -fx-fill: #143b28;    
-}
-.radar-info-pane {
-    -fx-stroke: -fx-line-base;
-    -fx-arc-height:20;
-    -fx-arc-width:20;
-    -fx-fill: -fx-base-trans20;
 }
