@@ -7,12 +7,22 @@
 
 *{
     -fx-base : #143b28;
+    -fx-toggle-color: #254b88;
     -fx-base-trans10 : #143b2810;
     -fx-base-trans20 : #143b2820;
     -fx-line-base : #04fff2;
     -fx-font-family: Navisu, "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
     -fx-color-contours: #70bbbf;
+    /*-fx-toggle-body-color: linear-gradient(to bottom,
+            ladder(
+                -fx-color,
+                derive(-fx-color,8%) 75%,
+                derive(-fx-color,10%) 80%
+            ),
+            derive(-fx-color,-8%));
+    */
+
 }
 /*******************************************************************************
  *                                                                             *
@@ -116,6 +126,23 @@
 .radar-buttonlabel-nlines{
     -fx-font: 12px "Roboto Cn";
     -fx-fill : whitesmoke;
+}
+.radar-togglebutton{
+    -fx-background-color: linear-gradient(to bottom,
+        ladder(
+        -fx-toggle-color,
+        derive(-fx-toggle-color,8%) 75%,
+        derive(-fx-toggle-color,10%) 80%
+        ),
+        derive(-fx-toggle-color,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : whitesmoke;
+    -fx-alignment: CENTER;
 }
 /*******************************************************************************
  *                                                                             *
