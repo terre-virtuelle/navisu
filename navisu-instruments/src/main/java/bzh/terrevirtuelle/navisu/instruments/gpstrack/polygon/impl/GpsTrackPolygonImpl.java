@@ -387,7 +387,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
 			}
 		
-		if (count%200==0) {
+		if (count%400==0) {
 			saveShips();
 			nbSave++;
 			Date now = new Date();
@@ -488,8 +488,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			}
 			
 			if (!(isTextOn.get(i))) {
-				if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);}
-				if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
+				layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(false);
+				layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);
+				layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
+				layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
 				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
 				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
 				textOn(i);
@@ -520,6 +522,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			textOff(i);
 		}
 		
+		if (!(WWMath.isLocationInside(pos, list.get(i).getPositions())) && list.get(i) != null) {
+			if (shipDetected[i]) {
+				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (i+1));
+				shipDetected[i] = false;
+			}
+		}
+		
 		}
 	}
 	
@@ -538,6 +547,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				putTextOn = true;
 				index = targets.indexOf(target);
 			}
+			
+			if (!(WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions())) && tool != null) {
+				if (detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)]) {
+					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (savedMeasureTool.indexOf(tool)+1));
+					detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)] = false;
+				}
+			}
+			
 		}
 			
 		if (!(isTextOnAis.get(savedMeasureTool.indexOf(tool))) && putTextOn) {
@@ -682,6 +699,11 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
 			}
 			
+			if (!(WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions())) && dmp != null && firstDetection && aisShipDetected[targets.indexOf(target)]) {
+				aisShipDetected[targets.indexOf(target)] = false;
+				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside CPA zone");
+			}
+			
 		}
 
 		if (!alarmOn && detection) {
@@ -752,6 +774,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
 		createPathTarget(pShip);
 		pathActivated = true;
+		layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);
+		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
+		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
 		aisTrackPanel.updateAisPanelStatus("Custom path activated");
 	}
 	
