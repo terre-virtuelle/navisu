@@ -13,9 +13,9 @@
     <children>
         <Group>
             <children>
-                <Pane prefHeight="473.0" prefWidth="401.0" styleClass="ais-panel">
+                <Pane prefHeight="497.0" prefWidth="401.0" styleClass="ais-panel">
                     <children>
-                        <TextArea fx:id="names" editable="false" layoutX="30.0" layoutY="122.0" prefHeight="80.0" prefWidth="335.0" styleClass="aislabel" />   
+                        <TextArea fx:id="names" editable="false" layoutX="30.0" layoutY="151.0" prefHeight="80.0" prefWidth="335.0" styleClass="aislabel" />   
                         <Slider fx:id="slider" layoutX="379.0" layoutY="34.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                         </Slider>
                         <ImageView fx:id="quit" fitHeight="20.0" fitWidth="25.0" layoutX="367.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" rotate="30.0">
@@ -39,7 +39,7 @@
                         </ImageView>
                         <Group layoutX="-7.0" layoutY="12.0">
                             <children>
-                                <Text fill="#04fff2" layoutX="29.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="AIS ships in database : ">
+                                <Text fill="#04fff2" layoutX="28.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Ships in database : ">
                                     <font>
                                         <Font name="Roboto Regular" size="14.0" />
                                     </font>
@@ -49,11 +49,11 @@
                                         <Font name="Roboto Regular" size="14.0" />
                                     </font>
                                 </Text>
-                                <Text fx:id="shipsInSight" fill="#c2f8c4" layoutX="185.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="0" textAlignment="CENTER" wrappingWidth="44.0" />
-                                <Text fx:id="countOfAisShipsReceived" fill="#c2f8c4" layoutX="185.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="0" textAlignment="CENTER" wrappingWidth="44.0" />
+                                <Text fx:id="shipsInSight" fill="#c2f8c4" layoutX="254.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="0" textAlignment="CENTER" wrappingWidth="44.0" />
+                                <Text fx:id="countOfAisShipsReceived" fill="#c2f8c4" layoutX="254.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="0" textAlignment="CENTER" wrappingWidth="44.0" />
                             </children>
                         </Group>
-                        <Text fill="#04fff2" layoutX="21.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Last ship names received : ">
+                        <Text fill="#04fff2" layoutX="21.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Ship names in database :">
                             <font>
                                 <Font name="Roboto Regular" size="14.0" />
                             </font>
@@ -65,18 +65,24 @@
                         </Text>
                     </children>
                 </Group>
-            <Text fill="#04fff2" layoutX="31.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Last ship MMSI's received : ">
+            <Text fill="#04fff2" layoutX="31.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Last ship MMSI's received : ">
                <font>
                   <Font name="Roboto Regular" size="14.0" />
                </font>
             </Text>
-            <TextArea fx:id="mmsis" editable="false" layoutX="30.0" layoutY="225.0" prefHeight="80.0" prefWidth="335.0" styleClass="aislabel" />
-            <Text fill="#04fff2" layoutX="31.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="System status :">
+            <TextArea fx:id="mmsis" editable="false" layoutX="30.0" layoutY="252.0" prefHeight="80.0" prefWidth="335.0" styleClass="aislabel" />
+            <Text fill="#04fff2" layoutX="31.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="System status :">
                <font>
                   <Font name="Roboto Regular" size="14.0" />
                </font>
             </Text>
-            <TextArea fx:id="status" editable="false" layoutX="30.0" layoutY="327.0" prefHeight="132.0" prefWidth="335.0" styleClass="aislabel" />
+            <TextArea fx:id="status" editable="false" layoutX="30.0" layoutY="354.0" prefHeight="132.0" prefWidth="335.0" styleClass="aislabel" />
+            <Text fill="#04fff2" layoutX="31.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Last ship names received : ">
+               <font>
+                  <Font name="Roboto Regular" size="14.0" />
+               </font>
+            </Text>
+            <Text fx:id="countOfNamesReceived" fill="#c2f8c4" layoutX="256.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="0" textAlignment="CENTER" wrappingWidth="44.0" />
             </children>
         </Group>
     </children>

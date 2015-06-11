@@ -51,6 +51,8 @@ public class TrackPanel
     @FXML
     public Text countOfAisShipsReceived;
     @FXML
+    public Text countOfNamesReceived;
+    @FXML
     public ImageView quit;
     @FXML
     public Slider slider;
@@ -124,7 +126,7 @@ public class TrackPanel
     	});
     }
     
-    public void updateAisPanelCount(String time, int ships, int count) {
+    public void updateAisPanelCount(String time, int ships, int count, int countOfNames) {
     	Platform.runLater(() -> {
     	timeStamp.setText(time);
         if (debut) {
@@ -136,6 +138,7 @@ public class TrackPanel
         }
         shipsInSight.setText(Integer.toString(ships));
         countOfAisShipsReceived.setText(Integer.toString(count));
+        countOfNamesReceived.setText(Integer.toString(countOfNames));
     	});
     }
     

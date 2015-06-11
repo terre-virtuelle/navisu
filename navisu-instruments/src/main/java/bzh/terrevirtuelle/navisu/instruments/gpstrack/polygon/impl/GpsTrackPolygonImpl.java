@@ -398,9 +398,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
 			aisTrackPanel.updateAisPanelStatus("Database saved (save #" + nbSave + ")");
 			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships / " + nbNamesReceived + " new names in database");
-			aisTrackPanel.updateAisPanelStatus(nbNamesDB+nbNamesReceived + " ship names in database");
 			aisTrackPanel.updateAisPanelStatus("Running for " + diffHours + " hours " + diffMinutes + " minutes " + diffSeconds + " seconds");
-			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
+			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size(), nbNamesDB+nbNamesReceived);
 			}
 		
 		if (count%5001==0) {
@@ -1166,7 +1165,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             aisTrackPanel.setScale(1.0);
             aisTrackPanel.setVisible(true);
             
-            aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size());
+            aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size(), nbNamesDB);
             aisTrackPanel.updateAisPanelStatus("Reading file done (" + aisShips.size() + " ships / " + nbNamesDB + " names in database)");
         });
         
