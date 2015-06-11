@@ -387,7 +387,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
 			}
 		
-		if (count%400==0) {
+		if (count%290==0) {
 			saveShips();
 			nbSave++;
 			Date now = new Date();
