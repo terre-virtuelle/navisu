@@ -170,6 +170,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int nbMmsiReceived = 0;
 	protected int nbNamesReceived = 0;
 	protected Date startTime;
+	protected int nbNamesDB = 0;
 
 	@Override
 	public void componentInitiated() {
@@ -396,7 +397,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
 			aisTrackPanel.updateAisPanelStatus("Database saved (save #" + nbSave + ")");
-			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships and " + nbNamesReceived + " new names in database");
+			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships / " + nbNamesReceived + " new names in database");
+			aisTrackPanel.updateAisPanelStatus(nbNamesDB + " ship names in database");
 			aisTrackPanel.updateAisPanelStatus("Running for " + diffHours + " hours " + diffMinutes + " minutes " + diffSeconds + " seconds");
 			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
 			}
@@ -1083,7 +1085,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			//Put data - if needed put the loop around more than orw of records
 			for (int j=0;j<aisShips.size();j++){
 				for (int i=0;i<6;i++) {
-			writer.write(shipMatrix[i][j]+";");}
+					writer.write(shipMatrix[i][j]+";");
+					}
 				writer.write("\r\n");
 			}
 			
@@ -1127,12 +1130,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			Ship s = new Ship();
     			s.setMMSI(Integer.parseInt(ship[0]));
     			s.setName(ship[1]);
+    			if (!ship[1].equals("")) {
+    				nbNamesDB++;
+    				}
     			//on ne charge pas les dernières positions connues des bateaux car ceux-ci ne sont peut-être plus actifs, les positions seront mises à jour à la réception de nouveaux signaux AIS (pour les bateaux actifs)
     			//s.setLatitude(Double.parseDouble(ship[2]));
     			//s.setLongitude(Double.parseDouble(ship[3]));
     			aisShips.add(s);
     			i++;
-	 
 			}
 	 
 		} catch (FileNotFoundException e) {
@@ -1162,7 +1167,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             aisTrackPanel.setVisible(true);
             
             aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size());
-            aisTrackPanel.updateAisPanelStatus("Reading file done (" + aisShips.size() + " ships in database)");
+            aisTrackPanel.updateAisPanelStatus("Reading file done (" + aisShips.size() + " ships / " + nbNamesDB + " names in database)");
         });
         
     }
