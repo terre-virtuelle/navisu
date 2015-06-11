@@ -141,7 +141,11 @@ public class AisRadarController
         }
         aisinfopanel.setVisible(false);
         aisbuttonpanel.setVisible(true);
-        radar.setOpacity(0.6);
+        Platform.runLater(() -> {
+            radar.setOpacity(0.6);
+            radar.setScaleX(0.7);
+            radar.setScaleY(0.7);
+        });
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
         });
@@ -459,9 +463,9 @@ public class AisRadarController
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTargetPanel);
             guiAgentServices.getRoot().getChildren().add(aisTargetPanel); //Par defaut le radar n'est pas visible Ctrl-A
             aisTargetPanel.setScale(1.0);
-            aisTargetPanel.setVisible(false); 
+            aisTargetPanel.setVisible(false);
         });
-        
+
     }
 
     protected final void updateAisPanel(Ship ship) {

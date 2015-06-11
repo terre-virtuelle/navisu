@@ -332,11 +332,11 @@ public class AppMain extends Application {
 
         // Test CPA zone
         //gpsTrackPlotterServices.on(); //plotter cible GPS
-        //dataServerServices.openFile("data/nmea/test5.txt"); //NMEA0183
-        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+       // dataServerServices.openFile("data/nmea/test5.txt"); //NMEA0183
+        dataServerServices.openFile("data/ais/ais.txt");  //AIS
         
         // Test cibles AIS en direct
-      dataServerServices.openGpsd("sinagot.net", 2947);
+     // dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
         
        // testDBServices.connect("data/databases/TestJDBC", "navisu", "!!navisu??");
