@@ -49,7 +49,8 @@ public class AnalyticSurfaceController {
 
     public AnalyticSurfaceController(double[] values, int lonDimension, int latDimension,
             double minLat, double maxLat, double minLon, double maxLon,
-            double minValue, double maxValue) {
+            double minValue, double maxValue, double opacity, 
+            String legendTitle, String units) {
         this.velocityField = values;
         this.analyticSurfaceLayer = new RenderableLayer();
         this.analyticSurfaceLayer.setPickEnabled(false);
@@ -59,7 +60,9 @@ public class AnalyticSurfaceController {
                 lonDimension, latDimension,
                 minValue, maxValue,
                 Sector.fromDegrees(minLat, maxLat, minLon, maxLon),
-                this.analyticSurfaceLayer);
+                this.analyticSurfaceLayer,
+                opacity,
+                legendTitle, units);
     }
 
     protected Renderable createLegendRenderable(final AnalyticSurface surface,
@@ -85,7 +88,9 @@ public class AnalyticSurfaceController {
             double minValue,
             double maxValue,
             Sector sector,
-            RenderableLayer outLayer) {
+            RenderableLayer outLayer,
+            double opacity,
+            String legendTitle, String units) {
 
         AnalyticSurface surface = new AnalyticSurface();
         surface.setSector(sector);
@@ -100,13 +105,13 @@ public class AnalyticSurfaceController {
         mixValuesOverTime(firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue, surface);
 
         AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
-        attr.setShadowOpacity(1.0);
-        attr.setInteriorOpacity(0.5);
+        //attr.setShadowOpacity(1.0);
+        attr.setInteriorOpacity(opacity);
         attr.setDrawOutline(true);
         attr.setOutlineMaterial(Material.BLACK);
         surface.setSurfaceAttributes(attr);
 
-        Format legendLabelFormat = new DecimalFormat("##.# Kt") {
+        Format legendLabelFormat = new DecimalFormat("##.#" + units) {
             @Override
             public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition) {
                 return super.format(number, result, fieldPosition);
@@ -115,7 +120,7 @@ public class AnalyticSurfaceController {
 
         AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, maxValue, minHue, maxHue,
                 AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, maxValue, legendLabelFormat),
-                AnalyticSurfaceLegend.createDefaultTitle("Wind"));
+                AnalyticSurfaceLegend.createDefaultTitle(legendTitle));
         legend.setOpacity(0.8);
         legend.setScreenLocation(new Point(950, 300));
         outLayer.addRenderable(createLegendRenderable(surface, 300, legend));

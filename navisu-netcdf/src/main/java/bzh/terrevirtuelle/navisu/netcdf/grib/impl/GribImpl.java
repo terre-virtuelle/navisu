@@ -42,11 +42,27 @@ public class GribImpl implements Grib, GribServices, ComponentState {
         this.driver = new Driver() {
 
             private static final String NAME = "Grib";
-            private static final String EXTENSION = ".grb";
+
+            private static final String EXTENSION_0 = ".grb";
+            private static final String EXTENSION_1 = ".grb.bz2";
+            private static final String EXTENSION_2 = ".grb.Z";
+            private static final String EXTENSION_3 = ".grb.zip";
+            private static final String EXTENSION_4 = ".grb.gzip";
+            private static final String EXTENSION_5 = ".grb.gz";
 
             @Override
             public boolean canOpen(String file) {
-                return file.toLowerCase().endsWith(EXTENSION);
+                boolean canOpen = false;
+                if (file.toLowerCase().endsWith(EXTENSION_0)
+                        || file.toLowerCase().endsWith(EXTENSION_1)
+                        || file.toLowerCase().endsWith(EXTENSION_2)
+                        || file.toLowerCase().endsWith(EXTENSION_3)
+                        || file.toLowerCase().endsWith(EXTENSION_4)
+                        || file.toLowerCase().endsWith(EXTENSION_5)
+                        ) {
+                    canOpen = true;
+                }
+                return canOpen;
             }
 
             @Override
@@ -64,7 +80,13 @@ public class GribImpl implements Grib, GribServices, ComponentState {
 
             @Override
             public String[] getExtensions() {
-                return new String[]{"*" + EXTENSION};
+                return new String[]{"*" + EXTENSION_0,
+                    "*" + EXTENSION_1,
+                    "*" + EXTENSION_2,
+                    "*" + EXTENSION_3,
+                    "*" + EXTENSION_4,
+                    "*" + EXTENSION_5
+                };
             }
         };
     }
@@ -85,21 +107,27 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     @Override
     public void loadFile(String path) {
         this.gribController = new GribController(path);
+        
         this.gribModel = this.gribController.getModel();
-        analyticSurfaceController 
+        
+        analyticSurfaceController
                 = new AnalyticSurfaceController(gribController.getModel().getVelocityField(),
-                getLongitudeDimension(), getLatitudeDimension(),
-                getMinLatitude(), getMaxLatitude(),
-                getMinLongitude(), getMaxLongitude(), 
-                0.0, 15.0);
+                        getLongitudeDimension(), getLatitudeDimension(),
+                        getMinLatitude(), getMaxLatitude(),
+                        getMinLongitude(), getMaxLongitude(),
+                        0.0, 15.0,
+                        0.6,
+                        "Wind", "Kt");
 
         // LOGGER.info(this.gribController.getModel().toString());
         //  LOGGER.info("######################################## CREATE LAYER #############################################");
-        // this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
+        //  this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
+        System.out.println("loadFile");
         this.layerLayerManager = (LayerManager<Layer>) ((GeoView) this.geoViewServices.getDisplayService()).getLayerManager();
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.analyticSurfaceController.getLayer()));
-    }
+   
+                }
 
     @Override
     public double[] getVelocityInMPSAtPoint(double latitude, double longitude) {
