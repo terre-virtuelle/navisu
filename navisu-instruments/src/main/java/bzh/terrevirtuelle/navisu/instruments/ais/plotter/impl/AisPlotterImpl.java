@@ -43,7 +43,7 @@ public class AisPlotterImpl
 
     @UsedService
     AisServices aisServices;
-    
+
     ComponentManager cm;
     ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
     ComponentEventSubscribe<AisCreateTargetEvent> aisCTEvent;
@@ -61,7 +61,7 @@ public class AisPlotterImpl
     protected TargetPanel aisPanelController;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
-   
+
     @Override
     public void componentInitiated() {
 
@@ -114,7 +114,7 @@ public class AisPlotterImpl
             });
             aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship updatedData) -> {
                // controller.deleteTarget(updatedData);
-               // ships.remove(updatedData.getMMSI());
+                // ships.remove(updatedData.getMMSI());
             });
 
             aisCSEvent.subscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
@@ -125,7 +125,7 @@ public class AisPlotterImpl
             });
             aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation updatedData) -> {
                // controller.deleteTarget(updatedData);
-              //  stations.remove(updatedData.getMMSI());
+                //  stations.remove(updatedData.getMMSI());
             });
         }
     }

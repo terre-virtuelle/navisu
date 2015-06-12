@@ -109,7 +109,8 @@ public class S57GlobalCatalogImpl
             }
         }
     }
-
+        
+          
     Map<String, Path> listSourceFiles(Path dir) throws IOException {
         Map<String, Path> result = new HashMap<>();
         Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
