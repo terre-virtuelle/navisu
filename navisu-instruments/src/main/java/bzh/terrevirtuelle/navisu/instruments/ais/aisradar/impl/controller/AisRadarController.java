@@ -52,6 +52,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -83,7 +84,33 @@ public class AisRadarController
     public Group aisinfopanel;
     @FXML
     public Button buttonsInfos;
-
+    @FXML
+    public Text imo;
+    @FXML
+    public Text type;
+    @FXML
+    public Text shipname;
+    @FXML
+    public Text mmsi;
+    @FXML
+    public Text xlength;
+    @FXML
+    public Text draught;
+    @FXML
+    public Text cog;
+    @FXML
+    public Text sog;
+    @FXML
+    public Text destination;
+    @FXML
+    public Text callSign;
+    @FXML
+    public Text width;
+    @FXML
+    public Text latitude;
+    @FXML
+    public Text longitude;
+   
     AisServices aisServices;
     boolean first = true;
     final Rotate rotationTransform = new Rotate(0, 0, 0);
