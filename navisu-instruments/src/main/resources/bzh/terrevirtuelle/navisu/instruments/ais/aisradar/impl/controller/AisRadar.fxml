@@ -1311,7 +1311,7 @@
                         </Group>
                     </children>
                 </Group>
-            <Group fx:id="aisinfopanel" layoutY="-100.0" visible="false">
+            <Group fx:id="aisinfopanel" layoutY="-100.0">
                <children>
                       <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
                 </Rectangle>
@@ -1396,7 +1396,6 @@
                   </Text>
                   <Text fx:id="latitude" fill="#c2f8c4" layoutX="800.0" layoutY="840.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="latitude" textAlignment="CENTER" wrappingWidth="200.0" />
                   <Text fx:id="longitude" fill="#c2f8c4" layoutX="800.0" layoutY="900.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="longitude" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <ToggleButton fx:id="toggle2info1" contentDisplay="CENTER" layoutX="940.0" layoutY="110.0" mnemonicParsing="false" styleClass="aisvalue" text="toggle" />
                </children>
             </Group>
                 <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="100.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15" styleClass="screen-pane" visible="true">
@@ -1441,17 +1440,17 @@
                      </items>
                   </MenuButton>
                   <Button layoutX="824.0" layoutY="130.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="152.0" styleClass="radar-buttonlabel" text="MENU" />
+                  <Slider fx:id="scaleSlider1" blockIncrement="100.0" layoutX="845.0" layoutY="300.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
+                  <Text layoutX="810.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="RANGE" textAlignment="CENTER" wrappingWidth="80.0" />
+                  <Slider fx:id="scaleSlider11" blockIncrement="100.0" layoutX="945.0" layoutY="300.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
+                  <Text layoutX="910.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="ZOOM" textAlignment="CENTER" wrappingWidth="80.0" />
                   </children>
             </Group>
-            <Slider fx:id="scaleSlider1" blockIncrement="100.0" layoutX="845.0" layoutY="200.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
-            <Text layoutX="810.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="RANGE" textAlignment="CENTER" wrappingWidth="80.0" />
-            <Slider fx:id="scaleSlider11" blockIncrement="100.0" layoutX="940.0" layoutY="200.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
-            <Text layoutX="910.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="ZOOM" textAlignment="CENTER" wrappingWidth="80.0" />
             </children>
         </Group>
       <Group>
          <children>
-             <Button fx:id="buttonsInfos" layoutX="950.0" layoutY="25.0" prefHeight="15.0" prefWidth="100.0" styleClass="radar-togglebutton" text="Buttons/Infos"/>
+             <Button fx:id="buttonsInfos" layoutX="950.0" layoutY="25.0" prefHeight="15.0" prefWidth="100.0" styleClass="radar-togglebutton" text="Buttons/Infos" />
                 <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="1091.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5">
                     <image>
                         <Image url="@quit.png" />
