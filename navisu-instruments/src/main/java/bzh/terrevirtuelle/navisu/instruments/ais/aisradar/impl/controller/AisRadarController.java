@@ -41,6 +41,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -80,6 +81,8 @@ public class AisRadarController
     public Group aisbuttonpanel;
     @FXML
     public Group aisinfopanel;
+    @FXML
+    public Button buttonsInfos;
 
     AisServices aisServices;
     boolean first = true;
@@ -148,6 +151,10 @@ public class AisRadarController
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
+        });
+        buttonsInfos.setOnMouseClicked((MouseEvent event) -> {
+            aisinfopanel.setVisible(aisbuttonpanel.isVisible());
+            aisbuttonpanel.setVisible(!aisinfopanel.isVisible());
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
