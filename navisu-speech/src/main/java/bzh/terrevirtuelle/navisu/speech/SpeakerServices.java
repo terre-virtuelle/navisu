@@ -19,7 +19,7 @@ public interface SpeakerServices
 
     void read(String text);
 
-    void read(String text, String language); // ENGLISH, FRENCH,...
+    void read(String text, String locale); //fr_FR, en_US, en_GB, ...
 
-    void read(String rep, String filename, String language);
+    void read(String rep, String filename, String locale);// Default locale if locale is null
 }
