@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.speech;
 
+import java.io.InputStream;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -17,4 +18,8 @@ public interface SpeakerServices
         extends ComponentService {
 
     void read(String text);
+
+    void read(String text, String language); // ENGLISH, FRENCH,...
+
+    void read(String rep, String filename, String language);
 }
