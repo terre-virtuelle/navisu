@@ -244,7 +244,8 @@ public class DockManagerImpl<TrackTool>
     private void createMeteoRadialWidget() {
         meteoRadialMenu = RadialMenuBuilder.create()
                 .centralImage("meteoradialmenu150.png")
-                .createNode(0, "file.png", 0, "vector.png", 0, "grib.png", (e) -> open("Grib", ".grb"))
+                .createNode(0, "file.png", 0, "vector.png", 0, "grib.png",
+                        (e) -> open("Grib", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2"))
                 .build();
 
         meteoRadialMenu.setLayoutX((width / 2) - 30);
@@ -307,36 +308,34 @@ public class DockManagerImpl<TrackTool>
         root.getChildren().add(systemRadialMenu);
         radialMenus.add(systemRadialMenu);
     }
-     //--------------Tracks------------------
+
+    //--------------Tracks------------------
+
     private void createTracksRadialWidget() {
         tracksRadialMenu = RadialMenuBuilder.create()
                 .centralImage("tracksradialmenu150.png")
-                //.createNode(0, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
-                //.createNode(0, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
-                
+                .createNode(0, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
+                .createNode(0, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
                 .createNode(1, "shape.png", 0, "shape.png", 0, "polyShapeOn.png", (e) -> polyShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 1, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 2, "circleShapeOn.png", (e) -> circleShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 3, "quadShapeOn.png", (e) -> quadShapeOn())
-                .createNode(1, "shape.png", 0, "shape.png", 4, "freeHandOn.png", (e) -> freeHandOn())
-                
-                .createNode(0, "polyControl.png", 0, "polyControl.png", 0, "polygonOn.png", (e) -> open("GpsTrackPolygon"))
-                .createNode(0, "polyControl.png", 0, "polyControl.png", 1, "drawerOn.png", (e) -> drawerOn())
-                .createNode(0, "polyControl.png", 0, "polyControl.png", 2, "savePolygon.png", (e) -> savePolygon())
-                .createNode(0, "polyControl.png", 0, "polyControl.png", 3, "saveAll.png", (e) -> saveAllPolygons())
-                .createNode(0, "polyControl.png", 0, "polyControl.png", 4, "load.png", (e) -> loadPolygons())
-                
-                .createNode(3, "cpa.png", 1, "custom.png", 1, "activateCpaZone.png", (e) -> activateCpaZone())
-                .createNode(3, "cpa.png", 1, "custom.png", 0, "createCpaZone.png", (e) -> createCpaZone())
-                .createNode(3, "cpa.png", 0, "classic.png", 1, "createCpaZone1000.png", (e) -> createCpaZone1000())
-                .createNode(3, "cpa.png", 0, "classic.png", 0, "createCpaZone500.png", (e) -> createCpaZone500())
-                
-                .createNode(4, "drawPath.png", 1, "drawPath.png", 3, "load.png", (e) -> loadPath())
-                .createNode(4, "drawPath.png", 1, "drawPath.png", 2, "save.png", (e) -> savePath())
-                .createNode(4, "drawPath.png", 1, "drawPath.png", 1, "activatePath.png", (e) -> activatePath())
+                .createNode(1, "shape.png", 0, "shape.png", 4, "freeHandOn.png", (e) -> freeHandOn())   
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 0, "load.png", (e) -> loadPolygons())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 1, "saveAll.png", (e) -> saveAllPolygons())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 2, "savePolygon.png", (e) -> savePolygon())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 3, "drawerOn.png", (e) -> drawerOn())
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 4, "polygonOn.png", (e) -> open("GpsTrackPolygon")) 
+                .createNode(3, "cpa.png", 1, "custom.png", 0, "activateCpaZone.png", (e) -> activateCpaZone())
+                .createNode(3, "cpa.png", 1, "custom.png", 1, "createCpaZone.png", (e) -> createCpaZone())
+                .createNode(3, "cpa.png", 0, "classic.png", 0, "createCpaZone1000.png", (e) -> createCpaZone1000())
+                .createNode(3, "cpa.png", 0, "classic.png", 1, "createCpaZone500.png", (e) -> createCpaZone500())
                 .createNode(4, "drawPath.png", 1, "drawPath.png", 0, "createPath.png", (e) -> createPath())
+                .createNode(4, "drawPath.png", 1, "drawPath.png", 1, "activatePath.png", (e) -> activatePath())
+                .createNode(4, "drawPath.png", 1, "drawPath.png", 2, "save.png", (e) -> savePath())
+                .createNode(4, "drawPath.png", 1, "drawPath.png", 3, "load.png", (e) -> loadPath())
                 .build();
-        
+
         tracksRadialMenu.setLayoutX((width / 2));
         tracksRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(tracksRadialMenu);
@@ -371,185 +370,167 @@ public class DockManagerImpl<TrackTool>
             instrumentDriver.off();
         }
     }
-    
+
     private void newSector() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackSector");
-    	if (zone != null) {
-    		zone.newSector();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackSector");
+        if (zone != null) {
+            zone.newSector();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void drawerOn() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.drawerOn();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.drawerOn();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void savePolygon() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.savePolygon();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.savePolygon();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void saveAllPolygons() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.saveAllPolygons();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.saveAllPolygons();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void loadPolygons() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.loadPolygons();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.loadPolygons();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void polyShapeOn() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.polyShapeOn();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.polyShapeOn();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void ellipseShapeOn() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.ellipseShapeOn();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.ellipseShapeOn();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void circleShapeOn() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.circleShapeOn();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.circleShapeOn();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void quadShapeOn() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.quadShapeOn();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.quadShapeOn();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void freeHandOn() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.freeHandOn();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.freeHandOn();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void createCpaZone() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.createCpaZone();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.createCpaZone();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void createPath() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.createPath();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.createPath();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void activatePath() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.activatePath();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.activatePath();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void savePath() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.savePath();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.savePath();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void loadPath() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.loadPath();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.loadPath();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void createCpaZone500() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.createCpaZone(500);
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.createCpaZone(500);
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void createCpaZone1000() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.createCpaZone(1000);
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.createCpaZone(1000);
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
-    
+
     private void activateCpaZone() {
-    	zone = (ZoneDriver)instrumentDrivers.get("GpsTrackPolygon");
-    	if (zone != null) {
-    		zone.activateCpaZone();
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.activateCpaZone();
+        } else {
+            System.out.println("ça plante");
         }
-    	else {
-    		System.out.println("ça plante");
-    	}
     }
 
     private void openWMS(String description, String url) {

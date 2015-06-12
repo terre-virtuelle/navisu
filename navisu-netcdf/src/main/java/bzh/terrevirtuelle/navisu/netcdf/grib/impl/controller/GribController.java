@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ucar.nc2.NetcdfFile;
+import ucar.nc2.dataset.NetcdfDataset;
+import ucar.nc2.dt.GridDatatype;
 import ucar.nc2.dt.grid.GeoGrid;
 import ucar.nc2.dt.grid.GridDataset;
 
@@ -16,7 +19,8 @@ import ucar.nc2.dt.grid.GridDataset;
 public class GribController {
 
     protected File gribFile;
-
+    protected NetcdfDataset netcdfDataset;
+    NetcdfFile ncfile = null;
     protected GridDataset gridDataset;
 
     protected GribModel model;
@@ -24,38 +28,60 @@ public class GribController {
     protected GribLayer layer;
 
     public GribController(String path) {
-        this.gribFile = new File(path);
 
-        if (this.gribFile == null) {
-            throw new IllegalArgumentException("Grib path is not valid"); //Todo Exception
-        }
-
+        /*
+         this.gribFile = new File(path);
+            
+         if (this.gribFile == null) {
+         throw new IllegalArgumentException("Grib path is not valid"); //Todo Exception
+         }
+            
+         try {
+         this.gridDataset = GridDataset.open(path);
+         } catch (IOException ex) {
+         Logger.getLogger(GribController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         */
         try {
-            this.gridDataset = GridDataset.open(path);
+            netcdfDataset = NetcdfDataset.openDataset(path);//OK
+            //ncfile = NetcdfDataset.openFile(path, null);//ok
+            //ncfile = NetcdfDataset.open(path);//ok
+            gridDataset = new GridDataset(netcdfDataset);//ok
+            // System.out.println(gridDataset.getGrids());
+            for (GridDatatype g : gridDataset.getGrids()) {
+                System.out.println("g : " + g.getShortName());
+            }
+            //  System.out.println("netcdfDataset " + netcdfDataset);
+            // System.out.println("ncfile " + ncfile);
+            //  System.out.println("gridDataset " + gridDataset);
         } catch (IOException ex) {
             Logger.getLogger(GribController.class.getName()).log(Level.SEVERE, null, ex);
         }
-      //  dumpMetaDataGribDataSet(gridDataset);
+        // dumpMetaDataGribDataSet(gridDataset);
         //check grid dimension
         //TODO Check if all grib have the same titleText of grid !
-        GeoGrid pressureGrid = this.gridDataset.findGridByName(GribConstants.PRESSURE_GRID_NAME);
+        GeoGrid pressureGrid = null;
+/*
+        pressureGrid = this.gridDataset.findGridByShortName(GribConstants.PRESSURE_GRID_NAME);
         if (pressureGrid == null) {
-            throw new IllegalArgumentException("Invalid Grib file"); //Todo Exception
+            throw new IllegalArgumentException("Invalid Grib file " + GribConstants.PRESSURE_GRID_NAME); //Todo Exception
         }
+        */
+         GeoGrid uGrid = this.gridDataset.findGridByShortName(GribConstants.U_GRID_NAME);
 
-        GeoGrid uGrid = this.gridDataset.findGridByName(GribConstants.U_GRID_NAME);
-        if (uGrid == null) {
-            throw new IllegalArgumentException("Invalid Grib File"); //Todo Exception
-        }
+         if (uGrid == null) {
+         throw new IllegalArgumentException("Invalid Grib File " + GribConstants.U_GRID_NAME); //Todo Exception
+         }
+        
+         GeoGrid vGrid = this.gridDataset.findGridByShortName(GribConstants.V_GRID_NAME);
+         if (vGrid == null) {
+         throw new IllegalArgumentException("Invalid Grib File "+GribConstants.V_GRID_NAME); //Todo Exception
+         }
 
-        GeoGrid vGrid = this.gridDataset.findGridByName(GribConstants.V_GRID_NAME);
-        if (vGrid == null) {
-            throw new IllegalArgumentException("Invalid Grib File"); //Todo Exception
-        }
-
-        //instantiate model
-        this.model = new GribModel(gridDataset, pressureGrid, uGrid, vGrid);
-        this.layer = new GribLayer(this.model);
+         //instantiate model
+         this.model = new GribModel(gridDataset, pressureGrid, uGrid, vGrid);
+         this.layer = new GribLayer(this.model);
+         
     }
 
     public GribModel getModel() {

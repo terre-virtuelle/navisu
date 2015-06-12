@@ -41,6 +41,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -80,6 +81,8 @@ public class AisRadarController
     public Group aisbuttonpanel;
     @FXML
     public Group aisinfopanel;
+    @FXML
+    public Button buttonsInfos;
 
     AisServices aisServices;
     boolean first = true;
@@ -141,9 +144,17 @@ public class AisRadarController
         }
         aisinfopanel.setVisible(false);
         aisbuttonpanel.setVisible(true);
-        radar.setOpacity(0.6);
+        Platform.runLater(() -> {
+            radar.setOpacity(0.6);
+            radar.setScaleX(0.7);
+            radar.setScaleY(0.7);
+        });
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
+        });
+        buttonsInfos.setOnMouseClicked((MouseEvent event) -> {
+            aisinfopanel.setVisible(aisbuttonpanel.isVisible());
+            aisbuttonpanel.setVisible(!aisinfopanel.isVisible());
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
@@ -459,9 +470,9 @@ public class AisRadarController
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, aisTargetPanel);
             guiAgentServices.getRoot().getChildren().add(aisTargetPanel); //Par defaut le radar n'est pas visible Ctrl-A
             aisTargetPanel.setScale(1.0);
-            aisTargetPanel.setVisible(false); 
+            aisTargetPanel.setVisible(false);
         });
-        
+
     }
 
     protected final void updateAisPanel(Ship ship) {

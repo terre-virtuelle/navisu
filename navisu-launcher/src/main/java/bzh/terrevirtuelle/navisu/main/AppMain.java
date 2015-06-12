@@ -295,7 +295,6 @@ public class AppMain extends Application {
         // Test connexion GPS 
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-        
         // Test connexion Gpsd 
         //dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
@@ -304,7 +303,6 @@ public class AppMain extends Application {
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS
-        
         // Test connexion fichier 
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
@@ -312,7 +310,6 @@ public class AppMain extends Application {
         //dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
-        
         // Test serveur Web Http 
         // dataServerServices.openHttpServer("localhost", 8181);
         // Test instanciation d'un client 
@@ -320,7 +317,7 @@ public class AppMain extends Application {
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
-        // Test clients à l'écoute des événements Nmea 
+        /* Test clients à l'écoute des événements Nmea */
         aisServices.on();
         //aisLoggerServices.on();
         aisPlotterServices.on();
@@ -330,20 +327,24 @@ public class AppMain extends Application {
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
 
-        // Test CPA zone
+        /* Test CPA zone */
         //gpsTrackPlotterServices.on(); //plotter cible GPS
-        //dataServerServices.openFile("data/nmea/test5.txt"); //NMEA0183
-        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        
+        // dataServerServices.openFile("data/nmea/test5.txt"); //NMEA0183
+        // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // Test cibles AIS en direct
-      dataServerServices.openGpsd("sinagot.net", 2947);
+        dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
-        
+
+        /* Test DB */
        // testDBServices.connect("data/databases/TestJDBC", "navisu", "!!navisu??");
-       // testDBServices.runJDBC();//OK
-        
+        // testDBServices.runJDBC();//OK
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
         //testDBServices.runJPA();//OK
+        
+        /* Test speech */
+        //speakerServices.read("data/text", "installation.txt", null);// local par defaut
+        //speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
+        // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");
     }
 
     public static void main(String[] args) throws Exception {

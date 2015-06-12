@@ -105,8 +105,8 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
         layerTreeServices.createGroup(GROUP);
         geoViewServices.getLayerManager().createGroup(GROUP);
 
-        layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
-        layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
+		layerTreeServices.search("Watch sectors").setSelected(false);
+		layerTreeServices.search("Watch polygons").setSelected(false);
 
         cm = ComponentManager.componentManager;
         ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -257,14 +257,12 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
 
             if (!(isTextOn.get(i))) {
                 wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
-                if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {
-                    layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);
-                }
-                if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {
-                    layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
-                }
-                layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
-                layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
+				layerTreeServices.search("Target").setSelected(false);
+				layerTreeServices.search("Target").setSelected(true);
+				layerTreeServices.search("Path").setSelected(false);
+				layerTreeServices.search("Path").setSelected(true);
+				layerTreeServices.search("Watch sectors").setSelected(false);
+				layerTreeServices.search("Watch sectors").setSelected(true);
                 textOn(sector, i);
             }
 
@@ -365,8 +363,8 @@ public class GpsTrackSectorImpl implements GpsTrackSector,
             sectorLayers.get(i).addRenderable(textAis.get(i));
         } else {
             sectorLayers.get(i).setEnabled(true);
-            layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(false);
-            layerTreeServices.getCheckBoxTreeItems().get(21).setSelected(true);
+			layerTreeServices.search("Watch sectors").setSelected(false);
+			layerTreeServices.search("Watch sectors").setSelected(true);
             sectorLayers.get(i).addRenderable(textAis.get(i));
         }
 

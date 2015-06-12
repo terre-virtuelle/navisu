@@ -51,6 +51,8 @@ public class TrackPanel
     @FXML
     public Text countOfAisShipsReceived;
     @FXML
+    public Text countOfNamesReceived;
+    @FXML
     public ImageView quit;
     @FXML
     public Slider slider;
@@ -124,7 +126,7 @@ public class TrackPanel
     	});
     }
     
-    public void updateAisPanelCount(String time, int ships, int count) {
+    public void updateAisPanelCount(String time, int ships, int count, int countOfNames) {
     	Platform.runLater(() -> {
     	timeStamp.setText(time);
         if (debut) {
@@ -136,6 +138,7 @@ public class TrackPanel
         }
         shipsInSight.setText(Integer.toString(ships));
         countOfAisShipsReceived.setText(Integer.toString(count));
+        countOfNamesReceived.setText(Integer.toString(countOfNames));
     	});
     }
     
@@ -148,7 +151,7 @@ public class TrackPanel
         tabNames = names.getText().split("\n");
         int nbNames = tabNames.length;
         String resu = "";
-        if (nbNames==50) {
+        if (nbNames==100) {
             for (int i=1;i<nbNames;i++) {
                 resu = resu + tabNames[i] + "\n";
             }
@@ -167,7 +170,7 @@ public class TrackPanel
         tabMmsis = mmsis.getText().split("\n");
         int nbMmsis = tabMmsis.length;
         String resu = "";
-        if (nbMmsis==50) {
+        if (nbMmsis==200) {
             for (int i=1;i<nbMmsis;i++) {
                 resu = resu + tabMmsis[i] + "\n";
             }
@@ -184,7 +187,7 @@ public class TrackPanel
         tabLines = status.getText().split("\n");
         int nbLines = tabLines.length;
         String resu = "";
-        if (nbLines==100) {
+        if (nbLines==200) {
             for (int i=1;i<nbLines;i++) {
                 resu = resu + tabLines[i] + "\n";
             }

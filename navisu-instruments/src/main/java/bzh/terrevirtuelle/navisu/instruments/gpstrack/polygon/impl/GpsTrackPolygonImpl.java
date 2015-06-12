@@ -25,14 +25,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -60,8 +57,6 @@ import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
-import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
-
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -170,6 +165,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int nbMmsiReceived = 0;
 	protected int nbNamesReceived = 0;
 	protected Date startTime;
+	protected int nbNamesDB = 0;
+	protected int distanceInterval = 70;
+	protected int timeInterval = 7000;
 
 	@Override
 	public void componentInitiated() {
@@ -249,7 +247,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		// couleur de la trajectoire perso : vert
 		pmt.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
 		pmtc.setFreeHand(true);
-		pmtc.setFreeHandMinSpacing(70);
+		pmtc.setFreeHandMinSpacing(distanceInterval);
 		tLayer.setName("Custom target");
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
 		layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
@@ -310,6 +308,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         	Date t = new Date();
         	if (pShipCreated && !verrou && (int)(t.getTime()-t0.getTime())%5==0 && etape<path.size()-1) {
         		verrou = true;
+        		Position p1 = new Position(LatLon.fromDegrees(path.get(etape).getLatitude().getDegrees(), path.get(etape).getLongitude().getDegrees()), 0);
+        		Position p2 = new Position(LatLon.fromDegrees(path.get(etape+1).getLatitude().getDegrees(), path.get(etape+1).getLongitude().getDegrees()), 0);
+        		double course = computeCourse(p1, p2);
+        		pShip.setCog(course);
         		etape++;
         		pShip.setLatitude(path.get(etape).getLatitude().getDegrees());
         		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
@@ -322,7 +324,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     				public void run() {
     					verrou = false;
     				}
-    			}, 1050);
+    			}, timeInterval);
         	}
         	
             for (int j=0; j<savedMeasureTool.size(); j++) {
@@ -386,7 +388,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
 			}
 		
-		if (count%200==0) {
+		if (count%290==0) {
 			saveShips();
 			nbSave++;
 			Date now = new Date();
@@ -396,9 +398,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			long diffHours = diff / (60 * 60 * 1000) % 24;
 			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
 			aisTrackPanel.updateAisPanelStatus("Database saved (save #" + nbSave + ")");
-			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships and " + nbNamesReceived + " new names in database");
+			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships / " + nbNamesReceived + " new names in database");
 			aisTrackPanel.updateAisPanelStatus("Running for " + diffHours + " hours " + diffMinutes + " minutes " + diffSeconds + " seconds");
-			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size());
+			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size(), nbNamesDB+nbNamesReceived);
 			}
 		
 		if (count%5001==0) {
@@ -487,10 +489,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			}
 			
 			if (!(isTextOn.get(i))) {
-				if (!layerTreeServices.getCheckBoxTreeItems().get(19).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);}
-				if (!layerTreeServices.getCheckBoxTreeItems().get(20).isSelected()) {layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);}
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+				layerTreeServices.search("Target").setSelected(false);
+				layerTreeServices.search("Target").setSelected(true);
+				layerTreeServices.search("Path").setSelected(false);
+				layerTreeServices.search("Path").setSelected(true);
+				layerTreeServices.search("Watch polygons").setSelected(false);
+				layerTreeServices.search("Watch polygons").setSelected(true);
 				textOn(i);
 			}
 			
@@ -519,6 +523,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			textOff(i);
 		}
 		
+		if (!(WWMath.isLocationInside(pos, list.get(i).getPositions())) && list.get(i) != null) {
+			if (shipDetected[i]) {
+				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (i+1));
+				shipDetected[i] = false;
+			}
+		}
+		
 		}
 	}
 	
@@ -537,12 +548,20 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				putTextOn = true;
 				index = targets.indexOf(target);
 			}
+			
+			if (!(WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions())) && tool != null) {
+				if (detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)]) {
+					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (savedMeasureTool.indexOf(tool)+1));
+					detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)] = false;
+				}
+			}
+			
 		}
 			
 		if (!(isTextOnAis.get(savedMeasureTool.indexOf(tool))) && putTextOn) {
 			wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(targets.get(index).getLatitude(), targets.get(index).getLongitude()), 20000));
-			layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-			layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+			layerTreeServices.search("Watch polygons").setSelected(false);
+			layerTreeServices.search("Watch polygons").setSelected(true);
 			textOnAis(savedMeasureTool.indexOf(tool));
 		}
 
@@ -643,8 +662,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	private void translatePolygon(double lat, double lon) {
 		dmp.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE, new Position(LatLon.fromDegrees(lat, lon), 0), diameter/2);
-		// couleur : blanc transparent a 016/256
-		dmp.setFillColor(WWUtil.decodeColorRGBA("FFFFFF10"));
+		// couleur : blanc transparent a 032/256
+		dmp.setFillColor(WWUtil.decodeColorRGBA("FFFFFF20"));
 		dmp.setShowControlPoints(false);
 	}
 	
@@ -662,8 +681,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
 				index = targets.indexOf(target);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+				layerTreeServices.search("Watch polygons").setSelected(false);
+				layerTreeServices.search("Watch polygons").setSelected(true);
 				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(targets.get(index).getLatitude(), targets.get(index).getLongitude()), 20000));
 				firstDetection = true;
 			}
@@ -677,8 +696,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
 				index = targets.indexOf(target);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+				layerTreeServices.search("Watch polygons").setSelected(false);
+				layerTreeServices.search("Watch polygons").setSelected(true);
+			}
+			
+			if (!(WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions())) && dmp != null && firstDetection && aisShipDetected[targets.indexOf(target)]) {
+				aisShipDetected[targets.indexOf(target)] = false;
+				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside CPA zone");
 			}
 			
 		}
@@ -751,13 +775,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
 		createPathTarget(pShip);
 		pathActivated = true;
+		layerTreeServices.search("Target").setSelected(false);
+		layerTreeServices.search("Target").setSelected(true);
+		layerTreeServices.search("Path").setSelected(false);
+		//layerTreeServices.search("Path").setSelected(true);
 		aisTrackPanel.updateAisPanelStatus("Custom path activated");
 	}
 	
 	private void createPathTarget(Ship target) {
 		gShip = new GShip(target);
-		gShip.update(0);
+		//gShip.update(0);
 		target.setShipType(80);
+		double sog = (distanceInterval*1000*3600)/(1852*timeInterval);
+		target.setSog(sog);
 		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
 			Renderable[] renderables = gShip.getRenderables();
 			for (Renderable r : renderables) {
@@ -767,8 +797,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		}
 		pShipCreated = true;
 		t0 = new Date();
-		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
-		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
+		layerTreeServices.search("Path").setSelected(true);
+		layerTreeServices.search("Path").setSelected(false);
+		gShip.setShip(target);
 	}
 
 	private void updatePathTarget(Ship target) {
@@ -1083,7 +1114,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			//Put data - if needed put the loop around more than orw of records
 			for (int j=0;j<aisShips.size();j++){
 				for (int i=0;i<6;i++) {
-			writer.write(shipMatrix[i][j]+";");}
+					writer.write(shipMatrix[i][j]+";");
+					}
 				writer.write("\r\n");
 			}
 			
@@ -1127,12 +1159,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			Ship s = new Ship();
     			s.setMMSI(Integer.parseInt(ship[0]));
     			s.setName(ship[1]);
+    			if (!ship[1].equals("")) {
+    				nbNamesDB++;
+    				}
     			//on ne charge pas les dernières positions connues des bateaux car ceux-ci ne sont peut-être plus actifs, les positions seront mises à jour à la réception de nouveaux signaux AIS (pour les bateaux actifs)
     			//s.setLatitude(Double.parseDouble(ship[2]));
     			//s.setLongitude(Double.parseDouble(ship[3]));
     			aisShips.add(s);
     			i++;
-	 
 			}
 	 
 		} catch (FileNotFoundException e) {
@@ -1161,10 +1195,24 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             aisTrackPanel.setScale(1.0);
             aisTrackPanel.setVisible(true);
             
-            aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size());
-            aisTrackPanel.updateAisPanelStatus("Reading file done (" + aisShips.size() + " ships in database)");
+            aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), 0, aisShips.size(), nbNamesDB);
+            aisTrackPanel.updateAisPanelStatus("Reading file done (" + aisShips.size() + " ships / " + nbNamesDB + " names in database)");
         });
         
     }
+	
+	private double computeCourse(Position start, Position end) {
+		double lat1 = start.getLatitude().getRadians();
+		double lat2 = end.getLatitude().getRadians();
+		double lon1 = start.getLongitude().getRadians();
+		double lon2 = end.getLongitude().getRadians();
+		double resu = Math.atan2((Math.sin(lon2-lon1))*(Math.cos(lat2)), (Math.cos(lat1))*(Math.sin(lat2))-(Math.sin(lat1))*(Math.cos(lat2))*(Math.cos(lon2-lon1)));
+		resu = Math.toDegrees(resu);
+		resu = Math.round(resu);
+		if (resu<0) {
+			resu = resu + 360;
+		}
+		return resu;
+	}
 	
 }

@@ -7,12 +7,21 @@ package bzh.terrevirtuelle.navisu.speech.impl;
 
 import bzh.terrevirtuelle.navisu.speech.Speaker;
 import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
+import com.gtranslate.Audio;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import javazoom.jl.decoder.JavaLayerException;
 import org.capcaval.c3.component.ComponentState;
-import t2s.son.LecteurTexte;
 
-/**
- * NaVisu
+/* NaVisu
  *
  * @date 3 mai 2015
  * @author Serge Morvan
@@ -20,23 +29,65 @@ import t2s.son.LecteurTexte;
 public class SpeakerImpl
         implements Speaker, SpeakerServices, ComponentState {
 
-    LecteurTexte reader;
+    Audio audio;
+    InputStream sound = null;
     String text;
+    String lang = null;
+    Stream<String> lines = null;
 
     @Override
     public void componentInitiated() {
-        reader = new LecteurTexte();
+        audio = Audio.getInstance();
+    }
+
+    @Override
+    public void read(String rep, String filename, String language) {
+
+        if (language == null) {
+            lang = Locale.getDefault().toString();
+        } else {
+            lang = language;
+        }
+        try {
+            lines = Files.lines(Paths.get(rep, filename));
+            text = lines.map(Object::toString).collect(Collectors.joining(""));
+        } catch (IOException ex) {
+            Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                sound = audio.getAudio(text, lang);
+                audio.play(sound);
+            } catch (IOException | JavaLayerException ex) {
+                // Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("ex " + ex);
+            }
+        });
     }
 
     @Override
     public void read(String text) {
-        this.text = text;
-        if (this.text.contains("/")) {
-            this.text = text.replace("/", "");
-        }
+
         Executors.newSingleThreadExecutor().execute(() -> {
-            reader.setTexte(this.text);
-            reader.playAll();
+            try {
+                sound = audio.getAudio(text, Locale.getDefault().toString());
+                audio.play(sound);
+            } catch (IOException | JavaLayerException ex) {
+                Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    @Override
+    public void read(String text, String language) {
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            try {
+                sound = audio.getAudio(text, "Language." + language);
+                audio.play(sound);
+            } catch (IOException | JavaLayerException ex) {
+                Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
 
