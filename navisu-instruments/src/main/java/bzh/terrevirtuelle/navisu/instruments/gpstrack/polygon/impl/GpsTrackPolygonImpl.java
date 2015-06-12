@@ -166,6 +166,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int nbNamesReceived = 0;
 	protected Date startTime;
 	protected int nbNamesDB = 0;
+	protected int distanceInterval = 70;
+	protected int timeInterval = 7000;
 
 	@Override
 	public void componentInitiated() {
@@ -245,7 +247,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		// couleur de la trajectoire perso : vert
 		pmt.setLineColor(WWUtil.decodeColorRGBA("00FF00FF"));
 		pmtc.setFreeHand(true);
-		pmtc.setFreeHandMinSpacing(70);
+		pmtc.setFreeHandMinSpacing(distanceInterval);
 		tLayer.setName("Custom target");
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
 		layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
@@ -322,7 +324,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     				public void run() {
     					verrou = false;
     				}
-    			}, 1050);
+    			}, timeInterval);
         	}
         	
             for (int j=0; j<savedMeasureTool.size(); j++) {
@@ -660,8 +662,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	private void translatePolygon(double lat, double lon) {
 		dmp.setMeasureShapeType(MeasureTool.SHAPE_CIRCLE, new Position(LatLon.fromDegrees(lat, lon), 0), diameter/2);
-		// couleur : blanc transparent a 016/256
-		dmp.setFillColor(WWUtil.decodeColorRGBA("FFFFFF10"));
+		// couleur : blanc transparent a 032/256
+		dmp.setFillColor(WWUtil.decodeColorRGBA("FFFFFF20"));
 		dmp.setShowControlPoints(false);
 	}
 	
@@ -776,7 +778,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		layerTreeServices.search("Target").setSelected(false);
 		layerTreeServices.search("Target").setSelected(true);
 		layerTreeServices.search("Path").setSelected(false);
-		layerTreeServices.search("Path").setSelected(true);
+		//layerTreeServices.search("Path").setSelected(true);
 		aisTrackPanel.updateAisPanelStatus("Custom path activated");
 	}
 	
@@ -784,6 +786,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		gShip = new GShip(target);
 		//gShip.update(0);
 		target.setShipType(80);
+		double sog = (distanceInterval*1000*3600)/(1852*timeInterval);
+		target.setSog(sog);
 		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
 			Renderable[] renderables = gShip.getRenderables();
 			for (Renderable r : renderables) {
