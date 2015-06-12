@@ -488,12 +488,12 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			}
 			
 			if (!(isTextOn.get(i))) {
-				layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);
-				layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+				layerTreeServices.search("Target").setSelected(false);
+				layerTreeServices.search("Target").setSelected(true);
+				layerTreeServices.search("Path").setSelected(false);
+				layerTreeServices.search("Path").setSelected(true);
+				layerTreeServices.search("Watch polygons").setSelected(false);
+				layerTreeServices.search("Watch polygons").setSelected(true);
 				textOn(i);
 			}
 			
@@ -559,8 +559,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			
 		if (!(isTextOnAis.get(savedMeasureTool.indexOf(tool))) && putTextOn) {
 			wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(targets.get(index).getLatitude(), targets.get(index).getLongitude()), 20000));
-			layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-			layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+			layerTreeServices.search("Watch polygons").setSelected(false);
+			layerTreeServices.search("Watch polygons").setSelected(true);
 			textOnAis(savedMeasureTool.indexOf(tool));
 		}
 
@@ -680,8 +680,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
 				index = targets.indexOf(target);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+				layerTreeServices.search("Watch polygons").setSelected(false);
+				layerTreeServices.search("Watch polygons").setSelected(true);
 				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(targets.get(index).getLatitude(), targets.get(index).getLongitude()), 20000));
 				firstDetection = true;
 			}
@@ -695,8 +695,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				//couleur de la DMP passe en rouge
 				dmp.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
 				index = targets.indexOf(target);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(false);
-				layerTreeServices.getCheckBoxTreeItems().get(22).setSelected(true);
+				layerTreeServices.search("Watch polygons").setSelected(false);
+				layerTreeServices.search("Watch polygons").setSelected(true);
 			}
 			
 			if (!(WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), dmp.getPositions())) && dmp != null && firstDetection && aisShipDetected[targets.indexOf(target)]) {
@@ -774,10 +774,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
 		createPathTarget(pShip);
 		pathActivated = true;
-		layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(19).setSelected(true);
-		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
-		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
+		layerTreeServices.search("Target").setSelected(false);
+		layerTreeServices.search("Target").setSelected(true);
+		layerTreeServices.search("Path").setSelected(false);
+		layerTreeServices.search("Path").setSelected(true);
 		aisTrackPanel.updateAisPanelStatus("Custom path activated");
 	}
 	
@@ -794,8 +794,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		}
 		pShipCreated = true;
 		t0 = new Date();
-		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(true);
-		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
+		layerTreeServices.search("Path").setSelected(true);
+		layerTreeServices.search("Path").setSelected(false);
 	}
 
 	private void updatePathTarget(Ship target) {
