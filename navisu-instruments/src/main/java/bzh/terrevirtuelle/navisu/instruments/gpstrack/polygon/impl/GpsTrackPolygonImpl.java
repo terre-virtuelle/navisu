@@ -25,14 +25,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
-
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -60,8 +57,6 @@ import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
-import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
-
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -311,6 +306,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         	Date t = new Date();
         	if (pShipCreated && !verrou && (int)(t.getTime()-t0.getTime())%5==0 && etape<path.size()-1) {
         		verrou = true;
+        		Position p1 = new Position(LatLon.fromDegrees(path.get(etape).getLatitude().getDegrees(), path.get(etape).getLongitude().getDegrees()), 0);
+        		Position p2 = new Position(LatLon.fromDegrees(path.get(etape+1).getLatitude().getDegrees(), path.get(etape+1).getLongitude().getDegrees()), 0);
+        		double course = computeCourse(p1, p2);
+        		pShip.setCog(course);
         		etape++;
         		pShip.setLatitude(path.get(etape).getLatitude().getDegrees());
         		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
@@ -783,7 +782,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	private void createPathTarget(Ship target) {
 		gShip = new GShip(target);
-		gShip.update(0);
+		//gShip.update(0);
 		target.setShipType(80);
 		if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
 			Renderable[] renderables = gShip.getRenderables();
@@ -796,6 +795,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		t0 = new Date();
 		layerTreeServices.search("Path").setSelected(true);
 		layerTreeServices.search("Path").setSelected(false);
+		gShip.setShip(target);
 	}
 
 	private void updatePathTarget(Ship target) {
@@ -1196,5 +1196,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         });
         
     }
+	
+	private double computeCourse(Position start, Position end) {
+		double lat1 = start.getLatitude().getRadians();
+		double lat2 = end.getLatitude().getRadians();
+		double lon1 = start.getLongitude().getRadians();
+		double lon2 = end.getLongitude().getRadians();
+		double resu = Math.atan2((Math.sin(lon2-lon1))*(Math.cos(lat2)), (Math.cos(lat1))*(Math.sin(lat2))-(Math.sin(lat1))*(Math.cos(lat2))*(Math.cos(lon2-lon1)));
+		resu = Math.toDegrees(resu);
+		resu = Math.round(resu);
+		if (resu<0) {
+			resu = resu + 360;
+		}
+		return resu;
+	}
 	
 }
