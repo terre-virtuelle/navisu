@@ -1311,146 +1311,146 @@
                         </Group>
                     </children>
                 </Group>
-            <Group fx:id="aisinfopanel" layoutY="-100.0">
-               <children>
-                      <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
-                </Rectangle>
-                  <Text fx:id="imo" fill="#c2f8c4" layoutX="800.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="imo" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fx:id="type" fill="#c2f8c4" layoutX="800.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="passenger" textAlignment="CENTER" wrappingWidth="200.0" />
-                      <Text fontSmoothingType="LCD" layoutX="800.0" layoutY="130.0" styleClass="info-text" text="Infos AIS" textAlignment="CENTER" wrappingWidth="200"> 
-                </Text>
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="IMO" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="shipname" fill="#c2f8c4" layoutX="800.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisname" text="name not yet available" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Country" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="MMSI" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Type" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="570.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="COG" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="country" fill="#c2f8c4" layoutX="800.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="pavillon" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="690.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Length" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="mmsi" fill="#c2f8c4" layoutX="800.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="000000000" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fx:id="length" fill="#c2f8c4" layoutX="800.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="length" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fx:id="draught" fill="#c2f8c4" layoutX="800.0" layoutY="780.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="draught" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Call sign" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="SOG" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="750.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Draught" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="cog" fill="#c2f8c4" layoutX="800.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="cog" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="630.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Width" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="930.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Destination" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="sog" fill="#c2f8c4" layoutX="800.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="speed" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fx:id="destination" fill="#c2f8c4" layoutX="800.0" layoutY="960.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="PORT ALFRED-CROZET" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fx:id="callSign" fill="#c2f8c4" layoutX="800.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="callsign" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fx:id="width" fill="#c2f8c4" layoutX="800.0" layoutY="660.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="width" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="810.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Latitude" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#04fff2" layoutX="800.0" layoutY="870.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Longitude" wrappingWidth="195.0" x="5.0">
-                     <font>
-                        <Font name="Roboto Regular" size="14.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="latitude" fill="#c2f8c4" layoutX="800.0" layoutY="840.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="latitude" textAlignment="CENTER" wrappingWidth="200.0" />
-                  <Text fx:id="longitude" fill="#c2f8c4" layoutX="800.0" layoutY="900.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="longitude" textAlignment="CENTER" wrappingWidth="200.0" />
-               </children>
-            </Group>
+                <Group fx:id="aisinfopanel" layoutY="-100.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
+                        </Rectangle>
+                        <Text fx:id="imo" fill="#c2f8c4" layoutX="800.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="imo" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fx:id="type" fill="#c2f8c4" layoutX="800.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="passenger" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fx:id="agereport" fontSmoothingType="LCD" layoutX="800.0" layoutY="130.0" styleClass="info-text" text="---" textAlignment="CENTER" wrappingWidth="200"> 
+                        </Text>
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="450.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="IMO" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="shipname" fill="#c2f8c4" layoutX="800.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisname" text="name not yet available" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="scale" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="MMSI" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Type" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="570.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="COG" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="country" fill="#c2f8c4" layoutX="800.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="---" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="690.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Length" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="mmsi" fill="#c2f8c4" layoutX="800.0" layoutY="420.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="000000000" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fx:id="length" fill="#c2f8c4" layoutX="800.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="length" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fx:id="draught" fill="#c2f8c4" layoutX="800.0" layoutY="780.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="draught" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Call sign" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="SOG" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="750.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Draught" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="cog" fill="#c2f8c4" layoutX="800.0" layoutY="600.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="cog" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="630.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Width" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="930.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Destination" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="sog" fill="#c2f8c4" layoutX="800.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="speed" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fx:id="destination" fill="#c2f8c4" layoutX="800.0" layoutY="960.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="PORT ALFRED-CROZET" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fx:id="callSign" fill="#c2f8c4" layoutX="800.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="callsign" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fx:id="width" fill="#c2f8c4" layoutX="800.0" layoutY="660.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="width" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="810.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Latitude" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#04fff2" layoutX="800.0" layoutY="870.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aislabel" text="Longitude" wrappingWidth="195.0" x="5.0">
+                            <font>
+                                <Font name="Roboto Regular" size="14.0" />
+                            </font>
+                        </Text>
+                        <Text fx:id="latitude" fill="#c2f8c4" layoutX="800.0" layoutY="840.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="latitude" textAlignment="CENTER" wrappingWidth="200.0" />
+                        <Text fx:id="longitude" fill="#c2f8c4" layoutX="800.0" layoutY="900.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="longitude" textAlignment="CENTER" wrappingWidth="200.0" />
+                    </children>
+                </Group>
                 <ImageView fx:id="faisceau" blendMode="LIGHTEN" fitHeight="600.0" fitWidth="600.0" layoutX="100.0" layoutY="130.0" nodeOrientation="INHERIT" opacity="0.86" pickOnBounds="true" preserveRatio="true" scaleX="1.15" scaleY="1.15" styleClass="screen-pane" visible="true">
                     <image>
                         <Image url="@radarfaisceau600.png" />
                     </image>
                 </ImageView>
-            <Group fx:id="aisbuttonpanel" layoutY="-100.0">
-               <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0" />
-                  <Button layoutX="810.0" layoutY="210.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="Button1" />
-                  <Button layoutX="910.0" layoutY="210.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="CUSTOM" />
-                  <Button layoutX="810.0" layoutY="720.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
-                  <Button layoutX="910.0" layoutY="720.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="OFF&#10;CENTER" textAlignment="CENTER" />
-                  <Button layoutX="810.0" layoutY="790.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
-                  <Button layoutX="910.0" layoutY="790.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
-                  <Button layoutX="810.0" layoutY="860.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
-                  <Button layoutX="910.0" layoutY="860.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="CANCEL" textAlignment="CENTER" />
-                  <Button layoutX="810.0" layoutY="930.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" styleClass="radar-buttonlabel" text="ENTER" textAlignment="CENTER" />
-                  <MenuButton layoutX="810.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="EBL" textAlignment="CENTER">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="1" />
-                      <MenuItem mnemonicParsing="false" text="2" />
-                    </items>
-                  </MenuButton>
-                  <MenuButton contentDisplay="RIGHT" layoutX="910.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="VRM" textAlignment="CENTER">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="1" />
-                        <MenuItem mnemonicParsing="false" text="2" />
-                     </items>
-                  </MenuButton>
-                  <MenuButton layoutX="810.0" layoutY="560.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="TARGET&#10;ALARM" textAlignment="CENTER">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="1" />
-                        <MenuItem mnemonicParsing="false" text="2" />
-                     </items>
-                  </MenuButton>
-                  <MenuButton layoutX="910.0" layoutY="560.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="TARGET&#10;TYPE" textAlignment="CENTER">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="IN" />
-                        <MenuItem mnemonicParsing="false" text="OUT" />
-                     </items>
-                  </MenuButton>
-                  <Button layoutX="824.0" layoutY="130.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="152.0" styleClass="radar-buttonlabel" text="MENU" />
-                  <Slider fx:id="scaleSlider1" blockIncrement="100.0" layoutX="845.0" layoutY="300.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
-                  <Text layoutX="810.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="RANGE" textAlignment="CENTER" wrappingWidth="80.0" />
-                  <Slider fx:id="scaleSlider11" blockIncrement="100.0" layoutX="945.0" layoutY="300.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
-                  <Text layoutX="910.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="ZOOM" textAlignment="CENTER" wrappingWidth="80.0" />
-                  </children>
-            </Group>
+                <Group fx:id="aisbuttonpanel" layoutY="-100.0">
+                    <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0" />
+                        <Button fx:id="stbytx" layoutX="810.0" layoutY="210.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="STBY&#10;TX" />
+                        <Button fx:id="custom" layoutX="910.0" layoutY="210.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="CUSTOM" />
+                        <Button fx:id="mode" layoutX="810.0" layoutY="720.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="MODE" textAlignment="CENTER" />
+                        <Button fx:id="offcenter" layoutX="910.0" layoutY="720.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="OFF&#10;CENTER" textAlignment="CENTER" />
+                        <Button fx:id="mode1" layoutX="810.0" layoutY="790.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="" textAlignment="CENTER" />
+                        <Button fx:id="mode2" layoutX="910.0" layoutY="790.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="" textAlignment="CENTER" />
+                        <Button fx:id="mode3" layoutX="810.0" layoutY="860.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="" textAlignment="CENTER" />
+                        <Button fx:id="cancel" layoutX="910.0" layoutY="860.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="CANCEL" textAlignment="CENTER" />
+                        <Button fx:id="enter" layoutX="810.0" layoutY="930.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="180.0" styleClass="radar-buttonlabel" text="ENTER" textAlignment="CENTER" />
+                        <MenuButton fx:id="ebl" layoutX="810.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="EBL" textAlignment="CENTER">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="1" />
+                                <MenuItem mnemonicParsing="false" text="2" />
+                            </items>
+                        </MenuButton>
+                        <MenuButton fx:id="vrm" contentDisplay="RIGHT" layoutX="910.0" layoutY="420.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="VRM" textAlignment="CENTER">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="1" />
+                                <MenuItem mnemonicParsing="false" text="2" />
+                            </items>
+                        </MenuButton>
+                        <MenuButton fx:id="targetalarm" layoutX="810.0" layoutY="560.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="TARGET&#10;ALARM" textAlignment="CENTER">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="1" />
+                                <MenuItem mnemonicParsing="false" text="2" />
+                            </items>
+                        </MenuButton>
+                        <MenuButton fx:id="targettype" layoutX="910.0" layoutY="560.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel-nlines" text="TARGET&#10;TYPE" textAlignment="CENTER">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="IN" />
+                                <MenuItem mnemonicParsing="false" text="OUT" />
+                            </items>
+                        </MenuButton>
+                        <Button fx:id="menu" layoutX="824.0" layoutY="130.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="152.0" styleClass="radar-buttonlabel" text="MENU" />
+                        <Slider fx:id="rangeSlider" blockIncrement="100.0" layoutX="845.0" layoutY="300.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
+                        <Text layoutX="810.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="RANGE" textAlignment="CENTER" wrappingWidth="80.0" />
+                        <Slider fx:id="zoomSlider" blockIncrement="100.0" layoutX="945.0" layoutY="300.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="1000" />
+                        <Text layoutX="910.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="ZOOM" textAlignment="CENTER" wrappingWidth="80.0" />
+                    </children>
+                </Group>
             </children>
         </Group>
-      <Group>
-         <children>
-             <Button fx:id="buttonsInfos" layoutX="950.0" layoutY="25.0" prefHeight="15.0" prefWidth="100.0" styleClass="radar-togglebutton" text="Buttons/Infos" />
+        <Group>
+            <children>
+                <Button fx:id="buttonsInfos" layoutX="950.0" layoutY="25.0" prefHeight="15.0" prefWidth="100.0" styleClass="radar-togglebutton" text="Buttons/Infos" />
                 <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="1091.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5">
                     <image>
                         <Image url="@quit.png" />
@@ -1464,16 +1464,13 @@
                         <Glow />
                     </effect>
                 </ImageView>
-            <Text layoutX="1123.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Opacity" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
+                <Text layoutX="1123.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Opacity" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
                 <Slider fx:id="opacitySlider" layoutX="1123.0" layoutY="200.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="0.6">
                 </Slider>
-            <Text layoutX="1123.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Scale" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
-               <Slider fx:id="scaleSlider" blockIncrement="100.0" layoutX="1123.0" layoutY="450.0" max="3500.0" min="500.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="1000">
-                </Slider>
-            <Text layoutX="1123.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Dimension" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
+                <Text layoutX="1123.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Dimension" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
                 <Slider fx:id="dimensionSlider" blockIncrement="0.1" layoutX="1123.0" layoutY="750.0" max="1.0" min="0.2" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="0.5">
                 </Slider>
-         </children>
-      </Group>
+            </children>
+        </Group>
     </children>
 </fx:root>

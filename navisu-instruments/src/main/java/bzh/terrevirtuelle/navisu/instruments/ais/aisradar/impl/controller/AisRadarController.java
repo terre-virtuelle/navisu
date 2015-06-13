@@ -7,6 +7,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
+import static bzh.terrevirtuelle.navisu.domain.ship.view.ShipType.TYPE;
 import bzh.terrevirtuelle.navisu.instruments.common.view.targets.ShipTypeColor;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShip;
@@ -42,6 +43,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -77,7 +79,9 @@ public class AisRadarController
     @FXML
     public Slider dimensionSlider;
     @FXML
-    public Slider scaleSlider;
+    public Slider rangeSlider;
+    @FXML
+    public Slider zoomSlider;
     @FXML
     public Group aisbuttonpanel;
     @FXML
@@ -93,7 +97,7 @@ public class AisRadarController
     @FXML
     public Text mmsi;
     @FXML
-    public Text xlength;
+    public Text length;
     @FXML
     public Text draught;
     @FXML
@@ -110,16 +114,47 @@ public class AisRadarController
     public Text latitude;
     @FXML
     public Text longitude;
-   
-    AisServices aisServices;
-    boolean first = true;
-    final Rotate rotationTransform = new Rotate(0, 0, 0);
+    @FXML
+    public Text country;
+    @FXML
+    public Text agereport;
+    @FXML
+    public Button menu;
+    @FXML
+    public Button mode;
+    @FXML
+    public Button custom;
+    @FXML
+    public Button offcenter;
+    @FXML
+    public Button mode1;
+    @FXML
+    public Button mode2;
+    @FXML
+    public Button mode3;
+    @FXML
+    public Button cancel;
+    @FXML
+    public Button enter;
+    @FXML
+    public Button stbytx;
+    @FXML
+    public MenuButton ebl;
+    @FXML
+    public MenuButton vrm;
+    @FXML
+    public MenuButton targetalarm;
+    @FXML
+    public MenuButton targettype;
+
+    protected AisServices aisServices;
+    protected boolean first = true;
+    protected final Rotate rotationTransform = new Rotate(0, 0, 0);
     protected Timeline fiveSecondsWonder;
     protected final int CENTER_X = 500;//425 + 100 suite rajout pane//-25 Serge
     protected final int CENTER_Y = 494;//429 + 65 et agrandissement faisceau
-
-    int centerX;
-    int centerY;
+    protected int centerX;
+    protected int centerY;
     protected double latOwner = 0.0;
     protected double lonOwner = 0.0;
     protected double posX = 0.0;
@@ -138,14 +173,16 @@ public class AisRadarController
     protected Ship ship;
     protected Ship ownerShip;
     protected BaseStation transceiver;
-    protected NumberFormat formatter = new DecimalFormat("#0");
-    protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     protected AisRadarImpl aisRadar;
     protected TargetPanel aisTargetPanel;
     protected TrackPanel aisTrackPanel;
-
     protected GuiAgentServices guiAgentServices;
     protected Map<Integer, String> midMap;
+    protected NumberFormat nf = new DecimalFormat("0.###");
+    protected SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
+    protected NumberFormat formatter = new DecimalFormat("#0");
+    protected SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
     public AisRadarController(AisRadarImpl aisRadar) {
         this(aisRadar, null, null);
@@ -194,15 +231,76 @@ public class AisRadarController
                 radar.setScaleY(dimensionSlider.getValue());
             });
         });
-        scaleSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+        rangeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                radarScale = scaleSlider.getValue();
+                radarScale = rangeSlider.getValue();
                 updateTargets();
             });
         });
+        zoomSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            Platform.runLater(() -> {
+                // radarScale = zoomSlider.getValue();
+                // updateTargets();
+            });
+        });
+        menu.setOnMouseClicked((MouseEvent event) -> {
+
+            workInProgress(menu.getText());
+        });
+        stbytx.setOnMouseClicked((MouseEvent event) -> {
+
+            workInProgress(stbytx.getText());
+        });
+        mode.setOnMouseClicked((MouseEvent event) -> {
+            workInProgress(mode.getText());
+        });
+        custom.setOnMouseClicked((MouseEvent event) -> {
+            workInProgress(custom.getText());
+        });
+        offcenter.setOnMouseClicked((MouseEvent event) -> {
+            workInProgress(offcenter.getText());
+        });
+        mode1.setOnMouseClicked((MouseEvent event) -> {
+            workInProgress(mode1.getText());
+        });
+        mode2.setOnMouseClicked((MouseEvent event) -> {
+            workInProgress(mode2.getText());
+        });
+        mode3.setOnMouseClicked((MouseEvent event) -> {
+            workInProgress(mode3.getText());
+        });
+        cancel.setOnMouseClicked((MouseEvent event) -> {
+            workInProgress(cancel.getText());
+        });
+        enter.setOnMouseClicked((MouseEvent event) -> {
+            workInProgress(enter.getText());
+        });
+        ebl.getItems().get(0).setOnAction((ActionEvent event) -> {
+            workInProgress(ebl.getItems().get(0).getText());
+        });
+        ebl.getItems().get(1).setOnAction((ActionEvent event) -> {
+            workInProgress(ebl.getItems().get(1).getText());
+        });
+        vrm.getItems().get(0).setOnAction((ActionEvent event) -> {
+            workInProgress(vrm.getItems().get(0).getText());
+        });
+        vrm.getItems().get(1).setOnAction((ActionEvent event) -> {
+            workInProgress(vrm.getItems().get(1).getText());
+        });
+        targetalarm.getItems().get(0).setOnAction((ActionEvent event) -> {
+            workInProgress(targetalarm.getItems().get(0).getText());
+        });
+        targetalarm.getItems().get(1).setOnAction((ActionEvent event) -> {
+            workInProgress(targetalarm.getItems().get(1).getText());
+        });
+        targettype.getItems().get(0).setOnAction((ActionEvent event) -> {
+            workInProgress(targettype.getItems().get(0).getText());
+        });
+        targettype.getItems().get(1).setOnAction((ActionEvent event) -> {
+            workInProgress(targettype.getItems().get(1).getText());
+        });
         GhostLine ghostLine = new GhostLine(CENTER_X, CENTER_Y, 1, RADIUS_LIMIT);
         getChildren().add(ghostLine);
-
         radar.setOnMouseClicked(press -> {
             if (press.getButton() == MouseButton.PRIMARY) {
                 ghostLine.show(press.getX(), press.getY());
@@ -210,7 +308,6 @@ public class AisRadarController
                 ghostLine.clear();
             }
         });
-
         addPanelController();
     }
 
@@ -311,7 +408,7 @@ public class AisRadarController
         grship.setOnMouseClicked((MouseEvent me) -> {
             if (first) {
                 grship.setRadius(RADIUS * 1.5);
-                updateAisPanel(grship.getShip());
+                updateAisRadarPanel(grship.getShip());
                 first = false;
             } else {
                 grship.setRadius(RADIUS);
@@ -508,11 +605,125 @@ public class AisRadarController
         });
     }
 
+    protected final void updateAisRadarPanel(Ship ship) {
+        Platform.runLater(() -> {
+
+            aisinfopanel.setVisible(true);
+            aisbuttonpanel.setVisible(false);
+            updateAisPanel(ship, timestamps, midMap);
+        });
+    }
+
     public void setTimestamps(Map<Integer, Calendar> timestamps) {
         this.timestamps = timestamps;
     }
 
     public void setMidMap(Map<Integer, String> midMap) {
         this.midMap = midMap;
+    }
+
+    public void updateAisPanel(Ship ship,
+            Map<Integer, Calendar> timestamps,
+            Map<Integer, String> midMap) {
+        setVisible(true);
+        if (ship.getName() == null || "".equals(ship.getName())) {
+            shipname.setText("Name not yet available");
+        } else {
+            shipname.setText(ship.getName());
+        }
+        // Le type est publié tel quel, le dictionnaire n'est pas bien defini dans la spec AIS
+        // A revoir
+        if (ship.getShipType() != 0) {
+            type.setText(TYPE.get(ship.getShipType()));
+        } else {
+            type.setText("---");
+        }
+        if (ship.getCallSign() != null) {
+            callSign.setText(ship.getCallSign());
+        } else {
+            callSign.setText("---");
+        }
+        if (ship.getMMSI() != 0) {
+            if (timestamps != null && timestamps.get(ship.getMMSI()) != null) {
+                long seconds = Calendar.getInstance().getTimeInMillis()
+                        - timestamps.get(ship.getMMSI()).getTimeInMillis();
+                agereport.setText("Age report : " + Long.toString(seconds / 1000) + " s");
+            }
+        } else {
+            agereport.setText("Age report : --- s");
+        }
+        if (ship.getMMSI() != 0) {
+            mmsi.setText(Integer.toString(ship.getMMSI()));
+        } else {
+            mmsi.setText("---");
+        }
+        if (ship.getIMO() != 0) {
+            imo.setText(Integer.toString(ship.getIMO()));
+        } else {
+            imo.setText("---");
+        }
+        if (ship.getLength() != 0) {
+            length.setText(Float.toString(ship.getLength()) + " m");
+        } else {
+            length.setText("---");
+        }
+        if (ship.getWidth() != 0) {
+            width.setText(Float.toString(ship.getWidth()) + " m");
+        } else {
+            width.setText("---");
+        }
+        if (ship.getDraught() != 0) {
+            draught.setText(Float.toString(ship.getDraught()) + " m");
+        } else {
+            draught.setText("---");
+        }
+        if (ship.getNavigationalStatus() != 0) {
+            //  status.setText(Integer.toString(ship.getNavigationalStatus()));
+        } else {
+            // status.setText("---");
+        }
+        if (ship.getSog() != 0) {
+            sog.setText(nf.format(ship.getSog()) + " Kn");
+        } else {
+            sog.setText("---");
+        }
+        if (ship.getCog() != 0 && ship.getCog() != 511) {
+            cog.setText((int) ship.getCog() + " °");
+        } else {
+            cog.setText("---");
+        }
+        if (ship.getDestination() != null) {
+            destination.setText(ship.getDestination());
+        } else {
+            destination.setText("---");
+        }
+        if (ship.getETA() != null) {
+            //  eta.setText(dt.format(ship.getETA().getTime()));
+        } else {
+            //  eta.setText("---");
+        }
+        if (ship.getLatitude() != 0) {
+            latitude.setText(nf.format(ship.getLatitude()) + " °");
+        } else {
+            latitude.setText("---");
+        }
+        if (ship.getLongitude() != 0) {
+            longitude.setText(nf.format(ship.getLongitude()) + " °");
+        } else {
+            longitude.setText("---");
+        }
+        if (ship.getMMSI() != 0) {
+            String mmsiStr = Integer.toString(ship.getMMSI());
+            String mid = mmsiStr.substring(0, 3);
+            if (midMap != null) {
+                country.setText(midMap.get(new Integer(mid)));
+            }
+        } else {
+            country.setText("---");
+        }
+    }
+
+    private void workInProgress(String text) {
+        System.out.println(text + ": WorkInProgress");
     }
 }
