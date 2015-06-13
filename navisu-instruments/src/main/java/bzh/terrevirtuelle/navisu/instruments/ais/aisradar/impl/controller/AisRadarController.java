@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShip;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.view.GRShipImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.MenuPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -177,6 +178,7 @@ public class AisRadarController
     protected AisRadarImpl aisRadar;
     protected TargetPanel aisTargetPanel;
     protected TrackPanel aisTrackPanel;
+    protected MenuPanel menuPanel;
     protected GuiAgentServices guiAgentServices;
     protected Map<Integer, String> midMap;
     protected NumberFormat nf = new DecimalFormat("0.###");
@@ -245,7 +247,9 @@ public class AisRadarController
         });
         menu.setOnMouseClicked((MouseEvent event) -> {
 
-            workInProgress(menu.getText());
+            menuPanel = new MenuPanel(guiAgentServices, KeyCode.M, KeyCombination.CONTROL_DOWN);
+            guiAgentServices.getRoot().getChildren().add(menuPanel);
+            menuPanel.setVisible(true);
         });
         stbytx.setOnMouseClicked((MouseEvent event) -> {
 
