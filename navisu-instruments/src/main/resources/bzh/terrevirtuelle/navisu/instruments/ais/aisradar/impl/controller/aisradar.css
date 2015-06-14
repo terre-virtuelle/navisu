@@ -1,7 +1,7 @@
 /* @charset "utf-8"; */
 /* CSS Document */
 @font-face {
-    -fx-font-family: 'Navisu';
+    /*-fx-font-family: 'Navisu';*/
     src: url('fonts/Roboto-Condensed.ttf');
 }
 
@@ -11,18 +11,9 @@
     -fx-base-trans10 : #143b2810;
     -fx-base-trans20 : #143b2820;
     -fx-line-base : #04fff2;
-    -fx-font-family: Navisu, "Roboto Cn" ;
+    -fx-font-family: "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
     -fx-color-contours: #70bbbf;
-    /*-fx-toggle-body-color: linear-gradient(to bottom,
-            ladder(
-                -fx-color,
-                derive(-fx-color,8%) 75%,
-                derive(-fx-color,10%) 80%
-            ),
-            derive(-fx-color,-8%));
-    */
-
 }
 /*******************************************************************************
  *                                                                             *

@@ -11,9 +11,9 @@
 
 <fx:root fx:id="menu" stylesheets="@ais.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">  
     <children>
-        <Group opacity="0.6">
+        <Group>
             <children>
-                <Pane prefHeight="155.0" prefWidth="196.0" styleClass="ais-panel" />
+                <Pane prefHeight="239.0" prefWidth="196.0" styleClass="ais-panel" />
                 <Group layoutX="9.0">
                     <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -29,17 +29,24 @@
                                 <Image url="@quit.png" />
                             </image>
                         </ImageView>
+                       
+                       
                         <Slider fx:id="slider" layoutX="161.0" layoutY="45.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                         </Slider>
-                        <MenuButton alignment="CENTER" layoutX="20.0" layoutY="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="110.0" styleClass="radar-buttonlabel" text="MENU" textAlignment="CENTER">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Display" />
-                                <MenuItem mnemonicParsing="false" text="GPS" />
-                            </items>
-                        </MenuButton>
+                  <MenuBar layoutX="20.0" layoutY="50.0" prefHeight="30.0" prefWidth="110.0" styleClass="radar-buttonlabel">
+                    <menus>
+                      <Menu mnemonicParsing="false" text="MENU">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="Display" />
+                              <MenuItem mnemonicParsing="false" text="GPS" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
                     </children>
                 </Group>
             </children>
         </Group>
     </children>
+
 </fx:root>
