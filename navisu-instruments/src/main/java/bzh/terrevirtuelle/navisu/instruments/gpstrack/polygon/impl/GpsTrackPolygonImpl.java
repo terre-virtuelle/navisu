@@ -1067,10 +1067,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			diameter = 2*yards*0.9144;
 			dmpLayer = dmp.getLayer();
 			dmpLayer.setEnabled(true);
-			dmpLayer.setName("CPA zone " + yards + " yards");
+			dmpLayer.setName("CPA zone " + Math.round(yards) + " yards");
 			geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
 			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
-			aisTrackPanel.updateAisPanelStatus("CPA zone " + yards + " yards activated");
+			aisTrackPanel.updateAisPanelStatus("CPA zone " + Math.round(yards) + " yards activated");
 		}
 	}
 	
@@ -1092,7 +1092,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(dmpLayer));
 			dmp.setArmed(false);
 			dmpController.setArmed(false);
-			aisTrackPanel.updateAisPanelStatus("CPA zone activated");
+			aisTrackPanel.updateAisPanelStatus("CPA zone activated - radius : " + Math.round(diameter/2) + " meters");
 		}
 	}
 	
