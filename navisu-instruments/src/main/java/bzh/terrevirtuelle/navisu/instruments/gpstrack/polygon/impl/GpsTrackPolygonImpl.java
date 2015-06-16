@@ -167,7 +167,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected Date startTime;
 	protected int nbNamesDB = 0;
 	protected int distanceInterval = 70;
-	protected int timeInterval = 7000;
+	protected int timeInterval = 1000;//7000;
+	protected ArrayList<Position> reco = new ArrayList<Position>();
+	protected ArrayList<Double> headings = new ArrayList<Double>();
 
 	@Override
 	public void componentInitiated() {
@@ -481,7 +483,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			if (!shipDetected[i]) {
 				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside P" + (i+1));
 				shipDetected[i] = true;
+				reco = new ArrayList<Position>();
 				}
+			
+			reco.add(new Position(pos,0));
 					
 			if (!(centered.get(i))) {
 				wwd.getView().setEyePosition(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 20000));
@@ -527,10 +532,133 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			if (shipDetected[i]) {
 				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (i+1));
 				shipDetected[i] = false;
+				for (int k=45; k<=135; k=k+45) {
+					if (detectTurn(reco, k).getResult()) {
+						aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + detectTurn(reco, k).getPercent() + "%");
+					}
+					if (detectTurn(reco, -k).getResult()) {
+						aisTrackPanel.updateAisPanelStatus("Left turn " + k + "° detected at " + detectTurn(reco, -k).getPercent() + "%");
+					}
+				}
+
+				if (detectTurn(reco, 180).getResult()) {
+					aisTrackPanel.updateAisPanelStatus("U-turn detected at " + detectTurn(reco, 180).getPercent() + "%");
+				}
 			}
 		}
 		
 		}
+	}
+	
+	
+	private Doublon detectTurn(ArrayList<Position> positions, double alpha) {
+		headings = new ArrayList<Double>();
+		for (int i=0; i<positions.size()-1; i++) {
+			headings.add(computeCourse(positions.get(i), positions.get(i+1)));
+		}
+		
+		/*for (Double d : headings) {
+			aisTrackPanel.updateAisPanelStatus(d.toString());
+		}*/
+		
+		double h0 = (headings.get(0)+headings.get(1)+headings.get(2))/3;
+		double hf = h0 + alpha;
+		if (hf>=360) {
+			hf = hf - 360;
+			}
+		if (hf<0) {
+			hf = hf + 360;
+		}
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		int d = 0;
+		boolean left = false;
+		boolean right = false;
+		double h0min = h0-20;
+		double h0max = h0+20;
+		if (h0min<0) {
+			h0min = h0min + 360;
+			left = true;
+			}
+		if (h0max>=360) {
+			h0max = h0max - 360;
+			right = true;
+		}
+		
+		boolean leftf = false;
+		boolean rightf = false;
+		double hfmin = hf-20;
+		double hfmax = hf+20;
+		if (hfmin<0) {
+			hfmin = hfmin + 360;
+			leftf = true;
+			}
+		if (hfmax>=360) {
+			hfmax = hfmax - 360;
+			rightf = true;
+		}
+		
+		for (Double h : headings) {
+			if (left || right) {if ((0<h && h<h0max) || (h0min<h && h<360)) {a++;}}
+			if (!left && !right) {if (h0min<h && h<h0max) {a++;}}
+			if (leftf || rightf) {if ((0<h && h<hfmax) || (hfmin<h && h<360)) {b++;}}
+			if (!leftf && !rightf) {if (hfmin<h && h<hfmax) {b++;}}
+		}
+			
+		for (int j=0; j<headings.size()-1; j++) {
+			if (Math.abs(headings.get(j)-headings.get(j+1))>40) {d++;}
+		}
+		
+		int taille = headings.size();
+		c = taille - a - b;
+		double resultat = 0;
+		
+		//aisTrackPanel.updateAisPanelStatus("a=" + a + " b=" + b + " c=" + c + " d=" + d);
+		if (taille>(a+b)) {
+			resultat = (Math.round(((a+b)*1000)/taille))/10;
+			} 
+		else {
+			resultat = 100.0;
+			}
+		
+		if ((double)a>=taille*0.2 && (double)b>=taille*0.2 && (double)(a+b)>=taille*0.7 && (double)c<=taille*0.3 && (double)d<=taille*0.4) {
+			Doublon doublon = new Doublon (true, resultat);
+			return doublon;
+			} 
+		else {
+			Doublon doublon = new Doublon (false, resultat);
+			return doublon;
+			}
+		
+	}
+	
+	private class Doublon {
+		
+		public Doublon (boolean b, double d) {
+			this.result = b;
+			this.percent = d;
+		}
+		
+		private boolean result;
+		private double percent;
+
+		public boolean getResult() {
+			return result;
+		}
+		
+		public void setResult(boolean result) {
+			this.result = result;
+		}
+		
+		public double getPercent() {
+			return percent;
+		}
+		
+		public void setPercent(double percent) {
+			this.percent = percent;
+		}
+		
 	}
 	
 	
