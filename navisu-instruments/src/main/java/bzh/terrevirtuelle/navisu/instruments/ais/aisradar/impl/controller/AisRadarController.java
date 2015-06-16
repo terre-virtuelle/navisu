@@ -208,6 +208,11 @@ public class AisRadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        /*
+        guiAgentServices.getScene().getStylesheets().setAll(
+                getClass().getResource("aisradar.css").toExternalForm()
+        );
+*/
         aisinfopanel.setVisible(false);
         aisbuttonpanel.setVisible(true);
         Platform.runLater(() -> {
