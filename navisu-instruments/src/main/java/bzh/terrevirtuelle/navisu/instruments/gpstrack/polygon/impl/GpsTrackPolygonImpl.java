@@ -169,7 +169,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int distanceInterval = 70;
 	protected int timeInterval = 1000;//7000;
 	protected ArrayList<Position> reco = new ArrayList<Position>();
-	protected ArrayList<Double> headings = new ArrayList<Double>();
+	protected ArrayList<SamplePositions> recos = new ArrayList<SamplePositions>();
 
 	@Override
 	public void componentInitiated() {
@@ -534,15 +534,15 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				shipDetected[i] = false;
 				for (int k=45; k<=135; k=k+45) {
 					if (detectTurn(reco, k).getResult()) {
-						aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + detectTurn(reco, k).getPercent() + "%");
+						aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + detectTurn(reco, k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
 					}
 					if (detectTurn(reco, -k).getResult()) {
-						aisTrackPanel.updateAisPanelStatus("Left turn " + k + "° detected at " + detectTurn(reco, -k).getPercent() + "%");
+						aisTrackPanel.updateAisPanelStatus("Left turn " + k + "° detected at " + detectTurn(reco, -k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
 					}
 				}
 
 				if (detectTurn(reco, 180).getResult()) {
-					aisTrackPanel.updateAisPanelStatus("U-turn detected at " + detectTurn(reco, 180).getPercent() + "%");
+					aisTrackPanel.updateAisPanelStatus("U-turn detected at " + detectTurn(reco, 180).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
 				}
 			}
 		}
@@ -552,16 +552,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	
 	private Doublon detectTurn(ArrayList<Position> positions, double alpha) {
-		headings = new ArrayList<Double>();
+		ArrayList<Double> headings = new ArrayList<Double>();
 		for (int i=0; i<positions.size()-1; i++) {
-			headings.add(computeCourse(positions.get(i), positions.get(i+1)));
+			//ajout des caps dans la liste headings seulement si les deux points i et i+1 sont bien distincts
+			if (computeCourse(positions.get(i), positions.get(i+1)) != 500) {
+				headings.add(computeCourse(positions.get(i), positions.get(i+1)));
+				}
 		}
-		
-		/*for (Double d : headings) {
-			aisTrackPanel.updateAisPanelStatus(d.toString());
-		}*/
-		
-		double h0 = (headings.get(0)+headings.get(1)+headings.get(2))/3;
+		/*String resu = "";
+		for (Double d : headings) {
+			resu = resu + d.toString() + "-";
+		}
+		aisTrackPanel.updateAisPanelStatus(resu);*/
+		double h0 = headings.get(0);
 		double hf = h0 + alpha;
 		if (hf>=360) {
 			hf = hf - 360;
@@ -622,7 +625,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			resultat = 100.0;
 			}
 		
-		if ((double)a>=taille*0.2 && (double)b>=taille*0.2 && (double)(a+b)>=taille*0.7 && (double)c<=taille*0.3 && (double)d<=taille*0.4) {
+		if ((double)a>=taille*0.1 && (double)b>=taille*0.1 && (double)(a+b)>=taille*0.7 && (double)c<=taille*0.45 && (double)d<=taille*0.4) {
 			Doublon doublon = new Doublon (true, resultat);
 			return doublon;
 			} 
@@ -661,6 +664,44 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 	}
 	
+	private class SamplePositions {
+		
+		public SamplePositions (int mmsi, int zone) {
+			this.positions = new ArrayList<Position>();
+			this.mmsi = mmsi;
+			this.zone = zone;
+		}
+		
+		private ArrayList<Position> positions;
+		
+		private int mmsi;
+		
+		public int getMmsi() {
+			return mmsi;
+		}
+
+		public void setMmsi(int mmsi) {
+			this.mmsi = mmsi;
+		}
+
+		public int getZone() {
+			return zone;
+		}
+
+		public void setZone(int zone) {
+			this.zone = zone;
+		}
+
+		private int zone;
+
+		public ArrayList<Position> getPositions() {
+			return positions;
+		}
+
+		public void setPositions(ArrayList<Position> positions) {
+			this.positions = positions;
+		}
+	}
 	
 	private void watchTargetAis(LinkedList<Ship> targets, MeasureTool tool) {
 		
@@ -672,15 +713,46 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				if (!detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)]) {
 					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " inside P" + (savedMeasureTool.indexOf(tool)+1));
 					detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)] = true;
+					SamplePositions sample = new SamplePositions(target.getMMSI(), savedMeasureTool.indexOf(tool));
+					recos.add(sample);
 					}
 				putTextOn = true;
 				index = targets.indexOf(target);
+			}
+			
+			for (SamplePositions p : recos) {
+				if (p.getMmsi()==target.getMMSI() && p.getZone()==savedMeasureTool.indexOf(tool)) {
+					ArrayList<Position> resuPos = p.getPositions();
+					resuPos.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 0));
+					p.setPositions(resuPos);
+				}
 			}
 			
 			if (!(WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions())) && tool != null) {
 				if (detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)]) {
 					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (savedMeasureTool.indexOf(tool)+1));
 					detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)] = false;
+					
+					ArrayList<Position> resuPos1 = new ArrayList<Position>();
+					for (SamplePositions p : recos) {
+						if (p.getMmsi()==target.getMMSI() && p.getZone()==savedMeasureTool.indexOf(tool)) {
+							resuPos1 = p.getPositions();
+						}
+					}
+					
+					for (int k=45; k<=135; k=k+45) {
+						if (detectTurn(resuPos1, k).getResult()) {
+							aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + detectTurn(resuPos1, k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
+						}
+						if (detectTurn(resuPos1, -k).getResult()) {
+							aisTrackPanel.updateAisPanelStatus("Left turn " + k + "° detected at " + detectTurn(resuPos1, -k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
+						}
+					}
+
+					if (detectTurn(resuPos1, 180).getResult()) {
+						aisTrackPanel.updateAisPanelStatus("U-turn detected at " + detectTurn(resuPos1, 180).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName() + " in P" + (savedMeasureTool.indexOf(tool)+1));
+					}
+					
 				}
 			}
 			
@@ -1330,6 +1402,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     }
 	
 	private double computeCourse(Position start, Position end) {
+		if (start.getLatitude().getDegrees()==end.getLatitude().getDegrees() && start.getLongitude().getDegrees()==end.getLongitude().getDegrees()) {
+			return 500;
+			}
+		
 		double lat1 = start.getLatitude().getRadians();
 		double lat2 = end.getLatitude().getRadians();
 		double lon1 = start.getLongitude().getRadians();

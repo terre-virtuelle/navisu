@@ -187,7 +187,7 @@ public class TrackPanel
         tabLines = status.getText().split("\n");
         int nbLines = tabLines.length;
         String resu = "";
-        if (nbLines==200) {
+        if (nbLines==500) {
             for (int i=1;i<nbLines;i++) {
                 resu = resu + tabLines[i] + "\n";
             }
