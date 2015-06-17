@@ -327,11 +327,10 @@ public class AppMain extends Application {
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
 
-        /* Test CPA zone */
-        //gpsTrackPlotterServices.on(); //plotter cible GPS
-        // dataServerServices.openFile("data/nmea/test5.txt"); //NMEA0183
-        // dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        // Test cibles AIS en direct
+        /* Test CPA zone et reconnaissance de trajectoire */
+         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        
+        /* Test cibles AIS en direct */
       dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
 
