@@ -1,7 +1,6 @@
-/* @charset "utf-8"; */
+
 /* CSS Document */
 @font-face {
-    /*-fx-font-family: 'Navisu';*/
     src: url('fonts/Roboto-Condensed.ttf');
 }
 
@@ -20,21 +19,22 @@
  * Infos et valeurs AIS                                                        *
  *                                                                             *
  ******************************************************************************/
-.aisvalue{
-    -fx-font: 14px "Roboto Cn";
+.radaraisvalue{
+    -fx-font: 18px "Roboto";
     -fx-fill : #fff900;
+    -fx-font-weight: bold;
 }
-.aislabel{
-    -fx-font: 14px "Roboto Cn";
+.radaraislabel{
+    -fx-font: 18px "Roboto";
     -fx-fill : -fx-line-base;
 }
-.aisname{
-    -fx-font: 18px "Roboto Cn";
+.radaraisname{
+    -fx-font: 18px "Roboto";
     -fx-fill : #fff900;
     -fx-underline : true;
 }
 .info-text{
-    -fx-font: 16px "Roboto Cn";
+    -fx-font: 18px "Roboto";
     -fx-fill : #fff900;
 }
 /*******************************************************************************
