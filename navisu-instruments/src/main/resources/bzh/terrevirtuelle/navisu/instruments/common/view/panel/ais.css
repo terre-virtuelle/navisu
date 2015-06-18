@@ -1,8 +1,6 @@
-/* @charset "utf-8"; */
 /* CSS Document */
 @font-face {
-    /*-fx-font-family: 'Navisu';*/
-    src: url('fonts/Roboto-Condensed.ttf');
+        src: url('fonts/Roboto-Condensed.ttf');
 }
 
 *{

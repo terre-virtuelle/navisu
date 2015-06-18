@@ -1,7 +1,6 @@
-@charset "utf-8";
+
 /* CSS Document */
 @font-face {
-    -fx-font-family: 'Navisu';
     src: url('fonts/Roboto-Condensed.ttf');
 }
 
@@ -16,19 +15,17 @@
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
     -fx-fill : -fx-color-typo;
-    /*-fx-font-weight: bold;
-    -fx-underline : true;*/
+
 }
 .infotittle{
     -fx-font: 16px "Roboto Cn";
     -fx-fill : -fx-color-typo;
-    /*-fx-font-weight: bold;
-    -fx-underline : true;*/    
+ 
 }
 .instrumentvalue{
     -fx-font: 20px "Roboto Cn";
     -fx-fill: -fx-color-typo;
-    /*-fx-font-weight: bold;*/   
+  
 }
 .instrumentcadres{
     -fx-stroke:-fx-color-contours;
@@ -37,13 +34,15 @@
 }
 .aisvalue{
     -fx-font: 14px "Roboto Cn";
-    -fx-fill : #c2f8c4;
-    /*-fx-font-weight: bold;*/
+    -fx-fill : #fff900;
+}
+.aislabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-line-base;
 }
 .aisname{
     -fx-font: 18px "Roboto Cn";
-    -fx-fill : #c2f8c4;
-    /*-fx-font-weight: bold;*/
+    -fx-fill : #fff900;
     -fx-underline : true;
 }
 /*******************************************************************************

@@ -118,6 +118,8 @@ public class AisRadarController
     @FXML
     public Text country;
     @FXML
+    public Text radarscale;
+    @FXML
     public Text agereport;
     @FXML
     public Button menu;
@@ -630,6 +632,7 @@ public class AisRadarController
             Map<Integer, Calendar> timestamps,
             Map<Integer, String> midMap) {
         setVisible(true);
+        //radarscale.setText(Double.toString(radarScale));
         if (ship.getName() == null || "".equals(ship.getName())) {
             shipname.setText("Name not yet available");
         } else {
