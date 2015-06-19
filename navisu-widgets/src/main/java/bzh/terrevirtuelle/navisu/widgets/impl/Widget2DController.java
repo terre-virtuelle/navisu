@@ -96,6 +96,11 @@ public class Widget2DController
         setScaleY(scale);
     }
 
+    public void setLocation(double x, double y) {
+        setTranslateX(x - getLayoutX());
+        setTranslateY(y - getLayoutY());
+    }
+
     public void startFadeTransition(Group group, double start, double end) {
         FadeTransition fade = new FadeTransition(Duration.millis(1000), this);
         fade.setFromValue(start);
