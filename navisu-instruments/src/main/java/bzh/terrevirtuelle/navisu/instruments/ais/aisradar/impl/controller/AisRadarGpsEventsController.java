@@ -24,14 +24,17 @@ public class AisRadarGpsEventsController extends GpsEventsController{
         this.controller = controller;
     }
 
+    @Override
     public void notifyNmeaMessage(GGA data) {
         controller.notifyNmeaMessage(data);
     }
 
+    @Override
     public void notifyNmeaMessage(VTG data) {
         controller.notifyNmeaMessage(data);
     }
 
+    @Override
     public void notifyNmeaMessage(RMC data) {
         controller.notifyNmeaMessage(data);
     }

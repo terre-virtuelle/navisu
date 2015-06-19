@@ -370,7 +370,6 @@ public class AisRadarController
         ownerShip.setLatitude(latOwner);
         ownerShip.setLongitude(lonOwner);
         updateTargets();
-
     }
 
     public void notifyNmeaMessage(VTG data) {
