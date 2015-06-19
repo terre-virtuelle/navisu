@@ -12,7 +12,6 @@ import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;

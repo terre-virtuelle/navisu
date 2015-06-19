@@ -8,22 +8,16 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
-import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisCreateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisDeleteStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisDeleteTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateStationEvent;
-import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotter;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.AisPlotterServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller.AisPlotterAisEventsController;
 import bzh.terrevirtuelle.navisu.instruments.ais.plotter.impl.controller.AisPlotterController;
+import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsController;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
-import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
-import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
  * @date 3 mars 2015
@@ -44,20 +38,13 @@ public class AisPlotterImpl
     @UsedService
     AisServices aisServices;
 
-    ComponentManager cm;
-    ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
-    ComponentEventSubscribe<AisCreateTargetEvent> aisCTEvent;
-    ComponentEventSubscribe<AisDeleteStationEvent> aisDSEvent;
-    ComponentEventSubscribe<AisDeleteTargetEvent> aisDTEvent;
-    ComponentEventSubscribe<AisUpdateStationEvent> aisUSEvent;
-    ComponentEventSubscribe<AisUpdateTargetEvent> aisUTEvent;
-
     protected final String NAME = "AisPlotter";
     protected final String GROUP = "Devices";
     protected Map<Integer, Ship> ships;
     protected Map<Integer, BaseStation> stations;
     protected boolean on = false;
-    protected AisPlotterController controller;
+    protected AisPlotterController aisPlotterController;
+    protected AisEventsController aisEventsController;
     protected TargetPanel aisPanelController;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
@@ -65,13 +52,6 @@ public class AisPlotterImpl
     @Override
     public void componentInitiated() {
 
-        cm = ComponentManager.componentManager;
-        aisCSEvent = cm.getComponentEventSubscribe(AisCreateStationEvent.class);
-        aisCTEvent = cm.getComponentEventSubscribe(AisCreateTargetEvent.class);
-        aisDSEvent = cm.getComponentEventSubscribe(AisDeleteStationEvent.class);
-        aisDTEvent = cm.getComponentEventSubscribe(AisDeleteTargetEvent.class);
-        aisUSEvent = cm.getComponentEventSubscribe(AisUpdateStationEvent.class);
-        aisUTEvent = cm.getComponentEventSubscribe(AisUpdateTargetEvent.class);
     }
 
     @Override
@@ -84,7 +64,7 @@ public class AisPlotterImpl
 
     @Override
     public void on(String... files) {
-        controller = new AisPlotterController(geoViewServices, layerTreeServices, guiAgentServices,
+        aisPlotterController = new AisPlotterController(geoViewServices, layerTreeServices, guiAgentServices,
                 NAME, GROUP);
         if (!aisServices.isOn()) {
             aisServices.on();
@@ -94,39 +74,19 @@ public class AisPlotterImpl
             ships = aisServices.getShips();
             Set<Integer> shipSet = ships.keySet();
             shipSet.stream().forEach((i) -> {
-                controller.createTarget(ships.get(i));
+                aisPlotterController.createTarget(ships.get(i));
             });
             stations = aisServices.getStations();
             Set<Integer> stationSet = stations.keySet();
             stationSet.stream().forEach((i) -> {
-                controller.createTarget(stations.get(i));
+                aisPlotterController.createBaseStation(stations.get(i));
             });
             timestamps = aisServices.getTimestamps();
-            controller.setTimestamps(timestamps);
+            aisPlotterController.setTimestamps(timestamps);
             midMap = aisServices.getMidMap();
-            controller.setMidMap(midMap);
-
-            aisCTEvent.subscribe((AisCreateTargetEvent) (Ship updatedData) -> {
-                controller.createTarget(updatedData);
-            });
-            aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
-                controller.updateTarget(updatedData);
-            });
-            aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship updatedData) -> {
-               // controller.deleteTarget(updatedData);
-                // ships.remove(updatedData.getMMSI());
-            });
-
-            aisCSEvent.subscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
-                controller.createTarget(updatedData);
-            });
-            aisUSEvent.subscribe((AisUpdateStationEvent) (BaseStation updatedData) -> {
-                controller.updateTarget(updatedData);
-            });
-            aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation updatedData) -> {
-               // controller.deleteTarget(updatedData);
-                //  stations.remove(updatedData.getMMSI());
-            });
+            aisPlotterController.setMidMap(midMap);
+            aisEventsController = new AisPlotterAisEventsController(aisPlotterController);
+            aisEventsController.subscribe();
         }
     }
 
@@ -134,25 +94,6 @@ public class AisPlotterImpl
     public void off() {
         if (on == true) {
             on = false;
-            aisCTEvent.unsubscribe((AisCreateTargetEvent) (Ship updatedDate) -> {
-                System.out.println(updatedDate);
-            });
-            aisUTEvent.unsubscribe((AisUpdateTargetEvent) (Ship updatedData) -> {
-                System.out.println(updatedData);
-            });
-            aisDTEvent.unsubscribe((AisDeleteTargetEvent) (Ship updatedDate) -> {
-                System.out.println(updatedDate);
-            });
-
-            aisCSEvent.unsubscribe((AisCreateStationEvent) (BaseStation updatedData) -> {
-                System.out.println(updatedData);
-            });
-            aisUSEvent.unsubscribe((AisUpdateStationEvent) (BaseStation updatedData) -> {
-                System.out.println(updatedData);
-            });
-            aisDSEvent.unsubscribe((AisDeleteStationEvent) (BaseStation updatedDate) -> {
-                System.out.println(updatedDate);
-            });
         }
     }
 

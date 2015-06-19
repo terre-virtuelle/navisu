@@ -89,7 +89,7 @@ public class AisPlotterController {
         }
     }
 
-    public void createTarget(BaseStation target) {
+    public void createBaseStation(BaseStation target) {
 
         GStation gTarget = new GStation(target);
         gStations.put(target.getMMSI(), gTarget);
@@ -108,7 +108,7 @@ public class AisPlotterController {
         wwd.redrawNow();
     }
 
-    public void updateTarget(BaseStation target) {
+    public void updateBaseStation(BaseStation target) {
         GStation gTarget = gStations.get(target.getMMSI());
         gTarget.update();
         wwd.redrawNow();
@@ -126,7 +126,7 @@ public class AisPlotterController {
         wwd.redrawNow();
     }
 
-    public void deleteTarget(BaseStation target) {
+    public void deleteBaseStation(BaseStation target) {
         GStation gTarget = gStations.get(target.getMMSI());
         Renderable[] renderables = gTarget.getRenderables();
         for (Renderable r : renderables) {
@@ -162,6 +162,7 @@ public class AisPlotterController {
 
     protected final void updateAisPanel(Ship ship) {
         Platform.runLater(() -> {
+            targetPanel.setLocation(100, 100);
             targetPanel.updateAisPanel(ship, timestamps, midMap);
         });
     }

@@ -118,8 +118,6 @@ public class AisRadarController
     @FXML
     public Text country;
     @FXML
-    public Text radarscale;
-    @FXML
     public Text agereport;
     @FXML
     public Button menu;
@@ -366,7 +364,7 @@ public class AisRadarController
         createTarget(ownerShip);
     }
 
-    public void notifyNmeaMessageChanged(GGA data) {
+    public void notifyNmeaMessage(GGA data) {
         latOwner = data.getLatitude();
         lonOwner = data.getLongitude();
         ownerShip.setLatitude(latOwner);
@@ -375,7 +373,7 @@ public class AisRadarController
 
     }
 
-    public void notifyNmeaMessageChanged(VTG data) {
+    public void notifyNmeaMessage(VTG data) {
 
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
@@ -384,7 +382,7 @@ public class AisRadarController
         }
     }
 
-    public void notifyNmeaMessageChanged(RMC data) {
+    public void notifyNmeaMessage(RMC data) {
         latOwner = data.getLatitude();
         lonOwner = data.getLongitude();
         ownerShip.setLatitude(latOwner);
@@ -637,7 +635,6 @@ public class AisRadarController
             Map<Integer, Calendar> timestamps,
             Map<Integer, String> midMap) {
         setVisible(true);
-        //radarscale.setText(Double.toString(radarScale));
         if (ship.getName() == null || "".equals(ship.getName())) {
             shipname.setText("Name not yet available");
         } else {
