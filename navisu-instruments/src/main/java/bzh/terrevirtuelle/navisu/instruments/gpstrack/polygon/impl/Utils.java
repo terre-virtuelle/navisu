@@ -134,7 +134,60 @@ public class Utils {
 			Doublon doublon = new Doublon (false, resultat);
 			return doublon;
 			}
+	}
+	
+	public static Doublon detectStraightLine(ArrayList<Position> positions) {
+		ArrayList<Double> headings = new ArrayList<Double>();
+		for (int i=0; i<positions.size()-1; i++) {
+			//ajout des caps dans la liste headings seulement si les deux points i et i+1 sont bien distincts
+			if (Utils.computeCourse(positions.get(i), positions.get(i+1)) != 500) {
+				headings.add(Utils.computeCourse(positions.get(i), positions.get(i+1)));
+				}
+		}
+		/*String resu = "";
+		for (Double d : headings) {
+			resu = resu + d.toString() + "-";
+		}
+		aisTrackPanel.updateAisPanelStatus(resu);*/
+		double h0 = headings.get(0);
+		int a = 0;
+		int d = 0;
+		boolean left = false;
+		boolean right = false;
+		double h0min = h0-20;
+		double h0max = h0+20;
+		if (h0min<0) {
+			h0min = h0min + 360;
+			left = true;
+			}
+		if (h0max>=360) {
+			h0max = h0max - 360;
+			right = true;
+		}
 		
+		for (Double h : headings) {
+			if (left || right) {if ((0<h && h<h0max) || (h0min<h && h<360)) {a++;}}
+			if (!left && !right) {if (h0min<h && h<h0max) {a++;}}
+		}
+			
+		for (int j=0; j<headings.size()-1; j++) {
+			if (Math.abs(headings.get(j)-headings.get(j+1))>40) {d++;}
+		}
+		
+		int taille = headings.size();
+		double resultat = 0;
+		
+		//aisTrackPanel.updateAisPanelStatus("a=" + a + " d=" + d);
+		resultat = (Math.round((a*1000)/taille))/10;
+		
+		if (((double)a)>=taille*0.7 && (double)d<=taille*0.4) {
+			Doublon doublon = new Doublon (true, resultat);
+			return doublon;
+			} 
+		else {
+			Doublon doublon = new Doublon (false, resultat);
+			return doublon;
+			}
 	}
 
 }
