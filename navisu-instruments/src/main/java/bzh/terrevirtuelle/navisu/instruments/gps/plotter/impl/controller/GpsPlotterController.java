@@ -147,20 +147,20 @@ public class GpsPlotterController {
         ownerShipView.setField("Ship", ownerShip);
     }
 
-    public void notifyNmeaMessageChanged(GGA data) {
+    public void notifyNmeaMessage(GGA data) {
         ownerShip.setLatitude(data.getLatitude());
         ownerShip.setLongitude(data.getLongitude());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
     }
 
-    public void notifyNmeaMessageChanged(VTG data) {
+    public void notifyNmeaMessage(VTG data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
     }
 
-    public void notifyNmeaMessageChanged(RMC data) {
+    public void notifyNmeaMessage(RMC data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         ownerShip.setLatitude(data.getLatitude());
