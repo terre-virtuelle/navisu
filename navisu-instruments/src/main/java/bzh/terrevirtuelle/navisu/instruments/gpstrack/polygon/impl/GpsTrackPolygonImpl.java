@@ -143,6 +143,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected ArrayList<Position> path = new ArrayList<Position>();
 	protected static final String GROUP1 = "Target";
 	protected static final String GROUP2 = "Path";
+	protected static final String GROUP3 = "Rules";
 	protected Ship pShip;
 	protected GShip gShip;
 	protected boolean pShipCreated = false;
@@ -178,6 +179,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int selectedPolygon = 0;
 	protected boolean polygonSelected = false;
 	protected LinkedList<ArrayList<Position>> trajectories;
+	protected MeasureTool rmt;
+	protected MeasureToolController rmtc;
+	protected RenderableLayer rLayer;
+	protected boolean ruleCreated = false;
 
 	@Override
 	public void componentInitiated() {
@@ -190,6 +195,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		wwd = GeoWorldWindViewImpl.getWW();
 		layerTreeServices.createGroup(GROUP);
 		geoViewServices.getLayerManager().createGroup(GROUP);
+		layerTreeServices.createGroup(GROUP3);
+		geoViewServices.getLayerManager().createGroup(GROUP3);
 		
 		cm = ComponentManager.componentManager;
 		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -257,7 +264,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
 		
 		trajectories = new LinkedList<ArrayList<Position>>();
-		
+		for (int l=0; l<10; l++) {trajectories.add(null);}
 	}
 
 	@Override
@@ -1328,4 +1335,47 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         
     }
 	
+	@Override
+	public void createRule() {
+		if (polygonSelected) {
+			
+			rmt = new MeasureTool(wwd);
+			rmtc = new MeasureToolController();
+			rmt.setController(rmtc);
+			rmt.setFollowTerrain(true);
+			rmt.setMeasureShapeType(MeasureTool.SHAPE_PATH);
+			// couleur de la trajectoire perso : bleu
+			rmt.setLineColor(WWUtil.decodeColorRGBA("0000FFFF"));
+			rmtc.setFreeHand(true);
+			rmtc.setFreeHandMinSpacing(distanceInterval);
+			rmt.setArmed(true);
+			rmtc.setArmed(true);
+			aisTrackPanel.updateAisPanelStatus("New rule ready to be drawn");
+			ruleCreated = true;
+		}
+		else {
+			aisTrackPanel.updateAisPanelStatus("You must select a Polygon first");	
+		}
+	}
+	
+	@Override
+	public void activateRule() {
+		if (ruleCreated) {
+			rmt.setShowControlPoints(false);
+			trajectories.set((selectedPolygon-1), ((ArrayList<Position>) rmt.getPositions()));
+			rLayer = new RenderableLayer();
+			rLayer = rmt.getLayer();
+			rLayer.setName("P" + selectedPolygon + " rule");
+			geoViewServices.getLayerManager().insertGeoLayer(GROUP3, GeoLayer.factory.newWorldWindGeoLayer(rLayer));
+			layerTreeServices.addGeoLayer(GROUP3, GeoLayer.factory.newWorldWindGeoLayer(rLayer));
+			rmt.setArmed(false);
+			rmtc.setArmed(false);
+			aisTrackPanel.updateAisPanelStatus("New rule associated with polygon P" + selectedPolygon);
+			ruleCreated = false;
+			}
+		else {
+			aisTrackPanel.updateAisPanelStatus("Please create a rule first");
+		}
+	}
+
 }

@@ -1,5 +1,5 @@
 #org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
-#Wed May 27 11:27:47 CEST 2015
-build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;navisu-agents;navisu-app;navisu-bathymetry;navisu-charts;navisu-client;navisu-core;navisu-currents;navisu-database;navisu-domain;navisu-geodesy;navisu-gpx;navisu-instruments;navisu-kml;navisu-launcher;navisu-magnetic;navisu-media;navisu-netcdf;navisu-sedimentology;navisu-server;navisu-shapefiles;navisu-speech;navisu-system;navisu-topology;navisu-util;navisu-widgets;navisu-wms;
+#Mon Jun 22 14:55:57 CEST 2015
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;navisu-agents;navisu-app;navisu-bathymetry;navisu-charts;navisu-client;navisu-core;navisu-currents;navisu-database;navisu-domain;navisu-geodesy;navisu-geometry;navisu-gpx;navisu-instruments;navisu-kml;navisu-launcher;navisu-magnetic;navisu-media;navisu-netcdf;navisu-sedimentology;navisu-server;navisu-shapefiles;navisu-speech;navisu-system;navisu-topology;navisu-util;navisu-widgets;navisu-wms;
 org.springsource.ide.eclipse.gradle.linkedresources=
 org.springsource.ide.eclipse.gradle.rootprojectloc=

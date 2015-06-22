@@ -314,8 +314,8 @@ public class DockManagerImpl<TrackTool>
     private void createTracksRadialWidget() {
         tracksRadialMenu = RadialMenuBuilder.create()
                 .centralImage("tracksradialmenu150.png")
-                .createNode(0, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
-                .createNode(0, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
+                //.createNode(0, "sector.png", 0, "sector.png", 0, "sectorOn.png", (e) -> open("GpsTrackSector"))
+                //.createNode(0, "sector.png", 0, "sector.png", 1, "newSector.png", (e) -> newSector())
                 .createNode(1, "shape.png", 0, "shape.png", 0, "polyShapeOn.png", (e) -> polyShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 1, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 2, "circleShapeOn.png", (e) -> circleShapeOn())
@@ -325,7 +325,9 @@ public class DockManagerImpl<TrackTool>
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 1, "saveAll.png", (e) -> saveAllPolygons())
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 2, "savePolygon.png", (e) -> savePolygon())
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 3, "drawerOn.png", (e) -> drawerOn())
-                .createNode(2, "polyControl.png", 0, "polyControl.png", 4, "polygonOn.png", (e) -> open("GpsTrackPolygon")) 
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 4, "polygonOn.png", (e) -> open("GpsTrackPolygon"))              
+                .createNode(0, "createRule.png", 1, "createRule.png", 0, "createPath.png", (e) -> createRule())
+                .createNode(0, "createRule.png", 1, "createRule.png", 1, "associatePath.png", (e) -> activateRule()) 
                 .createNode(3, "cpa.png", 1, "custom.png", 0, "activateCpaZone.png", (e) -> activateCpaZone())
                 .createNode(3, "cpa.png", 1, "custom.png", 1, "createCpaZone.png", (e) -> createCpaZone())
                 .createNode(3, "cpa.png", 0, "classic.png", 0, "createCpaZone1000.png", (e) -> createCpaZone1000())
@@ -528,6 +530,24 @@ public class DockManagerImpl<TrackTool>
         zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
         if (zone != null) {
             zone.activateCpaZone();
+        } else {
+            System.out.println("ça plante");
+        }
+    }
+    
+    private void createRule() {
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.createRule();
+        } else {
+            System.out.println("ça plante");
+        }
+    }
+    
+    private void activateRule() {
+        zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
+        if (zone != null) {
+            zone.activateRule();
         } else {
             System.out.println("ça plante");
         }

@@ -34,4 +34,8 @@ default void newSector() {};
     default void savePath() {};
     
     default void loadPath() {};
+    
+    default void createRule() {};
+    
+    default void activateRule() {};
 }
