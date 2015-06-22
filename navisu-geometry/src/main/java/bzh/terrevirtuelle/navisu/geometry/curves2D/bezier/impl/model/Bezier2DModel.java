@@ -61,6 +61,10 @@ public class Bezier2DModel {
         return si;
     }
 
+    public void setSi(List<Pair<Double, Double>> si) {
+        this.si = si;
+    }
+
     @Override
     public String toString() {
         return "Bezier2D{" + "n=" + n + ", si=" + si + ", coeffs=" + coeffs + '}';

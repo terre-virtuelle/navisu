@@ -9,7 +9,9 @@ import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2D;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.model.Bezier2DModel;
 import bzh.terrevirtuelle.navisu.util.Pair;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -49,7 +51,8 @@ public class Bezier2DImpl
      */
     @Override
     public List<Pair<Double, Double>> compute(List<Pair<Double, Double>> si, double inc) {
-        return null;
+        bezier.setSi(si);
+        return bezier.compute(inc);
     }
 
     /**
@@ -70,7 +73,7 @@ public class Bezier2DImpl
      */
     @Override
     public List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, double inc) {
-        return null;
+        return leastSquareCompute(data, 0.1, 5);
     }
 
     /**
@@ -80,7 +83,7 @@ public class Bezier2DImpl
      * @return
      */
     @Override
-    public List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, int degree) {
+    public List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, int degree) {   
         return leastSquareCompute(data, 0.1, degree);
     }
 
@@ -93,7 +96,22 @@ public class Bezier2DImpl
      */
     @Override
     public List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, double inc, int degree) {
+        List<Pair<Double, Double>> filtered = filter(data);
         return null;
+    }
+
+    private List<Pair<Double, Double>> filter(List<Pair<Double, Double>> data) {
+        List<Pair<Double, Double>> dataFiltered = new ArrayList<>();
+        int size = data.size();
+        Pair<Double, Double> tmp = data.get(0);
+        dataFiltered.add(tmp);
+        for (int i = 1; i < size; i++) {
+            if (tmp != data.get(i)) {
+                dataFiltered.add(data.get(i));
+                tmp = data.get(i);
+            }
+        }
+        return dataFiltered;
     }
 
     /**
