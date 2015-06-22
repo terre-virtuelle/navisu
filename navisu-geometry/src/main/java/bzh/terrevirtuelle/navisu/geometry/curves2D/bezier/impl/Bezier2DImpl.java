@@ -11,7 +11,6 @@ import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.model.Bezier2DMod
 import bzh.terrevirtuelle.navisu.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import org.capcaval.c3.component.ComponentState;
 
 /**
