@@ -6,6 +6,8 @@
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
 
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -30,6 +32,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -57,6 +60,7 @@ import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
+
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -171,6 +175,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected ArrayList<Position> reco = new ArrayList<Position>();
 	protected ArrayList<SamplePositions> recos = new ArrayList<SamplePositions>();
 	protected int nbPolygonMax = 10;
+	protected int selectedPolygon = 0;
+	protected boolean polygonSelected = false;
+	protected LinkedList<ArrayList<Position>> trajectories;
 
 	@Override
 	public void componentInitiated() {
@@ -249,6 +256,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
 		layerTreeServices.addGeoLayer(GROUP1, GeoLayer.factory.newWorldWindGeoLayer(tLayer));
 		
+		trajectories = new LinkedList<ArrayList<Position>>();
+		
 	}
 
 	@Override
@@ -264,6 +273,38 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		if (on == false) {
 			on = true;
+			
+            wwd.addSelectListener(new SelectListener() {
+                public void selected(SelectEvent event) {
+                if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
+                //System.out.println("Left click");
+                if(event.getTopPickedObject().hasPosition()) {
+                Position pos = event.getTopPickedObject().getPosition() ;
+                polygonSelected = false;
+                
+                for (MeasureTool m : savedMeasureTool) {
+                	for (Position p : m.getPositions()) {
+                		if (Math.round(100000*p.getLatitude().getDegrees())==Math.round(100000*pos.getLatitude().getDegrees()) && Math.round(100000*p.getLongitude().getDegrees())==Math.round(100000*pos.getLongitude().getDegrees())) {
+                			polygonSelected = true;
+							selectedPolygon = savedMeasureTool.indexOf(m)+1;
+                		}
+                	}
+                }
+                
+                if (polygonSelected) {
+                	aisTrackPanel.updateAisPanelStatus("Polygon P" + selectedPolygon + " selected");
+                }
+                else {
+                	aisTrackPanel.updateAisPanelStatus("No polygon selected");
+                }
+                
+                }
+                }
+                }
+                });
+			
+
+			
 			readShips();
 			addPanelController();
 			startTime = new Date();
