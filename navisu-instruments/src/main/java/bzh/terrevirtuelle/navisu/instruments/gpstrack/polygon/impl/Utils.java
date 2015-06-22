@@ -189,5 +189,9 @@ public class Utils {
 			return doublon;
 			}
 	}
+	
+	public static Position translate(Position start, Position end, Position pos) {
+		return new Position(LatLon.fromDegrees(pos.getLatitude().getDegrees()+end.getLatitude().getDegrees()-start.getLatitude().getDegrees(), pos.getLongitude().getDegrees()+end.getLongitude().getDegrees()-start.getLongitude().getDegrees()), 0);
+	}
 
 }

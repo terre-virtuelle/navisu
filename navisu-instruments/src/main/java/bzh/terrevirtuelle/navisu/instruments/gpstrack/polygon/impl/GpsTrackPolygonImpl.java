@@ -66,6 +66,10 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+
 
 /**
  * @date 3 mars 2015
@@ -179,10 +183,13 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int selectedPolygon = 0;
 	protected boolean polygonSelected = false;
 	protected LinkedList<ArrayList<Position>> trajectories;
+	protected LinkedList<MeasureTool> buffers;
 	protected MeasureTool rmt;
 	protected MeasureToolController rmtc;
 	protected RenderableLayer rLayer;
 	protected boolean ruleCreated = false;
+	protected MeasureTool poly;
+	protected MeasureToolController polyc;
 
 	@Override
 	public void componentInitiated() {
@@ -265,6 +272,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		trajectories = new LinkedList<ArrayList<Position>>();
 		for (int l=0; l<10; l++) {trajectories.add(null);}
+		
+		buffers = new LinkedList<MeasureTool>();
+		for (int m=0; m<10; m++) {buffers.add(null);}
 	}
 
 	@Override
@@ -1344,7 +1354,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			rmt.setController(rmtc);
 			rmt.setFollowTerrain(true);
 			rmt.setMeasureShapeType(MeasureTool.SHAPE_PATH);
-			// couleur de la trajectoire perso : bleu
+			// couleur de la règle : bleu
 			rmt.setLineColor(WWUtil.decodeColorRGBA("0000FFFF"));
 			rmtc.setFreeHand(true);
 			rmtc.setFreeHandMinSpacing(distanceInterval);
@@ -1372,6 +1382,40 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			rmtc.setArmed(false);
 			aisTrackPanel.updateAisPanelStatus("New rule associated with polygon P" + selectedPolygon);
 			ruleCreated = false;
+			layerTreeServices.search("Rules").setSelected(false);
+			Coordinate[] coordinates = new Coordinate[trajectories.get(selectedPolygon-1).size()];
+			int i = 0;
+			for (Position p : trajectories.get(selectedPolygon-1)) {
+				coordinates[i] = new Coordinate(p.getLatitude().getDegrees(), p.getLongitude().getDegrees());
+				i++;
+			}
+			Geometry g1 = new GeometryFactory().createLineString(coordinates);
+			double inMeters = 200;
+			Geometry g2 = g1.buffer(inMeters/111120);
+			ArrayList<Position> positions = new ArrayList<Position>();
+			for (Coordinate c : g2.getCoordinates()) {
+				Position pos = new Position(LatLon.fromDegrees(c.x, c.y),0);
+				positions.add(pos);
+			}
+			poly = new MeasureTool(wwd);
+			polyc = new MeasureToolController();
+			poly.setController(polyc);
+			poly.setFollowTerrain(true);
+			poly.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+			// couleur de la forme : rouge
+			poly.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
+			poly.setShowControlPoints(false);
+			polyc.setUseRubberBand(true);
+			poly.setArmed(true);
+			polyc.setArmed(true);
+			/*ArrayList<Position> positions2 = new ArrayList<Position>();
+			for (Position p : positions) {
+				positions2.add(Utils.translate(Utils.barycenter(positions), centers.get(selectedPolygon-1), p));
+			}*/
+			poly.setPositions(positions);
+			poly.setArmed(false);
+			polyc.setArmed(false);
+			buffers.set(selectedPolygon-1, poly);
 			}
 		else {
 			aisTrackPanel.updateAisPanelStatus("Please create a rule first");
