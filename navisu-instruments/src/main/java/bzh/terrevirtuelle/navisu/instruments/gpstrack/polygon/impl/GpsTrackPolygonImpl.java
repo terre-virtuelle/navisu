@@ -308,9 +308,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                 if (polygonSelected) {
                 	aisTrackPanel.updateAisPanelStatus("Polygon P" + selectedPolygon + " selected");
                 }
-                else {
+                /*else {
                 	aisTrackPanel.updateAisPanelStatus("No polygon selected");
-                }
+                }*/
                 
                 }
                 }
@@ -601,13 +601,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				geoViewServices.getLayerManager().insertGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
 				layerTreeServices.addGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
 				wwd.redrawNow();
-				layerTreeServices.search("Buffers").setSelected(true);
-				layerTreeServices.search("Buffers").setSelected(false);
 				poly.setArmed(false);
 				polyc.setArmed(false);
 				aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(reco, poly).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
 				
-				/*for (int k=45; k<=135; k=k+45) {
+				/*
+				 * Détection de virages + demi-tours
+				 * 
+				 * for (int k=45; k<=135; k=k+45) {
 					if (Utils.detectTurn(reco, k).getResult()) {
 						aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + Utils.detectTurn(reco, k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
 					}
@@ -710,7 +711,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					polyc1.setArmed(false);
 					aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(resuPos1, poly1).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
 					
-					/*for (int k=45; k<=135; k=k+45) {
+					/*
+					 * Détection de virages + demi-tours
+					 * 
+					 * for (int k=45; k<=135; k=k+45) {
 						if (Utils.detectTurn(resuPos1, k).getResult()) {
 							aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + Utils.detectTurn(resuPos1, k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
 						}
@@ -1429,8 +1433,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			aisTrackPanel.updateAisPanelStatus("New rule associated with polygon P" + selectedPolygon);
 			ruleCreated = false;
 			polygonSelected = false;
-			layerTreeServices.search("Rules").setSelected(true);
-			layerTreeServices.search("Rules").setSelected(false);
 			}
 		else {
 			aisTrackPanel.updateAisPanelStatus("Please create a rule first");
