@@ -148,6 +148,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected static final String GROUP1 = "Target";
 	protected static final String GROUP2 = "Path";
 	protected static final String GROUP3 = "Rules";
+	protected static final String GROUP4 = "Buffers";
 	protected Ship pShip;
 	protected GShip gShip;
 	protected boolean pShipCreated = false;
@@ -183,13 +184,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected int selectedPolygon = 0;
 	protected boolean polygonSelected = false;
 	protected LinkedList<ArrayList<Position>> trajectories;
-	protected LinkedList<MeasureTool> buffers;
 	protected MeasureTool rmt;
 	protected MeasureToolController rmtc;
 	protected RenderableLayer rLayer;
 	protected boolean ruleCreated = false;
-	protected MeasureTool poly;
-	protected MeasureToolController polyc;
 
 	@Override
 	public void componentInitiated() {
@@ -204,6 +202,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		geoViewServices.getLayerManager().createGroup(GROUP);
 		layerTreeServices.createGroup(GROUP3);
 		geoViewServices.getLayerManager().createGroup(GROUP3);
+		layerTreeServices.createGroup(GROUP4);
+		geoViewServices.getLayerManager().createGroup(GROUP4);
 		
 		cm = ComponentManager.componentManager;
 		ggaES = cm.getComponentEventSubscribe(GGAEvent.class);
@@ -272,9 +272,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		trajectories = new LinkedList<ArrayList<Position>>();
 		for (int l=0; l<10; l++) {trajectories.add(null);}
-		
-		buffers = new LinkedList<MeasureTool>();
-		for (int m=0; m<10; m++) {buffers.add(null);}
 	}
 
 	@Override
@@ -584,7 +581,32 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			if (shipDetected[i]) {
 				aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (i+1));
 				shipDetected[i] = false;
-				for (int k=45; k<=135; k=k+45) {
+				
+				MeasureTool poly = new MeasureTool(wwd);
+				MeasureToolController polyc = new MeasureToolController();
+				RenderableLayer polyLayer = new RenderableLayer();
+				poly.setController(polyc);
+				poly.setFollowTerrain(true);
+				poly.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+				// couleur de la forme : rouge
+				poly.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
+				poly.setShowControlPoints(false);
+				polyc.setUseRubberBand(true);
+				poly.setArmed(true);
+				polyc.setArmed(true);
+				poly.setPositions(Utils.createTranslatedBuffer(trajectories.get(i), trajectories.get(i).get(0), reco.get(0), 200));
+				polyLayer = poly.getLayer();
+				polyLayer.setName("Buffer P" + (i+1));
+				geoViewServices.getLayerManager().insertGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
+				layerTreeServices.addGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
+				wwd.redrawNow();
+				layerTreeServices.search("Buffers").setSelected(true);
+				layerTreeServices.search("Buffers").setSelected(false);
+				poly.setArmed(false);
+				polyc.setArmed(false);
+				aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(reco, poly).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
+				
+				/*for (int k=45; k<=135; k=k+45) {
 					if (Utils.detectTurn(reco, k).getResult()) {
 						aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + Utils.detectTurn(reco, k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
 					}
@@ -599,7 +621,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				
 				if (Utils.detectStraightLine(reco).getResult()) {
 					aisTrackPanel.updateAisPanelStatus("Straight line detected at " + Utils.detectStraightLine(reco).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
-				}
+				}*/
 			}
 		}
 		
@@ -643,7 +665,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 							resuPos1 = p.getPositions();
 						}
 					}
-					//d�but copie
 					MeasureTool aisMt = new MeasureTool(wwd);
 					RenderableLayer aisMtLayer = new RenderableLayer();
 					MeasureToolController aisMtc = new MeasureToolController();
@@ -652,8 +673,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					aisMtc.setArmed(true);
 					aisMt.setFollowTerrain(true);
 					aisMt.setMeasureShapeType(MeasureTool.SHAPE_PATH);
-					// couleur de la trajectoire AIS : rouge
-					aisMt.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
+					// couleur de la trajectoire AIS : orange
+					aisMt.setLineColor(WWUtil.decodeColorRGBA("FFA500FF"));
 					aisMt.setPositions(resuPos1);
 					aisMt.setShowControlPoints(false);
 					aisMtLayer = aisMt.getLayer();
@@ -663,9 +684,32 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					wwd.redrawNow();
 					aisMt.setArmed(false);
 					aisMtc.setArmed(false);
-					//fin copie
 					
-					for (int k=45; k<=135; k=k+45) {
+					MeasureTool poly1 = new MeasureTool(wwd);
+					MeasureToolController polyc1 = new MeasureToolController();
+					RenderableLayer polyLayer = new RenderableLayer();
+					poly1.setController(polyc1);
+					poly1.setFollowTerrain(true);
+					poly1.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+					// couleur de la forme : rouge
+					poly1.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
+					poly1.setShowControlPoints(false);
+					polyc1.setUseRubberBand(true);
+					poly1.setArmed(true);
+					polyc1.setArmed(true);
+					poly1.setPositions(Utils.createTranslatedBuffer(trajectories.get(savedMeasureTool.indexOf(tool)), trajectories.get(savedMeasureTool.indexOf(tool)).get(0), resuPos1.get(0), 200));
+					polyLayer = poly1.getLayer();
+					polyLayer.setName("Buffer P" + (savedMeasureTool.indexOf(tool)+1) + "-" + target.getMMSI() + "-" + target.getName());
+					geoViewServices.getLayerManager().insertGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
+					layerTreeServices.addGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
+					wwd.redrawNow();
+					layerTreeServices.search("Buffers").setSelected(true);
+					layerTreeServices.search("Buffers").setSelected(false);
+					poly1.setArmed(false);
+					polyc1.setArmed(false);
+					aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(resuPos1, poly1).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
+					
+					/*for (int k=45; k<=135; k=k+45) {
 						if (Utils.detectTurn(resuPos1, k).getResult()) {
 							aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + Utils.detectTurn(resuPos1, k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
 						}
@@ -680,7 +724,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					
 					if (Utils.detectStraightLine(resuPos1).getResult()) {
 						aisTrackPanel.updateAisPanelStatus("Straight line detected at " + Utils.detectStraightLine(resuPos1).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName() + " in P" + (savedMeasureTool.indexOf(tool)+1));
-					}	
+					}	*/
 				}
 			}
 			
@@ -1378,44 +1422,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			rLayer.setName("P" + selectedPolygon + " rule");
 			geoViewServices.getLayerManager().insertGeoLayer(GROUP3, GeoLayer.factory.newWorldWindGeoLayer(rLayer));
 			layerTreeServices.addGeoLayer(GROUP3, GeoLayer.factory.newWorldWindGeoLayer(rLayer));
+			wwd.redrawNow();
 			rmt.setArmed(false);
 			rmtc.setArmed(false);
 			aisTrackPanel.updateAisPanelStatus("New rule associated with polygon P" + selectedPolygon);
 			ruleCreated = false;
+			polygonSelected = false;
+			layerTreeServices.search("Rules").setSelected(true);
 			layerTreeServices.search("Rules").setSelected(false);
-			Coordinate[] coordinates = new Coordinate[trajectories.get(selectedPolygon-1).size()];
-			int i = 0;
-			for (Position p : trajectories.get(selectedPolygon-1)) {
-				coordinates[i] = new Coordinate(p.getLatitude().getDegrees(), p.getLongitude().getDegrees());
-				i++;
-			}
-			Geometry g1 = new GeometryFactory().createLineString(coordinates);
-			double inMeters = 200;
-			Geometry g2 = g1.buffer(inMeters/111120);
-			ArrayList<Position> positions = new ArrayList<Position>();
-			for (Coordinate c : g2.getCoordinates()) {
-				Position pos = new Position(LatLon.fromDegrees(c.x, c.y),0);
-				positions.add(pos);
-			}
-			poly = new MeasureTool(wwd);
-			polyc = new MeasureToolController();
-			poly.setController(polyc);
-			poly.setFollowTerrain(true);
-			poly.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-			// couleur de la forme : rouge
-			poly.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
-			poly.setShowControlPoints(false);
-			polyc.setUseRubberBand(true);
-			poly.setArmed(true);
-			polyc.setArmed(true);
-			/*ArrayList<Position> positions2 = new ArrayList<Position>();
-			for (Position p : positions) {
-				positions2.add(Utils.translate(Utils.barycenter(positions), centers.get(selectedPolygon-1), p));
-			}*/
-			poly.setPositions(positions);
-			poly.setArmed(false);
-			polyc.setArmed(false);
-			buffers.set(selectedPolygon-1, poly);
 			}
 		else {
 			aisTrackPanel.updateAisPanelStatus("Please create a rule first");

@@ -2,8 +2,16 @@ package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
 
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.util.WWMath;
+import gov.nasa.worldwind.util.WWUtil;
+import gov.nasa.worldwind.util.measure.MeasureTool;
+import gov.nasa.worldwind.util.measure.MeasureToolController;
 
 import java.util.ArrayList;
+
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 
 public class Utils {
 
@@ -192,6 +200,44 @@ public class Utils {
 	
 	public static Position translate(Position start, Position end, Position pos) {
 		return new Position(LatLon.fromDegrees(pos.getLatitude().getDegrees()+end.getLatitude().getDegrees()-start.getLatitude().getDegrees(), pos.getLongitude().getDegrees()+end.getLongitude().getDegrees()-start.getLongitude().getDegrees()), 0);
+	}
+	
+	public static Doublon pathInsideBuffer(ArrayList<Position> positions, MeasureTool mt) {
+		int total = 0;
+		int outside = 0;
+		for (Position p : positions) {
+			total++;
+			if (!WWMath.isLocationInside(p, mt.getPositions())) {
+				outside++;
+			}
+		}
+		if (outside==0) {
+			return new Doublon (true, (Math.round(1000*(total-outside)/total))/10);
+		}
+		else {
+			return new Doublon (false, (Math.round(1000*(total-outside)/total))/10);
+		}	
+	}
+	
+	public static ArrayList<Position> createTranslatedBuffer(ArrayList<Position> positions, Position start, Position end, double meters) {
+		ArrayList<Position> positions2 = new ArrayList<Position>();		
+		for (Position p : positions) {
+			positions2.add(Utils.translate(start, end, p));
+		}
+		Coordinate[] coordinates2 = new Coordinate[positions2.size()];
+		int i = 0;
+		for (Position p : positions2) {
+			coordinates2[i] = new Coordinate(p.getLatitude().getDegrees(), p.getLongitude().getDegrees());
+			i++;
+		}
+		Geometry g1 = new GeometryFactory().createLineString(coordinates2);
+		Geometry g2 = g1.buffer(meters/111120);
+		ArrayList<Position> resu = new ArrayList<Position>();
+		for (Coordinate c : g2.getCoordinates()) {
+			Position pos = new Position(LatLon.fromDegrees(c.x, c.y),0);
+			resu.add(pos);
+		}
+		return resu;
 	}
 
 }
