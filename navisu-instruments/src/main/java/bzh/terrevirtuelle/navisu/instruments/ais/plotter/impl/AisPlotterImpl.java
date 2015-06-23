@@ -64,7 +64,8 @@ public class AisPlotterImpl
 
     @Override
     public void on(String... files) {
-        aisPlotterController = new AisPlotterController(geoViewServices, layerTreeServices, guiAgentServices,
+        aisPlotterController = new AisPlotterController(geoViewServices, 
+                layerTreeServices, guiAgentServices,
                 NAME, GROUP);
         if (!aisServices.isOn()) {
             aisServices.on();
