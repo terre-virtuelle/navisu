@@ -450,10 +450,11 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			long diffSeconds = diff / 1000 % 60;
 			long diffMinutes = diff / (60 * 1000) % 60;
 			long diffHours = diff / (60 * 60 * 1000) % 24;
+			long diffDays = diff / (60 * 60 * 1000) / 24;
 			//System.out.println(ANSI_GREEN + "List of AIS ships saved (" + aisShips.size() + " ships in database)" + ANSI_RESET);
 			aisTrackPanel.updateAisPanelStatus("Database saved (save #" + nbSave + ")");
 			aisTrackPanel.updateAisPanelStatus(nbMmsiReceived + " new ships / " + nbNamesReceived + " new names in database");
-			aisTrackPanel.updateAisPanelStatus("Running for " + diffHours + " hours " + diffMinutes + " minutes " + diffSeconds + " seconds");
+			aisTrackPanel.updateAisPanelStatus("Running for " + diffDays + " days " + diffHours + " hours " + diffMinutes + " minutes " + diffSeconds + " seconds");
 			aisTrackPanel.updateAisPanelCount(dateFormatTime.format(date), inSight, aisShips.size(), nbNamesDB+nbNamesReceived);
 			}
 		
