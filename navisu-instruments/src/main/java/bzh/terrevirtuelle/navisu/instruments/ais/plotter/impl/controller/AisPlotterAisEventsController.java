@@ -36,7 +36,7 @@ public class AisPlotterAisEventsController
 
     @Override
     public void deleteTarget(Ship ship) {
-        controller.deleteTarget(ship);
+      //  controller.deleteTarget(ship);//TODO
     }
 
     @Override
@@ -51,6 +51,6 @@ public class AisPlotterAisEventsController
 
     @Override
     public void deleteBaseStation(BaseStation baseStation) {
-        controller.deleteBaseStation(baseStation);
+       // controller.deleteBaseStation(baseStation);//TODO
     }
 }
