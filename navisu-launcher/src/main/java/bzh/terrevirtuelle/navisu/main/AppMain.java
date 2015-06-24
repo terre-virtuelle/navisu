@@ -43,6 +43,8 @@ import bzh.terrevirtuelle.navisu.database.DatabaseServices;
 import bzh.terrevirtuelle.navisu.database.app.TestDBServices;
 import bzh.terrevirtuelle.navisu.database.app.impl.TestDBImpl;
 import bzh.terrevirtuelle.navisu.database.impl.DatabaseImpl;
+import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
+import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.Bezier2DImpl;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
 import bzh.terrevirtuelle.navisu.gpx.impl.GpxObjectImpl;
 import bzh.terrevirtuelle.navisu.netcdf.grib.GribServices;
@@ -85,11 +87,13 @@ import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import bzh.terrevirtuelle.navisu.speech.impl.SpeakerImpl;
 import bzh.terrevirtuelle.navisu.system.files.FilesServices;
 import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
 
 import java.io.FileInputStream;
+import java.util.List;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -135,6 +139,7 @@ public class AppMain extends Application {
                         BathymetryEventProducerImpl.class,
                         BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
+                        Bezier2DImpl.class,
                         CurrentsImpl.class,
                         DataServerImpl.class,
                         DatabaseImpl.class,
@@ -180,6 +185,8 @@ public class AppMain extends Application {
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
+
+        Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
 
@@ -321,11 +328,18 @@ public class AppMain extends Application {
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
 
+        List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
+        bezier2DServices.toKML("path.kml", data);
+        List<Pair<Double, Double>> si = bezier2DServices.leastSquareCompute(data);
+        System.out.println("si "+si);
+        List<Pair<Double, Double>> bez = bezier2DServices.compute(si, 0.01);
+        System.out.println("bez "+bez);
+        bezier2DServices.toKML("testBezier.kml", bez);
+
         /* Test CPA zone et reconnaissance de trajectoire */
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        
         /* Test cibles AIS en direct */
-    dataServerServices.openGpsd("sinagot.net", 2947);
+        dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
 
         /* Test DB */
@@ -333,7 +347,6 @@ public class AppMain extends Application {
         // testDBServices.runJDBC();//OK
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
         //testDBServices.runJPA();//OK
-        
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         //speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
