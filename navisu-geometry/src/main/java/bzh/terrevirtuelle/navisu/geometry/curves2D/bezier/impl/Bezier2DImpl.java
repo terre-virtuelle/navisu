@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2D;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.model.Bezier2DModel;
+import bzh.terrevirtuelle.navisu.geometry.utils.Utils;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class Bezier2DImpl
      * @return
      */
     @Override
-    public List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, int degree) {   
+    public List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, int degree) {
         return leastSquareCompute(data, 0.1, degree);
     }
 
@@ -96,7 +97,9 @@ public class Bezier2DImpl
     @Override
     public List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, double inc, int degree) {
         List<Pair<Double, Double>> filtered = filter(data);
-        return null;
+        List<Pair<Double, Double>> smoothSi = bezier.leastSquare(filtered, inc, degree);
+        Bezier2DModel tmp = new Bezier2DModel(smoothSi);
+        return tmp.compute(inc);
     }
 
     private List<Pair<Double, Double>> filter(List<Pair<Double, Double>> data) {
@@ -111,6 +114,21 @@ public class Bezier2DImpl
             }
         }
         return dataFiltered;
+    }
+
+    @Override
+    public void toKML(String filename, List<Pair<Double, Double>> data) {
+        toKML("data/kml", filename, data, "501400FF", "2");
+    }
+
+    @Override
+    public void toKML(String path, String filename, List<Pair<Double, Double>> data, String color, String width) {
+        Utils.toKML(path, filename, data, color, width);
+    }
+
+    @Override
+    public List<Pair<Double, Double>> readCsv(String path, String filename) {
+        return Utils.readCsv(path, filename);
     }
 
     /**

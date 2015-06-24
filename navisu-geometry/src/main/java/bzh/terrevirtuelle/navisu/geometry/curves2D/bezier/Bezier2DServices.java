@@ -29,4 +29,10 @@ public interface Bezier2DServices
     List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, int degree);
 
     List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, double inc, int degree);
+
+    void toKML(String filename, List<Pair<Double, Double>> data);
+
+    void toKML(String path, String filename, List<Pair<Double, Double>> data, String color, String width);
+
+    List<Pair<Double, Double>> readCsv(String path, String filename);
 }
