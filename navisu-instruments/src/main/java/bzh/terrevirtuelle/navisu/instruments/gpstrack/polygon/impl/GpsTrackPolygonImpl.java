@@ -156,6 +156,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected Date t0;
 	protected boolean verrou = false;
 	protected boolean pathActivated = false;
+	protected boolean pathLoaded = false;
 	protected static final String ANSI_RESET = "\u001B[0m";
 	protected static final String ANSI_BLACK = "\u001B[30m";
 	protected static final String ANSI_RED = "\u001B[31m";
@@ -913,9 +914,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	@Override
 	public void createPath() {
-		pmt.setArmed(true);
-		pmtc.setArmed(true);
-		aisTrackPanel.updateAisPanelStatus("Custom path ready to be drawn");
+		if (!pathActivated && !pathLoaded) {
+			pmt.setArmed(true);
+			pmtc.setArmed(true);
+			aisTrackPanel.updateAisPanelStatus("Custom path ready to be drawn");
+			}
+		else {
+			aisTrackPanel.updateAisPanelStatus("Only one path can be created at the same time");
+		}
 	}
 	
 	@Override
@@ -1147,45 +1153,53 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	
 	@Override
 	public void loadPath() {
-		// chargement de la trajectoire path sauvegardée
-		String csvFile = "data/saved/savedPath.csv";
-		BufferedReader br = null;
-		String line = "";
-		String cvsSplitBy = ";";
-	 
-		try {
-	 
-			br = new BufferedReader(new FileReader(csvFile));
-			while ((line = br.readLine()) != null) {
-				// use separator
-				String[] positions = line.split(cvsSplitBy);
-				for (int j=0; j<positions.length-1; j=j+2) {
-					Position pos = new Position(LatLon.fromDegrees(Double.parseDouble(positions[j]), Double.parseDouble(positions[j+1])), 0);
-					path.add(pos);
+		if (!pathActivated) {
+			// chargement de la trajectoire path sauvegardée
+			String csvFile = "data/saved/savedPath.csv";
+			BufferedReader br = null;
+			String line = "";
+			String cvsSplitBy = ";";
+
+			try {
+
+				br = new BufferedReader(new FileReader(csvFile));
+				while ((line = br.readLine()) != null) {
+					// use separator
+					String[] positions = line.split(cvsSplitBy);
+					for (int j = 0; j < positions.length - 1; j = j + 2) {
+						Position pos = new Position(LatLon.fromDegrees(
+								Double.parseDouble(positions[j]),
+								Double.parseDouble(positions[j + 1])), 0);
+						path.add(pos);
+					}
+					pmt.setArmed(true);
+					pmtc.setArmed(true);
+					pmt.setPositions(path);
+					pmt.setFollowTerrain(true);
+					pLayer = pmt.getLayer();
+					pmt.setArmed(false);
+					pmtc.setArmed(false);
 				}
-				pmt.setArmed(true);
-				pmtc.setArmed(true);
-				pmt.setPositions(path);
-				pmt.setFollowTerrain(true);
-				pLayer = pmt.getLayer();
-				pmt.setArmed(false);
-				pmtc.setArmed(false);
-			}
-	 
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (br != null) {
+					try {
+						br.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
+			pathLoaded = true;
+			aisTrackPanel.updateAisPanelStatus("Path loaded successfully");
 		}
-		aisTrackPanel.updateAisPanelStatus("Path loaded successfully");	
+		else {
+			aisTrackPanel.updateAisPanelStatus("Only one path can be created at the same time");
+		}
 	}
 	
 	
