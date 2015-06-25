@@ -111,8 +111,6 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Path", null);
         rootItems.add(tmp);
-        tmp = createNode(targetDisplay, "Watch sectors", null);
-        rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Watch polygons", null);
         rootItems.add(tmp);
         tmp = createNode(targetDisplay, "Rules", null);
