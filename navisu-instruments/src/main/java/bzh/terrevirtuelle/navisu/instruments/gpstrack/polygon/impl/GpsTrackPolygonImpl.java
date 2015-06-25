@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -148,7 +149,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected static final String GROUP1 = "Target";
 	protected static final String GROUP2 = "Path";
 	protected static final String GROUP3 = "Rules";
-	protected static final String GROUP4 = "Buffers";
+	protected static final String GROUP4 = "Buffer";
 	protected Ship pShip;
 	protected GShip gShip;
 	protected boolean pShipCreated = false;
@@ -680,17 +681,17 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					aisMt.setLineColor(WWUtil.decodeColorRGBA("FFA500FF"));
 					aisMt.setPositions(resuPos1);
 					aisMt.setShowControlPoints(false);
+					layerTreeServices.search("Path").setSelected(false);
+					wwd.redrawNow();
 					aisMtLayer = aisMt.getLayer();
 					aisMtLayer.setName("P" + (savedMeasureTool.indexOf(tool)+1) + "-" + target.getMMSI() + "-" + target.getName());
 					geoViewServices.getLayerManager().insertGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(aisMtLayer));
 					layerTreeServices.addGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(aisMtLayer));
-					wwd.redrawNow();
 					aisMt.setArmed(false);
 					aisMtc.setArmed(false);
 					
 					MeasureTool poly1 = new MeasureTool(wwd);
 					MeasureToolController polyc1 = new MeasureToolController();
-					RenderableLayer polyLayer = new RenderableLayer();
 					poly1.setController(polyc1);
 					poly1.setFollowTerrain(true);
 					poly1.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
@@ -701,13 +702,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					poly1.setArmed(true);
 					polyc1.setArmed(true);
 					poly1.setPositions(Utils.createTranslatedBuffer(trajectories.get(savedMeasureTool.indexOf(tool)), trajectories.get(savedMeasureTool.indexOf(tool)).get(0), resuPos1.get(0), 200));
-					polyLayer = poly1.getLayer();
-					polyLayer.setName("Buffer P" + (savedMeasureTool.indexOf(tool)+1) + "-" + target.getMMSI() + "-" + target.getName());
-					geoViewServices.getLayerManager().insertGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
-					layerTreeServices.addGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
+					RenderableLayer bufferLayer = poly1.getLayer();
+					aisMtLayer.addRenderables(bufferLayer.getRenderables());
+					bufferLayer.removeAllRenderables();
 					wwd.redrawNow();
-					layerTreeServices.search("Buffers").setSelected(true);
-					layerTreeServices.search("Buffers").setSelected(false);
 					poly1.setArmed(false);
 					polyc1.setArmed(false);
 					aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(resuPos1, poly1).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
@@ -1438,10 +1436,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			trajectories.set((selectedPolygon-1), ((ArrayList<Position>) rmt.getPositions()));
 			rLayer = new RenderableLayer();
 			rLayer = rmt.getLayer();
+			wwd.redrawNow();
 			rLayer.setName("P" + selectedPolygon + " rule");
 			geoViewServices.getLayerManager().insertGeoLayer(GROUP3, GeoLayer.factory.newWorldWindGeoLayer(rLayer));
 			layerTreeServices.addGeoLayer(GROUP3, GeoLayer.factory.newWorldWindGeoLayer(rLayer));
-			wwd.redrawNow();
 			rmt.setArmed(false);
 			rmtc.setArmed(false);
 			aisTrackPanel.updateAisPanelStatus("New rule associated with polygon P" + selectedPolygon);
