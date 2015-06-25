@@ -76,7 +76,7 @@ public class Utils {
         lines.add("<LineString>");
         lines.add("<coordinates>");
         data.stream().forEach((d) -> {
-            lines.add(d.getY().toString() + "," + d.getX().toString() + "," + "100");
+            lines.add(d.getY().toString() + "," + d.getX().toString() + "," + "1000");
         });
         lines.add("</coordinates>");
         lines.add("</LineString>");

@@ -33,6 +33,7 @@ public class Bezier2DModel {
         coeffs = new ArrayList();
         this.n = si.size() - 1;
         this.si = si;
+
         for (int i = 0; i <= n; i++) {
             coeffs.add(Utils.cni(n, i));
         }
@@ -53,21 +54,22 @@ public class Bezier2DModel {
         return result;
     }
 
-    public List<Pair<Double, Double>> leastSquare(List<Pair<Double, Double>> data, double inc, int degree) {
-        List<Pair<Double, Double>> filtered = filter(data);
+    public List<Pair<Double, Double>> leastSquare(List<Pair<Double, Double>> data, int degree) {
 
         double[][] ta = new double[degree + 1][degree + 1];
         double[][] tb = new double[degree + 1][1];
         double[][] ts = new double[degree + 1][1];
-        int m = filtered.size();
+        List<Pair<Double, Double>> filtered = filter(data);
+        double m = filtered.size() - 1;
+
         for (int k = 0; k <= degree; k++) {
             for (int i = 0; i <= degree; i++) {
                 for (int j = 0; j <= m; j++) {
-                    ta[k][i] += Utils.bernstein(degree, i, j / (double) m) * Utils.bernstein(degree, k, j / (double) m);
+                    ta[k][i] += Utils.bernstein(degree, i, j / m) * Utils.bernstein(degree, k, j / m);
                 }
             }
-            for (int j = 0; j < m; j++) {
-                tb[k][0] += filtered.get(j).getX() * Utils.bernstein(degree, k, j / (double) m);
+            for (int j = 0; j <= m; j++) {
+                tb[k][0] += filtered.get(j).getX() * Utils.bernstein(degree, k, j / m);
             }
         }
 
@@ -77,24 +79,29 @@ public class Bezier2DModel {
         LinearSolver<DenseMatrix64F> solver = LinearSolverFactory.qr(a.numRows, a.numCols);
         solver.setA(a);
         solver.solve(b, s);
+
         List<Double> x = new ArrayList<>();
         for (Double tmp : s.getData()) {
             x.add(tmp);
         }
+        ta = new double[degree + 1][degree + 1];
+        tb = new double[degree + 1][1];
+        ts = new double[degree + 1][1];
 
         for (int k = 0; k <= degree; k++) {
-            tb[k][0] = 0.0;
             for (int i = 0; i <= degree; i++) {
-                for (int j = 0; j < m; j++) {
-                    ta[k][i] += Utils.bernstein(degree, i, j / (double) m) * Utils.bernstein(degree, k, j / (double) m);
+                for (int j = 0; j <= m; j++) {
+                    ta[k][i] += Utils.bernstein(degree, i, j / m) * Utils.bernstein(degree, k, j / m);
                 }
             }
-            for (int j = 0; j < m; j++) {
-                tb[k][0] += filtered.get(j).getY() * Utils.bernstein(degree, k, j / (double) m);
+            for (int j = 0; j <= m; j++) {
+                tb[k][0] += filtered.get(j).getY() * Utils.bernstein(degree, k, j / m);
             }
         }
-
+        a = new DenseMatrix64F(ta);
         b = new DenseMatrix64F(tb);
+        s = new DenseMatrix64F(ts);
+        solver = LinearSolverFactory.qr(a.numRows, a.numCols);
         solver.setA(a);
         solver.solve(b, s);
 
@@ -107,7 +114,10 @@ public class Bezier2DModel {
         for (int i = 0; i < x.size(); i++) {
             sii.add(new Pair(x.get(i), y.get(i)));
         }
-
+        sii.remove(0);
+        sii.set(0, data.get(0));
+        sii.remove(degree-1);
+        sii.add(data.get(data.size()-1));
         return sii;
     }
 
