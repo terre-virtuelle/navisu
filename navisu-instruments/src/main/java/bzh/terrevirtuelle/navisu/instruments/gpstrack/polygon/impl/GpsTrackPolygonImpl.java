@@ -1409,20 +1409,24 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	@Override
 	public void createRule() {
 		if (polygonSelected) {
-			
-			rmt = new MeasureTool(wwd);
-			rmtc = new MeasureToolController();
-			rmt.setController(rmtc);
-			rmt.setFollowTerrain(true);
-			rmt.setMeasureShapeType(MeasureTool.SHAPE_PATH);
-			// couleur de la règle : bleu
-			rmt.setLineColor(WWUtil.decodeColorRGBA("0000FFFF"));
-			rmtc.setFreeHand(true);
-			rmtc.setFreeHandMinSpacing(distanceInterval);
-			rmt.setArmed(true);
-			rmtc.setArmed(true);
-			aisTrackPanel.updateAisPanelStatus("New rule ready to be drawn");
-			ruleCreated = true;
+			if (trajectories.get(selectedPolygon-1)==null) {
+				rmt = new MeasureTool(wwd);
+				rmtc = new MeasureToolController();
+				rmt.setController(rmtc);
+				rmt.setFollowTerrain(true);
+				rmt.setMeasureShapeType(MeasureTool.SHAPE_PATH);
+				// couleur de la règle : bleu
+				rmt.setLineColor(WWUtil.decodeColorRGBA("0000FFFF"));
+				rmtc.setFreeHand(true);
+				rmtc.setFreeHandMinSpacing(distanceInterval);
+				rmt.setArmed(true);
+				rmtc.setArmed(true);
+				aisTrackPanel.updateAisPanelStatus("New rule ready to be drawn");
+				ruleCreated = true;
+			}
+			else {
+				aisTrackPanel.updateAisPanelStatus("Only one rule can be associated to an area");
+			}
 		}
 		else {
 			aisTrackPanel.updateAisPanelStatus("You must select a Polygon first");	
