@@ -22,6 +22,12 @@ public interface Bezier2DServices
 
     List<Pair<Double, Double>> compute(List<Pair<Double, Double>> si, double inc);
 
+    List<Pair<Double, Double>> tangent(List<Pair<Double, Double>> si);
+
+    List<Pair<Double, Double>> tangentCompute(List<Pair<Double, Double>> si, double inc);
+
+    List<Pair<Double, Double>> leastSquare(List<Pair<Double, Double>> data, int degree);
+
     List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data);
 
     List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, double inc);
@@ -29,4 +35,10 @@ public interface Bezier2DServices
     List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, int degree);
 
     List<Pair<Double, Double>> leastSquareCompute(List<Pair<Double, Double>> data, double inc, int degree);
+
+    void toKML(String filename, List<Pair<Double, Double>> data);
+
+    void toKML(String path, String filename, List<Pair<Double, Double>> data, String color, String width);
+
+    List<Pair<Double, Double>> readCsv(String path, String filename);
 }

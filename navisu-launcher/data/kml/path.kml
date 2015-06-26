@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+<Folder>
+<Placemark>
+<name>2015-06-26</name>
+<Style>
+<LineStyle>
+<color>501400FF</color>
+<width>2</width>
+</LineStyle>
+</Style>
+<LineString>
+<coordinates>
+-4.4876,48.3684,1000
+-4.4783,48.3675,1000
+-4.471,48.3655,1000
+-4.4663,48.3648,1000
+-4.4665,48.3626,1000
+-4.467,48.3579,1000
+-4.4689,48.354,1000
+-4.4761,48.3481,1000
+-4.485,48.3429,1000
+-4.4914,48.3415,1000
+-4.5022,48.347,1000
+-4.5058,48.3511,1000
+-4.5052,48.3565,1000
+-4.5017,48.3618,1000
+</coordinates>
+</LineString>
+</Placemark>
+</Folder>
+</kml>

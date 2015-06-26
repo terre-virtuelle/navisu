@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.util;
+package bzh.terrevirtuelle.navisu.domain.util;
 
 import java.util.Objects;
 
@@ -92,6 +92,8 @@ public class Pair<T,K>{
     public String toString() {
         return "Pair{" + "x=" + x + ", y=" + y + '}';
     }
+
+    
 
    
 }
