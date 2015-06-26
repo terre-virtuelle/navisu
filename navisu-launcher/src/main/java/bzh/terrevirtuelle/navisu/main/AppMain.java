@@ -328,11 +328,12 @@ public class AppMain extends Application {
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
 
-        List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "testBez.csv");
+        List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
         bezier2DServices.toKML("path.kml", data);
+        
         List<Pair<Double, Double>> bez = bezier2DServices.leastSquareCompute(data, 0.01, 8);
         bezier2DServices.toKML("data/kml/", "testBezier.kml", bez, "5000FF14", "2");
-
+        
         /* Test CPA zone et reconnaissance de trajectoire */
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
