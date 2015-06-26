@@ -51,7 +51,19 @@ public class Bezier2DImpl
      */
     @Override
     public List<Pair<Double, Double>> compute(List<Pair<Double, Double>> si, double inc) {
-         Bezier2DModel tmp = new Bezier2DModel(si);
+        Bezier2DModel tmp = new Bezier2DModel(si);
+        return tmp.compute(inc);
+    }
+
+    @Override
+    public List<Pair<Double, Double>> tangent(List<Pair<Double, Double>> si) {
+        return bezier.tangent(si);
+    }
+
+    @Override
+    public List<Pair<Double, Double>> tangentCompute(List<Pair<Double, Double>> si, double inc) {
+        List<Pair<Double, Double>> tgSi = bezier.tangent(si);
+        Bezier2DModel tmp = new Bezier2DModel(tgSi);
         return tmp.compute(inc);
     }
 
@@ -100,6 +112,13 @@ public class Bezier2DImpl
         List<Pair<Double, Double>> smoothSi = bezier.leastSquare(filtered, degree);
         Bezier2DModel tmp = new Bezier2DModel(smoothSi);
         return tmp.compute(inc);
+    }
+
+    @Override
+    public List<Pair<Double, Double>> leastSquare(List<Pair<Double, Double>> data, int degree) {
+        List<Pair<Double, Double>> filtered = filter(data);
+        List<Pair<Double, Double>> smoothSi = bezier.leastSquare(filtered, degree);
+        return smoothSi;
     }
 
     private List<Pair<Double, Double>> filter(List<Pair<Double, Double>> data) {

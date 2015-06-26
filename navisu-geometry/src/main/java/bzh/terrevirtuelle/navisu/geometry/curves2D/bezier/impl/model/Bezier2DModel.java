@@ -54,6 +54,15 @@ public class Bezier2DModel {
         return result;
     }
 
+    public List<Pair<Double, Double>> tangent(List<Pair<Double, Double>> si) {
+        List<Pair<Double, Double>> tmp = new ArrayList<>();
+        for (int i = 0; i < si.size() - 1; i++) {
+            tmp.add(new Pair((si.get(i + 1).getX() - si.get(i).getX()),
+                    (si.get(i + 1).getY() - si.get(i).getY())));
+        }
+        return tmp;
+    }
+
     public List<Pair<Double, Double>> leastSquare(List<Pair<Double, Double>> data, int degree) {
 
         double[][] ta = new double[degree + 1][degree + 1];
@@ -116,8 +125,8 @@ public class Bezier2DModel {
         }
         sii.remove(0);
         sii.set(0, data.get(0));
-        sii.remove(degree-1);
-        sii.add(data.get(data.size()-1));
+        sii.remove(degree - 1);
+        sii.add(data.get(data.size() - 1));
         return sii;
     }
 
