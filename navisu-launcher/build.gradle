@@ -21,6 +21,7 @@ dependencies {
     compile project(':navisu-kml')
     compile project(':navisu-magnetic')
     compile project(':navisu-media')
+    compile project(':navisu-navigation')
     compile project(':navisu-shapefiles')
     compile project(':navisu-sedimentology')
     compile project(':navisu-speech')

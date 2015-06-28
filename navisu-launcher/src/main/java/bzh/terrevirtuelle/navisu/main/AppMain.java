@@ -79,6 +79,8 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
+import bzh.terrevirtuelle.navisu.navigation.route.RouteServices;
+import bzh.terrevirtuelle.navisu.navigation.route.impl.RouteImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -93,6 +95,7 @@ import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
 
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -127,7 +130,7 @@ public class AppMain extends Application {
 
         final ComponentManager componentManager = ComponentManager.componentManager;
 
-        // deploy components
+        /* Deploy components */
         LOGGER.info("\n"
                 + componentManager.startApplication(
                         GuiAgentImpl.class,//in first
@@ -161,6 +164,7 @@ public class AppMain extends Application {
                         KapChartImpl.class,
                         KmlObjectImpl.class,
                         MagneticImpl.class,
+                        RouteImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
                         SedimentologyImpl.class,
@@ -175,7 +179,7 @@ public class AppMain extends Application {
                         WMSImpl.class
                 )
         );
-        // Services
+        /* Services */
         AisServices aisServices = componentManager.getComponentService(AisServices.class);
         AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
         AisPlotterServices aisPlotterServices = componentManager.getComponentService(AisPlotterServices.class);
@@ -216,6 +220,8 @@ public class AppMain extends Application {
 
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
+
+        RouteServices routeServives = componentManager.getComponentService(RouteServices.class);
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
@@ -289,15 +295,14 @@ public class AppMain extends Application {
 
         //First position
         GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
-        //GeoWorldWindViewImpl.getWW().getView().setEyePosition(Position.fromDegrees(49.70, -0.66, 15000));
 
         // Initialisation des paramètres de diffusion des data.
         dataServerServices.init("localhost", 8585);
 
-        // Test connexion GPS 
+        /* Test connexion GPS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-        // Test connexion Gpsd 
+        /* Test connexion Gpsd */
         //dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
         // dataServerServices.openGpsd("sinagot.net", 4001); 
@@ -305,16 +310,16 @@ public class AppMain extends Application {
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS
-        // Test connexion fichier 
+        /* Test lecture fichier */
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
         //dataServerServices.openFile("data/nmea/hcgdg.txt"); //test compas
         //dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
-        // Test serveur Web Http 
+        /* Test serveur Web Http */
         // dataServerServices.openHttpServer("localhost", 8181);
-        // Test instanciation d'un client 
+        /* Instanciation d'un client */
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
@@ -328,18 +333,25 @@ public class AppMain extends Application {
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
 
+        /* Test Bezier, approxiamtion trajectoire */
         List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
         bezier2DServices.toKML("path.kml", data);
 
-        List<Pair<Double, Double>> bez = bezier2DServices.leastSquareCompute(data, 0.01, 8);
+        List<Pair<Double, Double>> bez = bezier2DServices.leastSquareCompute(data, 0.01, 10);
         bezier2DServices.toKML("data/kml/", "testBezier.kml", bez, "5000FF14", "2");
 
         List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
-        List<Pair<Double, Double>> tg = bezier2DServices.tangentCompute(bezSi, 0.1);
-        bezier2DServices.toKML("data/kml/", "testTgBezier.kml", tg, "50FF7800", "2");
+        // La liste headings est utile si on souhaite récupérer le cap en chaque points de la trajectoire
+        // sous la forme [[Lat, Lon], heading]
+        // si ce n'est pas nécessaire mettre null
+        List<Pair<Pair<Double, Double>, Double>> headings = new ArrayList<>();
+        List<Pair<Pair<Double, Double>, Pair<Double, Double>>> vectorTg
+                = bezier2DServices.vectorTangentCompute(bezSi, 0.01, 0.5,  headings);
+        bezier2DServices.toKML2("data/kml/", "testTgBezier.kml", vectorTg, "5014F0FF", "2");
+        System.out.println(headings);
 
         /* Test CPA zone et reconnaissance de trajectoire */
-    //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
         dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
