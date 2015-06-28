@@ -337,11 +337,11 @@ public class AppMain extends Application {
         List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
         bezier2DServices.toKML("path.kml", data);
 
-        List<Pair<Double, Double>> bez = bezier2DServices.leastSquareCompute(data, 0.01, 10);
-        bezier2DServices.toKML("data/kml/", "testBezier.kml", bez, "5000FF14", "2");
-
         List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
-        // La liste headings est utile si on souhaite récupérer le cap en chaque points de la trajectoire
+        List<Pair<Double, Double>> bez = bezier2DServices.compute(bezSi, 0.01);
+        bezier2DServices.toKML("data/kml/", "testBezier.kml", bez, "5000FF14", "2");
+        
+        // La liste headings est utile si on souhaite récupérer le cap en chaque point de la trajectoire
         // sous la forme [[Lat, Lon], heading]
         // si ce n'est pas nécessaire mettre null
         List<Pair<Pair<Double, Double>, Double>> headings = new ArrayList<>();
