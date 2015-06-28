@@ -136,7 +136,7 @@ public class DataServerImpl
             try {
                 sentenceQueues.get(currentReader).stream().forEach((s) -> {
                    //LOGGER.info(s);
-                   // System.out.println(s);
+                  //  System.out.println(s);
                     parser.parse(s.trim());
                 });
                 stringWriter = new StringWriter();
