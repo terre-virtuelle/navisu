@@ -69,6 +69,42 @@ public class Bezier2DImpl
 
     /**
      *
+     * @param si : a characteristic Bezier polygon
+     * @param inc
+     * @param scale :for tg vector
+     * @param headings
+     * @return a list of tangent vectors
+     */
+    @Override
+    public List<Pair<Pair<Double, Double>, Pair<Double, Double>>>
+            vectorTangentCompute(List<Pair<Double, Double>> si, double inc, double scale,
+                    List<Pair<Pair<Double, Double>, Double>> headings) {
+        List<Pair<Pair<Double, Double>, Pair<Double, Double>>> result = new ArrayList<>();
+        Bezier2DModel bez = new Bezier2DModel(si);
+        List<Pair<Double, Double>> curvePts = bez.compute(inc);
+        List<Pair<Double, Double>> tgSi = bez.tangent(si);
+        bez = new Bezier2DModel(tgSi);
+        List<Pair<Double, Double>> tgPts = bez.compute(inc);
+        for (int i = 0; i < curvePts.size(); i++) {
+            double u = curvePts.get(i).getX() + tgPts.get(i).getX() * scale;
+            double v = curvePts.get(i).getY() + tgPts.get(i).getY() * scale;
+            Pair<Double, Double> pu = new Pair(u, v);
+            result.add(new Pair(curvePts.get(i), pu));
+            if (headings != null) {
+                double uu = pu.getX() - curvePts.get(i).getX();
+                double vv = pu.getY() - curvePts.get(i).getY();
+                double heading = 90 - Math.toDegrees(Math.atan2(uu, vv));
+                if (heading < 0) {
+                    heading += 360;
+                }
+                headings.add(new Pair(curvePts.get(i), heading));
+            }
+        }
+        return result;
+    }
+
+    /**
+     *
      * @param data
      * @return
      */
@@ -143,6 +179,12 @@ public class Bezier2DImpl
     @Override
     public void toKML(String path, String filename, List<Pair<Double, Double>> data, String color, String width) {
         Utils.toKML(path, filename, data, color, width);
+    }
+
+    @Override
+    public void toKML2(String path, String filename, List<Pair<Pair<Double, Double>, Pair<Double, Double>>> data,
+            String color, String width) {
+        Utils.toKML2(path, filename, data, color, width);
     }
 
     @Override
