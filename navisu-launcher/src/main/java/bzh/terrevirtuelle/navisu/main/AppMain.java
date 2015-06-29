@@ -334,7 +334,7 @@ public class AppMain extends Application {
         //gpsPlotterServices.on();
 
         /* Test Bezier, approxiamtion trajectoire */
-        List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
+        /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
         bezier2DServices.toKML("path.kml", data);
 
         List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
@@ -348,12 +348,12 @@ public class AppMain extends Application {
         List<Pair<Pair<Double, Double>, Pair<Double, Double>>> vectorTg
                 = bezier2DServices.vectorTangentCompute(bezSi, 0.01, 0.5,  headings);
         bezier2DServices.toKML2("data/kml/", "testTgBezier.kml", vectorTg, "5014F0FF", "2");
-        System.out.println(headings);
+        System.out.println(headings);*/
 
         /* Test CPA zone et reconnaissance de trajectoire */
-        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+     //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
-        dataServerServices.openGpsd("sinagot.net", 2947);
+     dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
 
         /* Test DB */

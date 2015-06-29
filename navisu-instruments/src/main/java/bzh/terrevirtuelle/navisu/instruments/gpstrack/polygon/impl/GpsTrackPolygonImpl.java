@@ -195,8 +195,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	public void componentInitiated() {
 
 		watchedShip = new Ship();
-		watchedShip.setMMSI(999999999);
-		watchedShip.setName("PLASTRON");
+		watchedShip.setMMSI(999999998);
+		watchedShip.setName("PLASTRON2");
 		aisShips = new LinkedList<Ship>();
 		
 		wwd = GeoWorldWindViewImpl.getWW();
@@ -660,6 +660,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 			
 			if (!(WWMath.isLocationInside(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), tool.getPositions())) && tool != null) {
 				if (detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)]) {
+					layerTreeServices.search("Path").setSelected(true);
 					aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (savedMeasureTool.indexOf(tool)+1));
 					detected[savedMeasureTool.indexOf(tool)][targets.indexOf(target)] = false;
 					
@@ -670,7 +671,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 						}
 					}
 					MeasureTool aisMt = new MeasureTool(wwd);
-					RenderableLayer aisMtLayer = new RenderableLayer();
 					MeasureToolController aisMtc = new MeasureToolController();
 					aisMt.setController(aisMtc);
 					aisMt.setArmed(true);
@@ -682,34 +682,39 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					aisMt.setPositions(resuPos1);
 					aisMt.setShowControlPoints(false);
 					layerTreeServices.search("Path").setSelected(false);
-					wwd.redrawNow();
-					aisMtLayer = aisMt.getLayer();
-					aisMtLayer.setName("P" + (savedMeasureTool.indexOf(tool)+1) + "-" + target.getMMSI() + "-" + target.getName());
+					RenderableLayer aisMtLayer = aisMt.getLayer();
+					if (!target.getName().equals("") && !target.getName().equals(null)) {
+						aisMtLayer.setName("P" + (savedMeasureTool.indexOf(tool)+1) + "-" + target.getName());
+						}
+					else {
+						aisMtLayer.setName("P" + (savedMeasureTool.indexOf(tool)+1) + "-" + target.getMMSI());
+					}
 					geoViewServices.getLayerManager().insertGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(aisMtLayer));
 					layerTreeServices.addGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(aisMtLayer));
 					aisMt.setArmed(false);
 					aisMtc.setArmed(false);
 					
-					MeasureTool poly1 = new MeasureTool(wwd);
-					MeasureToolController polyc1 = new MeasureToolController();
-					poly1.setController(polyc1);
-					poly1.setFollowTerrain(true);
-					poly1.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-					// couleur de la forme : rouge
-					poly1.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
-					poly1.setShowControlPoints(false);
-					polyc1.setUseRubberBand(true);
-					poly1.setArmed(true);
-					polyc1.setArmed(true);
-					poly1.setPositions(Utils.createTranslatedBuffer(trajectories.get(savedMeasureTool.indexOf(tool)), trajectories.get(savedMeasureTool.indexOf(tool)).get(0), resuPos1.get(0), 200));
-					RenderableLayer bufferLayer = poly1.getLayer();
-					aisMtLayer.addRenderables(bufferLayer.getRenderables());
-					bufferLayer.removeAllRenderables();
-					wwd.redrawNow();
-					poly1.setArmed(false);
-					polyc1.setArmed(false);
-					aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(resuPos1, poly1).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
-					
+					if (trajectories.get(savedMeasureTool.indexOf(tool)) != null) {
+						MeasureTool poly1 = new MeasureTool(wwd);
+						MeasureToolController polyc1 = new MeasureToolController();
+						poly1.setController(polyc1);
+						poly1.setFollowTerrain(true);
+						poly1.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+						// couleur de la forme : rouge
+						poly1.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
+						poly1.setShowControlPoints(false);
+						polyc1.setUseRubberBand(true);
+						poly1.setArmed(true);
+						polyc1.setArmed(true);
+						poly1.setPositions(Utils.createTranslatedBuffer(trajectories.get(savedMeasureTool.indexOf(tool)), trajectories.get(savedMeasureTool.indexOf(tool)).get(0), resuPos1.get(0), 200));
+						RenderableLayer bufferLayer = poly1.getLayer();
+						aisMtLayer.addRenderables(bufferLayer.getRenderables());
+						bufferLayer.removeAllRenderables();
+						wwd.redrawNow();
+						poly1.setArmed(false);
+						polyc1.setArmed(false);
+						aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(resuPos1, poly1).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName() + " in P" + (savedMeasureTool.indexOf(tool) + 1));
+					}
 					/*
 					 * Détection de virages + demi-tours
 					 * 
@@ -934,8 +939,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		pmt.setArmed(false);
 		pmtc.setArmed(false);
 		pShip = new Ship();
-		pShip.setMMSI(999999998);
-		pShip.setName("PLASTRON2");
+		pShip.setMMSI(999999999);
+		pShip.setName("PLASTRON");
 		pShip.setLatitude(path.get(etape).getLatitude().getDegrees());
 		pShip.setLongitude(path.get(etape).getLongitude().getDegrees());
 		createPathTarget(pShip);
@@ -1436,7 +1441,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	@Override
 	public void activateRule() {
 		if (ruleCreated) {
-			rmt.setShowControlPoints(false);
+			//rmt.setShowControlPoints(false);
 			trajectories.set((selectedPolygon-1), ((ArrayList<Position>) rmt.getPositions()));
 			rLayer = new RenderableLayer();
 			rLayer = rmt.getLayer();
