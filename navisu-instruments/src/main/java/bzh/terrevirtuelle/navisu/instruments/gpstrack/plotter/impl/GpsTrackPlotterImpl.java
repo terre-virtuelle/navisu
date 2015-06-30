@@ -99,10 +99,10 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 		geoViewServices.getLayerManager().createGroup(GROUP2);
 
 		this.gpsTrackLayer = new RenderableLayer();
-		gpsTrackLayer.setName("Target");
+		gpsTrackLayer.setName("NMEA target");
 
 		this.layer = new RenderableLayer();
-		layer.setName("Path");
+		layer.setName("NMEA path");
 
 		pathPositions = new ArrayList<Position>();
 
@@ -112,7 +112,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 		geoViewServices.getLayerManager().insertGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(layer));
 		layerTreeServices.addGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(layer));
 		
-		layerTreeServices.getCheckBoxTreeItems().get(20).setSelected(false);
+		layerTreeServices.search("Path").setSelected(false);
 
 		attrs = new BasicShapeAttributes();
 		// couleur de la trace : vert
@@ -177,36 +177,6 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
 
 				}
 			});
-
-			/*
-			 * vtgES.subscribe(new VTGEvent() {
-			 * 
-			 * @Override public <T extends NMEA> void notifyNmeaMessageChanged(T
-			 * d) { VTG data = (VTG) d; if (on) { System.out.println(data);
-			 * ship.setSog(10*data.getSog()); ship.setCog(10*data.getCog());
-			 * createTarget(ship); if (gShipCreated) { updateTarget(ship);} else
-			 * {createTarget(ship); gShipCreated = true;}
-			 * 
-			 * 
-			 * }
-			 * 
-			 * } });
-			 */
-			/*
-			 * rmcES.subscribe(new RMCEvent() {
-			 * 
-			 * @Override public <T extends NMEA> void notifyNmeaMessageChanged(T
-			 * d) { RMC data = (RMC) d; if (on) { System.out.println(data);
-			 * ship.setLatitude(data.getLatitude());
-			 * ship.setLongitude(data.getLongitude());
-			 * ship.setSog(10*data.getSog()); ship.setCog(10*data.getCog()); if
-			 * (gShipCreated) { updateTarget(ship);} else {createTarget(ship);
-			 * gShipCreated = true;}
-			 * 
-			 * }
-			 * 
-			 * } });
-			 */
 		}
 
 	}

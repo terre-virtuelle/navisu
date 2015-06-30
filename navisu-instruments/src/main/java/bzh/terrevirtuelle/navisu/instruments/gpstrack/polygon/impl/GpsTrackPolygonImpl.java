@@ -5,14 +5,20 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
 
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceText;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
@@ -30,7 +36,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -66,10 +71,6 @@ import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import org.capcaval.c3.componentmanager.ComponentManager;
-
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 
 
 /**
@@ -190,6 +191,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	protected MeasureToolController rmtc;
 	protected RenderableLayer rLayer;
 	protected boolean ruleCreated = false;
+	protected RenderableLayer aisTrackLayer;
+	protected ShapeAttributes attrs;
+	protected LinkedList<Path> aisPath;
 
 	@Override
 	public void componentInitiated() {
@@ -274,6 +278,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		trajectories = new LinkedList<ArrayList<Position>>();
 		for (int l=0; l<10; l++) {trajectories.add(null);}
+		
+		aisTrackLayer = new RenderableLayer();
+		aisTrackLayer.setName("AIS path");
+		geoViewServices.getLayerManager().insertGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(aisTrackLayer));
+		layerTreeServices.addGeoLayer(GROUP2, GeoLayer.factory.newWorldWindGeoLayer(aisTrackLayer));
+		
+		attrs = new BasicShapeAttributes();
+		// couleur de la trace : vert
+		attrs.setOutlineMaterial(new Material(WWUtil.decodeColorRGBA("00FF00FF")));
+		attrs.setOutlineWidth(3);
+		
+		aisPath = new LinkedList<Path>();
+		for (int n=0; n<5000; n++) {aisPath.add(null);}
 	}
 
 	@Override
@@ -398,14 +415,36 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 	private void createTarget(Ship target) {
 		boolean shipExists = false;
 		inSight++;
+		
 		for (int i=0; i<aisShips.size(); i++) {
     		if (aisShips.get(i).getMMSI() == target.getMMSI()) {
     			shipExists = true;
+    			
+    			ArrayList<Position> resu = new ArrayList<Position>();
+    			resu.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
+    			aisPath.set(i, new Path(resu));
+    			aisPath.get(i).setAltitudeMode(WorldWind.ABSOLUTE);
+    			aisPath.get(i).setVisible(true);
+    			aisPath.get(i).setExtrude(true);
+    			aisPath.get(i).setPathType(AVKey.GREAT_CIRCLE);
+    			aisPath.get(i).setAttributes(attrs);
+    			wwd.redrawNow();
+    			
     			}
     		}
 		
 		if (shipExists) {updateTarget(target);} else {
-
+			
+		ArrayList<Position> resu = new ArrayList<Position>();
+		resu.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
+		aisPath.set(aisShips.size(), new Path(resu));
+		aisPath.get(aisShips.size()).setAltitudeMode(WorldWind.ABSOLUTE);
+		aisPath.get(aisShips.size()).setVisible(true);
+		aisPath.get(aisShips.size()).setExtrude(true);
+		aisPath.get(aisShips.size()).setPathType(AVKey.GREAT_CIRCLE);
+		aisPath.get(aisShips.size()).setAttributes(attrs);
+		wwd.redrawNow();
+			
 		nbMmsiReceived++;
 		Date date = new Date();
 		Ship aisShip = new Ship();
@@ -466,6 +505,28 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     	
     	for (int i=0; i<aisShips.size(); i++) {
     		if (aisShips.get(i).getMMSI() == target.getMMSI()) {
+    			
+    			if (aisPath.get(i)!=null) {
+    				aisTrackLayer.removeRenderable(aisPath.get(i));
+    				ArrayList<Position> resu1 = (ArrayList<Position>) aisPath.get(i).getPositions();
+    				resu1.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
+    				aisPath.get(i).setPositions(resu1);
+    				aisTrackLayer.addRenderable(aisPath.get(i));
+    				wwd.redrawNow();
+    			}
+    			
+    			else {
+    				ArrayList<Position> resu2 = new ArrayList<Position>();
+    				resu2.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
+    				aisPath.set(i, new Path(resu2));
+    				aisPath.get(i).setAltitudeMode(WorldWind.ABSOLUTE);
+        			aisPath.get(i).setVisible(true);
+        			aisPath.get(i).setExtrude(true);
+        			aisPath.get(i).setPathType(AVKey.GREAT_CIRCLE);
+        			aisPath.get(i).setAttributes(attrs);
+    				wwd.redrawNow();
+    			}
+    			
     			Ship resu = new Ship();
     			resu.setLatitude(target.getLatitude());
     			resu.setLongitude(target.getLongitude());
