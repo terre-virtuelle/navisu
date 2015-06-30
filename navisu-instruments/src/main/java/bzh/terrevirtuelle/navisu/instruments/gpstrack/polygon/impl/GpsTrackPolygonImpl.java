@@ -671,7 +671,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				/*
 				 * Détection de virages + demi-tours
 				 * 
-				 * for (int k=45; k<=135; k=k+45) {
+				 */
+				for (int k=45; k<=135; k=k+45) {
 					if (Utils.detectTurn(reco, k).getResult()) {
 						aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + Utils.detectTurn(reco, k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
 					}
@@ -686,7 +687,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				
 				if (Utils.detectStraightLine(reco).getResult()) {
 					aisTrackPanel.updateAisPanelStatus("Straight line detected at " + Utils.detectStraightLine(reco).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (i+1));
-				}*/
+				}
 			}
 		}
 		
@@ -779,7 +780,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					/*
 					 * Détection de virages + demi-tours
 					 * 
-					 * for (int k=45; k<=135; k=k+45) {
+					 */
+					for (int k=45; k<=135; k=k+45) {
 						if (Utils.detectTurn(resuPos1, k).getResult()) {
 							aisTrackPanel.updateAisPanelStatus("Right turn " + k + "° detected at " + Utils.detectTurn(resuPos1, k).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName()+ " in P" + (savedMeasureTool.indexOf(tool)+1));
 						}
@@ -794,7 +796,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 					
 					if (Utils.detectStraightLine(resuPos1).getResult()) {
 						aisTrackPanel.updateAisPanelStatus("Straight line detected at " + Utils.detectStraightLine(resuPos1).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName() + " in P" + (savedMeasureTool.indexOf(tool)+1));
-					}	*/
+					}	
 				}
 			}
 			
