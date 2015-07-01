@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g 2015-05-30 15:20:33
+// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g 2015-07-01 18:19:23
 
 package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl;
 
@@ -11961,8 +11961,8 @@ public class NMEALexer extends Lexer {
 				     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
 			            ais01 = new AIS01();
 			                        ais01.setRateOfTurn(new Integer(turn.getText()));
-			                        ais01.setCourseOverGround((int)((new Float(course.getText()))/10.0f));
-			                        ais01.setSpeedOverGround((int)((new Float(speed.getText()))/10.0f));
+			                        ais01.setCourseOverGround(new Float(course.getText()).intValue());
+			                        ais01.setSpeedOverGround(new Float(speed.getText()).intValue());
 			                        ais01.setNavigationalStatus(new Integer(status.getText()));
 			                        ais01.setTrueHeading(new Integer(heading.getText()));
 			                        ais01.setLatitude(degConvert(new Float(latitude.getText())));
@@ -11983,8 +11983,8 @@ public class NMEALexer extends Lexer {
 				     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
 			            ais02 = new AIS02();
 			                        ais02.setRateOfTurn(new Integer(turn.getText()));
-			                        ais02.setCourseOverGround((int)((new Float(course.getText()))/10.0f));
-			                        ais02.setSpeedOverGround((int)((new Float(speed.getText()))/10.0f));
+			                        ais02.setCourseOverGround(new Float(course.getText()).intValue());  
+			                        ais02.setSpeedOverGround(new Float(speed.getText()).intValue());
 			                        ais02.setNavigationalStatus(new Integer(status.getText()));
 			                        ais02.setTrueHeading(new Integer(heading.getText()));
 			                        ais02.setLatitude(degConvert(new Float(latitude.getText())));
@@ -12002,8 +12002,8 @@ public class NMEALexer extends Lexer {
 				     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
 			            ais03 = new AIS03();
 			                        ais03.setRateOfTurn(new Integer(turn.getText()));
-			                        ais03.setCourseOverGround((int)((new Float(course.getText()))/10.0f));
-			                        ais03.setSpeedOverGround((int)((new Float(speed.getText()))/10.0f));
+			                        ais03.setCourseOverGround(new Float(course.getText()).intValue());
+			                        ais03.setSpeedOverGround(new Float(speed.getText()).intValue());
 			                        ais03.setNavigationalStatus(new Integer(status.getText()));
 			                        ais03.setTrueHeading(new Integer(heading.getText()));
 			                        ais03.setLatitude(degConvert(new Float(latitude.getText())));
