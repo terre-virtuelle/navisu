@@ -5,7 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon;
 
+import java.util.LinkedList;
+
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 
 import org.capcaval.c3.component.ComponentService;
 
@@ -61,4 +65,8 @@ public interface GpsTrackPolygonServices extends ComponentService {
     void createRule();
     
     void activateRule();
+    
+    LinkedList<Ship> getSavedAisShips();
+    
+    TrackPanel getPanel();
 }

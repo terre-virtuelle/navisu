@@ -5,7 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter;
 
+import java.util.LinkedList;
+
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 
 import org.capcaval.c3.component.ComponentService;
 
@@ -25,4 +28,4 @@ public interface GpsTrackPlotterServices extends ComponentService {
     boolean canOpen(String category);
 
     InstrumentDriver getDriver();
-}
+} 

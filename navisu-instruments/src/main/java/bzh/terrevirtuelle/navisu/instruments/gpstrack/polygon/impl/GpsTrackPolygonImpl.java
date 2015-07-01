@@ -421,9 +421,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			shipExists = true;
     			
     			ArrayList<Position> resu = new ArrayList<Position>();
-    			resu.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
+    			resu.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 1));
     			aisPath.set(i, new Path(resu));
-    			aisPath.get(i).setAltitudeMode(WorldWind.ABSOLUTE);
+    			aisPath.get(i).setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
     			aisPath.get(i).setVisible(true);
     			aisPath.get(i).setExtrude(true);
     			aisPath.get(i).setPathType(AVKey.GREAT_CIRCLE);
@@ -435,9 +435,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		if (shipExists) {updateTarget(target);} else {
 			
 		ArrayList<Position> resu = new ArrayList<Position>();
-		resu.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
+		resu.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 1));
 		aisPath.set(aisShips.size(), new Path(resu));
-		aisPath.get(aisShips.size()).setAltitudeMode(WorldWind.ABSOLUTE);
+		aisPath.get(aisShips.size()).setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
 		aisPath.get(aisShips.size()).setVisible(true);
 		aisPath.get(aisShips.size()).setExtrude(true);
 		aisPath.get(aisShips.size()).setPathType(AVKey.GREAT_CIRCLE);
@@ -522,9 +522,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			
     			else {
     				ArrayList<Position> resu2 = new ArrayList<Position>();
-    				resu2.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
+    				resu2.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 1));
     				aisPath.set(i, new Path(resu2));
-    				aisPath.get(i).setAltitudeMode(WorldWind.ABSOLUTE);
+    				aisPath.get(i).setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
         			aisPath.get(i).setVisible(true);
         			aisPath.get(i).setExtrude(true);
         			aisPath.get(i).setPathType(AVKey.GREAT_CIRCLE);
@@ -1527,6 +1527,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		else {
 			aisTrackPanel.updateAisPanelStatus("Please create a rule first");
 		}
+	}
+	
+	public LinkedList<Ship> getSavedAisShips() {
+		return aisShips;
+	}
+	
+	public TrackPanel getPanel() {
+		return aisTrackPanel;
 	}
 
 }

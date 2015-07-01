@@ -28,6 +28,7 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.Ais
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateStationEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
 import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 
 import java.io.BufferedReader;
@@ -38,12 +39,14 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.ProducedEvent;
@@ -61,6 +64,8 @@ public class AisImpl
     InstrumentDriverManagerServices instrumentDriverManagerServices;
     @UsedService
     SpeakerServices speakerServices;
+    @UsedService
+    GpsTrackPolygonServices gpsTrackPolygonServices;
 
     @ProducedEvent
     protected AisCreateTargetEvent aisCreateTargetEvent;
@@ -90,6 +95,7 @@ public class AisImpl
     protected static final long DELAY = 300000;
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DELETE_TARGET_SOUND = "/data/sounds/mechanic.wav";
+    protected LinkedList<Ship> savedAisShips;
 
     ComponentManager cm;
     ComponentEventSubscribe<AIS01Event> ais1ES;
@@ -144,6 +150,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    retrieveShipName(ship);
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -155,6 +162,7 @@ public class AisImpl
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
                     ship.setNavigationalStatus(ais.getNavigationalStatus());
+                    retrieveShipName(ship);
                     aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -175,6 +183,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    retrieveShipName(ship);
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -186,6 +195,7 @@ public class AisImpl
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
                     ship.setNavigationalStatus(ais.getNavigationalStatus());
+                    retrieveShipName(ship);
                     aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -208,6 +218,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    retrieveShipName(ship);
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -219,6 +230,7 @@ public class AisImpl
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
                     ship.setNavigationalStatus(ais.getNavigationalStatus());
+                    retrieveShipName(ship);
                     aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -350,6 +362,20 @@ public class AisImpl
     @Override
     public Map<Integer, String> getMidMap() {
         return midMap;
+    }
+    
+    private void retrieveShipName(Ship target) {
+    	if (gpsTrackPolygonServices.isOn()) {
+        	savedAisShips = gpsTrackPolygonServices.getSavedAisShips();
+        	for (Ship s : savedAisShips) {
+        		if (s.getMMSI()==target.getMMSI() && target.getName()==null) {
+        			if (!(s.getName().equals("")) && !(s.getName().equals(null))) {
+        				gpsTrackPolygonServices.getPanel().updateAisPanelStatus("Name retrieved from database : " + s.getName());
+        				target.setName(s.getName());
+        			}
+        		}
+        	}
+        	}
     }
 
     private void scheduleLostTarget() {
