@@ -428,8 +428,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     			aisPath.get(i).setExtrude(true);
     			aisPath.get(i).setPathType(AVKey.GREAT_CIRCLE);
     			aisPath.get(i).setAttributes(attrs);
-    			wwd.redrawNow();
-    			
+
     			}
     		}
 		
@@ -443,7 +442,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		aisPath.get(aisShips.size()).setExtrude(true);
 		aisPath.get(aisShips.size()).setPathType(AVKey.GREAT_CIRCLE);
 		aisPath.get(aisShips.size()).setAttributes(attrs);
-		wwd.redrawNow();
 			
 		nbMmsiReceived++;
 		Date date = new Date();
@@ -507,12 +505,19 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     		if (aisShips.get(i).getMMSI() == target.getMMSI()) {
     			
     			if (aisPath.get(i)!=null) {
-    				aisTrackLayer.removeRenderable(aisPath.get(i));
+    				if (aisTrackLayer.isEnabled()) {
+    					aisTrackLayer.removeRenderable(aisPath.get(i));
+    				}
     				ArrayList<Position> resu1 = (ArrayList<Position>) aisPath.get(i).getPositions();
-    				resu1.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
-    				aisPath.get(i).setPositions(resu1);
-    				aisTrackLayer.addRenderable(aisPath.get(i));
-    				wwd.redrawNow();
+    				if (!(resu1.get(resu1.size()-1).equals(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10)))) {
+    					resu1.add(new Position(LatLon.fromDegrees(target.getLatitude(), target.getLongitude()), 10));
+        				aisPath.get(i).setPositions(resu1);
+    				}
+
+    				if (aisTrackLayer.isEnabled()) {
+    					aisTrackLayer.addRenderable(aisPath.get(i));
+    					wwd.redrawNow();
+    				}
     			}
     			
     			else {
@@ -524,7 +529,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         			aisPath.get(i).setExtrude(true);
         			aisPath.get(i).setPathType(AVKey.GREAT_CIRCLE);
         			aisPath.get(i).setAttributes(attrs);
-    				wwd.redrawNow();
     			}
     			
     			Ship resu = new Ship();
@@ -658,6 +662,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 				polyc.setUseRubberBand(true);
 				poly.setArmed(true);
 				polyc.setArmed(true);
+				// création du buffer avec JTS
 				poly.setPositions(Utils.createTranslatedBuffer(trajectories.get(i), trajectories.get(i).get(0), reco.get(0), 200));
 				polyLayer = poly.getLayer();
 				polyLayer.setName("Buffer P" + (i+1));
@@ -768,6 +773,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 						polyc1.setUseRubberBand(true);
 						poly1.setArmed(true);
 						polyc1.setArmed(true);
+						// création du buffer avec JTS
 						poly1.setPositions(Utils.createTranslatedBuffer(trajectories.get(savedMeasureTool.indexOf(tool)), trajectories.get(savedMeasureTool.indexOf(tool)).get(0), resuPos1.get(0), 200));
 						RenderableLayer bufferLayer = poly1.getLayer();
 						aisMtLayer.addRenderables(bufferLayer.getRenderables());
