@@ -5,9 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
 
+import gov.nasa.worldwind.BasicModel;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.awt.WorldWindowGLCanvas;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.geom.LatLon;
@@ -24,6 +26,8 @@ import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
 import gov.nasa.worldwind.util.WWMath;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -306,38 +310,34 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 		
 		if (on == false) {
 			on = true;
-			
-            wwd.addSelectListener(new SelectListener() {
-                public void selected(SelectEvent event) {
-                if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
-                //System.out.println("Left click");
-                if(event.getTopPickedObject().hasPosition()) {
-                Position pos = event.getTopPickedObject().getPosition() ;
-                polygonSelected = false;
-                
-                for (MeasureTool m : savedMeasureTool) {
-                	for (Position p : m.getPositions()) {
-                		if (Math.round(100000*p.getLatitude().getDegrees())==Math.round(100000*pos.getLatitude().getDegrees()) && Math.round(100000*p.getLongitude().getDegrees())==Math.round(100000*pos.getLongitude().getDegrees())) {
-                			polygonSelected = true;
-							selectedPolygon = savedMeasureTool.indexOf(m)+1;
-                		}
-                	}
-                }
-                
-                if (polygonSelected) {
-                	aisTrackPanel.updateAisPanelStatus("Polygon P" + selectedPolygon + " selected");
-                }
-                /*else {
-                	aisTrackPanel.updateAisPanelStatus("No polygon selected");
-                }*/
-                
-                }
-                }
-                }
-                });
-			
+			// Création d'un mouse listener de sélection des polygones
+			wwd.getInputHandler().addMouseListener(new MouseAdapter() {
+			    @Override
+			    public void mouseClicked(MouseEvent pE) {
+			        Position aCurrentPosition = wwd.getCurrentPosition();   
+			        if(aCurrentPosition != null) {
+			            //System.out.println("Current Pos= " + aCurrentPosition);
+			            polygonSelected = false;
+		                for (MeasureTool m : savedMeasureTool) {
+		                	if (WWMath.isLocationInside(aCurrentPosition, m.getPositions())) {
+		                		polygonSelected = true;
+								selectedPolygon = savedMeasureTool.indexOf(m)+1;
+		                	}
+		                }
+		                if (polygonSelected) {
+		                	aisTrackPanel.updateAisPanelStatus("Polygon P" + selectedPolygon + " selected");
+		                }
+//		                else {
+//		                	aisTrackPanel.updateAisPanelStatus("No polygon selected");
+//		                }
 
-			
+			        } 
+			        else {
+			            System.err.println("Error with mouse listener : current position is null");
+			        }
+			    }
+			});
+		
 			readShips();
 			addPanelController();
 			startTime = new Date();
