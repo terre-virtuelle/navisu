@@ -435,7 +435,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
     private void createTarget(Ship target) {
         boolean shipExists = false;
+        Date date = new Date();
         inSight++;
+        aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
 
         for (int i = 0; i < aisShips.size(); i++) {
             if (aisShips.get(i).getMMSI() == target.getMMSI()) {
@@ -467,7 +469,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             aisPath.get(aisShips.size()).setAttributes(attrs);
 
             nbMmsiReceived++;
-            Date date = new Date();
             Ship aisShip = new Ship();
             aisShip.setMMSI(target.getMMSI());
             aisShip.setLatitude(target.getLatitude());
@@ -501,7 +502,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
         Date date = new Date();
 
-        if (count % 15 == 0) {
+        if (count % 51 == 0) {
             //System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
             aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
         }

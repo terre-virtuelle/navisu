@@ -374,7 +374,7 @@ public class AisImpl
         				target.setName(s.getName());
         				nbNamesRetrieved++;
         				//gpsTrackPolygonServices.getPanel().updateAisPanelStatus("Name retrieved from database : " + s.getName());
-        				if (nbNamesRetrieved<101) {
+        				if (nbNamesRetrieved<51) {
         					if (nbNamesRetrieved % 25 == 0) {
         						gpsTrackPolygonServices.getPanel().updateAisPanelStatus(nbNamesRetrieved + " names retrieved from database");
         					}
