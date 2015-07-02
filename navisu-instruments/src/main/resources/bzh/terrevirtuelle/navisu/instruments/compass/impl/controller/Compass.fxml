@@ -60,7 +60,7 @@
                                         <Image url="@navirecompass.png" />
                                     </image>
                                 </ImageView>
-                                <Text fx:id="headingValue" layoutX="95.0" layoutY="175.0" styleClass="instrumentvalue" text="175" textAlignment="CENTER" wrappingWidth="50.0" x="4.0" />
+                                <Text fx:id="headingValue" layoutX="95.0" layoutY="175.0" styleClass="instrumentvalue" text="51" textAlignment="CENTER" wrappingWidth="50.0" x="4.0" />
                             </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -81,7 +81,7 @@
                             <children>
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="80.0" layoutX="65.0" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
                                 <Text layoutX="89.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Heading" />
-                                <Text fx:id="headingValue2" layoutX="99.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="177" textAlignment="CENTER" />
+                                <Text fx:id="headingValue2" layoutX="99.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="51" textAlignment="CENTER" />
                             </children>
                         </Pane>
                     </children>
