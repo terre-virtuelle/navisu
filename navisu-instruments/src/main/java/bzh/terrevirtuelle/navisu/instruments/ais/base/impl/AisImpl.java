@@ -96,6 +96,7 @@ public class AisImpl
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DELETE_TARGET_SOUND = "/data/sounds/mechanic.wav";
     protected LinkedList<Ship> savedAisShips;
+    protected int nbNamesRetrieved = 0;
 
     ComponentManager cm;
     ComponentEventSubscribe<AIS01Event> ais1ES;
@@ -370,12 +371,23 @@ public class AisImpl
         	for (Ship s : savedAisShips) {
         		if (s.getMMSI()==target.getMMSI() && target.getName()==null) {
         			if (!(s.getName().equals("")) && !(s.getName().equals(null))) {
-        				gpsTrackPolygonServices.getPanel().updateAisPanelStatus("Name retrieved from database : " + s.getName());
         				target.setName(s.getName());
+        				nbNamesRetrieved++;
+        				//gpsTrackPolygonServices.getPanel().updateAisPanelStatus("Name retrieved from database : " + s.getName());
+        				if (nbNamesRetrieved<101) {
+        					if (nbNamesRetrieved % 25 == 0) {
+        						gpsTrackPolygonServices.getPanel().updateAisPanelStatus(nbNamesRetrieved + " names retrieved from database");
+        					}
+        				} 
+        				else {
+        					if (nbNamesRetrieved % 10 == 0) {
+        						gpsTrackPolygonServices.getPanel().updateAisPanelStatus(nbNamesRetrieved + " names retrieved from database");
+        					}
+        				}
         			}
         		}
         	}
-        	}
+        }
     }
 
     private void scheduleLostTarget() {

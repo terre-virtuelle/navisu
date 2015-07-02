@@ -501,7 +501,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
         Date date = new Date();
 
-        if (count % 49 == 0) {
+        if (count % 15 == 0) {
             //System.out.println(ANSI_BLUE + inSight + " ships in sight at " + dateFormatTime.format(date) + ANSI_RESET);
             aisTrackPanel.updateAisPanelShips(dateFormatTime.format(date), inSight);
         }
