@@ -366,7 +366,7 @@ public class AisImpl
     }
     
     private void retrieveShipName(Ship target) {
-    	if (gpsTrackPolygonServices.isOn()) {
+    	if (gpsTrackPolygonServices.isOn() && gpsTrackPolygonServices.getComponentReady()) {
         	savedAisShips = gpsTrackPolygonServices.getSavedAisShips();
         	for (Ship s : savedAisShips) {
         		if (s.getMMSI()==target.getMMSI() && target.getName()==null) {

@@ -193,6 +193,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     protected RenderableLayer aisTrackLayer;
     protected ShapeAttributes attrs;
     protected LinkedList<Path> aisPath;
+    protected boolean componentReady = false;
 
     @Override
     public void componentInitiated() {
@@ -357,6 +358,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             readShips();
             addPanelController();
             startTime = new Date();
+            //feu vert pour l'actualisation des noms depuis la base pour le module AIS
+            componentReady = true;
 
             // souscription aux événements GPS
             ggaES.subscribe(new GGAEvent() {
@@ -430,7 +433,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                 watchTargetDmp(aisShips);
             }
         });
-
     }
 
     private void createTarget(Ship target) {
@@ -1551,6 +1553,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
     public TrackPanel getPanel() {
         return aisTrackPanel;
+    }
+    
+    public boolean getComponentReady() {
+    	return componentReady;
     }
 
 }
