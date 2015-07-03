@@ -34,10 +34,12 @@ import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -97,6 +99,7 @@ public class AisImpl
     protected static final String DELETE_TARGET_SOUND = "/data/sounds/mechanic.wav";
     protected LinkedList<Ship> savedAisShips;
     protected int nbNamesRetrieved = 0;
+    protected DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
 
     ComponentManager cm;
     ComponentEventSubscribe<AIS01Event> ais1ES;
@@ -373,7 +376,8 @@ public class AisImpl
         			if (!(s.getName().equals("")) && !(s.getName().equals(null))) {
         				target.setName(s.getName());
         				nbNamesRetrieved++;
-        				//gpsTrackPolygonServices.getPanel().updateAisPanelStatus("Name retrieved from database : " + s.getName());
+        				Date date = new Date();
+        				gpsTrackPolygonServices.getPanel().updateAisPanelName(dateFormatTime.format(date), gpsTrackPolygonServices.getInSight(), (s.getName() + " (database)"));
         				if (nbNamesRetrieved<51) {
         					if (nbNamesRetrieved % 25 == 0) {
         						gpsTrackPolygonServices.getPanel().updateAisPanelStatus(nbNamesRetrieved + " names retrieved from database");

@@ -71,4 +71,6 @@ public interface GpsTrackPolygonServices extends ComponentService {
     TrackPanel getPanel();
     
     boolean getComponentReady();
+    
+    int getInSight();
 }

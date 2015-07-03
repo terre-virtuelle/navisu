@@ -566,7 +566,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                     if (!((target.getName()).equals(aisShips.get(i).getName()))) {
                         nbNamesReceived++;
                         //System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
-                        aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), inSight, target.getName());
+                        aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), inSight, (target.getName() + " (AIS)"));
                         MediaPlayer mediaPlayer;
                         javafx.scene.media.Media media;
                         String userDir = System.getProperty("user.dir");
@@ -1557,6 +1557,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     
     public boolean getComponentReady() {
     	return componentReady;
+    }
+    
+    public int getInSight() {
+    	return inSight;
     }
 
 }
