@@ -193,6 +193,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     protected RenderableLayer aisTrackLayer;
     protected ShapeAttributes attrs;
     protected LinkedList<Path> aisPath;
+    protected boolean componentReady = false;
+    protected LinkedList<Boolean> hasRule;
 
     @Override
     public void componentInitiated() {
@@ -297,6 +299,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         for (int l = 0; l < 10; l++) {
             trajectories.add(null);
         }
+        hasRule = new LinkedList<Boolean>();
+        for (int o = 0; o < 10; o++) {
+        	hasRule.add(false);
+        }
 
         aisTrackLayer = new RenderableLayer();
         aisTrackLayer.setName("AIS path");
@@ -357,6 +363,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             readShips();
             addPanelController();
             startTime = new Date();
+            //feu vert pour l'actualisation des noms depuis la base pour le module AIS
+            componentReady = true;
 
             // souscription aux événements GPS
             ggaES.subscribe(new GGAEvent() {
@@ -430,7 +438,6 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                 watchTargetDmp(aisShips);
             }
         });
-
     }
 
     private void createTarget(Ship target) {
@@ -564,7 +571,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                     if (!((target.getName()).equals(aisShips.get(i).getName()))) {
                         nbNamesReceived++;
                         //System.out.println(ANSI_PURPLE + "New name received : " + target.getName() + " for ship#" + (i+1) + " with MMSI " + target.getMMSI() + ANSI_RESET);
-                        aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), inSight, target.getName());
+                        aisTrackPanel.updateAisPanelName(dateFormatTime.format(date), inSight, (target.getName() + " (AIS)"));
                         MediaPlayer mediaPlayer;
                         javafx.scene.media.Media media;
                         String userDir = System.getProperty("user.dir");
@@ -675,28 +682,30 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                     aisTrackPanel.updateAisPanelStatus("MMSI " + target.getMMSI() + " - " + target.getName() + " outside P" + (i + 1));
                     shipDetected[i] = false;
 
-                    MeasureTool poly = new MeasureTool(wwd);
-                    MeasureToolController polyc = new MeasureToolController();
-                    RenderableLayer polyLayer = new RenderableLayer();
-                    poly.setController(polyc);
-                    poly.setFollowTerrain(true);
-                    poly.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
-                    // couleur de la forme : rouge
-                    poly.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
-                    poly.setShowControlPoints(false);
-                    polyc.setUseRubberBand(true);
-                    poly.setArmed(true);
-                    polyc.setArmed(true);
-                    // création du buffer avec JTS
-                    poly.setPositions(Utils.createTranslatedBuffer(trajectories.get(i), trajectories.get(i).get(0), reco.get(0), 200));
-                    polyLayer = poly.getLayer();
-                    polyLayer.setName("Buffer P" + (i + 1));
-                    geoViewServices.getLayerManager().insertGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
-                    layerTreeServices.addGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
-                    wwd.redrawNow();
-                    poly.setArmed(false);
-                    polyc.setArmed(false);
-                    aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(reco, poly).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName() + " in P" + (i + 1));
+                    if (hasRule.get(i)) {
+                    	MeasureTool poly = new MeasureTool(wwd);
+						MeasureToolController polyc = new MeasureToolController();
+						RenderableLayer polyLayer = new RenderableLayer();
+						poly.setController(polyc);
+						poly.setFollowTerrain(true);
+						poly.setMeasureShapeType(MeasureTool.SHAPE_POLYGON);
+						// couleur de la forme : rouge
+						poly.setLineColor(WWUtil.decodeColorRGBA("FF0000FF"));
+						poly.setShowControlPoints(false);
+						polyc.setUseRubberBand(true);
+						poly.setArmed(true);
+						polyc.setArmed(true);
+						// création du buffer avec JTS
+						poly.setPositions(Utils.createTranslatedBuffer(trajectories.get(i), trajectories.get(i).get(0), reco.get(0), 200));
+						polyLayer = poly.getLayer();
+						polyLayer.setName("Buffer P" + (i + 1));
+						geoViewServices.getLayerManager().insertGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
+						layerTreeServices.addGeoLayer(GROUP4, GeoLayer.factory.newWorldWindGeoLayer(polyLayer));
+						wwd.redrawNow();
+						poly.setArmed(false);
+						polyc.setArmed(false);
+						aisTrackPanel.updateAisPanelStatus("Path matches at " + Utils.pathInsideBuffer(reco, poly).getPercent() + "% for MMSI " + target.getMMSI() + " - " + target.getName() + " in P" + (i + 1));
+                    }
 
                     /*
                      * Détection de virages + demi-tours
@@ -784,7 +793,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                     aisMt.setArmed(false);
                     aisMtc.setArmed(false);
 
-                    if (trajectories.get(savedMeasureTool.indexOf(tool)) != null) {
+                    if (hasRule.get(savedMeasureTool.indexOf(tool))) {
                         MeasureTool poly1 = new MeasureTool(wwd);
                         MeasureToolController polyc1 = new MeasureToolController();
                         poly1.setController(polyc1);
@@ -1529,6 +1538,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         if (ruleCreated) {
             //rmt.setShowControlPoints(false);
             trajectories.set((selectedPolygon - 1), ((ArrayList<Position>) rmt.getPositions()));
+            hasRule.set((selectedPolygon - 1), true);
             rLayer = new RenderableLayer();
             rLayer = rmt.getLayer();
             wwd.redrawNow();
@@ -1551,6 +1561,14 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
     public TrackPanel getPanel() {
         return aisTrackPanel;
+    }
+    
+    public boolean getComponentReady() {
+    	return componentReady;
+    }
+    
+    public int getInSight() {
+    	return inSight;
     }
 
 }

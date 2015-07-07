@@ -69,4 +69,8 @@ public interface GpsTrackPolygonServices extends ComponentService {
     LinkedList<Ship> getSavedAisShips();
     
     TrackPanel getPanel();
+    
+    boolean getComponentReady();
+    
+    int getInSight();
 }
