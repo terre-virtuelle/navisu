@@ -66,8 +66,6 @@ public class AisImpl
     InstrumentDriverManagerServices instrumentDriverManagerServices;
     @UsedService
     SpeakerServices speakerServices;
-    @UsedService
-    GpsTrackPolygonServices gpsTrackPolygonServices;
 
     @ProducedEvent
     protected AisCreateTargetEvent aisCreateTargetEvent;
