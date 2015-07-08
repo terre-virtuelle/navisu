@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="measuretools" stylesheets="@measuretools.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" styleClass="measuretool-panel">
+            <children>
+                <Group styleClass="measuretool-panel">
+                    <children>
+                        <Button fx:id="newButton" layoutX="38.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" styleClass="measuretools-togglebutton" text="NEW" />
+                        <Button fx:id="pauseButton" layoutX="167.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" styleClass="measuretools-togglebutton" text="PAUSE" />
+                        <Button fx:id="endButton" layoutX="311.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" styleClass="measuretools-togglebutton" text="END" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="210.0" layoutX="15.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
+                        <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="402.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                            <image>
+                                <Image url="@quit.png" />
+                            </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@logoTV64AIS.png" />
+                            </image>
+                            <effect>
+                                <Glow />
+                            </effect>
+                        </ImageView>
+                        <Slider fx:id="opacitySlider" layoutX="426.0" layoutY="105.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                        </Slider>
+                        <Group layoutX="-710.0" layoutY="35.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="131.0" layoutX="217.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
+                        <Text layoutX="10.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Shape :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                        <Text layoutX="10.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Path type :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                        <Text layoutX="10.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Units :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                        <ComboBox layoutX="115.0" layoutY="84.0" prefHeight="20.0" prefWidth="80.0" promptText="Line" styleClass="measuretoolcombolabel" />
+                  <ComboBox layoutX="115.0" layoutY="107.0" prefHeight="20.0" prefWidth="80.0" promptText="Great circle" styleClass="measuretoolcombolabel" />
+                  <ComboBox layoutX="115.0" layoutY="131.0" prefHeight="20.0" prefWidth="80.0" promptText="Km/Km²" styleClass="measuretoolcombolabel" />
+                  <ComboBox layoutX="115.0" layoutY="155.0" prefHeight="20.0" prefWidth="80.0" promptText="Decimal degrees" styleClass="measuretoolcombolabel" />
+                        <Text layoutX="10.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Angle format :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                        <Text layoutX="230.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Length :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                        <Text layoutX="230.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Area :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                        <Text layoutX="230.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Width :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                        <Text layoutX="230.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Height :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                        <Text layoutX="230.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Heading :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                        <Text layoutX="230.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Center :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                        <CheckBox fx:id="followCheck" layoutX="25.0" layoutY="194.0" mnemonicParsing="false" text="Follow terrain" />
+                        <CheckBox fx:id="showControlsCheck" layoutX="25.0" layoutY="254.0" mnemonicParsing="false" text="Control points" />
+                        <CheckBox fx:id="rubberBandCheck" layoutX="25.0" layoutY="224.0" mnemonicParsing="false" text="Rubber band" />
+                        <CheckBox fx:id="freeHandCheck" layoutX="120.0" layoutY="194.0" mnemonicParsing="false" text="Free Hand" />
+                        <CheckBox fx:id="showAnnotationCheck" layoutX="120.0" layoutY="224.0" mnemonicParsing="false" text="Tooltip" />
+                        <ScrollPane hbarPolicy="ALWAYS" layoutX="217.0" layoutY="210.0" prefHeight="78.0" prefWidth="224.0" styleClass="measuretool-info-pane" vbarPolicy="ALWAYS" />
+                        <Text layoutX="154.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="MEASURE TOOL" />
+                        <Text fx:id="lengthLabel" layoutX="290.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="lengthLabel" wrappingWidth="100.0" />
+                        <Text fx:id="areaLabel" layoutX="290.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="areaLabel" wrappingWidth="100.0" />
+                        <Text fx:id="widthLabel" layoutX="290.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="widthLabel" wrappingWidth="100.0" />
+                        <Text fx:id="heightLabel" layoutX="290.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="heightLabel" wrappingWidth="100.0" />
+                        <Text fx:id="headingLabel" layoutX="290.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="headingLabel" wrappingWidth="100.0" />
+                        <Text fx:id="centerLabel" layoutX="290.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="centerLabel" wrappingWidth="100.0" />
+                    </children>
+                </Group>
+                <Text layoutX="437.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Opacity" x="-23.0" />
+              
+            </children>
+        </Pane>
+    </children>
+</fx:root>
