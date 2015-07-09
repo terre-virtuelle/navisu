@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -66,6 +67,8 @@ public class AisImpl
     InstrumentDriverManagerServices instrumentDriverManagerServices;
     @UsedService
     SpeakerServices speakerServices;
+    @UsedService
+    GpsTrackPolygonServices gpsTrackPolygonServices;
 
     @ProducedEvent
     protected AisCreateTargetEvent aisCreateTargetEvent;
@@ -95,6 +98,9 @@ public class AisImpl
     protected static final long DELAY = 300000;
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DELETE_TARGET_SOUND = "/data/sounds/mechanic.wav";
+    protected LinkedList<Ship> savedAisShips;
+    protected int nbNamesRetrieved = 0;
+    protected DateFormat dateFormatTime = new SimpleDateFormat("HH:mm:ss");
 
     ComponentManager cm;
     ComponentEventSubscribe<AIS01Event> ais1ES;
@@ -149,6 +155,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    retrieveShipName(ship);
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -160,6 +167,7 @@ public class AisImpl
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
                     ship.setNavigationalStatus(ais.getNavigationalStatus());
+                    retrieveShipName(ship);
                     aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -180,6 +188,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    retrieveShipName(ship);
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -191,6 +200,7 @@ public class AisImpl
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
                     ship.setNavigationalStatus(ais.getNavigationalStatus());
+                    retrieveShipName(ship);
                     aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -213,6 +223,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    retrieveShipName(ship);
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -224,6 +235,7 @@ public class AisImpl
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
                     ship.setNavigationalStatus(ais.getNavigationalStatus());
+                    retrieveShipName(ship);
                     aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
@@ -355,6 +367,32 @@ public class AisImpl
     @Override
     public Map<Integer, String> getMidMap() {
         return midMap;
+    }
+    
+    private void retrieveShipName(Ship target) {
+    	if (gpsTrackPolygonServices.isOn() && gpsTrackPolygonServices.getComponentReady()) {
+        	savedAisShips = gpsTrackPolygonServices.getSavedAisShips();
+        	for (Ship s : savedAisShips) {
+        		if (s.getMMSI()==target.getMMSI() && target.getName()==null) {
+        			if (!(s.getName().equals("")) && !(s.getName().equals(null))) {
+        				target.setName(s.getName());
+        				nbNamesRetrieved++;
+        				Date date = new Date();
+        				gpsTrackPolygonServices.getPanel().updateAisPanelName(dateFormatTime.format(date), gpsTrackPolygonServices.getInSight(), (s.getName() + " (database)"));
+        				if (nbNamesRetrieved<51) {
+        					if (nbNamesRetrieved % 25 == 0) {
+        						gpsTrackPolygonServices.getPanel().updateAisPanelStatus(nbNamesRetrieved + " names retrieved from database");
+        					}
+        				} 
+        				else {
+        					if (nbNamesRetrieved % 10 == 0) {
+        						gpsTrackPolygonServices.getPanel().updateAisPanelStatus(nbNamesRetrieved + " names retrieved from database");
+        					}
+        				}
+        			}
+        		}
+        	}
+        }
     }
 
     private void scheduleLostTarget() {
