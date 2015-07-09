@@ -24,6 +24,7 @@ import gov.nasa.worldwind.util.WWMath;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -195,6 +196,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     protected LinkedList<Path> aisPath;
     protected boolean componentReady = false;
     protected LinkedList<Boolean> hasRule;
+    protected Position start = null;
+    protected Position end = null;
+    protected boolean mouseInsidePolygon = false;
 
     @Override
     public void componentInitiated() {
@@ -337,7 +341,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             wwd.getInputHandler().addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent pE) {
-                    Position aCurrentPosition = wwd.getCurrentPosition();
+                	Position aCurrentPosition = wwd.getCurrentPosition();
                     if (aCurrentPosition != null) {
                         //System.out.println("Current Pos= " + aCurrentPosition);
                         polygonSelected = false;
@@ -350,12 +354,60 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                         if (polygonSelected) {
                             aisTrackPanel.updateAisPanelStatus("Polygon P" + selectedPolygon + " selected");
                         }
-//		                else {
-//		                	aisTrackPanel.updateAisPanelStatus("No polygon selected");
-//		                }
+		                else {
+		                	aisTrackPanel.updateAisPanelStatus("No polygon selected");
+		                }
 
                     } else {
-                        System.err.println("Error with mouse listener : current position is null");
+                        System.err.println("Error with mouse listener clicked : current position is null");
+                    }
+                }
+            });
+            
+            wwd.getInputHandler().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent pE) {
+                    Position aCurrentPosition = wwd.getCurrentPosition();
+                    if (aCurrentPosition != null) {
+                    	start = aCurrentPosition;
+                    	
+                    } else {
+                        System.err.println("Error with mouse listener pressed : current position is null");
+                    }
+                }
+            });
+            
+            wwd.getInputHandler().addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent pE) {
+                    Position aCurrentPosition = wwd.getCurrentPosition();
+                    if (aCurrentPosition != null) {
+                        end = aCurrentPosition;
+                        if (polygonSelected && !(start.equals(end))) {
+                        	ArrayList<Position> resu = new ArrayList<Position>();
+                        	for (Position pos : savedMeasureTool.get(selectedPolygon-1).getPositions()) {
+                        		resu.add(Utils.translate(start, end, pos));
+                        	}
+                        	savedMeasureTool.get(selectedPolygon-1).setPositions(resu);
+                        	centers.set(selectedPolygon-1, Utils.barycenter(savedMeasureTool.get(selectedPolygon-1).getPositions()));
+                        }
+                    } else {
+                        System.err.println("Error with mouse listener released : current position is null");
+                    }
+                }
+            });
+            
+            wwd.getInputHandler().addMouseMotionListener(new MouseMotionAdapter()
+            {
+                public void mouseDragged(MouseEvent mouseEvent)
+                {
+                    if ((mouseEvent.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0)
+                    {
+                        // Don't update the polyline here because the wwd current cursor position will not
+                        // have been updated to reflect the current mouse position. Wait to update in the
+                        // position listener, but consume the event so the view doesn't respond to it.
+                        if (polygonSelected)
+                            mouseEvent.consume();
                     }
                 }
             });
