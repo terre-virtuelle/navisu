@@ -33,6 +33,11 @@
     //-fx-fill : -fx-line-base;
     -fx-fill : whitesmoke;
 }
+.measuretoolcombolabel{
+    -fx-font: 10px "Roboto";
+    //-fx-fill : -fx-line-base;
+    -fx-fill : whitesmoke;
+}
 .measuretoolname{
     -fx-font: 18px "Roboto";
     -fx-fill : #fff900;
