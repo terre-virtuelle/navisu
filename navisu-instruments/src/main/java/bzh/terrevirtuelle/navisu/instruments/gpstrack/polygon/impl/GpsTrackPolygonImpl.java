@@ -390,6 +390,7 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                         	}
                         	savedMeasureTool.get(selectedPolygon-1).setPositions(resu);
                         	centers.set(selectedPolygon-1, Utils.barycenter(savedMeasureTool.get(selectedPolygon-1).getPositions()));
+                            savedPolygons.set(selectedPolygon-1, resu);
                         }
                     } else {
                         System.err.println("Error with mouse listener released : current position is null");
