@@ -282,9 +282,9 @@ public class AisImpl
                 timestamps.put(mmsi, Calendar.getInstance());
             }
         });
-//        Timer timer = new Timer();
-//        scheduleLostTarget();
-//        timer.schedule(task, DELAY, TIME_OUT);
+        Timer timer = new Timer();
+        scheduleLostTarget();
+        timer.schedule(task, DELAY, TIME_OUT);
     }
 
     @Override
