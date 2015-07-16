@@ -1065,11 +1065,15 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                 controller.setArmed(true);
                 aisTrackPanel.updateAisPanelStatus("Drawer ready");
                 drawerActivated = true;
+            	wwd.getInputHandler().removeMouseListener(ma2);
+            	wwd.getInputHandler().removeMouseListener(ma3);
             } else {
                 measureTool.setArmed(false);
                 controller.setArmed(false);
                 aisTrackPanel.updateAisPanelStatus("Drawer deactivated");
                 drawerActivated = false;
+            	wwd.getInputHandler().addMouseListener(ma2);
+            	wwd.getInputHandler().addMouseListener(ma3);
             }
         } else {
             aisTrackPanel.updateAisPanelStatus("Maximum number of polygons reached");
@@ -1082,6 +1086,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             pmt.setArmed(true);
             pmtc.setArmed(true);
             aisTrackPanel.updateAisPanelStatus("Custom path ready to be drawn");
+        	wwd.getInputHandler().removeMouseListener(ma2);
+        	wwd.getInputHandler().removeMouseListener(ma3);
         } else {
             aisTrackPanel.updateAisPanelStatus("Only one path can be created at the same time");
         }
@@ -1108,6 +1114,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         layerTreeServices.search("Target").setSelected(true);
         //layerTreeServices.search("Path").setSelected(true);
         aisTrackPanel.updateAisPanelStatus("Custom path activated");
+    	wwd.getInputHandler().addMouseListener(ma2);
+    	wwd.getInputHandler().addMouseListener(ma3);
     }
 
     private void createPathTarget(Ship target) {
@@ -1163,6 +1171,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
             aisTrackPanel.updateAisPanelStatus("New polygon (polygon#" + nbPolygon + ") ready to be drawn");
+        	wwd.getInputHandler().addMouseListener(ma2);
+        	wwd.getInputHandler().addMouseListener(ma3);
         } else {
             aisTrackPanel.updateAisPanelStatus("Maximum number of polygons reached");
             nbPolygon = nbPolygonMax + 1;
