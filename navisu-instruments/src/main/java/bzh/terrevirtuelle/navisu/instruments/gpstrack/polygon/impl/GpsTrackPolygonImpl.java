@@ -199,6 +199,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     protected Position start = null;
     protected Position end = null;
     protected boolean mouseInsidePolygon = false;
+    protected MouseAdapter ma1;
+    protected MouseAdapter ma2;
+    protected MouseAdapter ma3;
+    protected MouseMotionAdapter mma1;
 
     @Override
     public void componentInitiated() {
@@ -337,8 +341,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
 
         if (on == false) {
             on = true;
+            
             // Création d'un mouse listener de sélection des polygones
-            wwd.getInputHandler().addMouseListener(new MouseAdapter() {
+            ma1 = new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent pE) {
                 	Position aCurrentPosition = wwd.getCurrentPosition();
@@ -362,9 +367,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                         System.err.println("Error with mouse listener clicked : current position is null");
                     }
                 }
-            });
+            };
             
-            wwd.getInputHandler().addMouseListener(new MouseAdapter() {
+            // Création d'un mouse listener pour prise de position de départ de la translation
+            ma2 = new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent pE) {
                     Position aCurrentPosition = wwd.getCurrentPosition();
@@ -375,9 +381,10 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                         System.err.println("Error with mouse listener pressed : current position is null");
                     }
                 }
-            });
+            };
             
-            wwd.getInputHandler().addMouseListener(new MouseAdapter() {
+            // Création d'un mouse listener pour prise de position de fin de la translation + réalisatin de la translation
+            ma3 = new MouseAdapter() {
                 @Override
                 public void mouseReleased(MouseEvent pE) {
                     Position aCurrentPosition = wwd.getCurrentPosition();
@@ -390,28 +397,32 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                         	}
                         	savedMeasureTool.get(selectedPolygon-1).setPositions(resu);
                         	centers.set(selectedPolygon-1, Utils.barycenter(savedMeasureTool.get(selectedPolygon-1).getPositions()));
+                            savedPolygons.set(selectedPolygon-1, resu);
                         }
                     } else {
                         System.err.println("Error with mouse listener released : current position is null");
                     }
                 }
-            });
+            };
             
-            wwd.getInputHandler().addMouseMotionListener(new MouseMotionAdapter()
+            // inhibition du recentrage de la vue
+            mma1 = new MouseMotionAdapter()
             {
                 public void mouseDragged(MouseEvent mouseEvent)
                 {
                     if ((mouseEvent.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0)
                     {
-                        // Don't update the polyline here because the wwd current cursor position will not
-                        // have been updated to reflect the current mouse position. Wait to update in the
-                        // position listener, but consume the event so the view doesn't respond to it.
                         if (polygonSelected)
                             mouseEvent.consume();
                     }
                 }
-            });
-
+            };
+            
+            wwd.getInputHandler().addMouseListener(ma1);
+            wwd.getInputHandler().addMouseListener(ma2);
+            wwd.getInputHandler().addMouseListener(ma3);
+            wwd.getInputHandler().addMouseMotionListener(mma1);
+            
             readShips();
             addPanelController();
             startTime = new Date();
@@ -1054,11 +1065,15 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
                 controller.setArmed(true);
                 aisTrackPanel.updateAisPanelStatus("Drawer ready");
                 drawerActivated = true;
+            	wwd.getInputHandler().removeMouseListener(ma2);
+            	wwd.getInputHandler().removeMouseListener(ma3);
             } else {
                 measureTool.setArmed(false);
                 controller.setArmed(false);
                 aisTrackPanel.updateAisPanelStatus("Drawer deactivated");
                 drawerActivated = false;
+            	wwd.getInputHandler().addMouseListener(ma2);
+            	wwd.getInputHandler().addMouseListener(ma3);
             }
         } else {
             aisTrackPanel.updateAisPanelStatus("Maximum number of polygons reached");
@@ -1071,6 +1086,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             pmt.setArmed(true);
             pmtc.setArmed(true);
             aisTrackPanel.updateAisPanelStatus("Custom path ready to be drawn");
+        	wwd.getInputHandler().removeMouseListener(ma2);
+        	wwd.getInputHandler().removeMouseListener(ma3);
         } else {
             aisTrackPanel.updateAisPanelStatus("Only one path can be created at the same time");
         }
@@ -1097,6 +1114,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
         layerTreeServices.search("Target").setSelected(true);
         //layerTreeServices.search("Path").setSelected(true);
         aisTrackPanel.updateAisPanelStatus("Custom path activated");
+    	wwd.getInputHandler().addMouseListener(ma2);
+    	wwd.getInputHandler().addMouseListener(ma3);
     }
 
     private void createPathTarget(Ship target) {
@@ -1152,6 +1171,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
             layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(polygonLayer));
             aisTrackPanel.updateAisPanelStatus("New polygon (polygon#" + nbPolygon + ") ready to be drawn");
+        	wwd.getInputHandler().addMouseListener(ma2);
+        	wwd.getInputHandler().addMouseListener(ma3);
         } else {
             aisTrackPanel.updateAisPanelStatus("Maximum number of polygons reached");
             nbPolygon = nbPolygonMax + 1;
@@ -1564,7 +1585,9 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
     public void createRule() {
         if (polygonSelected) {
             if (trajectories.get(selectedPolygon - 1) == null) {
-                rmt = new MeasureTool(wwd);
+            	wwd.getInputHandler().removeMouseListener(ma2);
+            	wwd.getInputHandler().removeMouseListener(ma3);
+            	rmt = new MeasureTool(wwd);
                 rmtc = new MeasureToolController();
                 rmt.setController(rmtc);
                 rmt.setFollowTerrain(true);
@@ -1602,6 +1625,8 @@ public class GpsTrackPolygonImpl implements GpsTrackPolygon,
             aisTrackPanel.updateAisPanelStatus("New rule associated with polygon P" + selectedPolygon);
             ruleCreated = false;
             polygonSelected = false;
+        	wwd.getInputHandler().addMouseListener(ma2);
+        	wwd.getInputHandler().addMouseListener(ma3);
         } else {
             aisTrackPanel.updateAisPanelStatus("Please create a rule first");
         }
