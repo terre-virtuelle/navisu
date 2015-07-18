@@ -506,14 +506,14 @@ public class Template_ShapefileLoader
     //**************************************************************//
     @SuppressWarnings({"UnusedDeclaration"})
     protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
-        // System.out.println("createPointAttributes " + record.getAttributes().getEntries());
+        System.out.println("createPointAttributes " + record.getAttributes().getEntries());
         return randomAttrs.nextPointAttributes();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
         if (record != null) {
-              System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
+             // System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
         return randomAttrs.nextPolylineAttributes();
     }

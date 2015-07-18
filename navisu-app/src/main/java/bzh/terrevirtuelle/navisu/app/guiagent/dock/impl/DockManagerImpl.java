@@ -68,6 +68,7 @@ public class DockManagerImpl<TrackTool>
     private final String PASSWD = "lithops";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
+  //  protected final String IFREMER = "http://www.ifremer.fr/services/photos_anciennes?SERVICE=WMS&REQUEST=GetCapabilities";
     protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
     protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;
@@ -208,6 +209,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(1, "bathy.png", 1, "data.png", 1, "dbshomon.png", (e) -> openDB(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD))
                 .createNode(1, "bathy.png", 1, "data.png", 2, "dbshomoff.png", (e) -> closeDB(DB_NAME))
                 .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", ".shp"))
+                .createNode(3, "magnetism.png", 0, "data.png", 0, "noaa.png", (e) -> open("Magnetic", ".shp"))
                 .build();
 
         chartsRadialMenu.setLayoutX((width / 2) - 10);
@@ -260,6 +262,7 @@ public class DockManagerImpl<TrackTool>
                 .centralImage("navigationradialmenu150.png")
                 .createNode(0, "navigation.png", 0, "tracks.png", 0, "gpx.png", (e) -> open("Gpx", ".gpx", ".GPX"))
                 .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", ".kmz", ".KMZ"))
+                 .createNode(0, "navigation.png", 1, "routes.png", 1, "measuretools.png", (e) -> open("MeasureTools"))
                 .build();
 
         navigationRadialMenu.setLayoutX((width / 2) - 30);
@@ -310,7 +313,6 @@ public class DockManagerImpl<TrackTool>
     }
 
     //--------------Tracks------------------
-
     private void createTracksRadialWidget() {
         tracksRadialMenu = RadialMenuBuilder.create()
                 .centralImage("tracksradialmenu150.png")
@@ -318,14 +320,14 @@ public class DockManagerImpl<TrackTool>
                 .createNode(1, "shape.png", 0, "shape.png", 1, "ellipseShapeOn.png", (e) -> ellipseShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 2, "circleShapeOn.png", (e) -> circleShapeOn())
                 .createNode(1, "shape.png", 0, "shape.png", 3, "quadShapeOn.png", (e) -> quadShapeOn())
-                .createNode(1, "shape.png", 0, "shape.png", 4, "freeHandOn.png", (e) -> freeHandOn())   
+                .createNode(1, "shape.png", 0, "shape.png", 4, "freeHandOn.png", (e) -> freeHandOn())
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 0, "load.png", (e) -> loadPolygons())
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 1, "saveAll.png", (e) -> saveAllPolygons())
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 2, "savePolygon.png", (e) -> savePolygon())
                 .createNode(2, "polyControl.png", 0, "polyControl.png", 3, "drawerOn.png", (e) -> drawerOn())
-                .createNode(2, "polyControl.png", 0, "polyControl.png", 4, "polygonOn.png", (e) -> open("GpsTrackPolygon"))              
+                .createNode(2, "polyControl.png", 0, "polyControl.png", 4, "polygonOn.png", (e) -> open("GpsTrackPolygon"))
                 .createNode(0, "createRule.png", 1, "createRule.png", 0, "createRule.png", (e) -> createRule())
-                .createNode(0, "createRule.png", 1, "createRule.png", 1, "associateRule.png", (e) -> activateRule()) 
+                .createNode(0, "createRule.png", 1, "createRule.png", 1, "associateRule.png", (e) -> activateRule())
                 .createNode(3, "cpa.png", 1, "custom.png", 0, "activateCpaZone.png", (e) -> activateCpaZone())
                 .createNode(3, "cpa.png", 1, "custom.png", 1, "createCpaZone.png", (e) -> createCpaZone())
                 .createNode(3, "cpa.png", 0, "classic.png", 0, "createCpaZone1000.png", (e) -> createCpaZone1000())
@@ -532,7 +534,7 @@ public class DockManagerImpl<TrackTool>
             System.out.println("ça plante");
         }
     }
-    
+
     private void createRule() {
         zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
         if (zone != null) {
@@ -541,7 +543,7 @@ public class DockManagerImpl<TrackTool>
             System.out.println("ça plante");
         }
     }
-    
+
     private void activateRule() {
         zone = (ZoneDriver) instrumentDrivers.get("GpsTrackPolygon");
         if (zone != null) {
