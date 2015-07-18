@@ -71,6 +71,8 @@ import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
+import bzh.terrevirtuelle.navisu.instruments.measuretools.MeasureToolsServices;
+import bzh.terrevirtuelle.navisu.instruments.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -89,14 +91,11 @@ import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import bzh.terrevirtuelle.navisu.speech.impl.SpeakerImpl;
 import bzh.terrevirtuelle.navisu.system.files.FilesServices;
 import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
-import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
 
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -164,6 +163,7 @@ public class AppMain extends Application {
                         KapChartImpl.class,
                         KmlObjectImpl.class,
                         MagneticImpl.class,
+                        MeasureToolsImpl.class,
                         RouteImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
@@ -217,6 +217,7 @@ public class AppMain extends Application {
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
+        MeasureToolsServices measureToolsServices = componentManager.getComponentService(MeasureToolsServices.class);
 
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
@@ -276,11 +277,13 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
-        webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
+        //  webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
+        webDriverServices.init("http://www.ifremer.fr/services/photos_anciennes?");
         // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
         // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
         webDriverServices.registerNewDriver(wmsServices.getDriver());
@@ -335,25 +338,25 @@ public class AppMain extends Application {
 
         /* Test Bezier, approxiamtion trajectoire */
         /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
-        bezier2DServices.toKML("path.kml", data);
+         bezier2DServices.toKML("path.kml", data);
 
-        List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
-        List<Pair<Double, Double>> bez = bezier2DServices.compute(bezSi, 0.01);
-        bezier2DServices.toKML("data/kml/", "testBezier.kml", bez, "5000FF14", "2");
+         List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
+         List<Pair<Double, Double>> bez = bezier2DServices.compute(bezSi, 0.01);
+         bezier2DServices.toKML("data/kml/", "testBezier.kml", bez, "5000FF14", "2");
         
-        // La liste headings est utile si on souhaite récupérer le cap en chaque point de la trajectoire
-        // sous la forme [[Lat, Lon], heading]
-        // si ce n'est pas nécessaire mettre null
-        List<Pair<Pair<Double, Double>, Double>> headings = new ArrayList<>();
-        List<Pair<Pair<Double, Double>, Pair<Double, Double>>> vectorTg
-                = bezier2DServices.vectorTangentCompute(bezSi, 0.01, 0.5,  headings);
-        bezier2DServices.toKML2("data/kml/", "testTgBezier.kml", vectorTg, "5014F0FF", "2");
-        System.out.println(headings);*/
+         // La liste headings est utile si on souhaite récupérer le cap en chaque point de la trajectoire
+         // sous la forme [[Lat, Lon], heading]
+         // si ce n'est pas nécessaire mettre null
+         List<Pair<Pair<Double, Double>, Double>> headings = new ArrayList<>();
+         List<Pair<Pair<Double, Double>, Pair<Double, Double>>> vectorTg
+         = bezier2DServices.vectorTangentCompute(bezSi, 0.01, 0.5,  headings);
+         bezier2DServices.toKML2("data/kml/", "testTgBezier.kml", vectorTg, "5014F0FF", "2");
+         System.out.println(headings);*/
 
         /* Test CPA zone et reconnaissance de trajectoire */
-     //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
-     dataServerServices.openGpsd("sinagot.net", 2947);
+        dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
 
         /* Test DB */
