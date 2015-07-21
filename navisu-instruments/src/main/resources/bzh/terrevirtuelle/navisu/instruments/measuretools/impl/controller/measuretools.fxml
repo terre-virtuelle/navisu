@@ -15,13 +15,25 @@
 
 <fx:root fx:id="view" stylesheets="@measuretools.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" styleClass="measuretool-panel">
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="455.0" styleClass="measuretool-panel">
             <children>
                 <Group styleClass="measuretool-panel">
                     <children>
-                        <Button fx:id="newButton" layoutX="38.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" styleClass="measuretools-togglebutton" text="NEW" />
-                        <Button fx:id="pauseButton" layoutX="167.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" styleClass="measuretools-togglebutton" text="PAUSE" />
-                        <Button fx:id="endButton" layoutX="311.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" styleClass="measuretools-togglebutton" text="END" />
+                        <Button fx:id="newButton" layoutX="38.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" text="NEW">
+                     <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                     </styleClass></Button>
+                        <Button fx:id="pauseButton" layoutX="167.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" text="PAUSE">
+                     <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                     </styleClass></Button>
+                        <Button fx:id="endButton" layoutX="311.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" text="END">
+                     <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                     </styleClass></Button>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" height="210.0" layoutX="15.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
                         <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="402.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
                             <image>
@@ -97,11 +109,14 @@
                         <Text layoutX="230.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Height :" textAlignment="RIGHT" wrappingWidth="55.0" />
                         <Text layoutX="230.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Heading :" textAlignment="RIGHT" wrappingWidth="55.0" />
                         <Text layoutX="230.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Center :" textAlignment="RIGHT" wrappingWidth="55.0" />
-                        <CheckBox fx:id="followCheck" layoutX="25.0" layoutY="194.0" mnemonicParsing="false" text="Follow terrain" />
-                        <CheckBox fx:id="showControlsCheck" layoutX="25.0" layoutY="254.0" mnemonicParsing="false" text="Control points" />
-                        <CheckBox fx:id="rubberBandCheck" layoutX="25.0" layoutY="224.0" mnemonicParsing="false" text="Rubber band" />
-                        <CheckBox fx:id="freeHandCheck" layoutX="120.0" layoutY="194.0" mnemonicParsing="false" text="Free Hand" />
-                        <CheckBox fx:id="showAnnotationCheck" layoutX="120.0" layoutY="224.0" mnemonicParsing="false" text="Tooltip" />
+                        <CheckBox fx:id="followCheck" layoutX="23.0" layoutY="194.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Follow terrain">
+                     <font>
+                        <Font name="Footlight MT Light" size="12.0" />
+                     </font></CheckBox>
+                        <CheckBox fx:id="showControlsCheck" layoutX="23.0" layoutY="254.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Control points" />
+                        <CheckBox fx:id="rubberBandCheck" layoutX="23.0" layoutY="224.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Rubber band" />
+                        <CheckBox fx:id="freeHandCheck" layoutX="123.0" layoutY="194.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Free Hand" />
+                        <CheckBox fx:id="showAnnotationCheck" layoutX="123.0" layoutY="224.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Tooltip" />
                         <ScrollPane hbarPolicy="ALWAYS" layoutX="217.0" layoutY="210.0" prefHeight="78.0" prefWidth="224.0" styleClass="measuretool-info-pane" vbarPolicy="ALWAYS" />
                         <Text layoutX="154.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="MEASURE TOOL" />
                         <Text fx:id="lengthLabel" layoutX="290.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="lengthLabel" wrappingWidth="100.0" />

@@ -11,7 +11,7 @@
     -fx-base-trans20 : #143b2820;
     -fx-base-trans95 : #143b2895;
     -fx-line-base : #04fff2;
-    -fx-font-family: "Roboto" ;
+    //-fx-font-family: "Roboto" ;
     -fx-color-typo: #c2f8c4;
     -fx-color-contours: #70bbbf;
 }
@@ -21,30 +21,30 @@
  *                                                                             *
  ******************************************************************************/
 .metriclabel{
-    -fx-font: 12px "Roboto";
+    -fx-font: 12px "Roboto Bk";
     -fx-fill : -fx-line-base;
 }
 .measuretoolvalue{
-    -fx-font: 12px "Roboto";
+    -fx-font: 12px "Roboto Bk";
     -fx-fill : #fff900;
 }
 .measuretoollabel{
-    -fx-font: 12px "Roboto";
+    -fx-font: 12px "Roboto Bk";
     //-fx-fill : -fx-line-base;
     -fx-fill : whitesmoke;
 }
 .measuretoolcombolabel{
-    -fx-font: 10px "Roboto";
+    -fx-font: 10px "Roboto Bk";
     //-fx-fill : -fx-line-base;
     -fx-fill : whitesmoke;
 }
 .measuretoolname{
-    -fx-font: 18px "Roboto";
+    -fx-font: 18px "Roboto Bk";
     -fx-fill : #fff900;
     -fx-underline : true;
 }
 .info-text{
-    -fx-font: 18px "Roboto";
+    -fx-font: 18px "Roboto Bk";
     -fx-fill : #fff900;
 }
 /*******************************************************************************
