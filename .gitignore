@@ -46,3 +46,6 @@
 /navisu-util/.nb-gradle/private/
 /navisu-widgets/.nb-gradle/private/
 /.nb-gradle/
+/HttpExample/nbproject/private/
+/HttpExample/dist/
+/HttpRedirectExample/nbproject/private/
