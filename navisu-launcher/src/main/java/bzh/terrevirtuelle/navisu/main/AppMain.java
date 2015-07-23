@@ -83,6 +83,8 @@ import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
 import bzh.terrevirtuelle.navisu.navigation.route.RouteServices;
 import bzh.terrevirtuelle.navisu.navigation.route.impl.RouteImpl;
+import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
+import bzh.terrevirtuelle.navisu.ontology.data.impl.DataAccessImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -143,6 +145,7 @@ public class AppMain extends Application {
                         BathymetryLocalCatalogImpl.class,
                         Bezier2DImpl.class,
                         CurrentsImpl.class,
+                        DataAccessImpl.class,
                         DataServerImpl.class,
                         DatabaseImpl.class,
                         DatabaseDriverManagerImpl.class,
@@ -194,6 +197,7 @@ public class AppMain extends Application {
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
 
+        DataAccessServices dataAccessServices= componentManager.getComponentService(DataAccessServices.class);
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
@@ -362,6 +366,9 @@ public class AppMain extends Application {
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         //speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
         // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");
+        
+        /* Test  ontology  DataAccess */
+        //dataAccessServices.test();
     }
 
     public static void main(String[] args) throws Exception {
