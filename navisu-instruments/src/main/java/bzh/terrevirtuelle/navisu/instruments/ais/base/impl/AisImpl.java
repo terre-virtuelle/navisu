@@ -29,20 +29,16 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.Ais
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateStationEvent;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
 import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
