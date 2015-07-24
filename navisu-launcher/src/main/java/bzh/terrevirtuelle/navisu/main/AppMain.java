@@ -362,13 +362,14 @@ public class AppMain extends Application {
         // testDBServices.runJDBC();//OK
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
         //testDBServices.runJPA();//OK
+        
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
-        //speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
-        // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");
+        // speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
+        // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");//OK
         
         /* Test  ontology  DataAccess */
-        //dataAccessServices.test();
+        dataAccessServices.test();//OK
     }
 
     public static void main(String[] args) throws Exception {
