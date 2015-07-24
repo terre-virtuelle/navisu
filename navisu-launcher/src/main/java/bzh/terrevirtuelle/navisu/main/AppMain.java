@@ -369,7 +369,7 @@ public class AppMain extends Application {
         // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");//OK
         
         /* Test  ontology  DataAccess */
-        dataAccessServices.test();//OK
+        //dataAccessServices.test();//OK
     }
 
     public static void main(String[] args) throws Exception {
