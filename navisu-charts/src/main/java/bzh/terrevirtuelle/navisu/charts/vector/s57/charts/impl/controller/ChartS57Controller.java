@@ -92,8 +92,8 @@ public class ChartS57Controller {
     private final Map<Pair<Double, Double>, String> topMarks;
     private String marsys;
     private SurveyZoneController surveyZoneController;
-    private final boolean DEV = false;
-    //private final boolean DEV = true;
+    //private final boolean DEV = false;
+    private final boolean DEV = true;
 
     static {
         INSTANCE = new ChartS57Controller();
