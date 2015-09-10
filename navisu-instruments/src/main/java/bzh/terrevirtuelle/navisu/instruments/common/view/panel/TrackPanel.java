@@ -59,7 +59,7 @@ public class TrackPanel
     TextArea mmsis;
     @FXML
     TextArea status;
-    
+
     private Paint color;
     private boolean debut = true;
 
@@ -118,82 +118,81 @@ public class TrackPanel
     }
 
     public void updateAisPanelShips(String time, int ships) {
-    	Platform.runLater(() -> {
-    	timeStamp.setText(time);
-        timeStamp.setFill(color);
-        shipsInSight.setText(Integer.toString(ships));
-    	});
+        Platform.runLater(() -> {
+            timeStamp.setText(time);
+            timeStamp.setFill(color);
+            shipsInSight.setText(Integer.toString(ships));
+        });
     }
-    
+
     public void updateAisPanelCount(String time, int ships, int count, int countOfNames) {
-    	Platform.runLater(() -> {
-    	timeStamp.setText(time);
-        if (debut) {
-        	color = timeStamp.getFill();
-        	debut = false;
-        } 
-        else {
-        	timeStamp.setFill(Color.RED);
-        }
-        shipsInSight.setText(Integer.toString(ships));
-        countOfAisShipsReceived.setText(Integer.toString(count));
-        countOfNamesReceived.setText(Integer.toString(countOfNames));
-    	});
+        Platform.runLater(() -> {
+            timeStamp.setText(time);
+            if (debut) {
+                color = timeStamp.getFill();
+                debut = false;
+            } else {
+                timeStamp.setFill(Color.RED);
+            }
+            shipsInSight.setText(Integer.toString(ships));
+            countOfAisShipsReceived.setText(Integer.toString(count));
+            countOfNamesReceived.setText(Integer.toString(countOfNames));
+        });
     }
-    
+
     public void updateAisPanelName(String time, int ships, String name) {
-    	Platform.runLater(() -> {
-    	timeStamp.setText(time);
-        timeStamp.setFill(color);
-        shipsInSight.setText(Integer.toString(ships));
-        String[] tabNames = null;
-        tabNames = names.getText().split("\n");
-        int nbNames = tabNames.length;
-        String resu = "";
-        if (nbNames==1000) {
-            for (int i=1;i<nbNames;i++) {
-                resu = resu + tabNames[i] + "\n";
+        Platform.runLater(() -> {
+            timeStamp.setText(time);
+            timeStamp.setFill(color);
+            shipsInSight.setText(Integer.toString(ships));
+            String[] tabNames = null;
+            tabNames = names.getText().split("\n");
+            int nbNames = tabNames.length;
+            String resu = "";
+            if (nbNames == 1000) {
+                for (int i = 1; i < nbNames; i++) {
+                    resu = resu + tabNames[i] + "\n";
+                }
+                names.setText(resu);
             }
-            names.setText(resu);
-        }
-        names.appendText(name + "\n");
-    	});
+            names.appendText(name + "\n");
+        });
     }
-   
+
     public void updateAisPanelMmsi(String time, int ships, int mmsi) {
-    	Platform.runLater(() -> {
-    	timeStamp.setText(time);
-        timeStamp.setFill(color);
-        shipsInSight.setText(Integer.toString(ships));
-        String[] tabMmsis = null;
-        tabMmsis = mmsis.getText().split("\n");
-        int nbMmsis = tabMmsis.length;
-        String resu = "";
-        if (nbMmsis==1000) {
-            for (int i=1;i<nbMmsis;i++) {
-                resu = resu + tabMmsis[i] + "\n";
+        Platform.runLater(() -> {
+            timeStamp.setText(time);
+            timeStamp.setFill(color);
+            shipsInSight.setText(Integer.toString(ships));
+            String[] tabMmsis = null;
+            tabMmsis = mmsis.getText().split("\n");
+            int nbMmsis = tabMmsis.length;
+            String resu = "";
+            if (nbMmsis == 1000) {
+                for (int i = 1; i < nbMmsis; i++) {
+                    resu = resu + tabMmsis[i] + "\n";
+                }
+                mmsis.setText(resu);
             }
-            mmsis.setText(resu);
-        }
-        mmsis.appendText(mmsi + "\n");
-    	});
+            mmsis.appendText(mmsi + "\n");
+        });
     }
-   
+
     public void updateAisPanelStatus(String message) {
-    	Platform.runLater(() -> {
-    	timeStamp.setFill(color);
-        String[] tabLines = null;
-        tabLines = status.getText().split("\n");
-        int nbLines = tabLines.length;
-        String resu = "";
-        if (nbLines==20000) {
-            for (int i=1;i<nbLines;i++) {
-                resu = resu + tabLines[i] + "\n";
+        Platform.runLater(() -> {
+            timeStamp.setFill(color);
+            String[] tabLines = null;
+            tabLines = status.getText().split("\n");
+            int nbLines = tabLines.length;
+            String resu = "";
+            if (nbLines == 20000) {
+                for (int i = 1; i < nbLines; i++) {
+                    resu = resu + tabLines[i] + "\n";
+                }
+                status.setText(resu);
             }
-            status.setText(resu);
-        }
-        status.appendText(message + "\n");
-    	});
+            status.appendText(message + "\n");
+        });
     }
-    
+
 }

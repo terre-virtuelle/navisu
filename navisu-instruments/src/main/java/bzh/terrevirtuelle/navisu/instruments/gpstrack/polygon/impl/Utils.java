@@ -3,9 +3,7 @@ package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.util.WWMath;
-import gov.nasa.worldwind.util.WWUtil;
 import gov.nasa.worldwind.util.measure.MeasureTool;
-import gov.nasa.worldwind.util.measure.MeasureToolController;
 
 import java.util.ArrayList;
 

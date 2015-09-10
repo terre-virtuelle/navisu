@@ -7,6 +7,7 @@ dependencies {
     compile project(':navisu-kml')
     compile project(':navisu-bathymetry')
     compile project(':navisu-speech')
+    compile project(':navisu-topology')
     compile fileTree(dir: 'lib', include: '*.jar')
 }
 jar {
