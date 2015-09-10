@@ -61,6 +61,8 @@ import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonSer
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl.GpsTrackPolygonImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.clock.ClockServices;
+import bzh.terrevirtuelle.navisu.instruments.clock.impl.ClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
@@ -73,6 +75,10 @@ import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.MeasureToolsServices;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.impl.MeasureToolsImpl;
+import bzh.terrevirtuelle.navisu.instruments.routeeditor.RouteEditorServices;
+import bzh.terrevirtuelle.navisu.instruments.routeeditor.impl.RouteEditorImpl;
+import bzh.terrevirtuelle.navisu.instruments.webview.WebViewServices;
+import bzh.terrevirtuelle.navisu.instruments.webview.impl.WebViewImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -144,6 +150,7 @@ public class AppMain extends Application {
                         BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
                         Bezier2DImpl.class,
+                     //   ClockImpl.class,
                         CurrentsImpl.class,
                         DataAccessImpl.class,
                         DataServerImpl.class,
@@ -170,6 +177,7 @@ public class AppMain extends Application {
                         RouteImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
+                        RouteEditorImpl.class,
                         SedimentologyImpl.class,
                         ShapefileObjectImpl.class,
                         SonarImpl.class,
@@ -179,7 +187,8 @@ public class AppMain extends Application {
                         S57GlobalCatalogImpl.class,
                         TestDBImpl.class,
                         WebDriverManagerImpl.class,
-                        WMSImpl.class
+                        WMSImpl.class,
+                        WebViewImpl.class
                 )
         );
         /* Services */
@@ -196,8 +205,9 @@ public class AppMain extends Application {
 
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
+      //  ClockServices clockServices = componentManager.getComponentService(ClockServices.class);
 
-        DataAccessServices dataAccessServices= componentManager.getComponentService(DataAccessServices.class);
+        DataAccessServices dataAccessServices = componentManager.getComponentService(DataAccessServices.class);
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
@@ -224,7 +234,8 @@ public class AppMain extends Application {
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
-        RouteServices routeServives = componentManager.getComponentService(RouteServices.class);
+        RouteServices routeServices = componentManager.getComponentService(RouteServices.class);
+        RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
@@ -239,6 +250,7 @@ public class AppMain extends Application {
 
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
+        WebViewServices webViewServices = componentManager.getComponentService(WebViewServices.class);
 
         // Manager services
         DatabaseDriverManagerServices databaseDriverManagerServices = componentManager.getComponentService(DatabaseDriverManagerServices.class);
@@ -270,14 +282,17 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
+      //  instrumentDriverManagerServices.registerNewDriver(clockServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         //  webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
@@ -362,12 +377,10 @@ public class AppMain extends Application {
         // testDBServices.runJDBC();//OK
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
         //testDBServices.runJPA();//OK
-        
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         // speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
         // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");//OK
-        
         /* Test  ontology  DataAccess */
         //dataAccessServices.test();//OK
     }
