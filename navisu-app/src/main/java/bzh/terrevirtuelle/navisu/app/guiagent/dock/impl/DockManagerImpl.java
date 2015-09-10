@@ -68,7 +68,7 @@ public class DockManagerImpl<TrackTool>
     private final String PASSWD = "lithops";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
-  //  protected final String IFREMER = "http://www.ifremer.fr/services/photos_anciennes?SERVICE=WMS&REQUEST=GetCapabilities";
+    //  protected final String IFREMER = "http://www.ifremer.fr/services/photos_anciennes?SERVICE=WMS&REQUEST=GetCapabilities";
     protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
     protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;
@@ -114,7 +114,7 @@ public class DockManagerImpl<TrackTool>
         (e) -> {
             meteoRadialMenu.setVisible(!meteoRadialMenu.isVisible());
         }),
-        DockItemFactory.newImageItem("instruments", ICON_PATH + "dock_icons/instruments.png",
+        DockItemFactory.newImageItem("instrum", ICON_PATH + "dock_icons/instruments.png",
         (e) -> {
             instrumentsRadialMenu.setVisible(!instrumentsRadialMenu.isVisible());
         }),
@@ -234,6 +234,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "navigation.png", 1, "gps.png", 3, "gpsLogOff.png", (e) -> close("GpsLogger"))
                 .createNode(0, "navigation.png", 2, "compass.png", 0, "compass.png", (e) -> open("Compass"))
                 .createNode(0, "navigation.png", 3, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
+                .createNode(0, "navigation.png", 4, "clock.png", 0, "clock.png", (e) -> open("Clock"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);
@@ -262,7 +263,7 @@ public class DockManagerImpl<TrackTool>
                 .centralImage("navigationradialmenu150.png")
                 .createNode(0, "navigation.png", 0, "tracks.png", 0, "gpx.png", (e) -> open("Gpx", ".gpx", ".GPX"))
                 .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", ".kmz", ".KMZ"))
-                 .createNode(0, "navigation.png", 1, "routes.png", 1, "measuretools.png", (e) -> open("MeasureTools"))
+                .createNode(0, "navigation.png", 1, "routes.png", 1, "measuretools.png", (e) -> open("MeasureTools"))
                 .build();
 
         navigationRadialMenu.setLayoutX((width / 2) - 30);
