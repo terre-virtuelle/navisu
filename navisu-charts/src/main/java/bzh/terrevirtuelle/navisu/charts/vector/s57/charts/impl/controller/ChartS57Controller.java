@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
-import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ACHARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPCNT_ShapefileLoader;
@@ -37,22 +36,31 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.Lights;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
+import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Offset;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -64,7 +72,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.capcaval.c3.component.annotation.UsedService;
+import javax.imageio.ImageIO;
 
 /**
  * @author Serge Morvan
@@ -72,8 +80,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  */
 public class ChartS57Controller {
 
-    @UsedService
-    GuiAgentServices guiAgentServices;
+    private DataAccessServices dataAccessServices;
 
     private final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     private static final ChartS57Controller INSTANCE;
@@ -92,21 +99,20 @@ public class ChartS57Controller {
     private final Map<Pair<Double, Double>, String> topMarks;
     private String marsys;
     private SurveyZoneController surveyZoneController;
-    //private final boolean DEV = false;
-    private final boolean DEV = true;
+    private final boolean DEV = false;
+    //private final boolean DEV = true;
 
     static {
         INSTANCE = new ChartS57Controller();
     }
 
     public ChartS57Controller() {
-        // surveyZoneController = new SurveyZoneController();
-        // guiAgentServices.getRoot().getChildren().add(surveyZoneController);
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
         System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
+        addListeners();
     }
 
     private void initAcronymsMap() {
@@ -420,4 +426,47 @@ public class ChartS57Controller {
         this.surveyZoneController = surveyZoneController;
     }
 
+    private void addListeners() {
+        wwd.addSelectListener((SelectEvent event) -> {
+            Object o = event.getTopObject();
+            if (event.isLeftClick() && o != null) {
+                if (o.getClass().equals(PointPlacemark.class)) {
+                    showImage((PointPlacemark) o);
+                }
+            }
+        });
+    }
+
+    public void setDataAccessServices(DataAccessServices dataAccessServices) {
+        this.dataAccessServices = dataAccessServices;
+    }
+
+    private void showImage(PointPlacemark pointPlacemark) {
+        String label = ((PointPlacemark) pointPlacemark).getLabelText();
+        if (label != null && !"".equals(label)) {
+            // Image image = dataAccessServices.queryImage(label);
+            Object object = (pointPlacemark).getValue("Model");
+            if (object.getClass().getName().contains("Landmark")) {
+
+                Landmark landmark = (Landmark) object;
+                if (landmark.getObjectName().contains("Minou")) {
+                    Image image = dataAccessServices.queryImage("Phare du Petit Minou");
+                    PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
+                    PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(landmark.getLat(), landmark.getLon(), 0));
+                    placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+                    try {
+                        ImageIO.write((BufferedImage) image, "bmp", new File("data/images/minou.jpg"));
+                    } catch (IOException ex) {
+                        Logger.getLogger(ChartS57Controller.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    attrs.setImageAddress("data/images/minou.jpg");
+                    attrs.setImageOffset(Offset.BOTTOM_CENTER);
+                    attrs.setScale(0.6);//0.8
+                    placemark.setAttributes(attrs);
+                    RenderableLayer l = getLayer("BUOYAGE");
+                    l.addRenderable(placemark);
+                }
+            }
+        }
+    }
 }

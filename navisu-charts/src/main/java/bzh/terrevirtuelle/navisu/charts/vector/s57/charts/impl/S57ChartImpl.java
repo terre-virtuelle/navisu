@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.View;
@@ -55,6 +56,8 @@ public class S57ChartImpl
     GuiAgentServices guiAgentServices;
     @UsedService
     LayerTreeServices layerTreeServices;
+    @UsedService
+    DataAccessServices dataAccessServices;
 
     private static final String NAME = "S57";
     private static final String EXTENSION_0 = ".000";
@@ -98,6 +101,7 @@ public class S57ChartImpl
             //  System.out.println("altitude : " + ((int) wwd.getView().getCurrentEyePosition().getAltitude()));
             filter();
         });
+
     }
 
     private void filter() {
@@ -234,6 +238,7 @@ public class S57ChartImpl
             }
 
             chartS57Controller = ChartS57Controller.getInstance();
+            chartS57Controller.setDataAccessServices(dataAccessServices);
             chartS57Controller.setSurveyZoneController(surveyZoneController);
             chartS57Controller.init("data/shp/shp_" + i++);
             layers = chartS57Controller.getLayers();

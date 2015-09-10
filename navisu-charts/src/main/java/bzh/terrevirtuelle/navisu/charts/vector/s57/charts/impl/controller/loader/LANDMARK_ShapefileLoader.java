@@ -37,8 +37,8 @@ public class LANDMARK_ShapefileLoader
     private Set<Entry<String, Object>> entries;
     private final String acronym;
     private final String marsys;
-    private boolean dev=false;
-    
+    private boolean dev = false;
+    RenderableLayer layer;
 
     public LANDMARK_ShapefileLoader(boolean dev, String marsys, String acronym) {
         this.dev = dev;
@@ -51,7 +51,7 @@ public class LANDMARK_ShapefileLoader
 
     @Override
     protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
-
+        this.layer = layer;
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
 
@@ -143,7 +143,7 @@ public class LANDMARK_ShapefileLoader
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setLabelText(object.getObjectName());
-
+        placemark.setValue("Model", object);
         String catMark = "";
         if (acronym.contains("CATLMK")) {
             catMark = CATLMK.ATT.get(object.getCategoryOfMark());
@@ -178,7 +178,7 @@ public class LANDMARK_ShapefileLoader
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.6);//0.8
         placemark.setAttributes(attrs);
-        
+
         return placemark;
     }
 
