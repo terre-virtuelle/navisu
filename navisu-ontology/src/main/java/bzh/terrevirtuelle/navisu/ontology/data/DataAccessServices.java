@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.ontology.data;
 
+import java.awt.Image;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -17,4 +18,6 @@ public interface DataAccessServices
         extends ComponentService {
 
     void test();
+
+    Image queryImage(String target);
 }
