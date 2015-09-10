@@ -15,7 +15,6 @@ import bzh.terrevirtuelle.navisu.gpx.GpxObject;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
 import bzh.terrevirtuelle.navisu.gpx.impl.controller.GpxController;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.Layer;
 import java.util.List;
 import java.util.logging.Level;

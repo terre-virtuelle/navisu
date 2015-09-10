@@ -77,10 +77,12 @@ public class GribController {
          if (vGrid == null) {
          throw new IllegalArgumentException("Invalid Grib File "+GribConstants.V_GRID_NAME); //Todo Exception
          }
-
+        System.out.println("GribController");
          //instantiate model
          this.model = new GribModel(gridDataset, pressureGrid, uGrid, vGrid);
+         System.out.println("GribController");
          this.layer = new GribLayer(this.model);
+         System.out.println("GribController");
          
     }
 

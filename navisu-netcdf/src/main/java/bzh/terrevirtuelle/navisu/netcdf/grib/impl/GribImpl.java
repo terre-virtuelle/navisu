@@ -49,6 +49,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
             private static final String EXTENSION_3 = ".grb.zip";
             private static final String EXTENSION_4 = ".grb.gzip";
             private static final String EXTENSION_5 = ".grb.gz";
+            private static final String EXTENSION_6 = ".grib2";
 
             @Override
             public boolean canOpen(String file) {
@@ -59,7 +60,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
                         || file.toLowerCase().endsWith(EXTENSION_3)
                         || file.toLowerCase().endsWith(EXTENSION_4)
                         || file.toLowerCase().endsWith(EXTENSION_5)
-                        ) {
+                        || file.toLowerCase().endsWith(EXTENSION_6)) {
                     canOpen = true;
                 }
                 return canOpen;
@@ -85,7 +86,8 @@ public class GribImpl implements Grib, GribServices, ComponentState {
                     "*" + EXTENSION_2,
                     "*" + EXTENSION_3,
                     "*" + EXTENSION_4,
-                    "*" + EXTENSION_5
+                    "*" + EXTENSION_5,
+                    "*" + EXTENSION_6
                 };
             }
         };
@@ -107,9 +109,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
     @Override
     public void loadFile(String path) {
         this.gribController = new GribController(path);
-        
         this.gribModel = this.gribController.getModel();
-        
         analyticSurfaceController
                 = new AnalyticSurfaceController(gribController.getModel().getVelocityField(),
                         getLongitudeDimension(), getLatitudeDimension(),
@@ -126,8 +126,8 @@ public class GribImpl implements Grib, GribServices, ComponentState {
         this.layerLayerManager = (LayerManager<Layer>) ((GeoView) this.geoViewServices.getDisplayService()).getLayerManager();
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));
         this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.analyticSurfaceController.getLayer()));
-   
-                }
+
+    }
 
     @Override
     public double[] getVelocityInMPSAtPoint(double latitude, double longitude) {

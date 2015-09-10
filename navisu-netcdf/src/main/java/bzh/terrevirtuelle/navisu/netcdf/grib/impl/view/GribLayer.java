@@ -26,24 +26,32 @@ public class GribLayer
     private void init() {
         double latInit = this.model.getMinLatitude();
         double latMax = this.model.getMaxLatitude();
-        double latGap = this.model.getLatitudeGap();
+        double latGap = this.model.getLatitudeGap()*20;
         double lonInit = this.model.getMinLongitude();
         double lonMax = this.model.getMaxLongitude();
-        double lonGap = this.model.getLongitudeGap();
+        double lonGap = this.model.getLongitudeGap()*20;
         int timeDimension = model.getTimeDimension();
-
+        System.out.println("latInit "+ latInit
+       + "latMax "+ latMax
+        +"latGap "+ latGap
+        +"lonInit "+ lonInit
+        +"lonMax "+ lonMax
+        +"lonGap "+ lonGap);
+        
         List<Arrow> arrows = new ArrayList<>();
-      //  for (int i = 0; i < timeDimension; i++) {
-        int i = 19;
+     //   for (int i = 0; i < timeDimension; i++) {
+        int i = 0;
             for (double lat = latInit; lat <= latMax; lat += latGap) {
                 for (double lon = lonInit; lon <= lonMax; lon += lonGap) {
+                  //  System.out.println("model.getVelocity(lat, lon, i) "+ model.getVelocity(lat, lon, i));
                     Arrow arrow = new Arrow(lat, lon, model.getVelocity(lat, lon, i));
+                   // System.out.println("model.getDirection(lat, lon, i) "+ model.getDirection(lat, lon, i));
                     arrow.setRotation(Math.toDegrees(model.getDirection(lat, lon, i)));
                     arrows.add(arrow);
                 }
             }
-      //  }
-
+     //   }
+System.out.println("arrows "+arrows);
         addRenderables(arrows);
     }
 

@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.netcdf.grib.impl.model;
 
-import bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.meteorology.Arrow;
 import bzh.terrevirtuelle.navisu.netcdf.grib.GribConstants;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -86,7 +85,7 @@ public class GribModel {
 
         Array uGridArray = null;
         Array vGridArray = null;
-
+      //  System.out.println("time "+time);
         try {
             uGridArray = this.uGrid.readYXData(time, 0);
             vGridArray = this.vGrid.readYXData(time, 0);

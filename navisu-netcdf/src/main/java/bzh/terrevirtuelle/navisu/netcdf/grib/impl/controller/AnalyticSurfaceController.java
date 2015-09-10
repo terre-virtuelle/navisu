@@ -49,13 +49,13 @@ public class AnalyticSurfaceController {
 
     public AnalyticSurfaceController(double[] values, int lonDimension, int latDimension,
             double minLat, double maxLat, double minLon, double maxLon,
-            double minValue, double maxValue, double opacity, 
+            double minValue, double maxValue, double opacity,
             String legendTitle, String units) {
         this.velocityField = values;
         this.analyticSurfaceLayer = new RenderableLayer();
         this.analyticSurfaceLayer.setPickEnabled(false);
         this.analyticSurfaceLayer.setName("Meteorology");
-      
+
         createSurface(HUE_BLUE, HUE_RED,
                 lonDimension, latDimension,
                 minValue, maxValue,
@@ -91,7 +91,7 @@ public class AnalyticSurfaceController {
             RenderableLayer outLayer,
             double opacity,
             String legendTitle, String units) {
-
+        
         AnalyticSurface surface = new AnalyticSurface();
         surface.setSector(sector);
         surface.setAltitude(10e2);

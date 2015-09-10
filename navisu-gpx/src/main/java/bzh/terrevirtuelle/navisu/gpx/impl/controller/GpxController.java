@@ -9,14 +9,10 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
-import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.formats.gpx.GpxReader;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.MarkerLayer;
-import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.ogc.kml.KMLRoot;
-import gov.nasa.worldwind.ogc.kml.impl.KMLController;
 import gov.nasa.worldwind.pick.PickedObject;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.markers.BasicMarker;
@@ -28,10 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
 import org.xml.sax.SAXException;
 
 /**
@@ -57,9 +50,7 @@ public class GpxController {
             if (event.getTopObject() != null) {
                 if (event.getTopPickedObject().getParentLayer() instanceof MarkerLayer) {
                     PickedObject po = event.getTopPickedObject();
-                    System.out.printf("Track position %s, %s, size = %f\n",
-                            po.getValue(AVKey.PICKED_OBJECT_ID).toString(),
-                            po.getPosition(), (Double) po.getValue(AVKey.PICKED_OBJECT_SIZE));
+                    System.out.printf("Track position %s\n", po.getPosition());
                 }
             }
         });
@@ -77,8 +68,8 @@ public class GpxController {
             Iterator<Position> positions = reader.getTrackPositionIterator();
 
             BasicMarkerAttributes attrs
-                    = new BasicMarkerAttributes(Material.RED, BasicMarkerShape.SPHERE, 1d);
-
+                    = new BasicMarkerAttributes(Material.RED, BasicMarkerShape.SPHERE, 1.d);
+            //   attrs.setMaxMarkerSize(50.0);
             ArrayList<Marker> markers = new ArrayList<>();
             while (positions.hasNext()) {
                 markers.add(new BasicMarker(positions.next(), attrs));
