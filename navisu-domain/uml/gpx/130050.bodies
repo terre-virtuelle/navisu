@@ -1,0 +1,29 @@
+class Point
+!!!142850.java!!!	Point(in ele : double, inout time : GregorianCalendar, in lat : double, in lon : double)
+        this.ele = ele;
+        this.time = time;
+        this.latitude = lat;
+        this.longitude = lon;
+!!!142978.java!!!	Point(inout time : GregorianCalendar, in lat : double, in lon : double)
+        this.time = time;
+        this.latitude = lat;
+        this.longitude = lon;
+!!!143106.java!!!	Point(in lat : double, in lon : double)
+        this.latitude = lat;
+        this.longitude = lon;
+!!!143234.java!!!	getEle() : double
+        return ele;
+!!!143362.java!!!	setEle(in value : double) : void
+        this.ele = value;
+!!!143490.java!!!	getTime() : GregorianCalendar
+        return time;
+!!!143618.java!!!	setTime(inout value : GregorianCalendar) : void
+        this.time = value;
+!!!143746.java!!!	getLatitude() : double
+        return latitude;
+!!!143874.java!!!	setLatitude(in value : double) : void
+        this.latitude = value;
+!!!144002.java!!!	getLongitude() : double
+        return longitude;
+!!!144130.java!!!	setLongitude(in value : double) : void
+        this.longitude = value;

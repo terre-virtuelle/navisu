@@ -1,0 +1,120 @@
+class Waypoint
+!!!155394.java!!!	getSpeed() : float
+        return speed;
+!!!155522.java!!!	setSpeed(in speed : float) : void
+        this.speed = speed;
+!!!155650.java!!!	getCourse() : float
+        return course;
+!!!155778.java!!!	setCourse(in course : float) : void
+        this.course = course;
+!!!155906.java!!!	Waypoint()
+      
+!!!156034.java!!!	Waypoint(in ele : double, inout time : GregorianCalendar, in magvar : double, in geoidheight : double, in name : String, in cmt : String, in desc : String, in src : String, inout link : List<Link>, in sym : String, in type : String, in fix : String, in sat : int, in hdop : double, in vdop : double, in pdop : double, in ageofdgpsdata : double, in dgpsid : int, inout extensions : Extensions, in lat : double, in lon : double)
+        this.ele = ele;
+        this.time = time;
+        this.magvar = magvar;
+        this.geoidheight = geoidheight;
+        this.name = name;
+        this.cmt = cmt;
+        this.desc = desc;
+        this.src = src;
+        this.link = link;
+        this.sym = sym;
+        this.type = type;
+        this.fix = fix;
+        this.sat = sat;
+        this.hdop = hdop;
+        this.vdop = vdop;
+        this.pdop = pdop;
+        this.ageofdgpsdata = ageofdgpsdata;
+        this.dgpsid = dgpsid;
+        this.extensions = extensions;
+        this.latitude = lat;
+        this.longitude =lon;
+!!!156162.java!!!	getEle() : double
+        return ele;
+!!!156290.java!!!	setEle(in value : double) : void
+        this.ele = value;
+!!!156418.java!!!	getTime() : GregorianCalendar
+        return time;
+!!!156546.java!!!	setTime(inout value : GregorianCalendar) : void
+        this.time = value;
+!!!156674.java!!!	getMagvar() : double
+        return magvar;
+!!!156802.java!!!	setMagvar(in value : double) : void
+        this.magvar = value;
+!!!156930.java!!!	getGeoidheight() : double
+        return geoidheight;
+!!!157058.java!!!	setGeoidheight(in value : double) : void
+        this.geoidheight = value;
+!!!157186.java!!!	getName() : String
+        return name;
+!!!157314.java!!!	setName(in value : String) : void
+        this.name = value;
+!!!157442.java!!!	getCmt() : String
+        return cmt;
+!!!157570.java!!!	setCmt(in value : String) : void
+        this.cmt = value;
+!!!157698.java!!!	getDesc() : String
+        return desc;
+!!!157826.java!!!	setDesc(in value : String) : void
+        this.desc = value;
+!!!157954.java!!!	getSrc() : String
+        return src;
+!!!158082.java!!!	setSrc(in value : String) : void
+        this.src = value;
+!!!158210.java!!!	getLink() : Link
+        if (link == null) {
+            link = new ArrayList<Link>();
+        }
+        return this.link;
+!!!158338.java!!!	getSym() : String
+        return sym;
+!!!158466.java!!!	setSym(in value : String) : void
+        this.sym = value;
+!!!158594.java!!!	getType() : String
+        return type;
+!!!158722.java!!!	setType(in value : String) : void
+        this.type = value;
+!!!158850.java!!!	getFix() : String
+        return fix;
+!!!158978.java!!!	setFix(in value : String) : void
+        this.fix = value;
+!!!159106.java!!!	getSat() : int
+        return sat;
+!!!159234.java!!!	setSat(in value : int) : void
+        this.sat = value;
+!!!159362.java!!!	getHdop() : double
+        return hdop;
+!!!159490.java!!!	setHdop(in value : double) : void
+        this.hdop = value;
+!!!159618.java!!!	getVdop() : double
+        return vdop;
+!!!159746.java!!!	setVdop(in value : double) : void
+        this.vdop = value;
+!!!159874.java!!!	getPdop() : double
+        return pdop;
+!!!160002.java!!!	setPdop(in value : double) : void
+        this.pdop = value;
+!!!160130.java!!!	getAgeofdgpsdata() : double
+        return ageofdgpsdata;
+!!!160258.java!!!	setAgeofdgpsdata(in value : double) : void
+        this.ageofdgpsdata = value;
+!!!160386.java!!!	getDgpsid() : int
+        return dgpsid;
+!!!160514.java!!!	setDgpsid(in value : int) : void
+        this.dgpsid = value;
+!!!160642.java!!!	getExtensions() : Extensions
+        return extensions;
+!!!160770.java!!!	setExtensions(inout value : Extensions) : void
+        this.extensions = value;
+!!!160898.java!!!	getLatitude() : double
+        return latitude;
+!!!161026.java!!!	setLatitude(in value : double) : void
+        this.latitude = value;
+!!!161154.java!!!	getLongitude() : double
+        return longitude;
+!!!161282.java!!!	setLongitude(in value : double) : void
+        this.longitude = value;
+!!!161410.java!!!	toString() : String
+        return "Waypoint{" + "ele=" + ele + ", time=" + time + ", magvar=" + magvar + ", geoidheight=" + geoidheight + ", name=" + name + ", cmt=" + cmt + ", desc=" + desc + ", src=" + src + ", link=" + link + ", sym=" + sym + ", type=" + type + ", fix=" + fix + ", sat=" + sat + ", hdop=" + hdop + ", vdop=" + vdop + ", pdop=" + pdop + ", ageofdgpsdata=" + ageofdgpsdata + ", dgpsid=" + dgpsid + ", extensions=" + extensions + ", latitude=" + latitude + ", longitude=" + longitude + '}';

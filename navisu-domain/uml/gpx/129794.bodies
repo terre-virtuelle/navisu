@@ -1,0 +1,29 @@
+class MetadataBuilder
+!!!139650.java!!!	create() : MetadataBuilder
+        return new MetadataBuilder();
+!!!139778.java!!!	build() : Metadata
+        return new Metadata(name, desc, author, copyright, link, time, keywords, bounds, extensions);
+!!!139906.java!!!	name(in name : String) : MetadataBuilder
+        this.name = name;
+        return this;
+!!!140034.java!!!	desc(in desc : String) : MetadataBuilder
+        this.desc = desc;
+        return this;
+!!!140162.java!!!	author(inout author : Person) : MetadataBuilder
+        this.author = author;
+        return this;
+!!!140290.java!!!	setCopyright(inout copyright : Copyright) : MetadataBuilder
+        this.copyright = copyright;
+        return this;
+!!!140418.java!!!	time(inout time : GregorianCalendar) : MetadataBuilder
+        this.time = time;
+        return this;
+!!!140546.java!!!	keywords(in keywords : String) : MetadataBuilder
+        this.keywords = keywords;
+        return this;
+!!!140674.java!!!	bounds(inout bounds : Bounds) : MetadataBuilder
+        this.bounds = bounds;
+        return this;
+!!!140802.java!!!	extensions(inout extensions : Extensions) : MetadataBuilder
+        this.extensions = extensions;
+        return this;

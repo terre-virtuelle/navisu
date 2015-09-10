@@ -1,0 +1,10 @@
+class Extensions
+!!!131842.java!!!	Extensions()
+        any = new ArrayList<>();
+!!!131970.java!!!	Extensions(inout any : List<Object>)
+        this.any = any;
+!!!132098.java!!!	getAny() : List<Object>
+        if (any == null) {
+            any = new ArrayList<Object>();
+        }
+        return this.any;

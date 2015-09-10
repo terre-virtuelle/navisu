@@ -1,0 +1,26 @@
+class GpxBuilder
+!!!134146.java!!!	create() : GpxBuilder
+        return new GpxBuilder();
+!!!134274.java!!!	build() : Gpx
+        return new Gpx(metadata, wpt, rte, trk, extensions, version, creator);
+!!!134402.java!!!	metadata(inout metadata : Metadata) : GpxBuilder
+        this.metadata = metadata;
+        return this;
+!!!134530.java!!!	wpt(inout wpt : List<Waypoint>) : GpxBuilder
+        this.wpt = wpt;
+        return this;
+!!!134658.java!!!	rte(inout rte : List<Route>) : GpxBuilder
+        this.rte = rte;
+        return this;
+!!!134786.java!!!	trk(inout trk : List<Track>) : GpxBuilder
+        this.trk = trk;
+        return this;
+!!!134914.java!!!	extensions(inout extensions : Extensions) : GpxBuilder
+        this.extensions = extensions;
+        return this;
+!!!135042.java!!!	version(in version : String) : GpxBuilder
+        this.version = version;
+        return this;
+!!!135170.java!!!	creator(in creator : String) : GpxBuilder
+        this.creator = creator;
+        return this;

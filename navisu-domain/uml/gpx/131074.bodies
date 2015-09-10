@@ -1,0 +1,72 @@
+class WaypointBuilder
+!!!161666.java!!!	create() : WaypointBuilder
+        return new WaypointBuilder();
+!!!161794.java!!!	build() : Waypoint
+        return new Waypoint(ele, time, magvar, geoidheight,
+                name, cmt, desc, src, link,
+                sym, type, fix, sat, hdop,
+                vdop, pdop, ageofdgpsdata,
+                dgpsid, extensions, latitude, longitude);
+!!!161922.java!!!	ele(in ele : double) : WaypointBuilder
+        this.ele = ele;
+        return this;
+!!!162050.java!!!	time(inout time : GregorianCalendar) : WaypointBuilder
+        this.time = time;
+        return this;
+!!!162178.java!!!	magvar(in magvar : double) : WaypointBuilder
+        this.magvar = magvar;
+        return this;
+!!!162306.java!!!	geoidheight(in geoidheight : double) : WaypointBuilder
+        this.geoidheight = geoidheight;
+        return this;
+!!!162434.java!!!	name(in name : String) : WaypointBuilder
+        this.name = name;
+        return this;
+!!!162562.java!!!	cmt(in cmt : String) : WaypointBuilder
+        this.cmt = cmt;
+        return this;
+!!!162690.java!!!	desc(in desc : String) : WaypointBuilder
+        this.desc = desc;
+        return this;
+!!!162818.java!!!	src(in src : String) : WaypointBuilder
+        this.src = src;
+        return this;
+!!!162946.java!!!	link(inout link : List<Link>) : WaypointBuilder
+        this.link = link;
+        return this;
+!!!163074.java!!!	sym(in sym : String) : WaypointBuilder
+        this.sym = sym;
+        return this;
+!!!163202.java!!!	type(in type : String) : WaypointBuilder
+        this.type = type;
+        return this;
+!!!163330.java!!!	fix(in fix : String) : WaypointBuilder
+        this.fix = fix;
+        return this;
+!!!163458.java!!!	sat(in sat : int) : WaypointBuilder
+        this.sat = sat;
+        return this;
+!!!163586.java!!!	hdop(in hdop : double) : WaypointBuilder
+        this.hdop = hdop;
+        return this;
+!!!163714.java!!!	vdop(in vdop : double) : WaypointBuilder
+        this.vdop = vdop;
+        return this;
+!!!163842.java!!!	pdop(in pdop : double) : WaypointBuilder
+        this.pdop = pdop;
+        return this;
+!!!163970.java!!!	ageofdgpsdata(in ageofdgpsdata : double) : WaypointBuilder
+        this.ageofdgpsdata = ageofdgpsdata;
+        return this;
+!!!164098.java!!!	dgpsid(in dgpsid : int) : WaypointBuilder
+        this.dgpsid = dgpsid;
+        return this;
+!!!164226.java!!!	extensions(inout extensions : Extensions) : WaypointBuilder
+        this.extensions = extensions;
+        return this;
+!!!164354.java!!!	latitude(in latitude : double) : WaypointBuilder
+        this.latitude = latitude;
+        return this;
+!!!164482.java!!!	longitude(in longitude : double) : WaypointBuilder
+        this.longitude = longitude;
+        return this;

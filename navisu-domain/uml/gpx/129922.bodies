@@ -1,0 +1,14 @@
+class PersonBuilder
+!!!142082.java!!!	create() : PersonBuilder
+        return new PersonBuilder();
+!!!142210.java!!!	build() : Person
+        return new Person(name, email, link);
+!!!142338.java!!!	name(in name : String) : PersonBuilder
+        this.name = name;
+        return this;
+!!!142466.java!!!	email(inout email : Email) : PersonBuilder
+        this.email = email;
+        return this;
+!!!142594.java!!!	link(inout link : Link) : PersonBuilder
+        this.link = link;
+        return this;

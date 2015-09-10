@@ -1,0 +1,15 @@
+class TrackSegment
+!!!154114.java!!!	TrackSegment(inout trkpt : List<Waypoint>, inout extensions : Extensions)
+        this.trkpt = trkpt;
+        this.extensions = extensions;
+!!!154242.java!!!	getTrkpt() : Waypoint
+        if (trkpt == null) {
+            trkpt = new ArrayList<Waypoint>();
+        }
+        return this.trkpt;
+!!!154370.java!!!	getExtensions() : Extensions
+        return extensions;
+!!!154498.java!!!	setExtensions(inout value : Extensions) : void
+        this.extensions = value;
+!!!154626.java!!!	toString() : String
+        return "TrackSegment{" + "trkpt=" + trkpt + ", extensions=" + extensions + '}';

@@ -1,0 +1,48 @@
+class Metadata
+!!!137218.java!!!	Metadata(in name : String, in desc : String, inout author : Person, inout copyright : Copyright, inout link : List<Link>, inout time : GregorianCalendar, in keywords : String, inout bounds : Bounds, inout extensions : Extensions)
+        this.name = name;
+        this.desc = desc;
+        this.author = author;
+        this.copyright = copyright;
+        this.link = link;
+        this.time = time;
+        this.keywords = keywords;
+        this.bounds = bounds;
+        this.extensions = extensions;
+!!!137346.java!!!	getName() : String
+        return name;
+!!!137474.java!!!	setName(in value : String) : void
+        this.name = value;
+!!!137602.java!!!	getDesc() : String
+        return desc;
+!!!137730.java!!!	setDesc(in value : String) : void
+        this.desc = value;
+!!!137858.java!!!	getAuthor() : Person
+        return author;
+!!!137986.java!!!	setAuthor(inout value : Person) : void
+        this.author = value;
+!!!138114.java!!!	getCopyright() : Copyright
+        return copyright;
+!!!138242.java!!!	setCopyright(inout value : Copyright) : void
+        this.copyright = value;
+!!!138370.java!!!	getLink() : Link
+        if (link == null) {
+            link = new ArrayList<Link>();
+        }
+        return this.link;
+!!!138498.java!!!	getTime() : GregorianCalendar
+        return time;
+!!!138626.java!!!	setTime(inout value : GregorianCalendar) : void
+        this.time = value;
+!!!138754.java!!!	getKeywords() : String
+        return keywords;
+!!!138882.java!!!	setKeywords(in value : String) : void
+        this.keywords = value;
+!!!139010.java!!!	getBounds() : Bounds
+        return bounds;
+!!!139138.java!!!	setBounds(inout value : Bounds) : void
+        this.bounds = value;
+!!!139266.java!!!	getExtensions() : Extensions
+        return extensions;
+!!!139394.java!!!	setExtensions(inout value : Extensions) : void
+        this.extensions = value;

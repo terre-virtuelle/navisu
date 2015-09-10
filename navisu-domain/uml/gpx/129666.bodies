@@ -1,0 +1,17 @@
+class Person
+!!!141058.java!!!	Person(in name : String, inout email : Email, inout link : Link)
+        this.name = name;
+        this.email = email;
+        this.link = link;
+!!!141186.java!!!	getName() : String
+        return name;
+!!!141314.java!!!	setName(in value : String) : void
+        this.name = value;
+!!!141442.java!!!	getEmail() : Email
+        return email;
+!!!141570.java!!!	setEmail(inout value : Email) : void
+        this.email = value;
+!!!141698.java!!!	getLink() : Link
+        return link;
+!!!141826.java!!!	setLink(inout value : Link) : void
+        this.link = value;

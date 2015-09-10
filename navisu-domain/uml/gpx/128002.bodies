@@ -1,0 +1,22 @@
+class Bounds
+!!!128130.java!!!	Bounds(in minlat : double, in minlon : double, in maxlat : double, in maxlon : double)
+        this.minlat = minlat;
+        this.minlon = minlon;
+        this.maxlat = maxlat;
+        this.maxlon = maxlon;
+!!!128258.java!!!	getMinlat() : double
+        return minlat;
+!!!128386.java!!!	setMinlat(in value : double) : void
+        this.minlat = value;
+!!!128514.java!!!	getMinlon() : double
+        return minlon;
+!!!128642.java!!!	setMinlon(in value : double) : void
+        this.minlon = value;
+!!!128770.java!!!	getMaxlat() : double
+        return maxlat;
+!!!128898.java!!!	setMaxlat(in value : double) : void
+        this.maxlat = value;
+!!!129026.java!!!	getMaxlon() : double
+        return maxlon;
+!!!129154.java!!!	setMaxlon(in value : double) : void
+        this.maxlon = value;

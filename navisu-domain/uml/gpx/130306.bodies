@@ -1,0 +1,8 @@
+class PointSegment
+!!!145282.java!!!	PointSegment(inout pt : List<Point>)
+        this.pt = pt;
+!!!145410.java!!!	getPt() : Point
+        if (pt == null) {
+            pt = new ArrayList<Point>();
+        }
+        return this.pt;

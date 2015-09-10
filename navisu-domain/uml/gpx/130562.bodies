@@ -1,0 +1,32 @@
+class RouteBuilder
+!!!148610.java!!!	create() : RouteBuilder
+        return new RouteBuilder();
+!!!148738.java!!!	build() : Route
+        return new Route(name, cmt, desc, src, link, number, type, extensions, rtept);
+!!!148866.java!!!	name(in name : String) : RouteBuilder
+        this.name = name;
+        return this;
+!!!148994.java!!!	cmt(in cmt : String) : RouteBuilder
+        this.cmt = cmt;
+        return this;
+!!!149122.java!!!	desc(in desc : String) : RouteBuilder
+        this.desc = desc;
+        return this;
+!!!149250.java!!!	src(in src : String) : RouteBuilder
+        this.src = src;
+        return this;
+!!!149378.java!!!	link(inout link : List<Link>) : RouteBuilder
+        this.link = link;
+        return this;
+!!!149506.java!!!	number(in number : int) : RouteBuilder
+        this.number = number;
+        return this;
+!!!149634.java!!!	type(in type : String) : RouteBuilder
+        this.type = type;
+        return this;   
+!!!149762.java!!!	extensions(inout extensions : Extensions) : RouteBuilder
+        this.extensions = extensions;
+        return this;
+!!!149890.java!!!	rtept(inout rtept : List<Waypoint>) : RouteBuilder
+        this.rtept = rtept;
+        return this;

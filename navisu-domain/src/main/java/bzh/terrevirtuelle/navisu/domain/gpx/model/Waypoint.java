@@ -6,7 +6,7 @@
 //
 package bzh.terrevirtuelle.navisu.domain.gpx.model;
 
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -14,8 +14,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
-
 
 /**
  *
@@ -116,6 +116,8 @@ public class Waypoint {
     protected double longitude;
     protected float course;
     protected float speed;
+    @XmlTransient
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
 
     /**
      * Get the value of speed
@@ -134,8 +136,6 @@ public class Waypoint {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
-
-    
 
     /**
      * Get the value of course
@@ -156,13 +156,13 @@ public class Waypoint {
     }
 
     public Waypoint() {
-      
+
     }
 
     public Waypoint(double ele, GregorianCalendar time, double magvar, double geoidheight,
             String name, String cmt, String desc, String src, List<Link> link,
             String sym, String type, String fix, int sat, double hdop,
-            double vdop, double pdop, double ageofdgpsdata,
+            double vdop, double pdop, double ageofdgpsdata, float course,
             int dgpsid, Extensions extensions, double lat, double lon) {
         this.ele = ele;
         this.time = time;
@@ -181,10 +181,11 @@ public class Waypoint {
         this.vdop = vdop;
         this.pdop = pdop;
         this.ageofdgpsdata = ageofdgpsdata;
+        this.course = course;
         this.dgpsid = dgpsid;
         this.extensions = extensions;
         this.latitude = lat;
-        this.longitude =lon;
+        this.longitude = lon;
     }
 
     /**
@@ -617,7 +618,29 @@ public class Waypoint {
 
     @Override
     public String toString() {
-        return "Waypoint{" + "ele=" + ele + ", time=" + time + ", magvar=" + magvar + ", geoidheight=" + geoidheight + ", name=" + name + ", cmt=" + cmt + ", desc=" + desc + ", src=" + src + ", link=" + link + ", sym=" + sym + ", type=" + type + ", fix=" + fix + ", sat=" + sat + ", hdop=" + hdop + ", vdop=" + vdop + ", pdop=" + pdop + ", ageofdgpsdata=" + ageofdgpsdata + ", dgpsid=" + dgpsid + ", extensions=" + extensions + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+        return "Waypoint{"
+                + "time=" + sdf.format(time.getTime())
+                + (ele != 0 ? ", ele=" + ele : "")
+                + (magvar != 0 ? ", magvar=" + magvar : "")
+                + (geoidheight != 0 ? ", geoidheight=" + geoidheight : "")
+                + (name != null ? ", name=" + name : "")
+                + (cmt != null ? ", cmt=" + cmt : "")
+                + (desc != null ? ", desc=" + desc : "")
+                + (src != null ? ", src=" + src : "")
+                + (!link.isEmpty() ? ", link=" + link : "")
+                + (sym != null ? ", sym=" + sym : "")
+                + (type != null ? ", type=" + type : "")
+                + (fix != null ? ", fix=" + fix : "")
+                + (sat != 0 ? ", sat=" + sat : "")
+                + (hdop != 0 ? ", hdop=" + hdop : "")
+                + (vdop != 0 ? ", vdop=" + vdop : "")
+                + (pdop != 0 ? ", pdop=" + pdop : "")
+                + (ageofdgpsdata != 0.0 ? ", ageofdgpsdata=" + ageofdgpsdata : "")
+                + (dgpsid != 0 ? ", dgpsid=" + dgpsid : "")
+                + (extensions != null ? ", extensions=" + extensions : "")
+                + ", latitude=" + latitude
+                + ", longitude=" + longitude
+                + '}';
     }
 
 }

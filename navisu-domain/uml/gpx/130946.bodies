@@ -1,0 +1,11 @@
+class TrackSegmentBuilder
+!!!154882.java!!!	create() : TrackSegmentBuilder
+        return new TrackSegmentBuilder();
+!!!155010.java!!!	trackpoints(inout trackpoints : List<Waypoint>) : TrackSegmentBuilder
+        this.trackpoints = trackpoints;
+        return this;
+!!!155138.java!!!	extensions(inout extensions : Extensions) : TrackSegmentBuilder
+        this.extensions = extensions;
+        return this;
+!!!155266.java!!!	build() : TrackSegment
+        return new TrackSegment(trackpoints, extensions);

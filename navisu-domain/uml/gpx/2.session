@@ -1,0 +1,11 @@
+window_sizes 1366 706 320 960 512 82
+diagrams
+  active  classdiagram_ref 128002 // gpx
+    1040 548 100 4 0 0
+end
+show_stereotypes
+selected class_ref 129410 // Link
+open
+  classview_ref 128002 // model
+end
+end

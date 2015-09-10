@@ -1,0 +1,14 @@
+class LinkBuilder
+!!!136450.java!!!	create() : LinkBuilder
+        return new LinkBuilder();
+!!!136578.java!!!	build() : Link
+        return new Link(text, type, href);
+!!!136706.java!!!	text(in text : String) : LinkBuilder
+        this.text = text;
+        return this;
+!!!136834.java!!!	type(in type : String) : LinkBuilder
+        this.type = type;
+        return this;
+!!!136962.java!!!	href(in href : String) : LinkBuilder
+        this.href = href;
+        return this;

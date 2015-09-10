@@ -1,0 +1,17 @@
+class PointBuilder
+!!!144386.java!!!	create() : PointBuilder
+        return new PointBuilder();
+!!!144514.java!!!	build() : Point
+        return new Point(ele, time, latitude, longitude);
+!!!144642.java!!!	ele(in ele : double) : PointBuilder
+        this.ele = ele;
+        return this;
+!!!144770.java!!!	time(inout time : GregorianCalendar) : PointBuilder
+        this.time = time;
+        return this;
+!!!144898.java!!!	latitude(in latitude : double) : PointBuilder
+        this.latitude = latitude;
+        return this;
+!!!145026.java!!!	longitude(in longitude : double) : PointBuilder
+        this.longitude = longitude;
+        return this;

@@ -1,0 +1,17 @@
+class Link
+!!!135426.java!!!	Link(in text : String, in type : String, in href : String)
+        this.text = text;
+        this.type = type;
+        this.href = href;
+!!!135554.java!!!	getText() : String
+        return text;
+!!!135682.java!!!	setText(in value : String) : void
+        this.text = value;
+!!!135810.java!!!	getType() : String
+        return type;
+!!!135938.java!!!	setType(in value : String) : void
+        this.type = value;
+!!!136066.java!!!	getHref() : String
+        return href;
+!!!136194.java!!!	setHref(in value : String) : void
+        this.href = value;

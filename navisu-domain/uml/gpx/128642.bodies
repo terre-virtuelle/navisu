@@ -1,0 +1,50 @@
+class Gpx
+!!!132226.java!!!	Gpx()
+        wpt = new ArrayList<>();
+        rte = new ArrayList<>();
+        trk  = new ArrayList<>();
+!!!132354.java!!!	Gpx(inout metadata : Metadata, inout wpt : List<Waypoint>, inout rte : List<Route>, inout trk : List<Track>, inout extensions : Extensions, in version : String, in creator : String)
+        this.metadata = metadata;
+        this.wpt = wpt;
+        this.rte = rte;
+        this.trk = trk;
+        this.extensions = extensions;
+        this.version = version;
+        this.creator = creator;
+!!!132482.java!!!	getMetadata() : Metadata
+        return metadata;
+!!!132610.java!!!	setMetadata(inout value : Metadata) : void
+        this.metadata = value;
+!!!132738.java!!!	getWpt() : Waypoint
+        if (wpt == null) {
+            wpt = new ArrayList<Waypoint>();
+        }
+        return this.wpt;
+!!!132866.java!!!	getRte() : Route
+        if (rte == null) {
+            rte = new ArrayList<Route>();
+        }
+        return this.rte;
+!!!132994.java!!!	getTrk() : Track
+        if (trk == null) {
+            trk = new ArrayList<Track>();
+        }
+        return this.trk;
+!!!133122.java!!!	getExtensions() : Extensions
+        return extensions;
+!!!133250.java!!!	setExtensions(inout value : Extensions) : void
+        this.extensions = value;
+!!!133378.java!!!	getVersion() : String
+        if (version == null) {
+            return "1.1";
+        } else {
+            return version;
+        }
+!!!133506.java!!!	setVersion(in value : String) : void
+        this.version = value;
+!!!133634.java!!!	getCreator() : String
+        return creator;
+!!!133762.java!!!	setCreator(in value : String) : void
+        this.creator = value;
+!!!133890.java!!!	toString() : String
+        return "Gpx{" + "metadata=" + metadata + ", wpt=" + wpt + ", rte=" + rte + ", trk=" + trk + ", extensions=" + extensions + ", version=" + version + ", creator=" + creator + '}';

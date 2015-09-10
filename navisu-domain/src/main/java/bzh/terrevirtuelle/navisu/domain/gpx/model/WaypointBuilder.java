@@ -33,6 +33,7 @@ public class WaypointBuilder {
     protected double pdop;
     protected double ageofdgpsdata;
     protected int dgpsid;
+    protected float course;
     protected Extensions extensions = null;
     protected double latitude;
     protected double longitude;
@@ -48,7 +49,7 @@ public class WaypointBuilder {
         return new Waypoint(ele, time, magvar, geoidheight,
                 name, cmt, desc, src, link,
                 sym, type, fix, sat, hdop,
-                vdop, pdop, ageofdgpsdata,
+                vdop, pdop, ageofdgpsdata, course,
                 dgpsid, extensions, latitude, longitude);
     }
 
@@ -134,6 +135,11 @@ public class WaypointBuilder {
 
     public WaypointBuilder ageofdgpsdata(double ageofdgpsdata) {
         this.ageofdgpsdata = ageofdgpsdata;
+        return this;
+    }
+
+    public WaypointBuilder course(float course) {
+        this.course = course;
         return this;
     }
 

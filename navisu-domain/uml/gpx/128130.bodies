@@ -1,0 +1,17 @@
+class Copyright
+!!!129410.java!!!	Copyright(inout year : GregorianCalendar, in license : String, in author : String)
+        this.year = year;
+        this.license = license;
+        this.author = author;
+!!!129538.java!!!	getYear() : GregorianCalendar
+        return year;
+!!!129666.java!!!	setYear(inout value : GregorianCalendar) : void
+        this.year = value;
+!!!129794.java!!!	getLicense() : String
+        return license;
+!!!129922.java!!!	setLicense(in value : String) : void
+        this.license = value;
+!!!130050.java!!!	getAuthor() : String
+        return author;
+!!!130178.java!!!	setAuthor(in value : String) : void
+        this.author = value;

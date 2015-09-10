@@ -1,0 +1,51 @@
+class Track
+!!!150146.java!!!	Track(in name : String, in cmt : String, in desc : String, in src : String, inout link : List<Link>, in number : int, in type : String, inout extensions : Extensions, inout trkseg : List<TrackSegment>)
+        this.name = name;
+        this.cmt = cmt;
+        this.desc = desc;
+        this.src = src;
+        this.link = link;
+        this.number = number;
+        this.type = type;
+        this.extensions = extensions;
+        this.trkseg = trkseg;
+!!!150274.java!!!	getName() : String
+        return name;
+!!!150402.java!!!	setName(in value : String) : void
+        this.name = value;
+!!!150530.java!!!	getCmt() : String
+        return cmt;
+!!!150658.java!!!	setCmt(in value : String) : void
+        this.cmt = value;
+!!!150786.java!!!	getDesc() : String
+        return desc;
+!!!150914.java!!!	setDesc(in value : String) : void
+        this.desc = value;
+!!!151042.java!!!	getSrc() : String
+        return src;
+!!!151170.java!!!	setSrc(in value : String) : void
+        this.src = value;
+!!!151298.java!!!	getLink() : Link
+        if (link == null) {
+            link = new ArrayList<Link>();
+        }
+        return this.link;
+!!!151426.java!!!	getNumber() : int
+        return number;
+!!!151554.java!!!	setNumber(in value : int) : void
+        this.number = value;
+!!!151682.java!!!	getType() : String
+        return type;
+!!!151810.java!!!	setType(in value : String) : void
+        this.type = value;
+!!!151938.java!!!	getExtensions() : Extensions
+        return extensions;
+!!!152066.java!!!	setExtensions(inout value : Extensions) : void
+        this.extensions = value;
+!!!152194.java!!!	getTrkseg() : TrackSegment
+        if (trkseg == null) {
+            trkseg = new ArrayList<TrackSegment>();
+        }
+        return this.trkseg;
+!!!152322.java!!!	toString() : String
+        return "Track{" + "name=" + name + ", cmt=" + cmt + ", desc=" + desc + ", src=" + src + ", link=" + link + ", number=" + number + ", type=" + type + ", extensions=" + extensions + ", trkseg=" + trkseg + '}';

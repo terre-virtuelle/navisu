@@ -1,0 +1,33 @@
+class TrackBuilder
+!!!152578.java!!!	create() : TrackBuilder
+        return new TrackBuilder();
+!!!152706.java!!!	build() : Track
+        return new Track(name, cmt, desc, src,
+                link, number, type, extensions, trkseg);
+!!!152834.java!!!	name(in name : String) : TrackBuilder
+        this.name = name;
+        return this;
+!!!152962.java!!!	cmt(in cmt : String) : TrackBuilder
+        this.cmt = cmt;
+        return this;
+!!!153090.java!!!	v(in desc : String) : TrackBuilder
+        this.desc = desc;
+        return this;
+!!!153218.java!!!	src(in src : String) : TrackBuilder
+        this.src = src;
+        return this;
+!!!153346.java!!!	link(inout link : List<Link>) : TrackBuilder
+        this.link = link;
+        return this;
+!!!153474.java!!!	number(in number : int) : TrackBuilder
+        this.number = number;
+        return this;
+!!!153602.java!!!	type(in type : String) : TrackBuilder
+        this.type = type;
+        return this;
+!!!153730.java!!!	extensions(inout extensions : Extensions) : TrackBuilder
+        this.extensions = extensions;
+        return this;
+!!!153858.java!!!	trkseg(inout trkseg : List<TrackSegment>) : TrackBuilder
+        this.trkseg = trkseg;
+        return this;

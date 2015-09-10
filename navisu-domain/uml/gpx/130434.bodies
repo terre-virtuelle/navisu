@@ -1,0 +1,8 @@
+class PointSegmentBuilder
+!!!145666.java!!!	create() : PointSegmentBuilder
+        return new PointSegmentBuilder();
+!!!145794.java!!!	build() : PointSegment
+        return new PointSegment(points);
+!!!145922.java!!!	points(inout pt : List<Point>) : PointSegmentBuilder
+        this.points = pt;
+        return this;

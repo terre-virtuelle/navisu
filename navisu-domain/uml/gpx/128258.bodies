@@ -1,0 +1,14 @@
+class CopyrightBuilder
+!!!130434.java!!!	create() : CopyrightBuilder
+        return new CopyrightBuilder();
+!!!130562.java!!!	build() : Copyright
+        return new Copyright(year, license, author);
+!!!130690.java!!!	year(inout year : GregorianCalendar) : CopyrightBuilder
+        this.year = year;
+        return this;
+!!!130818.java!!!	license(in license : String) : CopyrightBuilder
+        this.license = license;
+        return this;
+!!!130946.java!!!	author(in author : String) : CopyrightBuilder
+        this.author = author;
+        return this;

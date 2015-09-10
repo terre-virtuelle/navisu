@@ -4,28 +4,29 @@
 // Any modifications to this file will be lost upon recompilation of the source schema. 
 // Generated on: 2012.12.03 at 09:49:42 AM CET 
 //
-
-
 package bzh.terrevirtuelle.navisu.domain.gpx.model;
-
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * 
- * 		rte represents route - an ordered list of waypoints representing a series of turn points leading to a destination.
- * 	  
- * 
- * <p>Java class for rteType complex type.
- * 
- * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
+ * rte represents route - an ordered list of waypoints representing a series of
+ * turn points leading to a destination.
+ *
+ *
+ * <p>
+ * Java class for rteType complex type.
+ *
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ *
  * <pre>
  * &lt;complexType name="rteType">
  *   &lt;complexContent>
@@ -45,8 +46,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "rte", propOrder = {
@@ -60,6 +61,7 @@ import javax.xml.bind.annotation.XmlType;
     "extensions",
     "rtept"
 })
+@XmlRootElement
 public class Route {
 
     protected String name;
@@ -76,8 +78,8 @@ public class Route {
     public Route() {
     }
 
-    public Route(String name, String cmt, String desc, String src, 
-            List<Link> link, int number, String type, 
+    public Route(String name, String cmt, String desc, String src,
+            List<Link> link, int number, String type,
             Extensions extensions, List<Waypoint> rtept) {
         this.name = name;
         this.cmt = cmt;
@@ -92,11 +94,9 @@ public class Route {
 
     /**
      * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getName() {
         return name;
@@ -104,11 +104,9 @@ public class Route {
 
     /**
      * Sets the value of the name property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setName(String value) {
         this.name = value;
@@ -116,11 +114,9 @@ public class Route {
 
     /**
      * Gets the value of the cmt property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getCmt() {
         return cmt;
@@ -128,11 +124,9 @@ public class Route {
 
     /**
      * Sets the value of the cmt property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setCmt(String value) {
         this.cmt = value;
@@ -140,11 +134,9 @@ public class Route {
 
     /**
      * Gets the value of the desc property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getDesc() {
         return desc;
@@ -152,11 +144,9 @@ public class Route {
 
     /**
      * Sets the value of the desc property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setDesc(String value) {
         this.desc = value;
@@ -164,11 +154,9 @@ public class Route {
 
     /**
      * Gets the value of the src property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getSrc() {
         return src;
@@ -176,11 +164,9 @@ public class Route {
 
     /**
      * Sets the value of the src property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setSrc(String value) {
         this.src = value;
@@ -188,25 +174,24 @@ public class Route {
 
     /**
      * Gets the value of the link property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the link property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the link property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getLink().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Link }
-     * 
-     * 
+     * Objects of the following type(s) are allowed in the list {@link Link }
+     *
+     *
      */
     public List<Link> getLink() {
         if (link == null) {
@@ -217,11 +202,9 @@ public class Route {
 
     /**
      * Gets the value of the number property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link int }
-     *     
+     *
+     * @return possible object is {@link int }
+     *
      */
     public int getNumber() {
         return number;
@@ -229,11 +212,9 @@ public class Route {
 
     /**
      * Sets the value of the number property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link int }
-     *     
+     *
+     * @param value allowed object is {@link int }
+     *
      */
     public void setNumber(int value) {
         this.number = value;
@@ -241,11 +222,9 @@ public class Route {
 
     /**
      * Gets the value of the type property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is {@link String }
+     *
      */
     public String getType() {
         return type;
@@ -253,11 +232,9 @@ public class Route {
 
     /**
      * Sets the value of the type property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is {@link String }
+     *
      */
     public void setType(String value) {
         this.type = value;
@@ -265,11 +242,9 @@ public class Route {
 
     /**
      * Gets the value of the extensions property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Extensions }
-     *     
+     *
+     * @return possible object is {@link Extensions }
+     *
      */
     public Extensions getExtensions() {
         return extensions;
@@ -277,11 +252,9 @@ public class Route {
 
     /**
      * Sets the value of the extensions property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Extensions }
-     *     
+     *
+     * @param value allowed object is {@link Extensions }
+     *
      */
     public void setExtensions(Extensions value) {
         this.extensions = value;
@@ -289,26 +262,26 @@ public class Route {
 
     /**
      * Gets the value of the rtept property.
-     * 
+     *
      * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the rtept property.
-     * 
+     * This accessor method returns a reference to the live list, not a
+     * snapshot. Therefore any modification you make to the returned list will
+     * be present inside the JAXB object. This is why there is not a
+     * <CODE>set</CODE> method for the rtept property.
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-    getRoutept().add(newItem);
- </pre>
-     * 
-     * 
+     * getRoutept().add(newItem);
+     * </pre>
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Waypoint }
-     * 
-     * 
-     * @return 
+     *
+     *
+     * @return
      */
     public List<Waypoint> getRtept() {
         if (rtept == null) {
@@ -319,7 +292,17 @@ public class Route {
 
     @Override
     public String toString() {
-        return "Route{" + "name=" + name + ", cmt=" + cmt + ", desc=" + desc + ", src=" + src + ", link=" + link + ", number=" + number + ", type=" + type + ", extensions=" + extensions + ", rtept=" + rtept + '}';
+        return "Route{"
+                + (name != null ? "name=" + name : "")
+                + (!"".equals(cmt) ? ", cmt=" + cmt : "")
+                + (!"".equals(desc) ? ", desc=" + desc : "")
+                + (!"".equals(src) ? ", src=" + src : "")
+                + (!link.isEmpty() ? ", link=" + link : "")
+                + (number != 0 ? ", number=" + number : "")
+                + (!"".equals(type) ? ", type=" + type : "")
+                + (!extensions.getAny().isEmpty() ? ", extensions=" + extensions : "")
+                + (rtept != null ? ", rtept=" + rtept : "")
+                + '}';
     }
 
 }

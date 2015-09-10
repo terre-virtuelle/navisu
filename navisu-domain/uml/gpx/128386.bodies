@@ -1,0 +1,12 @@
+class Email
+!!!131202.java!!!	Email(in id : String, in domain : String)
+        this.id = id;
+        this.domain = domain;
+!!!131330.java!!!	getId() : String
+        return id;
+!!!131458.java!!!	setId(in value : String) : void
+        this.id = value;
+!!!131586.java!!!	getDomain() : String
+        return domain;
+!!!131714.java!!!	setDomain(in value : String) : void
+        this.domain = value;
