@@ -28,7 +28,8 @@
 /navisu-launcher/errors.txt
 /navisu-launcher/derby.log
 /navisu-launcher/properties/*
-/navisu-launcher/properties/caches.properties
+#/navisu-launcher/properties/caches.properties
+#/navisu-launcher/properties/user.properties
 /navisu-launcher/donnees/pho_wav/*
 /navisu-agents/.nb-gradle/private/
 /navisu-app/.nb-gradle/private/
