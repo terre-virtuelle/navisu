@@ -19,6 +19,7 @@ public class GpxBuilder {
     protected List<Route> rte = new ArrayList<>();
     protected List<Track> trk = new ArrayList<>();
     protected Extensions extensions = new Extensions();
+    protected Boundaries boundaries = new Boundaries();
     protected String version = "notdefined";
     protected String creator = "unknow";
 
@@ -55,6 +56,11 @@ public class GpxBuilder {
 
     public GpxBuilder extensions(Extensions extensions) {
         this.extensions = extensions;
+        return this;
+    }
+
+    public GpxBuilder boundaries(Boundaries boundaries) {
+        this.boundaries = boundaries;
         return this;
     }
 

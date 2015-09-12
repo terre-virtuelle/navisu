@@ -41,20 +41,20 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "extensions", propOrder = {
-    "any"
+@XmlType(name = "boundaries", propOrder = {
+    "bounds"
 })
-public class Extensions {
+public class Boundaries {
 
     @XmlElement
-    protected List<Point> any;
+    protected List<Point> bounds= new ArrayList<>();
 
-    public Extensions() {
-        any = new ArrayList<>();
+    public Boundaries() {
+        bounds = new ArrayList<>();
     }
 
-    public Extensions(List<Point> any) {
-        this.any = any;
+    public Boundaries(List<Point> bounds) {
+        this.bounds = bounds;
     }
 
     /**
@@ -81,16 +81,16 @@ public class Extensions {
      * 
      * @return 
      */
-    public List<Point> getAny() {
-        if (any == null) {
-            any = new ArrayList<>();
+    public List<Point> getBounds() {
+        if (bounds == null) {
+            bounds = new ArrayList<>();
         }
-        return this.any;
+        return this.bounds;
     }
 
     @Override
     public String toString() {
-        return "Extensions{" + "any=" + any + '}';
+        return "Extensions{" + "bounds =" + bounds + '}';
     }
 
 }

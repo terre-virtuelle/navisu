@@ -66,12 +66,12 @@ public class Track {
     protected String cmt;
     protected String desc;
     protected String src;
-    protected List<Link> link;
+    protected List<Link> link= new ArrayList<>();
     @XmlSchemaType(name = "nonNegativeInteger")
     protected int number;
     protected String type;
     protected Extensions extensions;
-    protected List<TrackSegment> trkseg;
+    protected List<TrackSegment> trkseg= new ArrayList<>();;
 
     public Track() {
     }

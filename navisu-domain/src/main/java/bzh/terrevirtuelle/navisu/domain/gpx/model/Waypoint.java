@@ -98,7 +98,7 @@ public class Waypoint {
     protected String cmt;
     protected String desc;
     protected String src;
-    protected List<Link> link;
+    protected List<Link> link = new ArrayList<>();
     protected String sym;
     protected String type;
     protected String fix;
