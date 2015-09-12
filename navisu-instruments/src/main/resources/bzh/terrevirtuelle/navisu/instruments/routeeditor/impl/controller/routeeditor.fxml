@@ -19,8 +19,9 @@
             <children>
                 <Group styleClass="routeeditor-panel">
                     <children>
-                        <GridPane layoutX="38.0" layoutY="45.0" prefHeight="46.0" prefWidth="403.0">
+                        <GridPane layoutX="38.0" layoutY="45.0" prefHeight="46.0" prefWidth="368.0">
                             <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -31,42 +32,42 @@
                                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="pauseButton" prefHeight="15.0" prefWidth="100.0" text="PAUSE/EDIT" GridPane.columnIndex="1">
-                                    <styleClass>
-                                        <String fx:value="routeeditor-togglebutton" />
-                                        <String fx:value="routeeditorlabel" />
-                                    </styleClass>
-                                </Button>
-                                <Button fx:id="endButton" prefHeight="15.0" prefWidth="100.0" text="END" GridPane.columnIndex="2">
-                                    <styleClass>
-                                        <String fx:value="routeeditor-togglebutton" />
-                                        <String fx:value="routeeditorlabel" />
-                                    </styleClass>
-                                </Button>
-                                <Button fx:id="bufferButton" prefHeight="15.0" prefWidth="100.0" text="OFFSET" GridPane.rowIndex="2">
-                                    <styleClass>
-                                        <String fx:value="routeeditor-togglebutton" />
-                                        <String fx:value="routeeditorlabel" />
-                                    </styleClass>
-                                </Button>
-                                <Button fx:id="gpxButton" prefHeight="15.0" prefWidth="100.0" text="SAVE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                    <styleClass>
-                                        <String fx:value="routeeditor-togglebutton" />
-                                        <String fx:value="routeeditorlabel" />
-                                    </styleClass>
-                                </Button>
-                                <Button fx:id="kmlButton" prefHeight="15.0" prefWidth="100.0" text="KML" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                    <styleClass>
-                                        <String fx:value="routeeditor-togglebutton" />
-                                        <String fx:value="routeeditorlabel" />
-                                    </styleClass>
-                                </Button>
-                                <Button fx:id="newButton" prefHeight="15.0" prefWidth="100.0" text="NEW">
-                                    <styleClass>
-                                        <String fx:value="routeeditor-togglebutton" />
-                                        <String fx:value="routeeditorlabel" />
-                                    </styleClass>
-                                </Button>
+                        <Button  fx:id="gpxButton" mnemonicParsing="false" prefWidth="82.0" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="bufferButton"  mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Offset" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="newButton" mnemonicParsing="false" prefWidth="90.0" text="New">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="openButton" mnemonicParsing="false" prefWidth="82.0" text="Open" GridPane.columnIndex="1" />
+                        <Button fx:id="pauseButton" mnemonicParsing="false" prefWidth="90.0" text="Pause/Edit" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="endButton" mnemonicParsing="false" prefWidth="90.0" text="End" GridPane.columnIndex="3">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="kmlButton" mnemonicParsing="false" prefWidth="90.0" text="Export KML" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="snapshotButton" mnemonicParsing="false" prefWidth="90.0" text="Snapshot" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Button>
                             </children>
                         </GridPane>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" height="83.0" layoutX="26.0" layoutY="255.0" stroke="#00abff" strokeType="INSIDE" styleClass="routeeditor-info-pane" width="195.0" />

@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.instruments.routeeditor.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.GpxBuilder;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Track;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackBuilder;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackSegment;
@@ -21,6 +22,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.operation.buffer.BufferOp;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.TerrainProfileLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
@@ -33,6 +35,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -45,13 +48,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GlobalCoordinates;
@@ -69,13 +75,16 @@ public class RouteEditorController
     private final String FXML = "routeeditor.fxml";
 
     private MeasureTool measureTool;
+    private TerrainProfileLayer profile = new TerrainProfileLayer();
 
     private Gpx gpx;
     private List<Track> tracks;// 1 seul Track par Gpx/Route
     private Track track;
     private List<List<Waypoint>> waypoints;// 1 Liste de WP par TS
     private List<TrackSegment> trackSegments;
+    private List<Point> boundaries;
     private List<Position> positions;
+    private List<Position> pathPositions;
     private int size;
     private String routeName;
     private String author;
@@ -111,6 +120,10 @@ public class RouteEditorController
     @FXML
     public Button kmlButton;
     @FXML
+    public Button openButton;
+    @FXML
+    public Button snapshotButton;
+    @FXML
     public TextField lengthText;
     @FXML
     public TextField totalLengthText;
@@ -136,6 +149,12 @@ public class RouteEditorController
         geoCalc = new GeodeticCalculator();
         positions = new ArrayList();
 
+        /*
+         // Add terrain profile layer
+         profile.setEventSource(GeoWorldWindViewImpl.getWW());
+         profile.setFollow(TerrainProfileLayer.FOLLOW_PATH);
+         profile.setShowProfileLine(false);
+         */
         load(FXML);
         quit.setOnMouseClicked((MouseEvent event) -> {
             this.instrument.off();
@@ -156,13 +175,44 @@ public class RouteEditorController
             track = TrackBuilder.create().name(routeName).build();
             tracks = new ArrayList<>();
             tracks.add(track);
-            gpx = GpxBuilder.create().creator(author).version(version).trk(tracks).build();
+            boundaries = new ArrayList();
+            gpx = GpxBuilder.create().creator(author).version(version)
+                    .trk(tracks)
+                    .build();
             trackSegments = new ArrayList<>();
             measureTool.clear();
             measureTool.setArmed(true);
             bufferButton.disarm();
             gpxButton.disarm();
             kmlButton.disarm();
+        });
+        openButton.setOnMouseClicked((MouseEvent event) -> {
+            Label fileLabel = new Label();
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter
+                    = new FileChooser.ExtensionFilter("GPX files (*.gpx)", "*.gpx");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showOpenDialog(instrument.getGuiAgentServices().getStage());
+            if (file != null) {
+                fileLabel.setText(file.getPath());
+            }
+            FileInputStream inputFile = null;
+            gpx = null;
+            try {
+                inputFile = new FileInputStream(new File(file.getPath()));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Unmarshaller unmarshaller = null;
+            JAXBContext jAXBContext;
+            try {
+                jAXBContext = JAXBContext.newInstance(Gpx.class);
+                unmarshaller = jAXBContext.createUnmarshaller();
+                gpx = (Gpx) unmarshaller.unmarshal(inputFile);
+            } catch (JAXBException ex) {
+                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            showGpx();
         });
         pauseButton.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(!measureTool.isArmed());
@@ -186,10 +236,19 @@ public class RouteEditorController
         });
         gpxButton.setOnMouseClicked((MouseEvent event) -> {
             fillGpx();
+            fillGpxExtensions();
             exportGpx();
         });
         kmlButton.setOnMouseClicked((MouseEvent event) -> {
             System.out.println("Not yet implemented");
+        });
+        snapshotButton.setOnMouseClicked((MouseEvent event) -> {
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    System.out.println("Not yet implemented");
+                    //  new ScreenShotAction(GeoWorldWindViewImpl.getWW());
+                }
+            });
         });
         routeNameText.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
@@ -242,7 +301,6 @@ public class RouteEditorController
                 }
             }
         });
-
     }
 
     private void initMeasureTool() {
@@ -335,7 +393,6 @@ public class RouteEditorController
             Waypoint wp = WaypointBuilder.create()
                     .latitude(pos.getLatitude().getDegrees())
                     .longitude(pos.getLongitude().getDegrees())
-                    //  .course((float) getAzimuth(measureTool.getPositions().get(i), measureTool.getPositions().get(i + 1)))
                     .name("WP" + i)
                     .build();
             if (i < size - 1) {
@@ -351,6 +408,14 @@ public class RouteEditorController
         }
     }
 
+    private void fillGpxExtensions() {
+        boundaries = gpx.getBoundaries().getBounds();
+        pathPositions.stream().forEach((p) -> {
+            boundaries.add(new Point(p.getLatitude().getDegrees(), p.getLongitude().getDegrees()));
+        });
+
+    }
+
     private void bufferFromJTS(List<Position> positions) {
 
         if (measureTool.isArmed() == false) {
@@ -363,7 +428,7 @@ public class RouteEditorController
             BufferOp bufferOp = new BufferOp(geom);
             bufferOp.setEndCapStyle(BufferOp.CAP_ROUND);
             Geometry buffer = bufferOp.getResultGeometry(BUFFER_DISTANCE);
-            ArrayList<Position> pathPositions = new ArrayList<>();
+            pathPositions = new ArrayList<>();
             for (Coordinate c : buffer.getCoordinates()) {
                 pathPositions.add(Position.fromDegrees(c.y, c.x, 100));
             }
@@ -395,6 +460,10 @@ public class RouteEditorController
         }
     }
 
+    private void showGpx() {
+        System.out.println("Gpx : " + gpx);
+    }
+
     private void exportGpx() {
         if (gpx != null) {
             try {
@@ -407,6 +476,7 @@ public class RouteEditorController
                 marshaller.marshal(gpx, outputFile);
             } catch (JAXBException | FileNotFoundException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("ex " + ex);
             }
         }
     }

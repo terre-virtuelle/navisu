@@ -66,4 +66,9 @@ public class RouteEditorImpl
     @Override
     public void componentStopped() {
     }
+
+    public GuiAgentServices getGuiAgentServices() {
+        return guiAgentServices;
+    }
+    
 }
