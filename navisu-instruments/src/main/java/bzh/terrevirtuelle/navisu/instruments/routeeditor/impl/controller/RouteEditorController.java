@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.routeeditor.impl.controller;
 
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.GpxBuilder;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
@@ -13,14 +14,15 @@ import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackBuilder;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackSegment;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Waypoint;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.WaypointBuilder;
-
 import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentController;
 import bzh.terrevirtuelle.navisu.instruments.routeeditor.impl.RouteEditorImpl;
+import bzh.terrevirtuelle.navisu.util.ScreenShotAction;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.operation.buffer.BufferOp;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.TerrainProfileLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -147,7 +149,7 @@ public class RouteEditorController
         super(keyCode, keyCombination);
         this.instrument = instrument;
         geoCalc = new GeodeticCalculator();
-        positions = new ArrayList();
+        //  positions = new ArrayList();
 
         /*
          // Add terrain profile layer
@@ -167,43 +169,28 @@ public class RouteEditorController
 
         initMeasureTool();
         newButton.setOnMouseClicked((MouseEvent event) -> {
-            routeName = routeNameText.getText();
-            version = versionText.getText();
-            author = authorText.getText();
-            positions = new CopyOnWriteArrayList();
-            waypoints = new ArrayList();
-            track = TrackBuilder.create().name(routeName).build();
-            tracks = new ArrayList<>();
-            tracks.add(track);
-            boundaries = new ArrayList();
-            gpx = GpxBuilder.create().creator(author).version(version)
-                    .trk(tracks)
-                    .build();
-            trackSegments = new ArrayList<>();
-            measureTool.clear();
-            measureTool.setArmed(true);
-            bufferButton.disarm();
-            gpxButton.disarm();
-            kmlButton.disarm();
+            newAction();
         });
         openButton.setOnMouseClicked((MouseEvent event) -> {
+            initMeasureTool();
+            newAction();
             Label fileLabel = new Label();
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extFilter
                     = new FileChooser.ExtensionFilter("GPX files (*.gpx)", "*.gpx");
             fileChooser.getExtensionFilters().add(extFilter);
             File file = fileChooser.showOpenDialog(instrument.getGuiAgentServices().getStage());
+            FileInputStream inputFile = null;
             if (file != null) {
                 fileLabel.setText(file.getPath());
+                gpx = null;
+                try {
+                    inputFile = new FileInputStream(new File(file.getPath()));
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            FileInputStream inputFile = null;
-            gpx = null;
-            try {
-                inputFile = new FileInputStream(new File(file.getPath()));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Unmarshaller unmarshaller = null;
+            Unmarshaller unmarshaller;
             JAXBContext jAXBContext;
             try {
                 jAXBContext = JAXBContext.newInstance(Gpx.class);
@@ -212,7 +199,8 @@ public class RouteEditorController
             } catch (JAXBException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            showGpx();
+            measureTool.setArmed(!measureTool.isArmed());
+            fillMesureTool();
         });
         pauseButton.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(!measureTool.isArmed());
@@ -236,7 +224,7 @@ public class RouteEditorController
         });
         gpxButton.setOnMouseClicked((MouseEvent event) -> {
             fillGpx();
-            fillGpxExtensions();
+            fillGpxBoundaries();
             exportGpx();
         });
         kmlButton.setOnMouseClicked((MouseEvent event) -> {
@@ -244,9 +232,10 @@ public class RouteEditorController
         });
         snapshotButton.setOnMouseClicked((MouseEvent event) -> {
             java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
                 public void run() {
-                    System.out.println("Not yet implemented");
-                    //  new ScreenShotAction(GeoWorldWindViewImpl.getWW());
+                   // System.out.println("Not yet implemented");
+                    new ScreenShotAction(GeoWorldWindViewImpl.getWW(), instrument.getGuiAgentServices().getStage());
                 }
             });
         });
@@ -349,6 +338,27 @@ public class RouteEditorController
         });
     }
 
+    private void newAction() {
+        routeName = routeNameText.getText();
+        version = versionText.getText();
+        author = authorText.getText();
+        positions = new CopyOnWriteArrayList();
+        waypoints = new ArrayList();
+        track = TrackBuilder.create().name(routeName).build();
+        tracks = new ArrayList<>();
+        tracks.add(track);
+        boundaries = new ArrayList();
+        gpx = GpxBuilder.create().creator(author).version(version)
+                .trk(tracks)
+                .build();
+        trackSegments = new ArrayList<>();
+        measureTool.clear();
+        measureTool.setArmed(true);
+        bufferButton.disarm();
+        gpxButton.disarm();
+        kmlButton.disarm();
+    }
+
     private void fillPointsPanel() {
         int length = measureTool.getPositions().size();
         Position pos = measureTool.getPositions().get(length - 1);
@@ -408,7 +418,7 @@ public class RouteEditorController
         }
     }
 
-    private void fillGpxExtensions() {
+    private void fillGpxBoundaries() {
         boundaries = gpx.getBoundaries().getBounds();
         pathPositions.stream().forEach((p) -> {
             boundaries.add(new Point(p.getLatitude().getDegrees(), p.getLongitude().getDegrees()));
@@ -435,6 +445,7 @@ public class RouteEditorController
             if (!pathPositions.isEmpty()) {
                 offset = new Polygon(pathPositions);
             }
+            offset.setValue(AVKey.DISPLAY_NAME, routeName);
         }
     }
 
@@ -457,11 +468,43 @@ public class RouteEditorController
             offset.setHighlightAttributes(highlightAttributes);
 
             measureTool.getLayer().addRenderable(offset);
+
         }
     }
 
+    private void fillMesureTool() {
+        positions = new CopyOnWriteArrayList();
+        Position pos;
+        for (TrackSegment ts : gpx.getTrk().get(0).getTrkseg()) {
+            for (int i = 0; i < ts.getTrkpt().size(); i++) {
+                pos = new Position(
+                        Angle.fromDegrees(ts.getTrkpt().get(i).getLatitude()),
+                        Angle.fromDegrees(ts.getTrkpt().get(i).getLongitude()), 0.0);
+                positions.add(pos);
+            }
+        }
+        
+        size = positions.size();
+        Position ref;
+        int i = 0;
+        for (Position p : positions) {
+            if (i < positions.size() - 1) {
+                ref = positions.get(i);
+                for (int j = i + 1; j < positions.size(); j++) {
+                    if (getDistanceNm(ref, positions.get(j)) < MIN_DISTANCE) {
+                        positions.remove(j);
+                    }
+                }
+                i++;
+            }
+        }
+        ArrayList<Position> positionsList = new ArrayList<>();
+        positionsList.addAll(positions);
+        measureTool.setPositions(positionsList);
+    }
+
     private void showGpx() {
-        System.out.println("Gpx : " + gpx);
+        //  System.out.println("gpx " + gpx.getBoundaries().getBounds());
     }
 
     private void exportGpx() {
