@@ -14,7 +14,7 @@ import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsControll
  * @date 12 sept. 2015
  * @author Serge Morvan
  */
-public class GpsBuoyageGpsController 
+public class GpsBuoyageController 
                extends GpsEventsController{
 
 }
