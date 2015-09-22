@@ -27,6 +27,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.TerrainProfileLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.UnitsFormat;
@@ -62,6 +63,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
+import org.gavaghan.geodesy.GeodeticCurve;
 import org.gavaghan.geodesy.GlobalCoordinates;
 
 /**
@@ -91,6 +93,7 @@ public class RouteEditorController
     private String routeName;
     private String author;
     private String version;
+    private float speed;
     private final double MIN_DISTANCE = 0.5; // minimal distance between 2 Wp
     private final double BUFFER_DISTANCE = 0.01; //unit is decimal degrees
     private Polygon offset;
@@ -143,6 +146,8 @@ public class RouteEditorController
     TextField versionText;
     @FXML
     TextField authorText;
+    @FXML
+    TextField speedText;
 
     public RouteEditorController(RouteEditorImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
@@ -217,6 +222,7 @@ public class RouteEditorController
             bufferButton.arm();
             gpxButton.arm();
             kmlButton.arm();
+            test();
         });
         bufferButton.setOnMouseClicked((MouseEvent event) -> {
             bufferFromJTS(positions);
@@ -234,7 +240,7 @@ public class RouteEditorController
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                   // System.out.println("Not yet implemented");
+                    // System.out.println("Not yet implemented");
                     new ScreenShotAction(GeoWorldWindViewImpl.getWW(), instrument.getGuiAgentServices().getStage());
                 }
             });
@@ -262,6 +268,11 @@ public class RouteEditorController
         descText.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
                 //  route.getRtept().get(route.getRtept().size() - 1).setDesc(newvalue);
+            }
+        });
+        speedText.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                speed = Float.parseFloat(newvalue);
             }
         });
         unitsCombo.setOnAction((event) -> {
@@ -404,6 +415,7 @@ public class RouteEditorController
                     .latitude(pos.getLatitude().getDegrees())
                     .longitude(pos.getLongitude().getDegrees())
                     .name("WP" + i)
+                    .speed(speed)
                     .build();
             if (i < size - 1) {
                 TrackSegment ts = new TrackSegment();
@@ -483,7 +495,7 @@ public class RouteEditorController
                 positions.add(pos);
             }
         }
-        
+
         size = positions.size();
         Position ref;
         int i = 0;
@@ -534,5 +546,33 @@ public class RouteEditorController
         waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
         return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getAzimuth();
+    }
+
+    private void test() {
+        List<GlobalCoordinates> globalCoordinates = new ArrayList<>();
+        // set start Memorial coordinates
+        GlobalCoordinates start;
+        Position startPos = positions.get(0);
+        start = new GlobalCoordinates(startPos.getLatitude().getDegrees(), startPos.getLongitude().getDegrees());
+
+        // set end Tower coordinates
+        GlobalCoordinates end;
+        Position endPos = positions.get(1);
+        end = new GlobalCoordinates(endPos.getLatitude().getDegrees(), endPos.getLongitude().getDegrees());
+
+        // calculate the geodetic curve
+        GeodeticCurve geoCurve = geoCalc.calculateGeodeticCurve(reference, start, end);
+        double ellipseKilometers = geoCurve.getEllipsoidalDistance() / 1000.0;
+        System.out.println("ellipseKilometers " + ellipseKilometers);
+        double i = ellipseKilometers / 10.0;
+      
+        for (double j = 0; j < ellipseKilometers; j += i) {
+            globalCoordinates.add(geoCalc.calculateEndingGlobalCoordinates(reference, start, geoCurve.getAzimuth(), j*1000));
+        }
+       
+        for(GlobalCoordinates gc : globalCoordinates){
+            PointPlacemark pp = new PointPlacemark(Position.fromDegrees(gc.getLatitude(), gc.getLongitude(), 1e4));
+        measureTool.getLayer().addRenderable(pp);
+        }
     }
 }

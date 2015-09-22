@@ -9,13 +9,13 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="textListPanel" stylesheets="@Clock.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" stylesheets="@clock.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Group>
             <children>
                 <Pane layoutX="420.0" layoutY="50" prefHeight="250.0" prefWidth="30.0" styleClass="right-pane">
                     <children>
-                        <Slider fx:id="slider" layoutX="5.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                        <Slider fx:id="opacitySlider" layoutX="5.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                         </Slider>
                         <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="3.0" layoutY="125.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -50,7 +50,7 @@
                 <GridPane layoutX="30.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="390.0" styleClass="grid-instruments">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints />
+                        <ColumnConstraints />
                         
                     </columnConstraints>
                     <rowConstraints>
@@ -64,9 +64,9 @@
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" layoutY="-26.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="145.0" layoutY="-26.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
                                 <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="264.0" layoutY="-26.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Text layoutX="53.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="hours" />
-                        <Text layoutX="163.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="minutes" />
-                        <Text layoutX="281.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="seconds" />
+                                <Text layoutX="53.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="hours" />
+                                <Text layoutX="163.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="minutes" />
+                                <Text layoutX="281.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="seconds" />
                             </children>
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0">

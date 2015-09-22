@@ -148,6 +148,7 @@ public class GpsPlotterController {
     }
 
     public void notifyNmeaMessage(GGA data) {
+        System.out.println("data "+data);
         ownerShip.setLatitude(data.getLatitude());
         ownerShip.setLongitude(data.getLongitude());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));

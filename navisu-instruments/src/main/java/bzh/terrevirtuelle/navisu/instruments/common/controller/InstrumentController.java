@@ -43,7 +43,6 @@ public class InstrumentController
     public InstrumentController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         wwd = GeoWorldWindViewImpl.getWW();
-
     }
 
     protected void load(String fxml) {
