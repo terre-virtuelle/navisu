@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><gpx xmlns="http://www.topografix.com/GPX/1/1" version="Route" creator="Route">
+    <metadata/>
+    <trk>
+        <name>Route_4</name>
+        <cmt></cmt>
+        <desc></desc>
+        <src></src>
+        <number>0</number>
+        <type></type>
+        <extensions/>
+        <trkseg>
+            <trkpt lat="48.40634536108468" lon="-4.550453118198324">
+                <ele>0.0</ele>
+                <time>2015-09-16T10:05:46.132+02:00</time>
+                <magvar>0.0</magvar>
+                <geoidheight>0.0</geoidheight>
+                <name>WP0</name>
+                <sat>0</sat>
+                <hdop>0.0</hdop>
+                <vdop>0.0</vdop>
+                <pdop>0.0</pdop>
+                <ageofdgpsdata>0.0</ageofdgpsdata>
+                <dgpsid>0</dgpsid>
+                <course>59.594837</course>
+                <speed>12.0</speed>
+            </trkpt>
+            <trkpt lat="48.42990680874955" lon="-4.490080699056454">
+                <ele>0.0</ele>
+                <time>2015-09-16T10:05:46.135+02:00</time>
+                <magvar>0.0</magvar>
+                <geoidheight>0.0</geoidheight>
+                <name>WP1</name>
+                <sat>0</sat>
+                <hdop>0.0</hdop>
+                <vdop>0.0</vdop>
+                <pdop>0.0</pdop>
+                <ageofdgpsdata>0.0</ageofdgpsdata>
+                <dgpsid>0</dgpsid>
+                <course>103.62712</course>
+                <speed>12.0</speed>
+            </trkpt>
+        </trkseg>
+        <trkseg>
+            <trkpt lat="48.42990680874955" lon="-4.490080699056454">
+                <ele>0.0</ele>
+                <time>2015-09-16T10:05:46.135+02:00</time>
+                <magvar>0.0</magvar>
+                <geoidheight>0.0</geoidheight>
+                <name>WP1</name>
+                <sat>0</sat>
+                <hdop>0.0</hdop>
+                <vdop>0.0</vdop>
+                <pdop>0.0</pdop>
+                <ageofdgpsdata>0.0</ageofdgpsdata>
+                <dgpsid>0</dgpsid>
+                <course>103.62712</course>
+                <speed>12.0</speed>
+            </trkpt>
+            <trkpt lat="48.41937919815226" lon="-4.4249557339052705">
+                <ele>0.0</ele>
+                <time>2015-09-16T10:05:46.135+02:00</time>
+                <magvar>0.0</magvar>
+                <geoidheight>0.0</geoidheight>
+                <name>WP2</name>
+                <sat>0</sat>
+                <hdop>0.0</hdop>
+                <vdop>0.0</vdop>
+                <pdop>0.0</pdop>
+                <ageofdgpsdata>0.0</ageofdgpsdata>
+                <dgpsid>0</dgpsid>
+                <course>186.81476</course>
+                <speed>12.0</speed>
+            </trkpt>
+        </trkseg>
+        <trkseg>
+            <trkpt lat="48.41937919815226" lon="-4.4249557339052705">
+                <ele>0.0</ele>
+                <time>2015-09-16T10:05:46.135+02:00</time>
+                <magvar>0.0</magvar>
+                <geoidheight>0.0</geoidheight>
+                <name>WP2</name>
+                <sat>0</sat>
+                <hdop>0.0</hdop>
+                <vdop>0.0</vdop>
+                <pdop>0.0</pdop>
+                <ageofdgpsdata>0.0</ageofdgpsdata>
+                <dgpsid>0</dgpsid>
+                <course>186.81476</course>
+                <speed>12.0</speed>
+            </trkpt>
+            <trkpt lat="48.38317029837623" lon="-4.431451704096756">
+                <ele>0.0</ele>
+                <time>2015-09-16T10:05:46.135+02:00</time>
+                <magvar>0.0</magvar>
+                <geoidheight>0.0</geoidheight>
+                <name>WP3</name>
+                <sat>0</sat>
+                <hdop>0.0</hdop>
+                <vdop>0.0</vdop>
+                <pdop>0.0</pdop>
+                <ageofdgpsdata>0.0</ageofdgpsdata>
+                <dgpsid>0</dgpsid>
+                <course>0.0</course>
+                <speed>12.0</speed>
+            </trkpt>
+        </trkseg>
+    </trk>
+    <extensions/>
+    <boundaries>
+        <bounds lat="48.43922250764156" lon="-4.493716321995299">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.43971798753358" lon="-4.492014806309895">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.43990533205525" lon="-4.490252546969937">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.4397786573597" lon="-4.488484890478256">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.42925104676241" lon="-4.423359925327072">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.428742486609245" lon="-4.421444490639523">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.427866181104214" lon="-4.419666960855382">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.426656547351705" lon="-4.418097148874138">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.425161094001275" lon="-4.416796709429816">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.42343855533427" lon="-4.415816717586825">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.42155658446114" lon="-4.41519566275482">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.41958909622967" lon="-4.414957937008099">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.417613364201934" lon="-4.415112877081163">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.381404464425906" lon="-4.4216088472726485">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37951814832274" lon="-4.422142472120552">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37777218229798" lon="-4.423033845532622">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.376233662846815" lon="-4.424248712528523">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.374961714408926" lon="-4.425740386450906">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37400521724948" lon="-4.427451543107477">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.3734009290179" lon="-4.429316423707548">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37317207217203" lon="-4.431263361935498">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37332744155212" lon="-4.433217538047082">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.373861066400025" lon="-4.435103854150245">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37475243981209" lon="-4.436849820175003">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37596730680799" lon="-4.438388339626172">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37745898073038" lon="-4.439660288064055">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.37917013738695" lon="-4.440616785223503">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.381035017987024" lon="-4.441221073455085">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.38298195621497" lon="-4.441449930300953">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.38493613232655" lon="-4.441294560920864">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.41113092301044" lon="-4.436595147779142">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.41959986736424" lon="-4.488984975538389">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.39702966219267" lon="-4.5468174952594795">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.396499385884866" lon="-4.548704755431456">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.3963474848823" lon="-4.55065920420407">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.39657979665531" lon="-4.552605733207058">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.39718739359276" lon="-4.5544695384224605">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.39814692608507" lon="-4.556178994861083">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.39942151983668" lon="-4.557668409070666">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.40096219292452" lon="-4.558880543698406">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.40270973814584" lon="-4.559768817090331">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.404596998317814" lon="-4.560299093398142">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.40655144709043" lon="-4.56045099440071">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.408497976093415" lon="-4.560218682627694">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.410361781308815" lon="-4.559611085690249">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.41207123774744" lon="-4.558651553197937">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.41356065195702" lon="-4.557376959446324">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.41477278658476" lon="-4.555836286358486">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.41566105997669" lon="-4.554088741137169">
+            <ele>0.0</ele>
+        </bounds>
+        <bounds lat="48.43922250764156" lon="-4.493716321995299">
+            <ele>0.0</ele>
+        </bounds>
+    </boundaries>
+</gpx>
