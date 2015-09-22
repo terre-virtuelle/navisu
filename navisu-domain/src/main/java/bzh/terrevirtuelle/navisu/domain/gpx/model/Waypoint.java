@@ -162,7 +162,7 @@ public class Waypoint {
     public Waypoint(double ele, GregorianCalendar time, double magvar, double geoidheight,
             String name, String cmt, String desc, String src, List<Link> link,
             String sym, String type, String fix, int sat, double hdop,
-            double vdop, double pdop, double ageofdgpsdata, float course,
+            double vdop, double pdop, double ageofdgpsdata, float course,float speed,
             int dgpsid, Extensions extensions, double lat, double lon) {
         this.ele = ele;
         this.time = time;
@@ -182,6 +182,7 @@ public class Waypoint {
         this.pdop = pdop;
         this.ageofdgpsdata = ageofdgpsdata;
         this.course = course;
+        this.speed = speed;
         this.dgpsid = dgpsid;
         this.extensions = extensions;
         this.latitude = lat;
