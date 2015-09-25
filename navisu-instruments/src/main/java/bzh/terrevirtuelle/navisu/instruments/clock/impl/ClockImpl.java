@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
+import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
  * NaVisu
@@ -28,11 +29,13 @@ public class ClockImpl
     private final String KEY_NAME = "Clock";
     @UsedService
     GuiAgentServices guiAgentServices;
+    ComponentManager cm;
     private ClockController controller;
-
+    
     @Override
     public void componentInitiated() {
         controller = new ClockController(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
+        cm = ComponentManager.componentManager;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class ClockImpl
     }
 
     @Override
-    public void on(String ... files) {
+    public void on(String... files) {
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
         guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
         controller.setVisible(true);

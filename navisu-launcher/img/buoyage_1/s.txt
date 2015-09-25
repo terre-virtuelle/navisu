@@ -203,5 +203,4 @@ BOYLAT_8_1_3_0_0_1.png
 BOYLAT_8_1_3_0_5_1.png
 BOYLAT_8_2_4_0_0_1.png
 BOYLAT_8_2_4_0_1_1.png
-Thumbs.db
 s.txt
