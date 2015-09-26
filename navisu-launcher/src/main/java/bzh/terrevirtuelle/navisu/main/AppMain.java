@@ -73,6 +73,8 @@ import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.impl.GpsTrackImpl;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.MeasureToolsServices;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.instruments.routeeditor.RouteEditorServices;
@@ -162,6 +164,7 @@ public class AppMain extends Application {
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
+                        GpsTrackImpl.class,
                         GpsTrackPlotterImpl.class,
                         GpsTrackPolygonImpl.class,
                         GpsPlotterImpl.class,
@@ -215,6 +218,7 @@ public class AppMain extends Application {
 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
+        GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
         GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
         GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
@@ -285,6 +289,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(clockServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
@@ -327,8 +332,8 @@ public class AppMain extends Application {
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS
         /* Test lecture fichier */
-        dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        dataServerServices.openFile("data/nmea/gpsLostennic.txt"); //NMEA0183 //gps.txt
+        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        // dataServerServices.openFile("data/nmea/Route.nmea"); //NMEA0183 //gps.txt //gpsLostennic.txt
         //dataServerServices.openFile("data/nmea/hcgdg.txt"); //test compas
         //dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K

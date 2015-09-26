@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+    <Document>
+<Placemark><description><![CDATA[WP0<br>Lat : 48,4211<br>Lon : -4,5430<br>Time : 04:19:06<br>Day : 25/09/15]]></description><Point><coordinates>-4.543047643249153,48.421057653187965,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.543047643249153,48.421057653187965,10
+-4.553466081982589,48.378173961504544,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP1<br>Lat : 48,3782<br>Lon : -4,5535<br>Time : 04:19:06<br>Day : 25/09/15]]></description><Point><coordinates>-4.553466081982589,48.378173961504544,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.553466081982589,48.378173961504544,10
+-4.4280985650957625,48.378803814865535,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP2<br>Lat : 48,3788<br>Lon : -4,4281<br>Time : 04:19:06<br>Day : 25/09/15]]></description><Point><coordinates>-4.4280985650957625,48.378803814865535,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.4280985650957625,48.378803814865535,10
+-4.434381429786791,48.41238281359361,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP3<br>Lat : 48,4124<br>Lon : -4,4344<br>Time : 04:19:06<br>Day : 25/09/15]]></description><Point><coordinates>-4.434381429786791,
+48.41238281359361,10</coordinates></Point></Placemark>
+ </Document></kml>
