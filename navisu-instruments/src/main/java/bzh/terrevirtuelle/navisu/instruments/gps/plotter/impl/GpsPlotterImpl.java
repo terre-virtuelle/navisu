@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotter;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterGpsEventsController;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -39,6 +40,9 @@ public class GpsPlotterImpl
     @UsedService
     KmlObjectServices kmlObjectServices;
 
+    @UsedService
+    GpsTrackServices gpsTrackServices;
+
     protected boolean on = false;
     private final String NAME = "GpsPlotter";
     protected final String GROUP = "Devices";
@@ -47,7 +51,7 @@ public class GpsPlotterImpl
 
     @Override
     public void componentInitiated() {
-      
+
     }
 
     @Override
@@ -62,6 +66,7 @@ public class GpsPlotterImpl
         gpsPlotterController.createTarget();
         gpsEventsController = new GpsPlotterGpsEventsController(gpsPlotterController);
         gpsEventsController.subscribe();
+        gpsTrackServices.on(files);
     }
 
     @Override

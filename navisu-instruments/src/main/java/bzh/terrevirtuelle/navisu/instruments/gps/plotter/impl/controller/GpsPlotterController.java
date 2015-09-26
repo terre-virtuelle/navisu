@@ -22,6 +22,7 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.FileInputStream;
@@ -53,7 +54,8 @@ public class GpsPlotterController {
     protected KmlObjectServices kmlObjectServices;
     protected TargetPanel targetPanel;
     protected Ship ownerShip;
-    protected final String OWNER_SHIP_NAME = "data/collada/ownerShip.dae";
+    protected double initRotation;
+    protected Properties properties;
     protected ColladaRoot ownerShipView;
 
     public GpsPlotterController(GeoViewServices geoViewServices,
@@ -115,7 +117,7 @@ public class GpsPlotterController {
     }
 
     private void createOwnerShip() {
-        Properties properties = new Properties();
+        properties = new Properties();
         try {
             properties.load(new FileInputStream("properties/domain.properties"));
         } catch (IOException ex) {
@@ -141,24 +143,26 @@ public class GpsPlotterController {
     }
 
     public void createTarget() {
-        ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, OWNER_SHIP_NAME);
+        initRotation = new Double(properties.getProperty("initRotation"));
+        ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae"));
+        ownerShipView.setModelScale(new Vec4(new Double(properties.getProperty("scale"))));
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         ownerShipView.setField("Ship", ownerShip);
+        
     }
 
     public void notifyNmeaMessage(GGA data) {
-        System.out.println("data "+data);
         ownerShip.setLatitude(data.getLatitude());
         ownerShip.setLongitude(data.getLongitude());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
     }
 
     public void notifyNmeaMessage(VTG data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
     }
 
     public void notifyNmeaMessage(RMC data) {
@@ -167,6 +171,6 @@ public class GpsPlotterController {
         ownerShip.setLatitude(data.getLatitude());
         ownerShip.setLongitude(data.getLongitude());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
     }
 }
