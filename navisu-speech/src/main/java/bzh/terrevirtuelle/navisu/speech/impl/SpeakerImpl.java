@@ -42,7 +42,7 @@ public class SpeakerImpl
 
     @Override
     public void read(String rep, String filename, String language) {
-
+/*
         if (language == null) {
             lang = Locale.getDefault().toString();
         } else {
@@ -63,11 +63,12 @@ public class SpeakerImpl
                 System.out.println("ex " + ex);
             }
         });
+        */
     }
 
     @Override
     public void read(String text) {
-
+/*
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
                 sound = audio.getAudio(text, Locale.getDefault().toString());
@@ -76,11 +77,12 @@ public class SpeakerImpl
                 Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        */
     }
 
     @Override
     public void read(String text, String language) {
-
+/*
         Executors.newSingleThreadExecutor().execute(() -> {
             try {
                 sound = audio.getAudio(text, "Language." + language);
@@ -89,6 +91,7 @@ public class SpeakerImpl
                 Logger.getLogger(SpeakerImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        */
     }
 
     @Override
