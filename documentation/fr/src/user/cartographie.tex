@@ -1,0 +1,160 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Cartographie}
+\section{Présentation}
+
+\nav\ utilise les cartes raster BSB/KAP. Avant d'utiliser vos cartes il est
+nécessaire d'opérer un pré-traitement, c'est l'opération de tuilage : la carte
+au format KAP, de 1 à plusieurs Mo, sera transformée en plusieurs sous images
+ou tuiles. Les répertoires où sont placés les cartes et les tuiles doivent être
+renseignés dans l'application.
+\subsection{La projection Equirectangulaire}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\nav, s'appuyant sur
+\href{http://goworldwind.org/}{WorldWind},
+utilise une projection cylindrique simple (appelée projection
+Equirectangulaire ou Plate Carrée) avec comme référentiel géodésique le WGS84. Dans la projection Equirectangulaire
+  l'instersection avec les méridiens se fait à angle droit, 
+  mais contrairement à la projection Mercator, les parallèles sont des lignes
+  droites équidistantes.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\framebox[1\width]{
+	\includegraphics[width=16cm]{images/carto/Equirectangular-projection.png}
+}
+\begin{figure}[ht]
+\caption{\label{equiProj}\textit{Projection équirectangulaire}}
+\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Pour plus
+d'informations sur le sujet consulter, par exemple,  le site du
+``Intergovernmental Committee on Surveying and Mapping ``(ICSM) :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{
+	\tt
+	 \href{http://www.icsm.gov.au/mapping/about\_projections.html}{http://www.icsm.gov.au/mapping/about\_projections.html}
+}\\
+
+\vspace{.2cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Et pour un exposé plus large des problèmes de projection :\\
+
+\vspace{.2cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{
+\tt 
+	 \href{http://kartoweb.itc.nl/geometrics/}{http://kartoweb.itc.nl/geometrics/}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Tuilage}
+\subsubsection{Le principe}
+Comme la plupart des applications géoréférencées (GoogleEarth, Yahoo, Bing,
+\ldots) pour fournir un niveau de détail important et une bonne fluidité,
+\nav\ utilise la méthode du tuilage des cartes. Les images affichées sont de
+256x256 pixels. Elles sont choisies suivant le niveau de zoom et l'emplacement
+géographique, l'affichage à l'écran est recréé dynamiquement.
+Chaque carte est constituée d'un répertoire, puis de nombreux sous-répertoires
+numérotés comme suit :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\framebox[1\width]{
+	\includegraphics[width=16cm]{images/carto/Worldwind_tile_system.png}
+}
+\begin{figure}[ht]
+\caption{\label{wwTiles}\textit{Conventions de la numérotation des
+tuiles WorldWind}}
+\end{figure}
+\end{center}
+ Lors d'un
+premier accès ces images peuvent provenir de différents sites internet, elles
+sont mises en cache sur le disque utilisateur. Lors des accès suivants
+l'application commence par chercher dans le cache. Elles peuvent être dès le
+départ être mise dans le cache.\\
+ Sous Windows 7 par défaut WorldWind utilise le
+répertoire :
+\begin{verbatim} C:\ProgramData\WorldWindData \end{verbatim} 
+
+Pour plus de détails sur le tuilage, voir :
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	 \href{http://www.worldwindcentral.com/wiki/Tiling\_System}{http://www.worldwindcentral.com/wiki/Tiling\_System}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cartographie raster}
+\subsection{Les cartes BSB/KAP}
+ L'utilisateur peut définir son
+propre répertoire pour passer facilement d'un ordinateur à un autre, sans avoir à recopier les données.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\framebox[1\width]{
+	\includegraphics[width=16cm]{images/carto/0.png}
+}
+\begin{figure}[ht]
+\caption{\label{carte0}\textit{Frontières d'une carte}}
+\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Les frontières sont en vert : la carte 101.KAP est dans le répertoire désigné et
+la carte a été tuilée, les tuiles sont dans le cache désigné. Si les tuiles ne
+sont pas dans le cache les polygones frontière sont rouges.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\framebox[1\width]{
+	\includegraphics[width=16cm]{images/carto/3.png}
+}
+\begin{figure}[ht]
+\caption{\label{usa}\textit{Les Etats Unis}}
+\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\framebox[1\width]{
+	\includegraphics[width=16cm]{images/carto/1.png}
+}
+\begin{figure}[ht]
+\caption{\label{carte1}\textit{Affichage de la carte}}
+\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Double clic à l'intérieur du polygone : affichage de la carte, dès que
+l'altitude le permet.
+Ici la distance fait que les tuiles les plus hautes en latitude ne s'affichent pas encore.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+\framebox[1\width]{
+	\includegraphics[width=16cm]{images/carto/2.png}
+}
+\begin{figure}[ht]
+\caption{\label{details}\textit{Niveaux de détail et la 3D}}
+\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Acquisition}
+Quelques sites pour obtenir des cartes raster au format BSB/KAP : 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+{
+\tt\small
+	 \href{http://marine.geogarage.com/}{http://marine.geogarage.com/}
+	 
+	 \vspace{.2cm}
+	\href{http://www.justmagic.com/RasterChart2BSB.html}{http://www.justmagic.com/RasterChart2BSB.html}
+	
+	\vspace{.2cm}
+	 \href{https://www.mar.mil.br/dhn/chm/cartas/download/cartasbsb/cartas\_eletronicas\_Internet.htm}{https://www.mar.mil.br/dhn/chm/cartas/download/cartasbsb/cartas\_eletronicas\_Internet.htm}
+	
+	\vspace{.2cm}
+	 \href{http://www.nauticalcharts.noaa.gov/mcd/Raster/index.htm}{http://www.nauticalcharts.noaa.gov/mcd/Raster/index.htm}
+	
+	 \vspace{.2cm}
+	 \href{http://www.1yachtua.com/}{http://www.1yachtua.com/}
+	 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

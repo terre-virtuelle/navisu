@@ -1,0 +1,104 @@
+\chapter*{Préparation des routes}
+
+\section{Objet}
+ L'objet de cette section est de décrire les différentes étapes de préparation d'une route : choix des cartes, 
+  définition des waypoints, tracé de la route, repérage des dangers, calculs des distances, sauvegarde et simulation du trajet.
+\hbox{}\vspace{0.2cm}
+
+
+\hbox{}\vspace{0.2cm}
+\section{Choix des cartes}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{center}
+		\framebox[1\width]{
+			\includegraphics[width=12cm]{images/routes/route_0.png}
+		}
+		\begin{figure}[ht]
+			\caption{\label{0}\textit{Choix des cartes à partir du catalogue ou directement}}
+		\end{figure}
+	\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sélection du menu RouteEditor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{center}
+		\framebox[1\width]{
+			\includegraphics[width=12cm]{images/routes/route_1.png}
+		}
+		\begin{figure}[ht]
+			\caption{\label{0}\textit{Menu Navigation : l'éditeur de routes}}
+		\end{figure}
+	\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\begin{center}
+			\framebox[1\width]{
+				\includegraphics[width=12cm]{images/routes/route_2.png}
+			}
+			\begin{figure}[ht]
+				\caption{\label{0}\textit{Menu RouteEditor : les paramètres de la route}}
+			\end{figure}
+		\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\begin{center}
+				\framebox[1\width]{
+					\includegraphics[width=12cm]{images/routes/routeeditor_1.png}
+				}
+				\begin{figure}[ht]
+					\caption{\label{0}\textit{Menu RouteEditor : les items}}
+				\end{figure}
+			\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Le menu RouteEditor}
+
+\begin{itemize}
+	\item Les commandes
+		\begin{itemize}
+		\item Le bouton {\tt New} : début de la définition d'une route.
+		\item Le bouton {\tt Open} : ouverture d'une route sauvegardée au format Gpx.
+		\item Le bouton {\tt Pause } : permet de se déplacer interactivement dans les cartes sans marquer de waypoint, {\tt Resume} permet de revenir au mode édition.
+		\item Le bouton {\tt End } : termine une route, il doit être impérativement presser en fin de route.
+		\item Le bouton {\tt Offset} : permet de définir une zone de sécurité autour de la route.
+		\item Le bouton {\tt Export Gpx} : sauvegarde de la route, et si elle définie de la zone de sécurité, sous format Gpx.
+		\item Le bouton {\tt Export Kml} : sauvegarde de la route au format KML.
+		\item Le bouton {\tt Export NMEA} : sauvegarde de la route sous forme de phrases NMEA, pour une simulation de déplacement.
+		\item Le bouton {\tt Snapshot} : copie d'écran.
+		\end{itemize}
+	\item Les données utilisateur
+		\begin{itemize}
+			\item Les fichiers
+			\begin{itemize}		
+			 	\item Le champs {\tt Name }: définit les noms des fichiers de sauvegarde aux formats GPX, KML, NMEA. Ces fichiers sont dans les répertoires {\tt data/gpx, data/kml, data/nmea} respectivement.
+			    \item Le champs {\tt Version } : numéro de version dans le fichier GPX.
+				\item Le champs {\tt Author }: nom de l'auteur dans le fichier Gpx.
+			\end{itemize}
+			\item Les Waypoints
+			\begin{itemize}
+				\item Le champs {\tt Name }: Par défaut les waypoints se nomme WP0, WP1, \ldots Il est possible de leur donner un nom particulier.
+				\item Le champs {\tt Desc. } Texte de description du waypoint.
+		     \end{itemize}
+		     \item La route
+		     \begin{itemize}
+		     	\item Le champs {\tt Speed }: vitesse moyenne du navire.
+		     	\item Le champs {\tt Dist. point d'ordre } : distance permettant de définir un waypoint d'alerte pour changement de cap.
+		     	\item Le champs {\tt Dist. offset }: définit la largeur de la bande de sécurité entourant la route.
+		     \end{itemize}
+		     \end{itemize}
+	 \item L'affichage
+	  \begin{itemize}
+	  	\item -
+	  \end{itemize}
+\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Tracé de la route}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{center}
+	\framebox[1\width]{
+		\includegraphics[width=16cm]{images/routes/route_3.png}
+	}
+	\begin{figure}[ht]
+		\caption{\label{0}\textit{Tracé de la route}}
+	\end{figure}
+\end{center}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
