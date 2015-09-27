@@ -10,11 +10,8 @@ import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentControl
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javafx.animation.Animation;
-import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -69,19 +66,17 @@ public class ClockController
                             }
                         }
                 ),
-                new KeyFrame(Duration.seconds(1))
-        );
-
+                new KeyFrame(Duration.seconds(1))       
+        );   
         // time never ends.
         digitalTime.setCycleCount(Animation.INDEFINITE);
-        
+
         // start the Clock.
         digitalTime.play();
-        
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
-
 
     }
 }

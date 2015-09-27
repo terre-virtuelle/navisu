@@ -28,7 +28,6 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotter;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
 import gov.nasa.worldwind.geom.Angle;
@@ -92,7 +91,7 @@ public class GpsTrackImpl implements GpsTrackPlotter,
         layerTreeServices.search("GpsTrack").setSelected(true);
         
         attrs = new BasicShapeAttributes();
-        attrs.setOutlineMaterial(Material.RED);
+        attrs.setOutlineMaterial(Material.GREEN);
         attrs.setOutlineWidth(4);
         
         cm = ComponentManager.componentManager;
