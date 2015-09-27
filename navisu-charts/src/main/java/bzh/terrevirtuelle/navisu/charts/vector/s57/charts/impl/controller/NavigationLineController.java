@@ -50,7 +50,7 @@ public class NavigationLineController {
         this.tooltipAnnotation.getAttributes().setDistanceMaxScale(1);
         this.tooltipAnnotation.getAttributes().setVisible(false);
         this.tooltipAnnotation.setAlwaysOnTop(true);
-        
+
         wwd.addSelectListener((SelectEvent event) -> {
             if (event.getEventAction().equals(SelectEvent.ROLLOVER)) {
                 Object o = event.getTopObject();
@@ -70,7 +70,7 @@ public class NavigationLineController {
                 }
             }
         });
-        
+
     }
 
     /**
@@ -170,14 +170,16 @@ public class NavigationLineController {
     private void highlight(Path path) {
         navigationLine = (NavigationLine) path.getValue("NAVLNE");
         // ogr ne semble pas bien gérer les accents, seulle la version anglaise est affichée
-        String str = "NAVIGATION LINE (NAVLNE)\n\n"
-                + "CATNAV : " + navigationLine.getCategoryOfNavigationLine() + "\n"
-                + "ORIENT : " + navigationLine.getOrientation() + "\n"
-                + "INFORM : " + navigationLine.getInformation();// + "\n"
-        // + "NINFOM : " + navigationLine.getInformationInNationalLanguage();
-        this.tooltipAnnotation.setText(str);
-        List<Position> pos = (List<Position>) path.getPositions();
-        tooltipAnnotation.setPosition(Position.interpolate(0.5, pos.get(0), pos.get(1)));
-        this.tooltipAnnotation.getAttributes().setVisible(true);
+        if (navigationLine != null) {
+            String str = "NAVIGATION LINE (NAVLNE)\n\n"
+                    + "CATNAV : " + navigationLine.getCategoryOfNavigationLine() + "\n"
+                    + "ORIENT : " + navigationLine.getOrientation() + "\n"
+                    + "INFORM : " + navigationLine.getInformation();// + "\n"
+            // + "NINFOM : " + navigationLine.getInformationInNationalLanguage();
+            this.tooltipAnnotation.setText(str);
+            List<Position> pos = (List<Position>) path.getPositions();
+            tooltipAnnotation.setPosition(Position.interpolate(0.5, pos.get(0), pos.get(1)));
+            this.tooltipAnnotation.getAttributes().setVisible(true);
+        }
     }
 }
