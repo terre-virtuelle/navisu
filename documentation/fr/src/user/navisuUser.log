@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.4.29)  26 SEP 2015 14:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.4.29)  27 SEP 2015 18:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -710,6 +710,24 @@ LaTeX Warning: Label `0' multiply defined.
 
 LaTeX Warning: Label `0' multiply defined.
 
+
+LaTeX Warning: Label `0' multiply defined.
+
+
+LaTeX Warning: Label `0' multiply defined.
+
+
+LaTeX Warning: Label `0' multiply defined.
+
+
+LaTeX Warning: Label `0' multiply defined.
+
+
+LaTeX Warning: Label `0' multiply defined.
+
+
+LaTeX Warning: Label `0' multiply defined.
+
 )
 \openout1 = `navisuUser.aux'.
 
@@ -794,41 +812,41 @@ Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             ! on input line 162.
 
 (./body.tex (./commandes.tex) (./routes.tex
-<images/routes/route_0.png, id=30, 544.15059pt x 430.2586pt>
-File: images/routes/route_0.png Graphic file (type png)
+<images/routes/route1.png, id=42, 918.25412pt x 598.32837pt>
+File: images/routes/route1.png Graphic file (type png)
 
-<use images/routes/route_0.png>
-Package pdftex.def Info: images/routes/route_0.png used on input line 16.
-(pdftex.def)             Requested size: 341.43306pt x 269.9811pt.
+<use images/routes/route1.png>
+Package pdftex.def Info: images/routes/route1.png used on input line 16.
+(pdftex.def)             Requested size: 426.79134pt x 278.092pt.
 
-<images/routes/route_1.png, id=31, 544.15059pt x 430.2586pt>
-File: images/routes/route_1.png Graphic file (type png)
+<images/routes/route2.png, id=43, 925.90623pt x 591.60558pt>
+File: images/routes/route2.png Graphic file (type png)
 
-<use images/routes/route_1.png>
-Package pdftex.def Info: images/routes/route_1.png used on input line 27.
-(pdftex.def)             Requested size: 341.43306pt x 269.9811pt.
+<use images/routes/route2.png>
+Package pdftex.def Info: images/routes/route2.png used on input line 27.
+(pdftex.def)             Requested size: 426.79134pt x 272.70155pt.
 
-Underfull \vbox (badness 7740) has occurred while \output is active []
+Underfull \vbox (badness 5756) has occurred while \output is active []
 
  [1
 
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/routes/route_0.pn
-g>]
-<images/routes/route_2.png, id=43, 544.15059pt x 430.2586pt>
-File: images/routes/route_2.png Graphic file (type png)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/routes/route1.png
+>]
+<images/routes/route3.png, id=55, 928.45694pt x 592.44592pt>
+File: images/routes/route3.png Graphic file (type png)
 
-<use images/routes/route_2.png>
-Package pdftex.def Info: images/routes/route_2.png used on input line 36.
-(pdftex.def)             Requested size: 341.43306pt x 269.9811pt.
+<use images/routes/route3.png>
+Package pdftex.def Info: images/routes/route3.png used on input line 36.
+(pdftex.def)             Requested size: 426.79134pt x 272.3386pt.
 
-<images/routes/routeeditor_1.png, id=44, 490.76372pt x 421.85512pt>
+<images/routes/routeeditor_1.png, id=56, 490.76372pt x 421.85512pt>
 File: images/routes/routeeditor_1.png Graphic file (type png)
 
 <use images/routes/routeeditor_1.png>
 Package pdftex.def Info: images/routes/routeeditor_1.png used on input line 46.
 
-(pdftex.def)             Requested size: 341.43306pt x 293.4942pt.
+(pdftex.def)             Requested size: 398.33858pt x 342.41527pt.
 
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -836,7 +854,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-<images/bas-page-masterPPT_RVB_final.png, id=46, 722.7pt x 48.9027pt>
+<images/bas-page-masterPPT_RVB_final.png, id=58, 722.7pt x 48.9027pt>
 File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
 
 <use images/bas-page-masterPPT_RVB_final.png>
@@ -848,8 +866,8 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[2 <./images/logonavisuglobe.png> <./images/routes/route_1.png> <./images/route
-s/route_2.png> <./images/bas-page-masterPPT_RVB_final.png>]
+[2 <./images/logonavisuglobe.png> <./images/routes/route2.png> <./images/routes
+/route3.png> <./images/bas-page-masterPPT_RVB_final.png>]
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -859,7 +877,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
 <use images/bas-page-masterPPT_RVB_final.png>
 Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
-line 78.
+line 73.
 (pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
 
 Overfull \hbox (28.45276pt too wide) has occurred while \output is active
@@ -867,13 +885,78 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  []
 
 [3 <./images/routes/routeeditor_1.png>]
-<images/routes/route_3.png, id=64, 544.15059pt x 430.2586pt>
-File: images/routes/route_3.png Graphic file (type png)
+<images/routes/route4.png, id=76, 919.10435pt x 594.12663pt>
+File: images/routes/route4.png Graphic file (type png)
 
-<use images/routes/route_3.png>
-Package pdftex.def Info: images/routes/route_3.png used on input line 98.
-(pdftex.def)             Requested size: 455.24408pt x 359.97041pt.
-))
+<use images/routes/route4.png>
+Package pdftex.def Info: images/routes/route4.png used on input line 104.
+(pdftex.def)             Requested size: 398.33858pt x 257.4911pt.
+
+<images/routes/route5.png, id=77, 931.00764pt x 590.76523pt>
+File: images/routes/route5.png Graphic file (type png)
+
+<use images/routes/route5.png>
+Package pdftex.def Info: images/routes/route5.png used on input line 115.
+(pdftex.def)             Requested size: 398.33858pt x 252.76208pt.
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 61.25554pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
+<use images/bas-page-masterPPT_RVB_final.png>
+Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
+line 119.
+(pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
+
+Overfull \hbox (28.45276pt too wide) has occurred while \output is active
+ [][]| 
+ []
+
+[4 <./images/routes/route4.png>]
+<images/routes/route_8.png, id=84, 317.988pt x 364.7114pt>
+File: images/routes/route_8.png Graphic file (type png)
+
+<use images/routes/route_8.png>
+Package pdftex.def Info: images/routes/route_8.png used on input line 140.
+(pdftex.def)             Requested size: 256.0748pt x 293.71727pt.
+
+Underfull \vbox (badness 2302) has occurred while \output is active []
+
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 61.25554pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
+<use images/bas-page-masterPPT_RVB_final.png>
+Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
+line 144.
+(pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
+
+Overfull \hbox (28.45276pt too wide) has occurred while \output is active
+ [][]| 
+ []
+
+[5 <./images/routes/route5.png>]
+<images/routes/route6.png, id=92, 925.90623pt x 592.44592pt>
+File: images/routes/route6.png Graphic file (type png)
+
+<use images/routes/route6.png>
+Package pdftex.def Info: images/routes/route6.png used on input line 150.
+(pdftex.def)             Requested size: 398.33858pt x 254.88237pt.
+
+<images/routes/route7.png, id=93, 915.70341pt x 563.03372pt>
+File: images/routes/route7.png Graphic file (type png)
+
+<use images/routes/route7.png>
+Package pdftex.def Info: images/routes/route7.png used on input line 160.
+(pdftex.def)             Requested size: 398.33858pt x 244.92627pt.
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 61.25554pt.
@@ -890,7 +973,58 @@ Overfull \hbox (28.45276pt too wide) has occurred while \output is active
  [][]| 
  []
 
-[4 <./images/routes/route_3.png>]
+[6 <./images/routes/route_8.png> <./images/routes/route6.png>]
+<images/routes/route8.png, id=101, 918.25412pt x 592.44592pt>
+File: images/routes/route8.png Graphic file (type png)
+
+<use images/routes/route8.png>
+Package pdftex.def Info: images/routes/route8.png used on input line 170.
+(pdftex.def)             Requested size: 398.33858pt x 256.99773pt.
+
+<images/routes/route9.png, id=102, 919.10435pt x 590.76523pt>
+File: images/routes/route9.png Graphic file (type png)
+
+<use images/routes/route9.png>
+Package pdftex.def Info: images/routes/route9.png used on input line 180.
+(pdftex.def)             Requested size: 398.33858pt x 256.03429pt.
+
+Underfull \vbox (badness 3199) has occurred while \output is active []
+
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 61.25554pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
+<use images/bas-page-masterPPT_RVB_final.png>
+Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
+line 184.
+(pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
+
+Overfull \hbox (28.45276pt too wide) has occurred while \output is active
+ [][]| 
+ []
+
+[7 <./images/routes/route7.png> <./images/routes/route8.png>]))
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 61.25554pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+File: images/bas-page-masterPPT_RVB_final.png Graphic file (type png)
+<use images/bas-page-masterPPT_RVB_final.png>
+Package pdftex.def Info: images/bas-page-masterPPT_RVB_final.png used on input 
+line 164.
+(pdftex.def)             Requested size: 526.37598pt x 35.61806pt.
+
+Overfull \hbox (28.45276pt too wide) has occurred while \output is active
+ [][]| 
+ []
+
+[8 <./images/routes/route9.png>]
 \tf@thm=\write5
 \openout5 = `navisuUser.thm'.
 
@@ -902,7 +1036,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 168.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 168.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 168.
 Package rerunfilecheck Info: File `navisuUser.out' has not changed.
-(rerunfilecheck)             Checksum: 1680C50FD7A21D4B92C869EF53D0A57C;293.
+(rerunfilecheck)             Checksum: 213A67D91258288C01A841AA5FD529AA;467.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -910,23 +1044,23 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 168.
  ) 
 Here is how much of TeX's memory you used:
- 19078 strings out of 493105
- 345618 string characters out of 6137072
- 423794 words of memory out of 5000000
- 22192 multiletter control sequences out of 15000+600000
+ 19125 strings out of 493105
+ 346521 string characters out of 6137072
+ 424820 words of memory out of 5000000
+ 22219 multiletter control sequences out of 15000+600000
  6871 words of font info for 25 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,13n,54p,418b,584s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,13n,54p,418b,581s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on navisuUser.pdf (4 pages, 2340033 bytes).
+Output written on navisuUser.pdf (8 pages, 9281548 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 73 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 500000)
- 92 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 146 PDF objects out of 1000 (max. 8388607)
+ 112 compressed objects within 2 object streams
+ 30 named destinations out of 1000 (max. 500000)
+ 146 words of extra memory for PDF output out of 10000 (max. 10000000)
 
