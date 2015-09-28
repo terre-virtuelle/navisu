@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57Chart;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.model.ExtendedBuoyage;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -323,6 +324,11 @@ public class S57ChartImpl
             Logger.getLogger(S57ChartImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
         }
 
+    }
+
+    @Override
+    public List<ExtendedBuoyage> getExtendedBuoyageList() {
+        return chartS57Controller.getExtendedBuoyageList();
     }
 
     @Override

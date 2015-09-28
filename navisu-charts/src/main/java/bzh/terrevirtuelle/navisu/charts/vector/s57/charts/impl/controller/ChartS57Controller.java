@@ -34,6 +34,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.WRECKS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.Lights;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.model.ExtendedBuoyage;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
@@ -101,6 +102,7 @@ public class ChartS57Controller {
     private SurveyZoneController surveyZoneController;
     private final boolean DEV = false;
     //private final boolean DEV = true;
+    private final List<ExtendedBuoyage> extendedBuoyages;
 
     static {
         INSTANCE = new ChartS57Controller();
@@ -110,6 +112,7 @@ public class ChartS57Controller {
         wwd = GeoWorldWindViewImpl.getWW();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         topMarks = new HashMap<>();
+        extendedBuoyages = new ArrayList<>();
         System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
         addListeners();
@@ -210,37 +213,37 @@ public class ChartS57Controller {
                         load(new ACHARE_ShapefileLoader("ACHARE", new Color(2, 200, 184), 0.4, true), "AREA", "ACHARE", "/");
                         break;
                     case "BCNCAR.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR"), "BUOYAGE", "BCNCAR", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", extendedBuoyages), "BUOYAGE", "BCNCAR", "/");
                         break;
                     case "BCNISD.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNISD"), "BUOYAGE", "BCNISD", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNISD", extendedBuoyages), "BUOYAGE", "BCNISD", "/");
                         break;
                     case "BCNLAT.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT"), "BUOYAGE", "BCNLAT", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", extendedBuoyages), "BUOYAGE", "BCNLAT", "/");
                         break;
                     case "BCNSAW.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSAW"), "BUOYAGE", "BCNSAW", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSAW", extendedBuoyages), "BUOYAGE", "BCNSAW", "/");
                         break;
                     case "BCNSPP.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSPP"), "BUOYAGE", "BCNSPP", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSPP", extendedBuoyages), "BUOYAGE", "BCNSPP", "/");
                         break;
                     case "BRIDGE.shp":
                         load(new BRIDGE_ShapefileLoader(), "BUILDING", "BRIDGE", "/");
                         break;
                     case "BOYCAR.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYCAR"), "BUOYAGE", "BOYCAR", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYCAR", extendedBuoyages), "BUOYAGE", "BOYCAR", "/");
                         break;
                     case "BOYISD.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYISD"), "BUOYAGE", "BOYISD", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYISD", extendedBuoyages), "BUOYAGE", "BOYISD", "/");
                         break;
                     case "BOYLAT.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYLAT"), "BUOYAGE", "BOYLAT", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYLAT", extendedBuoyages), "BUOYAGE", "BOYLAT", "/");
                         break;
                     case "BOYSAW.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSAW"), "BUOYAGE", "BOYSAW", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSAW", extendedBuoyages), "BUOYAGE", "BOYSAW", "/");
                         break;
                     case "BOYSPP.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSPP"), "BUOYAGE", "BOYSPP", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSPP", extendedBuoyages), "BUOYAGE", "BOYSPP", "/");
                         break;
                     case "CBLSUB.shp":
                         load(new CBLSUB_ShapefileLoader(), "CBLSUB", "CBLSUB", "/");
@@ -270,7 +273,7 @@ public class ChartS57Controller {
                         load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.0, false), "AREA", "MIPARE", "/");
                         break;
                     case "MORFAC.shp":
-                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "MORFAC"), "BUOYAGE", "MORFAC", "/");
+                        load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "MORFAC", extendedBuoyages), "BUOYAGE", "MORFAC", "/");
                         break;
                     case "M_SREL.shp":
                         load(new AREA_ShapefileLoader("M_SREL", new Color(0, 255, 0), 0.0, false), "AREA", "M_SREL", "/");
@@ -450,6 +453,7 @@ public class ChartS57Controller {
 
                 Landmark landmark = (Landmark) object;
                 if (landmark.getObjectName().contains("Minou")) {
+                    dataAccessServices.test();
                     Image image = dataAccessServices.queryImage("Phare du Petit Minou");
                     PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
                     PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(landmark.getLat(), landmark.getLon(), 0));
@@ -469,4 +473,9 @@ public class ChartS57Controller {
             }
         }
     }
+
+    public List<ExtendedBuoyage> getExtendedBuoyageList() {
+        return extendedBuoyages;
+    }
+    
 }

@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.model.ExtendedBuoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BUOYAGE;
@@ -22,7 +23,6 @@ import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -39,7 +39,8 @@ public class BUOYAGE_ShapefileLoader
         extends LayerShapefileLoader {
 
     private Buoyage object;
-    private final List<Buoyage> objects;
+    private ExtendedBuoyage extendedBuoyage;
+    private final List<ExtendedBuoyage> objects;
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
     private Class claz;
@@ -48,19 +49,21 @@ public class BUOYAGE_ShapefileLoader
     private final String marsys;
     private boolean dev = false;
 
-    public BUOYAGE_ShapefileLoader(boolean dev, String path, Map<Pair<Double, Double>, String> topMarks, String marsys, String acronym) {
+    public BUOYAGE_ShapefileLoader(boolean dev, String path,
+            Map<Pair<Double, Double>, String> topMarks, 
+            String marsys, String acronym, 
+            List<ExtendedBuoyage> objects) {
         this.dev = dev;
         this.topMarks = topMarks;
         this.marsys = marsys;
         this.acronym = acronym;
+        this.objects = objects;
         String className = BUOYAGE.ATT.get(acronym);
         try {
             claz = Class.forName(path + "." + className);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        objects = new ArrayList<>();
-
     }
 
     @Override
@@ -94,7 +97,6 @@ public class BUOYAGE_ShapefileLoader
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        objects.add(object);
         entries = record.getAttributes().getEntries();
 
         object.setLat(latDegrees);
@@ -162,7 +164,8 @@ public class BUOYAGE_ShapefileLoader
                 object.setDateStart((String) e.getValue());
             }
         });
-
+        extendedBuoyage = new ExtendedBuoyage(object);
+        objects.add(extendedBuoyage);
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         //   placemark.setLabelText(object.getObjectName());
@@ -229,7 +232,7 @@ public class BUOYAGE_ShapefileLoader
         return placemark;
     }
 
-    public List<Buoyage> getBeacons() {
+    public List<ExtendedBuoyage> getBeacons() {
         return objects;
     }
 
