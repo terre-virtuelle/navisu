@@ -56,24 +56,35 @@ public class DataAccessImpl
         }
     }
 
-    @Override
-    public void test() {
+    //  @Override
+    public void test_0() {
         queryImage("Le Petit Minou");
 
     }
 
-    public void test_0() {
+    public void test_1() {
         Model model = ModelFactory.createDefaultModel();
         model.read("http://fr.dbpedia.org/page/Phare_de_Kermorvan", "HTML");
         model.write(System.out, "TURTLE");
+        /*
+         String queryString
+         = PREFIX
+         + "SELECT ?y WHERE {  "
+         // + "     ?x rdfs:label \"Phare du Petit Minou\"@fr ."
+         //  + "     ?x foaf:depiction ?y "
+         + " ?x dbpedia-owl:thumbnail ?y "
+         + "}";
+         */
 
         String queryString
                 = PREFIX
-                + "SELECT ?y WHERE {  "
-                // + "     ?x rdfs:label \"Phare du Petit Minou\"@fr ."
-                //  + "     ?x foaf:depiction ?y "
-                + " ?x dbpedia-owl:thumbnail ?y "
-                + "}";
+                + "SELECT ?y  where {"
+                + "?s prop-fr:feux ?o ."
+                + "?s rdfs:label ?name ."
+                + "?s prop-fr:géolocalisation ?lieu ."
+                + "FILTER ( REGEX ( ?name, \"Phare\", \"i\")"
+                + "FILTER ( REGEX ( ?lieu, \"france\", \"i\"))"
+                + "} ";
 
         Query query = QueryFactory.create(queryString);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
@@ -94,6 +105,47 @@ public class DataAccessImpl
                 }
             }
         }
+    }
+
+    @Override
+    public void test() {
+         URL url = null;
+        Model model = ModelFactory.createDefaultModel();
+        String queryString
+                = PREFIX
+                + "SELECT ?s  where {"
+                + "?s prop-fr:feux ?o ."
+                + "?s rdfs:label ?name ."
+                + "?s prop-fr:géolocalisation ?lieu ."
+                + "FILTER ( REGEX ( ?name, \"Phare\", \"i\"))"
+                + "FILTER ( REGEX ( ?lieu, \"france\", \"i\"))"
+                + "} ";
+
+        
+        
+        Query query = QueryFactory.create(queryString);
+        //Choose the parser to used to parse the result set
+        ARQ.getContext().setTrue(ARQ.useSAX);
+        //Executing SPARQL Query and pointing to the DBpedia SPARQL Endpoint
+        QueryExecution qexec = QueryExecutionFactory.sparqlService("http://fr.dbpedia.org/sparql", query);
+        //Retrieving the SPARQL Query results
+        ResultSet results = qexec.execSelect();
+        //Iterating over the SPARQL Query results
+        while (results.hasNext()) {
+            QuerySolution soln = results.nextSolution();
+            try {
+                url = new URL(soln.get("?s").toString());
+                System.out.println(url.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        qexec.close();
+        
+        
+        
+        
+        
     }
 
     @Override
