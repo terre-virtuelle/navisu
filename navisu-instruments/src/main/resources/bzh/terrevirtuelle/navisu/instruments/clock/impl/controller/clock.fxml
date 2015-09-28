@@ -10,7 +10,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="view" stylesheets="@clock.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" stylesheets="@clock.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Group layoutY="-20.0">
             <children>
@@ -66,16 +66,16 @@
                             <children>
                         <Group layoutY="7.0">
                            <children>
-                              <Text fx:id="daydate" layoutX="79.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="----" textAlignment="CENTER" wrappingWidth="190.0" />
+                              <Text fx:id="daydate" layoutX="79.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" textAlignment="CENTER" wrappingWidth="190.0" />
                            </children>
                         </Group>
                         <Group layoutX="57.0" layoutY="18.0">
                            <children>
-                              <Text fx:id="minutes" layoutX="100.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00" />
-                              <Text fx:id="hours" layoutX="50.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00 " />
-                              <Text fx:id="seconds" layoutX="150.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00" />
-                              <Text layoutX="90.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text=":" />
-                              <Text layoutX="140.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text=":" />
+                              <Text fx:id="minutes" layoutX="100.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" />
+                              <Text fx:id="hours" layoutX="50.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" />
+                              <Text fx:id="seconds" layoutX="150.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" />
+                              <Text layoutX="90.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" />
+                              <Text layoutX="140.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" />
                            </children>
                         </Group>
                             </children>
