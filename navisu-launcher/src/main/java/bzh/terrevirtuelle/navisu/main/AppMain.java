@@ -89,8 +89,6 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
-import bzh.terrevirtuelle.navisu.navigation.route.RouteServices;
-import bzh.terrevirtuelle.navisu.navigation.route.impl.RouteImpl;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.ontology.data.impl.DataAccessImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
@@ -177,7 +175,6 @@ public class AppMain extends Application {
                         KmlObjectImpl.class,
                         MagneticImpl.class,
                         MeasureToolsImpl.class,
-                        RouteImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
                         RouteEditorImpl.class,
@@ -238,7 +235,6 @@ public class AppMain extends Application {
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
-        RouteServices routeServices = componentManager.getComponentService(RouteServices.class);
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
