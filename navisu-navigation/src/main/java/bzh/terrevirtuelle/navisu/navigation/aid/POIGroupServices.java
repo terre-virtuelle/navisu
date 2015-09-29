@@ -14,7 +14,7 @@ import org.capcaval.c3.component.ComponentService;
  * @date 7 mai 2015
  * @author Serge Morvan
  */
-public interface GpsListenersManagerServices
+public interface POIGroupServices
         extends ComponentService {
 
     void on();

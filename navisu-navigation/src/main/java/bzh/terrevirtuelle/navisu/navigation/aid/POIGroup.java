@@ -14,7 +14,7 @@ import org.capcaval.c3.component.Component;
  * @date 7 mai 2015
  * @author Serge Morvan
  */
-public interface GpsListenersManager 
+public interface POIGroup 
 extends Component {
 
 }

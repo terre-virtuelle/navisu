@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.aid.impl.controller;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.model.ExtendedBuoyage;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.model.POI;
 import java.util.List;
 
 /**
@@ -14,15 +14,15 @@ import java.util.List;
  * @date 28 sept. 2015
  * @author Serge Morvan
  */
-public class GpsListenersManagerController {
+public class POIGroupController {
 
-    private static final GpsListenersManagerController INSTANCE;
+    private static final POIGroupController INSTANCE;
     static {
-        INSTANCE = new GpsListenersManagerController();
+        INSTANCE = new POIGroupController();
     }
-    protected List<ExtendedBuoyage> buoyages;
+    protected List<POI> pois;
 
-    public static GpsListenersManagerController getInstance() {
+    public static POIGroupController getInstance() {
         return INSTANCE;
     }
 
