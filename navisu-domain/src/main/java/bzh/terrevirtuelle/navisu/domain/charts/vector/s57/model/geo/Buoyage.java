@@ -40,6 +40,8 @@ public class Buoyage extends Location {
     protected String verticalLength;
     protected String objectNameInNationalLanguage;
     protected String status;
+    protected String label;
+    protected String imageAddress;
 
     /**
      * Get the value of navigationalSystemOfMarks
@@ -328,6 +330,53 @@ public class Buoyage extends Location {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Buoyage{"
+                + shape != null ? "shape=" + shape : ""
+                        + ", categoryOfMark=" + categoryOfMark
+                        + ", colour=" + colour
+                        + ", colourPattern=" + colourPattern
+                        + ", navigationalSystemOfMarks=" + navigationalSystemOfMarks
+                        + ", condition=" + condition
+                        + ", conspicuousRadar=" + conspicuousRadar
+                        + ", conspicuousVisually=" + conspicuousVisually
+                        + ", dateEnd=" + dateEnd
+                        + ", dateStart=" + dateStart
+                        + ", elevation=" + elevation
+                        + ", height=" + height
+                        + ", natureOfConstruction=" + natureOfConstruction
+                        + ", objectName=" + objectName
+                        + ", periodicDateStart=" + periodicDateStart
+                        + ", periodicDateEnd=" + periodicDateEnd
+                        + ", pictorialRepresentation=" + pictorialRepresentation
+                        + ", recordIngdate=" + recordIngdate
+                        + ", scaleMaximum=" + scaleMaximum
+                        + ", verticalAccuracy=" + verticalAccuracy
+                        + ", recordingIndication=" + recordingIndication
+                        + ", verticaldatum=" + verticaldatum
+                        + ", verticalLength=" + verticalLength
+                        + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
+                        + ", status=" + status
+                        + '}';
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getImageAddress() {
+        return imageAddress;
+    }
+
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
     }
 
 }

@@ -2,14 +2,11 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Edge;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Point2D;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.VectorUsage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Coastline extends Geo
