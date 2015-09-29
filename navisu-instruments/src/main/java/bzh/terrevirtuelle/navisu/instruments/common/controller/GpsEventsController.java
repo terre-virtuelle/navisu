@@ -63,6 +63,24 @@ public class GpsEventsController {
         });
     }
 
+    public void unsubscribe() {
+        ggaES.unsubscribe(new GGAEvent() {
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+            }
+        });
+        vtgES.unsubscribe(new VTGEvent() {
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+            }
+        });
+        rmcES.unsubscribe(new RMCEvent() {
+            @Override
+            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+            }
+        });
+    }
+
     public void notifyNmeaMessage(GGA data) {
 
     }
