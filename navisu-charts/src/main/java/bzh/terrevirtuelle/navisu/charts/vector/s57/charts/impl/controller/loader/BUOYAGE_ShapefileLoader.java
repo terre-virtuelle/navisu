@@ -5,7 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.model.ExtendedBuoyage;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.model.BuoyagePOI;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.model.POI;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BUOYAGE;
@@ -39,8 +40,8 @@ public class BUOYAGE_ShapefileLoader
         extends LayerShapefileLoader {
 
     private Buoyage object;
-    private ExtendedBuoyage extendedBuoyage;
-    private final List<ExtendedBuoyage> objects;
+    private BuoyagePOI buoyagePOI;
+    private final List<POI> objects;
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
     private Class claz;
@@ -50,9 +51,9 @@ public class BUOYAGE_ShapefileLoader
     private boolean dev = false;
 
     public BUOYAGE_ShapefileLoader(boolean dev, String path,
-            Map<Pair<Double, Double>, String> topMarks, 
-            String marsys, String acronym, 
-            List<ExtendedBuoyage> objects) {
+            Map<Pair<Double, Double>, String> topMarks,
+            String marsys, String acronym,
+            List<POI> objects) {
         this.dev = dev;
         this.topMarks = topMarks;
         this.marsys = marsys;
@@ -164,8 +165,8 @@ public class BUOYAGE_ShapefileLoader
                 object.setDateStart((String) e.getValue());
             }
         });
-        extendedBuoyage = new ExtendedBuoyage(object);
-        objects.add(extendedBuoyage);
+        buoyagePOI = new BuoyagePOI(object);
+        objects.add(buoyagePOI);
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         //   placemark.setLabelText(object.getObjectName());
@@ -209,31 +210,37 @@ public class BUOYAGE_ShapefileLoader
                     + "_" + marsys
                     + ".png";
         } else {
-            label = claz.getSimpleName() + "\n"
+            label = claz.getSimpleName() + " "
                     + ((catMark != null && !catMark.equals("0")) ? catMark : "") + "\n"
                     + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
-                    + "Lat : " + new Float(object.getLat()).toString() + "\n "
+                    + "Lat : " + new Float(object.getLat()).toString() + "\n"
                     + "Lon : " + new Float(object.getLon()).toString();
+            object.setLabel(label);
         }
         placemark.setValue(AVKey.DISPLAY_NAME, label);
-
-        attrs.setImageAddress("img/buoyage_" + marsys + "/" + acronym + "_"
+        String imageAddress = "img/buoyage_" + marsys + "/" + acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getColour() + "_"
                 + object.getColourPattern() + "_"
                 + tm
                 + "_" + marsys
-                + ".png");
+                + ".png";
+        object.setImageAddress(imageAddress);
+        
+        attrs.setImageAddress(imageAddress);
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.65);//0.9
         placemark.setAttributes(attrs);
-
+        
         return placemark;
     }
 
-    public List<ExtendedBuoyage> getBeacons() {
+    public List<POI> getBeacons() {
         return objects;
     }
 
+    public List<POI> getPois() {
+        return objects;
+    }
 }

@@ -18,20 +18,21 @@ import javax.persistence.Id;
  * @author Serge Morvan
  */
 @Entity
-public class ExtendedBuoyage
-        extends GpsEventsController {
+public class BuoyagePOI
+        extends POI {
 
     @Id
     private long id;
     private Buoyage buoyage;
 
-    public ExtendedBuoyage() {
+    public BuoyagePOI() {
     }
 
-    public ExtendedBuoyage(Buoyage buoyage) {
+    public BuoyagePOI(Buoyage buoyage) {
         this.buoyage = buoyage;
         id = buoyage.getId();
-        //subscribe();
+        subscribe();
+
     }
 
     public long getId() {
@@ -53,6 +54,22 @@ public class ExtendedBuoyage
 
     @Override
     public void notifyNmeaMessage(RMC data) {
-        System.out.println("data " + data);
+        System.out.println(getBuoyage().getLabel() + "\n" + getBuoyage().getImageAddress());
     }
+
+    @Override
+    public void activate() {
+        subscribe();
+    }
+
+    @Override
+    public void deactivate() {
+        unsubscribe();
+    }
+
+    @Override
+    public String toString() {
+        return buoyage.getLabel();
+    }
+    
 }

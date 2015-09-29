@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.model.ExtendedBuoyage;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.model.POI;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;
 
@@ -18,6 +18,8 @@ public interface S57ChartServices
 
     void openChart(String file);
 
-    List<ExtendedBuoyage> getExtendedBuoyageList();
+    public boolean isChartsOpen();
+
+    List<POI> getPOIList();
 
 }

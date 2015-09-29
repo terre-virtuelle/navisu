@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57Chart;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.model.ExtendedBuoyage;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.model.POI;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -83,8 +83,7 @@ public class S57ChartImpl
     protected float altitude;
     protected List<GeoLayer<Layer>> geoLayerList;
     protected List<String> groupNames = new ArrayList<>();
-
-    ;
+    protected boolean chartsOpen = false;
 
     @Override
     public void componentInitiated() {
@@ -243,7 +242,7 @@ public class S57ChartImpl
             chartS57Controller.setSurveyZoneController(surveyZoneController);
             chartS57Controller.init("data/shp/shp_" + i++);
             layers = chartS57Controller.getLayers();
-
+            chartsOpen = true;
             geoLayerList = geoViewServices.getLayerManager().getGroup(GROUP);
             groupNames.clear();
             geoLayerList.stream().forEach((l) -> {
@@ -327,12 +326,18 @@ public class S57ChartImpl
     }
 
     @Override
-    public List<ExtendedBuoyage> getExtendedBuoyageList() {
-        return chartS57Controller.getExtendedBuoyageList();
+    public List<POI> getPOIList() {
+        return chartS57Controller.getPOIList();
     }
 
     @Override
     public void componentStopped() {
 
     }
+
+    @Override
+    public boolean isChartsOpen() {
+        return chartsOpen;
+    }
+    
 }
