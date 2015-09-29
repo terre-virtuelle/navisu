@@ -89,6 +89,8 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
+import bzh.terrevirtuelle.navisu.navigation.aid.POIGroupServices;
+import bzh.terrevirtuelle.navisu.navigation.aid.impl.POIGroupImpl;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.ontology.data.impl.DataAccessImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
@@ -177,6 +179,7 @@ public class AppMain extends Application {
                         MeasureToolsImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
+                        POIGroupImpl.class,
                         RouteEditorImpl.class,
                         SedimentologyImpl.class,
                         ShapefileObjectImpl.class,
@@ -235,6 +238,8 @@ public class AppMain extends Application {
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
+        POIGroupServices poiGroupServices = componentManager.getComponentService(POIGroupServices.class);
+
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
@@ -290,6 +295,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(poiGroupServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
