@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root fx:id="view" stylesheets="@dialog.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Group layoutY="-20.0">
+            <children>
+                <Pane layoutY="21.0" prefHeight="50.0" prefWidth="400.0" styleClass="top-pane">
+                    <children>
+                        <Text  layoutX="125.0" layoutY="29.0" styleClass="instrumentvalue" text="ALERT" textAlignment="CENTER" visible="false" wrappingWidth="150.0">
+                        </Text>
+                    </children>
+                </Pane>
+                <Pane layoutY="50.0" prefHeight="80.0" prefWidth="50.0" styleClass="left-pane" />
+                <Pane layoutX="60.0" layoutY="51.0" prefHeight="80.0" prefWidth="280.0" styleClass="scrolling-pane">
+               <children>   
+                      <Pane layoutX="-60.0" layoutY="62.0" prefHeight="39.0" prefWidth="400.0" styleClass="foot-pane" />
+                      <Pane layoutX="315.0" layoutY="-11.0" prefHeight="80.0" prefWidth="25.0" styleClass="right-pane">
+                          <children>
+                              <Slider fx:id="opacitySlider" layoutX="-61.0" layoutY="46.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" rotate="90.0" value="0.6">
+                        </Slider>
+                            <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="-2.0" layoutY="-11.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@quit.png" />
+                                </image>
+                            </ImageView>
+                          </children>
+                      </Pane>
+               </children></Pane>
+                <GridPane layoutX="30.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="63.0" prefWidth="347.0" styleClass="grid-instruments">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints />
+                        
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    
+                    </rowConstraints>
+               <children>
+                  <TextField fx:id="label" text="ssssssssss" />
+               </children>
+                </GridPane>
+            </children>
+        </Group>
+    </children>
+</fx:root>

@@ -49,13 +49,15 @@ public class Widget2DController
 
     @Override
     public void handle(KeyEvent event) {
-        if (keyComb.match(event)) {
-            if (isVisible()) {
-                setVisible(false);
-                stop();
-            } else {
-                setVisible(true);
-                start();
+        if (keyComb != null) {
+            if (keyComb.match(event)) {
+                if (isVisible()) {
+                    setVisible(false);
+                    stop();
+                } else {
+                    setVisible(true);
+                    start();
+                }
             }
         }
     }
