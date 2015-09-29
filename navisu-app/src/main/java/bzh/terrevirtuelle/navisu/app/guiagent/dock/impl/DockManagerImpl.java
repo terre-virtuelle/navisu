@@ -265,6 +265,8 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", ".kmz", ".KMZ"))
                 .createNode(0, "navigation.png", 1, "routes.png", 2, "measuretools.png", (e) -> open("MeasureTools"))
                 .createNode(0, "navigation.png", 1, "routes.png", 1, "routeeditor.png", (e) -> open("RouteEditor"))
+                .createNode(0, "navigation.png", 1, "routes.png", 2, "poiOn.png", (e) -> open("POIGroup"))
+                .createNode(0, "navigation.png", 1, "routes.png", 3, "poiOff.png", (e) -> close("POIGroup"))
                 .build();
 
         navigationRadialMenu.setLayoutX((width / 2) - 30);
