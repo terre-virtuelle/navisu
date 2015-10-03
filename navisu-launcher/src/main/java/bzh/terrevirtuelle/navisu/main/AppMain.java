@@ -61,8 +61,10 @@ import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonSer
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl.GpsTrackPolygonImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
-import bzh.terrevirtuelle.navisu.instruments.utc.UtcServices;
-import bzh.terrevirtuelle.navisu.instruments.utc.impl.UtcImpl;
+import bzh.terrevirtuelle.navisu.instruments.utcclock.UtcClockServices;
+import bzh.terrevirtuelle.navisu.instruments.utcclock.impl.UtcClockImpl;
+import bzh.terrevirtuelle.navisu.instruments.boardclock.BoardClockServices;
+import bzh.terrevirtuelle.navisu.instruments.boardclock.impl.BoardClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
 import bzh.terrevirtuelle.navisu.instruments.sonar.impl.SonarImpl;
 import bzh.terrevirtuelle.navisu.instruments.template.InstrumentTemplateServices;
@@ -152,7 +154,8 @@ public class AppMain extends Application {
                         BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
                         Bezier2DImpl.class,
-                        UtcImpl.class,
+                        UtcClockImpl.class,
+                        BoardClockImpl.class,
                         CurrentsImpl.class,
                         DataAccessImpl.class,
                         DataServerImpl.class,
@@ -208,8 +211,8 @@ public class AppMain extends Application {
 
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
-        UtcServices utcServices = componentManager.getComponentService(UtcServices.class);
-
+        UtcClockServices utcclockServices = componentManager.getComponentService(UtcClockServices.class);
+        BoardClockServices boardclockServices = componentManager.getComponentService(BoardClockServices.class);
         DataAccessServices dataAccessServices = componentManager.getComponentService(DataAccessServices.class);
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
@@ -287,7 +290,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(utcServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(boardclockServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());

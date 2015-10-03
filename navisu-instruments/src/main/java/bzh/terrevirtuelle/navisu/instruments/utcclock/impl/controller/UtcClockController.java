@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.utc.impl.controller;
+package bzh.terrevirtuelle.navisu.instruments.utcclock.impl.controller;
 
-import bzh.terrevirtuelle.navisu.instruments.utc.impl.UtcImpl;
+import bzh.terrevirtuelle.navisu.instruments.utcclock.impl.UtcClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentController;
 import java.time.Clock;
 import java.time.LocalDate;
@@ -29,7 +29,7 @@ import javafx.util.Duration;
  * @date 31 mars 2015
  * @author Serge Morvan
  */
-public class UtcController
+public class UtcClockController
         extends InstrumentController
         implements Initializable {
 
@@ -45,10 +45,10 @@ public class UtcController
     @FXML
     public Text seconds;
 
-    protected UtcImpl instrument;
+    protected UtcClockImpl instrument;
     Timeline digitalTime;
 
-    public UtcController(UtcImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public UtcClockController(UtcClockImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.instrument = instrument;
         load(FXML);

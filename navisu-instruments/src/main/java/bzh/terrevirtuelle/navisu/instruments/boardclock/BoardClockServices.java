@@ -3,7 +3,7 @@
  * To change this clock file, choose Tools | Templates
  * and open the clock in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.utc;
+package bzh.terrevirtuelle.navisu.instruments.boardclock;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
@@ -14,7 +14,7 @@ import org.capcaval.c3.component.ComponentService;
  * @date 31 mars 2015
  * @author Serge Morvan
  */
-public interface UtcServices
+public interface BoardClockServices
         extends ComponentService {
 
     void on(String ... files);
