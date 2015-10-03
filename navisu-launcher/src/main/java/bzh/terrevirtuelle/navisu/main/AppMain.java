@@ -63,6 +63,8 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
 import bzh.terrevirtuelle.navisu.instruments.utcclock.UtcClockServices;
 import bzh.terrevirtuelle.navisu.instruments.utcclock.impl.UtcClockImpl;
+import bzh.terrevirtuelle.navisu.instruments.zoneclock.ZoneClockServices;
+import bzh.terrevirtuelle.navisu.instruments.zoneclock.impl.ZoneClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.boardclock.BoardClockServices;
 import bzh.terrevirtuelle.navisu.instruments.boardclock.impl.BoardClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
@@ -156,6 +158,7 @@ public class AppMain extends Application {
                         Bezier2DImpl.class,
                         UtcClockImpl.class,
                         BoardClockImpl.class,
+                        //ZoneClockImpl.class,
                         CurrentsImpl.class,
                         DataAccessImpl.class,
                         DataServerImpl.class,
@@ -213,6 +216,7 @@ public class AppMain extends Application {
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
         UtcClockServices utcclockServices = componentManager.getComponentService(UtcClockServices.class);
         BoardClockServices boardclockServices = componentManager.getComponentService(BoardClockServices.class);
+        // ZoneClockServices zoneclockServices = componentManager.getComponentService(ZoneClockServices.class);
         DataAccessServices dataAccessServices = componentManager.getComponentService(DataAccessServices.class);
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
@@ -290,7 +294,9 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(utcclockServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(boardclockServices.getDriver());
+        // instrumentDriverManagerServices.registerNewDriver(zoneclockServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());

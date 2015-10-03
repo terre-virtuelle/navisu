@@ -16,7 +16,7 @@
             <children>
                 <Pane layoutY="21.0" prefHeight="50.0" prefWidth="400.0" styleClass="top-pane">
                     <children>
-                        <Text fx:id="title" layoutX="125.0" layoutY="29.0" styleClass="instrumentvalue" text="CLOCK" textAlignment="CENTER" visible="false" wrappingWidth="150.0">
+                        <Text fx:id="title" layoutX="125.0" layoutY="23.0" styleClass="instrumentvalue" text="UTC" textAlignment="CENTER" wrappingWidth="150.0">
                         </Text>
                     </children>
                 </Pane>
@@ -50,7 +50,7 @@
                     <children>
                         <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <children>
-                                <Rectangle arcHeight="30.0" arcWidth="30.0" height="81.0" layoutX="1.0" layoutY="-40.0" strokeType="INSIDE" styleClass="clockcadres" width="340.0">
+                                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="1.0" layoutY="-30.0" strokeType="INSIDE" styleClass="clockcadres" width="340.0">
                            <stroke>
                               <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
                                  <stops>
@@ -66,12 +66,12 @@
                             <children>
                         <Group layoutY="7.0">
                            <children>
-                              <Text fx:id="daydate" layoutX="79.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" textAlignment="CENTER" wrappingWidth="190.0" />
+                              <Text fx:id="daydate" layoutX="79.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="00/00/00" textAlignment="CENTER" wrappingWidth="190.0" />
                            </children>
                         </Group>
                         <Group layoutX="57.0" layoutY="18.0">
                            <children>
-                              <Text fx:id="hours" layoutX="17.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" textAlignment="CENTER" wrappingWidth="207.0" />
+                              <Text fx:id="hours" layoutX="17.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00:00:00" textAlignment="CENTER" wrappingWidth="207.0" />
                            </children>
                         </Group>
                             </children>

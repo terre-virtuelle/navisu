@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.boardclock.impl.controller;
+package bzh.terrevirtuelle.navisu.instruments.zoneclock.impl.controller;
 
-import bzh.terrevirtuelle.navisu.instruments.boardclock.impl.BoardClockImpl;
+import antlr.collections.AST;
+import bzh.terrevirtuelle.navisu.instruments.zoneclock.impl.ZoneClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentController;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -29,12 +32,12 @@ import javafx.util.Duration;
  * @date 31 mars 2015
  * @author Serge Morvan
  */
-public class BoardClockController
+public class ZoneClockController
         extends InstrumentController
         implements Initializable {
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("kk:mm:ss");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a - z");
     private final String FXML = "clock.fxml";
     @FXML
     public Text daydate;
@@ -44,11 +47,14 @@ public class BoardClockController
     public Text minutes;
     @FXML
     public Text seconds;
-
-    protected BoardClockImpl instrument;
+    
+    
+    
+    protected ZoneClockImpl instrument;
     Timeline digitalTime;
+    
 
-    public BoardClockController(BoardClockImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public ZoneClockController(ZoneClockImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.instrument = instrument;
         load(FXML);
@@ -71,6 +77,7 @@ public class BoardClockController
          new KeyFrame(Duration.seconds(1))       
          );   
          */
+        
         digitalTime = new Timeline(
                 new KeyFrame(Duration.seconds(0), (ActionEvent actionEvent) -> {
                     daydate.setText(LocalDate.now(Clock.systemDefaultZone()).format(dateFormatter));
@@ -86,10 +93,11 @@ public class BoardClockController
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
+    
     }
-
     @Override
     public void stop() {
         digitalTime.stop();
     }
+
 }

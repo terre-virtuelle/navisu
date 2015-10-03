@@ -16,7 +16,7 @@
             <children>
                 <Pane layoutY="21.0" prefHeight="50.0" prefWidth="400.0" styleClass="top-pane">
                     <children>
-                        <Text fx:id="title" layoutX="125.0" layoutY="23.0" styleClass="instrumentvalue" text="onboard time" textAlignment="CENTER" wrappingWidth="150.0">
+                        <Text fx:id="title" layoutX="125.0" layoutY="23.0" styleClass="instrumentvalue" text="local time" textAlignment="CENTER" wrappingWidth="150.0">
                         </Text>
                     </children>
                 </Pane>
