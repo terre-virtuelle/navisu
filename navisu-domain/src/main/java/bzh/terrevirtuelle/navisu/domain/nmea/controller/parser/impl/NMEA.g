@@ -1411,7 +1411,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"ice":' ice=NUMBER 
     	|
     	//Type 18
-    	'"reserved":' reserved=NUMBER* SEP
+    	'"reserved":' reserved=NUMBER SEP
     	'"speed":' speed=NUMBER SEP 
     	'"accuracy":' accuracy=LETTERS SEP
     	'"lon":' longitude=SIGNED SEP 
@@ -1577,7 +1577,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
             
             handler.doIt(ais18);
            */ 
-          // System.out.println("ais18"); 
+           System.out.println("ais18" + getText()); 
                                  
           }
           

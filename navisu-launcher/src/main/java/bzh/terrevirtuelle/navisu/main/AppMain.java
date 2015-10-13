@@ -81,8 +81,8 @@ import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.impl.GpsTrackImpl;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.MeasureToolsServices;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.impl.MeasureToolsImpl;
-import bzh.terrevirtuelle.navisu.instruments.routeeditor.RouteEditorServices;
-import bzh.terrevirtuelle.navisu.instruments.routeeditor.impl.RouteEditorImpl;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditorServices;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
 import bzh.terrevirtuelle.navisu.instruments.webview.WebViewServices;
 import bzh.terrevirtuelle.navisu.instruments.webview.impl.WebViewImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
@@ -93,8 +93,6 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
-import bzh.terrevirtuelle.navisu.navigation.aid.POIGroupServices;
-import bzh.terrevirtuelle.navisu.navigation.aid.impl.POIGroupImpl;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.ontology.data.impl.DataAccessImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
@@ -185,7 +183,6 @@ public class AppMain extends Application {
                         MeasureToolsImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
-                        POIGroupImpl.class,
                         RouteEditorImpl.class,
                         SedimentologyImpl.class,
                         ShapefileObjectImpl.class,
@@ -245,8 +242,6 @@ public class AppMain extends Application {
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
-        POIGroupServices poiGroupServices = componentManager.getComponentService(POIGroupServices.class);
-
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
@@ -304,7 +299,6 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(poiGroupServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
@@ -383,9 +377,9 @@ public class AppMain extends Application {
          System.out.println(headings);*/
 
         /* Test CPA zone et reconnaissance de trajectoire */
-        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
+        dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
-        dataServerServices.openGpsd("sinagot.net", 2947);
+        //dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
 
         /* Test DB */

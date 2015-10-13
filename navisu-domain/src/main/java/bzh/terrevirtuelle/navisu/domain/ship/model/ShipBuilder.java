@@ -33,6 +33,7 @@ public class ShipBuilder {
     private String callSign = "@@@@";
     private Calendar ETA = new GregorianCalendar(0, 0, 0, 0, 0);
     private String destination = "@@@@";
+    private boolean target = false;
 
     private ShipBuilder() {
     }
@@ -47,7 +48,7 @@ public class ShipBuilder {
                 latitude, longitude,
                 width, length, draught,
                 shipType, navigationalStatus, electronicPositionDevice, callSign,
-                ETA, destination, country);
+                ETA, destination, country, target);
     }
 
     public ShipBuilder eta(Calendar ETA) {
@@ -145,4 +146,8 @@ public class ShipBuilder {
         return this;
     }
 
+    public ShipBuilder target(boolean target) {
+        this.target = target;
+        return this;
+    }
 }

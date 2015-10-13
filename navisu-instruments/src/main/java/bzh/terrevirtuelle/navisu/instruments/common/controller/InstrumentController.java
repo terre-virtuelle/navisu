@@ -9,13 +9,10 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import gov.nasa.worldwind.WorldWindow;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
@@ -29,8 +26,7 @@ import javafx.scene.input.KeyCombination;
  * @author Serge Morvan
  */
 public class InstrumentController
-        extends Widget2DController
-        implements Initializable {
+        extends Widget2DController{
 
     protected WorldWindow wwd;
     @FXML
@@ -61,9 +57,5 @@ public class InstrumentController
                 view.setOpacity(opacitySlider.getValue());
             });
         });
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
     }
 }

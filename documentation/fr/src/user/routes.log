@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.4.29)  27 SEP 2015 17:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.4.29)  30 SEP 2015 18:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -604,7 +604,8 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.29 			\caption
-                {\label{0}\textit{Menu Navigation : l'éditeur de routes}}
+                {\label{0}\textit{Menu Navigation/Routes/RouteEditor : l'édi...
+
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
@@ -643,8 +644,8 @@ Overfull \hbox (13.28879pt too wide) in paragraph at lines 27--31
  []
 
 
-Overfull \hbox (17.12212pt too wide) in paragraph at lines 27--31
- \OT1/cmr/m/it/10 tion 
+Overfull \hbox (109.41039pt too wide) in paragraph at lines 27--31
+ \OT1/cmr/m/it/10 tion/Routes/RouteEditor 
  []
 
 
@@ -809,9 +810,46 @@ Overfull \hbox (22.85677pt too wide) in paragraph at lines 36--40
  []
 
 ! Undefined control sequence.
+l.42 \subsection
+                {Description du menu RouteEditor}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no D in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no E in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no r in font nullfont!
+! Undefined control sequence.
 <argument>  \includegraphics 
                              [width=14cm]{images/routes/routeeditor_1.png} 
-l.46 				}
+l.47 				}
           
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -859,19 +897,19 @@ Missing character: There is no r in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.46 				}
+l.47 				}
           
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 46.
+(Font)              <7> on input line 47.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 46.
+(Font)              <5> on input line 47.
 ! Extra }, or forgotten $.
 <argument> ...cm]{images/routes/routeeditor_1.png}
                                                    
-l.46 				}
+l.47 				}
           
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -882,7 +920,7 @@ deleted material, e.g., by typing `I$}'.
 ! Extra }, or forgotten $.
 \@begin@tempboxa ...begingroup #2\color@endgroup }
                                                   \def \width {\wd \@tempbox...
-l.46 				}
+l.47 				}
           
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -893,7 +931,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.46 				}
+l.47 				}
           
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -904,7 +942,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.46 				}
+l.47 				}
           
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -915,7 +953,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.46 				}
+l.47 				}
           
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -930,7 +968,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.47 				\begin{figure}
+l.48 				\begin{figure}
                        [ht]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -947,88 +985,57 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.48 					\caption
+l.49 					\caption
                   {\label{0}\textit{Menu RouteEditor : les items}}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-! LaTeX Error: \begin{center} on input line 43 ended by \end{figure}.
+! LaTeX Error: \begin{center} on input line 44 ended by \end{figure}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.49 				\end{figure}
+l.50 				\end{figure}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (24.5554pt too wide) in paragraph at lines 46--50
+Overfull \hbox (24.5554pt too wide) in paragraph at lines 47--51
  []\OT1/cmr/m/it/10 Menu 
  []
 
 
-Overfull \hbox (40.65527pt too wide) in paragraph at lines 46--50
+Overfull \hbox (40.65527pt too wide) in paragraph at lines 47--51
  \OT1/cmr/m/it/10 RouteEd- 
  []
 
 
-Overfull \hbox (6.6444pt too wide) in paragraph at lines 46--50
+Overfull \hbox (6.6444pt too wide) in paragraph at lines 47--51
  \OT1/cmr/m/it/10 i- 
  []
 
 
-Overfull \hbox (12.6499pt too wide) in paragraph at lines 46--50
+Overfull \hbox (12.6499pt too wide) in paragraph at lines 47--51
  \OT1/cmr/m/it/10 tor 
  []
 
 
-Overfull \hbox (3.06665pt too wide) in paragraph at lines 46--50
+Overfull \hbox (3.06665pt too wide) in paragraph at lines 47--51
  \OT1/cmr/m/it/10 : 
  []
 
 
-Overfull \hbox (11.24437pt too wide) in paragraph at lines 46--50
+Overfull \hbox (11.24437pt too wide) in paragraph at lines 47--51
  \OT1/cmr/m/it/10 les 
  []
 
 
-Overfull \hbox (24.07622pt too wide) in paragraph at lines 46--50
+Overfull \hbox (24.07622pt too wide) in paragraph at lines 47--51
  \OT1/cmr/m/it/10 items 
- []
-
-! Undefined control sequence.
-l.52 \subsection
-                {Le menu RouteEditor}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no L in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no R in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no E in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no r in font nullfont!
-
-Overfull \hbox (20.0pt too wide) in paragraph at lines 54--54
-[] 
  []
 
 Missing character: There is no L in font nullfont!
@@ -1052,7 +1059,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.57 		\item Le bouton {\tt
+l.56 		\item Le bouton {\tt
                             New} : début de la définition d'une route.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1103,7 +1110,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.58 		\item Le bouton {\tt
+l.57 		\item Le bouton {\tt
                             Open} : ouverture d'une route sauvegardée au for...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1155,8 +1162,8 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no G in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no x in font nullfont!
+Missing character: There is no P in font nullfont!
+Missing character: There is no X in font nullfont!
 Missing character: There is no . in font nullfont!
 Missing character: There is no L in font nullfont!
 Missing character: There is no e in font nullfont!
@@ -1167,7 +1174,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.59 		\item Le bouton {\tt
+l.58 		\item Le bouton {\tt
                             Pause } : permet de se déplacer interactivement ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1250,7 +1257,7 @@ Missing character: There is no n in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no , in font nullfont!
 ! Undefined control sequence.
-l.59 ... les cartes sans marquer de waypoint, {\tt
+l.58 ... les cartes sans marquer de waypoint, {\tt
                                                    Resume} permet de revenir...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1302,8 +1309,8 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.60 		\item Le bouton {\tt
-                            End } : termine une route, il doit être  pressé,...
+l.59 		\item Le bouton {\tt
+                            End } : termine une route, il doit, impérativeme...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -1336,16 +1343,6 @@ Missing character: There is no d in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no t in font nullfont!
-Missing character: There is no ê in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no é in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no m in font nullfont!
@@ -1361,6 +1358,17 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no t in font nullfont!
+Missing character: There is no , in font nullfont!
+Missing character: There is no ê in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no é in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no n in font nullfont!
@@ -1384,7 +1392,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.61 		\item Le bouton {\tt
+l.60 		\item Le bouton {\tt
                             Offset} : permet de définir une zone de sécurité...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1456,7 +1464,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.62 		\item Le bouton {\tt
+l.61 		\item Le bouton {\tt
                             Export Gpx} : sauvegarde de la route, et si elle...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1552,7 +1560,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.63 		\item Le bouton {\tt
+l.62 		\item Le bouton {\tt
                             Export Kml} : sauvegarde de la route au format KML.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1610,7 +1618,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.64 		\item Le bouton {\tt
+l.63 		\item Le bouton {\tt
                             Export NMEA} : sauvegarde de la route sous forme...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1711,7 +1719,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.65 		\item Le bouton {\tt
+l.64 		\item Le bouton {\tt
                             Snapshot} : copie d'écran.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1782,7 +1790,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.71 			 	\item Le champs {\tt
+l.70 			 	\item Le champs {\tt
                                Name }: définit les noms des fichiers de sauv...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1896,7 +1904,7 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.71 ...ers seront créés dans les répertoires {\tt
+l.70 ...ers seront créés dans les répertoires {\tt
                                                    data/gpx/, data/kml/, dat...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1958,7 +1966,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.72 			    \item Le champs {\tt
+l.71 			    \item Le champs {\tt
                                  Version } : numéro de version dans le fichi...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2015,7 +2023,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.73 				\item Le champs {\tt
+l.72 				\item Le champs {\tt
                               Author }: nom de l'auteur dans le fichier GPX.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2081,8 +2089,8 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.77 				\item Le champs {\tt
-                              Name }: Par défaut les waypoints sont nommés W...
+l.76 				\item Le champs {\tt
+                              Name }: par défaut les waypoints sont nommés W...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2094,7 +2102,7 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no m in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no : in font nullfont!
-Missing character: There is no P in font nullfont!
+Missing character: There is no p in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no d in font nullfont!
@@ -2187,8 +2195,8 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.78 				\item Le champs {\tt
-                              Desc. } Texte de description du waypoint.
+l.77 				\item Le champs {\tt
+                              Desc. } texte de description du waypoint.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2200,7 +2208,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no c in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no T in font nullfont!
+Missing character: There is no t in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no x in font nullfont!
 Missing character: There is no t in font nullfont!
@@ -2245,7 +2253,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.82 		     	\item Le champs {\tt
+l.81 		     	\item Le champs {\tt
                                   Speed }: vitesse moyenne du navire.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2291,7 +2299,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.83 		     	\item Le champs {\tt
+l.82 		     	\item Le champs {\tt
                                   Dist. point d'ordre } : distance permettan...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2391,7 +2399,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.84 		     	\item Le champs {\tt
+l.83 		     	\item Le champs {\tt
                                   Dist. offset }: définit la largeur de la b...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2483,7 +2491,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.89 	 	\item Le champs {\tt
+l.88 	 	\item Le champs {\tt
                               Units} : définit les unités d'affichage
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2533,7 +2541,7 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.90 	 	\item Le champs {\tt
+l.89 	 	\item Le champs {\tt
                               Angle} :  définit le mode d'affichage des angles
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2589,8 +2597,8 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.91 	 	\item Le champs {\tt
-                              Length} : définit la longueur du track courant
+l.90 	 	\item Le champs {\tt
+                              Length} : affiche la longueur du track courant
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2604,13 +2612,13 @@ Missing character: There is no g in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no : in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no é in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no f in font nullfont!
 Missing character: There is no f in font nullfont!
 Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no l in font nullfont!
@@ -2644,8 +2652,8 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.92 	 	\item Le champs {\tt
-                              Heading} : définit l'azimut du track courant
+l.91 	 	\item Le champs {\tt
+                              Heading} : affiche l'azimut du track courant
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2660,13 +2668,13 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no g in font nullfont!
 Missing character: There is no : in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no é in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no f in font nullfont!
 Missing character: There is no f in font nullfont!
 Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no ' in font nullfont!
 Missing character: There is no a in font nullfont!
@@ -2698,8 +2706,8 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.93 	 	\item Le champs {\tt
-                              Total length} : définit la longueur totale du ...
+l.92 	 	\item Le champs {\tt
+                              Total length} : affiche la longueur totale du ...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2718,13 +2726,13 @@ Missing character: There is no g in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no h in font nullfont!
 Missing character: There is no : in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no é in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no f in font nullfont!
 Missing character: There is no f in font nullfont!
 Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no l in font nullfont!
@@ -2758,8 +2766,8 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no p in font nullfont!
 Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
-l.94 	 	\item Le champs {\tt
-                              LatLon} : définit la position du waypoint courant
+l.93 	 	\item Le champs {\tt
+                              LatLon} : affiche la position du waypoint courant
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2773,13 +2781,13 @@ Missing character: There is no L in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no : in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no é in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no f in font nullfont!
 Missing character: There is no f in font nullfont!
 Missing character: There is no i in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no t in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no e in font nullfont!
 Missing character: There is no l in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no p in font nullfont!
@@ -2808,7 +2816,7 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no t in font nullfont!
 ! Undefined control sequence.
-l.98 \section
+l.97 \section
              {Tracé de la route}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2839,8 +2847,8 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.100 Le bouton {\tt
-                     Pause-Resume} permet d'utiliser le zoom le plus intéres...
+l.99 Le bouton {\tt
+                    Pause-Resume} permet d'utiliser le zoom le plus intéress...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2981,7 +2989,7 @@ Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
 <argument>  \includegraphics 
                              [width=14cm]{images/routes/route4.png} 
-l.104 	}
+l.103 	}
         
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3032,7 +3040,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.105 	\begin{figure}
+l.104 	\begin{figure}
                      [ht]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -3049,47 +3057,47 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.106 		\caption
+l.105 		\caption
                 {\label{0}\textit{Tracé de la route}}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 Missing character: There is no é in font cmti10!
 
-! LaTeX Error: \begin{center} on input line 101 ended by \end{figure}.
+! LaTeX Error: \begin{center} on input line 100 ended by \end{figure}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.107 	\end{figure}
+l.106 	\end{figure}
                    
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (19.80539pt too wide) in paragraph at lines 104--108
+Overfull \hbox (19.80539pt too wide) in paragraph at lines 103--107
  []\OT1/cmr/m/it/10 Trac 
  []
 
 
-Overfull \hbox (9.71104pt too wide) in paragraph at lines 104--108
+Overfull \hbox (9.71104pt too wide) in paragraph at lines 103--107
  \OT1/cmr/m/it/10 de 
  []
 
 
-Overfull \hbox (7.66663pt too wide) in paragraph at lines 104--108
+Overfull \hbox (7.66663pt too wide) in paragraph at lines 103--107
  \OT1/cmr/m/it/10 la 
  []
 
 
-Overfull \hbox (22.85677pt too wide) in paragraph at lines 104--108
+Overfull \hbox (22.85677pt too wide) in paragraph at lines 103--107
  \OT1/cmr/m/it/10 route 
  []
 
 ! Undefined control sequence.
-l.110 \section
+l.109 \section
               {Définition de la zone de sécurité}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3128,7 +3136,7 @@ Missing character: There is no é in font nullfont!
 ! Undefined control sequence.
 <argument>  \includegraphics 
                              [width=14cm]{images/routes/route5.png} 
-l.115 	}
+l.114 	}
         
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3179,7 +3187,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.116 	\begin{figure}
+l.115 	\begin{figure}
                      [ht]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -3196,7 +3204,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.117 		\caption
+l.116 		\caption
                 {\label{0}\textit{Le bouton {\tt Offset}  lance le calcul d'...
 
 You're in trouble here.  Try typing  <return>  to proceed.
@@ -3205,7 +3213,7 @@ If that doesn't work, type  X <return>  to quit.
 ! Undefined control sequence.
 <argument> Le bouton {\tt 
                           Offset} lance le calcul d'une zone de sécurité aut...
-l.117 ...'une zone de sécurité autour de la route}
+l.116 ...'une zone de sécurité autour de la route}
                                                   }
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3216,115 +3224,115 @@ and I'll forget about whatever was undefined.
 Missing character: There is no é in font cmti10!
 Missing character: There is no é in font cmti10!
 
-! LaTeX Error: \begin{center} on input line 112 ended by \end{figure}.
+! LaTeX Error: \begin{center} on input line 111 ended by \end{figure}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.118 	\end{figure}
+l.117 	\end{figure}
                    
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (10.36101pt too wide) in paragraph at lines 115--119
+Overfull \hbox (10.36101pt too wide) in paragraph at lines 114--118
  []\OT1/cmr/m/it/10 Le 
  []
 
 
-Overfull \hbox (18.1443pt too wide) in paragraph at lines 115--119
+Overfull \hbox (18.1443pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 bou- 
  []
 
 
-Overfull \hbox (14.05547pt too wide) in paragraph at lines 115--119
+Overfull \hbox (14.05547pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 ton 
  []
 
 
-Overfull \hbox (17.37766pt too wide) in paragraph at lines 115--119
+Overfull \hbox (17.37766pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 Off- 
  []
 
 
-Overfull \hbox (12.01102pt too wide) in paragraph at lines 115--119
+Overfull \hbox (12.01102pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 set 
  []
 
 
-Overfull \hbox (21.97762pt too wide) in paragraph at lines 115--119
+Overfull \hbox (21.97762pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 lance 
  []
 
 
-Overfull \hbox (7.1555pt too wide) in paragraph at lines 115--119
+Overfull \hbox (7.1555pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 le 
  []
 
 
-Overfull \hbox (15.3332pt too wide) in paragraph at lines 115--119
+Overfull \hbox (15.3332pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 cal- 
  []
 
 
-Overfull \hbox (12.52214pt too wide) in paragraph at lines 115--119
+Overfull \hbox (12.52214pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 cul 
  []
 
 
-Overfull \hbox (23.76653pt too wide) in paragraph at lines 115--119
+Overfull \hbox (23.76653pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 d'une 
  []
 
 
-Overfull \hbox (19.4221pt too wide) in paragraph at lines 115--119
+Overfull \hbox (19.4221pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 zone 
  []
 
 
-Overfull \hbox (9.71104pt too wide) in paragraph at lines 115--119
+Overfull \hbox (9.71104pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 de 
  []
 
 
-Overfull \hbox (17.63321pt too wide) in paragraph at lines 115--119
+Overfull \hbox (17.63321pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 scu- 
  []
 
 
-Overfull \hbox (10.60547pt too wide) in paragraph at lines 115--119
+Overfull \hbox (10.60547pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 rit 
  []
 
 
-Overfull \hbox (14.05547pt too wide) in paragraph at lines 115--119
+Overfull \hbox (14.05547pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 au- 
  []
 
 
-Overfull \hbox (18.01654pt too wide) in paragraph at lines 115--119
+Overfull \hbox (18.01654pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 tour 
  []
 
 
-Overfull \hbox (9.71104pt too wide) in paragraph at lines 115--119
+Overfull \hbox (9.71104pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 de 
  []
 
 
-Overfull \hbox (7.66663pt too wide) in paragraph at lines 115--119
+Overfull \hbox (7.66663pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 la 
  []
 
 
-Overfull \hbox (22.85677pt too wide) in paragraph at lines 115--119
+Overfull \hbox (22.85677pt too wide) in paragraph at lines 114--118
  \OT1/cmr/m/it/10 route 
  []
 
 ! Undefined control sequence.
-l.121 \section
+l.120 \section
               {Sauvegardes}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3352,7 +3360,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.123  \item Le bouton {\tt
+l.122  \item Le bouton {\tt
                             Export Gpx} : sauvegarde de la route, et si elle...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3448,7 +3456,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.124  \item Le bouton {\tt
+l.123  \item Le bouton {\tt
                             Export Kml} : sauvegarde de la route au format KML.
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3506,7 +3514,7 @@ Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.125  \item Le bouton {\tt
+l.124  \item Le bouton {\tt
                             Export NMEA} : sauvegarde de la route sous forme...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3599,7 +3607,7 @@ Missing character: There is no n in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no . in font nullfont!
 ! Undefined control sequence.
-l.127  \section
+l.126  \section
                {Simulation}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3618,7 +3626,7 @@ Missing character: There is no i in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no n in font nullfont!
 ! Undefined control sequence.
-l.129   \subsection
+l.128   \subsection
                    *{Choix du navire}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3648,7 +3656,7 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no m in font nullfont!
-Missing character: There is no e in font nullfont!
+Missing character: There is no è in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no e in font nullfont!
@@ -3731,7 +3739,7 @@ Missing character: There is no a in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no m in font nullfont!
-Missing character: There is no e in font nullfont!
+Missing character: There is no è in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no e in font nullfont!
@@ -3871,12 +3879,12 @@ Missing character: There is no m in font nullfont!
 Missing character: There is no a in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no C in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no a in font nullfont!
+Missing character: There is no O in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no A in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no A in font nullfont!
 Missing character: There is no , in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no e in font nullfont!
@@ -3949,7 +3957,7 @@ Missing character: There is no t in font nullfont!
 ! Undefined control sequence.
 <argument>  \includegraphics 
                              [width=9cm]{images/routes/route_8.png} 
-l.140   	}
+l.139   	}
           
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -3990,7 +3998,7 @@ Missing character: There is no e in font nullfont!
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.140   	}
+l.139   	}
           
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
@@ -3998,7 +4006,7 @@ you left one out. Proceed, with fingers crossed.
 ! Extra }, or forgotten $.
 <argument> ...idth=9cm]{images/routes/route_8.png}
                                                    
-l.140   	}
+l.139   	}
           
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -4009,7 +4017,7 @@ deleted material, e.g., by typing `I$}'.
 ! Extra }, or forgotten $.
 \@begin@tempboxa ...begingroup #2\color@endgroup }
                                                   \def \width {\wd \@tempbox...
-l.140   	}
+l.139   	}
           
 I've deleted a group-closing symbol because it seems to be
 spurious, as in `$x}$'. But perhaps the } is legitimate and
@@ -4020,7 +4028,7 @@ deleted material, e.g., by typing `I$}'.
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.140   	}
+l.139   	}
           
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -4031,7 +4039,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.140   	}
+l.139   	}
           
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -4042,7 +4050,7 @@ my insertion and my current dilemma will both disappear.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.140   	}
+l.139   	}
           
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -4057,7 +4065,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.141   	\begin{figure}
+l.140   	\begin{figure}
                        [ht]
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -4074,72 +4082,605 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.142   		\caption
+l.141   		\caption
                   {\label{0}\textit{Les parametres du {\em ownership}}}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-! LaTeX Error: \begin{center} on input line 137 ended by \end{figure}.
+! LaTeX Error: \begin{center} on input line 136 ended by \end{figure}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.143   	\end{figure}
+l.142   	\end{figure}
                      
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-Overfull \hbox (14.44987pt too wide) in paragraph at lines 140--144
+Overfull \hbox (14.44987pt too wide) in paragraph at lines 139--143
  []\OT1/cmr/m/it/10 Les 
  []
 
 
-Overfull \hbox (34.88307pt too wide) in paragraph at lines 140--144
+Overfull \hbox (34.88307pt too wide) in paragraph at lines 139--143
  \OT1/cmr/m/it/10 parame- 
  []
 
 
-Overfull \hbox (15.71652pt too wide) in paragraph at lines 140--144
+Overfull \hbox (15.71652pt too wide) in paragraph at lines 139--143
  \OT1/cmr/m/it/10 tres 
  []
 
 
-Overfull \hbox (10.47772pt too wide) in paragraph at lines 140--144
+Overfull \hbox (10.47772pt too wide) in paragraph at lines 139--143
  \OT1/cmr/m/it/10 du 
  []
 
 
-Overfull \hbox (20.83336pt too wide) in paragraph at lines 140--144
+Overfull \hbox (20.83336pt too wide) in paragraph at lines 139--143
  \OT1/cmr/m/n/10 own- 
  []
 
 
-Overfull \hbox (11.69444pt too wide) in paragraph at lines 140--144
+Overfull \hbox (11.69444pt too wide) in paragraph at lines 139--143
  \OT1/cmr/m/n/10 er- 
  []
 
 
-Overfull \hbox (17.83337pt too wide) in paragraph at lines 140--144
+Overfull \hbox (17.83337pt too wide) in paragraph at lines 139--143
  \OT1/cmr/m/n/10 ship 
  []
 
-)
-Runaway argument?
-{ \includegraphics [width=14cm]{images/routes/route6.png} \begin {fig\ETC.
-! File ended while scanning use of \@iframebox.
-<inserted text> 
-                \par 
-<*> routes.tex
-              
-I suspect you have forgotten a `}', causing me
-to read past where you wanted me to stop.
-I'll try to recover; but if the error is serious,
-you'd better type `E' or `X' now and fix your file.
+! Undefined control sequence.
+<argument>  \includegraphics 
+                             [width=14cm]{images/routes/route6.png} 
+l.149  	}
+         
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
 
+Missing character: There is no [ in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no 6 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+
+! LaTeX Error: Environment figure undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.150  		\begin{figure}
+                       [ht]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.151  			\caption
+                  {\label{0}\textit{GpsPlot On du menu Instruments/Navigatio...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \begin{center} on input line 146 ended by \end{figure}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.152  		\end{figure}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (16.4249pt too wide) in paragraph at lines 149--153
+ []\OT1/cmr/m/it/10 Gp- 
+ []
+
+
+Overfull \hbox (21.86098pt too wide) in paragraph at lines 149--153
+ \OT1/cmr/m/it/10 sPlot 
+ []
+
+
+Overfull \hbox (13.28882pt too wide) in paragraph at lines 149--153
+ \OT1/cmr/m/it/10 On 
+ []
+
+
+Overfull \hbox (10.47772pt too wide) in paragraph at lines 149--153
+ \OT1/cmr/m/it/10 du 
+ []
+
+
+Overfull \hbox (23.76653pt too wide) in paragraph at lines 149--153
+ \OT1/cmr/m/it/10 menu 
+ []
+
+
+Overfull \hbox (13.05547pt too wide) in paragraph at lines 149--153
+ \OT1/cmr/m/it/10 In- 
+ []
+
+
+Overfull \hbox (20.57207pt too wide) in paragraph at lines 149--153
+ \OT1/cmr/m/it/10 stru- 
+ []
+
+
+Overfull \hbox (100.83409pt too wide) in paragraph at lines 149--153
+ \OT1/cmr/m/it/10 ments/Navigation/Gps 
+ []
+
+! Undefined control sequence.
+<argument>  \includegraphics 
+                             [width=14cm]{images/routes/route7.png} 
+l.159  	}
+         
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no 7 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+
+! LaTeX Error: Environment figure undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.160  	\begin{figure}
+                      [ht]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.161  		\caption
+                 {\label{0}\textit{Choix du fichier Gps à rejouer}}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+Missing character: There is no à in font cmti10!
+
+! LaTeX Error: \begin{center} on input line 156 ended by \end{figure}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.162  	\end{figure}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (25.08319pt too wide) in paragraph at lines 159--163
+ []\OT1/cmr/m/it/10 Choix 
+ []
+
+
+Overfull \hbox (10.47772pt too wide) in paragraph at lines 159--163
+ \OT1/cmr/m/it/10 du 
+ []
+
+
+Overfull \hbox (27.21648pt too wide) in paragraph at lines 159--163
+ \OT1/cmr/m/it/10 fichier 
+ []
+
+
+Overfull \hbox (16.93602pt too wide) in paragraph at lines 159--163
+ \OT1/cmr/m/it/10 Gps 
+ []
+
+
+Overfull \hbox (11.88321pt too wide) in paragraph at lines 159--163
+ \OT1/cmr/m/it/10 re- 
+ []
+
+
+Overfull \hbox (23.43733pt too wide) in paragraph at lines 159--163
+ \OT1/cmr/m/it/10 jouer 
+ []
+
+! Undefined control sequence.
+<argument>  \includegraphics 
+                             [width=14cm]{images/routes/route8.png} 
+l.169  	}
+         
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no 8 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+
+! LaTeX Error: Environment figure undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.170  	\begin{figure}
+                      [ht]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.171  		\caption
+                 {\label{0}\textit{Simulation de la route avec la couche Gps...
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \begin{center} on input line 166 ended by \end{figure}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.172  	\end{figure}
+                    
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (20.44432pt too wide) in paragraph at lines 169--173
+ []\OT1/cmr/m/it/10 Sim- 
+ []
+
+
+Overfull \hbox (8.94438pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 u- 
+ []
+
+
+Overfull \hbox (11.24437pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 la- 
+ []
+
+
+Overfull \hbox (17.12212pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 tion 
+ []
+
+
+Overfull \hbox (9.71104pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 de 
+ []
+
+
+Overfull \hbox (7.66663pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 la 
+ []
+
+
+Overfull \hbox (22.10538pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 route 
+ []
+
+
+Overfull \hbox (18.39984pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 avec 
+ []
+
+
+Overfull \hbox (7.66663pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 la 
+ []
+
+
+Overfull \hbox (28.87756pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 couche 
+ []
+
+
+Overfull \hbox (16.4249pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 Gp- 
+ []
+
+
+Overfull \hbox (29.57059pt too wide) in paragraph at lines 169--173
+ \OT1/cmr/m/it/10 sTrack 
+ []
+
+! Undefined control sequence.
+<argument>  \includegraphics 
+                             [width=14cm]{images/routes/route9.png} 
+l.179   	}
+          
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 4 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no ] in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no / in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no 9 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+
+! LaTeX Error: Environment figure undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.180   	\begin{figure}
+                       [ht]
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no ] in font nullfont!
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.181   		\caption
+                  {\label{0}\textit{Simulation de la route avec la couche KML}}
+
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: \begin{center} on input line 176 ended by \end{figure}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.182   	\end{figure}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (20.44432pt too wide) in paragraph at lines 179--183
+ []\OT1/cmr/m/it/10 Sim- 
+ []
+
+
+Overfull \hbox (8.94438pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 u- 
+ []
+
+
+Overfull \hbox (11.24437pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 la- 
+ []
+
+
+Overfull \hbox (17.12212pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 tion 
+ []
+
+
+Overfull \hbox (9.71104pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 de 
+ []
+
+
+Overfull \hbox (7.66663pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 la 
+ []
+
+
+Overfull \hbox (22.10538pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 route 
+ []
+
+
+Overfull \hbox (18.39984pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 avec 
+ []
+
+
+Overfull \hbox (7.66663pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 la 
+ []
+
+
+Overfull \hbox (28.87756pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 couche 
+ []
+
+
+Overfull \hbox (22.92763pt too wide) in paragraph at lines 179--183
+ \OT1/cmr/m/it/10 KML 
+ []
+
+)
 ! Emergency stop.
 <*> routes.tex
               
@@ -4149,7 +4690,7 @@ you'd better type `E' or `X' now and fix your file.
 Here is how much of TeX's memory you used:
  21 strings out of 493105
  289 string characters out of 6137072
- 62508 words of memory out of 5000000
+ 64508 words of memory out of 5000000
  3585 multiletter control sequences out of 15000+600000
  3986 words of font info for 15 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191

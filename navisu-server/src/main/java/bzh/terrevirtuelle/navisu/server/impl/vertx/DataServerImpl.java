@@ -103,7 +103,7 @@ public class DataServerImpl
                             readers.get(currentReaderIndex).read();
                         }
                         response = response(currentReaderIndex);
-                       // System.out.println("response "+ response);
+                        //System.out.println("response "+ response);
                         if (response != null) {
                             ws.writeTextFrame(response.toString());
                         }

@@ -32,4 +32,8 @@ public interface AisServices
     Map<Integer, Calendar> getTimestamps();
 
     Map<Integer, String> getMidMap();
+
+    void aisCreateTargetEvent(Ship ship);
+
+    void aisUpdateTargetEvent(Ship ship);
 }

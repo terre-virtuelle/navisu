@@ -9,11 +9,12 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57Chart;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.model.POI;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.AisActivateEvent;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
@@ -43,6 +44,8 @@ import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
+import org.capcaval.c3.component.ComponentEventSubscribe;
+import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
  * @author Serge Morvan
@@ -59,6 +62,8 @@ public class S57ChartImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     DataAccessServices dataAccessServices;
+    ComponentManager cm;
+    ComponentEventSubscribe<AisActivateEvent> aisActivateES;
 
     private static final String NAME = "S57";
     private static final String EXTENSION_0 = ".000";
@@ -101,7 +106,8 @@ public class S57ChartImpl
             //  System.out.println("altitude : " + ((int) wwd.getView().getCurrentEyePosition().getAltitude()));
             filter();
         });
-
+        cm = ComponentManager.componentManager;
+        aisActivateES = cm.getComponentEventSubscribe(AisActivateEvent.class);
     }
 
     private void filter() {
@@ -326,8 +332,8 @@ public class S57ChartImpl
     }
 
     @Override
-    public List<POI> getPOIList() {
-        return chartS57Controller.getPOIList();
+    public Set<S57Controller> getS57Controllers() {
+        return chartS57Controller.getS57Controllers();
     }
 
     @Override
@@ -339,5 +345,5 @@ public class S57ChartImpl
     public boolean isChartsOpen() {
         return chartsOpen;
     }
-    
+
 }

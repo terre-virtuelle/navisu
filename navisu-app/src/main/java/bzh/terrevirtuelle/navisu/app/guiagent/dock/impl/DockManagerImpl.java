@@ -230,6 +230,8 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "navigation.png", 0, "ais.png", 3, "aisLogOff.png", (e) -> close("AisLogger"))
                 .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsPlotOn.png", (e) -> open("GpsPlotter"))
                 .createNode(0, "navigation.png", 1, "gps.png", 1, "gpsPlotOff.png", (e) -> close("GpsPlotter"))
+                .createNode(0, "navigation.png", 1, "gps.png", 0, "gpsPlotWithRouteOn.png", (e) -> open("GpsPlotterWithRoute"))
+                .createNode(0, "navigation.png", 1, "gps.png", 1, "gpsPlotWithRouteOff.png", (e) -> close("GpsPlotterWithRoute"))
                 .createNode(0, "navigation.png", 1, "gps.png", 2, "gpsLogOn.png", (e) -> open("GpsLogger"))
                 .createNode(0, "navigation.png", 1, "gps.png", 3, "gpsLogOff.png", (e) -> close("GpsLogger"))
                 .createNode(0, "navigation.png", 2, "compass.png", 0, "compass.png", (e) -> open("Compass"))
@@ -267,8 +269,6 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "navigation.png", 0, "tracks.png", 1, "kml.png", (e) -> open("Kml", ".kml", ".KML", ".kmz", ".KMZ"))
                 .createNode(0, "navigation.png", 1, "routes.png", 2, "measuretools.png", (e) -> open("MeasureTools"))
                 .createNode(0, "navigation.png", 1, "routes.png", 1, "routeeditor.png", (e) -> open("RouteEditor"))
-                .createNode(0, "navigation.png", 1, "routes.png", 2, "poiOn.png", (e) -> open("POIGroup"))
-                .createNode(0, "navigation.png", 1, "routes.png", 3, "poiOff.png", (e) -> close("POIGroup"))
                 .build();
 
         navigationRadialMenu.setLayoutX((width / 2) - 30);

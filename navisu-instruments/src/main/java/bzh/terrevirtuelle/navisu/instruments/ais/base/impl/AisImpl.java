@@ -373,7 +373,7 @@ public class AisImpl
                         if (i < 1000) {
                             speakerServices.read("Perte d'une cible A I ES ! " + name);
                             i++;
-                        }  
+                        }
                     }
                     return _item;
                 }).map((_item) -> {
@@ -394,5 +394,15 @@ public class AisImpl
                 });
             }
         };
+    }
+
+    @Override
+    public void aisCreateTargetEvent(Ship ship) {
+        aisCreateTargetEvent.notifyAisMessageChanged(ship);
+    }
+
+    @Override
+    public void aisUpdateTargetEvent(Ship ship) {
+        aisUpdateTargetEvent.notifyAisMessageChanged(ship);
     }
 }
