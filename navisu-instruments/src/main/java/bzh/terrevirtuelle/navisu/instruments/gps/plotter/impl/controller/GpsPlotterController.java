@@ -16,7 +16,9 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -25,8 +27,12 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -35,6 +41,7 @@ import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 
 /**
  * NaVisu
@@ -43,32 +50,45 @@ import javafx.scene.input.KeyEvent;
  * @author Serge Morvan
  */
 public class GpsPlotterController {
-
-    protected String name;
+    
+    protected String name1;
+    protected String name2;
     protected String group;
     protected WorldWindow wwd;
     protected RenderableLayer gpsLayer;
+    protected RenderableLayer aisSurveyZoneLayer;
     protected GeoViewServices geoViewServices;
     protected LayerTreeServices layerTreeServices;
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
+    protected AisServices aisServices;
     protected TargetPanel targetPanel;
     protected Ship ownerShip;
     protected double initRotation;
     protected Properties properties;
     protected ColladaRoot ownerShipView;
-
-    public GpsPlotterController(GeoViewServices geoViewServices,
+    protected boolean withRoute = false;
+    protected List<String> s57Controllers;
+    protected GpsPlotterImpl component;
+    
+    public GpsPlotterController(GpsPlotterImpl component,
+            GeoViewServices geoViewServices,
             LayerTreeServices layerTreeServices,
             GuiAgentServices guiAgentServices,
             KmlObjectServices kmlObjectServices,
-            String name, String group) {
-
+            AisServices aisServices,
+            boolean withRoute,
+            String name1, String name2,
+            String group) {
+        this.component = component;
         this.geoViewServices = geoViewServices;
         this.layerTreeServices = layerTreeServices;
         this.guiAgentServices = guiAgentServices;
         this.kmlObjectServices = kmlObjectServices;
-        this.name = name;
+        this.aisServices = aisServices;
+        this.withRoute = withRoute;
+        this.name1 = name1;
+        this.name2 = name2;
         this.group = group;
         wwd = GeoWorldWindViewImpl.getWW();
         List<String> groups = layerTreeServices.getGroupNames();
@@ -77,14 +97,20 @@ public class GpsPlotterController {
             geoViewServices.getLayerManager().createGroup(group);
         }
         this.gpsLayer = new RenderableLayer();
-        gpsLayer.setName(name);
+        gpsLayer.setName(name1);
         geoViewServices.getLayerManager().insertGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(gpsLayer));
         layerTreeServices.addGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(gpsLayer));
+        this.aisSurveyZoneLayer = new RenderableLayer();
+        aisSurveyZoneLayer.setName(name2);
+        geoViewServices.getLayerManager().insertGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(aisSurveyZoneLayer));
+        layerTreeServices.addGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(aisSurveyZoneLayer));
+        
         addPanelController();
         addListeners();
         createOwnerShip();
+        activateS57Controllers();
     }
-
+    
     private void addPanelController() {
         Platform.runLater(() -> {
             targetPanel = new TargetPanel(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
@@ -94,13 +120,13 @@ public class GpsPlotterController {
             targetPanel.setVisible(false);
         });
     }
-
+    
     protected final void updateAisPanel(Ship ship) {
         Platform.runLater(() -> {
             targetPanel.updateAisPanel(ship);
         });
     }
-
+    
     private void addListeners() {
         wwd.addSelectListener((SelectEvent event) -> {
             Object o = event.getTopObject();
@@ -115,7 +141,7 @@ public class GpsPlotterController {
             }
         });
     }
-
+    
     private void createOwnerShip() {
         properties = new Properties();
         try {
@@ -139,9 +165,11 @@ public class GpsPlotterController {
                 .shipType(new Integer(properties.getProperty("shipType")))
                 .navigationalStatus(new Integer(properties.getProperty("navigationalStatus")))
                 .electronicPositionDevice(new Integer(properties.getProperty("electronicPositionDevice")))
-                .callSign(properties.getProperty("callSign")).build();
+                .callSign(properties.getProperty("callSign"))
+                .target(true)
+                .build();
     }
-
+    
     public void createTarget() {
         initRotation = new Double(properties.getProperty("initRotation"));
         ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae"));
@@ -149,22 +177,24 @@ public class GpsPlotterController {
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         ownerShipView.setField("Ship", ownerShip);
-        
+        aisServices.aisCreateTargetEvent(ownerShip);
     }
-
+    
     public void notifyNmeaMessage(GGA data) {
         ownerShip.setLatitude(data.getLatitude());
         ownerShip.setLongitude(data.getLongitude());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        aisServices.aisUpdateTargetEvent(ownerShip);
     }
-
+    
     public void notifyNmeaMessage(VTG data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        aisServices.aisUpdateTargetEvent(ownerShip);
     }
-
+    
     public void notifyNmeaMessage(RMC data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
@@ -172,5 +202,24 @@ public class GpsPlotterController {
         ownerShip.setLongitude(data.getLongitude());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        aisServices.aisUpdateTargetEvent(ownerShip);
+    }
+    
+    private void activateS57Controllers() {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter
+                = new FileChooser.ExtensionFilter("POI files (*.poi)", "*.poi", "*.POI");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setInitialDirectory(new File("data/poi"));
+        File file = fileChooser.showOpenDialog(guiAgentServices.getStage());
+        if (file != null) {
+            Path path = Paths.get(file.getAbsolutePath());
+            try {
+                s57Controllers = Files.readAllLines(path);
+            } catch (IOException ex) {
+                Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        component.notifyAisActivateEvent(aisSurveyZoneLayer, s57Controllers);
     }
 }

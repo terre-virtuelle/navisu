@@ -358,7 +358,8 @@ public class AisRadarController
                 .shipType(new Integer(properties.getProperty("shipType")))
                 .navigationalStatus(new Integer(properties.getProperty("navigationalStatus")))
                 .electronicPositionDevice(new Integer(properties.getProperty("electronicPositionDevice")))
-                .callSign(properties.getProperty("callSign")).build();
+                .callSign(properties.getProperty("callSign"))
+                .target(true).build();
         latOwner = new Float(properties.getProperty("latitude"));
         lonOwner = new Float(properties.getProperty("longitude"));
         createTarget(ownerShip);
