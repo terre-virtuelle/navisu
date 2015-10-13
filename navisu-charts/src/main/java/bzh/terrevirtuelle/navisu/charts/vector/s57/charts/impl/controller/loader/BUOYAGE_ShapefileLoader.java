@@ -5,8 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.model.BuoyagePOI;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.model.POI;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.BuoyageController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57BasicBehavior;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BUOYAGE;
@@ -24,7 +25,6 @@ import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -40,8 +40,8 @@ public class BUOYAGE_ShapefileLoader
         extends LayerShapefileLoader {
 
     private Buoyage object;
-    private BuoyagePOI buoyagePOI;
-    private final List<POI> objects;
+    private BuoyageController buoyageController;
+    private final Set<S57Controller> s57Controllers;
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
     private Class claz;
@@ -53,12 +53,12 @@ public class BUOYAGE_ShapefileLoader
     public BUOYAGE_ShapefileLoader(boolean dev, String path,
             Map<Pair<Double, Double>, String> topMarks,
             String marsys, String acronym,
-            List<POI> objects) {
+            Set<S57Controller> s57Controllers) {
         this.dev = dev;
         this.topMarks = topMarks;
         this.marsys = marsys;
         this.acronym = acronym;
-        this.objects = objects;
+        this.s57Controllers = s57Controllers;
         String className = BUOYAGE.ATT.get(acronym);
         try {
             claz = Class.forName(path + "." + className);
@@ -69,6 +69,7 @@ public class BUOYAGE_ShapefileLoader
 
     @Override
     protected void addRenderablesForPoints(Shapefile shp, RenderableLayer layer) {
+        this.layer = layer;
         while (shp.hasNext()) {
             ShapefileRecord record = shp.nextRecord();
 
@@ -78,7 +79,6 @@ public class BUOYAGE_ShapefileLoader
             attrs = this.createPointAttributes(record);
             double[] point = ((ShapefileRecordPoint) record).getPoint();
             layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
-
         }
     }
 
@@ -165,8 +165,8 @@ public class BUOYAGE_ShapefileLoader
                 object.setDateStart((String) e.getValue());
             }
         });
-        buoyagePOI = new BuoyagePOI(object);
-        objects.add(buoyagePOI);
+        buoyageController = new BuoyageController(object, new S57BasicBehavior(926));
+        s57Controllers.add(buoyageController);
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         //   placemark.setLabelText(object.getObjectName());
@@ -227,20 +227,20 @@ public class BUOYAGE_ShapefileLoader
                 + "_" + marsys
                 + ".png";
         object.setImageAddress(imageAddress);
-        
+
         attrs.setImageAddress(imageAddress);
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.65);//0.9
         placemark.setAttributes(attrs);
-        
+
         return placemark;
     }
 
-    public List<POI> getBeacons() {
-        return objects;
+    public Set<S57Controller> getBeacons() {
+        return s57Controllers;
     }
 
-    public List<POI> getPois() {
-        return objects;
+    public Set<S57Controller> getS57Controllers() {
+        return s57Controllers;
     }
 }
