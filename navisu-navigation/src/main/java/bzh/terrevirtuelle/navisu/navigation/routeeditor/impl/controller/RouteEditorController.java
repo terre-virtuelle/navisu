@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.routeeditor.impl.controller;
+package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.GpxBuilder;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
@@ -13,12 +16,14 @@ import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackBuilder;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackSegment;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Waypoint;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.WaypointBuilder;
-import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentController;
-import bzh.terrevirtuelle.navisu.instruments.routeeditor.impl.RouteEditorImpl;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
+import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.operation.buffer.BufferOp;
+import com.vividsolutions.jts.operation.buffer.BufferParameters;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
@@ -45,22 +50,28 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Clock;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
@@ -81,14 +92,12 @@ import org.gavaghan.geodesy.GlobalCoordinates;
  * @author Serge Morvan
  */
 public class RouteEditorController
-        extends InstrumentController {
+        extends Widget2DController {
 
     private final RouteEditorImpl instrument;
     private final String FXML = "routeeditor.fxml";
-
     private MeasureTool measureTool;
     private TerrainProfileLayer profile = new TerrainProfileLayer();
-
     private Gpx gpx;
     private List<Track> tracks;// 1 seul Track par Gpx/Route
     private Track track;
@@ -97,6 +106,7 @@ public class RouteEditorController
     private List<Point> boundaries;
     private List<Position> positions;
     private List<Position> pathPositions;
+    private Set<S57Controller> s57Controllers;
     private int size;
     private String routeName;
     private String author;
@@ -105,6 +115,7 @@ public class RouteEditorController
     private final double MIN_DISTANCE = 0.5; // minimal distance between 2 Wp
     private final double BUFFER_DISTANCE = 0.01; //unit is decimal degrees
     private double bufferDistance;
+    private Geometry buffer;
     private Polygon offset;
     private final GeodeticCalculator geoCalc;
     private final Ellipsoid reference = Ellipsoid.WGS84;//default
@@ -116,7 +127,14 @@ public class RouteEditorController
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hhmmss");
     private final DateTimeFormatter kmlDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     private final DateTimeFormatter kmlTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss dd/MM/yy");
+    private WorldWindow wwd;
+    private S57ChartServices s57ChartServices;
+    @FXML
+    public Group view;
+    @FXML
+    public ImageView quit;
+    @FXML
+    public Slider opacitySlider;
     @FXML
     public ComboBox unitsCombo;
     @FXML
@@ -132,17 +150,9 @@ public class RouteEditorController
     @FXML
     public Button endButton;
     @FXML
-    public Button bufferButton;
-    @FXML
-    public Button gpxButton;
-    @FXML
-    public Button kmlButton;
-    @FXML
     public Button openButton;
     @FXML
     public Button snapshotButton;
-    @FXML
-    public Button nmeaButton;
     @FXML
     public TextField lengthText;
     @FXML
@@ -168,14 +178,16 @@ public class RouteEditorController
     @FXML
     TextField distOffsetText;
 
-    public RouteEditorController(RouteEditorImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public RouteEditorController(RouteEditorImpl instrument, S57ChartServices s57ChartServices,
+            KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
         super(keyCode, keyCombination);
         this.instrument = instrument;
+        this.s57ChartServices = s57ChartServices;
+        wwd = GeoWorldWindViewImpl.getWW();
         geoCalc = new GeodeticCalculator();
         bufferDistance = BUFFER_DISTANCE;
 
-        //  positions = new ArrayList();
         /*
          // Add terrain profile layer
          profile.setEventSource(GeoWorldWindViewImpl.getWW());
@@ -203,7 +215,8 @@ public class RouteEditorController
             Label fileLabel = new Label();
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extFilter
-                    = new FileChooser.ExtensionFilter("GPX files (*.gpx)", "*.gpx");
+                    = new FileChooser.ExtensionFilter("GPX files (*.gpx)", "*.gpx", "*.GPX");
+            fileChooser.setInitialDirectory(new File("data/gpx"));
             fileChooser.getExtensionFilters().add(extFilter);
             File file = fileChooser.showOpenDialog(instrument.getGuiAgentServices().getStage());
             FileInputStream inputFile = null;
@@ -240,22 +253,16 @@ public class RouteEditorController
         endButton.setOnMouseClicked((MouseEvent event) -> {
             filter();
             measureTool.setArmed(false);
-            bufferButton.arm();
-            gpxButton.arm();
-            kmlButton.arm();
-        });
-        bufferButton.setOnMouseClicked((MouseEvent event) -> {
-            bufferFromJTS(positions);
+            bufferFromJTS();
             showBuffer();
-        });
-        gpxButton.setOnMouseClicked((MouseEvent event) -> {
             fillGpx();
             fillGpxBoundaries();
             exportGpx();
-        });
-        kmlButton.setOnMouseClicked((MouseEvent event) -> {
             exportKML();
+            exportNmea();
+            exportS57Controllers();
         });
+        
         snapshotButton.setOnMouseClicked((MouseEvent event) -> {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -265,9 +272,7 @@ public class RouteEditorController
                 }
             });
         });
-        nmeaButton.setOnMouseClicked((MouseEvent event) -> {
-            nmeaSentences();
-        });
+
         routeNameText.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
                 routeName = routeNameText.getText();
@@ -328,6 +333,24 @@ public class RouteEditorController
                     }
                 }
             }
+        });
+    }
+
+    final void load(String fxml) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+        view.setOpacity(0.8);
+        opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            Platform.runLater(() -> {
+                view.setOpacity(opacitySlider.getValue());
+            });
         });
     }
 
@@ -393,9 +416,6 @@ public class RouteEditorController
         trackSegments = new ArrayList<>();
         measureTool.clear();
         measureTool.setArmed(true);
-        bufferButton.disarm();
-        gpxButton.disarm();
-        kmlButton.disarm();
     }
 
     private void fillPointsPanel() {
@@ -467,7 +487,7 @@ public class RouteEditorController
         }
     }
 
-    private void bufferFromJTS(List<Position> positions) {
+    private void bufferFromJTS() {
 
         if (measureTool.isArmed() == false) {
             Coordinate[] coordinates = new Coordinate[positions.size()];
@@ -477,8 +497,8 @@ public class RouteEditorController
             }
             Geometry geom = new GeometryFactory().createLineString(coordinates);
             BufferOp bufferOp = new BufferOp(geom);
-            bufferOp.setEndCapStyle(BufferOp.CAP_ROUND);
-            Geometry buffer = bufferOp.getResultGeometry(bufferDistance);
+            bufferOp.setEndCapStyle(BufferParameters.CAP_ROUND);
+            buffer = bufferOp.getResultGeometry(bufferDistance);
             pathPositions = new ArrayList<>();
             for (Coordinate c : buffer.getCoordinates()) {
                 pathPositions.add(Position.fromDegrees(c.y, c.x, 100));
@@ -490,7 +510,7 @@ public class RouteEditorController
         }
     }
 
-    private void showBuffer() {
+    public final void showBuffer() {
         if (offset != null) {
             ShapeAttributes normalAttributes = new BasicShapeAttributes();
             normalAttributes.setInteriorMaterial(Material.WHITE);
@@ -507,10 +527,12 @@ public class RouteEditorController
             highlightAttributes.setOutlineOpacity(1);
             highlightAttributes.setInteriorOpacity(0.8);
             offset.setHighlightAttributes(highlightAttributes);
-
             measureTool.getLayer().addRenderable(offset);
-
         }
+    }
+
+    public Geometry getBuffer() {
+        return buffer;
     }
 
     private void fillMesureTool() {
@@ -544,10 +566,6 @@ public class RouteEditorController
         measureTool.setPositions(positionsList);
     }
 
-    private void showGpx() {
-        //  System.out.println("gpx " + gpx.getBoundaries().getBounds());
-    }
-
     private void exportGpx() {
         if (gpx != null) {
             try {
@@ -565,19 +583,7 @@ public class RouteEditorController
         }
     }
 
-    public double getDistanceNm(Position posA, Position posB) {
-        waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
-        waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
-        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getEllipsoidalDistance() / KM_TO_METER * KM_TO_NAUTICAL;
-    }
-
-    private double getAzimuth(Position posA, Position posB) {
-        waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
-        waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
-        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getAzimuth();
-    }
-
-    private void nmeaSentences() {
+    private void exportNmea() {
         List<GlobalCoordinates> globalCoordinates = new ArrayList<>();
         List<String> nmeaSentences = new ArrayList<>();
         GlobalCoordinates start;
@@ -643,22 +649,18 @@ public class RouteEditorController
                         + String.format(Locale.US, "%.2f", geoCurve.getAzimuth()) + ","
                         + localDate.format(dateFormatter) + ",,"
                         + "*";
-                nmeaSentences.add(sentence + getSum(sentence));
+                nmeaSentences.add(sentence + getChecksum(sentence));
             }
         }
-        exportNmea(nmeaSentences);
-    }
-
-    private void exportNmea(List<String> sentences) {
         Path path = Paths.get("data/nmea/" + routeName + ".nmea");
         try {
-            Files.write(path, sentences, Charset.defaultCharset());
+            Files.write(path, nmeaSentences, Charset.defaultCharset());
         } catch (IOException ex) {
             Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private static String getSum(String in) {
+    private static String getChecksum(String in) {
         int checksum = 0;
         if (in.startsWith("$")) {
             in = in.substring(1, in.length());
@@ -747,5 +749,36 @@ public class RouteEditorController
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    private void exportS57Controllers() {
+        s57Controllers = new HashSet<>();
+        s57Controllers = s57ChartServices.getS57Controllers();
+        List<String> activeS57ControllersStr = new ArrayList<>();
+        Coordinate buoyagePosition;
+        for (S57Controller sc : s57Controllers) {
+            buoyagePosition = new Coordinate(sc.getLocation().getLon(), sc.getLocation().getLat());
+            if (buffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
+                activeS57ControllersStr.add(Long.toString(sc.getLocation().getId()));
+            }
+        }
+        Path path = Paths.get("data/poi/" + routeName + ".poi");
+        try {
+            Files.write(path, activeS57ControllersStr, Charset.defaultCharset());
+        } catch (IOException ex) {
+            Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private double getDistanceNm(Position posA, Position posB) {
+        waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
+        waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
+        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getEllipsoidalDistance() / KM_TO_METER * KM_TO_NAUTICAL;
+    }
+
+    private double getAzimuth(Position posA, Position posB) {
+        waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
+        waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
+        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getAzimuth();
     }
 }

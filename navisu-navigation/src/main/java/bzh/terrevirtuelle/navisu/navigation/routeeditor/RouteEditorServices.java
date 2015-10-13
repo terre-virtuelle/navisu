@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.routeeditor;
+package bzh.terrevirtuelle.navisu.navigation.routeeditor;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import com.vividsolutions.jts.geom.Geometry;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -25,4 +26,7 @@ public interface RouteEditorServices extends ComponentService {
 
     InstrumentDriver getDriver();
 
+    Geometry getBuffer();
+
+    void showBuffer();
 }
