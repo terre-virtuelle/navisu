@@ -158,7 +158,7 @@ public class AppMain extends Application {
                         Bezier2DImpl.class,
                         UtcClockImpl.class,
                         BoardClockImpl.class,
-                        //ZoneClockImpl.class,
+                        ZoneClockImpl.class,
                         CurrentsImpl.class,
                         DataAccessImpl.class,
                         DataServerImpl.class,
@@ -216,7 +216,7 @@ public class AppMain extends Application {
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
         UtcClockServices utcclockServices = componentManager.getComponentService(UtcClockServices.class);
         BoardClockServices boardclockServices = componentManager.getComponentService(BoardClockServices.class);
-        // ZoneClockServices zoneclockServices = componentManager.getComponentService(ZoneClockServices.class);
+        ZoneClockServices zoneclockServices = componentManager.getComponentService(ZoneClockServices.class);
         DataAccessServices dataAccessServices = componentManager.getComponentService(DataAccessServices.class);
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
@@ -296,7 +296,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(utcclockServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(boardclockServices.getDriver());
-        // instrumentDriverManagerServices.registerNewDriver(zoneclockServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(zoneclockServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());

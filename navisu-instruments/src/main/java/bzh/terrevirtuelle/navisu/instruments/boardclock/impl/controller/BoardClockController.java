@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentControl
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -33,17 +34,28 @@ public class BoardClockController
         extends InstrumentController
         implements Initializable {
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("kk:mm:ss");
+    private final DateTimeFormatter utcdateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+    private final DateTimeFormatter utctimeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");
+    private final DateTimeFormatter onboarddateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+    private final DateTimeFormatter onboardtimeFormatter = DateTimeFormatter.ofPattern("kk:mm:ss");
+    private final DateTimeFormatter localdateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+    private final DateTimeFormatter localtimeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");
     private final String FXML = "clock.fxml";
+    
     @FXML
-    public Text daydate;
+    public Text utcdaydate;
     @FXML
-    public Text hours;
+    public Text utchours;
     @FXML
-    public Text minutes;
+    public Text onboarddaydate;
     @FXML
-    public Text seconds;
+    public Text onboardhours;
+    @FXML
+    public Text localdaydate;
+    @FXML
+    public Text localhours;
+        
+    public ZoneId zoneid = ZoneId.of("UTC+06:00");
 
     protected BoardClockImpl instrument;
     Timeline digitalTime;
@@ -52,29 +64,17 @@ public class BoardClockController
         super(keyCode, keyCombination);
         this.instrument = instrument;
         load(FXML);
-        // the digital clock updates once a second.
-        /*
-         final Timeline digitalTime = new Timeline(
-         new KeyFrame(Duration.seconds(0),
-         new EventHandler<ActionEvent>() {
-         @Override
-         public void handle(ActionEvent actionEvent) {
-         Calendar calendar = GregorianCalendar.getInstance();
-         daydate.setText((Integer.toString(calendar.get(Calendar.DATE))) + " / " + ((Integer.toString(calendar.get(Calendar.MONTH) + 1))) + " / " + (Integer.toString(calendar.get(Calendar.YEAR))));
-         hours.setText(Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)));
-         minutes.setText(Integer.toString(calendar.get(Calendar.MINUTE)));
-         seconds.setText(Integer.toString(calendar.get(Calendar.SECOND)));
-
-         }
-         }
-         ),
-         new KeyFrame(Duration.seconds(1))       
-         );   
-         */
+        
         digitalTime = new Timeline(
                 new KeyFrame(Duration.seconds(0), (ActionEvent actionEvent) -> {
-                    daydate.setText(LocalDate.now(Clock.systemDefaultZone()).format(dateFormatter));
-                    hours.setText(LocalTime.now(Clock.systemDefaultZone()).format(timeFormatter));
+                    
+                    utcdaydate.setText(LocalDate.now(Clock.systemUTC()).format(utcdateFormatter));
+                    utchours.setText(LocalTime.now(Clock.systemUTC()).format(utctimeFormatter));
+                    onboarddaydate.setText(LocalDate.now(Clock.systemDefaultZone()).format(onboarddateFormatter));
+                    onboardhours.setText(LocalTime.now(Clock.systemDefaultZone()).format(onboardtimeFormatter));
+                    localdaydate.setText(LocalDate.now(Clock.system(zoneid)).format(localdateFormatter));
+                    localhours.setText(LocalTime.now(Clock.system(zoneid)).format(localtimeFormatter));
+
                 }),
                 new KeyFrame(Duration.seconds(1))
         );

@@ -12,6 +12,7 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import javafx.animation.Animation;
@@ -37,7 +38,7 @@ public class ZoneClockController
         implements Initializable {
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a - z");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");
     private final String FXML = "clock.fxml";
     @FXML
     public Text daydate;
@@ -48,7 +49,9 @@ public class ZoneClockController
     @FXML
     public Text seconds;
     
+    public ZoneId zoneid = ZoneId.of("UTC+06:00");
     
+   
     
     protected ZoneClockImpl instrument;
     Timeline digitalTime;
@@ -58,30 +61,11 @@ public class ZoneClockController
         super(keyCode, keyCombination);
         this.instrument = instrument;
         load(FXML);
-        // the digital clock updates once a second.
-        /*
-         final Timeline digitalTime = new Timeline(
-         new KeyFrame(Duration.seconds(0),
-         new EventHandler<ActionEvent>() {
-         @Override
-         public void handle(ActionEvent actionEvent) {
-         Calendar calendar = GregorianCalendar.getInstance();
-         daydate.setText((Integer.toString(calendar.get(Calendar.DATE))) + " / " + ((Integer.toString(calendar.get(Calendar.MONTH) + 1))) + " / " + (Integer.toString(calendar.get(Calendar.YEAR))));
-         hours.setText(Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)));
-         minutes.setText(Integer.toString(calendar.get(Calendar.MINUTE)));
-         seconds.setText(Integer.toString(calendar.get(Calendar.SECOND)));
-
-         }
-         }
-         ),
-         new KeyFrame(Duration.seconds(1))       
-         );   
-         */
         
         digitalTime = new Timeline(
                 new KeyFrame(Duration.seconds(0), (ActionEvent actionEvent) -> {
-                    daydate.setText(LocalDate.now(Clock.systemDefaultZone()).format(dateFormatter));
-                    hours.setText(LocalTime.now(Clock.systemDefaultZone()).format(timeFormatter));
+                    daydate.setText(LocalDate.now(Clock.system(zoneid)).format(dateFormatter));
+                    hours.setText(LocalTime.now(Clock.system(zoneid)).format(timeFormatter));
                 }),
                 new KeyFrame(Duration.seconds(1))
         );
