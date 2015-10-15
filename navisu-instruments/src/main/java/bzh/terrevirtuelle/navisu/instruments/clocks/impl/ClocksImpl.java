@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.boardclock.impl;
+package bzh.terrevirtuelle.navisu.instruments.clocks.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.instruments.boardclock.BoardClock;
-import bzh.terrevirtuelle.navisu.instruments.boardclock.BoardClockServices;
-import bzh.terrevirtuelle.navisu.instruments.boardclock.impl.controller.BoardClockController;
+import bzh.terrevirtuelle.navisu.instruments.clocks.Clocks;
+import bzh.terrevirtuelle.navisu.instruments.clocks.ClocksServices;
+import bzh.terrevirtuelle.navisu.instruments.clocks.impl.controller.ClocksController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -23,18 +23,18 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @date 31 mars 2015
  * @author Serge Morvan
  */
-public class BoardClockImpl
-        implements BoardClock, BoardClockServices, InstrumentDriver, ComponentState {
+public class ClocksImpl
+        implements Clocks, ClocksServices, InstrumentDriver, ComponentState {
 
-    private final String KEY_NAME = "BoardClock";
+    private final String KEY_NAME = "Clocks";
     @UsedService
     GuiAgentServices guiAgentServices;
     ComponentManager cm;
-    private BoardClockController controller;
+    private ClocksController controller;
 
     @Override
     public void componentInitiated() {
-        // controller = new BoardClockController(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
+        // controller = new ClocksController(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
         cm = ComponentManager.componentManager;
     }
 
@@ -51,7 +51,7 @@ public class BoardClockImpl
 
     @Override
     public void on(String... files) {
-        controller = new BoardClockController(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
+        controller = new ClocksController(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
         guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
         controller.setVisible(true);

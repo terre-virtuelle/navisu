@@ -236,9 +236,9 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "navigation.png", 1, "gps.png", 3, "gpsLogOff.png", (e) -> close("GpsLogger"))
                 .createNode(0, "navigation.png", 2, "compass.png", 0, "compass.png", (e) -> open("Compass"))
                 .createNode(0, "navigation.png", 3, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
-                .createNode(0, "navigation.png", 4, "clocks.png", 0, "UTC.png", (e) -> open("UtcClock"))
-                .createNode(0, "navigation.png", 4, "clocks.png", 1, "board.png", (e) -> open("BoardClock"))
-                .createNode(0, "navigation.png", 4, "clocks.png", 2, "local.png", (e) -> open("ZoneClock"))
+                //.createNode(0, "navigation.png", 4, "clocks.png", 0, "UTC.png", (e) -> open("UtcClock"))
+                .createNode(0, "navigation.png", 4, "clocks.png", 1, "clocks.png", (e) -> open("Clocks"))
+                //.createNode(0, "navigation.png", 4, "clocks.png", 2, "local.png", (e) -> open("ZoneClock"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);

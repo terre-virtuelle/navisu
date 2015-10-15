@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.boardclock.impl.controller;
+package bzh.terrevirtuelle.navisu.instruments.clocks.impl.controller;
 
-import bzh.terrevirtuelle.navisu.instruments.boardclock.impl.BoardClockImpl;
+import bzh.terrevirtuelle.navisu.instruments.clocks.impl.ClocksImpl;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentController;
 import java.net.URL;
 import java.time.Clock;
@@ -32,7 +32,7 @@ import javafx.util.Duration;
  * @date 31 mars 2015
  * @author Serge Morvan
  */
-public class BoardClockController
+public class ClocksController
         extends InstrumentController
         implements Initializable {
 
@@ -42,7 +42,7 @@ public class BoardClockController
     private final DateTimeFormatter onboardtimeFormatter = DateTimeFormatter.ofPattern("kk:mm:ss");
     private final DateTimeFormatter localdateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     private final DateTimeFormatter localtimeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");
-    private final String FXML = "clock.fxml";
+    private final String FXML = "clocks.fxml";
     
     @FXML
     public Text utcdaydate;
@@ -59,10 +59,10 @@ public class BoardClockController
         
     public ZoneId zoneid = ZoneId.of("UTC+06:00");
 
-    protected BoardClockImpl instrument;
+    protected ClocksImpl instrument;
     Timeline digitalTime;
 
-    public BoardClockController(BoardClockImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public ClocksController(ClocksImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.instrument = instrument;
         load(FXML);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.boardclock;
+package bzh.terrevirtuelle.navisu.instruments.clocks;
 
 import org.capcaval.c3.component.Component;
 
@@ -13,7 +13,7 @@ import org.capcaval.c3.component.Component;
  * @date 31 mars 2015
  * @author Serge Morvan
  */
-public interface BoardClock
+public interface Clocks
         extends Component {
 
 }
