@@ -19,5 +19,5 @@ public interface DataAccessServices
 
     void test();
 
-    Image queryImage(String target);
+    Image queryImage(String targetImageName);
 }
