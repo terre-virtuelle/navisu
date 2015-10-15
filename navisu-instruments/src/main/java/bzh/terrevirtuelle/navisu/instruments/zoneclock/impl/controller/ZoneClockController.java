@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.instruments.zoneclock.impl.controller;
 import antlr.collections.AST;
 import bzh.terrevirtuelle.navisu.instruments.zoneclock.impl.ZoneClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentController;
+import java.net.URL;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,6 +16,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -83,5 +85,7 @@ public class ZoneClockController
     public void stop() {
         digitalTime.stop();
     }
-
+@Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 }

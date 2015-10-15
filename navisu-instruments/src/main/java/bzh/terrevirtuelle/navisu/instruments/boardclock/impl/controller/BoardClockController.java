@@ -7,11 +7,13 @@ package bzh.terrevirtuelle.navisu.instruments.boardclock.impl.controller;
 
 import bzh.terrevirtuelle.navisu.instruments.boardclock.impl.BoardClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentController;
+import java.net.URL;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -91,5 +93,8 @@ public class BoardClockController
     @Override
     public void stop() {
         digitalTime.stop();
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 }
