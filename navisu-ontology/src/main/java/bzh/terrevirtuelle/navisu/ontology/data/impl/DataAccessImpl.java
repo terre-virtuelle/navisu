@@ -41,7 +41,7 @@ public class DataAccessImpl implements DataAccess, DataAccessServices, Component
 		 try {
 	            Class.forName("net.rootdev.javardfa.jena.RDFaReader");
 	        } catch (ClassNotFoundException ex) {
-	            Logger.getLogger(DataAccessImplOld.class.getName()).log(Level.SEVERE, null, ex);
+	            Logger.getLogger(DataAccessImpl.class.getName()).log(Level.SEVERE, null, ex);
 	        }		
 	}
 
