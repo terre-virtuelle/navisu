@@ -61,6 +61,8 @@ import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonSer
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl.GpsTrackPolygonImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.AisRadarServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.AisRadarImpl;
+import bzh.terrevirtuelle.navisu.instruments.camera.CameraServices;
+import bzh.terrevirtuelle.navisu.instruments.camera.impl.CameraImpl;
 import bzh.terrevirtuelle.navisu.instruments.clock.ClockServices;
 import bzh.terrevirtuelle.navisu.instruments.clock.impl.ClockImpl;
 import bzh.terrevirtuelle.navisu.instruments.sonar.SonarServices;
@@ -150,7 +152,9 @@ public class AppMain extends Application {
                         BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
                         Bezier2DImpl.class,
+                        CameraImpl.class,
                         ClockImpl.class,
+                        CompassImpl.class,
                         CurrentsImpl.class,
                         DataAccessImpl.class,
                         DataServerImpl.class,
@@ -170,7 +174,6 @@ public class AppMain extends Application {
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
-                        CompassImpl.class,
                         KapChartImpl.class,
                         KmlObjectImpl.class,
                         MagneticImpl.class,
@@ -203,9 +206,10 @@ public class AppMain extends Application {
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
+        CameraServices cameraServices = componentManager.getComponentService(CameraServices.class);
+        ClockServices clockServices = componentManager.getComponentService(ClockServices.class);
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
-        ClockServices clockServices = componentManager.getComponentService(ClockServices.class);
 
         DataAccessServices dataAccessServices = componentManager.getComponentService(DataAccessServices.class);
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
@@ -281,8 +285,9 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(cameraServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(clockServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
@@ -322,7 +327,7 @@ public class AppMain extends Application {
         /* Test connexion Gpsd */
         //dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
-        // dataServerServices.openGpsd("sinagot.net", 4001); 
+        // dataServerServices.openGpsd("sinagot.net", 4002); 
         //dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
