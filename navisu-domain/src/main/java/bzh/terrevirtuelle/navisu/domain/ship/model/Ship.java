@@ -140,7 +140,7 @@ public class Ship implements Serializable, Cloneable {
     @Convert(converter = LocalDateTimePersistenceConverter.class)
     private LocalDateTime localDateTime;
 
-    private boolean target = false;
+    private boolean gpsTarget = false;
     /**
      * Creates a new instance of Ship
      */
@@ -215,7 +215,7 @@ public class Ship implements Serializable, Cloneable {
         this.ETA = ETA;
         this.destination = destination;
         this.country = country;
-        this.target = target;
+        this.gpsTarget = target;
     }
 
     public Ship(int mmsi, String name, double lat, double lon, LocalDate date, LocalTime time) {
@@ -420,12 +420,12 @@ public class Ship implements Serializable, Cloneable {
         this.localDateTime = localDateTime;
     }
 
-    public boolean isTarget() {
-        return target;
+    public boolean isGpsTarget() {
+        return gpsTarget;
     }
 
-    public void setTarget(boolean target) {
-        this.target = target;
+    public void setGpsTarget(boolean gpsTarget) {
+        this.gpsTarget = gpsTarget;
     }
 
     @Override
