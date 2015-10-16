@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Poi;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.GpxBuilder;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
@@ -107,6 +108,7 @@ public class RouteEditorController
     private List<Position> positions;
     private List<Position> pathPositions;
     private Set<S57Controller> s57Controllers;
+    private Poi poi;
     private int size;
     private String routeName;
     private String author;
@@ -262,7 +264,7 @@ public class RouteEditorController
             exportNmea();
             exportS57Controllers();
         });
-        
+
         snapshotButton.setOnMouseClicked((MouseEvent event) -> {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 @Override
@@ -578,7 +580,6 @@ public class RouteEditorController
                 marshaller.marshal(gpx, outputFile);
             } catch (JAXBException | FileNotFoundException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("ex " + ex);
             }
         }
     }
@@ -754,19 +755,28 @@ public class RouteEditorController
     private void exportS57Controllers() {
         s57Controllers = new HashSet<>();
         s57Controllers = s57ChartServices.getS57Controllers();
-        List<String> activeS57ControllersStr = new ArrayList<>();
-        Coordinate buoyagePosition;
-        for (S57Controller sc : s57Controllers) {
-            buoyagePosition = new Coordinate(sc.getLocation().getLon(), sc.getLocation().getLat());
-            if (buffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
-                activeS57ControllersStr.add(Long.toString(sc.getLocation().getId()));
+        if (s57Controllers != null) {
+            poi = new Poi();
+            Coordinate buoyagePosition;
+            for (S57Controller sc : s57Controllers) {
+                buoyagePosition = new Coordinate(sc.getLocation().getLon(), sc.getLocation().getLat());
+                if (buffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
+                    poi.add(sc.getLocation());
+                }
             }
-        }
-        Path path = Paths.get("data/poi/" + routeName + ".poi");
-        try {
-            Files.write(path, activeS57ControllersStr, Charset.defaultCharset());
-        } catch (IOException ex) {
-            Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                FileOutputStream outputFile;
+                outputFile = new FileOutputStream(new File("data/poi/" + routeName + ".xml"));
+                JAXBContext jAXBContext;
+                Marshaller marshaller;
+                jAXBContext = JAXBContext.newInstance(Poi.class);
+                marshaller = jAXBContext.createMarshaller();
+                marshaller.marshal(poi, outputFile);
+            } catch (JAXBException | FileNotFoundException ex) {
+                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            System.out.println("Il faut charger au moins une carte S57");
         }
     }
 
