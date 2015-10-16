@@ -25,12 +25,6 @@ import com.hp.hpl.jena.query.ResultSet;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccess;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 
-/**
- * NaVisu
- *
- * @date 14 oct. 2015
- * @author Serge Morvan, Arnaud Grancher
- */
 public class DataAccessImpl implements DataAccess, DataAccessServices, ComponentState {
 
 	final static String PREFIX = "prefix dbpedia-owl: <http://dbpedia.org/ontology/> \n"
@@ -63,6 +57,11 @@ public class DataAccessImpl implements DataAccess, DataAccessServices, Component
 		
 	}
 
+	@Override
+	public void test() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public Image queryImage(String targetName) {

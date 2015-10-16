@@ -17,5 +17,7 @@ import org.capcaval.c3.component.ComponentService;
 public interface DataAccessServices
         extends ComponentService {
 
+    void test();
+
     Image queryImage(String targetImageName);
 }
