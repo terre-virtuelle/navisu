@@ -208,8 +208,8 @@ public class DockManagerImpl<TrackTool>
                 .createNode(1, "bathy.png", 0, "images.png", 1, "gebco.png", (e) -> openWMS("WMS", GEBCO))
                 .createNode(1, "bathy.png", 1, "data.png", 1, "dbshomon.png", (e) -> openDB(DB_NAME, HOST_NAME, JDBC_PROTOCOL, PORT, DRIVER_NAME, USER_NAME, PASSWD))
                 .createNode(1, "bathy.png", 1, "data.png", 2, "dbshomoff.png", (e) -> closeDB(DB_NAME))
-                .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", ".shp"))
-                .createNode(3, "magnetism.png", 0, "data.png", 0, "noaa.png", (e) -> open("Magnetic", ".shp"))
+                .createNode(2, "sediment.png", 0, "data.png", 0, "shom.png", (e) -> open("sedimentology", ".shp", ".SHP"))
+                .createNode(3, "magnetism.png", 0, "data.png", 0, "noaa.png", (e) -> open("Magnetic", ".shp", ".SHP"))
                 .build();
 
         chartsRadialMenu.setLayoutX((width / 2) - 10);
@@ -294,7 +294,7 @@ public class DockManagerImpl<TrackTool>
                 .centralImage("toolsradialmenu150.png")
                 .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
                 .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
-                .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp"))
+                .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp", ".SHP"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
                 .build();
         toolsRadialMenu.setLayoutX((width / 2));
@@ -309,6 +309,8 @@ public class DockManagerImpl<TrackTool>
                 .centralImage("systemradialmenu150.png")
                 .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
                 .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
+            //    .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
+            //    .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
                 .build();
         systemRadialMenu.setLayoutX((width / 2));
         systemRadialMenu.setLayoutY(height / 2);

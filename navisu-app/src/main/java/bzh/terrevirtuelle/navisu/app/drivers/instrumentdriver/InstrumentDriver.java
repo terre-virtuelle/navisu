@@ -12,7 +12,11 @@ public interface InstrumentDriver {
         return false;
     }
 
-    void on(String ... files);
+    default void on(String ... files){
+        
+    }
 
-    void off();
+    default void off(){
+        
+    }
 }
