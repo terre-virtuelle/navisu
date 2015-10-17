@@ -169,8 +169,8 @@ public class AppMain extends Application {
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
                         GpsTrackImpl.class,
-                        GpsTrackPlotterImpl.class,
-                        GpsTrackPolygonImpl.class,
+                     //   GpsTrackPlotterImpl.class,
+                      //  GpsTrackPolygonImpl.class,
                         GpsPlotterImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
@@ -223,9 +223,9 @@ public class AppMain extends Application {
 
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
-        GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
-        GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
-        GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
+      //  GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
+      //  GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
+      //  GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
@@ -295,9 +295,9 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(zoneclockServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
+     //   instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
+     //   instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
+      //  instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
