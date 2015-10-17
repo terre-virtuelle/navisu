@@ -10,6 +10,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Poi;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
@@ -20,22 +22,18 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
-import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
-import gov.nasa.worldwind.view.orbit.BasicOrbitView;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -45,6 +43,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 /**
  * NaVisu
@@ -73,7 +75,7 @@ public class GpsPlotterController {
     protected boolean withRoute = false;
     protected List<String> s57Controllers;
     protected GpsPlotterImpl component;
-    private View view;
+    protected CircularFifoQueue<RMC> sentenceQueue;
 
     public GpsPlotterController(GpsPlotterImpl component,
             GeoViewServices geoViewServices,
@@ -94,6 +96,7 @@ public class GpsPlotterController {
         this.name1 = name1;
         this.name2 = name2;
         this.group = group;
+        sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         List<String> groups = layerTreeServices.getGroupNames();
         if (!groups.contains(group)) {
@@ -113,7 +116,6 @@ public class GpsPlotterController {
         addListeners();
         createOwnerShip();
         activateS57Controllers();
-        view = (BasicOrbitView) GeoWorldWindViewImpl.getWW().getView();
     }
 
     private void addPanelController() {
@@ -182,6 +184,7 @@ public class GpsPlotterController {
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         ownerShipView.setField("Ship", ownerShip);
+
         aisServices.aisCreateTargetEvent(ownerShip);
     }
 
@@ -201,31 +204,56 @@ public class GpsPlotterController {
     }
 
     public void notifyNmeaMessage(RMC data) {
-
-        ownerShip.setCog(data.getCog());
-        ownerShip.setSog(data.getSog());
-        ownerShip.setLatitude(data.getLatitude());
-        ownerShip.setLongitude(data.getLongitude());
-        ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-        aisServices.aisUpdateTargetEvent(ownerShip);
+        //filtre sur les doublons
+        if (!sentenceQueue.contains(data)) {
+            sentenceQueue.add(data);
+            RMC d = sentenceQueue.element();
+            if (d != null) {
+                ownerShip.setCog(d.getCog());
+                ownerShip.setSog(d.getSog());
+                ownerShip.setLatitude(d.getLatitude());
+                ownerShip.setLongitude(d.getLongitude());
+                ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
+                ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+                aisServices.aisUpdateTargetEvent(ownerShip);
+            }
+        }
     }
 
     private void activateS57Controllers() {
+        s57Controllers = new ArrayList<>();
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter
-                = new FileChooser.ExtensionFilter("POI files (*.poi)", "*.poi", "*.POI");
+                = new FileChooser.ExtensionFilter("POI files (*.xml)", "*.xml", "*.XML");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setInitialDirectory(new File("data/poi"));
         File file = fileChooser.showOpenDialog(guiAgentServices.getStage());
+        FileInputStream inputFile = null;
+        Poi poi = null;
         if (file != null) {
-            Path path = Paths.get(file.getAbsolutePath());
             try {
-                s57Controllers = Files.readAllLines(path);
-            } catch (IOException ex) {
+                inputFile = new FileInputStream(new File(file.getPath()));
+            } catch (FileNotFoundException ex) {
                 Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        component.notifyAisActivateEvent(aisSurveyZoneLayer, s57Controllers);
+        if (inputFile != null) {
+            Unmarshaller unmarshaller;
+            JAXBContext jAXBContext;
+            try {
+                jAXBContext = JAXBContext.newInstance(Poi.class);
+                unmarshaller = jAXBContext.createUnmarshaller();
+                poi = (Poi) unmarshaller.unmarshal(inputFile);
+            } catch (JAXBException ex) {
+                Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (poi != null) {
+                List<Location> locations = poi.getLocations();
+                locations.stream().forEach((l) -> {
+                    s57Controllers.add(Long.toString(l.getId()));
+                });
+                component.notifyAisActivateEvent(aisSurveyZoneLayer, s57Controllers);
+            }
+        }
     }
 }
