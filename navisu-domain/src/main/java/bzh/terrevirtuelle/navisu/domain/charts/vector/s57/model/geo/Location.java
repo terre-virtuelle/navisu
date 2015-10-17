@@ -7,12 +7,18 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author Serge Morvan
  * @date 10 juin 2014 NaVisu project
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "location")
 public class Location extends Geo
         implements Serializable {
 

@@ -176,7 +176,6 @@ public class AppMain extends Application {
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
-                        CompassImpl.class,
                         KapChartImpl.class,
                         KmlObjectImpl.class,
                         MagneticImpl.class,
@@ -209,6 +208,8 @@ public class AppMain extends Application {
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
+        CameraServices cameraServices = componentManager.getComponentService(CameraServices.class);
+        ClockServices clockServices = componentManager.getComponentService(ClockServices.class);
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
         UtcClockServices utcclockServices = componentManager.getComponentService(UtcClockServices.class);
@@ -331,7 +332,7 @@ public class AppMain extends Application {
         /* Test connexion Gpsd */
         //dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
-        // dataServerServices.openGpsd("sinagot.net", 4001); 
+        // dataServerServices.openGpsd("sinagot.net", 4002); 
         //dataServerServices.openGpsd("hd-sf.com", 9009);
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC

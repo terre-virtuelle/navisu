@@ -9,12 +9,9 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceCircle;
-import org.gavaghan.geodesy.GlobalCoordinates;
 
 /**
  * NaVisu
@@ -43,7 +40,7 @@ public class BuoyageController
 
     @Override
     public void updateTarget(Ship ship) {
-        if (ship.isTarget()) {
+        if (ship.isGpsTarget()) {
             distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
             azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
             if (first == true) {

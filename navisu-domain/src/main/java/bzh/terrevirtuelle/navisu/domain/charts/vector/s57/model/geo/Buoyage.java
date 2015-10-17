@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLPAT;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +41,7 @@ public class Buoyage extends Location {
     protected String verticalLength;
     protected String objectNameInNationalLanguage;
     protected String status;
+    @XmlTransient
     protected String label;
     protected String imageAddress;
 

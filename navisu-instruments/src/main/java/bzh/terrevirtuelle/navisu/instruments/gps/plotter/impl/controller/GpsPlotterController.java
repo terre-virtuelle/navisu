@@ -20,13 +20,16 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
+import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
+import gov.nasa.worldwind.view.orbit.BasicOrbitView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -50,7 +53,7 @@ import javafx.stage.FileChooser;
  * @author Serge Morvan
  */
 public class GpsPlotterController {
-    
+
     protected String name1;
     protected String name2;
     protected String group;
@@ -70,7 +73,8 @@ public class GpsPlotterController {
     protected boolean withRoute = false;
     protected List<String> s57Controllers;
     protected GpsPlotterImpl component;
-    
+    private View view;
+
     public GpsPlotterController(GpsPlotterImpl component,
             GeoViewServices geoViewServices,
             LayerTreeServices layerTreeServices,
@@ -104,13 +108,14 @@ public class GpsPlotterController {
         aisSurveyZoneLayer.setName(name2);
         geoViewServices.getLayerManager().insertGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(aisSurveyZoneLayer));
         layerTreeServices.addGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(aisSurveyZoneLayer));
-        
+
         addPanelController();
         addListeners();
         createOwnerShip();
         activateS57Controllers();
+        view = (BasicOrbitView) GeoWorldWindViewImpl.getWW().getView();
     }
-    
+
     private void addPanelController() {
         Platform.runLater(() -> {
             targetPanel = new TargetPanel(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
@@ -120,13 +125,13 @@ public class GpsPlotterController {
             targetPanel.setVisible(false);
         });
     }
-    
+
     protected final void updateAisPanel(Ship ship) {
         Platform.runLater(() -> {
             targetPanel.updateAisPanel(ship);
         });
     }
-    
+
     private void addListeners() {
         wwd.addSelectListener((SelectEvent event) -> {
             Object o = event.getTopObject();
@@ -141,7 +146,7 @@ public class GpsPlotterController {
             }
         });
     }
-    
+
     private void createOwnerShip() {
         properties = new Properties();
         try {
@@ -169,7 +174,7 @@ public class GpsPlotterController {
                 .target(true)
                 .build();
     }
-    
+
     public void createTarget() {
         initRotation = new Double(properties.getProperty("initRotation"));
         ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae"));
@@ -179,7 +184,7 @@ public class GpsPlotterController {
         ownerShipView.setField("Ship", ownerShip);
         aisServices.aisCreateTargetEvent(ownerShip);
     }
-    
+
     public void notifyNmeaMessage(GGA data) {
         ownerShip.setLatitude(data.getLatitude());
         ownerShip.setLongitude(data.getLongitude());
@@ -187,15 +192,16 @@ public class GpsPlotterController {
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         aisServices.aisUpdateTargetEvent(ownerShip);
     }
-    
+
     public void notifyNmeaMessage(VTG data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         aisServices.aisUpdateTargetEvent(ownerShip);
     }
-    
+
     public void notifyNmeaMessage(RMC data) {
+
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         ownerShip.setLatitude(data.getLatitude());
@@ -204,7 +210,7 @@ public class GpsPlotterController {
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         aisServices.aisUpdateTargetEvent(ownerShip);
     }
-    
+
     private void activateS57Controllers() {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter

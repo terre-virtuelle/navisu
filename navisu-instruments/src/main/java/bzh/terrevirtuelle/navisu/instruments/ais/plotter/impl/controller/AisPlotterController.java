@@ -78,14 +78,16 @@ public class AisPlotterController {
     }
 
     public void createTarget(Ship target) {
-        GShip gShip = new GShip(target);
-        gShips.put(target.getMMSI(), gShip);
-        if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
-            Renderable[] renderables = gShip.getRenderables();
-            for (Renderable r : renderables) {
-                aisLayer.addRenderable(r);
+        if (!target.isGpsTarget()) {
+            GShip gShip = new GShip(target);
+            gShips.put(target.getMMSI(), gShip);
+            if (target.getLatitude() != 0.0 && target.getLongitude() != 0.0) {
+                Renderable[] renderables = gShip.getRenderables();
+                for (Renderable r : renderables) {
+                    aisLayer.addRenderable(r);
+                }
+                wwd.redrawNow();
             }
-            wwd.redrawNow();
         }
     }
 
@@ -103,9 +105,11 @@ public class AisPlotterController {
     }
 
     public void updateTarget(Ship target) {
-        GShip gTarget = gShips.get(target.getMMSI());
-        gTarget.update();
-        wwd.redrawNow();
+        if (!target.isGpsTarget()) {
+            GShip gTarget = gShips.get(target.getMMSI());
+            gTarget.update();
+            wwd.redrawNow();
+        }
     }
 
     public void updateBaseStation(BaseStation target) {
