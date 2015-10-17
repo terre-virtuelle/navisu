@@ -10,9 +10,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Recommended minimum navigation information.
- * @author Serge MORVAN 
+ *
+ * @author Serge MORVAN
  */
-@XmlRootElement(name="RMC")
+@XmlRootElement(name = "RMC")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RMC
         extends NMEA {
@@ -184,7 +185,8 @@ public class RMC
     public void setTrack(float track) {
         this.track = track;
     }
-/**
+
+    /**
      *
      * @return
      */
@@ -199,6 +201,7 @@ public class RMC
     public void setCog(float track) {
         this.track = track;
     }
+
     /**
      *
      * @return
@@ -213,6 +216,27 @@ public class RMC
      */
     public void setSog(float sog) {
         this.sog = sog;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        // Vérification de l'égalité des références
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof RMC) {
+            RMC other = (RMC) obj;
+            return !(this.latitude != other.latitude || this.longitude != other.longitude);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Float.floatToIntBits(this.latitude);
+        hash = 79 * hash + Float.floatToIntBits(this.longitude);
+        return hash;
     }
 
     /**

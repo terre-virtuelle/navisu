@@ -51,6 +51,10 @@ public class Poi {
         locations.add(o);
     }
 
+    public List<Location> getLocations() {
+        return locations;
+    }
+
     @Override
     public String toString() {
         return "Poi{" + "locations=" + locations + '}';
