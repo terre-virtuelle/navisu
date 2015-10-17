@@ -55,9 +55,11 @@ public class InstrumentController
             throw new RuntimeException(exception);
         }
         viewpane.setOpacity(0.8);
+        view.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 viewpane.setOpacity(opacitySlider.getValue());
+                view.setOpacity(opacitySlider.getValue());
             });
         });
     }

@@ -60,7 +60,7 @@
                         <Image url="@quit.png" />
                     </image>
                 </ImageView>
-                  <Slider fx:id="opacitySlider" layoutX="166.0" layoutY="133.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                  <Slider fx:id="opacitySlider" layoutX="166.0" layoutY="133.0" max="1.0" min="0.2" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                         </Slider>
          </children>
       </Group>
