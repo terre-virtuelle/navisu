@@ -61,7 +61,11 @@
     -fx-background-radius: 0 0 0 0;
     -fx-background-color: -fx-base;    
 }
-
+.background-pane{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: -fx-base;
+}
 
 
 /*******************************************************************************
@@ -120,11 +124,11 @@
  ******************************************************************************/
 
 .clockvalue{
-    -fx-font: 36px "Roboto Cn";
+    -fx-font: 18px "Roboto Cn";
     -fx-fill: -fx-color-typo;  
 }
 .datevalue{
-    -fx-font: 24px "Roboto Cn";
+    -fx-font: 14px "Roboto Cn";
     -fx-fill: -fx-color-typo;  
 }
 .clockcadres{

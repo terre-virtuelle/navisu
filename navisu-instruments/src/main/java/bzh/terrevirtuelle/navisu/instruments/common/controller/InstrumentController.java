@@ -18,6 +18,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.Pane;
 
 /**
  * NaVisu
@@ -35,6 +36,8 @@ public class InstrumentController
     public ImageView quit;
     @FXML
     public Slider opacitySlider;
+    @FXML
+    public Pane viewpane;
 
     public InstrumentController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
@@ -51,10 +54,10 @@ public class InstrumentController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        view.setOpacity(0.8);
+        viewpane.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
+                viewpane.setOpacity(opacitySlider.getValue());
             });
         });
     }
