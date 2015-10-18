@@ -19,7 +19,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
@@ -33,8 +32,9 @@ import javafx.util.Duration;
  * @author Serge Morvan
  */
 public class ClocksController
-        extends InstrumentController
-        implements Initializable {
+        extends InstrumentController{
+
+    private static ClocksController INSTANCE;
 
     private final DateTimeFormatter utcdateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     private final DateTimeFormatter utctimeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");
@@ -43,7 +43,7 @@ public class ClocksController
     private final DateTimeFormatter localdateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     private final DateTimeFormatter localtimeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");
     private final String FXML = "clocks.fxml";
-    
+
     @FXML
     public Text utcdaydate;
     @FXML
@@ -56,20 +56,26 @@ public class ClocksController
     public Text localdaydate;
     @FXML
     public Text localhours;
-        
-    public ZoneId zoneid = ZoneId.of("UTC+06:00");
+
+    public ZoneId zoneid = ZoneId.systemDefault();
 
     protected ClocksImpl instrument;
-    Timeline digitalTime;
+    protected Timeline timeline;
 
-    public ClocksController(ClocksImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public static ClocksController getInstance(ClocksImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+        if (INSTANCE == null) {
+            INSTANCE = new ClocksController(instrument, keyCode, keyCombination);
+        }
+        return INSTANCE;
+    }
+
+    private ClocksController(ClocksImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.instrument = instrument;
         load(FXML);
-        
-        digitalTime = new Timeline(
+
+        timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), (ActionEvent actionEvent) -> {
-                    
                     utcdaydate.setText(LocalDate.now(Clock.systemUTC()).format(utcdateFormatter));
                     utchours.setText(LocalTime.now(Clock.systemUTC()).format(utctimeFormatter));
                     onboarddaydate.setText(LocalDate.now(Clock.systemDefaultZone()).format(onboarddateFormatter));
@@ -80,10 +86,8 @@ public class ClocksController
                 }),
                 new KeyFrame(Duration.seconds(1))
         );
-        // time never ends.
-        digitalTime.setCycleCount(Animation.INDEFINITE);
-        // start the Clock.
-        digitalTime.play();
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
@@ -92,9 +96,6 @@ public class ClocksController
 
     @Override
     public void stop() {
-        digitalTime.stop();
-    }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+        timeline.stop();
     }
 }

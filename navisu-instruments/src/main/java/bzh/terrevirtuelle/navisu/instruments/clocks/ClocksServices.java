@@ -5,8 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.clocks;
 
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import org.capcaval.c3.component.ComponentService;
+import bzh.terrevirtuelle.navisu.instruments.common.services.InstrumentServices;
 
 /**
  * NaVisu
@@ -15,14 +14,6 @@ import org.capcaval.c3.component.ComponentService;
  * @author Serge Morvan
  */
 public interface ClocksServices
-        extends ComponentService {
+        extends InstrumentServices {
 
-    void on(String ... files);
-
-    default void off() {
-    }
-
-    boolean canOpen(String category);
-
-    InstrumentDriver getDriver();
 }
