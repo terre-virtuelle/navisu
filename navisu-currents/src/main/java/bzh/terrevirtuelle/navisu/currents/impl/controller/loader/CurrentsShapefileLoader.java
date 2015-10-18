@@ -81,29 +81,49 @@ public class CurrentsShapefileLoader
             PointPlacemarkAttributes attrs) {
 
         Set<Entry<String, Object>> entries = record.getAttributes().getEntries();
-
+        System.out.println(entries);
+        /*
+         entries.stream().map((e) -> {
+         if (((String) e.getKey()).contains("vit")) {
+         this.speed = (Double) e.getValue();
+         }
+         return e;
+         }).map((e) -> {
+         if (((String) e.getKey()).contains("dir")) {
+         this.direction = (Double) e.getValue();
+         }
+         return e;
+         }).filter((e) -> (((String) e.getKey()).contains("ELEVATION"))).forEach((e) -> {
+         this.depth = (Double) e.getValue();
+         });
+         */
         entries.stream().map((e) -> {
-            if (((String) e.getKey()).contains("vit")) {
-                this.speed = (Double) e.getValue();
+            if (((String) e.getKey()).contains("ELEVATION")) {
+                if (e.getValue() != null) {
+                    this.speed = (Double) e.getValue();
+                }
             }
             return e;
         }).map((e) -> {
-            if (((String) e.getKey()).contains("dir")) {
-                this.direction = (Double) e.getValue();
+            if (((String) e.getKey()).contains("ATTR_1")) {
+                if (e.getValue() != null) {
+                    this.direction = (Double) e.getValue();
+                }
             }
             return e;
-        }).filter((e) -> (((String) e.getKey()).contains("ELEVATION"))).forEach((e) -> {
-            this.depth = (Double) e.getValue();
+        }).filter((e) -> (((String) e.getKey()).contains("ATTR_2"))).forEach((e) -> {
+            if (e.getValue() != null) {
+                this.depth = (Double) e.getValue();
+            }
         });
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setAttributes(attrs);
-        NumberFormat nf = new DecimalFormat("0.#");
-
-        String label = "Lat : " + latDegrees + " °\n"
-                + "Lon : " + lonDegrees + " °\n"
-                + "Speed : " + nf.format(speed * 2) + " NM\n"
-                + "Direction : " + nf.format(direction) + " °\n";
+       
+        String label = "Lat : " + String.format("%.4f", latDegrees) + " °\n"
+                + "Lon : " + String.format("%.4f", lonDegrees) + " °\n"
+                + "Speed : " + String.format("%.2f", speed * 2) + " NM\n"
+                + "Direction : " + String.format("%d", (int)direction) + " °\n";
         currents.add(CurrentBuilder.create()
                 .latitude(latDegrees)
                 .longitude(lonDegrees)

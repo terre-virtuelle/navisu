@@ -90,10 +90,12 @@ public class DockManagerImpl<TrackTool>
     private ZoneDriver zone;
 
     public final DockItem[] ICONS = new DockItem[]{
+        /*
         DockItemFactory.newImageItem("tracks", ICON_PATH + "dock_icons/tracks.png",
         (e) -> {
             tracksRadialMenu.setVisible(!tracksRadialMenu.isVisible());
         }),
+        */
         DockItemFactory.newImageItem("system I/O", ICON_PATH + "dock_icons/system.png",
         (e) -> {
             systemRadialMenu.setVisible(!systemRadialMenu.isVisible());
@@ -154,7 +156,7 @@ public class DockManagerImpl<TrackTool>
         createToolsRadialWidget();
         createNavigationRadialWidget();
         createSystemRadialWidget();
-        createTracksRadialWidget();
+      //  createTracksRadialWidget();
     }
 
     private void createDockWidget(Scene scene) {
@@ -236,9 +238,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "navigation.png", 1, "gps.png", 3, "gpsLogOff.png", (e) -> close("GpsLogger"))
                 .createNode(0, "navigation.png", 2, "compass.png", 0, "compass.png", (e) -> open("Compass"))
                 .createNode(0, "navigation.png", 3, "bathy.png", 0, "sonarOn.png", (e) -> open("Sonar"))
-                //.createNode(0, "navigation.png", 4, "clocks.png", 0, "UTC.png", (e) -> open("UtcClock"))
-                .createNode(0, "navigation.png", 4, "clocks.png", 1, "clocks.png", (e) -> open("Clocks"))
-                //.createNode(0, "navigation.png", 4, "clocks.png", 2, "local.png", (e) -> open("ZoneClock"))
+                .createNode(0, "navigation.png", 4, "time.png", 1, "clocks.png", (e) -> open("Clocks"))
                 .build();
 
         instrumentsRadialMenu.setLayoutX((width / 2) - 40);
@@ -311,8 +311,8 @@ public class DockManagerImpl<TrackTool>
                 .centralImage("systemradialmenu150.png")
                 .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais"))
                 .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
-            //    .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
-            //    .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
+             //   .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
+             //   .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
                 .build();
         systemRadialMenu.setLayoutX((width / 2));
         systemRadialMenu.setLayoutY(height / 2);

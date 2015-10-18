@@ -17,7 +17,6 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
-import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.awt.Color;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +46,6 @@ public class SingleAREA_ShapefileLoader
     protected void addRenderablesForPolygons(Shapefile shp, List<Layer> layers) {
         RenderableLayer layer = new RenderableLayer();
         layers.add(layer);
-
         int recordNumber = 0;
         while (shp.hasNext()) {
             try {

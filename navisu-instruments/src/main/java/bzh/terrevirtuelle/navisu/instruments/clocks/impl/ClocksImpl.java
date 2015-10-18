@@ -34,7 +34,6 @@ public class ClocksImpl
 
     @Override
     public void componentInitiated() {
-        // controller = new ClocksController(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
         cm = ComponentManager.componentManager;
     }
 
@@ -51,7 +50,7 @@ public class ClocksImpl
 
     @Override
     public void on(String... files) {
-        controller = new ClocksController(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
+        controller = ClocksController.getInstance(this, KeyCode.T, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
         guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
         controller.setVisible(true);
