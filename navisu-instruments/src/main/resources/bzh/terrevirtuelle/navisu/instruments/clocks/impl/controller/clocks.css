@@ -6,10 +6,22 @@
 
 *{
     -fx-base : #143b28;
+    -fx-color : #ff0000;
     -fx-line-base : #04fff2;
     -fx-font-family: "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
     -fx-color-backround-value: #143b2800;
+    -fx-body-color: linear-gradient(to bottom,
+        ladder(
+        -fx-color,
+        derive(-fx-color,8%) 75%,
+        derive(-fx-color,10%) 80%
+        ),
+        derive(-fx-color,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-color,10%) ,derive(-fx-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-color,10%) ,derive(-fx-color,-6%)); 
+    -fx-outer-border:-fx-line-base ;
+    -fx-inner-border: -fx-line-base ;
 }
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
@@ -135,3 +147,61 @@
     -fx-stroke-width: 2;
     -fx-fill:-fx-color-backround-value; 
 }
+.houradjustbutton{
+    -fx-border-width: 0;
+}
+
+
+
+/* ====   BUTTON LIKE THINGS   ============================================== */
+
+.button
+{
+    -fx-border-width: 0;
+    -fx-background-color:  -fx-outer-border, -fx-inner-border, -fx-body-color;
+    //-fx-background-image: ;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-text-fill: -fx-color-typo;
+    //-fx-alignment: LEFT;
+    //-fx-content-display: LEFT;
+}
+.menu-button > .label {
+    -fx-alignment: CENTER_LEFT;
+    -fx-text-fill: -fx-color-typo;
+}
+.button:hover
+{
+    -fx-color: #f0f0ff;
+}
+.button:armed
+{
+    -fx-color: #333333;
+}
+.button:focused
+{
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: -0.2, 1, 2, -1.4, 2.6;
+    -fx-background-radius: 3, 2, 1, 4, 1;
+}  
+/*******************************************************************************
+*                                                                             *
+* Button & ToggleButton                                                       *
+*                                                                             *
+******************************************************************************/
+
+/* ====   DEFAULT   ========================================================= */
+
+.button:default {
+    -fx-base: -fx-default-button;
+}
+
+/* ====   WEB BUTTONS   ===================================================== */
+
+.web-view .form-select-button {
+    -fx-background-radius: 2, 2, 1, 0;
+    -fx-background-insets: 2 2 1 2, 2, 3, 4;
+}
+
+

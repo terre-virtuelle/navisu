@@ -54,7 +54,7 @@ public class InstrumentController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        viewpane.setOpacity(0.8);
+        viewpane.setOpacity(0.6);
         //view.setOpacity(0.8);
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
