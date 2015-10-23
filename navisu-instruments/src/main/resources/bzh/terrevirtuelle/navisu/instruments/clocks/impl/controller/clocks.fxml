@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -12,78 +13,83 @@
 
 <fx:root fx:id="view" stylesheets="@clocks.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-          <Pane fx:id="viewpane" prefHeight="250.0" prefWidth="190.0" styleClass="background-pane" />
-      <Rectangle arcHeight="30.0" arcWidth="30.0" height="250.0" strokeType="INSIDE" styleClass="clockcadres" width="190.0">
-         <stroke>
-            <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
-               <stops>
-                  <Stop color="#04fff2" />
-                  <Stop color="WHITE" offset="1.0" />
-               </stops>
-            </RadialGradient>
-         </stroke>
-      </Rectangle>
-      <Group>
-         <children>
-                  <Text fx:id="title" layoutX="20.0" layoutY="30.0" styleClass="instrumentvalue" text="UTC" wrappingWidth="120.0">
-                        </Text>
-            <Text fx:id="utcdaydate" layoutX="20.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="00/00/00 - utc" wrappingWidth="120.0" />
-            <Text fx:id="utchours" layoutX="20.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00:00:00 - utc" wrappingWidth="120.0" />
-            <Text fx:id="title11" layoutX="20.0" layoutY="110.0" styleClass="instrumentvalue" text="local time" wrappingWidth="120.0" />
-            <Text fx:id="localdaydate" layoutX="20.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="00/00/00 - local" wrappingWidth="120.0" />
-            <Text fx:id="localhours" layoutX="20.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00:00:00 - local" wrappingWidth="120.0" />
-            <Text fx:id="title1" layoutX="20.0" layoutY="190.0" styleClass="instrumentvalue" text="onboard time" wrappingWidth="120.0" />
-            <Text fx:id="onboarddaydate" layoutX="20.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="00/00/00 - board" wrappingWidth="120.0" />
-            <Text fx:id="onboardhours" layoutX="20.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00:00:00 - board" wrappingWidth="120.0" />
-                    <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="9.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
-               <stroke>
-                  <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
-                     <stops>
+        <Pane fx:id="viewpane" prefHeight="250.0" prefWidth="190.0" styleClass="background-pane" />
+        <Rectangle arcHeight="30.0" arcWidth="30.0" height="250.0" strokeType="INSIDE" styleClass="clockcadres" width="190.0">
+            <stroke>
+                <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
+                    <stops>
                         <Stop color="#04fff2" />
                         <Stop color="WHITE" offset="1.0" />
-                     </stops>
-                  </RadialGradient>
-               </stroke>
-            </Rectangle>
-            <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="88.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
-               <stroke>
-                  <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
-                     <stops>
-                        <Stop color="#04fff2" />
-                        <Stop color="WHITE" offset="1.0" />
-                     </stops>
-                  </RadialGradient>
-               </stroke>
-            </Rectangle>
-            <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="166.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
-               <stroke>
-                  <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
-                     <stops>
-                        <Stop color="#04fff2" />
-                        <Stop color="WHITE" offset="1.0" />
-                     </stops>
-                  </RadialGradient>
-               </stroke>
-            </Rectangle>
-                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="161.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" rotate="15.0" scaleY="0.7" scaleZ="0.7">
-                    <image>
-                        <Image url="@quit.png" />
-                    </image>
-                </ImageView>
-                  <Slider fx:id="opacitySlider" layoutX="168.0" layoutY="65.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
-                        </Slider>
-            <Button fx:id="hourdown" layoutX="129.0" layoutY="192.0" mnemonicParsing="false" rotate="90.0" text="&gt;">
+                    </stops>
+                </RadialGradient>
+            </stroke>
+        </Rectangle>
+        <Group>
+            <children>
+                <Text fx:id="title" layoutX="20.0" layoutY="30.0" styleClass="instrumentvalue" text="UTC" wrappingWidth="120.0">
+                </Text>
+                <Text fx:id="utcdaydate" layoutX="20.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="00/00/00 - utc" wrappingWidth="120.0" />
+                <Text fx:id="utchours" layoutX="20.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00:00:00 - utc" wrappingWidth="120.0" />
+                <Text fx:id="title11" layoutX="20.0" layoutY="110.0" styleClass="instrumentvalue" text="local time" wrappingWidth="120.0" />
+                <Text fx:id="localdaydate" layoutX="20.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="00/00/00 - local" wrappingWidth="120.0" />
+                <Text fx:id="localhours" layoutX="20.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00:00:00 - local" wrappingWidth="120.0" />
+                <Text fx:id="title1" layoutX="20.0" layoutY="190.0" styleClass="instrumentvalue" text="onboard time" wrappingWidth="120.0" />
+                <Text fx:id="onboarddaydate" layoutX="20.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="00/00/00 - board" wrappingWidth="120.0" />
+                <Text fx:id="onboardhours" layoutX="20.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00:00:00 - board" wrappingWidth="120.0" />
+                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="9.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
+                    <stroke>
+                        <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
+                            <stops>
+                                <Stop color="#04fff2" />
+                                <Stop color="WHITE" offset="1.0" />
+                            </stops>
+                        </RadialGradient>
+                    </stroke>
+                </Rectangle>
+                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="88.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
+                    <stroke>
+                        <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
+                            <stops>
+                                <Stop color="#04fff2" />
+                                <Stop color="WHITE" offset="1.0" />
+                            </stops>
+                        </RadialGradient>
+                    </stroke>
+                </Rectangle>
+                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="166.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
+                    <stroke>
+                        <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
+                            <stops>
+                                <Stop color="#04fff2" />
+                                <Stop color="WHITE" offset="1.0" />
+                            </stops>
+                        </RadialGradient>
+                    </stroke>
+                </Rectangle>
+                
+            <Button fx:id="quit" alignment="CENTER" layoutX="145.0" layoutY="-10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.4" scaleY="0.4" styleClass="quitbutton" textOverrun="CLIP">
+               
+            </Button>
+                <Slider fx:id="opacitySlider" layoutX="168.0" layoutY="65.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                </Slider>
+                <Button fx:id="hourdown" graphicTextGap="0.0" layoutX="123.0" layoutY="176.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="14.0" prefWidth="30.0" text="+1" textAlignment="CENTER" >
             
-               </Button>
-            <Button fx:id="hourup" layoutX="129.0" layoutY="172.0" mnemonicParsing="false" rotate="90.0" text="&lt;" />
-            <MenuButton fx:id="zonechoice" layoutX="98.0" layoutY="92.0" mnemonicParsing="false" text="Zone">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
+                </Button>
+                <Button fx:id="hourup" graphicTextGap="0.0" layoutX="123.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="18.0" prefWidth="31.0" text="-1" textAlignment="CENTER">
+               <font>
+                  <Font size="10.0" />
+               </font></Button>
+                <MenuButton fx:id="zonechoice" layoutX="98.0" layoutY="94.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="50.0" text="Zone">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Zone 1" />
+                        <MenuItem mnemonicParsing="false" text="Zone 2" />
+                        <MenuItem mnemonicParsing="false" text="Zone 3" />
+                        <MenuItem mnemonicParsing="false" text="Zone 4" />
+                        <MenuItem mnemonicParsing="false" text="Zone 5" />
+                    </items>
               
-            </MenuButton>
-         </children>
-      </Group>
+                </MenuButton>
+            </children>
+        </Group>
     </children>
 </fx:root>

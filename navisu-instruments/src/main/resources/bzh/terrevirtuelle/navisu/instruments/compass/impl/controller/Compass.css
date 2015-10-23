@@ -44,7 +44,15 @@
     -fx-fill : #fff900;
     -fx-underline : true;
 }
-
+.quitbutton
+{
+    -fx-background-image: url(quit.png) ;
+    -fx-background-repeat:no-repeat;
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 10;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
 /*******************************************************************************
  *                                                                             *
  * cadre                                                                *
@@ -75,7 +83,11 @@
     -fx-background-radius: 0 0 0 0;
     -fx-background-color: #143b28;    
 }
-
+.background-pane{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: -fx-base;
+}
 /*******************************************************************************
  *                                                                             *
  * ScrollPane                                                                  *

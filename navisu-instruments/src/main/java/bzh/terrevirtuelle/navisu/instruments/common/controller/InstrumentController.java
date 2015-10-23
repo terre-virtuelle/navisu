@@ -14,6 +14,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -33,7 +34,8 @@ public class InstrumentController
     @FXML
     public Group view;
     @FXML
-    public ImageView quit;
+    //public ImageView quit;
+    public Button quit;
     @FXML
     public Slider opacitySlider;
     @FXML
