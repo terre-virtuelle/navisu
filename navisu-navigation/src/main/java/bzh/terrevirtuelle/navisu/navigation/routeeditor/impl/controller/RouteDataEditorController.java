@@ -46,9 +46,8 @@ public class RouteDataEditorController
     @FXML
     public TreeView dataTreeView;
     @FXML
-    public TextArea highTextArea;
-    @FXML
-    public TextArea lowTextArea;
+    public TextArea dataTextArea;
+    
 
     public RouteDataEditorController(RouteEditorImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
@@ -155,7 +154,7 @@ public class RouteDataEditorController
         landmarks.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (newValue) {
                 System.out.println("The selected item is " + landmarks.valueProperty().get());
-                highTextArea.setText(landmarks.valueProperty().get());
+                dataTextArea.setText(landmarks.valueProperty().get());
             }
         });
         church.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
