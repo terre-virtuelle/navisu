@@ -3,9 +3,8 @@
  * National Aeronautics and Space Administration.
  * All Rights Reserved.
  */
-package  bzh.terrevirtuelle.navisu.netcdf.common.view.analytics;
+package bzh.terrevirtuelle.navisu.netcdf.common.view.analytics;
 
-import com.jogamp.opengl.util.awt.TextRenderer;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.*;
 import gov.nasa.worldwind.util.*;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 
 /**
  * @author dcollins
- * @version $Id: AnalyticSurfaceLegend.java 1171 2013-02-11 21:45:02Z dcollins $
+ * @version $Id: AnalyticSurfaceLegend.java 2053 2014-06-10 20:16:57Z tgaskins $
  */
 public class AnalyticSurfaceLegend implements Renderable
 {
