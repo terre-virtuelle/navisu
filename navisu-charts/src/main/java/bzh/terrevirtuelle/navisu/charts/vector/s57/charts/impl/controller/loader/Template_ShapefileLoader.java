@@ -482,7 +482,7 @@ public class Template_ShapefileLoader
     @SuppressWarnings({"UnusedDeclaration"})
     protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
         // System.out.println("createPointAttributes " + record.getAttributes().getEntries());
-        return randomAttrs.nextPointAttributes();
+        return randomAttrs.nextAttributes().asPointAttributes();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
@@ -490,7 +490,7 @@ public class Template_ShapefileLoader
         if (record != null) {
             //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
-        return randomAttrs.nextPolylineAttributes();
+        return randomAttrs.nextAttributes().asShapeAttributes();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
@@ -501,8 +501,7 @@ public class Template_ShapefileLoader
             System.out.print("  " +p + "  ");
         }
         System.out.println("");
-        return randomAttrs.nextPolygonAttributes();
-
+        return randomAttrs.nextAttributes().asShapeAttributes();
     }
 
 }

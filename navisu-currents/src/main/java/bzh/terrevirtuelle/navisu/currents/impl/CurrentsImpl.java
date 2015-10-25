@@ -72,15 +72,9 @@ public class CurrentsImpl
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         CurrentsShapefileController shapefileController = CurrentsShapefileController.getInstance();
-        layers = shapefileController.init(fileName);
+        layers = shapefileController.create(fileName);
         layers.stream().filter((l) -> (l != null)).map((l) -> {
-            String name = l.getName();
-            //  if (name.contains(NAME)) {
-            l.setPickEnabled(true);
-            // } else {
-            //     l.setPickEnabled(false);
-            //}
-            System.out.println("l : " + l);
+            l.setPickEnabled(true);  
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {

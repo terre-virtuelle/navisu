@@ -28,8 +28,6 @@ import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.WWIO;
 import gov.nasa.worldwind.util.WWUtil;
 import java.awt.Color;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -71,7 +69,8 @@ public class CurrentsShapefileLoader
 
             lonList.add(point[0]);
             latList.add(point[1]);
-            layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
+          //  layer.addRenderable(this.createPoint(record, point[1], point[0], attrs));
+            createPoint(record, point[1], point[0], attrs);
         }
     }
 
@@ -81,7 +80,7 @@ public class CurrentsShapefileLoader
             PointPlacemarkAttributes attrs) {
 
         Set<Entry<String, Object>> entries = record.getAttributes().getEntries();
-        System.out.println(entries);
+        //  System.out.println(entries);
         /*
          entries.stream().map((e) -> {
          if (((String) e.getKey()).contains("vit")) {
@@ -119,11 +118,11 @@ public class CurrentsShapefileLoader
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setAttributes(attrs);
-       
+
         String label = "Lat : " + String.format("%.4f", latDegrees) + " °\n"
                 + "Lon : " + String.format("%.4f", lonDegrees) + " °\n"
                 + "Speed : " + String.format("%.2f", speed * 2) + " NM\n"
-                + "Direction : " + String.format("%d", (int)direction) + " °\n";
+                + "Direction : " + String.format("%d", (int) direction) + " °\n";
         currents.add(CurrentBuilder.create()
                 .latitude(latDegrees)
                 .longitude(lonDegrees)
@@ -210,4 +209,11 @@ public class CurrentsShapefileLoader
         return gridFactory.getMinLon();
     }
 
+    public double getMaxLat() {
+        return gridFactory.getMaxLat();
+    }
+
+    public double getMaxLon() {
+        return gridFactory.getMaxLon();
+    }
 }

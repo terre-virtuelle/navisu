@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -75,6 +76,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javax.xml.bind.JAXBContext;
@@ -130,7 +132,9 @@ public class RouteEditorController
     private final DateTimeFormatter kmlDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     private final DateTimeFormatter kmlTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
     private WorldWindow wwd;
-    private S57ChartServices s57ChartServices;
+    private RouteDataEditorController routeDataEditorController;
+    private final S57ChartServices s57ChartServices;
+    private GuiAgentServices guiAgentServices;
     @FXML
     public Group view;
     @FXML
@@ -156,6 +160,8 @@ public class RouteEditorController
     @FXML
     public Button snapshotButton;
     @FXML
+    public Button dataButton;
+    @FXML
     public TextField lengthText;
     @FXML
     public TextField totalLengthText;
@@ -180,12 +186,13 @@ public class RouteEditorController
     @FXML
     TextField distOffsetText;
 
-    public RouteEditorController(RouteEditorImpl instrument, S57ChartServices s57ChartServices,
+    public RouteEditorController(RouteEditorImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
         super(keyCode, keyCombination);
         this.instrument = instrument;
-        this.s57ChartServices = s57ChartServices;
+        this.s57ChartServices = instrument.getS57ChartServices();
+        this.guiAgentServices = instrument.getGuiAgentServices();
         wwd = GeoWorldWindViewImpl.getWW();
         geoCalc = new GeodeticCalculator();
         bufferDistance = BUFFER_DISTANCE;
@@ -197,9 +204,12 @@ public class RouteEditorController
          profile.setShowProfileLine(false);
          */
         load(FXML);
+        setTranslateX(225.0);
         speed = Float.parseFloat(speedText.getText());
         quit.setOnMouseClicked((MouseEvent event) -> {
-            this.instrument.off();
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
+            guiAgentServices.getRoot().getChildren().remove(this);
+            setVisible(false);
             measureTool.clear();
             measureTool.setArmed(false);
             if (offset != null) {
@@ -210,6 +220,9 @@ public class RouteEditorController
         initMeasureTool();
         newButton.setOnMouseClicked((MouseEvent event) -> {
             newAction();
+        });
+        dataButton.setOnMouseClicked((MouseEvent event) -> {
+            dataAction();
         });
         openButton.setOnMouseClicked((MouseEvent event) -> {
             initMeasureTool();
@@ -418,6 +431,10 @@ public class RouteEditorController
         trackSegments = new ArrayList<>();
         measureTool.clear();
         measureTool.setArmed(true);
+    }
+
+    private void dataAction() {
+        routeDataEditorController.setVisible(true);
     }
 
     private void fillPointsPanel() {
@@ -775,9 +792,13 @@ public class RouteEditorController
             } catch (JAXBException | FileNotFoundException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
+        } else {
             System.out.println("Il faut charger au moins une carte S57");
         }
+    }
+
+    public void setRouteDataEditorController(RouteDataEditorController routeDataEditorController) {
+        this.routeDataEditorController = routeDataEditorController;
     }
 
     private double getDistanceNm(Position posA, Position posB) {
