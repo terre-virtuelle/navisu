@@ -7,12 +7,17 @@ package bzh.terrevirtuelle.navisu.currents.impl.controller;
 
 import bzh.terrevirtuelle.navisu.currents.impl.controller.loader.CurrentsShapefileLoader;
 import bzh.terrevirtuelle.navisu.domain.currents.model.Current;
-import bzh.terrevirtuelle.navisu.domain.currents.view.SHOM_CURRENTS_CLUT;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LinearRing;
+import com.vividsolutions.jts.geom.Polygon;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwindx.examples.analytics.AnalyticSurface;
-import gov.nasa.worldwindx.examples.analytics.AnalyticSurfaceAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.util.BufferFactory;
+import gov.nasa.worldwind.util.BufferWrapper;
+import gov.nasa.worldwind.util.WWMath;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,15 +31,27 @@ public class CurrentsShapefileController {
 
     private static final CurrentsShapefileController INSTANCE;
     protected String path;
-    private final int WIDTH = 132;//132
-    private final int HEIGHT =132;
-    private List<Layer> layers;
+    private final int WIDTH = 100;//132
+    private final int HEIGHT = 100;
+    int SIZE = HEIGHT * WIDTH;
+    protected final double SMOOTHNESS = 0.5d;
+    protected final double HUE_BLUE = 240d / 360d;
+    protected final double HUE_RED = 0d / 360d;
+    double MIN_VALUE = -200e3;
+    double MAX_VALUE = 200e3;
+    private final String LAYER_NAME = "Currents";
+    private final List<Layer> layers;
+    private final RenderableLayer layer;
+    private CurrentsShapefileLoader shapefileLoader;
     private List<Current> currents;
     private double latRange;
     private double lonRange;
-    private double minLat;
+    //  private double minLat;
     private double minLon;
-    private final double[][] gridPoints;
+    private double maxLat;
+    // private double maxLon;
+    // private final double[][] gridPoints;
+    private double[] values;
 
     static {
         INSTANCE = new CurrentsShapefileController();
@@ -42,99 +59,155 @@ public class CurrentsShapefileController {
 
     private CurrentsShapefileController() {
         this.layers = new ArrayList<>();
-        gridPoints = new double[WIDTH][HEIGHT];
+        layer = new RenderableLayer();
+        layer.setName(LAYER_NAME);
     }
 
     public static CurrentsShapefileController getInstance() {
         return INSTANCE;
     }
 
-    public final List<Layer> init(String path) {
+    public final List<Layer> create(String path) {
         this.path = path;
-        RenderableLayer layer = new RenderableLayer();
-        layer.setName("Currents");
-        CurrentsShapefileLoader shapefileLoader = new CurrentsShapefileLoader();
-         layers =
-        shapefileLoader.createLayersFromSource(new File(path));//pas d'affectation si AnalyticSurface
-       // System.out.println("layers : " + layers);
+
+        shapefileLoader = new CurrentsShapefileLoader();
+        shapefileLoader.createLayersFromSource(new File(path));//layer = pas d'affectation si AnalyticSurface
         currents = shapefileLoader.getCurrents();
-       // System.out.println("currents.size() " + currents.size());
-      //  System.out.println("currents.sector() " + shapefileLoader.getSector());
-      //  System.out.println("LatList"+shapefileLoader.getLatList().size());
-      //  System.out.println("LonList"+shapefileLoader.getLonList().size());
+
+        latRange = shapefileLoader.getLatRange() / HEIGHT;
+        lonRange = shapefileLoader.getLonRange() / WIDTH;
+        //   minLat = shapefileLoader.getMinLat();
+        minLon = shapefileLoader.getMinLon();
+        maxLat = shapefileLoader.getMaxLat();
+        // maxLon = shapefileLoader.getMaxLon();
+
+        buildGrid();//Chargement de values[]
+        createSurface();
+
+        return layers;
+    }
+
+    protected void buildGrid() {
+        //Creation d'une grille reguliere en coordonnees JTS
+        GeometryFactory geometryFactory = new GeometryFactory();
+        Coordinate[][] coordinates = new Coordinate[HEIGHT][WIDTH];
+        Coordinate[] coordPolys;
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                coordinates[i][j] = new Coordinate(minLon + i * lonRange, maxLat - j * latRange);//LonLat   
+            }
+        }
+        // Creation de polygones a partir de la grille, en JTS
+        Polygon[][] polygons = new Polygon[HEIGHT][WIDTH];
+        for (int i = 0; i < HEIGHT - 1; i++) {
+            for (int j = 0; j < WIDTH - 1; j++) {
+                coordPolys = new Coordinate[5];
+                coordPolys[0] = coordinates[i][j];
+                coordPolys[1] = coordinates[i + 1][j];
+                coordPolys[2] = coordinates[i + 1][j + 1];
+                coordPolys[3] = coordinates[i][j + 1];
+                coordPolys[4] = coordinates[i][j];
+
+                LinearRing linearRing = geometryFactory.createLinearRing(coordPolys);
+                polygons[i][j] = geometryFactory.createPolygon(linearRing, null);
+            }
+        }
+        //Creatio d'une liste de coordonnées JTS, a partir des points de données
+        List<Coordinate> coordJTSs = new ArrayList<>();
+        currents.stream().forEach((current) -> {
+            coordJTSs.add(new Coordinate(current.getLon(), current.getLat()));
+        });
+        //Recherche et placement des points de données sur la grille
+        values = new double[HEIGHT * WIDTH];
+        int k = 0;
+        int kk = 0;
+        for (int i = 0; i < HEIGHT - 1; i++) {
+            for (int j = 0; j < WIDTH - 1; j++) {
+                for (Coordinate c : coordJTSs) {
+                    if (polygons[i][j].contains(new GeometryFactory().createPoint(c))) {
+                        values[kk] = currents.get(k).getSpeed();
+                    }
+                    k++;
+                }
+                k = 0;
+                kk++;
+            }
+        }
+
+    }
+
+    private void createSurface() {
         AnalyticSurface surface = new AnalyticSurface();
         surface.setSector(shapefileLoader.getSector());
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         surface.setDimensions(WIDTH, HEIGHT);
         surface.setClientLayer(layer);
+
+        AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
+        attr.setShadowOpacity(1.0);
+        attr.setDrawOutline(true);
+        attr.setOutlineMaterial(Material.BLACK);
+        surface.setSurfaceAttributes(attr);
+  
         layer.addRenderable(surface);
         layer.setEnabled(true);
-       // layers.add(layer);//si AnalyticSurface
+        layers.add(layer);
+        
+        BufferWrapper firstBuffer = createBuffer();
+        BufferWrapper secondBuffer = createBuffer();
+        mixValuesOverTime(firstBuffer, secondBuffer, MIN_VALUE, MAX_VALUE, HUE_BLUE, HUE_RED, surface);
+    }
 
-        latRange = shapefileLoader.getLatRange() / HEIGHT;
-        lonRange = shapefileLoader.getLonRange() / WIDTH;
-        minLat = Math.abs(shapefileLoader.getMinLat());
-        minLon = Math.abs(shapefileLoader.getMinLon());
-        System.out.println(minLat + "  " + latRange + "  " + minLon + "  " + lonRange);
-        int tmpI;
-        double tmpD;
-        int line = 0;
-        int col = 0;
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                gridPoints[i][j] = SHOM_CURRENTS_CLUT.MAX;
+    protected BufferWrapper createBuffer() {
+        smoothValues(WIDTH, HEIGHT, values, SMOOTHNESS);
+        scaleValues(values, SIZE, MIN_VALUE, MAX_VALUE);
+        BufferFactory factory = new BufferFactory.DoubleBufferFactory();
+        BufferWrapper buffer = factory.newBuffer(SIZE);
+        buffer.putDouble(0, values, 0, SIZE);
+        return buffer;
+    }
+
+    protected void scaleValues(double[] values, int count, double minValue, double maxValue) {
+        double min = Double.MAX_VALUE;
+        double max = -Double.MAX_VALUE;
+        for (int i = 0; i < count; i++) {
+            if (min > values[i]) {
+                min = values[i];
+            }
+            if (max < values[i]) {
+                max = values[i];
             }
         }
-        for (Current c : currents) {
-            tmpD = Math.abs((Math.abs(c.getLon()) - minLon) / lonRange);
-            tmpI = (int) (tmpD);
-            if (tmpD - tmpI > 0) {
-                if (tmpI < WIDTH - 1) {//-2
-                    col = tmpI;//1
-                } else {
-                    col = tmpI;
-                }
-            }
-            tmpD = Math.abs((Math.abs(c.getLat()) - minLat) / latRange);
-            tmpI = (int) (tmpD);
 
-            if (tmpD - tmpI > 0) {
-                if (tmpI < HEIGHT - 1) {//-2
-                    line = HEIGHT - tmpI;//+1
-                } else {
-                    line = HEIGHT - tmpI;
-                }
-            }
-            if (line < WIDTH && col < HEIGHT) {
-                gridPoints[line][col] = c.getSpeed();
-            }
+        for (int i = 0; i < count; i++) {
+            values[i] = (values[i] - min) / (max - min);
+            values[i] = minValue + values[i] * (maxValue - minValue);
         }
-        //  smoothValues(WIDTH, HEIGHT, gridPoints, 0.5);
-        /*
-         for (int i = 0; i < WIDTH; i++) {
-         for (int j = 0; j < HEIGHT; j++) {
-         System.out.println("i : " + i + "  j : " + j + " s : " + SHOM_CURRENTS_CLUT.getColor(gridPoints[i][j]));
-         }
-         }
-         */
+    }
+
+    protected void mixValuesOverTime(
+            final BufferWrapper firstBuffer, final BufferWrapper secondBuffer,
+            final double minValue, final double maxValue, 
+            final double minHue, final double maxHue,
+            final AnalyticSurface surface) {
+        double a = 10.;
+
+        surface.setValues(createMixedColorGradientGridValues(
+                a, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue));
+    }
+
+    public Iterable<? extends AnalyticSurface.GridPointAttributes> createMixedColorGradientGridValues(double a,
+            BufferWrapper firstBuffer, BufferWrapper secondBuffer, double minValue, double maxValue,
+            double minHue, double maxHue) {
         ArrayList<AnalyticSurface.GridPointAttributes> attributesList = new ArrayList<>();
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                tmpD = gridPoints[i][j];
-                if (tmpD != 0.0) {
-                    attributesList.add(AnalyticSurface.createGridPointAttributes(tmpD, SHOM_CURRENTS_CLUT.getColor(tmpD)));
-                }
-            }
-        }
-        surface.setValues(attributesList);
-        AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
-        attr.setDrawShadow(false);
-        attr.setInteriorOpacity(1);
-        attr.setDrawOutline(false);
-        attr.setOutlineWidth(0);
-        surface.setSurfaceAttributes(attr);
 
-        return layers;
+        long length = Math.min(firstBuffer.length(), secondBuffer.length());
+        for (int i = 0; i < length; i++) {
+            double value = WWMath.mixSmooth(a, firstBuffer.getDouble(i), secondBuffer.getDouble(i));
+            attributesList.add(
+                    AnalyticSurface.createColorGradientAttributes(value, minValue, maxValue, minHue, maxHue));
+        }
+        return attributesList;
     }
 
     protected static void smoothValues(int width, int height, double[] values, double smoothness) {
