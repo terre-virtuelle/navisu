@@ -333,7 +333,11 @@ public class S57ChartImpl
 
     @Override
     public Set<S57Controller> getS57Controllers() {
-        return chartS57Controller.getS57Controllers();
+        if (chartS57Controller != null) {
+            return chartS57Controller.getS57Controllers();
+        } else {
+            return null;
+        }
     }
 
     @Override
