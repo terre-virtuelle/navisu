@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditor;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditorServices;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteDataEditorController;
 import com.vividsolutions.jts.geom.Geometry;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -27,25 +28,32 @@ import org.capcaval.c3.component.annotation.UsedService;
 public class RouteEditorImpl
         implements RouteEditor, RouteEditorServices, InstrumentDriver, ComponentState {
 
-    
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
     S57ChartServices s57ChartServices;
-    
+
     private final String KEY_NAME = "RouteEditor";
-    private RouteEditorController controller;
+    private RouteEditorController routeEditorController;
+    private RouteDataEditorController routeDataEditorController;
 
     @Override
-    public void componentInitiated() {    
+    public void componentInitiated() {
     }
 
     @Override
     public void on(String... files) {
-        controller = new RouteEditorController(this, s57ChartServices, KeyCode.M, KeyCombination.CONTROL_DOWN);
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
-        guiAgentServices.getRoot().getChildren().add(controller);
-        controller.setVisible(true);
+        routeEditorController = new RouteEditorController(this, KeyCode.M, KeyCombination.CONTROL_DOWN);
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routeEditorController);
+        guiAgentServices.getRoot().getChildren().add(routeEditorController);
+        routeEditorController.setVisible(true);
+        
+        routeDataEditorController = new RouteDataEditorController(this, KeyCode.M, KeyCombination.CONTROL_DOWN);
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routeDataEditorController);
+        guiAgentServices.getRoot().getChildren().add(routeDataEditorController);
+        routeDataEditorController.setVisible(false);
+        
+        routeEditorController.setRouteDataEditorController(routeDataEditorController);
     }
 
     @Override
@@ -60,9 +68,10 @@ public class RouteEditorImpl
 
     @Override
     public void off() {
-        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
-        guiAgentServices.getRoot().getChildren().remove(controller);
-        controller.setVisible(false);
+        
+        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, routeDataEditorController);
+        guiAgentServices.getRoot().getChildren().remove(routeDataEditorController);
+        routeDataEditorController.setVisible(false);
     }
 
     @Override
@@ -79,8 +88,8 @@ public class RouteEditorImpl
 
     @Override
     public Geometry getBuffer() {
-        if (controller != null) {
-            return controller.getBuffer();
+        if (routeEditorController != null) {
+            return routeEditorController.getBuffer();
         } else {
             return null;
         }
@@ -88,8 +97,13 @@ public class RouteEditorImpl
 
     @Override
     public void showBuffer() {
-        if (controller != null) {
-            controller.showBuffer();
+        if (routeEditorController != null) {
+            routeEditorController.showBuffer();
         }
     }
+
+    public S57ChartServices getS57ChartServices() {
+        return s57ChartServices;
+    }
+    
 }
