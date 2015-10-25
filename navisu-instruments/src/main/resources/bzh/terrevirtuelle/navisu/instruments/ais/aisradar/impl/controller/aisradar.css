@@ -14,6 +14,15 @@
     -fx-color-typo: #c2f8c4;
     -fx-color-contours: #70bbbf;
 }
+.quitbutton
+{
+    -fx-background-image: url(quit.png) ;
+    -fx-background-repeat:no-repeat;
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 10;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
 /*******************************************************************************
  *                                                                             *
  * Infos et valeurs AIS                                                        *

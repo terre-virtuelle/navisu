@@ -53,6 +53,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -70,11 +71,13 @@ public class AisRadarController
     @FXML
     public Group radar;
     @FXML
+    public Pane view;
+    @FXML
     public ImageView faisceau;
     @FXML
     public double route = 0.0;
     @FXML
-    public ImageView quit;
+    public Button quit;
     @FXML
     public Slider opacitySlider;
     @FXML
@@ -229,13 +232,13 @@ public class AisRadarController
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                radar.setOpacity(opacitySlider.getValue());
+                view.setOpacity(opacitySlider.getValue());
             });
         });
         dimensionSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                radar.setScaleX(dimensionSlider.getValue());
-                radar.setScaleY(dimensionSlider.getValue());
+                radar.setScaleX(((dimensionSlider.getValue())/100));
+                radar.setScaleY(((dimensionSlider.getValue())/100));
             });
         });
         rangeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {

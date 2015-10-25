@@ -67,19 +67,25 @@
                     </stroke>
                 </Rectangle>
                 
-            <Button fx:id="quit" alignment="CENTER" layoutX="145.0" layoutY="-10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.4" scaleY="0.4" styleClass="quitbutton" textOverrun="CLIP">
+                <Button fx:id="quit" alignment="CENTER" layoutX="145.0" layoutY="-10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.4" scaleY="0.4" styleClass="quitbutton" textOverrun="CLIP">
                
-            </Button>
+                </Button>
                 <Slider fx:id="opacitySlider" layoutX="168.0" layoutY="65.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
                 <Button fx:id="hourdown" graphicTextGap="0.0" layoutX="123.0" layoutY="176.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="14.0" prefWidth="30.0" text="+1" textAlignment="CENTER" >
-            
+                    <font>
+                        <Font size="10.0" />
+                    </font>
                 </Button>
                 <Button fx:id="hourup" graphicTextGap="0.0" layoutX="123.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="18.0" prefWidth="31.0" text="-1" textAlignment="CENTER">
-               <font>
-                  <Font size="10.0" />
-               </font></Button>
+                    <font>
+                        <Font size="10.0" />
+                    </font>
+                </Button>
                 <MenuButton fx:id="zonechoice" layoutX="98.0" layoutY="94.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="50.0" text="Zone">
+                    <font>
+                        <Font size="10.0" />
+                    </font>
                     <items>
                         <MenuItem mnemonicParsing="false" text="Zone 1" />
                         <MenuItem mnemonicParsing="false" text="Zone 2" />

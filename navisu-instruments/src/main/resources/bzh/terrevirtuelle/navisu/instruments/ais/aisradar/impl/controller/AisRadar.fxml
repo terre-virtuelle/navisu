@@ -12,9 +12,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="radar" stylesheets="@aisradar.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="radar" stylesheets="@aisradar.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" styleClass="ais-panel" />
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" styleClass="ais-panel" />
         <Group layoutX="100.0" layoutY="65.0">
             <children>
                 <Pane opacity="0.0" prefHeight="860.0" prefWidth="1050.0" styleClass="ais-panel" />
@@ -1425,7 +1425,7 @@
         <Group>
             <children>
                 <Button fx:id="buttonsInfos" layoutX="950.0" layoutY="25.0" prefHeight="15.0" prefWidth="100.0" styleClass="radar-togglebutton" text="Buttons/Infos" />
-                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="1091.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5">
+                <ImageView fx:id="oldquit" fitHeight="22.0" fitWidth="43.0" layoutX="1091.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5" visible="false">
                     <image>
                         <Image url="@quit.png" />
                     </image>
@@ -1441,9 +1441,11 @@
                 <Text layoutX="1123.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Opacity" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
                 <Slider fx:id="opacitySlider" layoutX="1123.0" layoutY="200.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="0.6">
                 </Slider>
-                <Text layoutX="1123.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Dimension" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
-                <Slider fx:id="dimensionSlider" blockIncrement="0.1" layoutX="1123.0" layoutY="750.0" max="1.0" min="0.2" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" scaleX="2.0" scaleY="2.0" value="0.5">
+                <Text layoutX="1124.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Dimension" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
+                <Slider fx:id="dimensionSlider" blockIncrement="1.0" layoutX="1118.0" layoutY="386.0" min="40.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="20.0" showTickLabels="true" showTickMarks="true" value="60.0">
                 </Slider>
+                <Button fx:id="quit" alignment="CENTER" layoutX="1085.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" styleClass="quitbutton" textOverrun="CLIP">
+                    </Button>
             </children>
         </Group>
     </children>
