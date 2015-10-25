@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
@@ -16,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -40,6 +41,12 @@ public class RouteDataEditorController
     public ImageView quit;
     @FXML
     public Slider opacitySlider;
+    @FXML
+    public TreeView dataTreeView;
+    @FXML
+    public TextArea highTextArea;
+    @FXML
+    public TextArea lowTextArea;
 
     public RouteDataEditorController(RouteEditorImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
@@ -73,4 +80,9 @@ public class RouteDataEditorController
             });
         });
     }
+
+    final void create() {
+       //dataTreeView
+    }
+
 }

@@ -19,7 +19,7 @@
             <children>
                 <Group styleClass="routeeditor-panel">
                     <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="356.0" layoutX="28.0" layoutY="107.0" stroke="#00abff" strokeType="INSIDE" styleClass="routeeditor-info-pane" width="195.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="417.0" layoutX="29.0" layoutY="42.0" stroke="#00abff" strokeType="INSIDE" styleClass="routeeditor-info-pane" width="195.0" />
                         <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="402.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
                             <image>
                                 <Image url="@quit.png" />
@@ -37,7 +37,30 @@
                         </Slider>
                         <Group layoutX="-710.0" layoutY="35.0" />
                         <Text layoutX="154.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="ROUTE DATA EDITOR" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="356.0" layoutX="227.0" layoutY="107.0" stroke="#00abff" strokeType="INSIDE" styleClass="routeeditor-info-pane" width="195.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="417.0" layoutX="226.0" layoutY="42.0" stroke="#00abff" strokeType="INSIDE" styleClass="routeeditor-info-pane" width="195.0" />
+                  <TreeView fx:id="dataTreeView" layoutX="38.0" layoutY="56.0" prefHeight="394.0" prefWidth="177.0" />
+                  <VBox layoutX="235.0" layoutY="55.0" prefHeight="392.0" prefWidth="177.0">
+                     <children>
+                        <ScrollPane prefHeight="185.0" prefWidth="177.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <TextArea fx:id="highTextArea" prefHeight="263.0" prefWidth="290.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="188.0" prefWidth="200.0">
+                                 <children>
+                                    <TextArea fx:id="lowTextArea" layoutY="-6.0" prefHeight="310.0" prefWidth="282.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
                     </children>
                 </Group>
             </children>

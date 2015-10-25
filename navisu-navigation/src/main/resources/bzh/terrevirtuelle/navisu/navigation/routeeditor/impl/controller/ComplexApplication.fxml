@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?scenebuilder-preview-i18n-resource ComplexApplication_en.properties?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="%menu.title.file">
+          <items>
+            <MenuItem mnemonicParsing="false" text="%menu.title.new" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.open" />
+            <Menu mnemonicParsing="false" text="%menu.title.open.recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.close" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.save" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.save.as" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.preferences" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="%menu.title.edit">
+          <items>
+            <MenuItem mnemonicParsing="false" text="%menu.title.undo" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.cut" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.copy" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.paste" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.select.all" />
+            <MenuItem mnemonicParsing="false" text="%menu.title.unselect.all" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="%menu.title.help">
+          <items>
+            <MenuItem mnemonicParsing="false" text="%menu.title.about" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <items>
+        <AnchorPane>
+          <children>
+            <TreeView editable="true" focusTraversable="true" layoutX="11.0" layoutY="6.0" prefHeight="553.0" prefWidth="200.0" visible="true" />
+            <CheckBox layoutX="36.0" layoutY="46.0" mnemonicParsing="false" text="Landmarks" />
+            <CheckBox layoutX="68.0" layoutY="70.0" mnemonicParsing="false" text="Church" />
+            <CheckBox layoutX="68.0" layoutY="86.0" mnemonicParsing="false" text="LightHouse" />
+            <CheckBox layoutX="68.0" layoutY="102.0" mnemonicParsing="false" text="Tower" />
+            <CheckBox layoutX="68.0" layoutY="118.0" mnemonicParsing="false" text="WaterTower" />
+            <CheckBox layoutX="38.0" layoutY="145.0" mnemonicParsing="false" text="External Environnement" />
+            <CheckBox layoutX="36.0" layoutY="234.0" mnemonicParsing="false" text="Avurnav" />
+            <CheckBox layoutX="68.0" layoutY="169.0" mnemonicParsing="false" text="Current" />
+            <CheckBox layoutX="68.0" layoutY="185.0" mnemonicParsing="false" text="MTO" />
+            <CheckBox layoutX="68.0" layoutY="201.0" mnemonicParsing="false" text="Tide" />
+            <CheckBox layoutX="16.0" layoutY="22.0" mnemonicParsing="false" text="Data" />
+            <CheckBox layoutX="36.0" layoutY="267.0" mnemonicParsing="false" text="Nautical Documentation" />
+            <CheckBox layoutX="68.0" layoutY="294.0" mnemonicParsing="false" text="Sailing Directions" />
+            <CheckBox layoutX="68.0" layoutY="310.0" mnemonicParsing="false" text="List of Lights" />
+            <CheckBox layoutX="68.0" layoutY="326.0" mnemonicParsing="false" text="List of Charts" />
+            <CheckBox layoutX="36.0" layoutY="358.0" mnemonicParsing="false" text="Other" />
+          </children>
+        </AnchorPane>
+        <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+          <content>
+            <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="430.0">
+              <children>
+                <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="%label.text.view" textAlignment="CENTER" wrapText="false">
+                  <font>
+                    <Font size="18.0" fx:id="x1" />
+                  </font>
+                  <textFill>
+                    <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
+                  </textFill>
+                </Label>
+                <SplitPane dividerPositions="0.4990791896869245" focusTraversable="true" layoutX="0.0" layoutY="0.0" orientation="VERTICAL" prefHeight="545.0" prefWidth="430.0">
+                  <items>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="268.0" prefWidth="415.0" />
+                  </items>
+                </SplitPane>
+              </children>
+            </AnchorPane>
+          </content>
+        </ScrollPane>
+        <AnchorPane />
+      </items>
+    </SplitPane>
+    <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+      <children>
+        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="%label.text.left.status" HBox.hgrow="ALWAYS">
+          <font>
+            <Font size="11.0" fx:id="x3" />
+          </font>
+          <textFill>
+            <Color blue="0.625" green="0.625" red="0.625" fx:id="x4" />
+          </textFill>
+        </Label>
+        <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+        <Label font="$x3" maxWidth="-1.0" text="Right Status" textFill="$x4" HBox.hgrow="NEVER" />
+      </children>
+      <padding>
+        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+      </padding>
+    </HBox>
+  </children>
+  <stylesheets>
+    <URL value="@ComplexApplication.css" />
+  </stylesheets>
+</VBox>
