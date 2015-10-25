@@ -204,6 +204,7 @@ public class RouteEditorController
          profile.setShowProfileLine(false);
          */
         load(FXML);
+        setTranslateX(225.0);
         speed = Float.parseFloat(speedText.getText());
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
