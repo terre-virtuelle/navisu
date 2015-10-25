@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
