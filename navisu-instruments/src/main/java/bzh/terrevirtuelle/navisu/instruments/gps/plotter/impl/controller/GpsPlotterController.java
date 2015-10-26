@@ -11,12 +11,13 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Poi;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
+import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
@@ -229,7 +230,7 @@ public class GpsPlotterController {
         fileChooser.setInitialDirectory(new File("data/poi"));
         File file = fileChooser.showOpenDialog(guiAgentServices.getStage());
         FileInputStream inputFile = null;
-        Poi poi = null;
+        NavigationDataSet poi = null;
         if (file != null) {
             try {
                 inputFile = new FileInputStream(new File(file.getPath()));
@@ -241,9 +242,9 @@ public class GpsPlotterController {
             Unmarshaller unmarshaller;
             JAXBContext jAXBContext;
             try {
-                jAXBContext = JAXBContext.newInstance(Poi.class);
+                jAXBContext = JAXBContext.newInstance(NavigationDataSet.class);
                 unmarshaller = jAXBContext.createUnmarshaller();
-                poi = (Poi) unmarshaller.unmarshal(inputFile);
+                poi = (NavigationDataSet) unmarshaller.unmarshal(inputFile);
             } catch (JAXBException ex) {
                 Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
             }
