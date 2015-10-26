@@ -139,7 +139,7 @@ public class ChartS57Controller {
                 }
                 ids.stream().forEach((id) -> {
 
-                    s57Controllers.stream().filter((sc) -> (sc.getLocation().getId() == id)).map((sc) -> {
+                    s57Controllers.stream().filter((sc) -> (sc.getNavigationData().getLocation().getId() == id)).map((sc) -> {
                         sc.setLayer(layer);
                         return sc;
                     }).forEach((sc) -> {
