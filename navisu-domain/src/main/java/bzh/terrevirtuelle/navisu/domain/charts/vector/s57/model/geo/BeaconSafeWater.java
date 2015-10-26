@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcnsaw")
 public class BeaconSafeWater extends Buoyage
-        implements Serializable {
+        implements  Serializable {
 
     public BeaconSafeWater(Long id) {
         this.id = id;

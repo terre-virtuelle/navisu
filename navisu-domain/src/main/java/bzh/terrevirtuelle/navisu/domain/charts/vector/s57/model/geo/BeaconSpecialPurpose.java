@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcnspp")
 public class BeaconSpecialPurpose extends Buoyage
-implements Serializable
+implements  Serializable
 {
 
 	public BeaconSpecialPurpose(Long id)

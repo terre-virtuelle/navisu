@@ -66,7 +66,6 @@ public class NMEA {
     public String getChecksum() {
         StringTokenizer st = new StringTokenizer(sentence, "*");
         String tmp = st.nextToken();
-        tmp = st.nextToken();
         return tmp;
     }
 
