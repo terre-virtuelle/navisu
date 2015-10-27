@@ -11,7 +11,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="view" stylesheets="@clocks.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" stylesheets="@clocks.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewpane" prefHeight="250.0" prefWidth="190.0" styleClass="background-pane" />
         <Rectangle arcHeight="30.0" arcWidth="30.0" height="250.0" strokeType="INSIDE" styleClass="clockcadres" width="190.0">
@@ -72,17 +72,41 @@
                 </Button>
                 <Slider fx:id="opacitySlider" layoutX="168.0" layoutY="65.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
-                <Button fx:id="hourup" graphicTextGap="0.0" layoutX="123.0" layoutY="173.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="18.0" prefWidth="30.0" text="+1" textAlignment="CENTER" >
-                    <font>
-                        <Font size="10.0" />
-                    </font>
-                </Button>
-                <Button fx:id="hourdown" graphicTextGap="0.0" layoutX="123.0" layoutY="196.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="18.0" prefWidth="31.0" text="-1" textAlignment="CENTER">
-                    <font>
-                        <Font size="10.0" />
-                    </font>
-                </Button>
-                <MenuButton fx:id="zonechoice" layoutX="98.0" layoutY="94.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="50.0" text="Zone">
+            <Group layoutX="-1.0" layoutY="-2.0">
+               <children>
+                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="20.0" layoutX="128.0" layoutY="173.0" strokeType="INSIDE" styleClass="clockcadres" width="20.0">
+                     <stroke>
+                        <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
+                           <stops>
+                              <Stop color="#04fff2" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </stroke>
+                  </Rectangle>
+                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="20.0" layoutX="128.0" layoutY="196.0" strokeType="INSIDE" styleClass="clockcadres" width="20.0">
+                     <stroke>
+                        <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
+                           <stops>
+                              <Stop color="#04fff2" />
+                              <Stop color="WHITE" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </stroke>
+                  </Rectangle>
+                      <Button fx:id="hourup" graphicTextGap="0.0" layoutX="123.0" layoutY="169.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="houradjustbutton" text="+1" textAlignment="CENTER">
+                          <font>
+                              <Font size="10.0" />
+                          </font>
+                      </Button>
+                      <Button fx:id="hourdown" graphicTextGap="0.0" layoutX="123.0" layoutY="191.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="houradjustbutton" text="-1">
+                          <font>
+                              <Font size="10.0" />
+                          </font>
+                      </Button>
+               </children>
+            </Group>
+                <MenuButton fx:id="zonechoice" layoutX="98.0" layoutY="94.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="61.0" styleClass="houradjustbutton" text="Zone">
                     <font>
                         <Font size="10.0" />
                     </font>

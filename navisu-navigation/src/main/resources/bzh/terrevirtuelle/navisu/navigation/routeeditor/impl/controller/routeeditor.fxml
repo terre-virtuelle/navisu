@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<fx:root fx:id="view" stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="452.0" styleClass="routeeditor-panel">
             <children>
@@ -115,7 +115,10 @@
                                 <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Units :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Units :" textAlignment="RIGHT" wrappingWidth="95.0">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin></Text>
                               
                                       <ComboBox fx:id="unitsCombo" prefHeight="20.0" prefWidth="80.0" promptText="Nm" styleClass="routeeditorcombolabel" visibleRowCount="15" GridPane.columnIndex="1">
                                     <items>
@@ -139,12 +142,24 @@
                                     </items>
                                 </ComboBox> 
                               
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Angle format :" textAlignment="RIGHT" wrappingWidth="100.0" GridPane.rowIndex="1" />
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Length :" textAlignment="RIGHT" wrappingWidth="100.0" GridPane.rowIndex="2" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Angle format :" textAlignment="RIGHT" wrappingWidth="95.0" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin></Text>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Length :" textAlignment="RIGHT" wrappingWidth="95.0" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin></Text>
                                 <TextField fx:id="lengthText" prefHeight="26.0" prefWidth="73.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Heading :" textAlignment="RIGHT" wrappingWidth="100.0" GridPane.rowIndex="3" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Heading :" textAlignment="RIGHT" wrappingWidth="95.0" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin></Text>
                                 <TextField fx:id="headingText" prefHeight="26.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Total length :" textAlignment="RIGHT" wrappingWidth="100.0" GridPane.rowIndex="5" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="routeeditorlabel" text="Total length :" textAlignment="RIGHT" wrappingWidth="95.0" GridPane.rowIndex="5">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin></Text>
                                 <TextField fx:id="totalLengthText" prefHeight="26.0" prefWidth="84.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                             </children>
                         </GridPane>
@@ -160,11 +175,11 @@
                                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label prefHeight="16.0" prefWidth="40.0" text="Name" wrapText="true" />
+                                <Label prefHeight="16.0" prefWidth="40.0" text="Name" />
                                 <TextField fx:id="routeNameText" alignment="CENTER" prefHeight="26.0" prefWidth="85.0" text="Route" GridPane.columnIndex="1" />
                                 <Label prefHeight="16.0" prefWidth="60.0" text="Version" GridPane.rowIndex="1" />
                                 <TextField fx:id="versionText" alignment="CENTER" prefHeight="26.0" prefWidth="85.0" text="Route" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                <Label prefHeight="16.0" prefWidth="56.0" text="Author" GridPane.rowIndex="2" />
+                                <Label graphicTextGap="0.0" prefHeight="17.0" prefWidth="53.0" text="Author" textAlignment="RIGHT" GridPane.rowIndex="2" />
                                 <TextField fx:id="authorText" alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="Route" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             </children>
                         </GridPane>

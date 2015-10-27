@@ -219,7 +219,7 @@ public class AisRadarController
         aisinfopanel.setVisible(false);
         aisbuttonpanel.setVisible(true);
         Platform.runLater(() -> {
-            radar.setOpacity(0.6);
+            radar.setOpacity(0.9);
             radar.setScaleX(0.7);
             radar.setScaleY(0.7);
         });

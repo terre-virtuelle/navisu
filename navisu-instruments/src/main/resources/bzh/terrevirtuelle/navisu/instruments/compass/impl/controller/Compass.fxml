@@ -11,7 +11,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root stylesheets="@Compass.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@Compass.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
           <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="450.0" styleClass="background-pane" />
         <Group>
@@ -20,7 +20,7 @@
             <Group layoutX="40.0" layoutY="50.0">
                <children>
                           <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#1f93ff00" height="260.0" strokeType="INSIDE" styleClass="instrumentcadres" width="260.0" />
-                          <ImageView fx:id="couronne" fitHeight="225.0" fitWidth="225.0" layoutX="16.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                          <ImageView fx:id="couronne" fitHeight="225.0" fitWidth="225.0" layoutX="16.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" rotate="-156.5">
                               <image>
                                   <Image url="@couronne.png" />
                               </image>
