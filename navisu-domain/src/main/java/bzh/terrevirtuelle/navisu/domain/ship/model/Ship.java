@@ -4,6 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.ship.model;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,13 +17,19 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author morvan
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-public class Ship implements Serializable, Cloneable {
+public class Ship
+        implements NavigationData, Serializable, Cloneable {
 
     /**
      * MMSI number :1-999999999; 0 = not available = default
@@ -141,6 +148,7 @@ public class Ship implements Serializable, Cloneable {
     private LocalDateTime localDateTime;
 
     private boolean gpsTarget = false;
+
     /**
      * Creates a new instance of Ship
      */
@@ -440,7 +448,7 @@ public class Ship implements Serializable, Cloneable {
                 + latitude + ";"
                 + longitude + ";"
                 + localDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";"
-                + localDateTime.toLocalTime() 
+                + localDateTime.toLocalTime()
                 + ";");
     }
 

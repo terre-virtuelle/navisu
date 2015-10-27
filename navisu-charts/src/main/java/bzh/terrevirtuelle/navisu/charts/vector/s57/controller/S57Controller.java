@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.controller;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsController;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -38,7 +39,7 @@ public abstract class S57Controller
     protected GlobalCoordinates waypointB;
     protected double distance;
     protected double azimuth;
-    protected Location location;
+    protected NavigationData navigationData;
 
     public double getDistanceNm(Position posA, Position posB) {
         waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
@@ -90,6 +91,7 @@ public abstract class S57Controller
 
     public void setId(long id) {
         this.id = id;
+        navigationData.getLocation().setId(id);
     }
 
     public double getLat() {
@@ -98,6 +100,7 @@ public abstract class S57Controller
 
     public void setLat(double lat) {
         this.lat = lat;
+        navigationData.getLocation().setLat(lat);
     }
 
     public double getLon() {
@@ -156,12 +159,12 @@ public abstract class S57Controller
         this.azimuth = azimuth;
     }
 
-    public Location getLocation() {
-        return location;
+    public NavigationData getNavigationData() {
+        return navigationData;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setNavigationData(NavigationData navigationData) {
+        this.navigationData = navigationData;
     }
 
     public abstract void activate();

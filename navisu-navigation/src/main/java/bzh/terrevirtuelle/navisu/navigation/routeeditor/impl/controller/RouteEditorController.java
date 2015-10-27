@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Poi;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.GpxBuilder;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
@@ -19,6 +19,7 @@ import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackSegment;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Waypoint;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.WaypointBuilder;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -42,9 +43,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -79,10 +78,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GeodeticCurve;
@@ -110,7 +106,7 @@ public class RouteEditorController
     private List<Position> positions;
     private List<Position> pathPositions;
     private Set<S57Controller> s57Controllers;
-    private Poi poi;
+    private NavigationDataSet navigationDataSet;
     private int size;
     private String routeName;
     private String author;
@@ -234,23 +230,9 @@ public class RouteEditorController
             fileChooser.setInitialDirectory(new File("data/gpx"));
             fileChooser.getExtensionFilters().add(extFilter);
             File file = fileChooser.showOpenDialog(instrument.getGuiAgentServices().getStage());
-            FileInputStream inputFile = null;
-            if (file != null) {
-                fileLabel.setText(file.getPath());
-                gpx = null;
-                try {
-                    inputFile = new FileInputStream(new File(file.getPath()));
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            Unmarshaller unmarshaller;
-            JAXBContext jAXBContext;
             try {
-                jAXBContext = JAXBContext.newInstance(Gpx.class);
-                unmarshaller = jAXBContext.createUnmarshaller();
-                gpx = (Gpx) unmarshaller.unmarshal(inputFile);
-            } catch (JAXBException ex) {
+                 gpx = ImportExportXML.imports(gpx, file);
+            } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
             measureTool.setArmed(!measureTool.isArmed());
@@ -588,13 +570,7 @@ public class RouteEditorController
     private void exportGpx() {
         if (gpx != null) {
             try {
-                FileOutputStream outputFile;
-                outputFile = new FileOutputStream(new File("data/gpx/" + routeName + ".gpx"));
-                JAXBContext jAXBContext;
-                Marshaller marshaller;
-                jAXBContext = JAXBContext.newInstance(Gpx.class);
-                marshaller = jAXBContext.createMarshaller();
-                marshaller.marshal(gpx, outputFile);
+                ImportExportXML.exports(gpx, "privateData/gpx/" + routeName + ".gpx");
             } catch (JAXBException | FileNotFoundException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -670,7 +646,7 @@ public class RouteEditorController
                 nmeaSentences.add(sentence + getChecksum(sentence));
             }
         }
-        Path path = Paths.get("data/nmea/" + routeName + ".nmea");
+        Path path = Paths.get("privateData/nmea/" + routeName + ".nmea");
         try {
             Files.write(path, nmeaSentences, Charset.defaultCharset());
         } catch (IOException ex) {
@@ -760,7 +736,7 @@ public class RouteEditorController
             String footer = " </Document>"
                     + "</kml>";
             kml.add(footer);
-            Path path = Paths.get("data/kml/" + routeName + ".kml");
+            Path path = Paths.get("privateData/kml/" + routeName + ".kml");
             try {
                 Files.write(path, kml, Charset.defaultCharset());
             } catch (IOException ex) {
@@ -773,22 +749,17 @@ public class RouteEditorController
         s57Controllers = new HashSet<>();
         s57Controllers = s57ChartServices.getS57Controllers();
         if (s57Controllers != null) {
-            poi = new Poi();
+            navigationDataSet = new NavigationDataSet();
             Coordinate buoyagePosition;
             for (S57Controller sc : s57Controllers) {
-                buoyagePosition = new Coordinate(sc.getLocation().getLon(), sc.getLocation().getLat());
+                buoyagePosition = new Coordinate(sc.getNavigationData().getLocation().getLon(), sc.getNavigationData().getLocation().getLat());
+                System.out.println("buoyagePosition " + buoyagePosition);
                 if (buffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
-                    poi.add(sc.getLocation());
+                    navigationDataSet.add(sc.getNavigationData());
                 }
             }
             try {
-                FileOutputStream outputFile;
-                outputFile = new FileOutputStream(new File("data/poi/" + routeName + ".xml"));
-                JAXBContext jAXBContext;
-                Marshaller marshaller;
-                jAXBContext = JAXBContext.newInstance(Poi.class);
-                marshaller = jAXBContext.createMarshaller();
-                marshaller.marshal(poi, outputFile);
+                ImportExportXML.exports(navigationDataSet, "privateData/nds/" + routeName + ".xml");
             } catch (JAXBException | FileNotFoundException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }

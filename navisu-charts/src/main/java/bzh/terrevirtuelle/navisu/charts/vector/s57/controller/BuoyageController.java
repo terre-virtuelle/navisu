@@ -28,12 +28,12 @@ public class BuoyageController
     }
 
     public BuoyageController(Buoyage buoyage, S57Behavior s57Behavior) {
-        this.location = buoyage;
+        this.navigationData = buoyage;
         this.s57Behavior = s57Behavior;
         s57Behavior.setS57Controller(this);
-        id = buoyage.getId();
-        lat = buoyage.getLat();
-        lon = buoyage.getLon();
+        setId(buoyage.getId());
+        setLat(buoyage.getLat());
+        setLon(buoyage.getLon());
         normalAttributes.setDrawInterior(false);
         normalAttributes.setDrawOutline(false);
     }
@@ -45,13 +45,13 @@ public class BuoyageController
             azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
             if (first == true) {
                 first = false;
-                shape = new SurfaceCircle(LatLon.fromDegrees(location.getLat(), location.getLon()), s57Behavior.getRange());
+                shape = new SurfaceCircle(LatLon.fromDegrees(navigationData.getLocation().getLat(), navigationData.getLocation().getLon()), s57Behavior.getRange());
                 shape.setAttributes(normalAttributes);
                 s57Behavior.setShape(shape);
                 layer.addRenderable(shape);
             }
             s57Behavior.doIt(distance, azimuth);
-            shape.setValue(AVKey.DISPLAY_NAME, ((Buoyage) location).getObjectName() + "\n distance :  "
+            shape.setValue(AVKey.DISPLAY_NAME, ((Buoyage) navigationData).getObjectName() + "\n distance :  "
                     + String.format("%.2f", distance) + " Nm"
                     + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
         }
@@ -69,7 +69,7 @@ public class BuoyageController
 
     @Override
     public String toString() {
-        return ((Buoyage) location).getLabel();
+        return ((Buoyage) navigationData).getLabel();
     }
 
 }

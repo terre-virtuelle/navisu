@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "boylat")
 public class BuoyLateral extends Buoyage
-        implements Serializable {
+        implements  Serializable {
 
     public BuoyLateral(Long id) {
         this.id = id;
