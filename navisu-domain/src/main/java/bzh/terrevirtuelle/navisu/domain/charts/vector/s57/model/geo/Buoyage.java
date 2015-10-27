@@ -338,6 +338,11 @@ public class Buoyage
     }
 
     @Override
+    public Location getLocation() {
+        return this;
+    }
+
+    @Override
     public String toString() {
         return "Buoyage{"
                 + shape != null ? "shape=" + shape : ""
