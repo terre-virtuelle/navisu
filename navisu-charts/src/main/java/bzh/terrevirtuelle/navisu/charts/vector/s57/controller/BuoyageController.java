@@ -31,9 +31,9 @@ public class BuoyageController
         this.navigationData = buoyage;
         this.s57Behavior = s57Behavior;
         s57Behavior.setS57Controller(this);
-        id = buoyage.getId();
-        lat = buoyage.getLat();
-        lon = buoyage.getLon();
+        setId(buoyage.getId());
+        setLat(buoyage.getLat());
+        setLon(buoyage.getLon());
         normalAttributes.setDrawInterior(false);
         normalAttributes.setDrawOutline(false);
     }

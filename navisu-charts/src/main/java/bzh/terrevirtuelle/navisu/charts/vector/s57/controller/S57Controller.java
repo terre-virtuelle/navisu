@@ -91,6 +91,7 @@ public abstract class S57Controller
 
     public void setId(long id) {
         this.id = id;
+        navigationData.getLocation().setId(id);
     }
 
     public double getLat() {
@@ -99,6 +100,7 @@ public abstract class S57Controller
 
     public void setLat(double lat) {
         this.lat = lat;
+        navigationData.getLocation().setLat(lat);
     }
 
     public double getLon() {
