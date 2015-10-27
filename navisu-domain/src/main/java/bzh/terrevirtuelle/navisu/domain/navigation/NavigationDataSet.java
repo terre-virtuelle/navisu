@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation;
 
+import bzh.terrevirtuelle.navisu.domain.avurnav.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.avurnav.Rss;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
@@ -20,7 +22,6 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -58,7 +59,9 @@ public class NavigationDataSet {
         @XmlElement(name = "boyssp", type = BuoySpecialPurpose.class),
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
         @XmlElement(name = "lndmrk", type = Landmark.class),
-        @XmlElement(name = "ship", type = Ship.class)
+        @XmlElement(name = "ship", type = Ship.class),
+        @XmlElement(name = "rss", type = Rss.class),
+        @XmlElement(name = "avurnav", type = Avurnav.class)
     })
 
     private final ConcurrentLinkedQueue<NavigationData> navigationDataSet;
