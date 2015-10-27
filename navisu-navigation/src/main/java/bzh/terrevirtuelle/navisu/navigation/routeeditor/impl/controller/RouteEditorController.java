@@ -753,6 +753,7 @@ public class RouteEditorController
             Coordinate buoyagePosition;
             for (S57Controller sc : s57Controllers) {
                 buoyagePosition = new Coordinate(sc.getNavigationData().getLocation().getLon(), sc.getNavigationData().getLocation().getLat());
+                System.out.println("buoyagePosition " + buoyagePosition);
                 if (buffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
                     navigationDataSet.add(sc.getNavigationData());
                 }
