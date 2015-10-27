@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLPAT;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -14,7 +15,9 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Serge Morvan
  * @date 2 oct. 2014 NaVisu project
  */
-public class Buoyage extends Location {
+public class Buoyage
+        extends Location
+        implements NavigationData {
 
     protected String shape;
     protected String categoryOfMark = "0";
@@ -332,6 +335,11 @@ public class Buoyage extends Location {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public Location getLocation() {
+        return this;
     }
 
     @Override

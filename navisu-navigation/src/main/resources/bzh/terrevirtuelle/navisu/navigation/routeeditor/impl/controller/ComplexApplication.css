@@ -1,0 +1,280 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28 oct. 2015, 18:18:04
+    Author     : Dom
+*/
+/* CSS Document */
+@font-face {
+        src: url('fonts/Roboto-Condensed.ttf');
+}
+
+*{
+    -fx-base : #143b28;
+    -fx-toggle-color: #254b88;
+    -fx-base-trans10 : #143b2810;
+    -fx-base-trans20 : #143b2820;
+    -fx-line-base : #04fff2;
+    -fx-font-family: "Roboto Cn" ;
+    -fx-color-typo: #c2f8c4;
+    -fx-color-contours: #70bbbf;
+}
+/*******************************************************************************
+ *                                                                             *
+ * Infos et valeurs AIS                                                        *
+ *                                                                             *
+ ******************************************************************************/
+.aisvalue{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : #fff900;
+}
+.aislabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+}
+.aisname{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : #fff900;
+    -fx-underline : true;
+}
+.info-text{
+    -fx-font: 16px "Roboto Cn";
+    -fx-fill : #fff900;
+}
+/*******************************************************************************
+ *                                                                             *
+ * cadre                                                                *
+ *                                                                             *
+ ******************************************************************************/
+.ais-panel{
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: -fx-base;
+    -fx-stroke: -fx-line-base;
+}
+.foot-pane {
+    -fx-border-radius: 0 0 20 20;
+    -fx-background-radius: 0 0 20 20;
+    -fx-background-color: -fx-base;
+}
+.top-pane {
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: -fx-base;    
+}
+.left-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+.right-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+.center-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+/*******************************************************************************
+ *                                                                             *
+ * radar circles and lines                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.radar-circle, .radar-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: -fx-base-trans10;  
+}
+.radar-line, .radar-ticks {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 2;
+}
+.radar-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.radar-degrees{
+    -fx-font: 20pt "Roboto Cn";
+    -fx-fill:-fx-line-base;
+}
+.radar-screen {
+    /*
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 4px;
+    */
+    -fx-arc-height:30;
+    -fx-arc-width:30;
+    -fx-fill: #143b28;    
+}
+.radar-info-pane {
+    -fx-stroke: -fx-line-base;
+    -fx-arc-height:20;
+    -fx-arc-width:20;
+    -fx-fill: -fx-base-trans20;
+}
+.radar-buttonlabel{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.radar-buttonlabel-nlines{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.radar-togglebutton{
+    -fx-background-color: linear-gradient(to bottom,
+        ladder(
+        -fx-toggle-color,
+        derive(-fx-toggle-color,8%) 75%,
+        derive(-fx-toggle-color,10%) 80%
+        ),
+        derive(-fx-toggle-color,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : whitesmoke;
+    -fx-alignment: CENTER;
+}
+/*******************************************************************************
+ *                                                                             *
+ * Slider                                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+.slider .thumb {
+    -fx-background-color:   -fx-line-base;
+    -fx-background-insets: 2;
+    -fx-background-radius: 1.0em; /* makes sure this remains circular */
+    -fx-padding: 0.583333em;  /* 7 */
+    -fx-effect: dropshadow(two-pass-box , rgba(0, 0, 0, 0.1), 5, 0.0 , 0, 2);
+}
+.slider:focused .thumb {
+    -fx-background-radius: 1.0em; /* makes sure this remains circular */
+
+}
+.slider .track {
+    -fx-background-color:  #04fff2, -fx-line-base;
+    -fx-background-insets: 2, 1;
+    -fx-background-radius: 0.25em, 0.166667em; /* 3 3 2 */
+    -fx-padding: 0.25em; /* 3 */
+}
+.slider:vertical .track {
+    -fx-background-color: -fx-line-base;
+}
+.slider .axis {
+    -fx-tick-label-fill: derive(-fx-background, 30%);
+    -fx-tick-length: 5px;
+    -fx-minor-tick-length: 3px;
+    -fx-border-color: null;
+}
+.sliderlabel{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+    /*-fx-font-weight: bold;*/
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * ScrollPane                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+.scrolling-pane > .viewport {
+    -fx-background-color: -fx-base;
+}
+.scrolling-pane > .scroll-bar:horizontal {
+    -fx-background-insets: 0 1 1 1, 1;
+    -fx-padding: 0 1 0 1;
+}
+.scrolling-pane > .scroll-bar:horizontal > .increment-button,
+.scrolling-pane > .scroll-bar:horizontal > .decrement-button {
+    -fx-padding: 0.166667em 0.25em 0.25em  0.25em; /* 2 3 3 3 */
+}
+.scrolling-pane > .scroll-bar:vertical > .increment-button,
+.scrolling-pane > .scroll-bar:vertical > .decrement-button {
+    -fx-padding: 0.25em 0.25em 0.25em 0.166667em; /* 3 3 3 2 */
+}
+.scrolling-pane > .scroll-bar:vertical {
+    -fx-background-insets: 1 1 1 0, 1;
+    -fx-padding: 1 0 1 0;
+}
+.scrolling-pane > .corner {
+    -fx-background-color: -fx-base;
+    -fx-background-insets: 0 1 1 0;
+}
+/* new styleclass for edge to edge scrollpanes that don't want to draw a border */
+.scrolling-pane.edge-to-edge,
+.tab-pane > * > .scrolling-pane {
+    -fx-background-color: #ffff00;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scrolling-pane.edge-to-edge > .scroll-bar,
+.tab-pane > * > .scrolling-pane > .scroll-bar,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scrolling-pane.edge-to-edge > .scroll-bar > .increment-button, 
+.scrolling-pane.edge-to-edge > .scroll-bar > .decrement-button,
+.tab-pane > * > .scrolling-pane > .scroll-bar > .increment-button, 
+.tab-pane > * > .scrolling-pane > .scroll-bar > .decrement-button,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar > .increment-button,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar > .decrement-button {
+    -fx-padding: 0.25em; /* 3px */
+}
+
+/*******************************************************************************
+ *                                                                             *
+ *GridPane                                                                  *
+ *                                                                             *
+ ******************************************************************************/
+.grid-pane {
+    -fx-background-color: -fx-base;  
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * MenuBar                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.menu-bar {
+    -fx-padding: 0.0em 0.666667em 0.0em 0.666667em; /* 0 8 0 8 */
+    -fx-spacing: 0.166667em; /* 2 */
+    -fx-background-color:
+        linear-gradient(to bottom, derive(-fx-base,75%) 0%, -fx-base 90%),
+        linear-gradient(to bottom, derive(-fx-base,46.9%) 2%, derive(-fx-base,-2.1%) 95%);
+    -fx-background-insets: 0 0 0 0, 1 0 1 0;
+    -fx-background-radius: 5 ;
+}
+
+
+/*******************************************************************************
+ *                                                                             *
+ * MenuItem                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-padding: 0.333333em 0.41777em 0.333333em 0.41777em;  /* 4 5 4 5 */
+    -fx-background-radius: 5 ;
+}
+.menu-item > .left-container {
+    -fx-padding: 0.458em 0.791em 0.458em 0.458em;
+}
+.menu-item > .graphic-container {
+    -fx-padding: 0em 0.333em 0em 0em;
+}
+.menu-item >.label {
+    -fx-padding: 0em 0.5em 0em 0em;
+    -fx-text-fill: whitesmoke;
+}
+

@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcncar")
 public class BeaconCardinal extends Beacon
-        implements Serializable {
+        implements  Serializable {
 
     public BeaconCardinal(Long id) {
         this.id = id;

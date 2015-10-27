@@ -69,6 +69,10 @@ import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.GpsTrackPlotterServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter.impl.GpsTrackPlotterImpl;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
+import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl.GpsTrackPolygonImpl;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.impl.GpsTrackImpl;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.MeasureToolsServices;
@@ -162,8 +166,8 @@ public class AppMain extends Application {
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
                         GpsTrackImpl.class,
-                        //   GpsTrackPlotterImpl.class,
-                        //  GpsTrackPolygonImpl.class,
+                        GpsTrackPlotterImpl.class,
+                        GpsTrackPolygonImpl.class,
                         GpsPlotterImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
@@ -201,10 +205,8 @@ public class AppMain extends Application {
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
-
         //CameraServices cameraServices = componentManager.getComponentService(CameraServices.class);
         //ClockServices clockServices = componentManager.getComponentService(ClockServices.class);
-
         ClocksServices clocksServices = componentManager.getComponentService(ClocksServices.class);
 
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
@@ -219,8 +221,8 @@ public class AppMain extends Application {
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
-        //  GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
-        //  GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
+        GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
+        GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
@@ -238,7 +240,7 @@ public class AppMain extends Application {
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
-        //RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
+        RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
@@ -250,7 +252,7 @@ public class AppMain extends Application {
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
-     
+
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
         WebViewServices webViewServices = componentManager.getComponentService(WebViewServices.class);
@@ -289,11 +291,11 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
-        //   instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
-        //  instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
-//        instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());

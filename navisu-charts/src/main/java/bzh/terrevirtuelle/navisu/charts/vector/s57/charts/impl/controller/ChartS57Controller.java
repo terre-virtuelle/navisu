@@ -139,7 +139,7 @@ public class ChartS57Controller {
                 }
                 ids.stream().forEach((id) -> {
 
-                    s57Controllers.stream().filter((sc) -> (sc.getLocation().getId() == id)).map((sc) -> {
+                    s57Controllers.stream().filter((sc) -> (sc.getNavigationData().getLocation().getId() == id)).map((sc) -> {
                         sc.setLayer(layer);
                         return sc;
                     }).forEach((sc) -> {
@@ -480,7 +480,7 @@ public class ChartS57Controller {
     private void showImage(PointPlacemark pointPlacemark) {
         String label = ((PointPlacemark) pointPlacemark).getLabelText();
         if (label != null && !"".equals(label)) {
-            // Image image = dataAccessServices.queryImage(label);
+           // Image image = dataAccessServices.queryImage(label);
             Object object = (pointPlacemark).getValue("Model");
             if (object.getClass().getName().contains("Landmark")) {
 
