@@ -227,7 +227,7 @@ public class GpsPlotterController {
         FileChooser.ExtensionFilter extFilter
                 = new FileChooser.ExtensionFilter("POI files (*.xml)", "*.xml", "*.XML");
         fileChooser.getExtensionFilters().add(extFilter);
-        fileChooser.setInitialDirectory(new File("data/poi"));
+        fileChooser.setInitialDirectory(new File("privateData/nds/"));
         File file = fileChooser.showOpenDialog(guiAgentServices.getStage());
         FileInputStream inputFile = null;
         NavigationDataSet poi = null;
@@ -245,6 +245,7 @@ public class GpsPlotterController {
                 jAXBContext = JAXBContext.newInstance(NavigationDataSet.class);
                 unmarshaller = jAXBContext.createUnmarshaller();
                 poi = (NavigationDataSet) unmarshaller.unmarshal(inputFile);
+                System.out.println("poi " + poi);
             } catch (JAXBException ex) {
                 Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -253,6 +254,7 @@ public class GpsPlotterController {
                 locations.stream().forEach((l) -> {
                     s57Controllers.add(Long.toString(l.getId()));
                 });
+                System.out.println("s57Controllers " + s57Controllers);
                 component.notifyAisActivateEvent(aisSurveyZoneLayer, s57Controllers);
             }
         }
