@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.photos.exif;
 
+import com.drew.metadata.Metadata;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -15,5 +16,7 @@ import org.capcaval.c3.component.ComponentService;
  */
 public interface ExifServices
         extends ComponentService {
+
+    Metadata readMetadata(String filename);
 
 }
