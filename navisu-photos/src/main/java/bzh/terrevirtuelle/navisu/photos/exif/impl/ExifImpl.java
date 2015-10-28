@@ -70,6 +70,7 @@ public class ExifImpl
     }
 
     private ExifType populate(Metadata metadata) {
+        //TODO
         for (Directory directory : metadata.getDirectories()) {
             String tagName;
             for (Tag tag : directory.getTags()) {
