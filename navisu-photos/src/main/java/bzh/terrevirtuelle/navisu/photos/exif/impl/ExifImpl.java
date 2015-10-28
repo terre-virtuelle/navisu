@@ -69,7 +69,8 @@ public class ExifImpl
         return populate(readMetadata(stream));
     }
 
-    private ExifType populate(Metadata metadata) {
+    @Override
+    public ExifType populate(Metadata metadata) {
         //TODO
         for (Directory directory : metadata.getDirectories()) {
             String tagName;

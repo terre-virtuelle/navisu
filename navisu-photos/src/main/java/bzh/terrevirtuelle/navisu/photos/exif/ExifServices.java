@@ -33,4 +33,6 @@ public interface ExifServices
     ExifType create(File file) throws IOException, ImageProcessingException;
 
     ExifType create(InputStream stream) throws IOException, ImageProcessingException;
+
+    public ExifType populate(Metadata metadata);
 }
