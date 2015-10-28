@@ -25,10 +25,10 @@
 /navisu-launcher/data/databases/*
 /navisu-launcher/data/saved/*.csv
 /navisu-launcher/data/bathymetry/shom/*
-/navisu-launcher/privateData/nds/*
-/navisu-launcher/privateData/kml/*
-/navisu-launcher/privateData/nmea/*
-/navisu-launcher/privateData/gpx/*
+#/navisu-launcher/privateData/nds/*
+#/navisu-launcher/privateData/kml/*
+#/navisu-launcher/privateData/nmea/*
+#/navisu-launcher/privateData/gpx/*
 /navisu-launcher/errors.txt
 /navisu-launcher/derby.log
 /navisu-launcher/properties/*
