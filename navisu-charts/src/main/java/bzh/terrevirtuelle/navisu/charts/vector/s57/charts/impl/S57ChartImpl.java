@@ -21,8 +21,11 @@ import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneControl
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
+import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.layers.AirspaceLayer;
 import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.ViewControlsLayer;
+import gov.nasa.worldwind.layers.ViewControlsSelectListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -261,6 +264,10 @@ public class S57ChartImpl
             }).forEach((gl) -> {
                 layerTreeServices.addGeoLayer(GROUP, gl);
             });
+            
+            ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
+            wwd.addSelectListener(new ViewControlsSelectListener(wwd, viewControlsLayer));
+            geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(viewControlsLayer));
 
             airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
