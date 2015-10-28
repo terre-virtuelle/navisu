@@ -265,6 +265,7 @@ public class S57ChartImpl
                 layerTreeServices.addGeoLayer(GROUP, gl);
             });
             
+            //Controle fin de la camera
             ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
             wwd.addSelectListener(new ViewControlsSelectListener(wwd, viewControlsLayer));
             geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(viewControlsLayer));
