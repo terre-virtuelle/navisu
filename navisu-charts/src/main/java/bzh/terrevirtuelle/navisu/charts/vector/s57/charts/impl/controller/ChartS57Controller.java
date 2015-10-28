@@ -60,6 +60,7 @@ import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Renderable;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -98,8 +99,10 @@ public class ChartS57Controller {
     private Map<String, Map<Long, S57Object>> geos;
     private static final List<Layer> layers = Collections.synchronizedList(new ArrayList());
     // private static final Set<Layer> layers = new HashSet<>();
-    private final List<AirspaceLayer> airspaceLayers = new ArrayList<>();
-    private AirspaceLayer airspaceTmpLayer;
+   // private final List<AirspaceLayer> airspaceLayers = new ArrayList<>();
+    private final List<RenderableLayer> airspaceLayers = new ArrayList<>();
+   // private AirspaceLayer airspaceTmpLayer;
+    private RenderableLayer airspaceTmpLayer;
     private ShapefileLoader loader;
     protected WorldWindow wwd;
     protected Globe globe;
@@ -187,7 +190,7 @@ public class ChartS57Controller {
         initGeosMap();
     }
 
-    public List<AirspaceLayer> getAirspaceLayers() {
+    public List<RenderableLayer> getAirspaceLayers() {
         return airspaceLayers;
     }
 
@@ -340,12 +343,11 @@ public class ChartS57Controller {
                     case "WRECKS.shp":
                         load(new WRECKS_CNT_ShapefileLoader(), "DANGERS", "WRECKS", "/");
                         load(new WRECKS_ShapefileLoader(), "DANGERS", "WRECKS", "/");
-                        break;
-                    /*
+                        break;  
                      case "LIGHTS.shp":
                      loadLights();
                      break; 
-                     */
+                     
                     default:
                 }
 
@@ -363,10 +365,11 @@ public class ChartS57Controller {
         loader = new LIGHTS_ShapefileLoader();
         loader.createLayersFromSource(new File(path + "/LIGHTS.shp"));
 
-        AirspaceLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
+        RenderableLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
         la.setName("LIGHTS");
         layers.add(la);
-        airspaceTmpLayer = new AirspaceLayer();
+       // airspaceTmpLayer = new AirspaceLayer();
+        airspaceTmpLayer = new RenderableLayer();
         airspaceTmpLayer.setName("LIGHTS_1");
         airspaceLayers.add(la);
         airspaceLayers.add(airspaceTmpLayer);
@@ -379,12 +382,12 @@ public class ChartS57Controller {
                     if (o.getClass().getInterfaces()[0].equals(Lights.class)) {
                         lightView = ((LightView) o);
                         if (lightView.isTmp() == true) {
-                            airspaceTmpLayer.removeAllAirspaces();
+                            airspaceTmpLayer.removeAllRenderables();
                             isDisplay = false;
                         } else {
                             if (isDisplay == false) {
                                 isDisplay = true;
-                                airspaceTmpLayer.removeAllAirspaces();
+                                airspaceTmpLayer.removeAllRenderables();
                                 Light data = lightView.getLight();
                                 if (data.getSectorLimitOne() != null
                                         && data.getSectorLimitTwo() != null
@@ -422,10 +425,10 @@ public class ChartS57Controller {
                                         lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
                                         lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
                                     }
-                                    airspaceTmpLayer.addAirspace(lightView);
+                                    airspaceTmpLayer.addRenderable(lightView);
                                 }
                             } else {
-                                airspaceTmpLayer.removeAllAirspaces();
+                                airspaceTmpLayer.removeAllRenderables();
                                 isDisplay = false;
                             }
                         }

@@ -43,7 +43,7 @@ public class LIGHTS_ShapefileLoader
 
     private Set<Map.Entry<String, Object>> entries;
     private Light data;
-    private final AirspaceLayer airspaceLayer;
+    private final RenderableLayer airspaceLayer;
     RenderableLayer layer = new RenderableLayer();
     protected WorldWindow wwd;
     protected Globe globe;
@@ -52,7 +52,7 @@ public class LIGHTS_ShapefileLoader
 
     public LIGHTS_ShapefileLoader() {
         dataList = new ArrayList<>();
-        airspaceLayer = new AirspaceLayer();
+        airspaceLayer = new RenderableLayer();
         chartS57Controller = ChartS57Controller.getInstance();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         chartS57Controller.getLayers().add(layer);
@@ -176,7 +176,7 @@ public class LIGHTS_ShapefileLoader
                 lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
             }
 
-            airspaceLayer.addAirspace(lightView);
+            airspaceLayer.addRenderable(lightView);
         } else {
 
             lightView.setCenter(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)));
@@ -214,7 +214,7 @@ public class LIGHTS_ShapefileLoader
                 }
             }
         }
-        airspaceLayer.addAirspace(lightView);
+        airspaceLayer.addRenderable(lightView);
 
         return lightView;
     }
@@ -223,7 +223,7 @@ public class LIGHTS_ShapefileLoader
         return dataList;
     }
 
-    public AirspaceLayer getAirspaceLayer() {
+    public RenderableLayer getAirspaceLayer() {
         return airspaceLayer;
     }
 

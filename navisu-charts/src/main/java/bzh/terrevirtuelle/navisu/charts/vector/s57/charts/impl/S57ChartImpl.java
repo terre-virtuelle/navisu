@@ -21,8 +21,7 @@ import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneControl
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
-import gov.nasa.worldwind.event.SelectListener;
-import gov.nasa.worldwind.layers.AirspaceLayer;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.ViewControlsLayer;
 import gov.nasa.worldwind.layers.ViewControlsSelectListener;
@@ -81,7 +80,7 @@ public class S57ChartImpl
     protected Layer layer;
     protected List<Layer> enabledLayers;
     protected List<CheckBoxTreeItem<GeoLayer>> rootItems;
-    protected List<AirspaceLayer> airspaceLayers;
+    protected List<RenderableLayer> airspaceLayers;
     protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
     protected WorldWindow wwd;
     protected Scene scene;
