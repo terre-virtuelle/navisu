@@ -1,271 +1,228 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.io.Serializable;
 
-
 public class LightFloat extends Geo
-implements Serializable
-{
+        implements NavigationData, Serializable {
 
-	public LightFloat(Long id)
-	{
-		this.id=id;
-	}
+    public LightFloat(Long id) {
+        this.id = id;
+    }
 
-	public LightFloat(){}
+    public LightFloat() {
+    }
 
-	private String colour;
+    
+    private String colour;
 
-	public String getColour()
-	{
-		return colour;
-	}
+    public String getColour() {
+        return colour;
+    }
 
-	public void setColour(String value)
-	{
-		this.colour= value;
-	}
+    public void setColour(String value) {
+        this.colour = value;
+    }
 
-	private String colourPattern;
+    private String colourPattern;
 
-	public String getColourPattern()
-	{
-		return colourPattern;
-	}
+    public String getColourPattern() {
+        return colourPattern;
+    }
 
-	public void setColourPattern(String value)
-	{
-		this.colourPattern= value;
-	}
+    public void setColourPattern(String value) {
+        this.colourPattern = value;
+    }
 
-	private String conspicuousRadar;
+    private String conspicuousRadar;
 
-	public String getConspicuousRadar()
-	{
-		return conspicuousRadar;
-	}
+    public String getConspicuousRadar() {
+        return conspicuousRadar;
+    }
 
-	public void setConspicuousRadar(String value)
-	{
-		this.conspicuousRadar= value;
-	}
+    public void setConspicuousRadar(String value) {
+        this.conspicuousRadar = value;
+    }
 
-	private String conspicuousVisually;
+    private String conspicuousVisually;
 
-	public String getConspicuousVisually()
-	{
-		return conspicuousVisually;
-	}
+    public String getConspicuousVisually() {
+        return conspicuousVisually;
+    }
 
-	public void setConspicuousVisually(String value)
-	{
-		this.conspicuousVisually= value;
-	}
+    public void setConspicuousVisually(String value) {
+        this.conspicuousVisually = value;
+    }
 
-	private String dateEnd;
+    private String dateEnd;
 
-	public String getDateEnd()
-	{
-		return dateEnd;
-	}
+    public String getDateEnd() {
+        return dateEnd;
+    }
 
-	public void setDateEnd(String value)
-	{
-		this.dateEnd= value;
-	}
+    public void setDateEnd(String value) {
+        this.dateEnd = value;
+    }
 
-	private String dateStart;
+    private String dateStart;
 
-	public String getDateStart()
-	{
-		return dateStart;
-	}
+    public String getDateStart() {
+        return dateStart;
+    }
 
-	public void setDateStart(String value)
-	{
-		this.dateStart= value;
-	}
+    public void setDateStart(String value) {
+        this.dateStart = value;
+    }
 
-	private String horizontalAccuracy;
+    private String horizontalAccuracy;
 
-	public String getHorizontalAccuracy()
-	{
-		return horizontalAccuracy;
-	}
+    public String getHorizontalAccuracy() {
+        return horizontalAccuracy;
+    }
 
-	public void setHorizontalAccuracy(String value)
-	{
-		this.horizontalAccuracy= value;
-	}
+    public void setHorizontalAccuracy(String value) {
+        this.horizontalAccuracy = value;
+    }
 
-	private String horizontalLength;
+    private String horizontalLength;
 
-	public String getHorizontalLength()
-	{
-		return horizontalLength;
-	}
+    public String getHorizontalLength() {
+        return horizontalLength;
+    }
 
-	public void setHorizontalLength(String value)
-	{
-		this.horizontalLength= value;
-	}
+    public void setHorizontalLength(String value) {
+        this.horizontalLength = value;
+    }
 
-	private String horizontalWidth;
+    private String horizontalWidth;
 
-	public String getHorizontalWidth()
-	{
-		return horizontalWidth;
-	}
+    public String getHorizontalWidth() {
+        return horizontalWidth;
+    }
 
-	public void setHorizontalWidth(String value)
-	{
-		this.horizontalWidth= value;
-	}
+    public void setHorizontalWidth(String value) {
+        this.horizontalWidth = value;
+    }
 
-	private String natureOfConstruction;
+    private String natureOfConstruction;
 
-	public String getNatureOfConstruction()
-	{
-		return natureOfConstruction;
-	}
+    public String getNatureOfConstruction() {
+        return natureOfConstruction;
+    }
 
-	public void setNatureOfConstruction(String value)
-	{
-		this.natureOfConstruction= value;
-	}
+    public void setNatureOfConstruction(String value) {
+        this.natureOfConstruction = value;
+    }
 
-	private String objectName;
+    private String objectName;
 
-	public String getObjectName()
-	{
-		return objectName;
-	}
+    public String getObjectName() {
+        return objectName;
+    }
 
-	public void setObjectName(String value)
-	{
-		this.objectName= value;
-	}
+    public void setObjectName(String value) {
+        this.objectName = value;
+    }
 
-	private String periodicDateEnd;
+    private String periodicDateEnd;
 
-	public String getPeriodicDateEnd()
-	{
-		return periodicDateEnd;
-	}
+    public String getPeriodicDateEnd() {
+        return periodicDateEnd;
+    }
 
-	public void setPeriodicDateEnd(String value)
-	{
-		this.periodicDateEnd= value;
-	}
+    public void setPeriodicDateEnd(String value) {
+        this.periodicDateEnd = value;
+    }
 
-	private String periodicDateStart;
+    private String periodicDateStart;
 
-	public String getPeriodicDateStart()
-	{
-		return periodicDateStart;
-	}
+    public String getPeriodicDateStart() {
+        return periodicDateStart;
+    }
 
-	public void setPeriodicDateStart(String value)
-	{
-		this.periodicDateStart= value;
-	}
+    public void setPeriodicDateStart(String value) {
+        this.periodicDateStart = value;
+    }
 
-	private String pictorialRepresentation;
+    private String pictorialRepresentation;
 
-	public String getPictorialRepresentation()
-	{
-		return pictorialRepresentation;
-	}
+    public String getPictorialRepresentation() {
+        return pictorialRepresentation;
+    }
 
-	public void setPictorialRepresentation(String value)
-	{
-		this.pictorialRepresentation= value;
-	}
+    public void setPictorialRepresentation(String value) {
+        this.pictorialRepresentation = value;
+    }
 
-	private String recordIngdate;
+    private String recordIngdate;
 
-	public String getRecordIngdate()
-	{
-		return recordIngdate;
-	}
+    public String getRecordIngdate() {
+        return recordIngdate;
+    }
 
-	public void setRecordIngdate(String value)
-	{
-		this.recordIngdate= value;
-	}
+    public void setRecordIngdate(String value) {
+        this.recordIngdate = value;
+    }
 
-	private String recordingIndication;
+    private String recordingIndication;
 
-	public String getRecordingIndication()
-	{
-		return recordingIndication;
-	}
+    public String getRecordingIndication() {
+        return recordingIndication;
+    }
 
-	public void setRecordingIndication(String value)
-	{
-		this.recordingIndication= value;
-	}
+    public void setRecordingIndication(String value) {
+        this.recordingIndication = value;
+    }
 
-	private String scaleMaximum;
+    private String scaleMaximum;
 
-	public String getScaleMaximum()
-	{
-		return scaleMaximum;
-	}
+    public String getScaleMaximum() {
+        return scaleMaximum;
+    }
 
-	public void setScaleMaximum(String value)
-	{
-		this.scaleMaximum= value;
-	}
+    public void setScaleMaximum(String value) {
+        this.scaleMaximum = value;
+    }
 
-	private String status;
+    private String status;
 
-	public String getStatus()
-	{
-		return status;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setStatus(String value)
-	{
-		this.status= value;
-	}
+    public void setStatus(String value) {
+        this.status = value;
+    }
 
-	private String verticalAccuracy;
+    private String verticalAccuracy;
 
-	public String getVerticalAccuracy()
-	{
-		return verticalAccuracy;
-	}
+    public String getVerticalAccuracy() {
+        return verticalAccuracy;
+    }
 
-	public void setVerticalAccuracy(String value)
-	{
-		this.verticalAccuracy= value;
-	}
+    public void setVerticalAccuracy(String value) {
+        this.verticalAccuracy = value;
+    }
 
-	private String verticalLength;
+    private String verticalLength;
 
-	public String getVerticalLength()
-	{
-		return verticalLength;
-	}
+    public String getVerticalLength() {
+        return verticalLength;
+    }
 
-	public void setVerticalLength(String value)
-	{
-		this.verticalLength= value;
-	}
+    public void setVerticalLength(String value) {
+        this.verticalLength = value;
+    }
 
-	private String objectNameInNationalLanguage;
+    private String objectNameInNationalLanguage;
 
-	public String getObjectNameInNationalLanguage()
-	{
-		return objectNameInNationalLanguage;
-	}
+    public String getObjectNameInNationalLanguage() {
+        return objectNameInNationalLanguage;
+    }
 
-	public void setObjectNameInNationalLanguage(String value)
-	{
-		this.objectNameInNationalLanguage= value;
-	}
-
+    public void setObjectNameInNationalLanguage(String value) {
+        this.objectNameInNationalLanguage = value;
+    }
 
 }
