@@ -397,7 +397,7 @@ public class AppMain extends Application {
         //dataAccessServices.test();//OK
         
         
-        /* Text Exif file reading from jpg photo : Test OK*/
+        /* Test Exif file reading from jpg photo : Test OK*/
         /*
          // Metadata read and creation of a Exif object
          String NAME = "LaGrandeVinotiere_1510";
