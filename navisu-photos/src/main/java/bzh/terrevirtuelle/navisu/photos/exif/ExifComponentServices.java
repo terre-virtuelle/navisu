@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.photos.exif;
 
-import bzh.terrevirtuelle.navisu.domain.photos.exif.ExifType;
+import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.Metadata;
 import java.io.File;
@@ -19,7 +19,7 @@ import org.capcaval.c3.component.ComponentService;
  * @date 26 août 2015
  * @author Serge Morvan
  */
-public interface ExifServices
+public interface ExifComponentServices
         extends ComponentService {
 
     Metadata readMetadata(String filename) throws IOException, ImageProcessingException;
@@ -28,11 +28,11 @@ public interface ExifServices
 
     Metadata readMetadata(InputStream stream) throws IOException, ImageProcessingException;
 
-    ExifType create(String filename) throws IOException, ImageProcessingException;
+    Exif create(String filename) throws IOException, ImageProcessingException;
 
-    ExifType create(File file) throws IOException, ImageProcessingException;
+    Exif create(File file) throws IOException, ImageProcessingException;
 
-    ExifType create(InputStream stream) throws IOException, ImageProcessingException;
+    Exif create(InputStream stream) throws IOException, ImageProcessingException;
 
-    public ExifType populate(Metadata metadata);
+    public Exif populate(Metadata metadata);
 }
