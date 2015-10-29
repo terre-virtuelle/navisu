@@ -43,6 +43,7 @@ import bzh.terrevirtuelle.navisu.database.DatabaseServices;
 import bzh.terrevirtuelle.navisu.database.app.TestDBServices;
 import bzh.terrevirtuelle.navisu.database.app.impl.TestDBImpl;
 import bzh.terrevirtuelle.navisu.database.impl.DatabaseImpl;
+import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.Bezier2DImpl;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
@@ -73,8 +74,6 @@ import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.impl.GpsTrackImpl;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.MeasureToolsServices;
 import bzh.terrevirtuelle.navisu.instruments.measuretools.impl.MeasureToolsImpl;
-//import bzh.terrevirtuelle.navisu.instruments.routeeditor.RouteEditorServices;
-//import bzh.terrevirtuelle.navisu.instruments.routeeditor.impl.RouteEditorImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
 import bzh.terrevirtuelle.navisu.instruments.webview.WebViewServices;
@@ -87,8 +86,11 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.ontology.data.impl.DataAccessImpl;
+import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
+import bzh.terrevirtuelle.navisu.photos.exif.impl.ExifComponentImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
 import bzh.terrevirtuelle.navisu.sedimentology.impl.SedimentologyImpl;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
@@ -97,16 +99,21 @@ import bzh.terrevirtuelle.navisu.speech.SpeakerServices;
 import bzh.terrevirtuelle.navisu.speech.impl.SpeakerImpl;
 import bzh.terrevirtuelle.navisu.system.files.FilesServices;
 import bzh.terrevirtuelle.navisu.system.files.impl.FilesImpl;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
+import java.io.File;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javax.xml.bind.JAXBException;
 
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -158,6 +165,7 @@ public class AppMain extends Application {
                         DirectoryDriverManagerImpl.class,
                         DpAgentImpl.class,
                         DriverManagerImpl.class,
+                        ExifComponentImpl.class,
                         FilesImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
@@ -201,10 +209,8 @@ public class AppMain extends Application {
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
-
         //CameraServices cameraServices = componentManager.getComponentService(CameraServices.class);
         //ClockServices clockServices = componentManager.getComponentService(ClockServices.class);
-
         ClocksServices clocksServices = componentManager.getComponentService(ClocksServices.class);
 
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
@@ -213,6 +219,8 @@ public class AppMain extends Application {
         DataAccessServices dataAccessServices = componentManager.getComponentService(DataAccessServices.class);
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
+
+        ExifComponentServices exifComponentServices = componentManager.getComponentService(ExifComponentServices.class);
 
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
 
@@ -250,7 +258,7 @@ public class AppMain extends Application {
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
-     
+
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
         WebViewServices webViewServices = componentManager.getComponentService(WebViewServices.class);
@@ -387,6 +395,28 @@ public class AppMain extends Application {
         // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");//OK
         /* Test  ontology  DataAccess */
         //dataAccessServices.test();//OK
+        
+        
+        /* Text Exif file reading from jpg photo : Test OK*/
+        /*
+         // Metadata read and creation of a Exif object
+         String NAME = "LaGrandeVinotiere_1510";
+         Exif exif0 = exifComponentServices.create("data/photos/" + NAME + ".jpg");
+         // Save it in xml file
+         try {
+         ImportExportXML.exports(exif0, "data/photos/" + NAME + ".xml");
+         } catch (JAXBException | FileNotFoundException ex) {
+         Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         // Load from a xml file
+         Exif exif1 = new Exif();
+         try {
+         exif1 = ImportExportXML.imports(exif1, new File("data/photos/" + NAME + ".xml"));
+         } catch (JAXBException | FileNotFoundException ex) {
+         Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         System.out.println(exif1);
+         */
     }
 
     public static void main(String[] args) throws Exception {
