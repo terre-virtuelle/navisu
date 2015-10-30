@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.app;
 
-import bzh.terrevirtuelle.navisu.domain.avurnav.Avurnav;
-import bzh.terrevirtuelle.navisu.domain.avurnav.Rss;
+import bzh.terrevirtuelle.navisu.domain.avurnav.rss.AvurnavRSS;
+import bzh.terrevirtuelle.navisu.domain.avurnav.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
@@ -43,7 +43,7 @@ public class AppMain {
          }
          System.out.println("s : " + nds);
          */
-        // Les avurnav du shom sont des flus Rss, lecture suivie de l'instanciation d'un Avurnav
+        // Les avurnav du shom sont des flus Rss, lecture suivie de l'instanciation d'un AvurnavRSS
         Rss rss = new Rss();
         try {
             rss = ImportExportXML.imports(rss, new File("data/rssatlantique-fr.xml"));
@@ -52,7 +52,7 @@ public class AppMain {
         }
         System.out.println(rss);
 
-        Avurnav avurnav = new Avurnav(rss);
+        AvurnavRSS avurnav = new AvurnavRSS(rss);
         NavigationDataSet navigationDataSet = new NavigationDataSet();
         navigationDataSet.add(avurnav);
         Ship ship = ShipBuilder

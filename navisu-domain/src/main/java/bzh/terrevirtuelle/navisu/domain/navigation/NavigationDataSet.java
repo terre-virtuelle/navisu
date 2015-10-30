@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation;
 
-import bzh.terrevirtuelle.navisu.domain.avurnav.Avurnav;
-import bzh.terrevirtuelle.navisu.domain.avurnav.Rss;
+import bzh.terrevirtuelle.navisu.domain.avurnav.rss.AvurnavRSS;
+import bzh.terrevirtuelle.navisu.domain.avurnav.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
@@ -61,7 +61,7 @@ public class NavigationDataSet {
         @XmlElement(name = "lndmrk", type = Landmark.class),
         @XmlElement(name = "ship", type = Ship.class),
         @XmlElement(name = "rss", type = Rss.class),
-        @XmlElement(name = "avurnav", type = Avurnav.class)
+        @XmlElement(name = "avurnav", type = AvurnavRSS.class)
     })
 
     private final ConcurrentLinkedQueue<NavigationData> navigationDataSet;
