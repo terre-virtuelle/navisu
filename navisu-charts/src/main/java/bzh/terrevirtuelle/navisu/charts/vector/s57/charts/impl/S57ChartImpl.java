@@ -21,8 +21,10 @@ import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneControl
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
-import gov.nasa.worldwind.layers.AirspaceLayer;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.ViewControlsLayer;
+import gov.nasa.worldwind.layers.ViewControlsSelectListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -78,7 +80,7 @@ public class S57ChartImpl
     protected Layer layer;
     protected List<Layer> enabledLayers;
     protected List<CheckBoxTreeItem<GeoLayer>> rootItems;
-    protected List<AirspaceLayer> airspaceLayers;
+    protected List<RenderableLayer> airspaceLayers;
     protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
     protected WorldWindow wwd;
     protected Scene scene;
@@ -261,6 +263,11 @@ public class S57ChartImpl
             }).forEach((gl) -> {
                 layerTreeServices.addGeoLayer(GROUP, gl);
             });
+            
+            //Controle fin de la camera
+            ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
+            wwd.addSelectListener(new ViewControlsSelectListener(wwd, viewControlsLayer));
+            geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(viewControlsLayer));
 
             airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
