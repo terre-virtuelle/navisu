@@ -192,11 +192,11 @@ public class ExifComponentImpl
                         tmp = tag.getDescription().split(" ");
                         exif.setGpsAltitude(Double.parseDouble(tmp[0]));
                         break;
-                    case "GpsImgDirectionRef":
+                    case "GPSImgDirectionRef":
                         exif.setGpsImgDirectionRef(tag.getDescription());
                         break;
                     case "GPSImgDirection":
-                        tmp = tag.getDescription().split(" ");
+                        tmp = tag.getDescription().trim().split(" ");
                         exif.setGpsImgDirection(Integer.parseInt(tmp[0]));
                         break;
                     case "Artist":
