@@ -251,7 +251,7 @@ public class Exif {
      * @param gpsImgDirection new value of gpsImgDirection
      */
     public void setGpsImgDirection(int gpsImgDirection) {
-        position.getGpsImgDirection();
+        position.setGpsImgDirection(gpsImgDirection);
     }
 
     /**
