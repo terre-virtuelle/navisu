@@ -25,6 +25,19 @@ import javax.xml.bind.Unmarshaller;
  */
 public class ImportExportXML<T> {
 
+    public static <T> T exports(T data, File file) throws JAXBException, FileNotFoundException {
+        if (file != null) {
+            FileOutputStream outputFile;
+            outputFile = new FileOutputStream(file);
+            JAXBContext jAXBContext;
+            Marshaller marshaller;
+            jAXBContext = JAXBContext.newInstance(data.getClass());
+            marshaller = jAXBContext.createMarshaller();
+            marshaller.marshal(data, outputFile);
+        }
+        return data;
+    }
+
     public static <T> T exports(T data, String filename) throws JAXBException, FileNotFoundException {
         FileOutputStream outputFile;
         outputFile = new FileOutputStream(new File(filename));
@@ -45,6 +58,17 @@ public class ImportExportXML<T> {
             unmarshaller = jAXBContext.createUnmarshaller();
             data = (T) unmarshaller.unmarshal(inputFile);
         }
+        return data;
+    }
+
+    public static <T> T imports(T data, String filename) throws FileNotFoundException, JAXBException {
+        File file = new File(filename);
+        FileInputStream inputFile = new FileInputStream(new File(file.getPath()));
+        Unmarshaller unmarshaller;
+        JAXBContext jAXBContext;
+        jAXBContext = JAXBContext.newInstance(data.getClass());
+        unmarshaller = jAXBContext.createUnmarshaller();
+        data = (T) unmarshaller.unmarshal(inputFile);
         return data;
     }
 }
