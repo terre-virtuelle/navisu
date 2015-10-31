@@ -396,7 +396,7 @@ public class AppMain extends Application {
         /* Test  ontology  DataAccess */
         //dataAccessServices.test();//OK
         /* Test Exif file reading from jpg photo : Test OK*/
-        /*
+        
          // Metadata read and creation of a Exif object
          String NAME = "LaGrandeVinotiere_1510";
          Exif exif0 = exifComponentServices.create("data/photos/" + NAME + ".jpg");
@@ -414,7 +414,7 @@ public class AppMain extends Application {
          Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
          }
          System.out.println(exif1);
-         */
+         
         /* Test read Sparql file and creatio Avurnav object */
         /* Have a look at  App in navisu-domain */
         /*
