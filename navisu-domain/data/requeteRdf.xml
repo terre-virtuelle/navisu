@@ -1,11 +1,40 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><avurnavSet><avurnav><id>256</id><globalZone>Rade de Brest - Anse du Poulmic</globalZone><broadcastTime>2015-08-15 20:07:34</broadcastTime><expirationDate>29-09-15 00:00:00</expirationDate><description>Dans le cadre des stages d'entrainement à la survie du mois de septembre 2015, des tirs de fusées de détresses
-					et de fumigénes auront lieu aux dates et heures locales suivantes: 
-					- mardi 01 septembre de 08h30 à 16h30
-					- mercredi 02 septembre de 21h30 à 23h59
-					- lundi 07 septembre de 14h00 à 18h00
-					- jeudi 10 septembre de 14h00 à 18h00
-					- mardi 15 septembre de 08h30 à 16h30
-					- mercredi 16 septembre de 21h30 à 23h59
-					- mercredi 23 septembre de 08h30 à 16h30
-					- lundi 28 septembre de 14h00 à 18h00</description></avurnav><avurnav><id>251</id><globalZone>Rade de Brest - Zone Rascas</globalZone><broadcastTime>2015-08-15 20:08:40</broadcastTime><expirationDate>2015-10-01 00:00:00</expirationDate><description>le Gesma/DGA a procéder au mouillage de 50 cibles, sur le polygone Rascas (nord-est de la pointe de Pen ar Vir). Ces cibles resteront mouilées dans cette zone jusqu'à fin septembre 2015. 
-					Il est demandé de ne pas pécher, de ne pas mouiller d'engins de pêche et de ne pas mouiller dans cette zone durant cette période.</description></avurnav><avurnav><id>220</id><globalZone>Rade de Brest</globalZone><broadcastTime>2015-07-15 03:11:52</broadcastTime><expirationDate>0000-00-00 00:00:00</expirationDate><description>4 coffres (N 3; 6; 8 et 9) des bases accoustiques grande profondeur aux positions suivantes :</description></avurnav><avurnav><id>218</id><globalZone>Rade de Brest - Entre la pointe de Pen ar Vir et la pointe de Doubidy</globalZone><broadcastTime>2015-07-15 02:12:04</broadcastTime><expirationDate>2015-10-01 00:00:00</expirationDate><description>12 cibles mouillées en rade de Brest; les navigateurs sont invités à ne pas mouiller dans la zone définie</description></avurnav></avurnavSet>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><avurnavSet>
+    <avurnav>
+        <id>256</id>
+        <globalZone>Rade de Brest - Anse du Poulmic</globalZone>
+        <broadcastTime>2015-08-15 20:07:34</broadcastTime>
+        <expirationDate>29-09-15 00:00:00</expirationDate>
+        <description>Dans le cadre des stages d'entrainement à la survie du mois de septembre 2015, des tirs de fusées de détresses
+            et de fumigénes auront lieu aux dates et heures locales suivantes: 
+            - mardi 01 septembre de 08h30 à 16h30
+            - mercredi 02 septembre de 21h30 à 23h59
+            - lundi 07 septembre de 14h00 à 18h00
+            - jeudi 10 septembre de 14h00 à 18h00
+            - mardi 15 septembre de 08h30 à 16h30
+            - mercredi 16 septembre de 21h30 à 23h59
+            - mercredi 23 septembre de 08h30 à 16h30
+            - lundi 28 septembre de 14h00 à 18h00</description>
+    </avurnav>
+    <avurnav>
+        <id>251</id>
+        <globalZone>Rade de Brest - Zone Rascas</globalZone>
+        <broadcastTime>2015-08-15 20:08:40</broadcastTime>
+        <expirationDate>2015-10-01 00:00:00</expirationDate>
+        <description>le Gesma/DGA a procéder au mouillage de 50 cibles, sur le polygone Rascas (nord-est de la pointe de Pen ar Vir). Ces cibles resteront mouilées dans cette zone jusqu'à fin septembre 2015. 
+            Il est demandé de ne pas pécher, de ne pas mouiller d'engins de pêche et de ne pas mouiller dans cette zone durant cette période.</description>
+    </avurnav>
+    <avurnav>
+        <id>220</id>
+        <globalZone>Rade de Brest</globalZone>
+        <broadcastTime>2015-07-15 03:11:52</broadcastTime>
+        <expirationDate>0000-00-00 00:00:00</expirationDate>
+        <description>4 coffres (N 3; 6; 8 et 9) des bases accoustiques grande profondeur aux positions suivantes :</description>
+    </avurnav>
+    <avurnav>
+        <id>218</id>
+        <globalZone>Rade de Brest - Entre la pointe de Pen ar Vir et la pointe de Doubidy</globalZone>
+        <broadcastTime>2015-07-15 02:12:04</broadcastTime>
+        <expirationDate>2015-10-01 00:00:00</expirationDate>
+        <description>12 cibles mouillées en rade de Brest; les navigateurs sont invités à ne pas mouiller dans la zone définie</description>
+    </avurnav>
+</avurnavSet>

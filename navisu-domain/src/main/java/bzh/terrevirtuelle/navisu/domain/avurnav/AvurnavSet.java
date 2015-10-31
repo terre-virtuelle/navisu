@@ -12,6 +12,11 @@ import bzh.terrevirtuelle.navisu.domain.avurnav.rdf.Sparql;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -49,18 +54,45 @@ public class AvurnavSet {
     }
 
     public AvurnavSet(String srcDir, String filename, String extension) {
-
         String[] tmp;
         String avurnavName = "";
         Avurnav avurnav = null;
         avurnavs = new ArrayList<>();
+        Path path = Paths.get(srcDir + filename + ".rdf");
+        List<String> tmpList = null;
+        try {
+            tmpList = Files.readAllLines(path);
+        } catch (IOException ex) {
+            Logger.getLogger(AvurnavSet.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ex " + ex);
+        }
+        List<String> lines = new ArrayList<>();
+        for (String s : tmpList) {
+            if (s.contains("xmlns")) {
+                s = s.replace("xmlns", "name");
+            }
+            lines.add(s);
+        }
+        path = Paths.get(srcDir + filename + "_.rdf");
+        try {
+            Files.write(path, lines, Charset.defaultCharset());
+        } catch (IOException ex) {
+            Logger.getLogger(AvurnavSet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (extension.contains("rdf")) {
             Sparql sparql = new Sparql();
             try {
-                sparql = ImportExportXML.imports(sparql, new File(srcDir + filename + ".rdf"));
+                sparql = ImportExportXML.imports(sparql, new File(srcDir + filename + "_.rdf"));
             } catch (JAXBException | FileNotFoundException ex) {
-                Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AvurnavSet.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            try {
+                Files.delete(path);
+            } catch (IOException ex) {
+                Logger.getLogger(AvurnavSet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             List<Result> results = sparql.getResults().getResultList();
             for (Result r : results) {
                 List<Binding> bindings = r.getBindings();
@@ -98,6 +130,7 @@ public class AvurnavSet {
                             }
                         }
                     }
+
                 }
             }
         }
