@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.avurnav.rdf;
+package bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rdf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,34 +21,38 @@ import javax.xml.bind.annotation.XmlType;
  * @author Serge Morvan
  */
 @XmlRootElement
-@XmlType(name = "result")
+@XmlType(name = "head")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Result {
+public class Head {
 
     @XmlElements({
-        @XmlElement(name = "binding", type = Binding.class)
+        @XmlElement(name = "variable", type = Variable.class)
     })
-    List<Binding> bindings;
+    List<Variable> variables;
 
-    public Result() {
-        bindings = new ArrayList<>();
+    public Head() {
+        variables = new ArrayList<>();
     }
 
-    public Result(List<Binding> bindings) {
-        this.bindings = bindings;
+    public Head(List<Variable> variables) {
+        this.variables = variables;
     }
 
-    public List<Binding> getBindings() {
-        return bindings;
+    public void add(Variable variable) {
+        variables.add(variable);
     }
 
-    public void setBindings(List<Binding> bindings) {
-        this.bindings = bindings;
+    public List<Variable> getVariables() {
+        return variables;
+    }
+
+    public void setVariables(List<Variable> variables) {
+        this.variables = variables;
     }
 
     @Override
     public String toString() {
-        return "Result{" + "bindings=" + bindings + '}';
+        return "Head{" + "variables=" + variables + '}';
     }
 
 }

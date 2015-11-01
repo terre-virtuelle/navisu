@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.avurnav;
+package bzh.terrevirtuelle.navisu.domain.navigation.avurnav;
 
-import bzh.terrevirtuelle.navisu.domain.avurnav.app.App;
-import bzh.terrevirtuelle.navisu.domain.avurnav.rdf.Binding;
-import bzh.terrevirtuelle.navisu.domain.avurnav.rdf.Result;
-import bzh.terrevirtuelle.navisu.domain.avurnav.rdf.Sparql;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rdf.Binding;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rdf.Result;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rdf.Sparql;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlType(name = "avurnavSet")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AvurnavSet {
+public class AvurnavSet
+        implements NavigationData {
 
     @XmlElements({
         @XmlElement(name = "avurnav", type = Avurnav.class)

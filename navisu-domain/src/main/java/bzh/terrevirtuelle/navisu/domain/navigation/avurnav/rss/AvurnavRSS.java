@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.avurnav.rss;
+package bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.io.Serializable;
@@ -19,32 +19,46 @@ import javax.xml.bind.annotation.XmlType;
  * @author Serge Morvan
  */
 @XmlRootElement
-@XmlType(name = "rss")
+@XmlType(name = "avurnavrss")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Rss
+public class AvurnavRSS
         implements NavigationData, Serializable, Cloneable {
 
-    Channel channel;
+    private Rss rss;
+    private Long id;
 
-    public Rss() {
-        channel = new Channel();
+    public AvurnavRSS() {
     }
 
-    public Rss(Channel channel) {
-        this.channel = channel;
+    public AvurnavRSS(Rss rss) {
+        this.rss = rss;
     }
 
-    public Channel getChannel() {
-        return channel;
+    /**
+     * Get the value of rss
+     *
+     * @return the value of rss
+     */
+    public Rss getRss() {
+        return rss;
     }
 
-    public void setChannel(Channel channel) {
-        this.channel = channel;
+    /**
+     * Set the value of rss
+     *
+     * @param rss new value of rss
+     */
+    public void setRss(Rss rss) {
+        this.rss = rss;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
-    public String toString() {
-        return "Rss{" + "channel=" + channel + '}';
+    public long getId() {
+        return id;
     }
-    
+
 }

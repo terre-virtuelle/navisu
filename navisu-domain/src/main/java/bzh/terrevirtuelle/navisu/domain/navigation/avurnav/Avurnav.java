@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.avurnav;
+package bzh.terrevirtuelle.navisu.domain.navigation.avurnav;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,7 +20,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlType(name = "avurnav", propOrder = {"id", "globalZone", "broadcastTime", "expirationDate", "description"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Avurnav {
+public class Avurnav implements NavigationData{
 
     private long id;
 

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.domain.avurnav.rss;
+package bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
