@@ -10,9 +10,9 @@
 <?import javafx.scene.text.*?>
 <?scenebuilder-preview-i18n-resource ComplexApplication_en.properties?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="600.0" prefWidth="900.0" styleClass="background-pane-nocorner" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar styleClass="background-pane-nocorner" VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="%menu.title.file">
           <items>
@@ -53,9 +53,9 @@
     </MenuBar>
     <SplitPane dividerPositions="0.25, 0.75" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
-        <AnchorPane>
+        <AnchorPane styleClass="background-pane-nocorner">
           <children>
-            <TreeView editable="true" focusTraversable="true" prefHeight="553.0" prefWidth="220.0" visible="true" />
+              <TreeView fx:id="CAtreeview" editable="true" focusTraversable="true" prefHeight="553.0" prefWidth="220.0" visible="true" />
             <CheckBox layoutX="36.0" layoutY="46.0" mnemonicParsing="false" text="Landmarks" />
             <CheckBox layoutX="68.0" layoutY="70.0" mnemonicParsing="false" text="Church" />
             <CheckBox layoutX="68.0" layoutY="86.0" mnemonicParsing="false" text="LightHouse" />
@@ -67,7 +67,7 @@
             <CheckBox layoutX="68.0" layoutY="185.0" mnemonicParsing="false" text="MTO" />
             <CheckBox layoutX="68.0" layoutY="201.0" mnemonicParsing="false" text="Tide" />
             <CheckBox layoutX="16.0" layoutY="22.0" mnemonicParsing="false" text="Data" />
-            <CheckBox layoutX="36.0" layoutY="267.0" mnemonicParsing="false" text="Nautical Documentation" />
+            <CheckBox layoutX="36.0" layoutY="267.0" mnemonicParsing="false" styleClass="aisvalue" text="Nautical Documentation" />
             <CheckBox layoutX="68.0" layoutY="294.0" mnemonicParsing="false" text="Sailing Directions" />
             <CheckBox layoutX="68.0" layoutY="310.0" mnemonicParsing="false" text="List of Lights" />
             <CheckBox layoutX="68.0" layoutY="326.0" mnemonicParsing="false" text="List of Charts" />
@@ -88,15 +88,15 @@
                 </Label>
                 <SplitPane dividerPositions="0.4990791896869245" focusTraversable="true" layoutX="0.0" layoutY="0.0" orientation="VERTICAL" prefHeight="553.0" prefWidth="443.0">
                   <items>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="268.0" prefWidth="415.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background-pane-nocorner" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="268.0" prefWidth="415.0" styleClass="background-pane-nocorner" />
                   </items>
                 </SplitPane>
               </children>
             </AnchorPane>
           </content>
         </ScrollPane>
-        <AnchorPane />
+        <AnchorPane styleClass="background-pane-nocorner" />
       </items>
     </SplitPane>
     <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
@@ -118,6 +118,6 @@
     </HBox>
   </children>
   <stylesheets>
-    <URL value="@ComplexApplication.css" />
+    <URL value="@ComplexApplication_1.css" />
   </stylesheets>
 </VBox>
