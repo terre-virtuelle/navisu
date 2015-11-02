@@ -38,6 +38,7 @@ import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.UnitsFormat;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
+import gov.nasa.worldwindx.examples.util.ScreenShotAction;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -266,6 +267,7 @@ public class RouteEditorController
                 public void run() {
                     System.out.println("Not yet implemented");
                     //  new ScreenShotAction(GeoWorldWindViewImpl.getWW(), instrument.getGuiAgentServices().getStage());
+                   // new ScreenShotAction(GeoWorldWindViewImpl.getWW());
                 }
             });
         });

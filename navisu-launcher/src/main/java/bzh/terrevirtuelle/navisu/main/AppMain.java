@@ -43,6 +43,7 @@ import bzh.terrevirtuelle.navisu.database.DatabaseServices;
 import bzh.terrevirtuelle.navisu.database.app.TestDBServices;
 import bzh.terrevirtuelle.navisu.database.app.impl.TestDBImpl;
 import bzh.terrevirtuelle.navisu.database.impl.DatabaseImpl;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rdf.Sparql;
 import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.Bezier2DImpl;
@@ -90,7 +91,6 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
-import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.ontology.data.impl.DataAccessImpl;
 import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
@@ -399,8 +399,6 @@ public class AppMain extends Application {
         // speakerServices.read("naVisu est un logiciel de visualisation et de simulation de données maritimes.");//OK
         /* Test  ontology  DataAccess */
         //dataAccessServices.test();//OK
-        
-        
         /* Test Exif file reading from jpg photo : Test OK*/
         
          // Metadata read and creation of a Exif object
@@ -421,6 +419,19 @@ public class AppMain extends Application {
          }
          System.out.println(exif1);
          
+        /* Test read Sparql file and creatio Avurnav object */
+        /* Have a look at  App in navisu-domain */
+        /*
+         String NAME = "requeteRdf";
+         Sparql sparql = new Sparql();
+         try {
+         sparql = ImportExportXML.imports(sparql, new File("data/rdf/" + NAME + ".rdf"));
+         } catch (JAXBException | FileNotFoundException ex) {
+         Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
+         System.out.println("ex " + ex);
+         }
+         System.out.println(sparql);
+         */
     }
 
     public static void main(String[] args) throws Exception {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.avurnav;
+package bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.io.Serializable;
@@ -19,18 +19,18 @@ import javax.xml.bind.annotation.XmlType;
  * @author Serge Morvan
  */
 @XmlRootElement
-@XmlType(name = "avurnav")
+@XmlType(name = "avurnavrss")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Avurnav
+public class AvurnavRSS
         implements NavigationData, Serializable, Cloneable {
 
     private Rss rss;
     private Long id;
 
-    public Avurnav() {
+    public AvurnavRSS() {
     }
 
-    public Avurnav(Rss rss) {
+    public AvurnavRSS(Rss rss) {
         this.rss = rss;
     }
 
