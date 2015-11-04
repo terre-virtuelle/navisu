@@ -114,7 +114,7 @@ public class NmeaClientImpl
                         ws = websocket;
                     });
         } catch (Exception e) {
-            Logger.getLogger(NmeaEventProducerImpl.class.getName()).log(Level.SEVERE, "Erreur", e);
+            Logger.getLogger(NmeaClientImpl.class.getName()).log(Level.SEVERE, "Erreur", e);
         }
     }
 

@@ -727,7 +727,7 @@ public class AisRadarController
         if (ship.getMMSI() != 0) {
             String mmsiStr = Integer.toString(ship.getMMSI());
             String mid = mmsiStr.substring(0, 3);
-            if (midMap != null) {
+            if (midMap != null && country != null) {
                 country.setText(midMap.get(new Integer(mid)));
             }
         } else {
