@@ -1,1 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><exif><imageInfo><dateTime>2015:10:25 16:51:40</dateTime><imageHeight>2432</imageHeight><imageWidth>3648</imageWidth><fileName>Kermorvan_1470.jpg</fileName><fileSize>2531680</fileSize></imageInfo><hardSoft><model>Canon EOS 7D Mark II</model><exifVersion>2.30</exifVersion></hardSoft><optic><fNumber>192</fNumber><apertureValue>f/8,0</apertureValue><focalLenth>70</focalLenth><lensModel>EF24-70mm f/2.8L USM</lensModel></optic><position><gpsMapDatum>WGS-84</gpsMapDatum><gpsLatitude>48.3599</gpsLatitude><gpsLongitude>-4.77862</gpsLongitude><gpsAltitudeRef>Sea level</gpsAltitudeRef><gpsAltitude>23.0</gpsAltitude><gpsImgDirection>0</gpsImgDirection></position><author><name>Dom.Mhyrdin.Marques</name><copyright>Dom.</copyright></author></exif>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<exif>
+    <imageInfo>
+        <dateTime>2015:10:25 16:51:40</dateTime>
+        <imageHeight>2432</imageHeight>
+        <imageWidth>3648</imageWidth>
+        <fileName>Kermorvan_1470.jpg</fileName>
+        <fileSize>2531680</fileSize>
+    </imageInfo>
+    <hardSoft>
+        <model>Canon EOS 7D Mark II</model>
+        <exifVersion>2.30</exifVersion>
+    </hardSoft>
+    <optic>
+        <fNumber>192</fNumber>
+        <apertureValue>f/8,0</apertureValue>
+        <focalLenth>70</focalLenth>
+        <lensModel>EF24-70mm f/2.8L USM</lensModel>
+    </optic>
+    <position>
+        <gpsMapDatum>WGS-84</gpsMapDatum>
+        <gpsLatitude>48.3599</gpsLatitude>
+        <gpsLongitude>-4.77862</gpsLongitude>
+        <gpsAltitudeRef>Sea level</gpsAltitudeRef>
+        <gpsAltitude>23.0</gpsAltitude>
+        <gpsImgDirection>0</gpsImgDirection>
+    </position>
+    <author>
+        <name>Dom.Mhyrdin.Marques</name>
+        <copyright>Dom.</copyright>
+    </author>
+</exif>

@@ -34,6 +34,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.S57Global
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.S57LocalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartImpl;
+import bzh.terrevirtuelle.navisu.client.navigation.NavigationServerServices;
+import bzh.terrevirtuelle.navisu.client.navigation.impl.vertx.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -43,7 +45,6 @@ import bzh.terrevirtuelle.navisu.database.DatabaseServices;
 import bzh.terrevirtuelle.navisu.database.app.TestDBServices;
 import bzh.terrevirtuelle.navisu.database.app.impl.TestDBImpl;
 import bzh.terrevirtuelle.navisu.database.impl.DatabaseImpl;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rdf.Sparql;
 import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.Bezier2DImpl;
@@ -91,6 +92,8 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditorServices;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoEditorImpl;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.ontology.data.impl.DataAccessImpl;
 import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
@@ -107,7 +110,6 @@ import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
 import bzh.terrevirtuelle.navisu.wms.impl.WMSImpl;
 import gov.nasa.worldwind.geom.Position;
-import java.io.File;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -185,9 +187,11 @@ public class AppMain extends Application {
                         KmlObjectImpl.class,
                         MagneticImpl.class,
                         MeasureToolsImpl.class,
+                        NavigationServerImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
                         RouteEditorImpl.class,
+                        RoutePhotoEditorImpl.class,
                         SedimentologyImpl.class,
                         ShapefileObjectImpl.class,
                         SonarImpl.class,
@@ -247,10 +251,14 @@ public class AppMain extends Application {
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         MeasureToolsServices measureToolsServices = componentManager.getComponentService(MeasureToolsServices.class);
 
+        NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
+        NavigationServerServices navigationServerServices = componentManager.getComponentService(NavigationServerServices.class);
+
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
+        RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
 
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
@@ -306,6 +314,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());
@@ -352,7 +361,6 @@ public class AppMain extends Application {
         /* Test serveur Web Http */
         // dataServerServices.openHttpServer("localhost", 8181);
         /* Instanciation d'un client */
-        NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
@@ -400,17 +408,17 @@ public class AppMain extends Application {
         /* Test  ontology  DataAccess */
         //dataAccessServices.test();//OK
         /* Test Exif file reading from jpg photo : Test OK*/
-        
-         // Metadata read and creation of a Exif object
-         String NAME = "LaGrandeVinotiere_1510";
-         Exif exif0 = exifComponentServices.create("data/photos/" + NAME + ".jpg");
-         // Save it in xml file
-         try {
-         ImportExportXML.exports(exif0, "data/photos/" + NAME + ".xml");
-         } catch (JAXBException | FileNotFoundException ex) {
-         Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         // Load from a xml file
+        // Metadata read and creation of a Exif object
+        String NAME = "LaGrandeVinotiere_1510";
+        Exif exif0 = exifComponentServices.create("data/photos/" + NAME + ".jpg");
+        // Save it in xml file
+        try {
+            ImportExportXML.exports(exif0, "data/photos/" + NAME + ".xml");
+        } catch (JAXBException | FileNotFoundException ex) {
+            Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        // Load from a xml file
+        /*
          Exif exif1 = new Exif();
          try {
          exif1 = ImportExportXML.imports(exif1, new File("data/photos/" + NAME + ".xml"));
@@ -418,7 +426,7 @@ public class AppMain extends Application {
          Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
          }
          System.out.println(exif1);
-         
+         */
         /* Test read Sparql file and creatio Avurnav object */
         /* Have a look at  App in navisu-domain */
         /*
@@ -432,6 +440,9 @@ public class AppMain extends Application {
          }
          System.out.println(sparql);
          */
+
+        /* Test Navigation RA */
+        // navigationServerServices.open("localhost", 8686, 1000);
     }
 
     public static void main(String[] args) throws Exception {
