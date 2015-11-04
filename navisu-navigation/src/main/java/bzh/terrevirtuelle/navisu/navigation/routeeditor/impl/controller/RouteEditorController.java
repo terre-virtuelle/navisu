@@ -19,6 +19,7 @@ import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackSegment;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Waypoint;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.WaypointBuilder;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
+import bzh.terrevirtuelle.navisu.util.ScreenShotAction;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Coordinate;
@@ -38,7 +39,6 @@ import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.UnitsFormat;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
-import gov.nasa.worldwindx.examples.util.ScreenShotAction;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -267,7 +267,7 @@ public class RouteEditorController
                 public void run() {
                     System.out.println("Not yet implemented");
                     //  new ScreenShotAction(GeoWorldWindViewImpl.getWW(), instrument.getGuiAgentServices().getStage());
-                   // new ScreenShotAction(GeoWorldWindViewImpl.getWW());
+                   
                 }
             });
         });
