@@ -17,6 +17,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.AisActivateEvent;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
+import bzh.terrevirtuelle.navisu.util.view.ViewState;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
@@ -263,7 +264,7 @@ public class S57ChartImpl
             }).forEach((gl) -> {
                 layerTreeServices.addGeoLayer(GROUP, gl);
             });
-            
+
             //Controle fin de la camera
             ViewControlsLayer viewControlsLayer = new ViewControlsLayer();
             wwd.addSelectListener(new ViewControlsSelectListener(wwd, viewControlsLayer));
