@@ -10,7 +10,6 @@ import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
 
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import java.util.ArrayList;
 import java.util.List;
 

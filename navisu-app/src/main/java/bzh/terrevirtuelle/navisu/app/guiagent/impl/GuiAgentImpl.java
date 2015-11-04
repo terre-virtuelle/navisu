@@ -39,7 +39,6 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import javafx.event.EventHandler;
 
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
