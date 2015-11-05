@@ -409,6 +409,7 @@ public class AppMain extends Application {
         //dataAccessServices.test();//OK
         /* Test Exif file reading from jpg photo : Test OK*/
         // Metadata read and creation of a Exif object
+        /*
         String NAME = "LaGrandeVinotiere_1510";
         Exif exif0 = exifComponentServices.create("data/photos/" + NAME + ".jpg");
         // Save it in xml file
@@ -417,6 +418,7 @@ public class AppMain extends Application {
         } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
         }
+        */
         // Load from a xml file
         /*
          Exif exif1 = new Exif();
