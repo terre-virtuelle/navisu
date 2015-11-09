@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditor;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RoutePhotoEditorController;
+import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -30,6 +31,8 @@ public class RoutePhotoEditorImpl
     GuiAgentServices guiAgentServices;
     @UsedService
     S57ChartServices s57ChartServices;
+    @UsedService
+    ExifComponentServices exifComponentServices;
 
     private final String KEY_NAME = "RoutePhotoEditor";
     private RoutePhotoEditorController routePhotoEditorController;
@@ -79,6 +82,10 @@ public class RoutePhotoEditorImpl
 
     public S57ChartServices getS57ChartServices() {
         return s57ChartServices;
+    }
+
+    public ExifComponentServices getExifComponentServices() {
+        return exifComponentServices;
     }
     
 }

@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Controller;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
@@ -19,7 +19,7 @@ import bzh.terrevirtuelle.navisu.domain.gpx.model.TrackSegment;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Waypoint;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.WaypointBuilder;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
-import bzh.terrevirtuelle.navisu.util.ScreenShotAction;
+import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Coordinate;
@@ -70,7 +70,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -78,7 +77,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
 import javax.xml.bind.JAXBException;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
@@ -224,15 +222,11 @@ public class RouteEditorController
         openButton.setOnMouseClicked((MouseEvent event) -> {
             initMeasureTool();
             newAction();
-            Label fileLabel = new Label();
-            FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter extFilter
-                    = new FileChooser.ExtensionFilter("GPX files (*.gpx)", "*.gpx", "*.GPX");
-            fileChooser.setInitialDirectory(new File("data/gpx"));
-            fileChooser.getExtensionFilters().add(extFilter);
-            File file = fileChooser.showOpenDialog(instrument.getGuiAgentServices().getStage());
+            gpx = new Gpx();
+            File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(),
+                    "data/gpx", "GPX files (*.gpx)", "*.gpx", "*.GPX");
             try {
-                 gpx = ImportExportXML.imports(gpx, file);
+                gpx = ImportExportXML.imports(gpx, file);
             } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -267,7 +261,7 @@ public class RouteEditorController
                 public void run() {
                     System.out.println("Not yet implemented");
                     //  new ScreenShotAction(GeoWorldWindViewImpl.getWW(), instrument.getGuiAgentServices().getStage());
-                   
+
                 }
             });
         });
@@ -752,6 +746,7 @@ public class RouteEditorController
         s57Controllers = s57ChartServices.getS57Controllers();
         if (s57Controllers != null) {
             navigationDataSet = new NavigationDataSet();
+            navigationDataSet.add(gpx);
             Coordinate buoyagePosition;
             for (S57Controller sc : s57Controllers) {
                 buoyagePosition = new Coordinate(sc.getNavigationData().getLocation().getLon(), sc.getNavigationData().getLocation().getLat());

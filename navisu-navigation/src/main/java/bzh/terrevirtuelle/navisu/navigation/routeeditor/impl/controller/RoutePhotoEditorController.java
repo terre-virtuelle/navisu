@@ -8,12 +8,27 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoEditorImpl;
+import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
+import bzh.terrevirtuelle.navisu.util.io.IO;
+import static bzh.terrevirtuelle.navisu.util.io.IO.fileChooser;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import com.drew.imaging.ImageProcessingException;
+import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.Position;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -25,6 +40,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javax.xml.bind.JAXBException;
 
 /**
  * NaVisu
@@ -35,15 +51,14 @@ import javafx.scene.input.MouseEvent;
 public class RoutePhotoEditorController
         extends Widget2DController {
 
-    private final RoutePhotoEditorImpl instrument;
-    private final String FXML = "routephotoeditor.fxml";
-
-    private String routeName;
-    private WorldWindow wwd;
-    private RoutePhotoEditorController routePhotoEditorController;
-
+    private ExifComponentServices exifComponentServices;
     private final S57ChartServices s57ChartServices;
     private GuiAgentServices guiAgentServices;
+    private final RoutePhotoEditorImpl instrument;
+    private View viewWW;
+    private final String FXML = "routephotoeditor.fxml";
+    private WorldWindow wwd;
+
     @FXML
     public Group view;
     @FXML
@@ -120,6 +135,15 @@ public class RoutePhotoEditorController
     public Button gotoButton;
     @FXML
     public Button saveButton;
+    @FXML
+    public Button routeChoiceButton;
+    @FXML
+    public Button photoChoiceButton;
+    private double latitude;
+    private double longitude;
+    private double altitude;
+    private int heading;
+    private double fieldOfView;
 
     public RoutePhotoEditorController(RoutePhotoEditorImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
@@ -128,10 +152,11 @@ public class RoutePhotoEditorController
         this.instrument = instrument;
         this.s57ChartServices = instrument.getS57ChartServices();
         this.guiAgentServices = instrument.getGuiAgentServices();
+        this.exifComponentServices = instrument.getExifComponentServices();
         wwd = GeoWorldWindViewImpl.getWW();
-
+        viewWW = wwd.getView();
         load(FXML);
-       // setTranslateX(225.0);
+        // setTranslateX(225.0);
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
@@ -140,10 +165,53 @@ public class RoutePhotoEditorController
 
         });
         gotoButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("gotoButton not implemented");
+            viewWW.setHeading(Angle.fromDegrees(heading));
+            viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
+            viewWW.setPitch(Angle.fromDegrees(90.0));
+            viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
+            updatePanel();
         });
         saveButton.setOnMouseClicked((MouseEvent event) -> {
             System.out.println("saveButton not implemented");
+        });
+        routeChoiceButton.setOnMouseClicked((MouseEvent event) -> {
+            File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(), "privateData/nds", "Route files (*.nds)", "*.xml", "*.XML");
+            NavigationDataSet navigationDataSet = new NavigationDataSet();
+            try {
+                navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
+                routeTF.setText(file.getName());
+            } catch (FileNotFoundException | JAXBException ex) {
+                Logger.getLogger(RoutePhotoEditorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        photoChoiceButton.setOnMouseClicked((MouseEvent event) -> {
+            File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(), "data/photos", "JPG files (*.jpg)", "*.jpg", "*.JPG");
+            Exif exif = null;
+            try {
+                exif = exifComponentServices.create(file);
+                photoTF.setText(file.getName());
+            } catch (IOException | ImageProcessingException ex) {
+                Logger.getLogger(RoutePhotoEditorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (exif != null) {
+                latitude = exif.getGpsLatitude();
+                longitude = exif.getGpsLongitude();
+                altitude = exif.getGpsAltitude();
+                heading = exif.getGpsImgDirection();
+                //fieldOfView = Math.toDegrees(2 * Math.atan2(exif.getImageHeight() / 2.0, exif.getFocalLenth()));
+                fieldOfView = 20;
+                updatePanel();
+            }
+
+        });
+
+        fieldOfViewTF.setOnAction((ActionEvent event) -> {
+            fieldOfView = Double.parseDouble(fieldOfViewTF.getText());
+            viewWW.setHeading(Angle.fromDegrees(heading));
+            viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
+            viewWW.setPitch(Angle.fromDegrees(90.0));
+            viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
+            updatePanel();
         });
 
     }
@@ -166,4 +234,33 @@ public class RoutePhotoEditorController
         });
     }
 
+    private void updatePanel() {
+        latTF.setText(Double.toString(latitude));
+        lonTF.setText(Double.toString(longitude));
+        altTF.setText(Double.toString(altitude));
+        headingTF.setText(Integer.toString(heading));
+        fieldOfViewTF.setText(Integer.toString((int) fieldOfView));
+        curEyePointXTF.setText(Double.toString(viewWW.getEyePoint().x));
+        curEyePointYTF.setText(Double.toString(viewWW.getEyePoint().y));
+        curEyePointZTF.setText(Double.toString(viewWW.getEyePoint().z));
+        curEyePointTTF.setText(Double.toString(viewWW.getEyePoint().w));
+        curEyePositionXTF.setText(String.format("%2.4f", viewWW.getEyePosition().getLatitude().getDegrees()));
+        curEyePositionYTF.setText(String.format("%2.4f", viewWW.getEyePosition().getLongitude().getDegrees()));
+        curEyePositionZTF.setText(String.format("%2.4f", viewWW.getEyePosition().getAltitude()));
+        farClipDistanceTF.setText(String.format("%8.4f", viewWW.getFarClipDistance()));
+        forwardVectorXTF.setText(String.format("%2.4f", viewWW.getForwardVector().x));
+        forwardVectorYTF.setText(String.format("%2.4f", viewWW.getForwardVector().y));
+        forwardVectorZTF.setText(String.format("%2.4f", viewWW.getForwardVector().z));
+        forwardVectorTTF.setText(String.format("%2.4f", viewWW.getForwardVector().w));
+        horizonDistanceTF.setText(String.format("%8.1f", viewWW.getHorizonDistance()));
+        nearClipDistanceTF.setText(String.format("%8.1f", viewWW.getNearClipDistance()));
+        upVectorXTF.setText(Double.toString(viewWW.getUpVector().x));
+        upVectorYTF.setText(Double.toString(viewWW.getUpVector().y));
+        upVectorZTF.setText(Double.toString(viewWW.getUpVector().z));
+        upVectorTTF.setText(Double.toString(viewWW.getUpVector().w));
+        viewportXTF.setText(Double.toString(viewWW.getViewport().x));
+        viewportYTF.setText(Double.toString(viewWW.getViewport().y));
+        viewportZTF.setText(Double.toString(viewWW.getViewport().height));
+        viewportTTF.setText(Double.toString(viewWW.getViewport().width));
+    }
 }

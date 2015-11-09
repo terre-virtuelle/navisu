@@ -51,14 +51,14 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label minWidth="-Infinity" prefHeight="16.0" prefWidth="90.0" text="Goto" />
-                        <Label minWidth="-Infinity" prefHeight="16.0" prefWidth="90.0" text="FocalLength" GridPane.rowIndex="1" />
+                        <Label minWidth="-Infinity" prefHeight="16.0" prefWidth="90.0" text="PointOfView" />
+                        <Label minWidth="-Infinity" prefHeight="16.0" prefWidth="90.0" text="FieldOfView" GridPane.rowIndex="1" />
                         <Label minWidth="-Infinity" prefHeight="16.0" prefWidth="90.0" text="Heading" GridPane.rowIndex="2" />
                         <Label minWidth="-Infinity" prefHeight="16.0" prefWidth="90.0" text="Width" GridPane.rowIndex="3" />
                         <TextField fx:id="latTF" prefHeight="26.0" prefWidth="105.0" GridPane.columnIndex="1" />
                         <TextField fx:id="lonTF" GridPane.columnIndex="2" />
                         <TextField fx:id="altTF" GridPane.columnIndex="3" />
-                        <TextField fx:id="focalLengthTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="fieldOfViewTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="headingTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="widthTF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
@@ -101,7 +101,7 @@
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="20.0" prefWidth="72.0" text="FieldOfView" GridPane.rowIndex="3">
+                        <Label fx:id="focalLentghTF" prefHeight="20.0" prefWidth="72.0" text="FocalLength" GridPane.rowIndex="3">
                            <font>
                               <Font size="10.0" />
                            </font>
@@ -149,7 +149,7 @@
                         <TextField fx:id="curEyePositionYTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <TextField fx:id="curEyePositionZTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <TextField fx:id="farClipDistanceTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="fieldOfViewTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="focalLengthTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextField fx:id="forwardVectorXTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField fx:id="forwardVectorYTF" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                         <TextField fx:id="forwardVectorZTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
@@ -178,10 +178,10 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label text="Route" />
                         <TextField fx:id="routeTF" GridPane.columnIndex="1" />
-                        <Label text="Photo" GridPane.rowIndex="1" />
                         <TextField fx:id="photoTF" prefHeight="26.0" prefWidth="263.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="routeChoiceButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="119.0" text="Route" />
+                        <Button fx:id="photoChoiceButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="118.0" text="Photo" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                   <Button fx:id="gotoButton" layoutX="51.0" layoutY="7.0" mnemonicParsing="false" text="GOTO" />
