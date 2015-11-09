@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceCircle;
 
@@ -24,6 +25,7 @@ public class S57BuoyageController
         extends S57Controller {
 
     private ShapeAttributes normalAttributes = null;
+    private PointPlacemark pointPlacemark = null;
 
     public S57BuoyageController() {
     }
@@ -53,16 +55,7 @@ public class S57BuoyageController
         if (ship.isGpsTarget()) {
             distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
             azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
-            /*
-             if (first == true) {
-             first = false;
-             shape = new SurfaceCircle(LatLon.fromDegrees(navigationData.getLocation().getLat(), navigationData.getLocation().getLon()), s57Behavior.getRange());
-             shape.setAttributes(normalAttributes);
-             s57Behavior.setShape(shape);
-             layer.addRenderable(shape);
-             }
-             */
-            s57Behavior.doIt(distance, azimuth);
+            s57Behavior.doIt(distance, azimuth, pointPlacemark);
             shape.setValue(AVKey.DISPLAY_NAME, ((Buoyage) navigationData).getObjectName() + "\n distance :  "
                     + String.format("%.2f", distance) + " Nm"
                     + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
@@ -82,6 +75,14 @@ public class S57BuoyageController
     @Override
     public String toString() {
         return ((Buoyage) navigationData).getLabel();
+    }
+
+    public PointPlacemark getPointPlacemark() {
+        return pointPlacemark;
+    }
+
+    public void setPointPlacemark(PointPlacemark pointPlacemark) {
+        this.pointPlacemark = pointPlacemark;
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.SurfaceShape;
 
 /**
@@ -54,6 +55,6 @@ public abstract class S57Behavior {
     }
 
 
-    public abstract void doIt(double distance, double azimuth);
+    public abstract void doIt(double distance, double azimuth, PointPlacemark pointPlacemark);
 
 }

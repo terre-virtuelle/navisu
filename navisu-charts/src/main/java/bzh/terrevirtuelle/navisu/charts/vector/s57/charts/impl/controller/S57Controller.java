@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsController;
 import gov.nasa.worldwind.geom.Position;

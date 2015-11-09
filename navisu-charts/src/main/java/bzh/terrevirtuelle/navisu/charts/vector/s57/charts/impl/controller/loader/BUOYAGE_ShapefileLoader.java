@@ -236,7 +236,7 @@ public class BUOYAGE_ShapefileLoader
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.65);//0.9
         placemark.setAttributes(attrs);
-        // object.setPlacemark(placemark);
+        buoyageController.setPointPlacemark(placemark);
         return placemark;
     }
 

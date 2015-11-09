@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.ShapeAttributes;
 
 /**
@@ -37,7 +38,7 @@ public class S57BuoyageBehavior
     public void init(S57BuoyageController buoyageController) {
         s57Controller = buoyageController;
         buoyage = (Buoyage) s57Controller.getNavigationData();
-        
+
         highlightAttributes = new BasicShapeAttributes();
         highlightAttributes.setInteriorMaterial(Material.GRAY);
         highlightAttributes.setDrawInterior(true);
@@ -61,32 +62,31 @@ public class S57BuoyageBehavior
     }
 
     @Override
-    public void doIt(double distance, double azimuth) {
-        
+    public void doIt(double distance, double azimuth, PointPlacemark pointPlacemark) {
+
         distance *= 1000;
         shape.setHighlightAttributes(highlightAttributes);
         if (distance > this.range) {
             shape.getAttributes().setDrawInterior(false);
-            //  buoyage.getPlacemark().getAttributes().setScale(0.65);
-
+            pointPlacemark.getAttributes().setScale(0.65);
             wwd.redrawNow();
         } else {
             if (distance <= this.range && distance > this.range / 2.0) {
                 shape.setAttributes(farAttributes);
                 shape.getAttributes().setDrawInterior(true);
-                //   buoyage.getPlacemark().getAttributes().setScale(0.7);
+                pointPlacemark.getAttributes().setScale(0.7);
                 wwd.redrawNow();
             } else {
                 if (distance <= this.range / 2.0 && distance > this.range / 4.0) {
                     shape.setAttributes(middleAttributes);
                     shape.getAttributes().setDrawInterior(true);
-                    //    buoyage.getPlacemark().getAttributes().setScale(0.9);
+                    pointPlacemark.getAttributes().setScale(0.9);
                     wwd.redrawNow();
                 } else {
                     if (distance <= this.range / 4.0) {
                         shape.setAttributes(nearAttributes);
                         shape.getAttributes().setDrawInterior(true);
-                        //   buoyage.getPlacemark().getAttributes().setScale(1.5);
+                        pointPlacemark.getAttributes().setScale(1.5);
                         wwd.redrawNow();
                     }
                 }
