@@ -43,6 +43,7 @@ public class AisEventsController {
     }
 
     public void subscribe() {
+
         aisCTEvent.subscribe((AisCreateTargetEvent) (Ship ship) -> {
             createTarget(ship);
         });
@@ -61,6 +62,7 @@ public class AisEventsController {
         aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation baseStation) -> {
             deleteBaseStation(baseStation);
         });
+
     }
 
     public void unsubscribe() {

@@ -15,7 +15,8 @@ import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsControll
  * @date 18 juin 2015
  * @author Serge Morvan
  */
-public class AisLoggerAisEventsController extends AisEventsController {
+public class AisLoggerAisEventsController
+        extends AisEventsController {
 
     public AisLoggerAisEventsController() {
     }

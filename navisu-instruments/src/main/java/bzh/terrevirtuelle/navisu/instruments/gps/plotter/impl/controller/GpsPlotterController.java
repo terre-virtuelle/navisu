@@ -23,6 +23,8 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
+import bzh.terrevirtuelle.navisu.util.io.IO;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
@@ -77,6 +79,7 @@ public class GpsPlotterController {
     protected List<String> s57Controllers;
     protected GpsPlotterImpl component;
     protected CircularFifoQueue<RMC> sentenceQueue;
+    protected NavigationDataSet navigationDataSet = null;
 
     public GpsPlotterController(GpsPlotterImpl component,
             GeoViewServices geoViewServices,
@@ -116,7 +119,9 @@ public class GpsPlotterController {
         addPanelController();
         addListeners();
         createOwnerShip();
-        activateS57Controllers();
+        if (withRoute == true) {
+            activateS57Controllers();
+        }
     }
 
     private void addPanelController() {
@@ -223,14 +228,11 @@ public class GpsPlotterController {
 
     private void activateS57Controllers() {
         s57Controllers = new ArrayList<>();
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter
-                = new FileChooser.ExtensionFilter("POI files (*.xml)", "*.xml", "*.XML");
-        fileChooser.getExtensionFilters().add(extFilter);
-        fileChooser.setInitialDirectory(new File("privateData/nds/"));
-        File file = fileChooser.showOpenDialog(guiAgentServices.getStage());
+
+        File file = IO.fileChooser(guiAgentServices.getStage(),
+                "privateData/nds/", "NDS files (*.xml)", "*.xml", "*.XML");
         FileInputStream inputFile = null;
-        NavigationDataSet poi = null;
+
         if (file != null) {
             try {
                 inputFile = new FileInputStream(new File(file.getPath()));
@@ -238,23 +240,20 @@ public class GpsPlotterController {
                 Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         if (inputFile != null) {
-            Unmarshaller unmarshaller;
-            JAXBContext jAXBContext;
+            navigationDataSet = new NavigationDataSet();
             try {
-                jAXBContext = JAXBContext.newInstance(NavigationDataSet.class);
-                unmarshaller = jAXBContext.createUnmarshaller();
-                poi = (NavigationDataSet) unmarshaller.unmarshal(inputFile);
-                System.out.println("poi " + poi);
-            } catch (JAXBException ex) {
+                navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
+            } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (poi != null) {
-                List<Location> locations = poi.getLocations();
+            if (navigationDataSet != null) {
+                List<Location> locations = navigationDataSet.getLocations();
                 locations.stream().forEach((l) -> {
-                    s57Controllers.add(Long.toString(l.getId()));
+                    long id = l.getId();
+                    s57Controllers.add(Long.toString(id));
                 });
-                System.out.println("s57Controllers " + s57Controllers);
                 component.notifyAisActivateEvent(aisSurveyZoneLayer, s57Controllers);
             }
         }

@@ -75,7 +75,7 @@ public class GpsPlotterImpl
 
     @Override
     public void on(String... files) {
-        if (files[0].equals("NAME3")) {
+        if (files[0].contains(NAME3)) {
             withRoute = true;
         }
         gpsPlotterController = new GpsPlotterController(this, geoViewServices, layerTreeServices,
