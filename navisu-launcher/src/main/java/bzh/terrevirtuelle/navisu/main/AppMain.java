@@ -95,7 +95,7 @@ import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoEditorImpl;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
-import bzh.terrevirtuelle.navisu.ontology.data.impl.DataAccessImpl;
+import bzh.terrevirtuelle.navisu.ontology.data.impl.JenaDataAccessImpl;
 import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
 import bzh.terrevirtuelle.navisu.photos.exif.impl.ExifComponentImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
@@ -150,8 +150,7 @@ public class AppMain extends Application {
 
         /* Deploy components */
         LOGGER.info("\n"
-                + componentManager.startApplication(
-                        GuiAgentImpl.class,//in first
+                + componentManager.startApplication(GuiAgentImpl.class,//in first
                         AisImpl.class,
                         AisLoggerImpl.class,
                         AisPlotterImpl.class,
@@ -164,7 +163,7 @@ public class AppMain extends Application {
                         ClocksImpl.class,
                         CompassImpl.class,
                         CurrentsImpl.class,
-                        DataAccessImpl.class,
+                        JenaDataAccessImpl.class,
                         DataServerImpl.class,
                         DatabaseImpl.class,
                         DatabaseDriverManagerImpl.class,
