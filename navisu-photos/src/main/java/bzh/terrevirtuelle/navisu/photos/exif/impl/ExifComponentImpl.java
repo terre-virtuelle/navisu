@@ -36,6 +36,7 @@ public class ExifComponentImpl
         df.setRoundingMode(RoundingMode.HALF_UP);
     }
 
+
     @Override
     public void componentStarted() {
     }
@@ -217,4 +218,5 @@ public class ExifComponentImpl
         }
         return exif;
     }
+    
 }
