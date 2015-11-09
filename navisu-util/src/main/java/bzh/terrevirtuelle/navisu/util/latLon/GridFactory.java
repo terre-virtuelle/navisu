@@ -15,10 +15,10 @@ public class GridFactory {
 
     private List<Double> latList;
     private List<Double> lonList;
-    private double minLat;
-    private double maxLat;
-    private double minLon;
-    private double maxLon;
+    private final double minLat;
+    private final double maxLat;
+    private final double minLon;
+    private final double maxLon;
 
     public GridFactory(List<Double> latList, List<Double> lonList) {
         this.latList = latList;
