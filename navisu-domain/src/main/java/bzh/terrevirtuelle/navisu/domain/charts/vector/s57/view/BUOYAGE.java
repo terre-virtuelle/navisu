@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view;
 
+import gov.nasa.worldwind.render.PointPlacemark;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 public class BUOYAGE {
 
+   
     public static final Map<String, String> ATT = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
             put("BCNCAR", "BeaconCardinal");
@@ -24,6 +26,8 @@ public class BUOYAGE {
             put("MORFAC", "MooringWarpingFacility");
         }
     });
+
+    
 
     @Override
     public String toString() {

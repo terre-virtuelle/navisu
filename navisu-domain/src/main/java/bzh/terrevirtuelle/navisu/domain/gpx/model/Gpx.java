@@ -6,6 +6,7 @@
 //
 package bzh.terrevirtuelle.navisu.domain.gpx.model;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -50,7 +51,6 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "gpx", propOrder = {
-    "metadata",
     "wpt",
     "rte",
     "trk",
@@ -58,9 +58,9 @@ import javax.xml.bind.annotation.XmlType;
     "boundaries"
 })
 @XmlRootElement
-public class Gpx {
+public class Gpx
+        implements NavigationData {
 
-    protected Metadata metadata;
     protected List<Waypoint> wpt = new ArrayList<>();
     protected List<Route> rte = new ArrayList<>();
     protected List<Track> trk = new ArrayList<>();
@@ -75,9 +75,9 @@ public class Gpx {
 
     }
 
-    public Gpx(Metadata metadata, List<Waypoint> wpt, List<Route> rte, List<Track> trk,
+    public Gpx( List<Waypoint> wpt, List<Route> rte, List<Track> trk,
             Extensions extensions, String version, String creator) {
-        this.metadata = metadata;
+      //  this.metadata = metadata;
         this.wpt = wpt;
         this.rte = rte;
         this.trk = trk;
@@ -86,8 +86,8 @@ public class Gpx {
         this.creator = creator;
     }
 
-    public Gpx(Metadata metadata, List<Waypoint> wpt, List<Route> rte, List<Track> trk, Extensions extensions, Boundaries boundaries, String version, String creator) {
-        this.metadata = metadata;
+    public Gpx( List<Waypoint> wpt, List<Route> rte, List<Track> trk, Extensions extensions, Boundaries boundaries, String version, String creator) {
+      //  this.metadata = metadata;
         this.wpt = wpt;
         this.rte = rte;
         this.trk = trk;
@@ -97,26 +97,7 @@ public class Gpx {
         this.creator = creator;
     }
 
-    /**
-     * Gets the value of the metadata property.
-     *
-     * @return possible object is {@link Metadata }
-     *
-     */
-    public Metadata getMetadata() {
-        return metadata;
-    }
-
-    /**
-     * Sets the value of the metadata property.
-     *
-     * @param value allowed object is {@link Metadata }
-     *
-     */
-    public void setMetadata(Metadata value) {
-        this.metadata = value;
-    }
-
+    
     /**
      * Gets the value of the wpt property.
      *
@@ -275,8 +256,9 @@ public class Gpx {
         this.boundaries = boundaries;
 
     }
+
     @Override
     public String toString() {
-        return "Gpx{" + "metadata=" + metadata + ", wpt=" + wpt + ", rte=" + rte + ", trk=" + trk + ", extensions=" + extensions + ", boundaries=" + boundaries + ", version=" + version + ", creator=" + creator + '}';
-    } 
+        return "Gpx{" + ", wpt=" + wpt + ", rte=" + rte + ", trk=" + trk + ", extensions=" + extensions + ", boundaries=" + boundaries + ", version=" + version + ", creator=" + creator + '}';
+    }
 }

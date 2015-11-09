@@ -25,7 +25,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccess;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 
-public class DataAccessImpl implements DataAccess, DataAccessServices, ComponentState {
+public class JenaDataAccessImpl implements DataAccess, DataAccessServices, ComponentState {
 
 	final static String PREFIX = "prefix dbpedia-owl: <http://dbpedia.org/ontology/> \n"
             + "prefix prop-fr: <http://fr.dbpedia.org/property/> \n"
@@ -41,7 +41,7 @@ public class DataAccessImpl implements DataAccess, DataAccessServices, Component
 		 try {
 	            Class.forName("net.rootdev.javardfa.jena.RDFaReader");
 	        } catch (ClassNotFoundException ex) {
-	            Logger.getLogger(DataAccessImpl.class.getName()).log(Level.SEVERE, null, ex);
+	            Logger.getLogger(JenaDataAccessImpl.class.getName()).log(Level.SEVERE, null, ex);
 	        }		
 	}
 

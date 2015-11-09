@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class GpxBuilder {
 
-    protected Metadata metadata = new Metadata();
     protected List<Waypoint> wpt = new ArrayList<>();
     protected List<Route> rte = new ArrayList<>();
     protected List<Track> trk = new ArrayList<>();
@@ -31,13 +30,10 @@ public class GpxBuilder {
     }
 
     public Gpx build() {
-        return new Gpx(metadata, wpt, rte, trk, extensions, version, creator);
+        return new Gpx( wpt, rte, trk, extensions, version, creator);
     }
 
-    public GpxBuilder metadata(Metadata metadata) {
-        this.metadata = metadata;
-        return this;
-    }
+    
 
     public GpxBuilder wpt(List<Waypoint> wpt) {
         this.wpt = wpt;

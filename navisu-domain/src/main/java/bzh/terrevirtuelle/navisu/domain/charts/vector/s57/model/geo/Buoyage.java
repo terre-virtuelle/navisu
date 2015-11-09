@@ -47,7 +47,20 @@ public class Buoyage
     @XmlTransient
     protected String label;
     protected String imageAddress;
+  //  @XmlTransient
+ //   protected PointPlacemark placemark;
 
+    public Buoyage() {
+    }
+/*
+    public PointPlacemark getPlacemark() {
+        return placemark;
+    }
+
+    public void setPlacemark(PointPlacemark placemark) {
+        this.placemark = placemark;
+    }
+*/
     /**
      * Get the value of navigationalSystemOfMarks
      *
