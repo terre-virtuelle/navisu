@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.controller;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
 import gov.nasa.worldwind.render.SurfaceShape;
 

@@ -32,7 +32,7 @@ import java.util.TimerTask;
  * @author Serge Morvan
  * @date 4 sept. 2014 NaVisu project
  */
-public class NavigationLineController {
+public class S57NavigationLineController {
 
     protected WorldWindow wwd;
     private NavigationLine navigationLine;
@@ -40,7 +40,7 @@ public class NavigationLineController {
     private final GlobeAnnotation tooltipAnnotation;
     private Path path;
 
-    public NavigationLineController() {
+    public S57NavigationLineController() {
         wwd = GeoWorldWindViewImpl.getWW();
         navigationLines = new ArrayList<>();
         this.tooltipAnnotation = new GlobeAnnotation("", Position.fromDegrees(0, 0, 0));

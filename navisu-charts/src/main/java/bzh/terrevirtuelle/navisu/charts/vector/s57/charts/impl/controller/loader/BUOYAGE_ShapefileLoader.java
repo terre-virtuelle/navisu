@@ -5,9 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.BuoyageController;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57BasicBehavior;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57BuoyageController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57BuoyageBehavior;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BUOYAGE;
@@ -40,7 +40,8 @@ public class BUOYAGE_ShapefileLoader
         extends LayerShapefileLoader {
 
     private Buoyage object;
-    private BuoyageController buoyageController;
+    private S57BuoyageController buoyageController;
+    private int LIMIT = 926; // distance of perception
     private final Set<S57Controller> s57Controllers;
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
@@ -89,7 +90,8 @@ public class BUOYAGE_ShapefileLoader
     }
 
     @Override
-    protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
+    protected Renderable createPoint(ShapefileRecord record,
+            double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
 
         try {
@@ -97,7 +99,6 @@ public class BUOYAGE_ShapefileLoader
         } catch (InstantiationException | IllegalAccessException ex) {
             Logger.getLogger(BUOYAGE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         entries = record.getAttributes().getEntries();
 
         object.setLat(latDegrees);
@@ -165,8 +166,11 @@ public class BUOYAGE_ShapefileLoader
                 object.setDateStart((String) e.getValue());
             }
         });
-        buoyageController = new BuoyageController(object, new S57BasicBehavior(926));
+        S57BuoyageBehavior s57BuoyageBehavior = new S57BuoyageBehavior(LIMIT);
+        buoyageController = new S57BuoyageController(object, s57BuoyageBehavior);
+        s57BuoyageBehavior.init(buoyageController);
         s57Controllers.add(buoyageController);
+        
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         //   placemark.setLabelText(object.getObjectName());
@@ -186,6 +190,7 @@ public class BUOYAGE_ShapefileLoader
                 }
             }
         }
+
         /*
          String label = claz.getSimpleName() + " "
          + catMark + "\n"
@@ -227,11 +232,11 @@ public class BUOYAGE_ShapefileLoader
                 + "_" + marsys
                 + ".png";
         object.setImageAddress(imageAddress);
-
         attrs.setImageAddress(imageAddress);
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.65);//0.9
         placemark.setAttributes(attrs);
+        // object.setPlacemark(placemark);
         return placemark;
     }
 

@@ -22,12 +22,13 @@ public class ACHARE_ShapefileLoader extends AREA_ShapefileLoader {
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-
+/*
         Iterable<? extends LatLon> coords = record.getCompoundPointBuffer().getLocations();
         for (LatLon l : coords) {
-            System.out.println(l.latitude + " " + l.longitude);
+          //  System.out.println(l.latitude + " " + l.longitude);
         }
         System.out.println("");
+        */
         return super.createPolygonAttributes(record);
     }
 }

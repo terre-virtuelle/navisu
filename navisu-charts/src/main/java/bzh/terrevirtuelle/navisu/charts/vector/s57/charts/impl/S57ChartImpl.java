@@ -8,8 +8,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57Chart;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -17,7 +17,6 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.AisActivateEvent;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
-import bzh.terrevirtuelle.navisu.util.view.ViewState;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
@@ -75,7 +74,7 @@ public class S57ChartImpl
     private static final String EXTENSION_3 = ".003";
     protected static final String GROUP = "S57 charts";
     static private int i = 0;
-    protected ChartS57Controller chartS57Controller;
+    protected S57ChartController chartS57Controller;
     private SurveyZoneController surveyZoneController;
     protected List<Layer> layers;
     protected Layer layer;
@@ -106,7 +105,6 @@ public class S57ChartImpl
         wwd = GeoWorldWindViewImpl.getWW();
         View view = wwd.getView();
         wwd.addPositionListener((PositionEvent event) -> {
-            //  System.out.println("altitude : " + ((int) wwd.getView().getCurrentEyePosition().getAltitude()));
             filter();
         });
         cm = ComponentManager.componentManager;
@@ -164,20 +162,28 @@ public class S57ChartImpl
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         try {
-            //Test capture des evts par l'AreaController
+            chartS57Controller = S57ChartController.getInstance();
+            if (first == true) {
+                first = false;
+                chartS57Controller.setDataAccessServices(dataAccessServices);
+                chartS57Controller.setAisActivateES(aisActivateES); 
+            }
             /*
-             if (first == true) {
-             first = false;
+            // Test capture des evts par l'AreaController
+            // only one shot
              surveyZoneController = new SurveyZoneController(KeyCode.Z, KeyCombination.CONTROL_DOWN);
-
              Platform.runLater(new Runnable() {
              @Override
              public void run() {
              guiAgentServices.getRoot().getChildren().add(surveyZoneController);
              }
              });
+             chartS57Controller.setSurveyZoneController(surveyZoneController);
              }
              */
+            
+            chartS57Controller.subscribe(); // A chaque nouvelle carte car S57Controllers est modifie
+            
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + i).mkdir();
             new File("data/shp/shp_" + i + "/soundg").mkdir();
@@ -246,11 +252,9 @@ public class S57ChartImpl
                 LOGGER.log(Level.SEVERE, null, e);
             }
 
-            chartS57Controller = ChartS57Controller.getInstance();
-            chartS57Controller.setDataAccessServices(dataAccessServices);
-            chartS57Controller.setSurveyZoneController(surveyZoneController);
             chartS57Controller.init("data/shp/shp_" + i++);
             layers = chartS57Controller.getLayers();
+
             chartsOpen = true;
             geoLayerList = geoViewServices.getLayerManager().getGroup(GROUP);
             groupNames.clear();
@@ -285,7 +289,7 @@ public class S57ChartImpl
             });
 
         } catch (Exception e) {
-            System.out.println("e " + e);
+            System.out.println("handleOpenFile e " + e);
         }
     }
 

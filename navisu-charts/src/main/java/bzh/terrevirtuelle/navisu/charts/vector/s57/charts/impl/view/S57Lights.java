@@ -10,6 +10,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view;
  *
  * @author Serge
  */
-public interface Lights {
+public interface S57Lights {
     double[] getRadii();
 }

@@ -13,9 +13,9 @@ import gov.nasa.worldwind.render.airspaces.PartialCappedCylinder;
  * @author Serge Morvan
  * @date 28 juin 2014 NaVisu project
  */
-public class LightView
+public class S57LightView
         extends PartialCappedCylinder
-        implements Lights {
+        implements S57Lights {
 
     private Light light;
 
@@ -39,11 +39,11 @@ public class LightView
         this.tmp = tmp;
     }
 
-    public LightView(Light light) {
+    public S57LightView(Light light) {
         this.light = light;
     }
 
-    public LightView() {
+    public S57LightView() {
     }
 
     public Light getLight() {

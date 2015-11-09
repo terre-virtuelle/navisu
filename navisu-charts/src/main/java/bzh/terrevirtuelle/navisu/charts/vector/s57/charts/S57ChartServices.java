@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.controller.S57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Controller;
 import java.util.Set;
 import org.capcaval.c3.component.ComponentService;
 

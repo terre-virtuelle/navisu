@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.ChartS57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartController;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.AREA;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.model.SurveyZone;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -81,7 +81,7 @@ public class AREA_ShapefileLoader
         shape.setHighlightAttributes(null);
 
      //   createValues(shape);
-      //  ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
+      //  S57ChartController.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));
         layer.addRenderable(shape);
 
     }

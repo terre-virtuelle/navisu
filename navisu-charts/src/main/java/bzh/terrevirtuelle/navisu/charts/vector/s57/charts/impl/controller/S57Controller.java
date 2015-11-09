@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.controller;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsController;
 import gov.nasa.worldwind.geom.Position;
@@ -23,9 +24,12 @@ import org.gavaghan.geodesy.GlobalCoordinates;
 public abstract class S57Controller
         extends AisEventsController {
 
+    protected S57Behavior s57Behavior;
+    protected NavigationData navigationData;
+
     protected RenderableLayer layer;
     protected SurfaceShape shape;
-    protected S57Behavior s57Behavior;
+
     protected long id;
     protected double lat;
     protected double lon;
@@ -38,7 +42,13 @@ public abstract class S57Controller
     protected GlobalCoordinates waypointB;
     protected double distance;
     protected double azimuth;
-    protected NavigationData navigationData;
+
+    public S57Controller() {
+    }
+
+    public S57Controller(NavigationData navigationData) {
+        this.navigationData = navigationData;
+    }
 
     public double getDistanceNm(Position posA, Position posB) {
         waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());

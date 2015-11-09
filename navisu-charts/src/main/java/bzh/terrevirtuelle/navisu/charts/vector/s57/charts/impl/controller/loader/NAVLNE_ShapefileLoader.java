@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.NavigationLineController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57NavigationLineController;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
@@ -29,7 +29,7 @@ public class NAVLNE_ShapefileLoader
 
     private Shapefile shapefile;
     private ShapefileRecord record;
-    private final NavigationLineController navigationLineController;
+    private final S57NavigationLineController navigationLineController;
     private RenderableLayer layer;
     private final List< List<LatLon>> coords;
     private final List<LatLon> latLonList;
@@ -39,7 +39,7 @@ public class NAVLNE_ShapefileLoader
         records = new ArrayList<>();
         latLonList = new ArrayList<>();
         coords = new ArrayList<>();
-        navigationLineController = new NavigationLineController();
+        navigationLineController = new S57NavigationLineController();
     }
 
     @Override

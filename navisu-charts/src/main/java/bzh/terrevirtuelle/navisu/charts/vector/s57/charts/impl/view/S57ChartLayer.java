@@ -7,12 +7,12 @@ import java.util.logging.Logger;
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class ChartS57Layer
+public class S57ChartLayer
         extends RenderableLayer {
 
-    protected final static Logger LOGGUER = Logger.getLogger(ChartS57Layer.class.getName());
+    protected final static Logger LOGGUER = Logger.getLogger(S57ChartLayer.class.getName());
 
-    public ChartS57Layer() {
+    public S57ChartLayer() {
         this.init();
     }
 
