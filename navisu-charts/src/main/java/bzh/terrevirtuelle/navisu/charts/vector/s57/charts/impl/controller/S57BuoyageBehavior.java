@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Behavior;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import gov.nasa.worldwind.WorldWindow;
