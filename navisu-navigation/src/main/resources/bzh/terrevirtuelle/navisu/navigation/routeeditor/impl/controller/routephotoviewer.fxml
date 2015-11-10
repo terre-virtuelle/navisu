@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<fx:root fx:id="view" mouseTransparent="true" stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="452.0" styleClass="routeeditor-panel">
+            <children>
+                <Group styleClass="routeeditor-panel">
+                    <children>
+                        <SplitPane dividerPositions="0.9608610567514677" prefHeight="683.0" prefWidth="1024.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" >
+                                    <children>
+                                        <ImageView fx:id="imageView" fitHeight="683.0" fitWidth="978.0" layoutX="-2.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true" />
+                                    </children>
+                                </AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                    <children>
+                                        <Slider fx:id="opacitySlider" layoutX="20.0" layoutY="105.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                                        </Slider> 
+                                        <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="20.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                                            <image>
+                                                <Image url="@quit.png" />
+                                            </image>
+                                        </ImageView>  
+                                    </children>
+                                </AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </Group>
+            </children>
+        </Pane>
+    </children>
+</fx:root>

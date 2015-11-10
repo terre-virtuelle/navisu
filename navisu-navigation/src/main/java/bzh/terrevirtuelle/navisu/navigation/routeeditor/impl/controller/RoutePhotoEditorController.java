@@ -10,10 +10,10 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewerServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoEditorImpl;
 import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
 import bzh.terrevirtuelle.navisu.util.io.IO;
-import static bzh.terrevirtuelle.navisu.util.io.IO.fileChooser;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.drew.imaging.ImageProcessingException;
@@ -35,6 +35,7 @@ import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -54,6 +55,7 @@ public class RoutePhotoEditorController
     private ExifComponentServices exifComponentServices;
     private final S57ChartServices s57ChartServices;
     private GuiAgentServices guiAgentServices;
+    private RoutePhotoViewerServices routePhotoViewerServices;
     private final RoutePhotoEditorImpl instrument;
     private View viewWW;
     private final String FXML = "routephotoeditor.fxml";
@@ -144,6 +146,7 @@ public class RoutePhotoEditorController
     private double altitude;
     private int heading;
     private double fieldOfView;
+    private Image image = null;
 
     public RoutePhotoEditorController(RoutePhotoEditorImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
@@ -152,6 +155,7 @@ public class RoutePhotoEditorController
         this.instrument = instrument;
         this.s57ChartServices = instrument.getS57ChartServices();
         this.guiAgentServices = instrument.getGuiAgentServices();
+        this.routePhotoViewerServices = instrument.getRoutePhotoViewerServices();
         this.exifComponentServices = instrument.getExifComponentServices();
         wwd = GeoWorldWindViewImpl.getWW();
         viewWW = wwd.getView();
@@ -170,6 +174,7 @@ public class RoutePhotoEditorController
             viewWW.setPitch(Angle.fromDegrees(90.0));
             viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
             updatePanel();
+            routePhotoViewerServices.load(image);
         });
         saveButton.setOnMouseClicked((MouseEvent event) -> {
             System.out.println("saveButton not implemented");
@@ -188,10 +193,13 @@ public class RoutePhotoEditorController
             File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(), "data/photos", "JPG files (*.jpg)", "*.jpg", "*.JPG");
             Exif exif = null;
             try {
-                exif = exifComponentServices.create(file);
+                if (file != null) {
+                    image = new Image("file:" + file.getAbsolutePath());
+                }
                 photoTF.setText(file.getName());
+                exif = exifComponentServices.create(file);
             } catch (IOException | ImageProcessingException ex) {
-                Logger.getLogger(RoutePhotoEditorController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("RoutePhotoEditorController e " + ex);
             }
             if (exif != null) {
                 latitude = exif.getGpsLatitude();

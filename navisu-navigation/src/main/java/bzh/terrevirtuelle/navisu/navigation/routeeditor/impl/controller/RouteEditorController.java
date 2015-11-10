@@ -102,8 +102,10 @@ public class RouteEditorController
     private List<List<Waypoint>> waypoints;// 1 Liste de WP par TS
     private List<TrackSegment> trackSegments;
     private List<Point> boundaries;
+    private List<Point> highways;
     private List<Position> positions;
-    private List<Position> pathPositions;
+    private List<Position> offsetPathPositions;
+    private List<Position> highwayPathPositions;
     private Set<S57Controller> s57Controllers;
     private NavigationDataSet navigationDataSet;
     private int size;
@@ -111,11 +113,15 @@ public class RouteEditorController
     private String author;
     private String version;
     private float speed;
-    private final double MIN_DISTANCE = 0.5; // minimal distance between 2 Wp
-    private final double BUFFER_DISTANCE = 0.01; //unit is decimal degrees
+    private final double MIN_DISTANCE = 0.1; // minimal distance between 2 Wp
+    private final double OFFSET_BUFFER_DISTANCE = 0.01; //unit is decimal degrees
+    private final double HIGHWAY_BUFFER_DISTANCE = 0.0003; //unit is decimal degrees
     private double bufferDistance;
-    private Geometry buffer;
+    private double highwayDistance;
+    private Geometry offsetBuffer;
+    private Geometry highwayBuffer;
     private Polygon offset;
+    private Polygon highway;
     private final GeodeticCalculator geoCalc;
     private final Ellipsoid reference = Ellipsoid.WGS84;//default
     private final double KM_TO_NAUTICAL = 0.53879310;
@@ -190,7 +196,8 @@ public class RouteEditorController
         this.guiAgentServices = instrument.getGuiAgentServices();
         wwd = GeoWorldWindViewImpl.getWW();
         geoCalc = new GeodeticCalculator();
-        bufferDistance = BUFFER_DISTANCE;
+        bufferDistance = OFFSET_BUFFER_DISTANCE;
+        highwayDistance = HIGHWAY_BUFFER_DISTANCE;
 
         /*
          // Add terrain profile layer
@@ -249,10 +256,11 @@ public class RouteEditorController
             showBuffer();
             fillGpx();
             fillGpxBoundaries();
+            fillGpxHighway();
             exportGpx();
             exportKML();
             exportNmea();
-            exportS57Controllers();
+            exportNavigationDataset();
         });
 
         snapshotButton.setOnMouseClicked((MouseEvent event) -> {
@@ -402,7 +410,7 @@ public class RouteEditorController
         track = TrackBuilder.create().name(routeName).build();
         tracks = new ArrayList<>();
         tracks.add(track);
-        boundaries = new ArrayList();
+        // boundaries = new ArrayList();
         gpx = GpxBuilder.create().creator(author).version(version)
                 .trk(tracks)
                 .build();
@@ -477,9 +485,18 @@ public class RouteEditorController
 
     private void fillGpxBoundaries() {
         boundaries = gpx.getBoundaries().getBounds();
-        if (boundaries != null && pathPositions != null) {
-            pathPositions.stream().forEach((p) -> {
+        if (boundaries != null && offsetPathPositions != null) {
+            offsetPathPositions.stream().forEach((p) -> {
                 boundaries.add(new Point(p.getLatitude().getDegrees(), p.getLongitude().getDegrees()));
+            });
+        }
+    }
+
+    private void fillGpxHighway() {
+        highways = gpx.getHighway().getBounds();
+        if (highways != null && highwayPathPositions != null) {
+            highwayPathPositions.stream().forEach((p) -> {
+                highways.add(new Point(p.getLatitude().getDegrees(), p.getLongitude().getDegrees()));
             });
         }
     }
@@ -493,43 +510,72 @@ public class RouteEditorController
                         positions.get(i).getLatitude().getDegrees());
             }
             Geometry geom = new GeometryFactory().createLineString(coordinates);
+
             BufferOp bufferOp = new BufferOp(geom);
             bufferOp.setEndCapStyle(BufferParameters.CAP_ROUND);
-            buffer = bufferOp.getResultGeometry(bufferDistance);
-            pathPositions = new ArrayList<>();
-            for (Coordinate c : buffer.getCoordinates()) {
-                pathPositions.add(Position.fromDegrees(c.y, c.x, 100));
+            offsetBuffer = bufferOp.getResultGeometry(bufferDistance);
+            offsetPathPositions = new ArrayList<>();
+            for (Coordinate c : offsetBuffer.getCoordinates()) {
+                offsetPathPositions.add(Position.fromDegrees(c.y, c.x, 100));
             }
-            if (!pathPositions.isEmpty()) {
-                offset = new Polygon(pathPositions);
+            if (!offsetPathPositions.isEmpty()) {
+                offset = new Polygon(offsetPathPositions);
             }
             offset.setValue(AVKey.DISPLAY_NAME, routeName);
+
+            bufferOp = new BufferOp(geom);
+            bufferOp.setEndCapStyle(BufferParameters.CAP_ROUND);
+
+            highwayBuffer = bufferOp.getResultGeometry(highwayDistance);
+            highwayPathPositions = new ArrayList<>();
+            for (Coordinate c : highwayBuffer.getCoordinates()) {
+                highwayPathPositions.add(Position.fromDegrees(c.y, c.x, 5));
+            }
+            if (!highwayPathPositions.isEmpty()) {
+                highway = new Polygon(highwayPathPositions);
+            }
+            highway.setValue(AVKey.DISPLAY_NAME, routeName);
         }
     }
 
     public final void showBuffer() {
         if (offset != null) {
-            ShapeAttributes normalAttributes = new BasicShapeAttributes();
-            normalAttributes.setInteriorMaterial(Material.WHITE);
-            normalAttributes.setInteriorOpacity(0.3);
-            normalAttributes.setOutlineMaterial(Material.YELLOW);
-            normalAttributes.setOutlineWidth(2);
-            normalAttributes.setDrawOutline(true);
-            normalAttributes.setDrawInterior(true);
-            normalAttributes.setEnableLighting(true);
-            offset.setAttributes(normalAttributes);
+            ShapeAttributes offsetNormalAttributes = new BasicShapeAttributes();
+            offsetNormalAttributes.setInteriorMaterial(Material.WHITE);
+            offsetNormalAttributes.setInteriorOpacity(0.3);
+            offsetNormalAttributes.setOutlineMaterial(Material.YELLOW);
+            offsetNormalAttributes.setOutlineWidth(2);
+            offsetNormalAttributes.setDrawOutline(true);
+            offsetNormalAttributes.setDrawInterior(true);
+            offsetNormalAttributes.setEnableLighting(true);
+            offset.setAttributes(offsetNormalAttributes);
 
-            ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
-            highlightAttributes.setOutlineMaterial(Material.WHITE);
-            highlightAttributes.setOutlineOpacity(1);
-            highlightAttributes.setInteriorOpacity(0.8);
-            offset.setHighlightAttributes(highlightAttributes);
+            ShapeAttributes offsetHighlightAttributes = new BasicShapeAttributes(offsetNormalAttributes);
+            offsetHighlightAttributes.setOutlineMaterial(Material.WHITE);
+            offsetHighlightAttributes.setOutlineOpacity(1);
+            offsetHighlightAttributes.setInteriorOpacity(0.8);
+            offset.setHighlightAttributes(offsetHighlightAttributes);
             measureTool.getLayer().addRenderable(offset);
+        }
+        if (highway != null) {
+            ShapeAttributes offsetNormalAttributes = new BasicShapeAttributes();
+            offsetNormalAttributes.setOutlineMaterial(Material.RED);
+            offsetNormalAttributes.setOutlineWidth(2);
+            offsetNormalAttributes.setDrawOutline(true);
+            offsetNormalAttributes.setDrawInterior(false);
+            offsetNormalAttributes.setEnableLighting(true);
+            highway.setAttributes(offsetNormalAttributes);
+
+            ShapeAttributes offsetHighlightAttributes = new BasicShapeAttributes(offsetNormalAttributes);
+            offsetHighlightAttributes.setOutlineMaterial(Material.GREEN);
+            offsetHighlightAttributes.setOutlineOpacity(1);
+            highway.setHighlightAttributes(offsetHighlightAttributes);
+            measureTool.getLayer().addRenderable(highway);
         }
     }
 
     public Geometry getBuffer() {
-        return buffer;
+        return offsetBuffer;
     }
 
     private void fillMesureTool() {
@@ -741,7 +787,7 @@ public class RouteEditorController
         }
     }
 
-    private void exportS57Controllers() {
+    private void exportNavigationDataset() {
         s57Controllers = new HashSet<>();
         s57Controllers = s57ChartServices.getS57Controllers();
         if (s57Controllers != null) {
@@ -751,7 +797,7 @@ public class RouteEditorController
             for (S57Controller sc : s57Controllers) {
                 buoyagePosition = new Coordinate(sc.getNavigationData().getLocation().getLon(), sc.getNavigationData().getLocation().getLat());
                 System.out.println("buoyagePosition " + buoyagePosition);
-                if (buffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
+                if (offsetBuffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
                     navigationDataSet.add(sc.getNavigationData());
                 }
             }

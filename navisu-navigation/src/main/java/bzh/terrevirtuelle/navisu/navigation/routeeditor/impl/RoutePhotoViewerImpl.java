@@ -8,11 +8,12 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
-import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditor;
-import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditorServices;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewer;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewerServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RoutePhotoEditorController;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RoutePhotoViewerController;
 import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -25,31 +26,30 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @date 26 août 2015
  * @author Serge Morvan
  */
-public class RoutePhotoEditorImpl
-        implements RoutePhotoEditor, RoutePhotoEditorServices, InstrumentDriver, ComponentState {
+public class RoutePhotoViewerImpl
+        implements RoutePhotoViewer, RoutePhotoViewerServices, InstrumentDriver, ComponentState {
 
     @UsedService
     GuiAgentServices guiAgentServices;
-    @UsedService
-    S57ChartServices s57ChartServices;
-    @UsedService
-    ExifComponentServices exifComponentServices;
-    @UsedService
-    RoutePhotoViewerServices routePhotoViewerServices;
-    
-    private final String KEY_NAME = "RoutePhotoEditor";
-    private RoutePhotoEditorController routePhotoEditorController;
+    private final String KEY_NAME = "RoutePhotoViewer";
+    private RoutePhotoViewerController routePhotoViewerController;
 
     @Override
     public void componentInitiated() {
     }
 
+    private void init() {
+        routePhotoViewerController = new RoutePhotoViewerController(this, KeyCode.P, KeyCombination.CONTROL_DOWN);
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routePhotoViewerController);
+        guiAgentServices.getRoot().getChildren().add(routePhotoViewerController);
+        routePhotoViewerController.setVisible(true);
+    }
+
     @Override
     public void on(String... files) {
-        routePhotoEditorController = new RoutePhotoEditorController(this, KeyCode.M, KeyCombination.CONTROL_DOWN);
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routePhotoEditorController);
-        guiAgentServices.getRoot().getChildren().add(routePhotoEditorController);
-        routePhotoEditorController.setVisible(true);
+        if (routePhotoViewerController == null) {
+            init();
+        }
     }
 
     @Override
@@ -64,9 +64,10 @@ public class RoutePhotoEditorImpl
 
     @Override
     public void off() {
-        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, routePhotoEditorController);
-        guiAgentServices.getRoot().getChildren().remove(routePhotoEditorController);
-        routePhotoEditorController.setVisible(false);
+
+        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, routePhotoViewerController);
+        guiAgentServices.getRoot().getChildren().remove(routePhotoViewerController);
+        routePhotoViewerController.setVisible(false);
     }
 
     @Override
@@ -81,16 +82,11 @@ public class RoutePhotoEditorImpl
         return guiAgentServices;
     }
 
-    public S57ChartServices getS57ChartServices() {
-        return s57ChartServices;
+    @Override
+    public void load(Image image) {
+        if (routePhotoViewerController == null) {
+            init();
+        }
+        routePhotoViewerController.load(image);
     }
-
-    public ExifComponentServices getExifComponentServices() {
-        return exifComponentServices;
-    }
-
-    public RoutePhotoViewerServices getRoutePhotoViewerServices() {
-        return routePhotoViewerServices;
-    }
-
 }
