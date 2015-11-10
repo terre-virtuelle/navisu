@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <kml xmlns="http://earth.google.com/kml/2.0">
     <Document>
-<Placemark><description><![CDATA[WP0<br>Lat : 48,3734<br>Lon : -4,4912<br>Time : 07:23:14<br>Day : 09/11/15]]></description><Point><coordinates>-4.491209174127022,48.37339297127687,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.491209174127022,48.37339297127687,10
--4.486571676108038,48.36334694965939,0</coordinates></LineString></Placemark>
-<Placemark><description><![CDATA[WP1<br>Lat : 48,3633<br>Lon : -4,4866<br>Time : 07:23:14<br>Day : 09/11/15]]></description><Point><coordinates>-4.486571676108038,48.36334694965939,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.486571676108038,48.36334694965939,10
--4.519882219936715,48.357162612579415,0</coordinates></LineString></Placemark>
-<Placemark><description><![CDATA[WP2<br>Lat : 48,3572<br>Lon : -4,5199<br>Time : 07:23:14<br>Day : 09/11/15]]></description><Point><coordinates>-4.519882219936715,48.357162612579415,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.519882219936715,48.357162612579415,10
--4.560884810555502,48.347378218680696,0</coordinates></LineString></Placemark>
-<Placemark><description><![CDATA[WP3<br>Lat : 48,3474<br>Lon : -4,5609<br>Time : 07:23:14<br>Day : 09/11/15]]></description><Point><coordinates>-4.560884810555502,
-48.347378218680696,10</coordinates></Point></Placemark>
+<Placemark><description><![CDATA[WP0<br>Lat : 48,3721<br>Lon : -4,4906<br>Time : 10:08:00<br>Day : 10/11/15]]></description><Point><coordinates>-4.490593748193773,48.372075081595014,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.490593748193773,48.372075081595014,10
+-4.48482439723333,48.36305826632545,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP1<br>Lat : 48,3631<br>Lon : -4,4848<br>Time : 10:08:00<br>Day : 10/11/15]]></description><Point><coordinates>-4.48482439723333,48.36305826632545,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.48482439723333,48.36305826632545,10
+-4.49960049962584,48.35153093334512,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP2<br>Lat : 48,3515<br>Lon : -4,4996<br>Time : 10:08:00<br>Day : 10/11/15]]></description><Point><coordinates>-4.49960049962584,48.35153093334512,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.49960049962584,48.35153093334512,10
+-4.519126368905381,48.33682717414575,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP3<br>Lat : 48,3368<br>Lon : -4,5191<br>Time : 10:08:00<br>Day : 10/11/15]]></description><Point><coordinates>-4.519126368905381,48.33682717414575,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.519126368905381,48.33682717414575,10
+-4.509091950271965,48.321802120688574,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP4<br>Lat : 48,3218<br>Lon : -4,5091<br>Time : 10:08:00<br>Day : 10/11/15]]></description><Point><coordinates>-4.509091950271965,48.321802120688574,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.509091950271965,48.321802120688574,10
+-4.485805060059697,48.322310579080536,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP5<br>Lat : 48,3223<br>Lon : -4,4858<br>Time : 10:08:00<br>Day : 10/11/15]]></description><Point><coordinates>-4.485805060059697,48.322310579080536,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.485805060059697,48.322310579080536,10
+-4.470032457817531,48.33199820886436,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP6<br>Lat : 48,3320<br>Lon : -4,4700<br>Time : 10:08:00<br>Day : 10/11/15]]></description><Point><coordinates>-4.470032457817531,48.33199820886436,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.470032457817531,48.33199820886436,10
+-4.49107609877481,48.34284922685316,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP7<br>Lat : 48,3428<br>Lon : -4,4911<br>Time : 10:08:00<br>Day : 10/11/15]]></description><Point><coordinates>-4.49107609877481,
+48.34284922685316,10</coordinates></Point></Placemark>
  </Document></kml>
