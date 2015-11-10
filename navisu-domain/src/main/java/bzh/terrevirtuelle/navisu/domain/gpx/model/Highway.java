@@ -41,19 +41,19 @@ import org.w3c.dom.Element;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "boundaries", propOrder = {
+@XmlType(name = "highway", propOrder = {
     "bounds"
 })
-public class Boundaries {
+public class Highway {
 
     @XmlElement
-    protected List<Point> bounds= new ArrayList<>();
+    protected List<Point> bounds;
 
-    public Boundaries() {
+    public Highway() {
         bounds = new ArrayList<>();
     }
 
-    public Boundaries(List<Point> bounds) {
+    public Highway(List<Point> bounds) {
         this.bounds = bounds;
     }
 
@@ -90,7 +90,9 @@ public class Boundaries {
 
     @Override
     public String toString() {
-        return "Boundaries{" + "bounds=" + bounds + '}';
+        return "Highway{" + "bounds=" + bounds + '}';
     }
+
+   
 
 }

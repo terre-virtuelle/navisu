@@ -55,29 +55,45 @@ import javax.xml.bind.annotation.XmlType;
     "rte",
     "trk",
     "extensions",
-    "boundaries"
+    "boundaries",
+    "highway"
 })
 @XmlRootElement
 public class Gpx
         implements NavigationData {
 
-    protected List<Waypoint> wpt = new ArrayList<>();
-    protected List<Route> rte = new ArrayList<>();
-    protected List<Track> trk = new ArrayList<>();
+    protected List<Waypoint> wpt;
+    protected List<Route> rte;
+    protected List<Track> trk;
     protected Extensions extensions;
-    protected Boundaries boundaries = new Boundaries();
+    protected Boundaries boundaries;
+    protected Highway highway;
     @XmlAttribute(name = "version", required = true)
     protected String version;
     @XmlAttribute(name = "creator", required = true)
     protected String creator;
 
     public Gpx() {
-
+        wpt = new ArrayList<>();
+        rte = new ArrayList<>();
+        trk = new ArrayList<>();
+        boundaries = new Boundaries();
+        highway = new Highway();
     }
 
-    public Gpx( List<Waypoint> wpt, List<Route> rte, List<Track> trk,
+    public Gpx(List<Waypoint> wpt, List<Route> rte, List<Track> trk, Extensions extensions, Boundaries boundaries, Highway highway, String version, String creator) {
+        this.wpt = wpt;
+        this.rte = rte;
+        this.trk = trk;
+        this.extensions = extensions;
+        this.boundaries = boundaries;
+        this.highway = highway;
+        this.version = version;
+        this.creator = creator;
+    }
+
+    public Gpx(List<Waypoint> wpt, List<Route> rte, List<Track> trk,
             Extensions extensions, String version, String creator) {
-      //  this.metadata = metadata;
         this.wpt = wpt;
         this.rte = rte;
         this.trk = trk;
@@ -86,8 +102,8 @@ public class Gpx
         this.creator = creator;
     }
 
-    public Gpx( List<Waypoint> wpt, List<Route> rte, List<Track> trk, Extensions extensions, Boundaries boundaries, String version, String creator) {
-      //  this.metadata = metadata;
+    public Gpx(List<Waypoint> wpt, List<Route> rte, List<Track> trk, Extensions extensions, Boundaries boundaries, String version, String creator) {
+        //  this.metadata = metadata;
         this.wpt = wpt;
         this.rte = rte;
         this.trk = trk;
@@ -97,7 +113,6 @@ public class Gpx
         this.creator = creator;
     }
 
-    
     /**
      * Gets the value of the wpt property.
      *
@@ -148,10 +163,11 @@ public class Gpx
      * Objects of the following type(s) are allowed in the list {@link Route }
      *
      *
+     * @return 
      */
     public List<Route> getRte() {
         if (rte == null) {
-            rte = new ArrayList<Route>();
+            rte = new ArrayList<>();
         }
         return this.rte;
     }
@@ -212,7 +228,7 @@ public class Gpx
      */
     public String getVersion() {
         if (version == null) {
-            return "1.1";
+            return "1.0";
         } else {
             return version;
         }
@@ -257,8 +273,18 @@ public class Gpx
 
     }
 
+    public Highway getHighway() {
+        return highway;
+    }
+
+    public void setHighway(Highway highway) {
+        this.highway = highway;
+    }
+
     @Override
     public String toString() {
-        return "Gpx{" + ", wpt=" + wpt + ", rte=" + rte + ", trk=" + trk + ", extensions=" + extensions + ", boundaries=" + boundaries + ", version=" + version + ", creator=" + creator + '}';
+        return "Gpx{" + "wpt=" + wpt + ", rte=" + rte + ", trk=" + trk + ", extensions=" + extensions + ", boundaries=" + boundaries + ", highway=" + highway + ", version=" + version + ", creator=" + creator + '}';
     }
+
+    
 }
