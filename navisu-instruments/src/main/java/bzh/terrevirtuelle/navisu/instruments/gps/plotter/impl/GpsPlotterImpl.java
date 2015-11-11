@@ -58,7 +58,7 @@ public class GpsPlotterImpl
     private final String NAME1 = "GpsPlotter";
     private final String NAME2 = "AisSurvey";
     private final String NAME3 = "GpsPlotterWithRoute";
-    protected final String GROUP = "Devices";
+    protected final String GROUP = "Navigation";
     private GpsPlotterController gpsPlotterController;
     private GpsEventsController gpsEventsController;
     private boolean withRoute = false;

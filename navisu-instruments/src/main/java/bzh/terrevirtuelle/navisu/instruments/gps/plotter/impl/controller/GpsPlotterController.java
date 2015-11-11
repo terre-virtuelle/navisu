@@ -17,7 +17,6 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
-import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
@@ -30,6 +29,7 @@ import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.File;
@@ -45,10 +45,7 @@ import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.FileChooser;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 /**
@@ -102,26 +99,40 @@ public class GpsPlotterController {
         this.group = group;
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
-        List<String> groups = layerTreeServices.getGroupNames();
-        if (!groups.contains(group)) {
-            layerTreeServices.createGroup(group);
-            geoViewServices.getLayerManager().createGroup(group);
-        }
-        this.gpsLayer = new RenderableLayer();
-        gpsLayer.setName(name1);
-        geoViewServices.getLayerManager().insertGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(gpsLayer));
-        layerTreeServices.addGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(gpsLayer));
-        this.aisSurveyZoneLayer = new RenderableLayer();
-        aisSurveyZoneLayer.setName(name2);
-        geoViewServices.getLayerManager().insertGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(aisSurveyZoneLayer));
-        layerTreeServices.addGeoLayer(group, GeoLayer.factory.newWorldWindGeoLayer(aisSurveyZoneLayer));
 
+        gpsLayer = initLayer(layerTreeServices, geoViewServices, group, name1);
+        aisSurveyZoneLayer = initLayer(layerTreeServices, geoViewServices, group, name2);
         addPanelController();
         addListeners();
         createOwnerShip();
         if (withRoute == true) {
             activateS57Controllers();
         }
+    }
+
+    private RenderableLayer initLayer(LayerTreeServices layerTreeServices,
+            GeoViewServices geoViewServices, String groupName, String layerName) {
+        List<String> groups = layerTreeServices.getGroupNames();
+        if (!groups.contains(groupName)) {
+            layerTreeServices.createGroup(groupName);
+            geoViewServices.getLayerManager().createGroup(groupName);
+        }
+        boolean layerExist = false;
+        RenderableLayer layer = null;
+        List<GeoLayer<Layer>> layers = geoViewServices.getLayerManager().getGroup(groupName);
+        for (GeoLayer<Layer> g : layers) {
+            if (g.getName().contains(layerName)) {
+                layer = (RenderableLayer) g.getDisplayLayer();
+                layerExist = true;
+            }
+        }
+        if (!layerExist) {
+            layer = new RenderableLayer();
+            layer.setName(layerName);
+            geoViewServices.getLayerManager().insertGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
+            layerTreeServices.addGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
+        }
+        return layer;
     }
 
     private void addPanelController() {
@@ -240,7 +251,7 @@ public class GpsPlotterController {
                 Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         if (inputFile != null) {
             navigationDataSet = new NavigationDataSet();
             try {

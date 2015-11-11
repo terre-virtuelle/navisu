@@ -39,7 +39,7 @@ public class AisPlotterImpl
     AisServices aisServices;
 
     protected final String NAME = "AisPlotter";
-    protected final String GROUP = "Devices";
+    protected final String GROUP = "Navigation";
     protected Map<Integer, Ship> ships;
     protected Map<Integer, BaseStation> stations;
     protected boolean on = false;
