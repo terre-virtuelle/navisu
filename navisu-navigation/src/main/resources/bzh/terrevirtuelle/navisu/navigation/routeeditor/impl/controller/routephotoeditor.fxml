@@ -155,7 +155,7 @@
                         <TextField fx:id="forwardVectorZTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                         <TextField fx:id="forwardVectorTTF" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                         <TextField fx:id="horizonDistanceTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <TextField fx:id="nearClipDistanceTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <TextField fx:id="nearClipDistanceTF" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <TextField fx:id="pitchTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                         <TextField fx:id="rollTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                         <TextField fx:id="upVectorXTF" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="9" />

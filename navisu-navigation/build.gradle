@@ -9,6 +9,4 @@ dependencies {
     compile project(':navisu-photos')
     compile fileTree(dir: 'lib', include: '*.jar') 
 }
-jar {
-   destinationDir project.file('../dest')
-}
+

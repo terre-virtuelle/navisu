@@ -7,6 +7,8 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditor;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditorServices;
@@ -33,11 +35,17 @@ public class RoutePhotoEditorImpl
     @UsedService
     S57ChartServices s57ChartServices;
     @UsedService
+    GeoViewServices geoViewServices;
+    @UsedService
+    private LayerTreeServices layerTreeServices;
+    @UsedService
     ExifComponentServices exifComponentServices;
     @UsedService
     RoutePhotoViewerServices routePhotoViewerServices;
-    
-    private final String KEY_NAME = "RoutePhotoEditor";
+
+    private final String COMPONENT_KEY_NAME = "RoutePhotoEditor";
+    private final String LAYER_NAME = "Highway";
+    private final String GROUP_NAME = "Navigation";
     private RoutePhotoEditorController routePhotoEditorController;
 
     @Override
@@ -46,7 +54,11 @@ public class RoutePhotoEditorImpl
 
     @Override
     public void on(String... files) {
-        routePhotoEditorController = new RoutePhotoEditorController(this, KeyCode.M, KeyCombination.CONTROL_DOWN);
+        routePhotoEditorController = new RoutePhotoEditorController(this,
+                geoViewServices, layerTreeServices, guiAgentServices,
+                s57ChartServices, routePhotoViewerServices, exifComponentServices,
+                GROUP_NAME, LAYER_NAME,
+                KeyCode.M, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routePhotoEditorController);
         guiAgentServices.getRoot().getChildren().add(routePhotoEditorController);
         routePhotoEditorController.setVisible(true);
@@ -54,7 +66,7 @@ public class RoutePhotoEditorImpl
 
     @Override
     public boolean canOpen(String category) {
-        return category.equals(KEY_NAME);
+        return category.equals(COMPONENT_KEY_NAME);
     }
 
     @Override

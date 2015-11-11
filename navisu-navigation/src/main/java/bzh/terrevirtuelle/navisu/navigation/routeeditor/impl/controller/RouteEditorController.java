@@ -206,7 +206,29 @@ public class RouteEditorController
          profile.setShowProfileLine(false);
          */
         load(FXML);
+        initPanel();
         setTranslateX(225.0);
+    }
+
+    final void load(String fxml) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+        view.setOpacity(0.8);
+        opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            Platform.runLater(() -> {
+                view.setOpacity(opacitySlider.getValue());
+            });
+        });
+    }
+
+    private void initPanel() {
         speed = Float.parseFloat(speedText.getText());
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
@@ -334,24 +356,6 @@ public class RouteEditorController
                     }
                 }
             }
-        });
-    }
-
-    final void load(String fxml) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-        view.setOpacity(0.8);
-        opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-            Platform.runLater(() -> {
-                view.setOpacity(opacitySlider.getValue());
-            });
         });
     }
 
@@ -538,7 +542,7 @@ public class RouteEditorController
         }
     }
 
-    public final void showBuffer() {
+    public  void showBuffer() {
         if (offset != null) {
             ShapeAttributes offsetNormalAttributes = new BasicShapeAttributes();
             offsetNormalAttributes.setInteriorMaterial(Material.WHITE);
@@ -696,7 +700,7 @@ public class RouteEditorController
         }
     }
 
-    private static String getChecksum(String in) {
+    private String getChecksum(String in) {
         int checksum = 0;
         if (in.startsWith("$")) {
             in = in.substring(1, in.length());

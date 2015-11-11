@@ -7,12 +7,9 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewer;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewerServices;
-import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RoutePhotoEditorController;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RoutePhotoViewerController;
-import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -64,7 +61,6 @@ public class RoutePhotoViewerImpl
 
     @Override
     public void off() {
-
         guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, routePhotoViewerController);
         guiAgentServices.getRoot().getChildren().remove(routePhotoViewerController);
         routePhotoViewerController.setVisible(false);

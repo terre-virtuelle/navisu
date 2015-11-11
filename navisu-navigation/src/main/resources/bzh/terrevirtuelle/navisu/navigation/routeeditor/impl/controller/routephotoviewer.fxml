@@ -13,34 +13,44 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<fx:root fx:id="view" mouseTransparent="true" stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="452.0" styleClass="routeeditor-panel">
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="1024.0" styleClass="routeeditor-panel">
             <children>
-                <Group styleClass="routeeditor-panel">
-                    <children>
-                        <SplitPane dividerPositions="0.9608610567514677" prefHeight="683.0" prefWidth="1024.0">
-                            <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" >
-                                    <children>
-                                        <ImageView fx:id="imageView" fitHeight="683.0" fitWidth="978.0" layoutX="-2.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true" />
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                    <children>
-                                        <Slider fx:id="opacitySlider" layoutX="20.0" layoutY="105.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
-                                        </Slider> 
-                                        <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="20.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
-                                            <image>
-                                                <Image url="@quit.png" />
-                                            </image>
-                                        </ImageView>  
-                                    </children>
-                                </AnchorPane>
-                            </items>
-                        </SplitPane>
-                    </children>
-                </Group>
+            <StackPane prefHeight="683.0" prefWidth="1024.0">
+               <children>
+                  <GridPane prefHeight="683.0" prefWidth="1004.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="998.0" minWidth="10.0" prefWidth="983.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ImageView fx:id="imageView" fitHeight="666.0" fitWidth="1004.0" pickOnBounds="true" preserveRatio="true" />
+                        <GridPane prefHeight="683.0" prefWidth="5.0" GridPane.columnIndex="1">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="631.0" minHeight="10.0" prefHeight="631.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                                    <Slider fx:id="opacitySlider" max="1.0" maxHeight="200.0" maxWidth="5.0" min="0.4" minHeight="50.0" orientation="VERTICAL" prefHeight="50.0" prefWidth="5.0" value="0.6" GridPane.rowIndex="1">
+                        </Slider>
+                                    <ImageView fx:id="quit" fitHeight="21.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="40.0">
+                                        <image>
+                                            <Image url="@quit.png" />
+                                        </image>
+                                    </ImageView>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </StackPane>
             </children>
         </Pane>
     </children>

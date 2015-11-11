@@ -50,8 +50,6 @@ public class RoutePhotoViewerController
         this.instrument = instrument;
         this.guiAgentServices = instrument.getGuiAgentServices();
         load(FXML);
-        // setTranslateX(225.0);
-
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
