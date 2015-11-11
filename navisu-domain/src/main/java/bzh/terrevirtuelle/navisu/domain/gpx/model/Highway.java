@@ -8,6 +8,7 @@
 
 package bzh.terrevirtuelle.navisu.domain.gpx.model;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -44,7 +45,7 @@ import org.w3c.dom.Element;
 @XmlType(name = "highway", propOrder = {
     "bounds"
 })
-public class Highway {
+public class Highway implements NavigationData{
 
     @XmlElement
     protected List<Point> bounds;

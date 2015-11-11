@@ -112,6 +112,16 @@ public class NavigationDataSet {
         return tmp;
     }
 
+    public <T extends NavigationData> List<T> get(Class<T> t) {
+        List<T> tmp = new ArrayList<>();
+        navigationDataSet.stream().forEach((data) -> {
+            if (data.getClass() == t) {
+                tmp.add((T) data);
+            }
+        });
+        return tmp;
+    }
+
     public void display() {
 
         navigationDataSet.stream().forEach((data) -> {
@@ -126,4 +136,11 @@ public class NavigationDataSet {
         return "NavigationDataSet{" + "navigationDataSet=" + navigationDataSet + '}';
     }
 
+    public void print() {
+        navigationDataSet.stream().forEach((data) -> {
+            if (data != null) {
+                System.out.println(data.getClass().getName());
+            }
+        });
+    }
 }
