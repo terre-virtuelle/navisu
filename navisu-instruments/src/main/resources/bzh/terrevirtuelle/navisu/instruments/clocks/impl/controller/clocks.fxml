@@ -11,10 +11,10 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="view" stylesheets="@clocks.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="view" stylesheets="@clocks.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewpane" prefHeight="250.0" prefWidth="190.0" styleClass="background-pane" />
-        <Rectangle arcHeight="30.0" arcWidth="30.0" height="250.0" strokeType="INSIDE" styleClass="clockcadres" width="190.0">
+        <Rectangle arcHeight="30.0" arcWidth="30.0" height="250.0" strokeType="INSIDE" styleClass="instrumentcontour" width="190.0">
             <stroke>
                 <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
                     <stops>
@@ -36,7 +36,7 @@
                 <Text fx:id="title1" layoutX="20.0" layoutY="190.0" styleClass="instrumentvalue" text="onboard time" wrappingWidth="120.0" />
                 <Text fx:id="onboarddaydate" layoutX="20.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="datevalue" text="00/00/00 - board" wrappingWidth="120.0" />
                 <Text fx:id="onboardhours" layoutX="20.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="clockvalue" text="00:00:00 - board" wrappingWidth="120.0" />
-                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="9.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
+                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="9.0" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0">
                     <stroke>
                         <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
                             <stops>
@@ -46,7 +46,7 @@
                         </RadialGradient>
                     </stroke>
                 </Rectangle>
-                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="88.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
+                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="88.0" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0">
                     <stroke>
                         <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
                             <stops>
@@ -56,7 +56,7 @@
                         </RadialGradient>
                     </stroke>
                 </Rectangle>
-                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="166.0" strokeType="INSIDE" styleClass="clockcadres" width="150.0">
+                <Rectangle arcHeight="30.0" arcWidth="30.0" height="75.0" layoutX="10.0" layoutY="166.0" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0">
                     <stroke>
                         <RadialGradient centerX="0.9333333333333333" centerY="0.8333333333333333" focusAngle="12.53" focusDistance="-0.7674418604651163" radius="1.0">
                             <stops>

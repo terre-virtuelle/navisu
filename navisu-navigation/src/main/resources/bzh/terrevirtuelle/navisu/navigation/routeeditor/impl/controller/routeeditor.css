@@ -1,19 +1,114 @@
-
-/* CSS Document */
 @font-face {
-    src: url('fonts/Roboto-Regular.ttf');
+    -fx-font-family: 'Roboto Cn';
+    src: url('fonts/Roboto-Condensed.ttf');
 }
 
 *{
     -fx-base : #143b28;
-    -fx-toggle-color: #254b88;
-    -fx-base-trans10 : #143b2810;
-    -fx-base-trans20 : #143b2820;
-    -fx-base-trans95 : #143b2895;
+    -fx-color : #143b28;
+    -fx-no-border: #143b28;
     -fx-line-base : #04fff2;
-    //-fx-font-family: "Roboto" ;
+    -fx-font-family: "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
-    -fx-color-contours: #70bbbf;
+    -fx-color-backround-value: #143b2800;
+    -fx-button-background-color: linear-gradient(to bottom,
+        ladder(
+        -fx-color,
+        derive(-fx-color,8%) 75%,
+        derive(-fx-color,10%) 80%
+        ),
+        derive(-fx-color,-8%));
+    -fx-body-color: linear-gradient(to bottom,
+        ladder(
+        -fx-color,
+        derive(-fx-color,8%) 75%,
+        derive(-fx-color,10%) 80%
+        ),
+        derive(-fx-color,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-color,10%) ,derive(-fx-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-color,10%) ,derive(-fx-color,-6%)); 
+    -fx-outer-border: -fx-no-border ;
+    -fx-inner-border: -fx-no-border ;
+}
+.instrumenttitle{
+    -fx-font: 24px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+
+}
+.infotittle{
+    -fx-font: 20px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+
+}
+.instrumentvalue{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill: -fx-color-typo;
+    /*-fx-font-weight: bold; */
+}
+.instrumentcadres{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
+    -fx-fill:-fx-color-backround-value;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
+}
+.instrumentcontour{
+ -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
+}
+.imageviewcontour{
+ -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 0.01em;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 0;	 
+    -fx-arc-width: 0;
+}
+.quitbutton
+{
+    -fx-background-image: url(quit.png) ;
+    -fx-background-repeat:no-repeat;
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 10;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
+/*******************************************************************************
+ *                                                                             *
+ * cadre                                                                *
+ *                                                                             *
+ ******************************************************************************/
+.foot-pane {
+    -fx-border-radius: 0 0 20 20;
+    -fx-background-radius: 0 0 20 20;
+    -fx-background-color: -fx-base;
+}
+.top-pane {
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: -fx-base;    
+}
+.left-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+.right-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+.center-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+.background-pane{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: -fx-base;
 }
 /*******************************************************************************
  *                                                                             *
@@ -47,53 +142,26 @@
     -fx-font: 18px "Roboto Bk";
     -fx-fill : #fff900;
 }
-/*******************************************************************************
- *                                                                             *
- * cadre                                                                *
- *                                                                             *
- ******************************************************************************/
-.ais-panel{
-    -fx-border-radius: 20 20 20 20;
-    -fx-background-radius: 20 20 20 20;
-    -fx-background-color: -fx-base;
-    -fx-stroke: -fx-line-base;
-}
-.foot-pane {
-    -fx-border-radius: 0 0 20 20;
-    -fx-background-radius: 0 0 20 20;
-    -fx-background-color: -fx-base;
-}
-.top-pane {
-    -fx-border-radius: 20 20 0 0;
-    -fx-background-radius: 20 20 0 0;
-    -fx-background-color: -fx-base;    
-}
-.left-pane {
-    -fx-border-radius: 0 0 0 0;
-    -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
-}
-.right-pane {
-    -fx-border-radius: 0 0 0 0;
-    -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
-}
-.center-pane {
-    -fx-border-radius: 0 0 0 0;
-    -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
-}
+
 /*******************************************************************************
  *                                                                             *
  * Measure tools                                                               *
  *                                                                             *
  ******************************************************************************/
+.clockcadres, .routeeditor-panel, .routeeditor-info-pane{
+    -fx-stroke: -fx-line-base;
+    -fx-background-radius: 20 20 20 20;
+    -fx-stroke-width: 2;
+    -fx-fill:-fx-color-backround-value; 
+}
+/*
 .routeeditor-panel{
     -fx-border-radius: 20 20 20 20;
     -fx-background-radius: 20 20 20 20;
     -fx-background-color: -fx-base;
     -fx-stroke: -fx-line-base;
 }
+*/
 .routeeditor-circle, .routeeditor-line{
     -fx-stroke: -fx-line-base;
     -fx-fill: -fx-base-trans10;  
@@ -119,12 +187,14 @@
     -fx-arc-width:30;
     -fx-fill: #143b28;    
 }
+/*
 .routeeditor-info-pane {
     -fx-stroke: -fx-line-base;
     -fx-arc-height:20;
     -fx-arc-width:20;
     -fx-fill: -fx-base-trans20;
 }
+*/
 .routeeditor-buttonlabel{
     -fx-font: 14px "Roboto";
     -fx-fill : whitesmoke;

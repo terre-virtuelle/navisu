@@ -28,21 +28,17 @@
 }
 .instrumentcadres{
     -fx-stroke:-fx-color-contours;
-    -fx-stroke-width: 2;
+    -fx-stroke-width: 1;
+    -fx-fill:-fx-color-backround-value;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
+}
+.instrumentcontour{
+    -fx-stroke:-fx-color-contours;
+    -fx-stroke-width: 0.05em;
     -fx-fill : -fx-color-backround-value;
-}
-.aisvalue{
-    -fx-font: 14px "Roboto Cn";
-    -fx-fill : #fff900;
-}
-.aislabel{
-    -fx-font: 14px "Roboto Cn";
-    -fx-fill : -fx-line-base;
-}
-.aisname{
-    -fx-font: 18px "Roboto Cn";
-    -fx-fill : #fff900;
-    -fx-underline : true;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
 }
 .quitbutton
 {
@@ -55,7 +51,7 @@
 }
 /*******************************************************************************
  *                                                                             *
- * cadre                                                                *
+ *         background instruments                                              *
  *                                                                             *
  ******************************************************************************/
 .foot-pane {
@@ -144,8 +140,12 @@
  *                                                                             *
  ******************************************************************************/
 .grid-pane {
-    -fx-background-color: #143b28;  
+   -fx-background-color: transparent;  
 }
+.grid-instruments {
+   -fx-background-color: -fx-base; 
+}
+
 
 
 /*******************************************************************************

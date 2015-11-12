@@ -7,12 +7,44 @@
 *{
     -fx-base : #143b28;
     -fx-toggle-color: #254b88;
+    -fx-color : #143b28;
+    -fx-no-border: #143b28;
+    -fx-line-base : #04fff2;
+    -fx-color-contours:  #04fff2;
+    -fx-color-backround-value: #143b2800;
     -fx-base-trans10 : #143b2810;
     -fx-base-trans20 : #143b2820;
-    -fx-line-base : #04fff2;
     -fx-font-family: "Roboto Cn" ;
     -fx-color-typo: #c2f8c4;
-    -fx-color-contours: #70bbbf;
+}
+.instrumenttitle{
+    -fx-font: 24px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+
+}
+.infotittle{
+    -fx-font: 16px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+
+}
+.instrumentvalue{
+    -fx-font: 20px "Roboto Cn";
+    -fx-fill: -fx-color-typo;
+    -fx-font-weight: bold; 
+}
+.instrumentcadres{
+    -fx-stroke:-fx-color-contours;
+    -fx-stroke-width: 2;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
+}
+.instrumentcontour{
+    -fx-stroke:-fx-color-contours;
+    -fx-stroke-width: 1;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
 }
 .quitbutton
 {
@@ -48,7 +80,7 @@
 }
 /*******************************************************************************
  *                                                                             *
- * cadre                                                                *
+ *         background instruments                                              *
  *                                                                             *
  ******************************************************************************/
 .ais-panel{
@@ -82,6 +114,12 @@
     -fx-background-radius: 0 0 0 0;
     -fx-background-color: -fx-base;    
 }
+.background-pane{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: -fx-base;
+}
+
 /*******************************************************************************
  *                                                                             *
  * radar circles and lines                                                     *

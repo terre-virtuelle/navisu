@@ -77,6 +77,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
@@ -137,9 +138,9 @@ public class RouteEditorController
     private final S57ChartServices s57ChartServices;
     private GuiAgentServices guiAgentServices;
     @FXML
-    public Group view;
+    public Pane view;
     @FXML
-    public ImageView quit;
+    public Button quit;
     @FXML
     public Slider opacitySlider;
     @FXML
