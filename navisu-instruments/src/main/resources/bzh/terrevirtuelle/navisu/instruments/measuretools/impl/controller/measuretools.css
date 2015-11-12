@@ -1,19 +1,48 @@
-
 /* CSS Document */
 @font-face {
-    src: url('fonts/Roboto-Regular.ttf');
+    src: url('fonts/Roboto-Condensed.ttf');
 }
 
 *{
     -fx-base : #143b28;
+    -fx-line-base : #04fff2;
+    -fx-font-family: "Roboto Cn" ;
+    -fx-color-typo: #c2f8c4;
+    -fx-color-contours: #70bbbf;
+    -fx-color-backround-value: #143b2800;
     -fx-toggle-color: #254b88;
     -fx-base-trans10 : #143b2810;
     -fx-base-trans20 : #143b2820;
     -fx-base-trans95 : #143b2895;
-    -fx-line-base : #04fff2;
-    //-fx-font-family: "Roboto" ;
-    -fx-color-typo: #c2f8c4;
-    -fx-color-contours: #70bbbf;
+}
+.instrumenttitle{
+    -fx-font: 24px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+ 
+}
+.infotittle{
+    -fx-font: 16px "Roboto Cn";
+    -fx-fill : -fx-color-typo;
+     
+}
+.instrumentvalue{
+    -fx-font: 20px "Roboto Cn";
+    -fx-fill: -fx-color-typo;
+    -fx-font-weight: bold; 
+}
+.instrumentcadres{
+    -fx-stroke:-fx-color-contours;
+    -fx-stroke-width: 1;
+    -fx-fill:-fx-color-backround-value;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
+}
+.instrumentcontour{
+    -fx-stroke:-fx-color-contours;
+    -fx-stroke-width: 0.05em;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
 }
 .quitbutton
 {
@@ -30,68 +59,72 @@
  *                                                                             *
  ******************************************************************************/
 .metriclabel{
-    -fx-font: 12px "Roboto Bk";
+    -fx-font: 12px "Roboto Cn";
     -fx-fill : -fx-line-base;
 }
 .measuretoolvalue{
-    -fx-font: 12px "Roboto Bk";
+    -fx-font: 12px "Roboto Cn";
     -fx-fill : #fff900;
 }
 .measuretoollabel{
-    -fx-font: 12px "Roboto Bk";
-    //-fx-fill : -fx-line-base;
+    -fx-font: 12px "Roboto Cn";
     -fx-fill : whitesmoke;
 }
 .measuretoolcombolabel{
-    -fx-font: 10px "Roboto Bk";
-    //-fx-fill : -fx-line-base;
+    -fx-font: 10px "Roboto Cn";
     -fx-fill : whitesmoke;
 }
 .measuretoolname{
-    -fx-font: 18px "Roboto Bk";
+    -fx-font: 18px "Roboto Cn";
     -fx-fill : #fff900;
     -fx-underline : true;
 }
 .info-text{
-    -fx-font: 18px "Roboto Bk";
+    -fx-font: 18px "Roboto Cn";
     -fx-fill : #fff900;
 }
 /*******************************************************************************
  *                                                                             *
- * cadre                                                                *
+ *         background instruments                                              *
  *                                                                             *
  ******************************************************************************/
+.foot-pane {
+    -fx-border-radius: 0 0 20 20;
+    -fx-background-radius: 0 0 20 20;
+    -fx-background-color: #143b28;
+}
+.top-pane {
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: #143b28;    
+}
+.left-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.right-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.center-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.background-pane{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: -fx-base;
+}
 .ais-panel{
     -fx-border-radius: 20 20 20 20;
     -fx-background-radius: 20 20 20 20;
     -fx-background-color: -fx-base;
     -fx-stroke: -fx-line-base;
 }
-.foot-pane {
-    -fx-border-radius: 0 0 20 20;
-    -fx-background-radius: 0 0 20 20;
-    -fx-background-color: -fx-base;
-}
-.top-pane {
-    -fx-border-radius: 20 20 0 0;
-    -fx-background-radius: 20 20 0 0;
-    -fx-background-color: -fx-base;    
-}
-.left-pane {
-    -fx-border-radius: 0 0 0 0;
-    -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
-}
-.right-pane {
-    -fx-border-radius: 0 0 0 0;
-    -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
-}
-.center-pane {
-    -fx-border-radius: 0 0 0 0;
-    -fx-background-radius: 0 0 0 0;
-    -fx-background-color: -fx-base;    
-}
+
 /*******************************************************************************
  *                                                                             *
  * Measure tools                                                               *
@@ -143,13 +176,7 @@
     -fx-fill : whitesmoke;
 }
 .measuretool-togglebutton{
-    -fx-background-color: linear-gradient(to bottom,
-        ladder(
-        -fx-toggle-color,
-        derive(-fx-toggle-color,8%) 75%,
-        derive(-fx-toggle-color,10%) 80%
-        ),
-        derive(-fx-toggle-color,-8%));
+    -fx-background-color: linear-gradient(to bottom, ladder(-fx-toggle-color,derive(-fx-toggle-color,8%) 75%,derive(-fx-toggle-color,10%) 80%),derive(-fx-toggle-color,-8%));
     -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
     -fx-body-color-to-right: linear-gradient(to right, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;

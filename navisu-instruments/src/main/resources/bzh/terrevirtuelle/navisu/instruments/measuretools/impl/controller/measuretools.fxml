@@ -13,9 +13,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<fx:root stylesheets="@measuretools.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@measuretools.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="455.0" styleClass="measuretool-panel" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="310.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="455.0" />
         <Group layoutY="10.0" styleClass="measuretool-panel">
             <children>
                 <Button fx:id="newButton" layoutX="38.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" text="NEW">
@@ -39,7 +40,7 @@
                 <Rectangle arcHeight="5.0" arcWidth="5.0" height="210.0" layoutX="15.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
                 <Button fx:id="quit" alignment="CENTER" layoutX="400.0" layoutY="-14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
-                <Slider fx:id="opacitySlider" layoutX="426.0" layoutY="105.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                <Slider fx:id="opacitySlider" layoutX="426.0" layoutY="105.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
                 <Group layoutX="-710.0" layoutY="35.0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="131.0" layoutX="217.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />

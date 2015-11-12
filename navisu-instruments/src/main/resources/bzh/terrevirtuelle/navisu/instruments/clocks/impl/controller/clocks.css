@@ -48,8 +48,17 @@
 }
 .instrumentcadres{
     -fx-stroke:-fx-color-contours;
-    -fx-stroke-width: 2;
-    -fx-fill:-fx-color-backround-value; 
+    -fx-stroke-width: 1;
+    -fx-fill:-fx-color-backround-value;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
+}
+.instrumentcontour{
+    -fx-stroke:-fx-color-contours;
+    -fx-stroke-width: 0.05em;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
 }
 .quitbutton
 {
@@ -62,7 +71,7 @@
 }
 /*******************************************************************************
  *                                                                             *
- * cadre                                                                *
+ *         background instruments                                              *
  *                                                                             *
  ******************************************************************************/
 .foot-pane {
@@ -171,7 +180,7 @@
     -fx-content-display: CENTER;
 }
 .houradjustbutton:hover{
-   -fx-background-color: #bb000088;
+    -fx-background-color: #bb000088;
     -fx-background-radius: 15; 
 }
 .hourzonebutton{

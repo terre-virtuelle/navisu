@@ -13,45 +13,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<fx:root fx:id="view" stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="1024.0" styleClass="routeeditor-panel">
-            <children>
-            <StackPane prefHeight="683.0" prefWidth="1024.0">
-               <children>
-                  <GridPane prefHeight="683.0" prefWidth="1004.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="998.0" minWidth="10.0" prefWidth="983.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="506.0" minWidth="10.0" prefWidth="10.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <ImageView fx:id="imageView" fitHeight="666.0" fitWidth="1004.0" pickOnBounds="true" preserveRatio="true" />
-                        <GridPane prefHeight="683.0" prefWidth="5.0" GridPane.columnIndex="1">
-                          <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="631.0" minHeight="10.0" prefHeight="631.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                                    <Slider fx:id="opacitySlider" max="1.0" maxHeight="200.0" maxWidth="5.0" min="0.4" minHeight="50.0" orientation="VERTICAL" prefHeight="50.0" prefWidth="5.0" value="0.6" GridPane.rowIndex="1">
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="1024.0" styleClass="background-pane">
+         <children>
+            <ImageView fx:id="imageView" fitHeight="683.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" />
+         </children></Pane>
+      <Group>
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="683.0" stroke="BLACK" strokeType="INSIDE" styleClass="imageviewcontour" width="1024.0" />
+            <Button fx:id="quit" layoutX="970.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
+                  <Slider fx:id="opacitySlider" layoutX="1007.0" layoutY="150.0" max="1.0" maxHeight="200.0" maxWidth="5.0" minHeight="50.0" minWidth="-Infinity" orientation="VERTICAL" prefHeight="200.0" prefWidth="5.0" value="0.6">
                         </Slider>
-                                    <ImageView fx:id="quit" fitHeight="21.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="40.0">
-                                        <image>
-                                            <Image url="@quit.png" />
-                                        </image>
-                                    </ImageView>
-                           </children>
-                        </GridPane>
-                     </children>
-                  </GridPane>
-               </children>
-            </StackPane>
-            </children>
-        </Pane>
+         </children>
+      </Group>
     </children>
 </fx:root>

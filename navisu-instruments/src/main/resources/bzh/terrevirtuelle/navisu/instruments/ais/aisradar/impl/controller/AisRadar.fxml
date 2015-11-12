@@ -12,11 +12,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="radar" stylesheets="@aisradar.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="radar" stylesheets="@aisradar.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" styleClass="ais-panel" />
         <Group layoutX="100.0" layoutY="65.0">
             <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="1000.0" layoutX="-100.0" layoutY="-65.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="1160.0" />
                 <Pane opacity="0.0" prefHeight="860.0" prefWidth="1050.0" styleClass="ais-panel" />
                 <Group layoutX="-25.0">
                     <children>

@@ -58,6 +58,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -71,9 +72,9 @@ public class RoutePhotoEditorController
 
     private final String FXML = "routephotoeditor.fxml";
     @FXML
-    public Group view;
+    public Pane view;
     @FXML
-    public ImageView quit;
+    public Button quit;
     @FXML
     public Slider opacitySlider;
     @FXML

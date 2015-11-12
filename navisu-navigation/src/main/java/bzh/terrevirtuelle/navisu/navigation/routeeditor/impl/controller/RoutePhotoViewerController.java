@@ -14,6 +14,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +22,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 /**
  * NaVisu
@@ -36,9 +38,9 @@ public class RoutePhotoViewerController
     private final String FXML = "routephotoviewer.fxml";
 
     @FXML
-    public Group view;
+    public Pane view;
     @FXML
-    public ImageView quit;
+    public Button quit;
     @FXML
     public Slider opacitySlider;
     @FXML
