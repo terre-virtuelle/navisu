@@ -11,22 +11,18 @@
 
 <fx:root fx:id="trackPanel" stylesheets="@ais.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">  
     <children>
+          <Pane prefHeight="497.0" prefWidth="401.0" styleClass="background-pane">
+              <children>
+                  <TextArea fx:id="names" editable="false" layoutX="30.0" layoutY="151.0" prefHeight="80.0" prefWidth="335.0" styleClass="aislabel" />   
+                  <Slider fx:id="slider" layoutX="382.0" layoutY="60.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                        </Slider>
+                  <Text fx:id="timeStamp" fill="#c2f8c4" layoutX="247.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="00 h 00 m 00 s" wrappingWidth="101.0">
+                        </Text>
+            <Button layoutX="349.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
+              </children>
+          </Pane>
         <Group>
             <children>
-                <Pane prefHeight="497.0" prefWidth="401.0" styleClass="ais-panel">
-                    <children>
-                        <TextArea fx:id="names" editable="false" layoutX="30.0" layoutY="151.0" prefHeight="80.0" prefWidth="335.0" styleClass="aislabel" />   
-                        <Slider fx:id="slider" layoutX="379.0" layoutY="34.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
-                        </Slider>
-                        <ImageView fx:id="quit" fitHeight="20.0" fitWidth="25.0" layoutX="367.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" rotate="30.0">
-                            <image>
-                                <Image url="@quit.png" />
-                            </image>
-                        </ImageView>
-                        <Text fx:id="timeStamp" fill="#c2f8c4" layoutX="247.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="00 h 00 m 00 s" wrappingWidth="101.0">
-                        </Text>
-                    </children>
-                </Pane>
                 <Group layoutX="9.0">
                     <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">

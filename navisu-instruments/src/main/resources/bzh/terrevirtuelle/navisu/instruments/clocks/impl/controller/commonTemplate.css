@@ -55,8 +55,7 @@
 .menu-button:focused,
 .choice-box:focused,
 .color-picker.split-button:focused > .color-picker-label,
-.combo-box-base:focused,
-.slider:focused .thumb {
+.combo-box-base:focused {
     /*-fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;*/
     /*-fx-background-insets: -0.2, 0.5, 2, -1.4, 2.6;*/
     /*-fx-background-radius: 3, 2, 1, 4, 1;*/
@@ -73,6 +72,10 @@
     -fx-background-radius: 10;
     -fx-text-fill: -fx-color-typo;
     -fx-content-display: CENTER;
+}
+.quitbutton:focused {
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 20;
 }
 /*----------- typos communes ----------- */
 .instrumenttitle{

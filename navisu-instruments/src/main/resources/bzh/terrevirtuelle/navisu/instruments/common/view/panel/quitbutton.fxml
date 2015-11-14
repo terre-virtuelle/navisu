@@ -1,2 +1,0 @@
-<Button fx:id="quit" alignment="CENTER" layoutX="145.0" layoutY="-10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.4" scaleY="0.4" styleClass="quitbutton" textOverrun="CLIP">    
-</Button>

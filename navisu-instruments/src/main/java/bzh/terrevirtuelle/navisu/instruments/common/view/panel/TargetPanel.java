@@ -23,11 +23,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
@@ -77,9 +79,11 @@ public class TargetPanel
     @FXML
     public Text eta;
     @FXML
-    public ImageView quit;
+    public Button quit;
     @FXML
     public Slider slider;
+    @FXML
+    public Pane view;
     //  @FXML
     // public Button photo;
     NumberFormat nf = new DecimalFormat("0.###");
@@ -103,7 +107,7 @@ public class TargetPanel
         });
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                ais.setOpacity(slider.getValue());
+                view.setOpacity(slider.getValue());
             });
         });
         /*

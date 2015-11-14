@@ -14,7 +14,7 @@
 
 <fx:root fx:id="radar" stylesheets="@aisradar.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" styleClass="ais-panel" />
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1160.0" styleClass="background-pane" />
         <Group layoutX="100.0" layoutY="65.0">
             <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="1000.0" layoutX="-100.0" layoutY="-65.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="1160.0" />
@@ -1425,7 +1425,7 @@
         </Group>
         <Group>
             <children>
-                <Button fx:id="buttonsInfos" layoutX="950.0" layoutY="25.0" prefHeight="15.0" prefWidth="100.0" styleClass="radar-togglebutton" text="Buttons/Infos" />
+                <Button fx:id="buttonsInfos" layoutX="935.0" layoutY="25.0" prefHeight="30.0" prefWidth="130.0" text="Buttons/Infos" />
                 <ImageView fx:id="oldquit" fitHeight="22.0" fitWidth="43.0" layoutX="1091.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5" visible="false">
                     <image>
                         <Image url="@quit.png" />

@@ -16,11 +16,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -33,9 +35,11 @@ public class MenuPanel
     @FXML
     public Group menu;
     @FXML
+    public Button quit;
+    @FXML
     public Slider slider;
     @FXML
-    public ImageView quit;
+    public Pane view;
     protected GuiAgentServices guiAgentServices;
 
     public MenuPanel(GuiAgentServices guiAgentServices, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
@@ -54,7 +58,7 @@ public class MenuPanel
         });
         slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
-                menu.setOpacity(slider.getValue());
+                view.setOpacity(slider.getValue());
             });
         });
     }

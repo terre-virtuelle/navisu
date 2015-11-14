@@ -9,11 +9,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="ais" stylesheets="@ais.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">  
+<fx:root fx:id="ais" stylesheets="@ais.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">  
     <children>
+          <Pane fx:id="view" prefHeight="240.0" prefWidth="400.0" styleClass="background-pane" />
         <Group>
             <children>
-                <Pane prefHeight="240.0" prefWidth="400.0" styleClass="ais-panel" />
                 <Line endX="400.0" endY="105.0" layoutY="-3.0" startY="105.0" stroke="#04fff2" strokeWidth="0.5" />
                 <Line endX="400.0" endY="78.0" layoutY="80.0" startY="78.0" stroke="#04fff2" strokeWidth="0.5" />
                 <Group layoutX="9.0">
@@ -26,14 +26,9 @@
                                 <Glow />
                             </effect>
                         </ImageView>
-                        <ImageView fx:id="quit" fitHeight="20.0" fitWidth="25.0" layoutX="365.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
-                            <image>
-                                <Image url="@quit.png" />
-                            </image>
-                        </ImageView>
                        
                        
-                        <Slider fx:id="slider" layoutX="377.0" layoutY="37.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                        <Slider fx:id="slider" layoutX="375.0" layoutY="125.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                         </Slider>
                         <Text fx:id="shipname" fill="#c2f8c4" layoutX="44.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisshipname" text="name not yet available" textAlignment="CENTER" wrappingWidth="220.0">
                      
@@ -162,6 +157,7 @@
                                 <Font name="Roboto Regular" size="14.0" />
                             </font>
                         </Text>
+                  <Button fx:id="quit" layoutX="346.0" layoutY="-12.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.4" scaleY="0.4" styleClass="quitbutton" />
                     </children>
                 </Group>
                 <Text fx:id="eta" fill="#c2f8c4" layoutX="45.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisvalue" text="15-28-01 07:00" wrappingWidth="110.0">
