@@ -1,48 +1,79 @@
-/* CSS Document */
 @font-face {
+    -fx-font-family: 'Roboto Cn';
     src: url('fonts/Roboto-Condensed.ttf');
 }
 
 *{
-    -fx-base : #143b28;
-    -fx-line-base : #04fff2;
     -fx-font-family: "Roboto Cn" ;
-    -fx-color-typo: #c2f8c4;
-    -fx-color-contours: #70bbbf;
-    -fx-color-backround-value: #143b2800;
-    -fx-toggle-color: #254b88;
+    -fx-base : #143b28;
     -fx-base-trans10 : #143b2810;
     -fx-base-trans20 : #143b2820;
-    -fx-base-trans95 : #143b2895;
+    -fx-color : #143b28;
+    -fx-no-border: #143b28;
+    -fx-line-base : #04fff2;
+    -fx-focus-color: derive(-fx-color,80%); /* tonalité claire de la couleur de base*/
+    -fx-faint-focus-color: derive(-fx-color,80%);
+    -fx-color-typo: #c2f8c4;
+    -fx-color-backround-value: #143b2800; /* background transparent */
+    -fx-cell-hover-color:#cce3f4;
+    /*------- dégradé des boutons----------*/
+    -fx-color-button: derive(-fx-color,30%);
+    -fx-button-background-color: linear-gradient(to bottom,
+        ladder(
+        -fx-color-button,
+        derive(-fx-color-button,8%) 75%,
+        derive(-fx-color-button,10%) 80%
+        ),
+        derive(-fx-color-button,-8%));
+    /*------- dégradé principal des boutons----------*/
+    -fx-body-color: linear-gradient(to bottom,
+        ladder(
+        -fx-color-button,
+        derive(-fx-color-button,8%) 75%,
+        derive(-fx-color-button,10%) 80%
+        ),
+        derive(-fx-color-button,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-color,10%) ,derive(-fx-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-color,10%) ,derive(-fx-color,-6%)); 
+    -fx-outer-border: -fx-no-border ;
+    -fx-inner-border: -fx-no-border ;
+
 }
 .instrumenttitle{
     -fx-font: 24px "Roboto Cn";
     -fx-fill : -fx-color-typo;
- 
+
 }
 .infotittle{
-    -fx-font: 16px "Roboto Cn";
+    -fx-font: 20px "Roboto Cn";
     -fx-fill : -fx-color-typo;
-     
+
 }
 .instrumentvalue{
-    -fx-font: 20px "Roboto Cn";
+    -fx-font: 18px "Roboto Cn";
     -fx-fill: -fx-color-typo;
-    -fx-font-weight: bold; 
+    /*-fx-font-weight: bold; */
 }
 .instrumentcadres{
-    -fx-stroke:-fx-color-contours;
+    -fx-stroke: -fx-line-base;
     -fx-stroke-width: 1;
     -fx-fill:-fx-color-backround-value;
     -fx-arc-height:30;	 
     -fx-arc-width: 30;
 }
 .instrumentcontour{
-    -fx-stroke:-fx-color-contours;
-    -fx-stroke-width: 0.05em;
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
     -fx-fill : -fx-color-backround-value;
     -fx-arc-height: 40;	 
     -fx-arc-width: 40;
+}
+.imageviewcontour{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 0.01em;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 0;	 
+    -fx-arc-width: 0;
 }
 .quitbutton
 {
@@ -52,6 +83,57 @@
     -fx-background-radius: 10;
     -fx-text-fill: -fx-color-typo;
     -fx-content-display: CENTER;
+}
+.button:focused,
+.toggle-button:focused,
+.radio-button:focused > .radio,
+.check-box:focused > .box,
+.menu-button:focused,
+.choice-box:focused,
+.color-picker.split-button:focused > .color-picker-label,
+.combo-box-base:focused,
+.slider:focused .thumb {
+    /*-fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;*/
+    /*-fx-background-insets: -0.2, 0.5, 2, -1.4, 2.6;*/
+    /*-fx-background-radius: 3, 2, 1, 4, 1;*/
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: 0, 1, 2, 4, 4;
+    -fx-background-radius: 3, 2, 1, 4, 1;
+}
+/*******************************************************************************
+ *                                                                             *
+ * cadre                                                                *
+ *                                                                             *
+ ******************************************************************************/
+.foot-pane {
+    -fx-border-radius: 0 0 20 20;
+    -fx-background-radius: 0 0 20 20;
+    -fx-background-color: -fx-base;
+}
+.top-pane {
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: -fx-base;    
+}
+.left-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+.right-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+.center-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: -fx-base;    
+}
+.background-pane{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: -fx-base;
 }
 /*******************************************************************************
  *                                                                             *

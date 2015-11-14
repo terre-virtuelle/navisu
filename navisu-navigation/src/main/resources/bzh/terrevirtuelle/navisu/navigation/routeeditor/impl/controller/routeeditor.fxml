@@ -16,7 +16,7 @@
 <fx:root stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="450.0" styleClass="background-pane" />
-          <Group styleClass="routeeditor-panel">
+          <Group>
               <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="475.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
                   <GridPane layoutX="38.0" layoutY="45.0" prefHeight="62.0" prefWidth="368.0">
@@ -34,28 +34,28 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                       </rowConstraints>
                       <children>
-                  <Button fx:id="newButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" text="New">
+                  <Button fx:id="newButton" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0"  text="New">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="openButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Open" GridPane.columnIndex="1" />
-                  <Button fx:id="pauseButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Pause/Edit" GridPane.columnIndex="2">
+                  <Button fx:id="openButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0"  text="Open" GridPane.columnIndex="1" />
+                  <Button fx:id="pauseButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0"  text="Pause/Edit" GridPane.columnIndex="2">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="endButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="End" GridPane.columnIndex="3">
+                  <Button fx:id="endButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0"  text="End" GridPane.columnIndex="3">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="snapshotButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Snapshot" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Button fx:id="snapshotButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0"  text="Snapshot" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="dataButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Data" GridPane.rowIndex="2">
+                  <Button fx:id="dataButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0"  text="Data" GridPane.rowIndex="2">
                      <font>
                         <Font size="12.0" />
                      </font>
