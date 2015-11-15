@@ -13,6 +13,8 @@ import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.impl.WebDriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.impl.LayersManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
@@ -181,6 +183,7 @@ public class AppMain extends Application {
                         InstrumentTemplateImpl.class,
                         KapChartImpl.class,
                         KmlObjectImpl.class,
+                        LayersManagerImpl.class,
                         MagneticImpl.class,
                         MeasureToolsImpl.class,
                         NavigationServerImpl.class,
@@ -245,6 +248,8 @@ public class AppMain extends Application {
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
+        LayersManagerServices layersManagerServices = componentManager.getComponentService(LayersManagerServices.class);
+        
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         MeasureToolsServices measureToolsServices = componentManager.getComponentService(MeasureToolsServices.class);
 
