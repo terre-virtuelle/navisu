@@ -9,21 +9,33 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="textListPanel" stylesheets="@webview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@webview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
+      <Pane fx:id="view" prefHeight="350.0" prefWidth="450.0" styleClass="background-pane" />
         <Group>
             <children>
-                <Pane prefHeight="50.0" prefWidth="450.0" styleClass="top-pane">
-                    <children>
-                        <Text fx:id="title" layoutX="150.0" layoutY="31.0" styleClass="instrumentvalue" text="INSTRUMENT" textAlignment="CENTER" wrappingWidth="150.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
+                  <Text fx:id="title" layoutX="144.0" layoutY="46.0" styleClass="instrumenttitle" text="INSTRUMENT" textAlignment="CENTER" wrappingWidth="150.0">
                         </Text>
-                    </children>
-                </Pane>
-                <Pane layoutX="0" layoutY="50" prefHeight="250.0" prefWidth="50.0" styleClass="left-pane" />   
-                <Pane layoutY="300" prefHeight="40.0" prefWidth="450.0" styleClass="foot-pane" />
-                <Pane layoutX="60.0" layoutY="50.0" prefHeight="250.0" prefWidth="350.0" styleClass="scrolling-pane" />
-                <Group layoutX="10.0" />
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" visible="false">
+            <Group layoutX="52.0" layoutY="72.0">
+               <children>
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutY="186.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="335.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutY="90.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
+                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="185.0" layoutY="90.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
+                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="118.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
+                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="235.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
+                  <Text layoutX="24.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="valeur1">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Group>
+            <Button fx:id="quit" layoutX="400.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
+                  <Slider fx:id="slider" layoutX="420.0" layoutY="68.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                        </Slider>
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="9.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@logoTV64AIS.png" />
                     </image>
@@ -31,63 +43,6 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="397.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
-                    <image>
-                        <Image url="@quit.png" />
-                    </image>
-                </ImageView>
-                <GridPane layoutX="30.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="390.0" styleClass="grid-instruments">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="139.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="250.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                        <Text layoutX="44.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="valeur1">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </Pane>
-                        <Pane prefHeight="200.0" prefWidth="200.0" styleClass="grid-instruments" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-                     <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="335.0" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-                     <children>
-                              <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="25.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
-                     </children>
-                  </Pane>
-                  <Pane prefHeight="200.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="10.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
-                     </children>
-                  </Pane>
-                    </children>
-                </GridPane>
-                <Pane layoutX="420.0" layoutY="50" prefHeight="250.0" prefWidth="30.0" styleClass="right-pane">
-                    <children>
-                        <Slider fx:id="slider" layoutX="5.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
-                        </Slider>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="3.0" layoutY="125.0" opacity="0.6" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@journuit.png" />
-                            </image>
-                        </ImageView>
-                    </children>
-                </Pane>
             </children>
         </Group>
     </children>

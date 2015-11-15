@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -49,9 +50,9 @@ public class WebViewController
     private LoadingState loadCanceledState;
 
     @FXML
-    public Group view;
+    public Pane view;
     @FXML
-    public ImageView quit;
+    public Button quit;
     private WebEngine engine;
     @FXML
     TextField urlText;

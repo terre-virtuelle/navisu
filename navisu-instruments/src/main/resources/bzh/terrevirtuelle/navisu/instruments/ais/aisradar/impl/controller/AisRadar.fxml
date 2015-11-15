@@ -1312,7 +1312,7 @@
                         </Group>
                     </children>
                 </Group>
-                <Group fx:id="aisinfopanel" layoutY="-100.0">
+                <Group fx:id="aisinfopanel" layoutY="-100.0" visible="false">
                     <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0">
                         </Rectangle>
@@ -1378,7 +1378,7 @@
                         <Image url="@radarfaisceau600.png" />
                     </image>
                 </ImageView>
-                <Group fx:id="aisbuttonpanel" layoutY="-100.0" visible="false">
+                <Group fx:id="aisbuttonpanel" layoutY="-100.0">
                     <children>
                         <Rectangle arcHeight="5.0" arcWidth="5.0" height="900.0" layoutX="800.0" layoutY="100.0" stroke="#00abff" strokeType="INSIDE" styleClass="radar-info-pane" width="200.0" />
                         <Button fx:id="stbytx" layoutX="810.0" layoutY="210.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="80.0" styleClass="radar-buttonlabel" text="STBY&#10;TX" />
@@ -1425,7 +1425,10 @@
         </Group>
         <Group>
             <children>
-                <Button fx:id="buttonsInfos" layoutX="935.0" layoutY="25.0" prefHeight="30.0" prefWidth="130.0" text="Buttons/Infos" />
+                <Button fx:id="buttonsInfos" layoutX="930.0" layoutY="15.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="150.0" styleClass="radar-buttonlabel" text="Buttons / Infos">
+               <font>
+                  <Font size="18.0" />
+               </font></Button>
                 <ImageView fx:id="oldquit" fitHeight="22.0" fitWidth="43.0" layoutX="1091.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" rotate="29.7" scaleX="1.5" scaleY="1.5" visible="false">
                     <image>
                         <Image url="@quit.png" />

@@ -11,7 +11,7 @@
 
 <fx:root fx:id="trackPanel" stylesheets="@ais.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">  
     <children>
-          <Pane prefHeight="497.0" prefWidth="401.0" styleClass="background-pane">
+          <Pane prefHeight="500.0" prefWidth="400.0" styleClass="background-pane">
               <children>
                   <TextArea fx:id="names" editable="false" layoutX="30.0" layoutY="151.0" prefHeight="80.0" prefWidth="335.0" styleClass="aislabel" />   
                   <Slider fx:id="slider" layoutX="382.0" layoutY="60.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
@@ -23,6 +23,7 @@
           </Pane>
         <Group>
             <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="500.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="400.0" />
                 <Group layoutX="9.0">
                     <children>
                         <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">

@@ -14,6 +14,7 @@
           <Pane fx:id="view" prefHeight="240.0" prefWidth="400.0" styleClass="background-pane" />
         <Group>
             <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="240.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="400.0" />
                 <Line endX="400.0" endY="105.0" layoutY="-3.0" startY="105.0" stroke="#04fff2" strokeWidth="0.5" />
                 <Line endX="400.0" endY="78.0" layoutY="80.0" startY="78.0" stroke="#04fff2" strokeWidth="0.5" />
                 <Group layoutX="9.0">
@@ -30,7 +31,7 @@
                        
                         <Slider fx:id="slider" layoutX="375.0" layoutY="125.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                         </Slider>
-                        <Text fx:id="shipname" fill="#c2f8c4" layoutX="44.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="aisshipname" text="name not yet available" textAlignment="CENTER" wrappingWidth="220.0">
+                        <Text fx:id="shipname" fill="#c2f8c4" layoutX="44.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="name not yet available" textAlignment="CENTER" wrappingWidth="230.0">
                      
                         </Text>
                   <Group>
