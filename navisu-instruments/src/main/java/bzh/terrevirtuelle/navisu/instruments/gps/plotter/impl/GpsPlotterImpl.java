@@ -8,7 +8,9 @@ package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotter;
@@ -35,19 +37,16 @@ public class GpsPlotterImpl
 
     @UsedService
     GeoViewServices geoViewServices;
-
     @UsedService
     GuiAgentServices guiAgentServices;
-
     @UsedService
     LayerTreeServices layerTreeServices;
-
+    @UsedService
+    LayersManagerServices layersManagerServices;
     @UsedService
     KmlObjectServices kmlObjectServices;
-
     @UsedService
     GpsTrackServices gpsTrackServices;
-
     @UsedService
     AisServices aisServices;
 
@@ -62,7 +61,9 @@ public class GpsPlotterImpl
     private GpsPlotterController gpsPlotterController;
     private GpsEventsController gpsEventsController;
     private boolean withRoute = false;
+    private boolean withTarget = true;
     protected List<String> s57Controllers;
+    protected NavigationDataSet navigationDataSet = null;
 
     @Override
     public void componentInitiated() {
@@ -74,14 +75,25 @@ public class GpsPlotterImpl
     }
 
     @Override
+    public void on(NavigationDataSet navigationDataSet, boolean withTarget) {
+        this.navigationDataSet = navigationDataSet;
+        this.withTarget = withTarget;
+    }
+
+    @Override
     public void on(String... files) {
         if (files[0].contains(NAME3)) {
             withRoute = true;
         }
-        gpsPlotterController = new GpsPlotterController(this, geoViewServices, layerTreeServices,
-                guiAgentServices, kmlObjectServices, aisServices, withRoute,
+        gpsPlotterController = new GpsPlotterController(this,
+                layersManagerServices,
+                guiAgentServices, kmlObjectServices, aisServices,
+                withRoute, withTarget,
+                navigationDataSet,
                 NAME1, NAME2, GROUP);
-        gpsPlotterController.createTarget();
+        if (withTarget) {
+            gpsPlotterController.createTarget();
+        }
         gpsEventsController = new GpsPlotterGpsEventsController(gpsPlotterController);
         gpsEventsController.subscribe();
         gpsTrackServices.on(files);
@@ -118,4 +130,5 @@ public class GpsPlotterImpl
     public void notifyAisActivateEvent(RenderableLayer layer, List<String> targets) {
         aisActivateEvent.notifyAisActivateMessageChanged(layer, targets);
     }
+   
 }

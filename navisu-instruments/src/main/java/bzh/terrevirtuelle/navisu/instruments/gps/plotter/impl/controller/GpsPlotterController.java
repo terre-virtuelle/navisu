@@ -6,9 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
@@ -29,7 +27,6 @@ import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.File;
@@ -62,8 +59,6 @@ public class GpsPlotterController {
     protected WorldWindow wwd;
     protected RenderableLayer gpsLayer;
     protected RenderableLayer aisSurveyZoneLayer;
-    protected GeoViewServices geoViewServices;
-    protected LayerTreeServices layerTreeServices;
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
     protected AisServices aisServices;
@@ -73,66 +68,43 @@ public class GpsPlotterController {
     protected Properties properties;
     protected ColladaRoot ownerShipView;
     protected boolean withRoute = false;
+    protected boolean withTarget = true;
     protected List<String> s57Controllers;
     protected GpsPlotterImpl component;
     protected CircularFifoQueue<RMC> sentenceQueue;
     protected NavigationDataSet navigationDataSet = null;
 
     public GpsPlotterController(GpsPlotterImpl component,
-            GeoViewServices geoViewServices,
-            LayerTreeServices layerTreeServices,
+            LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
             KmlObjectServices kmlObjectServices,
             AisServices aisServices,
-            boolean withRoute,
+            boolean withRoute, boolean withTarget,
+            NavigationDataSet navigationDataSet,
             String name1, String name2,
             String group) {
         this.component = component;
-        this.geoViewServices = geoViewServices;
-        this.layerTreeServices = layerTreeServices;
         this.guiAgentServices = guiAgentServices;
         this.kmlObjectServices = kmlObjectServices;
         this.aisServices = aisServices;
         this.withRoute = withRoute;
+        this.withTarget = withTarget;
+        this.navigationDataSet = navigationDataSet;
         this.name1 = name1;
         this.name2 = name2;
         this.group = group;
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
-
-        gpsLayer = initLayer(layerTreeServices, geoViewServices, group, name1);
-        aisSurveyZoneLayer = initLayer(layerTreeServices, geoViewServices, group, name2);
+        gpsLayer = layersManagerServices.initLayer(group, name1);
+        aisSurveyZoneLayer = layersManagerServices.initLayer(group, name2);
         addPanelController();
         addListeners();
-        createOwnerShip();
+        if (withTarget == true) {
+            createOwnerShip();
+        }
         if (withRoute == true) {
             activateS57Controllers();
         }
-    }
-
-    private RenderableLayer initLayer(LayerTreeServices layerTreeServices,
-            GeoViewServices geoViewServices, String groupName, String layerName) {
-        List<String> groups = layerTreeServices.getGroupNames();
-        if (!groups.contains(groupName)) {
-            layerTreeServices.createGroup(groupName);
-            geoViewServices.getLayerManager().createGroup(groupName);
-        }
-        boolean layerExist = false;
-        RenderableLayer layer = null;
-        List<GeoLayer<Layer>> layers = geoViewServices.getLayerManager().getGroup(groupName);
-        for (GeoLayer<Layer> g : layers) {
-            if (g.getName().contains(layerName)) {
-                layer = (RenderableLayer) g.getDisplayLayer();
-                layerExist = true;
-            }
-        }
-        if (!layerExist) {
-            layer = new RenderableLayer();
-            layer.setName(layerName);
-            geoViewServices.getLayerManager().insertGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
-            layerTreeServices.addGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
-        }
-        return layer;
     }
 
     private void addPanelController() {
@@ -201,7 +173,6 @@ public class GpsPlotterController {
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         ownerShipView.setField("Ship", ownerShip);
-
         aisServices.aisCreateTargetEvent(ownerShip);
     }
 
@@ -238,35 +209,22 @@ public class GpsPlotterController {
     }
 
     private void activateS57Controllers() {
-        s57Controllers = new ArrayList<>();
-
-        File file = IO.fileChooser(guiAgentServices.getStage(),
-                "privateData/nds/", "NDS files (*.xml)", "*.xml", "*.XML");
-        FileInputStream inputFile = null;
-
-        if (file != null) {
-            try {
-                inputFile = new FileInputStream(new File(file.getPath()));
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        if (inputFile != null) {
+        if (navigationDataSet == null) {//navigationDataSet not given
+            File file = IO.fileChooser(guiAgentServices.getStage(),
+                    "privateData/nds/", "NDS files (*.xml)", "*.xml", "*.XML");
             navigationDataSet = new NavigationDataSet();
             try {
                 navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
             } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (navigationDataSet != null) {
-                List<Location> locations = navigationDataSet.getLocations();
-                locations.stream().forEach((l) -> {
-                    long id = l.getId();
-                    s57Controllers.add(Long.toString(id));
-                });
-                component.notifyAisActivateEvent(aisSurveyZoneLayer, s57Controllers);
-            }
         }
+        s57Controllers = new ArrayList<>();
+        List<Location> locations = navigationDataSet.getLocations();
+        locations.stream().forEach((l) -> {
+            long id = l.getId();
+            s57Controllers.add(Long.toString(id));
+        });
+        component.notifyAisActivateEvent(aisSurveyZoneLayer, s57Controllers);
     }
 }
