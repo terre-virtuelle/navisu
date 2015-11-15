@@ -8,8 +8,11 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditor;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewerServices;
@@ -19,6 +22,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
+import org.capcaval.c3.component.annotation.ProducedEvent;
 import org.capcaval.c3.component.annotation.UsedService;
 
 /**
@@ -37,12 +41,18 @@ public class RoutePhotoEditorImpl
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
-    private LayerTreeServices layerTreeServices;
+    private LayersManagerServices layersManagerServices;
+    @UsedService
+    private GpsPlotterServices gpsPlotterServices;
     @UsedService
     ExifComponentServices exifComponentServices;
     @UsedService
     RoutePhotoViewerServices routePhotoViewerServices;
-
+    @ProducedEvent
+    protected AisUpdateTargetEvent aisUpdateTargetEvent;
+    @UsedService
+    AisServices aisServices;
+   
     private final String COMPONENT_KEY_NAME = "RoutePhotoEditor";
     private final String LAYER_NAME = "Highway";
     private final String GROUP_NAME = "Navigation";
@@ -55,8 +65,12 @@ public class RoutePhotoEditorImpl
     @Override
     public void on(String... files) {
         routePhotoEditorController = new RoutePhotoEditorController(this,
-                geoViewServices, layerTreeServices, guiAgentServices,
-                s57ChartServices, routePhotoViewerServices, exifComponentServices,
+                layersManagerServices,
+                guiAgentServices,
+                s57ChartServices,
+                routePhotoViewerServices, exifComponentServices,
+                gpsPlotterServices,
+                aisServices,
                 GROUP_NAME, LAYER_NAME,
                 KeyCode.M, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routePhotoEditorController);
@@ -104,5 +118,4 @@ public class RoutePhotoEditorImpl
     public RoutePhotoViewerServices getRoutePhotoViewerServices() {
         return routePhotoViewerServices;
     }
-
 }

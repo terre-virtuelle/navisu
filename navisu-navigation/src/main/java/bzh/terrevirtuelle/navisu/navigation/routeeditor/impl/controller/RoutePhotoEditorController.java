@@ -6,16 +6,17 @@
 package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
-import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
+import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewerServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoEditorImpl;
 import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
@@ -23,13 +24,11 @@ import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.drew.imaging.ImageProcessingException;
-import com.vividsolutions.jts.geom.Coordinate;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -48,12 +47,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -69,7 +66,7 @@ import javax.xml.bind.JAXBException;
  */
 public class RoutePhotoEditorController
         extends Widget2DController {
-
+    
     private final String FXML = "routephotoeditor.fxml";
     @FXML
     public Pane view;
@@ -151,13 +148,12 @@ public class RoutePhotoEditorController
     public Button routeChoiceButton;
     @FXML
     public Button photoChoiceButton;
-
-    private final ExifComponentServices exifComponentServices;
-    private final S57ChartServices s57ChartServices;
     private final GuiAgentServices guiAgentServices;
-    private final LayerTreeServices layerTreeServices;
-    private final GeoViewServices geoViewServices;
+    private final ExifComponentServices exifComponentServices;
+    private final LayersManagerServices layersManagerServices;
     private final RoutePhotoViewerServices routePhotoViewerServices;
+    private final GpsPlotterServices gpsPlotterServices;
+    private final AisServices aisServices;
     private final RoutePhotoEditorImpl instrument;
     private final View viewWW;
     private final WorldWindow wwd;
@@ -175,25 +171,26 @@ public class RoutePhotoEditorController
     private List<Position> highwayPathPositions;
     private List<Highway> highways;
     private Polygon highway;
-
+    
     public RoutePhotoEditorController(RoutePhotoEditorImpl instrument,
-            GeoViewServices geoViewServices,
-            LayerTreeServices layerTreeServices,
+            LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
             S57ChartServices s57ChartServices,
             RoutePhotoViewerServices routePhotoViewerServices,
             ExifComponentServices exifComponentServices,
+            GpsPlotterServices gpsPlotterServices,
+            AisServices aisServices,
             String groupName, String layerName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
-
+        
         super(keyCode, keyCombination);
         this.instrument = instrument;
-        this.geoViewServices = geoViewServices;
-        this.layerTreeServices = layerTreeServices;
+        this.layersManagerServices = layersManagerServices;
         this.guiAgentServices = guiAgentServices;
-        this.s57ChartServices = s57ChartServices;
         this.routePhotoViewerServices = routePhotoViewerServices;
         this.exifComponentServices = exifComponentServices;
+        this.gpsPlotterServices = gpsPlotterServices;
+        this.aisServices = aisServices;
         this.groupName = groupName;
         this.layerName = layerName;
         this.wwd = GeoWorldWindViewImpl.getWW();
@@ -201,12 +198,12 @@ public class RoutePhotoEditorController
         load(FXML);
         initPanel();
     }
-
+    
     final void load(String fxml) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
+        
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
@@ -219,15 +216,17 @@ public class RoutePhotoEditorController
             });
         });
     }
-
+    
     private void initPanel() {
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
             setVisible(false);
-
+            
         });
         gotoButton.setOnMouseClicked((MouseEvent event) -> {
+            Ship ship = ShipBuilder.create().latitude(latitude).longitude(longitude).name("Lithops").build();
+            aisServices.aisUpdateTargetEvent(ship); 
             viewWW.setHeading(Angle.fromDegrees(heading));
             viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
             viewWW.setPitch(Angle.fromDegrees(90.0));
@@ -240,7 +239,7 @@ public class RoutePhotoEditorController
         });
         routeChoiceButton.setOnMouseClicked((MouseEvent event) -> {
             fillHighway();
-            layer = initLayer(layerTreeServices, geoViewServices, groupName, layerName);
+            layer = layersManagerServices.initLayer(groupName, layerName);
             layer.addRenderable(highway);
         });
         photoChoiceButton.setOnMouseClicked((MouseEvent event) -> {
@@ -264,9 +263,9 @@ public class RoutePhotoEditorController
                 fieldOfView = 20;
                 updatePanel();
             }
-
+            
         });
-
+        
         fieldOfViewTF.setOnAction((ActionEvent event) -> {
             fieldOfView = Double.parseDouble(fieldOfViewTF.getText());
             viewWW.setHeading(Angle.fromDegrees(heading));
@@ -277,13 +276,13 @@ public class RoutePhotoEditorController
         });
         nearClipDistanceTF.setOnAction((ActionEvent event) -> {
             nearClipDistance = Double.parseDouble(nearClipDistanceTF.getText());
-
+            
             System.out.println("getDistance " + viewWW.getFrustumInModelCoordinates().getNear().getDistance());
             viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
             updatePanel();
         });
     }
-
+    
     private void updatePanel() {
         latTF.setText(Double.toString(latitude));
         lonTF.setText(Double.toString(longitude));
@@ -313,32 +312,7 @@ public class RoutePhotoEditorController
         viewportZTF.setText(String.format(Integer.toString(viewWW.getViewport().height)));
         viewportTTF.setText(String.format(Integer.toString(viewWW.getViewport().width)));
     }
-
-    private RenderableLayer initLayer(LayerTreeServices layerTreeServices,
-            GeoViewServices geoViewServices, String groupName, String layerName) {
-        List<String> groups = layerTreeServices.getGroupNames();
-        if (!groups.contains(groupName)) {
-            layerTreeServices.createGroup(groupName);
-            geoViewServices.getLayerManager().createGroup(groupName);
-        }
-        boolean layerExist = false;
-        RenderableLayer layer = null;
-        List<GeoLayer<Layer>> layers = geoViewServices.getLayerManager().getGroup(groupName);
-        for (GeoLayer<Layer> g : layers) {
-            if (g.getName().contains(layerName)) {
-                layer = (RenderableLayer) g.getDisplayLayer();
-                layerExist = true;
-            }
-        }
-        if (!layerExist) {
-            layer = new RenderableLayer();
-            layer.setName(layerName);
-            geoViewServices.getLayerManager().insertGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
-            layerTreeServices.addGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
-        }
-        return layer;
-    }
-
+    
     private void fillHighway() {
         File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(), "privateData/nds", "Route files (*.nds)", "*.xml", "*.XML");
         navigationDataSet = new NavigationDataSet();
@@ -370,7 +344,7 @@ public class RoutePhotoEditorController
             offsetNormalAttributes.setDrawInterior(false);
             offsetNormalAttributes.setEnableLighting(true);
             highway.setAttributes(offsetNormalAttributes);
-
+            
             ShapeAttributes offsetHighlightAttributes = new BasicShapeAttributes(offsetNormalAttributes);
             offsetHighlightAttributes.setOutlineMaterial(Material.GREEN);
             offsetHighlightAttributes.setOutlineOpacity(1);
@@ -381,5 +355,6 @@ public class RoutePhotoEditorController
             str = file.getName().split("\\.");
         }
         highway.setValue(AVKey.DISPLAY_NAME, str[0]);
+        gpsPlotterServices.on(navigationDataSet, false);
     }
 }
