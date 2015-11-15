@@ -41,7 +41,7 @@ public class RoutePhotoEditorImpl
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
-    private LayersManagerServices layersManagerServices;
+    private LayersManagerServices layersManagerServices;   
     @UsedService
     private GpsPlotterServices gpsPlotterServices;
     @UsedService
