@@ -44,17 +44,12 @@
  *        (#7ac0ce, #253e4466)                                                                     *
  ******************************************************************************/
 #radialItem {
-    //-fx-fill: linear-gradient(-fx-light-gradient, -fx-base);
-    //-fx-fill : linear-gradient( -fx-light-gradient, rgba(95,134,138,0.5) );
-    //-fx-fill :rgba(95,134,138,0.5);
-    
     -fx-fill:linear-gradient( rgba(122,192,206,0.5),rgba(37,62,68,0.5)) ;
     -fx-stroke: #7ac0ce;
     -fx-stroke-width: 1;
 }
 
 #radialItem:pressed {
-    //-fx-fill: linear-gradient(-fx-base, -fx-light-gradient);
     -fx-fill : linear-gradient(  rgba(95,134,138,0.5), -fx-light-gradient );
     -fx-stroke: #7ac0ce;
     -fx-stroke-width: 1;
@@ -66,13 +61,10 @@
  *                                                                             *
  ******************************************************************************/
 .split-pane-divider {
-   //-fx-background-color: linear-gradient(to left, #FAFAFA, #303030);
    -fx-background-color: linear-gradient(to left, lightgrey, grey);
-   //-fx-background-color: grey;
    -fx-background-image: url("layer_diviser_icon.png");
    -fx-background-position: center;
    -fx-background-repeat: no-repeat;
-   //-fx-padding: /*0 0.25em 0 0.25em;*/ 0 8 0 8;
    -fx-padding: 0 13 0 13;
 }
 /* horizontal the two nodes are placed to the left/right of each other. 

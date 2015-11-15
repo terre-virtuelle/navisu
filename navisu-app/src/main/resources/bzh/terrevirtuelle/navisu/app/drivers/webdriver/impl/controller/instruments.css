@@ -24,11 +24,9 @@
 
 .aisvalue{
     -fx-font: 14px "Roboto Cn";
-    //-fx-font-weight: bold;
 }
 .aisname{
     -fx-font: 18px "Roboto Cn";
     -fx-font-weight: bold;
-    //-fx-underline : true;
 }
 
