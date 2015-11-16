@@ -13,14 +13,12 @@ import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -59,7 +57,7 @@ public class RouteDataEditorController
         guiAgentServices = instrument.getGuiAgentServices();
         load(FXML);
         create();
-        setTranslateX(-225.0);
+        setTranslateX(-220.0);
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
@@ -132,22 +130,8 @@ public class RouteDataEditorController
 
         CheckBoxTreeItem<String> other = new CheckBoxTreeItem<>("Other");
         root.getChildren().add(other);
-
         dataTreeView.setRoot(root);
-        /*
-         dataTreeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 
-         @Override
-         public void changed(ObservableValue observable, Object oldValue,
-         Object newValue) {
-
-         TreeItem<String> selectedItem = (TreeItem<String>) newValue;
-         System.out.println("Selected Text : " + selectedItem.getValue());
-         // do what ever you want 
-         }
-
-         });
-         */
         root.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (newValue) {
                 System.out.println("The selected item is " + root.valueProperty().get());

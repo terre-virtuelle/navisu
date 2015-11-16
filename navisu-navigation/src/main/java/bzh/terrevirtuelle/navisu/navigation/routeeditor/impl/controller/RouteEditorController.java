@@ -206,7 +206,7 @@ public class RouteEditorController
          */
         load(FXML);
         initPanel();
-        setTranslateX(225.0);
+        setTranslateX(280.0);
     }
 
     final void load(String fxml) {
