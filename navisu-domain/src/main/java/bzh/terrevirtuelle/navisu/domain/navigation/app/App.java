@@ -5,15 +5,17 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.app;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.AvurnavRSS;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.AvurnavSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.controller.RdfParser;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
@@ -27,7 +29,7 @@ import javax.xml.bind.JAXBException;
 public class App {
 
     String SHIP_NAME = "Lithops";
-    String NAME_RDF = "requeteRdf";
+    String NAME_RDF = "requete";
     String NAME_RSS = "rssatlantique-fr";
     String TEST = "test";
     String DIR_SRC = "data/";
@@ -42,7 +44,7 @@ public class App {
                 .mmsi(124578)
                 .name(SHIP_NAME)
                 .build();
-        navigationDataSet.add(ship);
+      //  navigationDataSet.add(ship);
 
         // Les avurnav du shom sont des flux Rss,
         // Instanciation d'un AvurnavRSS
@@ -54,14 +56,16 @@ public class App {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
         AvurnavRSS avurnav = new AvurnavRSS(rss);
-        navigationDataSet.add(avurnav);
+      //  navigationDataSet.add(avurnav);
 
         // Les avurnav du shom sont des requetes Sparql, 
         // Instanciation d'un AvurnavSet
         // sauvegarde dans un  NavigationDataSet
-        AvurnavSet avurnavSet = new AvurnavSet(DIR_SRC, NAME_RDF, "rdf");
-        navigationDataSet.add(avurnavSet);
-
+        RdfParser rdfParser = new RdfParser();
+        List<NavigationData> navigationDatas = rdfParser.parse(DIR_SRC, NAME_RDF, "rdf");
+        navigationDatas.stream().forEach((n) -> {
+            navigationDataSet.add(n);
+        });
         // Ne pas commenter
         // sauvegarde du NavigationDataSet dans un fic
         try {
