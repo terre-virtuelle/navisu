@@ -29,7 +29,8 @@ import javax.xml.bind.JAXBException;
 public class App {
 
     String SHIP_NAME = "Lithops";
-    String NAME_RDF = "requete";
+    String NAME_RDF = "requeteArea";
+   // String NAME_RDF = "requeteAvurnav";
     String NAME_RSS = "rssatlantique-fr";
     String TEST = "test";
     String DIR_SRC = "data/";
@@ -80,6 +81,7 @@ public class App {
         } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println(nds);
     }
 
     public static void main(String[] args) {
