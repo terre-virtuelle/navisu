@@ -6,14 +6,9 @@
 package bzh.terrevirtuelle.navisu.ontology.rdf.app;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.AvurnavRSS;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.controller.RdfParser;
-import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
+import bzh.terrevirtuelle.navisu.ontology.rdf.controller.RdfParser;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.logging.Level;
