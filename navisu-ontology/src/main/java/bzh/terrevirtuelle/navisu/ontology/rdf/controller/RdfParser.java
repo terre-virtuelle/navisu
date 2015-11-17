@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.ontology.rdf.controller;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.area.Area;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.rdf.Binding;
 import bzh.terrevirtuelle.navisu.domain.rdf.Result;
@@ -37,7 +37,7 @@ public class RdfParser {
     private final String AVURNAV = "Avurnav";
     private final String AREA = "Area";
     private Avurnav avurnav = null;
-    private Area area = null;
+    private SailingDirections area = null;
 
     public RdfParser() {
         navigationDataList = new ArrayList<>();
@@ -123,7 +123,7 @@ public class RdfParser {
                             }
                         } else if (tmp[1].trim().contains(AREA)) {
                             if (!areaName.equals(tmp[1].trim())) {
-                                area = new Area();
+                                area = new SailingDirections();
                                 navigationDataList.add(area);
                                 areaName = tmp[1].trim();
                                 String number=areaName.replace(AREA, "");
