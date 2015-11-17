@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.navigation.avurnav;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.area.Area;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;

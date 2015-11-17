@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.navigation.area;
+package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.*;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
@@ -19,9 +19,9 @@ import javax.xml.bind.annotation.XmlType;
  * @author Serge Morvan
  */
 @XmlRootElement
-@XmlType(name = "area", propOrder = {"id", "wkt", "book", "zoneName", "description"})
+@XmlType(name = "sailingDirections", propOrder = {"id", "wkt", "book", "zoneName", "description"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Area
+public class SailingDirections
         implements NavigationData {
 
     private long id;
@@ -30,10 +30,10 @@ public class Area
     private String zoneName;
     private String description;
 
-    public Area() {
+    public SailingDirections() {
     }
 
-    public Area(long id, String wkt, String book, String zoneName, String description) {
+    public SailingDirections(long id, String wkt, String book, String zoneName, String description) {
         this.id = id;
         this.wkt = wkt;
         this.book = book;
@@ -134,7 +134,9 @@ public class Area
 
     @Override
     public String toString() {
-        return "Area{" + "id=" + id + ", wkt=" + wkt + ", book=" + book + ", zoneName=" + zoneName + ", description=" + description + '}';
+        return "SailingDirections{" + "id=" + id + ", wkt=" + wkt + ", book=" + book + ", zoneName=" + zoneName + ", description=" + description + '}';
     }
+
+    
 
 }
