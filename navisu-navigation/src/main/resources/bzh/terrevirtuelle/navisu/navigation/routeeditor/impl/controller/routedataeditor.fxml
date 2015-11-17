@@ -50,9 +50,10 @@
                <children>
                   <Button fx:id="openButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Open" />
                   <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Save" GridPane.columnIndex="1" />
+                  <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Reset" GridPane.columnIndex="2" />
                </children>
             </GridPane>
-            <Label fx:id="visibleLabel" layoutX="464.0" layoutY="11.0" prefHeight="15.0" prefWidth="12.0" />
+            <Label fx:id="visibleLabel" layoutX="459.0" layoutY="11.0" prefHeight="15.0" prefWidth="53.0" />
             </children>
         </Group>
     </children>

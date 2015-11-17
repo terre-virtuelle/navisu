@@ -9,8 +9,11 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
+import bzh.terrevirtuelle.navisu.ontology.rdf.controller.RdfParser;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -53,7 +56,8 @@ public class RouteDataEditorController
     private final LayersManagerServices layersManagerServices;
     private NavigationDataSet navigationDataSet;
     private List<Avurnav> avurnavList;
-    private Gpx gpx;
+    private List<SailingDirections> sailingDirectionsList;
+    private List<Gpx> gpxList;
     @FXML
     public Pane view;
     @FXML
@@ -79,9 +83,10 @@ public class RouteDataEditorController
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
         super(keyCode, keyCombination);
-        this.layersManagerServices=layersManagerServices;
+        this.layersManagerServices = layersManagerServices;
         this.guiAgentServices = guiAgentServices;
         this.s57ChartServices = s57ChartServices;
+        navigationDataSet = new NavigationDataSet();
         load(FXML);
         create();
         setTranslateX(-220.0);
@@ -90,7 +95,7 @@ public class RouteDataEditorController
             guiAgentServices.getRoot().getChildren().remove(this);
             setVisible(false);
         });
-        visibleLabel.setText("Ctrl "+ keyCode.toString());
+        visibleLabel.setText("Ctrl " + keyCode.toString());
     }
 
     final void load(String fxml) {
@@ -110,8 +115,6 @@ public class RouteDataEditorController
             });
         });
         openButton.setOnMouseClicked((MouseEvent event) -> {
-            navigationDataSet = new NavigationDataSet();
-
             File file = IO.fileChooser(guiAgentServices.getStage(),
                     "privateData/nds", "NDS files (*.nds)", "*.nds", "*.NDS");
             try {
@@ -119,6 +122,11 @@ public class RouteDataEditorController
             } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
+            gpxList = navigationDataSet.get(Gpx.class);
+            avurnavList = navigationDataSet.get(Avurnav.class);
+            //  System.out.println(sailingDirectionsList);
+            // System.out.println(gpxList);
         });
         saveButton.setOnMouseClicked((MouseEvent event) -> {
             System.out.println("Nor yet implemented :-) ");
@@ -132,6 +140,9 @@ public class RouteDataEditorController
         CheckBoxTreeItem<String> root = new CheckBoxTreeItem<>("Data");
         root.setExpanded(true);
 
+        CheckBoxTreeItem<String> avurnav = new CheckBoxTreeItem<>("Avurnav");
+        root.getChildren().add(avurnav);
+
         CheckBoxTreeItem<String> landmarks = new CheckBoxTreeItem<>("Landmarks");
         landmarks.setExpanded(true);
         root.getChildren().add(landmarks);
@@ -143,9 +154,6 @@ public class RouteDataEditorController
         landmarks.getChildren().add(tower);
         CheckBoxTreeItem<String> waterTower = new CheckBoxTreeItem<>("WaterTower");
         landmarks.getChildren().add(waterTower);
-
-        CheckBoxTreeItem<String> avurnav = new CheckBoxTreeItem<>("Avurnav");
-        root.getChildren().add(avurnav);
 
         CheckBoxTreeItem<String> nauticalDocumentation = new CheckBoxTreeItem<>("NauticalDocumentation");
         nauticalDocumentation.setExpanded(true);
@@ -224,7 +232,12 @@ public class RouteDataEditorController
         });
         avurnav.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (newValue) {
-                System.out.println("The selected item is " + avurnav.valueProperty().get());
+                File file = IO.fileChooser(guiAgentServices.getStage(),
+                        "data/rdf", "RDF files (*.rdf)", "*.rdf", "*.RDF");
+                RdfParser rdfParser = new RdfParser(file);
+                NavigationDataSet tmp = rdfParser.parse();
+                navigationDataSet.addAll(tmp.getNavigationDataList());
+                System.out.println(navigationDataSet);
             }
         });
         nauticalDocumentation.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
