@@ -23,7 +23,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpi
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.area.Area;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
-import bzh.terrevirtuelle.navisu.domain.navigation.controller.RdfParser;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.AvurnavSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.AvurnavRSS;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class NavigationDataSet {
         @XmlElement(name = "avurnavss", type = AvurnavRSS.class),
         @XmlElement(name = "avurnav", type = Avurnav.class),
         @XmlElement(name = "area", type = Area.class),
-        @XmlElement(name = "avurnavSet", type = RdfParser.class),
+        @XmlElement(name = "avurnavSet", type = AvurnavSet.class),
         @XmlElement(name = "gpx", type = Gpx.class)
     })
 

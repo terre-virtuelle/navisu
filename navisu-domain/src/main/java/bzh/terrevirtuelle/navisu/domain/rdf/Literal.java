@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.navigation.controller.rdf;
+package bzh.terrevirtuelle.navisu.domain.rdf;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,31 +18,40 @@ import javax.xml.bind.annotation.XmlType;
  * @author Serge Morvan
  */
 @XmlRootElement
-@XmlType(name = "variable")
+@XmlType(name = "literal")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Variable {
+public class Literal {
 
     @XmlAttribute
-    String name;
+    private String datatype;
+    String data;
 
-    public Variable() {
+    public Literal() {
     }
 
-    public Variable(String name) {
-        this.name = name;
+    public Literal(String datatype, String data) {
+        this.datatype = datatype;
+        this.data = data;
+    }
+    public String getDatatype() {
+        return datatype;
     }
 
-    public String getName() {
-        return name;
+    public void setDatatype(String datatype) {
+        this.datatype = datatype;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 
     @Override
     public String toString() {
-        return "Variable{" + "name=" + name + '}';
+        return "Literal{" + "datatype=" + datatype + ", data=" + data + '}';
     }
-    
+
 }
