@@ -93,8 +93,10 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteDataEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewerServices;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteDataEditorImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoEditorImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoViewerImpl;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
@@ -189,6 +191,7 @@ public class AppMain extends Application {
                         NavigationServerImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
+                        RouteDataEditorImpl.class,
                         RouteEditorImpl.class,
                         RoutePhotoEditorImpl.class,
                         RoutePhotoViewerImpl.class,
@@ -260,6 +263,7 @@ public class AppMain extends Application {
         //optionsManagerServices.show();
 
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
+        RouteDataEditorServices routeDataEditorServices = componentManager.getComponentService(RouteDataEditorServices.class);
         RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
         RoutePhotoViewerServices routePhotoViewerServices = componentManager.getComponentService(RoutePhotoViewerServices.class);
 
@@ -316,6 +320,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(routeDataEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
