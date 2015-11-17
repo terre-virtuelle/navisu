@@ -9,11 +9,9 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
-import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditor;
-import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
-import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditorServices;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteDataEditor;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteDataEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteDataEditorController;
-import com.vividsolutions.jts.geom.Geometry;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -26,8 +24,8 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @date 26 août 2015
  * @author Serge Morvan
  */
-public class RouteEditorImpl
-        implements RouteEditor, RouteEditorServices, InstrumentDriver, ComponentState {
+public class RouteDataEditorImpl
+        implements RouteDataEditor, RouteDataEditorServices, InstrumentDriver, ComponentState {
 
     @UsedService
     GuiAgentServices guiAgentServices;
@@ -35,10 +33,10 @@ public class RouteEditorImpl
     S57ChartServices s57ChartServices;
     @UsedService
     private LayersManagerServices layersManagerServices;
-    private final String KEY_NAME = "RouteEditor";
+
+    private final String COMPONENT_KEY_NAME = "RouteDataEditor";
     private final String LAYER_NAME = "Highway";
     private final String GROUP_NAME = "Navigation";
-    private RouteEditorController routeEditorController;
     private RouteDataEditorController routeDataEditorController;
 
     @Override
@@ -47,27 +45,21 @@ public class RouteEditorImpl
 
     @Override
     public void on(String... files) {
-        routeEditorController = new RouteEditorController(this, KeyCode.M, KeyCombination.CONTROL_DOWN);
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routeEditorController);
-        guiAgentServices.getRoot().getChildren().add(routeEditorController);
-        routeEditorController.setVisible(true);
-
         routeDataEditorController = new RouteDataEditorController(
                 layersManagerServices,
                 guiAgentServices,
                 s57ChartServices,
                 GROUP_NAME, LAYER_NAME,
-                KeyCode.M, KeyCombination.CONTROL_DOWN);
+                KeyCode.D, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routeDataEditorController);
         guiAgentServices.getRoot().getChildren().add(routeDataEditorController);
-        routeDataEditorController.setVisible(false);
+        routeDataEditorController.setVisible(true);
 
-        routeEditorController.setRouteDataEditorController(routeDataEditorController);
     }
 
     @Override
     public boolean canOpen(String category) {
-        return category.equals(KEY_NAME);
+        return category.equals(COMPONENT_KEY_NAME);
     }
 
     @Override
@@ -81,6 +73,7 @@ public class RouteEditorImpl
         guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, routeDataEditorController);
         guiAgentServices.getRoot().getChildren().remove(routeDataEditorController);
         routeDataEditorController.setVisible(false);
+
     }
 
     @Override
@@ -93,22 +86,6 @@ public class RouteEditorImpl
 
     public GuiAgentServices getGuiAgentServices() {
         return guiAgentServices;
-    }
-
-    @Override
-    public Geometry getBuffer() {
-        if (routeEditorController != null) {
-            return routeEditorController.getBuffer();
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public void showBuffer() {
-        if (routeEditorController != null) {
-            routeEditorController.showBuffer();
-        }
     }
 
     public S57ChartServices getS57ChartServices() {
