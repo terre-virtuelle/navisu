@@ -1443,13 +1443,14 @@
                     </effect>
                 </ImageView>
                 <Text layoutX="1123.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Opacity" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
-                <Slider fx:id="opacitySlider" layoutX="1127.0" layoutY="176.0" max="1.0" maxHeight="-Infinity" maxWidth="-Infinity" min="0.4" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="175.0" prefWidth="5.0" value="0.6">
+                <Slider fx:id="opacitySlider" layoutX="1127.0" layoutY="176.0" max="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="175.0" prefWidth="5.0" value="0.6">
                 </Slider>
-                <Text layoutX="1124.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Dimension" textAlignment="CENTER" wrappingWidth="58.0" x="-23.0" />
-                <Slider fx:id="dimensionSlider" blockIncrement="1.0" layoutX="1123.0" layoutY="386.0" min="40.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="5.0" value="60.0">
+                <Text layoutX="1124.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Dimension" textAlignment="CENTER" visible="false" wrappingWidth="58.0" x="-23.0" />
+                <Slider fx:id="dimensionSlider" blockIncrement="1.0" layoutX="1123.0" layoutY="386.0" min="40.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="5.0" value="75.0" visible="false">
                 </Slider>
                 <Button fx:id="quit" alignment="CENTER" layoutX="1085.0" layoutY="20.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" styleClass="quitbutton" textOverrun="CLIP">
                     </Button>
+            <Text layoutX="417.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="RADAR AIS" textAlignment="CENTER" wrappingWidth="150.0" />
             </children>
         </Group>
     </children>

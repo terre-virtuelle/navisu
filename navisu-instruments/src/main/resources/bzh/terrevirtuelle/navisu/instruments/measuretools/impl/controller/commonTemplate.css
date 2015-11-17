@@ -79,12 +79,12 @@
 }
 /*----------- typos communes ----------- */
 .instrumenttitle{
-    -fx-font: 18px "Roboto Cn";
+    -fx-font: 20px "Roboto Cn";
     -fx-fill : -fx-color-title;
 
 }
 .infotittle{
-    -fx-font: 20px "Roboto Cn";
+    -fx-font: 18px "Roboto Cn";
     -fx-fill : -fx-color-title;
 
 }
@@ -177,7 +177,6 @@
 .sliderlabel{
     -fx-font: 12px "Roboto Cn";
     -fx-fill : -fx-line-base;
-    /*-fx-font-weight: bold;*/
 }
 
 /*--------- ScrollPane ---------*/

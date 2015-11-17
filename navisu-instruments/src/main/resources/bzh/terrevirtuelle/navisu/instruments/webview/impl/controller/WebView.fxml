@@ -11,20 +11,20 @@
 
 <fx:root stylesheets="@webview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Pane fx:id="view" prefHeight="350.0" prefWidth="450.0" styleClass="background-pane" />
+      <Pane fx:id="view" prefHeight="350.0" prefWidth="350.0" styleClass="background-pane" />
         <Group>
             <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
-                  <Text fx:id="title" layoutX="144.0" layoutY="46.0" styleClass="instrumenttitle" text="INSTRUMENT" textAlignment="CENTER" wrappingWidth="150.0">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="350.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="350.0" />
+                  <Text fx:id="title" layoutX="100.0" layoutY="46.0" styleClass="instrumenttitle" text="INSTRUMENT" textAlignment="CENTER" wrappingWidth="150.0">
                         </Text>
-            <Group layoutX="52.0" layoutY="72.0">
+            <Group layoutX="8.0" layoutY="72.0">
                <children>
-                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutY="186.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="335.0" />
+                        <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutY="186.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="320.0" />
                         <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutY="90.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
-                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="185.0" layoutY="90.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
+                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="169.0" layoutY="90.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="150.0" />
                         <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="118.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
-                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="235.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
+                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="110.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
+                  <Rectangle arcHeight="30.0" arcWidth="30.0" height="80.0" layoutX="219.0" stroke="#70bbbf" strokeType="INSIDE" styleClass="instrumentcadres" width="100.0" />
                   <Text layoutX="24.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumentvalue" text="valeur1">
                      <font>
                         <Font size="24.0" />
@@ -32,8 +32,8 @@
                   </Text>
                </children>
             </Group>
-            <Button fx:id="quit" layoutX="400.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
-                  <Slider fx:id="slider" layoutX="420.0" layoutY="68.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+            <Button fx:id="quit" layoutX="298.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
+                  <Slider fx:id="slider" layoutX="331.0" layoutY="67.0" max="1.0" min="0.4" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                         </Slider>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="9.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                     <image>

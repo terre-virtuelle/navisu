@@ -79,12 +79,12 @@
 }
 /*----------- typos communes ----------- */
 .instrumenttitle{
-    -fx-font: 18px "Roboto Cn";
+    -fx-font: 20px "Roboto Cn";
     -fx-fill : -fx-color-title;
 
 }
 .infotittle{
-    -fx-font: 20px "Roboto Cn";
+    -fx-font: 18px "Roboto Cn";
     -fx-fill : -fx-color-title;
 
 }

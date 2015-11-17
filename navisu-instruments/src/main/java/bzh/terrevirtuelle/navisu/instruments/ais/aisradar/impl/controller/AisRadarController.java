@@ -220,8 +220,8 @@ public class AisRadarController
         aisbuttonpanel.setVisible(true);
         Platform.runLater(() -> {
             radar.setOpacity(0.9);
-            radar.setScaleX(0.7);
-            radar.setScaleY(0.7);
+            radar.setScaleX(0.685);
+            radar.setScaleY(0.685);
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             aisRadar.off();
@@ -235,12 +235,14 @@ public class AisRadarController
                 view.setOpacity(opacitySlider.getValue());
             });
         });
+        /*
         dimensionSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 radar.setScaleX(((dimensionSlider.getValue())/100));
                 radar.setScaleY(((dimensionSlider.getValue())/100));
             });
         });
+        */
         rangeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 radarScale = rangeSlider.getValue();

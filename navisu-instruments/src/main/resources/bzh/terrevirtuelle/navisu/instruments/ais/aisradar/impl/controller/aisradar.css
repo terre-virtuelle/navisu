@@ -7,6 +7,11 @@
  * Infos et valeurs AIS                                                        *
  *                                                                             *
  ******************************************************************************/
+.instrumenttitle{
+    -fx-font: 24px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+
+}
 .radaraisvalue{
     -fx-font: 18px "Roboto";
     -fx-fill : #fff900;

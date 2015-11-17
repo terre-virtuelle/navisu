@@ -11,7 +11,7 @@
  ******************************************************************************/
 *{
     -fx-font-family: "Roboto Cn" ;
-/*---------- couleurs ----------------------*/    
+    /*---------- couleurs ----------------------*/    
     -fx-base : #143b28;
     -fx-base-trans : #143b2800;
     -fx-base-trans10 : #143b2810;
@@ -25,7 +25,7 @@
     -fx-color-title: #fff900;
     -fx-color-backround-value: -fx-base-trans; /* background transparent boutons*/
     -fx-cell-hover-color:#cce3f4;
-/*------- dégradés des boutons----------*/
+    /*------- dégradés des boutons----------*/
     -fx-color-button: derive(-fx-color,30%);
     -fx-button-background-color: linear-gradient(to bottom,
         ladder(
@@ -34,7 +34,7 @@
         derive(-fx-color-button,10%) 80%
         ),
         derive(-fx-color-button,-8%));
-/*------- dégradé principal des boutons----------*/
+    /*------- dégradé principal des boutons----------*/
     -fx-body-color: linear-gradient(to bottom,
         ladder(
         -fx-color-button,
@@ -79,19 +79,18 @@
 }
 /*----------- typos communes ----------- */
 .instrumenttitle{
-    -fx-font: 18px "Roboto Cn";
+    -fx-font: 20px "Roboto Cn";
     -fx-fill : -fx-color-title;
 
 }
 .infotittle{
-    -fx-font: 20px "Roboto Cn";
+    -fx-font: 18px "Roboto Cn";
     -fx-fill : -fx-color-title;
 
 }
 .instrumentvalue{
     -fx-font: 18px "Roboto Cn";
     -fx-fill: -fx-color-typo;
-    /*-fx-font-weight: bold; */
 }
 /*---------------- contours et entourages --------------*/
 .instrumentcadres{

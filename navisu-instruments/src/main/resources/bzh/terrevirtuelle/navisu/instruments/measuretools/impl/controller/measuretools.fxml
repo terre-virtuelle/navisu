@@ -15,8 +15,8 @@
 
 <fx:root stylesheets="@measuretools.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="455.0" styleClass="measuretool-panel" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="310.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="455.0" />
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="450.0" styleClass="measuretool-panel" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="340.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
         <Group layoutY="10.0" styleClass="measuretool-panel">
             <children>
                 <Button fx:id="newButton" layoutX="38.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" text="NEW">
@@ -37,18 +37,18 @@
                         <String fx:value="measuretoollabel" />
                     </styleClass>
                 </Button>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" height="210.0" layoutX="15.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" height="240.0" layoutX="15.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
                 <Button fx:id="quit" alignment="CENTER" layoutX="400.0" layoutY="-14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
                 <Slider fx:id="opacitySlider" layoutX="426.0" layoutY="105.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
                 <Group layoutX="-710.0" layoutY="35.0" />
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="131.0" layoutX="217.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="135.0" layoutX="217.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
                 <Text layoutX="10.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Shape :" textAlignment="RIGHT" wrappingWidth="100.0" />
-                <Text layoutX="10.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Path type :" textAlignment="RIGHT" wrappingWidth="100.0" />
-                <Text layoutX="10.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Units :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                <Text layoutX="10.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Path type :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                <Text layoutX="11.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Units :" textAlignment="RIGHT" wrappingWidth="100.0" />
                   
-                <ComboBox fx:id="shapeCombo" layoutX="115.0" layoutY="84.0" prefHeight="20.0" prefWidth="80.0" promptText="shape" styleClass="measuretoolcombolabel" visibleRowCount="15">
+                <ComboBox fx:id="shapeCombo" layoutX="115.0" layoutY="85.0" prefHeight="20.0" prefWidth="80.0" promptText="shape" styleClass="measuretoolcombolabel" visibleRowCount="15">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Polygon" />
@@ -61,7 +61,7 @@
                     </items>
                 </ComboBox>
                   
-                <ComboBox fx:id="pathTypeCombo" layoutX="115.0" layoutY="107.0" prefHeight="20.0" prefWidth="80.0" promptText="path" styleClass="measuretoolcombolabel" visibleRowCount="15">
+                <ComboBox fx:id="pathTypeCombo" layoutX="115.0" layoutY="115.0" prefHeight="20.0" prefWidth="80.0" promptText="path" styleClass="measuretoolcombolabel" visibleRowCount="15">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Linear" />
@@ -71,7 +71,7 @@
                     </items>
                 </ComboBox>
                   
-                <ComboBox fx:id="unitsCombo" layoutX="115.0" layoutY="131.0" prefHeight="20.0" prefWidth="80.0" promptText="Km/Km²" styleClass="measuretoolcombolabel" visibleRowCount="15">
+                <ComboBox fx:id="unitsCombo" layoutX="116.0" layoutY="145.0" prefHeight="20.0" prefWidth="80.0" promptText="Km/Km²" styleClass="measuretoolcombolabel" visibleRowCount="15">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="M/M²" />
@@ -85,7 +85,7 @@
                     </items>
                 </ComboBox>
                   
-                <ComboBox fx:id="anglesCombo" layoutX="115.0" layoutY="155.0" prefHeight="20.0" prefWidth="80.0" promptText="degrees" styleClass="measuretoolcombolabel" visibleRowCount="15">
+                <ComboBox fx:id="anglesCombo" layoutX="116.0" layoutY="175.0" prefHeight="20.0" prefWidth="80.0" promptText="degrees" styleClass="measuretoolcombolabel" visibleRowCount="15">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value="Decimal degrees" />
@@ -94,23 +94,23 @@
                     </items>
                 </ComboBox> 
                   
-                <Text layoutX="10.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Angle format :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                <Text layoutX="11.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Angle format :" textAlignment="RIGHT" wrappingWidth="100.0" />
                 <Text layoutX="230.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Length :" textAlignment="RIGHT" wrappingWidth="55.0" />
                 <Text layoutX="230.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Area :" textAlignment="RIGHT" wrappingWidth="55.0" />
                 <Text layoutX="230.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Width :" textAlignment="RIGHT" wrappingWidth="55.0" />
                 <Text layoutX="230.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Height :" textAlignment="RIGHT" wrappingWidth="55.0" />
                 <Text layoutX="230.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Heading :" textAlignment="RIGHT" wrappingWidth="55.0" />
                 <Text layoutX="230.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Center :" textAlignment="RIGHT" wrappingWidth="55.0" />
-                <CheckBox fx:id="followCheck" layoutX="23.0" layoutY="194.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Follow terrain">
+                <CheckBox fx:id="followCheck" layoutX="28.0" layoutY="218.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Follow terrain">
                     <font>
                         <Font name="Footlight MT Light" size="12.0" />
                     </font>
                 </CheckBox>
-                <CheckBox fx:id="showControlsCheck" layoutX="23.0" layoutY="254.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Control points" />
-                <CheckBox fx:id="rubberBandCheck" layoutX="23.0" layoutY="224.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Rubber band" />
-                <CheckBox fx:id="freeHandCheck" layoutX="123.0" layoutY="194.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Free Hand" />
-                <CheckBox fx:id="showAnnotationCheck" layoutX="123.0" layoutY="224.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Tooltip" />
-                <ScrollPane hbarPolicy="ALWAYS" layoutX="217.0" layoutY="210.0" prefHeight="78.0" prefWidth="224.0" styleClass="measuretool-info-pane" vbarPolicy="ALWAYS" />
+                <CheckBox fx:id="showControlsCheck" layoutX="28.0" layoutY="278.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Control points" />
+                <CheckBox fx:id="rubberBandCheck" layoutX="28.0" layoutY="248.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Rubber band" />
+                <CheckBox fx:id="freeHandCheck" layoutX="128.0" layoutY="218.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Free Hand" />
+                <CheckBox fx:id="showAnnotationCheck" layoutX="128.0" layoutY="248.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Tooltip" />
+                <ScrollPane hbarPolicy="ALWAYS" layoutX="217.0" layoutY="216.0" prefHeight="100.0" prefWidth="224.0" styleClass="measuretool-info-pane" vbarPolicy="ALWAYS" />
                 <Text layoutX="154.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="MEASURE TOOL" />
                 <Text fx:id="lengthLabel" layoutX="290.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="lengthLabel" wrappingWidth="100.0" />
                 <Text fx:id="areaLabel" layoutX="290.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="areaLabel" wrappingWidth="100.0" />

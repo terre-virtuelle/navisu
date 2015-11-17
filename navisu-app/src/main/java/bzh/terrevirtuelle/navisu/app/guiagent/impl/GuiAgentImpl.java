@@ -54,7 +54,7 @@ public class GuiAgentImpl
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
-    private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
+   private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
 
     @SubComponent
     OptionsManagerImpl optionsManager;
