@@ -38,10 +38,8 @@ public class App {
         // Instanciation d'un AvurnavSet
         // sauvegarde dans un  NavigationDataSet
         RdfParser rdfParser = new RdfParser();
-        List<NavigationData> navigationDatas = rdfParser.parse(DIR_SRC, NAME_RDF, "rdf");
-        navigationDatas.stream().forEach((n) -> {
-            navigationDataSet.add(n);
-        });
+        navigationDataSet = rdfParser.parse(DIR_SRC, NAME_RDF);
+        
         // Ne pas commenter
         // sauvegarde du NavigationDataSet dans un fic
         try {

@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.ontology.rdf.controller;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.rdf.Binding;
@@ -35,21 +36,33 @@ public class RdfParser {
 
     private final List<NavigationData> navigationDataList;
     private final String AVURNAV = "Avurnav";
-    private final String AREA = "Area";
+    private final String SAILING_DIRECTIONS = "Area";
     private Avurnav avurnav = null;
-    private SailingDirections area = null;
+    private SailingDirections sailingDirections = null;
+    private Path path;
+    private String[] tmp;
+    private String avurnavName = "";
+    private String sailingDirectionsName = "";
+    private String repFileName;
 
     public RdfParser() {
         navigationDataList = new ArrayList<>();
     }
 
-    public List<NavigationData> parse(String srcDir, String filename, String extension) {
+    public RdfParser(File file) {
+        navigationDataList = new ArrayList<>();
+        path = file.toPath();
+        repFileName = path.toString().split("\\.")[0];
+    }
 
-        String[] tmp;
-        String avurnavName = "";
-        String areaName = "";
-        
-        Path path = Paths.get(srcDir + filename + ".rdf");
+    public NavigationDataSet parse(String srcDir, String filename) {
+        repFileName = srcDir + filename;
+        path = Paths.get(repFileName + ".rdf");
+        return parse();
+    }
+
+    public NavigationDataSet parse() {
+
         List<String> tmpList = null;
         try {
             tmpList = Files.readAllLines(path);
@@ -65,89 +78,87 @@ public class RdfParser {
                 }
                 lines.add(s);
             }
-            path = Paths.get(srcDir + filename + "_.rdf");
+            path = Paths.get(repFileName + "_.rdf");
             try {
                 Files.write(path, lines, Charset.defaultCharset());
             } catch (IOException ex) {
                 Logger.getLogger(RdfParser.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (extension.contains("rdf")) {
-                Sparql sparql = new Sparql();
-                try {
-                    sparql = ImportExportXML.imports(sparql, new File(srcDir + filename + "_.rdf"));
-                } catch (JAXBException | FileNotFoundException ex) {
-                    Logger.getLogger(RdfParser.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            Sparql sparql = new Sparql();
+            try {
+                sparql = ImportExportXML.imports(sparql, new File(repFileName + "_.rdf"));
+            } catch (JAXBException | FileNotFoundException ex) {
+                Logger.getLogger(RdfParser.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-                try {
-                    Files.delete(path);
-                } catch (IOException ex) {
-                    Logger.getLogger(RdfParser.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                List<Result> results = sparql.getResults().getResultList();
-                for (Result r : results) {
-                    List<Binding> bindings = r.getBindings();
-                    if (bindings.get(0).getName().equals("s")) {
-                        tmp = bindings.get(0).getUri().split("#");
-                        if (tmp[1].trim().contains(AVURNAV)) {
+            try {
+                Files.delete(path);
+            } catch (IOException ex) {
+                Logger.getLogger(RdfParser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            List<Result> results = sparql.getResults().getResultList();
+            for (Result r : results) {
+                List<Binding> bindings = r.getBindings();
+                if (bindings.get(0).getName().equals("s")) {
+                    tmp = bindings.get(0).getUri().split("#");
+                    if (tmp[1].trim().contains(AVURNAV)) {
 
-                            if (!avurnavName.equals(tmp[1].trim())) {
-                                avurnav = new Avurnav();
-                                navigationDataList.add(avurnav);
-                                avurnavName = tmp[1].trim();
-                            }
-                            if (bindings.get(1).getName().equals("p")) {
-                                if (bindings.get(1).getUri() != null) {
-                                    tmp = bindings.get(1).getUri().split("#");
-                                    if (avurnav != null) {
-                                        switch (tmp[1].trim()) {
-                                            case "globalZone":
-                                                avurnav.setGlobalZone(bindings.get(2).getLiteral());
-                                                break;
-                                            case "textDescription":
-                                                avurnav.setDescription(bindings.get(2).getLiteral());
-                                                break;
-                                            case "expirationDate":
-                                                avurnav.setExpirationDate(bindings.get(2).getLiteral());
-                                                break;
-                                            case "avNumber":
-                                                avurnav.setId(Integer.parseInt(bindings.get(2).getLiteral()));
-                                                break;
-                                            case "broadcastTime":
-                                                avurnav.setBroadcastTime(bindings.get(2).getLiteral());
-                                                break;
-                                            default:
-                                        }
+                        if (!avurnavName.equals(tmp[1].trim())) {
+                            avurnav = new Avurnav();
+                            navigationDataList.add(avurnav);
+                            avurnavName = tmp[1].trim();
+                        }
+                        if (bindings.get(1).getName().equals("p")) {
+                            if (bindings.get(1).getUri() != null) {
+                                tmp = bindings.get(1).getUri().split("#");
+                                if (avurnav != null) {
+                                    switch (tmp[1].trim()) {
+                                        case "globalZone":
+                                            avurnav.setGlobalZone(bindings.get(2).getLiteral());
+                                            break;
+                                        case "textDescription":
+                                            avurnav.setDescription(bindings.get(2).getLiteral());
+                                            break;
+                                        case "expirationDate":
+                                            avurnav.setExpirationDate(bindings.get(2).getLiteral());
+                                            break;
+                                        case "avNumber":
+                                            avurnav.setId(Integer.parseInt(bindings.get(2).getLiteral()));
+                                            break;
+                                        case "broadcastTime":
+                                            avurnav.setBroadcastTime(bindings.get(2).getLiteral());
+                                            break;
+                                        default:
                                     }
                                 }
                             }
-                        } else if (tmp[1].trim().contains(AREA)) {
-                            if (!areaName.equals(tmp[1].trim())) {
-                                area = new SailingDirections();
-                                navigationDataList.add(area);
-                                areaName = tmp[1].trim();
-                                String number=areaName.replace(AREA, "");
-                                area.setId(Integer.parseInt(number));
-                            }
-                            if (bindings.get(1).getName().equals("p")) {
-                                if (bindings.get(1).getUri() != null) {
-                                    tmp = bindings.get(1).getUri().split("#");
-                                    if (area != null) {
-                                        switch (tmp[1].trim()) {
-                                            case "hasGeometry":
-                                                area.setWkt(bindings.get(2).getLiteral());
-                                                break;
-                                            case "hasChapter":
-                                                area.setBook(bindings.get(2).getUri().split("#")[1]);
-                                                break;
-                                            case "zoneName":
-                                                area.setZoneName(bindings.get(2).getLiteral());
-                                                break;
-                                            case "zoneData":
-                                                area.setDescription(bindings.get(2).getLiteral());
-                                                break;
-                                            default:
-                                        }
+                        }
+                    } else if (tmp[1].trim().contains(SAILING_DIRECTIONS)) {
+                        if (!sailingDirectionsName.equals(tmp[1].trim())) {
+                            sailingDirections = new SailingDirections();
+                            navigationDataList.add(sailingDirections);
+                            sailingDirectionsName = tmp[1].trim();
+                            String number = sailingDirectionsName.replace(SAILING_DIRECTIONS, "");
+                            sailingDirections.setId(Integer.parseInt(number));
+                        }
+                        if (bindings.get(1).getName().equals("p")) {
+                            if (bindings.get(1).getUri() != null) {
+                                tmp = bindings.get(1).getUri().split("#");
+                                if (sailingDirections != null) {
+                                    switch (tmp[1].trim()) {
+                                        case "hasGeometry":
+                                            sailingDirections.setWkt(bindings.get(2).getLiteral());
+                                            break;
+                                        case "hasChapter":
+                                            sailingDirections.setBook(bindings.get(2).getUri().split("#")[1]);
+                                            break;
+                                        case "zoneName":
+                                            sailingDirections.setZoneName(bindings.get(2).getLiteral());
+                                            break;
+                                        case "zoneData":
+                                            sailingDirections.setDescription(bindings.get(2).getLiteral());
+                                            break;
+                                        default:
                                     }
                                 }
                             }
@@ -156,7 +167,9 @@ public class RdfParser {
                 }
             }
         }
-        return navigationDataList;
+        NavigationDataSet navigationDataSet = new NavigationDataSet();
+        navigationDataSet.addAll(navigationDataList);
+        return navigationDataSet;
     }
 
     @Override
