@@ -21,6 +21,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.AvurnavSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.AvurnavRSS;
@@ -66,47 +67,48 @@ public class NavigationDataSet {
         @XmlElement(name = "rss", type = Rss.class),
         @XmlElement(name = "avurnavss", type = AvurnavRSS.class),
         @XmlElement(name = "avurnav", type = Avurnav.class),
+        @XmlElement(name = "sailingDirections", type = SailingDirections.class),
         @XmlElement(name = "avurnavSet", type = AvurnavSet.class),
         @XmlElement(name = "gpx", type = Gpx.class)
     })
 
-    private final ConcurrentLinkedQueue<NavigationData> navigationDataSet;
+    private final ConcurrentLinkedQueue<NavigationData> navigationDataList;
 
     public NavigationDataSet() {
-        navigationDataSet = new ConcurrentLinkedQueue<>();
+        navigationDataList = new ConcurrentLinkedQueue<>();
     }
 
     public void add(NavigationData data) {
-        navigationDataSet.add(data);
+        navigationDataList.add(data);
     }
 
     public void addAll(Collection<? extends NavigationData> data) {
-        navigationDataSet.addAll(data);
+        navigationDataList.addAll(data);
     }
 
     public NavigationData poll() {
-        return navigationDataSet.poll();
+        return navigationDataList.poll();
     }
 
     public boolean isEmpty() {
-        return navigationDataSet.isEmpty();
+        return navigationDataList.isEmpty();
     }
 
-    public ConcurrentLinkedQueue<NavigationData> getNavigationDataSet() {
-        return navigationDataSet;
+    public ConcurrentLinkedQueue<NavigationData> getNavigationDataList() {
+        return navigationDataList;
     }
 
     public int size() {
-        return navigationDataSet.size();
+        return navigationDataList.size();
     }
 
     public void clear() {
-        navigationDataSet.clear();
+        navigationDataList.clear();
     }
 
     public List<Location> getLocations() {
         List<Location> tmp = new ArrayList<>();
-        navigationDataSet.stream().forEach((nd) -> {
+        navigationDataList.stream().forEach((nd) -> {
             tmp.add(nd.getLocation());
         });
         return tmp;
@@ -114,7 +116,7 @@ public class NavigationDataSet {
 
     public <T extends NavigationData> List<T> get(Class<T> t) {
         List<T> tmp = new ArrayList<>();
-        navigationDataSet.stream().forEach((data) -> {
+        navigationDataList.stream().forEach((data) -> {
             if (data.getClass() == t) {
                 tmp.add((T) data);
             }
@@ -124,7 +126,7 @@ public class NavigationDataSet {
 
     public void display() {
 
-        navigationDataSet.stream().forEach((data) -> {
+        navigationDataList.stream().forEach((data) -> {
             if (data != null) {
                 System.out.println(data);
             }
@@ -133,11 +135,11 @@ public class NavigationDataSet {
 
     @Override
     public String toString() {
-        return "NavigationDataSet{" + "navigationDataSet=" + navigationDataSet + '}';
+        return "NavigationDataSet{" + "navigationDataSet=" + navigationDataList + '}';
     }
 
     public void print() {
-        navigationDataSet.stream().forEach((data) -> {
+        navigationDataList.stream().forEach((data) -> {
             if (data != null) {
                 System.out.println(data.getClass().getName());
             }

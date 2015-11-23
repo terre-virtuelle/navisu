@@ -206,7 +206,7 @@ public class RouteEditorController
          */
         load(FXML);
         initPanel();
-        setTranslateX(225.0);
+        setTranslateX(280.0);
     }
 
     final void load(String fxml) {
@@ -805,7 +805,7 @@ public class RouteEditorController
                 }
             }
             try {
-                ImportExportXML.exports(navigationDataSet, "privateData/nds/" + routeName + ".xml");
+                ImportExportXML.exports(navigationDataSet, "privateData/nds/" + routeName + ".nds");
             } catch (JAXBException | FileNotFoundException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }

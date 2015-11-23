@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rdf;
+package bzh.terrevirtuelle.navisu.domain.rdf;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -85,7 +85,9 @@ public class Binding {
 
     @Override
     public String toString() {
-        return "Binding{" + "name=" + name + ", uri=" + uri + '}';
+        return "Binding{" + "name=" + name + ", uri=" + uri + ", literal=" + literal + '}';
     }
+
+    
 
 }

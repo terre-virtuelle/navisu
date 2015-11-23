@@ -35,8 +35,25 @@
                 <TextArea fx:id="dataTextArea" layoutX="235.0" layoutY="59.0" prefHeight="425.0" prefWidth="180.0" styleClass="datatextarea" />
                 <Button fx:id="quit" alignment="CENTER" layoutX="400.0" layoutY="-7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
-                <Slider fx:id="opacitySlider" layoutX="431.0" layoutY="41.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                <Slider fx:id="opacitySlider" layoutX="528.0" layoutY="88.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
+            <GridPane layoutX="30.0" layoutY="41.0" prefHeight="29.0" prefWidth="490.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="openButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Open" />
+                  <Button fx:id="saveButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Save" GridPane.columnIndex="1" />
+                  <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="Reset" GridPane.columnIndex="2" />
+               </children>
+            </GridPane>
+            <Label fx:id="visibleLabel" layoutX="459.0" layoutY="11.0" prefHeight="15.0" prefWidth="53.0" />
             </children>
         </Group>
     </children>
