@@ -7,9 +7,9 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +36,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.input.KeyCode;
+import static javafx.scene.input.KeyCode.I;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -58,6 +60,7 @@ public class RouteDataEditorController
     private List<Avurnav> avurnavList;
     private List<SailingDirections> sailingDirectionsList;
     private List<Gpx> gpxList;
+    private File file;
     @FXML
     public Pane view;
     @FXML
@@ -115,7 +118,7 @@ public class RouteDataEditorController
             });
         });
         openButton.setOnMouseClicked((MouseEvent event) -> {
-            File file = IO.fileChooser(guiAgentServices.getStage(),
+            file = IO.fileChooser(guiAgentServices.getStage(),
                     "privateData/nds", "NDS files (*.nds)", "*.nds", "*.NDS");
             try {
                 navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
@@ -125,11 +128,19 @@ public class RouteDataEditorController
             sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
             gpxList = navigationDataSet.get(Gpx.class);
             avurnavList = navigationDataSet.get(Avurnav.class);
-            //  System.out.println(sailingDirectionsList);
-            // System.out.println(gpxList);
         });
         saveButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("Nor yet implemented :-) ");
+            if (navigationDataSet != null) {
+                try {
+                    ImportExportXML.exports(navigationDataSet, file);
+                } catch (JAXBException | FileNotFoundException ex) {
+                    Logger.getLogger(RouteDataEditorController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        dataTextArea.setWrapText(true);
+        dataTextArea.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
+            dataTextArea.setScrollTop(Double.MAX_VALUE);
         });
     }
 
@@ -187,7 +198,7 @@ public class RouteDataEditorController
         landmarks.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (newValue) {
                 System.out.println("The selected item is " + landmarks.valueProperty().get());
-                dataTextArea.setText(landmarks.valueProperty().get());
+                // dataTextArea.setText(landmarks.valueProperty().get());
             }
         });
         church.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
@@ -232,12 +243,13 @@ public class RouteDataEditorController
         });
         avurnav.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (newValue) {
-                File file = IO.fileChooser(guiAgentServices.getStage(),
+                File f = IO.fileChooser(guiAgentServices.getStage(),
                         "data/rdf", "RDF files (*.rdf)", "*.rdf", "*.RDF");
-                RdfParser rdfParser = new RdfParser(file);
+                RdfParser rdfParser = new RdfParser(f);
                 NavigationDataSet tmp = rdfParser.parse();
                 navigationDataSet.addAll(tmp.getNavigationDataList());
-                System.out.println(navigationDataSet);
+                avurnavList.addAll(tmp.get(Avurnav.class));
+                avurnavPrint(avurnavList);
             }
         });
         nauticalDocumentation.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
@@ -265,5 +277,24 @@ public class RouteDataEditorController
                 System.out.println("The selected item is " + other.valueProperty().get());
             }
         });
+    }
+
+    public void avurnavPrint(List<Avurnav> avurnavList) {
+        String[] tmp;
+        String str = "";
+        for (Avurnav a : avurnavList) {
+            if (a.getId() != 0) {
+                tmp = new String[5];
+                tmp[0] = Translator.tr("navigation.avurnav.avurnav") + " "
+                        + Translator.tr("navigation.avurnav.id").toLowerCase() + " : " + a.getId() + "\n";
+                tmp[1] = Translator.tr("navigation.avurnav.globalZone") + " : " + a.getGlobalZone() + "\n";
+                tmp[2] = Translator.tr("navigation.avurnav.broadcastTime") + " : " + a.getBroadcastTime() + "\n";
+                tmp[3] = Translator.tr("navigation.avurnav.expirationDate") + " : " + a.getExpirationDate() + "\n";
+                tmp[4] = Translator.tr("navigation.avurnav.description") + " : " + a.getDescription() + "\n\n";
+                tmp[4] = tmp[4].replace("\t", "");
+                str += tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4];
+            }
+        }
+        dataTextArea.setText(str);
     }
 }
