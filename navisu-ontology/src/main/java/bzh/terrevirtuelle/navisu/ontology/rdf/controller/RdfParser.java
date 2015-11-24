@@ -128,6 +128,15 @@ public class RdfParser {
                                         case "broadcastTime":
                                             avurnav.setBroadcastTime(bindings.get(2).getLiteral());
                                             break;
+                                            case "hasGeometry":
+                                            avurnav.setGeometry(bindings.get(2).getLiteral());
+                                            break;
+                                            case "hasRestriction":
+                                            avurnav.setRestriction(bindings.get(2).getUri().split("#")[1]);
+                                            break;
+                                            case "type":
+                                            avurnav.setType(bindings.get(2).getUri().split("#")[1]);
+                                            break;
                                         default:
                                     }
                                 }

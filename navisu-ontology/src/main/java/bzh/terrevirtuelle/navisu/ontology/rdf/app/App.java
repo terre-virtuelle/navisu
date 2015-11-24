@@ -24,8 +24,8 @@ import javax.xml.bind.JAXBException;
 public class App {
 
     String SHIP_NAME = "Lithops";
-     String NAME_RDF = "requeteArea";
-    // String NAME_RDF = "requeteAvurnav";
+    // String NAME_RDF = "requeteArea";
+    String NAME_RDF = "requeteAvurnavGeo";
     //String NAME_RDF = "requete";
     String RESULT = "result";
     String DIR_SRC = "data/";
@@ -39,7 +39,7 @@ public class App {
         // sauvegarde dans un  NavigationDataSet
         RdfParser rdfParser = new RdfParser();
         navigationDataSet = rdfParser.parse(DIR_SRC, NAME_RDF);
-        
+
         // Ne pas commenter
         // sauvegarde du NavigationDataSet dans un fic
         try {
@@ -54,7 +54,9 @@ public class App {
         } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(nds);
+        if (nds != null) {
+            nds.display();
+        }
     }
 
     public static void main(String[] args) {
