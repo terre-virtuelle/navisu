@@ -163,7 +163,7 @@ public class Gpx
      * Objects of the following type(s) are allowed in the list {@link Route }
      *
      *
-     * @return 
+     * @return
      */
     public List<Route> getRte() {
         if (rte == null) {
@@ -282,9 +282,21 @@ public class Gpx
     }
 
     @Override
+    public String getGeometry() {
+        String geom = "MULTIPOINT(";
+        int size = wpt.size() - 1;
+        for (int i = 0; i < size; i++) {
+            geom += wpt.get(i).longitude + " " + wpt.get(i).latitude;
+            geom += ",";
+        }
+        geom += wpt.get(size - 1).longitude + " " + wpt.get(size - 1).latitude + ")";
+
+        return geom;
+    }
+
+    @Override
     public String toString() {
         return "Gpx{" + "wpt=" + wpt + ", rte=" + rte + ", trk=" + trk + ", extensions=" + extensions + ", boundaries=" + boundaries + ", highway=" + highway + ", version=" + version + ", creator=" + creator + '}';
     }
 
-    
 }

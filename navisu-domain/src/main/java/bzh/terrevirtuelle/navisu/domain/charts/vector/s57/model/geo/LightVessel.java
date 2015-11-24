@@ -224,4 +224,8 @@ public class LightVessel extends Geo
         this.objectNameInNationalLanguage = value;
     }
 
+    @Override
+    public String getGeometry() {
+        return "POINT(" + Double.toString(0.0) + " " + Double.toString(0.0) + ")";
+    }
 }

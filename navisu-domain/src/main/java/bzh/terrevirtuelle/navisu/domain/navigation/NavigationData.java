@@ -7,11 +7,13 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
-public  interface NavigationData {
+public interface NavigationData {
 
     default Location getLocation() {
         return (new Location(0.0, 0.0));
     }
+
+    String getGeometry();
 
     default long getId() {
         return ((long) 0);

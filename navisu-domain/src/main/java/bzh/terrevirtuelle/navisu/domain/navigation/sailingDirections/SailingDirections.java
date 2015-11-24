@@ -133,10 +133,13 @@ public class SailingDirections
     }
 
     @Override
+    public String getGeometry() {
+        return "";//TODO
+    }
+
+    @Override
     public String toString() {
         return "SailingDirections{" + "id=" + id + ", wkt=" + wkt + ", book=" + book + ", zoneName=" + zoneName + ", description=" + description + '}';
     }
-
-    
 
 }

@@ -263,4 +263,8 @@ public class Light extends Location
         this.objectNameInNationalLanguage = value;
     }
 
+    @Override
+    public String getGeometry() {
+        return "POINT(" + Double.toString(lon) + " " + Double.toString(lat) + ")";
+    }
 }

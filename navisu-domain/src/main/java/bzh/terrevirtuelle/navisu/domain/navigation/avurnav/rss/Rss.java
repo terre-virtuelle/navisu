@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "rss")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Rss
-        implements NavigationData, Serializable, Cloneable {
+        implements  Serializable, Cloneable {
 
     Channel channel;
 
