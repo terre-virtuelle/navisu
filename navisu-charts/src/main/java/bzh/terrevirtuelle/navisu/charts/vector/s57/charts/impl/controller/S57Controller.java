@@ -97,16 +97,16 @@ public abstract class S57Controller
         return id;
     }
 
-    public void setId(long id) {
+    public final void setId(long id) {
         this.id = id;
         navigationData.getLocation().setId(id);
     }
 
-    public double getLat() {
+    public final double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public final void setLat(double lat) {
         this.lat = lat;
         navigationData.getLocation().setLat(lat);
     }
@@ -115,7 +115,7 @@ public abstract class S57Controller
         return lon;
     }
 
-    public void setLon(double lon) {
+    public  final void setLon(double lon) {
         this.lon = lon;
     }
 
