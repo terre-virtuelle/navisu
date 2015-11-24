@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import  bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import java.util.logging.Level;
 
 /**
@@ -40,21 +40,21 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
 
         this.menuBar = menu;
 
-        if(this.menuBar.getMenus().size() > 0) {
+        if (this.menuBar.getMenus().size() > 0) {
             this.menuBar.getMenus().clear();
         }
 
-        for(DefaultMenuEnum defaultMenu : DefaultMenuEnum.getAll()) {
+        for (DefaultMenuEnum defaultMenu : DefaultMenuEnum.getAll()) {
 
             String key = defaultMenu.getKey();
-             this.createMenu(key, Translator.tr(key));
+            this.createMenu(key, Translator.tr(key));
         }
     }
 
     @Override
     public void createMenu(String menuKey, String menuName) {
 
-        if(!this.menuMap.containsKey(menuKey)) {
+        if (!this.menuMap.containsKey(menuKey)) {
 
             // Create the menuBar
             Menu menu = new Menu(menuName);
@@ -64,8 +64,7 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
 
             // Add it to the menuBar bar
             this.menuBar.getMenus().add(menu);
-        }
-        else {
+        } else {
             LOGGER.log(Level.WARNING, "Menu with key \"{0}\" already exists.", menuKey);
         }
     }
@@ -73,7 +72,7 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
     @Override
     public void addMenuItem(String menuKey, String menuName, MenuItem item) {
 
-        if(!this.menuMap.containsKey(menuKey)) {
+        if (!this.menuMap.containsKey(menuKey)) {
             LOGGER.log(Level.INFO, "Menu with key \"{0}\" does not exists. It will be created.", menuKey);
             this.createMenu(menuKey, menuName);
         }
@@ -88,13 +87,15 @@ public class MenuManagerImpl implements MenuManager, MenuManagerServices, Compon
     @Override
     public void addMenuItem(DefaultMenuEnum defMenu, MenuItem item) {
 
-      //  Menu menu = this.menuMap.get(defMenu.getKey());
-      //  menu.getItems().add(item);
+        //  Menu menu = this.menuMap.get(defMenu.getKey());
+        //  menu.getItems().add(item);
     }
 
     @Override
-    public void componentStarted() {}
+    public void componentStarted() {
+    }
 
     @Override
-    public void componentStopped() {}
+    public void componentStopped() {
+    }
 }
