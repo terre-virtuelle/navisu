@@ -81,19 +81,22 @@ public class GpsPlotterWithRouteImpl
 
     @Override
     public void on(String... files) {
-        gpsPlotterController = GpsPlotterWithRouteController.getInstance(this,
-                layersManagerServices,
-                guiAgentServices, kmlObjectServices, aisServices,
-                withTarget,
-                navigationDataSet,
-                NAME1, NAME2, GROUP);
-
-        if (withTarget) {
-            gpsPlotterController.createTarget();
+        if (gpsPlotterController == null) {
+            gpsPlotterController = GpsPlotterWithRouteController.getInstance(this,
+                    layersManagerServices,
+                    guiAgentServices, kmlObjectServices, aisServices,
+                    withTarget,
+                    navigationDataSet,
+                    NAME1, NAME2, GROUP);
+            if (withTarget) {
+                gpsPlotterController.createTarget();
+            }
+            gpsEventsController = new GpsPlotterWithRouteGpsEventsController(gpsPlotterController);
+            gpsEventsController.subscribe();
+            gpsTrackServices.on(files);
+        }else{
+            gpsPlotterController.activateControllers();
         }
-        gpsEventsController = new GpsPlotterWithRouteGpsEventsController(gpsPlotterController);
-        gpsEventsController.subscribe();
-        gpsTrackServices.on(files);
     }
 
     @Override

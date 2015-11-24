@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
@@ -22,13 +23,28 @@ import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.GpsPlotterWithRouteImpl;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
+import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Offset;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -73,7 +89,12 @@ public class GpsPlotterWithRouteController {
     protected CircularFifoQueue<RMC> sentenceQueue;
     protected NavigationDataSet navigationDataSet = null;
     private final int LIMIT = 926; // distance of perception
-    static private GpsPlotterWithRouteController instance;
+    protected WKTReader wktReader;
+    protected Point point;
+    protected PointPlacemark placemark;
+    protected PointPlacemarkAttributes placemarkNormalAttributes;
+    protected String AVURNAV_IMAGE_ADDRESS = "images/avurnav.png";
+    static private GpsPlotterWithRouteController instance = null;
 
     public static GpsPlotterWithRouteController getInstance(
             GpsPlotterWithRouteImpl component,
@@ -125,7 +146,7 @@ public class GpsPlotterWithRouteController {
         if (withTarget == true) {
             createOwnerShip();
         }
-        activateS57Controllers();
+        activateControllers();
     }
 
     private void addPanelController() {
@@ -229,16 +250,19 @@ public class GpsPlotterWithRouteController {
         }
     }
 
+    public final void activateControllers() {
+        activateS57Controllers();
+        activateNavigationControllers();
+    }
+
     private void activateS57Controllers() {
-        if (navigationDataSet == null) {//navigationDataSet not given
-            File file = IO.fileChooser(guiAgentServices.getStage(),
-                    "privateData/nds/", "NDS files (*.xml)", "*.xml", "*.XML");
-            navigationDataSet = new NavigationDataSet();
-            try {
-                navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
-            } catch (FileNotFoundException | JAXBException ex) {
-                Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        File file = IO.fileChooser(guiAgentServices.getStage(),
+                "privateData/nds/", "NDS files (*.nds)", "*.nds", "*.NDS");
+        navigationDataSet = new NavigationDataSet();
+        try {
+            navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
+        } catch (FileNotFoundException | JAXBException ex) {
+            Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
         }
         s57ControllerIdList = new ArrayList<>();
         List<Location> locations = navigationDataSet.getLocations();
@@ -247,10 +271,103 @@ public class GpsPlotterWithRouteController {
             s57ControllerIdList.add(Long.toString(id));
         });
         component.notifyAisActivateEvent(aisSurveyZoneLayer, s57ControllerIdList);
-        System.out.println(locations);
-        /* 
-        List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
-        for (Avurnav a : avurnavList) {
-        }*/
     }
+
+    private void activateNavigationControllers() {
+        List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
+        wktReader = new WKTReader();
+        placemarkNormalAttributes = new PointPlacemarkAttributes();
+        avurnavList.stream().forEach((Avurnav a) -> {
+            String geom = a.getGeometry();
+            String label = "Avurnav N°" + Long.toString(a.getId());
+            String description = a.getDescription() == null ? "" : a.getDescription();
+            String globalZone = a.getGlobalZone() == null ? "" : a.getGlobalZone();
+            geom = geom.toUpperCase();
+            if (geom.contains("MULTIPOINT")) {
+                createPoint(geom, label, globalZone, AVURNAV_IMAGE_ADDRESS);
+            } else if (geom.contains("POINT")) {
+                createPoint(geom, label, globalZone, AVURNAV_IMAGE_ADDRESS);
+            } else if (geom.contains("MULTIPOLYGON")) {
+                createPolygon(geom, label, globalZone, AVURNAV_IMAGE_ADDRESS);
+            } else if (geom.contains("POLYGON")) {
+                createPolygon(geom, label, globalZone, AVURNAV_IMAGE_ADDRESS);
+            } else if (geom.contains("MULTILINESTRING")) {
+                createLineString(geom);
+            } else if (geom.contains("LINESTRING")) {
+                createLineString(geom);
+            } else if (geom.contains("GEOMETRYCOLLECTION")) {
+                createGeometryCollection(geom);
+            }
+        });
+    }
+
+    private void createPoint(String geom, String label, String text, String imageAddress) {
+        Coordinate[] coordinates = null;
+        Geometry geometry;
+        try {
+            geometry = wktReader.read(geom);
+            coordinates = geometry.getCoordinates();
+        } catch (ParseException ex) {
+            Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        placemarkNormalAttributes.setImageAddress(imageAddress);
+        placemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
+        placemarkNormalAttributes.setScale(0.3);
+        if (coordinates != null) {
+            for (Coordinate coordinate : coordinates) {
+                placemark = new PointPlacemark(Position.fromDegrees(coordinate.y, coordinate.x, 0));
+                placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+                // placemark.setLabelText(label);
+                placemark.setValue(AVKey.DISPLAY_NAME, label + "\n" + text);
+                placemark.setAttributes(placemarkNormalAttributes);
+                aisSurveyZoneLayer.addRenderable(placemark);
+            }
+        }
+    }
+
+    private void createPolygon(String geom, String label, String text, String imageAddress) {
+        Coordinate[] coordinates = null;
+        Geometry geometry;
+        try {
+            geometry = wktReader.read(geom);
+            coordinates = geometry.getCoordinates();
+        } catch (ParseException ex) {
+            Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ex " + ex);
+        }
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setInteriorMaterial(new Material(Color.BLUE));
+        normalAttributes.setDrawInterior(true);
+        normalAttributes.setInteriorOpacity(0.5);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(new Material(Color.LIGHT_GRAY));
+        normalAttributes.setOutlineStipplePattern((short) 0xAAAA);
+        normalAttributes.setOutlineStippleFactor(5);
+        normalAttributes.setEnableLighting(true);
+        ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setDrawInterior(true);
+        highlightAttributes.setInteriorMaterial(new Material(Color.YELLOW));
+        highlightAttributes.setInteriorOpacity(0.8);
+        ArrayList<Position> pathPositions = new ArrayList<>();
+        if (coordinates != null) {
+            for (Coordinate coordinate : coordinates) {
+                pathPositions.add(Position.fromDegrees(coordinate.y, coordinate.x, 100));
+            }
+            Polygon pgon = new Polygon(pathPositions);
+            pgon.setAttributes(normalAttributes);
+            pgon.setHighlightAttributes(highlightAttributes);
+            pgon.setValue(AVKey.DISPLAY_NAME, label + "\n" + text);
+            aisSurveyZoneLayer.addRenderable(pgon);
+        }
+    }
+
+    private void createLineString(String geom) {
+
+    }
+
+    private void createGeometryCollection(String geom) {
+
+    }
+
 }
