@@ -56,11 +56,9 @@ public class GpsPlotterImpl
     protected boolean on = false;
     private final String NAME1 = "GpsPlotter";
     private final String NAME2 = "AisSurvey";
-    private final String NAME3 = "GpsPlotterWithRoute";
     protected final String GROUP = "Navigation";
     private GpsPlotterController gpsPlotterController;
     private GpsEventsController gpsEventsController;
-    private boolean withRoute = false;
     private boolean withTarget = true;
     protected List<String> s57Controllers;
     protected NavigationDataSet navigationDataSet = null;
@@ -82,13 +80,10 @@ public class GpsPlotterImpl
 
     @Override
     public void on(String... files) {
-        if (files[0].contains(NAME3)) {
-            withRoute = true;
-        }
-        gpsPlotterController = new GpsPlotterController(this,
+        gpsPlotterController = GpsPlotterController.getInstance(this,
                 layersManagerServices,
                 guiAgentServices, kmlObjectServices, aisServices,
-                withRoute, withTarget,
+                withTarget,
                 navigationDataSet,
                 NAME1, NAME2, GROUP);
         if (withTarget) {
@@ -119,7 +114,7 @@ public class GpsPlotterImpl
 
     @Override
     public boolean canOpen(String category) {
-        return category.equals(NAME1) || category.equals(NAME3);
+        return category.equals(NAME1);
     }
 
     @Override
@@ -130,5 +125,5 @@ public class GpsPlotterImpl
     public void notifyAisActivateEvent(RenderableLayer layer, List<String> targets) {
         aisActivateEvent.notifyAisActivateMessageChanged(layer, targets);
     }
-   
+
 }
