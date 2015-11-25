@@ -134,7 +134,7 @@ public class SailingDirections
 
     @Override
     public String getGeometry() {
-        return "";//TODO
+        return wkt;
     }
 
     @Override
