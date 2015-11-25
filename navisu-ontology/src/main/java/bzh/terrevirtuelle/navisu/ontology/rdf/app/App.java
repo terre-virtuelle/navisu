@@ -24,8 +24,8 @@ import javax.xml.bind.JAXBException;
 public class App {
 
     String SHIP_NAME = "Lithops";
-    // String NAME_RDF = "requeteArea";
-    String NAME_RDF = "requeteAvurnavGeo";
+     String NAME_RDF = "requeteArea";
+   // String NAME_RDF = "requeteAvurnavGeo";
     //String NAME_RDF = "requete";
     String RESULT = "result";
     String DIR_SRC = "data/";
