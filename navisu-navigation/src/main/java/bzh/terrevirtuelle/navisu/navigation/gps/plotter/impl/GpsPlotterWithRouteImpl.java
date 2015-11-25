@@ -55,7 +55,7 @@ public class GpsPlotterWithRouteImpl
 
     protected boolean on = false;
     private final String NAME1 = "GpsPlotter";
-    private final String NAME2 = "AisSurvey";
+    private final String NAME2 = "Nautical documents";//AisSurvey
     private final String NAME3 = "GpsPlotterWithRoute";
     protected final String GROUP = "Navigation";
     private GpsPlotterWithRouteController gpsPlotterController;
