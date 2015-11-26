@@ -16,4 +16,13 @@ public class BeaconSafeWater extends Buoyage
 
     public BeaconSafeWater() {
     }
+
+    public BeaconSafeWater(String wkt) {
+        super(wkt);
+    }
+
+    public BeaconSafeWater(double lat, double lon) {
+        super(lat, lon);
+    }
+    
 }

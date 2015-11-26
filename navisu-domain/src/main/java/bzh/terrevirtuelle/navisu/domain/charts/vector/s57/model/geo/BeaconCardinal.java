@@ -9,10 +9,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcncar")
 public class BeaconCardinal extends Beacon
-        implements  Serializable {
+        implements Serializable {
 
     public BeaconCardinal(Long id) {
         this.id = id;
+    }
+
+    public BeaconCardinal(String wkt) {
+        super(wkt);
+    }
+
+    public BeaconCardinal(double lat, double lon) {
+        super(lat, lon);
     }
 
     public BeaconCardinal() {
@@ -31,5 +39,9 @@ public class BeaconCardinal extends Beacon
         categoryOfMark = value;
     }
 
-    
+    @Override
+    public String toString() {
+        return "BeaconCardinal{" + super.toString() + '}';
+    }
+
 }

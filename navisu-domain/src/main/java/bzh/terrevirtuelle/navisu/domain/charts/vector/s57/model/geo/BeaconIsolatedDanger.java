@@ -14,6 +14,14 @@ public class BeaconIsolatedDanger extends Beacon
         this.id = id;
     }
 
+    public BeaconIsolatedDanger(String wkt) {
+        super(wkt);
+    }
+
+    public BeaconIsolatedDanger(double lat, double lon) {
+        super(lat, lon);
+    }
+
     public BeaconIsolatedDanger() {
     }
 }

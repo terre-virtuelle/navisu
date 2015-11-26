@@ -18,6 +18,14 @@ public class BeaconLateral extends Beacon
     public BeaconLateral() {
     }
 
+    public BeaconLateral(double lat, double lon) {
+        super(lat, lon);
+    }
+
+    public BeaconLateral(String wkt) {
+        super(wkt);
+    }
+
     public String getCategoryOfLateralMark() {
         return categoryOfMark;
     }

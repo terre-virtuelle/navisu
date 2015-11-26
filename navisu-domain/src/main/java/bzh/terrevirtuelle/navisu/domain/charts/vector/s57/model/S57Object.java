@@ -12,6 +12,13 @@ public class S57Object implements Serializable {
 
     protected long id;
 
+    public S57Object(long id) {
+        this.id = id;
+    }
+
+    public S57Object() {
+    }
+
     public long getId() {
         return this.id;
     }

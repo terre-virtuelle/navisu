@@ -18,6 +18,14 @@ implements  Serializable
 
 	public BeaconSpecialPurpose(){}
 
+    public BeaconSpecialPurpose(String wkt) {
+        super(wkt);
+    }
+
+    public BeaconSpecialPurpose(double lat, double lon) {
+        super(lat, lon);
+    }
+
 	private String beaconShape;
 
 	public String getBeaconShape()
