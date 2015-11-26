@@ -93,6 +93,8 @@ import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
 import bzh.terrevirtuelle.navisu.magnetic.impl.MagneticImpl;
 import bzh.terrevirtuelle.navisu.media.sound.SoundServices;
 import bzh.terrevirtuelle.navisu.media.sound.impl.SoundImpl;
+import bzh.terrevirtuelle.navisu.navigation.gps.plotter.GpsPlotterWithRouteServices;
+import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.GpsPlotterWithRouteImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteDataEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewerServices;
@@ -179,6 +181,7 @@ public class AppMain extends Application {
                         GpsTrackPlotterImpl.class,
                         GpsTrackPolygonImpl.class,
                         GpsPlotterImpl.class,
+                        GpsPlotterWithRouteImpl.class,
                         GpxObjectImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
@@ -241,6 +244,7 @@ public class AppMain extends Application {
         GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
         GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
+        GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
@@ -315,6 +319,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(clocksServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(gpsPlotterWithRouteServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());

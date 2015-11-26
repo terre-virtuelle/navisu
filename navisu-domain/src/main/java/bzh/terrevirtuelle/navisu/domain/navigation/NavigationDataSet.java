@@ -72,43 +72,51 @@ public class NavigationDataSet {
         @XmlElement(name = "gpx", type = Gpx.class)
     })
 
-    private final ConcurrentLinkedQueue<NavigationData> navigationDataList;
+    private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;
 
     public NavigationDataSet() {
-        navigationDataList = new ConcurrentLinkedQueue<>();
+        navigationDataQueue = new ConcurrentLinkedQueue<>();
     }
 
     public void add(NavigationData data) {
-        navigationDataList.add(data);
+        navigationDataQueue.add(data);
     }
 
     public void addAll(Collection<? extends NavigationData> data) {
-        navigationDataList.addAll(data);
+        navigationDataQueue.addAll(data);
     }
 
     public NavigationData poll() {
-        return navigationDataList.poll();
+        return navigationDataQueue.poll();
     }
 
     public boolean isEmpty() {
-        return navigationDataList.isEmpty();
+        return navigationDataQueue.isEmpty();
     }
 
-    public ConcurrentLinkedQueue<NavigationData> getNavigationDataList() {
-        return navigationDataList;
+    public void setNavigationDataQueue(ConcurrentLinkedQueue<NavigationData> navigationDataQueue) {
+        this.navigationDataQueue = navigationDataQueue;
+    }
+
+    public List<NavigationData> getNavigationDataList() {
+        return new ArrayList(navigationDataQueue);
+    }
+
+    public ConcurrentLinkedQueue<NavigationData> getNavigationDataQueue() {
+        return navigationDataQueue;
     }
 
     public int size() {
-        return navigationDataList.size();
+        return navigationDataQueue.size();
     }
 
     public void clear() {
-        navigationDataList.clear();
+        navigationDataQueue.clear();
     }
 
     public List<Location> getLocations() {
         List<Location> tmp = new ArrayList<>();
-        navigationDataList.stream().forEach((nd) -> {
+        navigationDataQueue.stream().forEach((nd) -> {
             tmp.add(nd.getLocation());
         });
         return tmp;
@@ -116,7 +124,7 @@ public class NavigationDataSet {
 
     public <T extends NavigationData> List<T> get(Class<T> t) {
         List<T> tmp = new ArrayList<>();
-        navigationDataList.stream().forEach((data) -> {
+        navigationDataQueue.stream().forEach((data) -> {
             if (data.getClass() == t) {
                 tmp.add((T) data);
             }
@@ -126,7 +134,7 @@ public class NavigationDataSet {
 
     public void display() {
 
-        navigationDataList.stream().forEach((data) -> {
+        navigationDataQueue.stream().forEach((data) -> {
             if (data != null) {
                 System.out.println(data);
             }
@@ -135,11 +143,11 @@ public class NavigationDataSet {
 
     @Override
     public String toString() {
-        return "NavigationDataSet{" + "navigationDataSet=" + navigationDataList + '}';
+        return "NavigationDataSet{" + "navigationDataSet=" + navigationDataQueue + '}';
     }
 
     public void print() {
-        navigationDataList.stream().forEach((data) -> {
+        navigationDataQueue.stream().forEach((data) -> {
             if (data != null) {
                 System.out.println(data.getClass().getName());
             }

@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "avurnavrss")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AvurnavRSS
-        implements NavigationData, Serializable, Cloneable {
+        implements  Serializable, Cloneable {
 
     private Rss rss;
     private Long id;
@@ -54,11 +54,6 @@ public class AvurnavRSS
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    @Override
-    public long getId() {
-        return id;
     }
 
 }

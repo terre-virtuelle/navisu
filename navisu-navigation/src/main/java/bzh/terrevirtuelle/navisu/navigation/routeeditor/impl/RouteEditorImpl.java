@@ -57,7 +57,7 @@ public class RouteEditorImpl
                 guiAgentServices,
                 s57ChartServices,
                 GROUP_NAME, LAYER_NAME,
-                KeyCode.M, KeyCombination.CONTROL_DOWN);
+                KeyCode.D, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routeDataEditorController);
         guiAgentServices.getRoot().getChildren().add(routeDataEditorController);
         routeDataEditorController.setVisible(false);

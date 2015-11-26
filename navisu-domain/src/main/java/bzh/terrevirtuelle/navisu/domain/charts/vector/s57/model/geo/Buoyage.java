@@ -47,12 +47,13 @@ public class Buoyage
     @XmlTransient
     protected String label;
     protected String imageAddress;
-  //  @XmlTransient
- //   protected PointPlacemark placemark;
+    //  @XmlTransient
+    //   protected PointPlacemark placemark;
 
     public Buoyage() {
     }
-/*
+
+    /*
     public PointPlacemark getPlacemark() {
         return placemark;
     }
@@ -60,7 +61,7 @@ public class Buoyage
     public void setPlacemark(PointPlacemark placemark) {
         this.placemark = placemark;
     }
-*/
+     */
     /**
      * Get the value of navigationalSystemOfMarks
      *
@@ -353,6 +354,11 @@ public class Buoyage
     @Override
     public Location getLocation() {
         return this;
+    }
+
+    @Override
+    public String getGeometry() {
+        return "POINT(" + Double.toString(lon) + " " + Double.toString(lat) + ")";
     }
 
     @Override

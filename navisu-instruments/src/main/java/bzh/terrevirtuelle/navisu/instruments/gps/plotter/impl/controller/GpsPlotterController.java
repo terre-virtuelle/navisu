@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
@@ -20,8 +19,6 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
-import bzh.terrevirtuelle.navisu.util.io.IO;
-import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
@@ -29,11 +26,8 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -42,7 +36,6 @@ import javafx.application.Platform;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javax.xml.bind.JAXBException;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 
 /**
@@ -67,19 +60,44 @@ public class GpsPlotterController {
     protected double initRotation;
     protected Properties properties;
     protected ColladaRoot ownerShipView;
-    protected boolean withRoute = false;
     protected boolean withTarget = true;
-    protected List<String> s57Controllers;
+    protected List<String> s57ControllerIdList;
     protected GpsPlotterImpl component;
     protected CircularFifoQueue<RMC> sentenceQueue;
     protected NavigationDataSet navigationDataSet = null;
+    private final int LIMIT = 926; // distance of perception
+    static private GpsPlotterController instance;
 
-    public GpsPlotterController(GpsPlotterImpl component,
+    public static GpsPlotterController getInstance(
+            GpsPlotterImpl component,
             LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
             KmlObjectServices kmlObjectServices,
             AisServices aisServices,
-            boolean withRoute, boolean withTarget,
+            boolean withTarget,
+            NavigationDataSet navigationDataSet,
+            String name1, String name2,
+            String group) {
+        if (instance == null) {
+            instance = new GpsPlotterController(component,
+                    layersManagerServices,
+                    guiAgentServices,
+                    kmlObjectServices,
+                    aisServices,
+                    withTarget,
+                    navigationDataSet,
+                    name1, name2,
+                    group);
+        }
+        return instance;
+    }
+
+    private GpsPlotterController(GpsPlotterImpl component,
+            LayersManagerServices layersManagerServices,
+            GuiAgentServices guiAgentServices,
+            KmlObjectServices kmlObjectServices,
+            AisServices aisServices,
+            boolean withTarget,
             NavigationDataSet navigationDataSet,
             String name1, String name2,
             String group) {
@@ -87,7 +105,6 @@ public class GpsPlotterController {
         this.guiAgentServices = guiAgentServices;
         this.kmlObjectServices = kmlObjectServices;
         this.aisServices = aisServices;
-        this.withRoute = withRoute;
         this.withTarget = withTarget;
         this.navigationDataSet = navigationDataSet;
         this.name1 = name1;
@@ -101,9 +118,6 @@ public class GpsPlotterController {
         addListeners();
         if (withTarget == true) {
             createOwnerShip();
-        }
-        if (withRoute == true) {
-            activateS57Controllers();
         }
     }
 
@@ -208,23 +222,4 @@ public class GpsPlotterController {
         }
     }
 
-    private void activateS57Controllers() {
-        if (navigationDataSet == null) {//navigationDataSet not given
-            File file = IO.fileChooser(guiAgentServices.getStage(),
-                    "privateData/nds/", "NDS files (*.xml)", "*.xml", "*.XML");
-            navigationDataSet = new NavigationDataSet();
-            try {
-                navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
-            } catch (FileNotFoundException | JAXBException ex) {
-                Logger.getLogger(GpsPlotterController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        s57Controllers = new ArrayList<>();
-        List<Location> locations = navigationDataSet.getLocations();
-        locations.stream().forEach((l) -> {
-            long id = l.getId();
-            s57Controllers.add(Long.toString(id));
-        });
-        component.notifyAisActivateEvent(aisSurveyZoneLayer, s57Controllers);
-    }
 }

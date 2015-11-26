@@ -18,29 +18,88 @@ import javax.xml.bind.annotation.XmlType;
  * @author Serge Morvan
  */
 @XmlRootElement
-@XmlType(name = "avurnav", propOrder = {"id", "globalZone", "broadcastTime", "expirationDate", "description"})
+@XmlType(name = "avurnav",
+        propOrder = {"id", "globalZone", "broadcastTime",
+            "expirationDate", "description",
+            "geometry", "restriction", "type"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Avurnav implements NavigationData{
+public class Avurnav implements NavigationData {
 
     private long id;
-
     private String globalZone;
-
     private String description;
-
     private String expirationDate;
-
     private String broadcastTime;
+    private String geometry;
+    private String restriction;
+    private String type;
 
     public Avurnav() {
     }
 
-    public Avurnav(long id, String globalZone, String description, String expirationDate, String broadcastTime) {
+    public Avurnav(long id, String globalZone, String description, String expirationDate, String broadcastTime, String geometry, String restriction, String type) {
         this.id = id;
         this.globalZone = globalZone;
         this.description = description;
         this.expirationDate = expirationDate;
         this.broadcastTime = broadcastTime;
+        this.geometry = geometry;
+        this.restriction = restriction;
+        this.type = type;
+    }
+
+    /**
+     * Get the value of restriction
+     *
+     * @return the value of restriction
+     */
+    public String getRestriction() {
+        return restriction;
+    }
+
+    /**
+     * Set the value of restriction
+     *
+     * @param restriction new value of restriction
+     */
+    public void setRestriction(String restriction) {
+        this.restriction = restriction;
+    }
+
+    /**
+     * Get the value of geometry
+     *
+     * @return the value of geometry
+     */
+    public String getGeometry() {
+        return geometry;
+    }
+
+    /**
+     * Set the value of geometry
+     *
+     * @param geometry new value of geometry
+     */
+    public void setGeometry(String geometry) {
+        this.geometry = geometry;
+    }
+
+    /**
+     * Get the value of type
+     *
+     * @return the value of type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Set the value of type
+     *
+     * @param type new value of type
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
@@ -136,18 +195,19 @@ public class Avurnav implements NavigationData{
 
     @Override
     public String toString() {
-        return "Avurnav{" + "id=" + id 
-                + ", globalZone=" + globalZone 
-                + ", description=" + description 
-                + ", expirationDate=" + expirationDate 
-                + ", broadcastTime=" + broadcastTime + '}';
+        return "Avurnav{" + "id=" + id + ", globalZone=" + globalZone + ", description=" + description + ", expirationDate=" + expirationDate + ", broadcastTime=" + broadcastTime + ", geometry=" + geometry + ", restriction=" + restriction + ", type=" + type + '}';
     }
 
-    public void print() {
-        System.out.println("Avurnav " + id);
-        System.out.println("  globalZone : " + globalZone);
-        System.out.println("  broadcastTime : " + broadcastTime);
-        System.out.println("  expirationDate : " + expirationDate);
-        System.out.println("  description : " + description);
+    public String printf() {
+        String tmp = "";
+        if (id != 0) {
+            tmp = "Avurnav : " + id + "\n"
+                    + "GlobalZone : " + globalZone + "\n"
+                    + "BroadcastTime : " + broadcastTime + "\n"
+                    + "ExpirationDate : " + expirationDate + "\n"
+                    + "Description : " + description + "\n\n";
+            
+        }
+        return tmp;
     }
 }

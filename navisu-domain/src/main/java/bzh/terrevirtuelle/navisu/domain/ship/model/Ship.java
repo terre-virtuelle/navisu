@@ -1,4 +1,4 @@
- /*
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -292,6 +292,11 @@ public class Ship
 
     public double getLongitude() {
         return longitude;
+    }
+
+    @Override
+    public String getGeometry() {
+        return "POINT(" + Double.toString(longitude) + " " + Double.toString(latitude) + ")";
     }
 
     public void setLongitude(double longitude) {

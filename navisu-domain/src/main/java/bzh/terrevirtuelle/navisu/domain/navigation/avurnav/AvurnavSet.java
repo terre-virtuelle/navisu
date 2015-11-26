@@ -23,8 +23,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlType(name = "avurnavSet")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AvurnavSet
-        implements NavigationData {
+public class AvurnavSet {
 
     @XmlElements({
         @XmlElement(name = "avurnav", type = Avurnav.class)

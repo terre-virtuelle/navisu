@@ -128,6 +128,15 @@ public class RdfParser {
                                         case "broadcastTime":
                                             avurnav.setBroadcastTime(bindings.get(2).getLiteral());
                                             break;
+                                            case "hasGeometry":
+                                            avurnav.setGeometry(bindings.get(2).getLiteral());
+                                            break;
+                                            case "hasRestriction":
+                                            avurnav.setRestriction(bindings.get(2).getUri().split("#")[1]);
+                                            break;
+                                            case "type":
+                                            avurnav.setType(bindings.get(2).getUri().split("#")[1]);
+                                            break;
                                         default:
                                     }
                                 }
@@ -147,7 +156,10 @@ public class RdfParser {
                                 if (sailingDirections != null) {
                                     switch (tmp[1].trim()) {
                                         case "hasGeometry":
-                                            sailingDirections.setWkt(bindings.get(2).getLiteral());
+                                            String tmp = bindings.get(2).getLiteral();
+                                            tmp=tmp.replace("(", "((");
+                                            tmp=tmp.replace(")", "))");
+                                            sailingDirections.setWkt(tmp);
                                             break;
                                         case "hasChapter":
                                             sailingDirections.setBook(bindings.get(2).getUri().split("#")[1]);

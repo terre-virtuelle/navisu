@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
 import bzh.terrevirtuelle.navisu.widgets.textlist.TextListController;
 import bzh.terrevirtuelle.navisu.wms.WMS;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
