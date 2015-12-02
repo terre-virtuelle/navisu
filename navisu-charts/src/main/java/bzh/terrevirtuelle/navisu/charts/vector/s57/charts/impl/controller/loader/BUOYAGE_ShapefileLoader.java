@@ -1,13 +1,13 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57BuoyageController;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57BuoyageBehavior;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageBehavior;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BUOYAGE;
@@ -41,7 +41,7 @@ public class BUOYAGE_ShapefileLoader
 
     private Buoyage object;
     private S57BuoyageController buoyageController;
-    private int LIMIT = 926; // distance of perception
+    private double LIMIT = 926; // distance of perception
     private final Set<S57Controller> s57Controllers;
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
@@ -166,29 +166,23 @@ public class BUOYAGE_ShapefileLoader
                 object.setDateStart((String) e.getValue());
             }
         });
-        S57BuoyageBehavior s57BuoyageBehavior = new S57BuoyageBehavior(LIMIT);
-        buoyageController = new S57BuoyageController(object, s57BuoyageBehavior);
-        s57BuoyageBehavior.init(buoyageController);
+
+        buoyageController = new S57BuoyageController(object, LIMIT);
+        S57BuoyageBehavior s57BuoyageBehavior = new S57BuoyageBehavior(buoyageController);
         s57Controllers.add(buoyageController);
-        
+
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         //   placemark.setLabelText(object.getObjectName());
         String catMark = "";
         if (acronym.contains("CAR")) {
             catMark = CATCAM.ATT.get(object.getCategoryOfMark());
-        } else {
-            if (acronym.contains("LAT")) {
-                catMark = CATLAM.ATT.get(object.getCategoryOfMark());
-            } else {
-                if (acronym.contains("SPP")) {
-                    catMark = CATSPM.ATT.get(object.getCategoryOfMark());
-                } else {
-                    if (acronym.contains("ISD")) {
-                        catMark = "0";
-                    }
-                }
-            }
+        } else if (acronym.contains("LAT")) {
+            catMark = CATLAM.ATT.get(object.getCategoryOfMark());
+        } else if (acronym.contains("SPP")) {
+            catMark = CATSPM.ATT.get(object.getCategoryOfMark());
+        } else if (acronym.contains("ISD")) {
+            catMark = "0";
         }
 
         /*
@@ -240,10 +234,11 @@ public class BUOYAGE_ShapefileLoader
         return placemark;
     }
 
+    /*
     public Set<S57Controller> getBeacons() {
         return s57Controllers;
     }
-
+     */
     public Set<S57Controller> getS57Controllers() {
         return s57Controllers;
     }

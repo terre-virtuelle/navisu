@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfaceShape;
 
 /**
  * NaVisu
@@ -22,22 +22,17 @@ import gov.nasa.worldwind.render.ShapeAttributes;
 public class S57BuoyageBehavior
         extends S57Behavior {
 
-    protected WorldWindow wwd;
     private ShapeAttributes farAttributes;
     private ShapeAttributes middleAttributes;
     private ShapeAttributes nearAttributes;
     private ShapeAttributes highlightAttributes;
-    Buoyage buoyage;
 
-    public S57BuoyageBehavior(double distance) {
-        this.range = distance;
-        wwd = GeoWorldWindViewImpl.getWW();
+    public S57BuoyageBehavior(S57Controller s57Controller) {
+        super(s57Controller);
+        init();
     }
 
-    public void init(S57BuoyageController buoyageController) {
-        s57Controller = buoyageController;
-        buoyage = (Buoyage) s57Controller.getNavigationData();
-
+    public final void init() {
         highlightAttributes = new BasicShapeAttributes();
         highlightAttributes.setInteriorMaterial(Material.GRAY);
         highlightAttributes.setDrawInterior(true);
@@ -61,35 +56,31 @@ public class S57BuoyageBehavior
     }
 
     @Override
-    public void doIt(double distance, double azimuth, PointPlacemark pointPlacemark) {
-
+    public void doIt(double distance, double azimuth) {
+        SurfaceShape surveyZone = s57Controller.getSurveyZone();
+        PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
+        double range = s57Controller.getRange();
         distance *= 1000;
-        shape.setHighlightAttributes(highlightAttributes);
-        if (distance > this.range) {
-            shape.getAttributes().setDrawInterior(false);
+        surveyZone.setHighlightAttributes(highlightAttributes);
+        if (distance > range) {
+            surveyZone.getAttributes().setDrawInterior(false);
             pointPlacemark.getAttributes().setScale(0.65);
             wwd.redrawNow();
-        } else {
-            if (distance <= this.range && distance > this.range / 2.0) {
-                shape.setAttributes(farAttributes);
-                shape.getAttributes().setDrawInterior(true);
-                pointPlacemark.getAttributes().setScale(0.7);
-                wwd.redrawNow();
-            } else {
-                if (distance <= this.range / 2.0 && distance > this.range / 4.0) {
-                    shape.setAttributes(middleAttributes);
-                    shape.getAttributes().setDrawInterior(true);
-                    pointPlacemark.getAttributes().setScale(0.9);
-                    wwd.redrawNow();
-                } else {
-                    if (distance <= this.range / 4.0) {
-                        shape.setAttributes(nearAttributes);
-                        shape.getAttributes().setDrawInterior(true);
-                        pointPlacemark.getAttributes().setScale(1.5);
-                        wwd.redrawNow();
-                    }
-                }
-            }
+        } else if (distance <= range && distance > range / 2.0) {
+            surveyZone.setAttributes(farAttributes);
+            surveyZone.getAttributes().setDrawInterior(true);
+            pointPlacemark.getAttributes().setScale(0.7);
+            wwd.redrawNow();
+        } else if (distance <= range / 2.0 && distance > range / 4.0) {
+            surveyZone.setAttributes(middleAttributes);
+            surveyZone.getAttributes().setDrawInterior(true);
+            pointPlacemark.getAttributes().setScale(0.9);
+            wwd.redrawNow();
+        } else if (distance <= range / 4.0) {
+            surveyZone.setAttributes(nearAttributes);
+            surveyZone.getAttributes().setDrawInterior(true);
+            pointPlacemark.getAttributes().setScale(1.5);
+            wwd.redrawNow();
         }
     }
 }
