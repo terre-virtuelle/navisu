@@ -13,8 +13,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.AisActivateEvent;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
+import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.GpsPlotterWithRoute;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.GpsPlotterWithRouteServices;
@@ -25,6 +25,7 @@ import java.util.List;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.ProducedEvent;
 import org.capcaval.c3.component.annotation.UsedService;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
 
 /**
  * NaVisu
@@ -49,15 +50,19 @@ public class GpsPlotterWithRouteImpl
     GpsTrackServices gpsTrackServices;
     @UsedService
     AisServices aisServices;
+    @UsedService
+    TransponderServices transponderServices;
 
     @ProducedEvent
-    protected AisActivateEvent aisActivateEvent;
+    protected TransponderActivateEvent transponderActivateEvent;
 
     protected boolean on = false;
-    private final String NAME1 = "GpsPlotter";
-    private final String NAME2 = "Nautical documents";//AisSurvey
-    private final String NAME3 = "GpsPlotterWithRoute";
+    private final String NAME0 = "GpsPlotter";
+    private final String NAME1 = "GpsPlotterWithRoute";
+    private final String NAME2 = "Nautical documents";
+    private final String NAME3 = "Transponder";
     protected final String GROUP = "Navigation";
+   // private RenderableLayer transponderZoneLayer;
     private GpsPlotterWithRouteController gpsPlotterController;
     private GpsEventsController gpsEventsController;
     private boolean withTarget = true;
@@ -77,6 +82,7 @@ public class GpsPlotterWithRouteImpl
     public void on(NavigationDataSet navigationDataSet, boolean withTarget) {
         this.navigationDataSet = navigationDataSet;
         this.withTarget = withTarget;
+         
     }
 
     @Override
@@ -87,14 +93,15 @@ public class GpsPlotterWithRouteImpl
                     guiAgentServices, kmlObjectServices, aisServices,
                     withTarget,
                     navigationDataSet,
-                    NAME1, NAME2, GROUP);
+                    NAME0, NAME2, NAME3, GROUP);
             if (withTarget) {
                 gpsPlotterController.createTarget();
             }
+            transponderServices.on();
             gpsEventsController = new GpsPlotterWithRouteGpsEventsController(gpsPlotterController);
             gpsEventsController.subscribe();
             gpsTrackServices.on(files);
-        }else{
+        } else {
             gpsPlotterController.activateControllers();
         }
     }
@@ -119,7 +126,7 @@ public class GpsPlotterWithRouteImpl
 
     @Override
     public boolean canOpen(String category) {
-        return category.equals(NAME3);
+        return category.equals(NAME1);
     }
 
     @Override
@@ -127,8 +134,7 @@ public class GpsPlotterWithRouteImpl
         return this;
     }
 
-    public void notifyAisActivateEvent(RenderableLayer layer, List<String> targets) {
-        aisActivateEvent.notifyAisActivateMessageChanged(layer, targets);
+    public void notifyTransponderActivateEvent(RenderableLayer layer, List<String> targets) {
+        transponderActivateEvent.notifyAisActivateMessageChanged(layer, targets);
     }
-
 }

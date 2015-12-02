@@ -51,7 +51,6 @@ import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwindx.examples.Placemarks;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,10 +78,12 @@ public class GpsPlotterWithRouteController {
 
     protected String name1;
     protected String name2;
+    protected String name3;
     protected String group;
     protected WorldWindow wwd;
     protected RenderableLayer gpsLayer;
-    protected RenderableLayer aisSurveyZoneLayer;
+    protected RenderableLayer avurnavZoneLayer;
+    protected RenderableLayer transponderZoneLayer;
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
     protected AisServices aisServices;
@@ -123,7 +124,7 @@ public class GpsPlotterWithRouteController {
             AisServices aisServices,
             boolean withTarget,
             NavigationDataSet navigationDataSet,
-            String name1, String name2,
+            String name1, String name2, String name3,
             String group) {
         if (instance == null) {
             instance = new GpsPlotterWithRouteController(component,
@@ -133,7 +134,7 @@ public class GpsPlotterWithRouteController {
                     aisServices,
                     withTarget,
                     navigationDataSet,
-                    name1, name2,
+                    name1, name2, name3,
                     group);
         }
         return instance;
@@ -146,7 +147,7 @@ public class GpsPlotterWithRouteController {
             AisServices aisServices,
             boolean withTarget,
             NavigationDataSet navigationDataSet,
-            String name1, String name2,
+            String name1, String name2, String name3,
             String group) {
         this.component = component;
         this.guiAgentServices = guiAgentServices;
@@ -159,7 +160,8 @@ public class GpsPlotterWithRouteController {
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         gpsLayer = layersManagerServices.initLayer(group, name1);
-        aisSurveyZoneLayer = layersManagerServices.initLayer(group, name2);
+        avurnavZoneLayer = layersManagerServices.initLayer(group, name2);
+        transponderZoneLayer = layersManagerServices.initLayer(group, name3);
         createAttributes();
         addPanelController();
         addListeners();
@@ -289,14 +291,14 @@ public class GpsPlotterWithRouteController {
                 ownerShip.setLongitude(d.getLongitude());
                 ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
                 ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-                aisServices.aisUpdateTargetEvent(ownerShip);
+                aisServices.aisUpdateTargetEvent(ownerShip);//OK
             }
         }
     }
 
     public final void activateControllers() {
         activateS57Controllers();
-        activateNavigationControllers();
+      //  activateNavigationControllers();
     }
 
     private void activateS57Controllers() {
@@ -314,14 +316,15 @@ public class GpsPlotterWithRouteController {
             long id = l.getId();
             s57ControllerIdList.add(Long.toString(id));
         });
-        component.notifyAisActivateEvent(aisSurveyZoneLayer, s57ControllerIdList);
+        component.notifyTransponderActivateEvent(transponderZoneLayer, s57ControllerIdList);
     }
 
     private void activateNavigationControllers() {
+        // TODO subscribe evts
+        // Fiare des controllers
         List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
         wktReader = new WKTReader();
         /* Avurnav */
-
         avurnavList.stream().forEach((Avurnav a) -> {
             String geom = a.getGeometry();
             String label = "Avurnav N°" + Long.toString(a.getId());
@@ -343,12 +346,11 @@ public class GpsPlotterWithRouteController {
         sailingDirectionsList.stream().forEach((SailingDirections a) -> {
             String geom = a.getGeometry();
             String label = "SailingDirections N°" + Long.toString(a.getId());
-            String globalZone = a.getZoneName() == null ? "" : a.getZoneName();
+         
             geom = geom.toUpperCase();
-            // String text = createText(a);
             if (geom.contains("POLYGON")) {
                 createMultiPolygon(geom, label, a.getBook(), a.getDescription(),
-                       sailingDirectionsPolygonNormalAttributes, sailingDirectionsPolygonHighlightAttributes, sailingDirectionsMultiPlacemarkNormalAttributes);
+                        sailingDirectionsPolygonNormalAttributes, sailingDirectionsPolygonHighlightAttributes, sailingDirectionsMultiPlacemarkNormalAttributes);
             }
         });
     }
@@ -402,7 +404,9 @@ public class GpsPlotterWithRouteController {
             pgon.setAttributes(nAttrs);
             pgon.setHighlightAttributes(hAttrs);
             pgon.setValue(AVKey.DISPLAY_NAME, label + "\n" + globalZone);
-            aisSurveyZoneLayer.addRenderable(pgon);
+            avurnavZoneLayer.addRenderable(pgon);
+            avurnavZoneLayer.setEnabled(false);
+            //TODO desarmer sur le layer tree
 
             CentroidArea centroid = new CentroidArea();
             centroid.add(geometry);
@@ -427,11 +431,6 @@ public class GpsPlotterWithRouteController {
         avurnavMultiPlacemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
         avurnavMultiPlacemarkNormalAttributes.setScale(0.3);
 
-        sailingDirectionsMultiPlacemarkNormalAttributes = new PointPlacemarkAttributes();
-        sailingDirectionsMultiPlacemarkNormalAttributes.setImageAddress(DIRECTIONS_IMAGE_ADDRESS);
-        sailingDirectionsMultiPlacemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
-        sailingDirectionsMultiPlacemarkNormalAttributes.setScale(0.6);
-
         avurnavPolygonNormalAttributes = new BasicShapeAttributes();
         avurnavPolygonNormalAttributes.setInteriorMaterial(new Material(Color.LIGHT_GRAY));
         avurnavPolygonNormalAttributes.setDrawInterior(true);
@@ -444,6 +443,11 @@ public class GpsPlotterWithRouteController {
         avurnavPolygonHighlightAttributes.setDrawInterior(true);
         avurnavPolygonHighlightAttributes.setInteriorMaterial(new Material(Color.LIGHT_GRAY));
         avurnavPolygonHighlightAttributes.setInteriorOpacity(0.5);
+
+        sailingDirectionsMultiPlacemarkNormalAttributes = new PointPlacemarkAttributes();
+        sailingDirectionsMultiPlacemarkNormalAttributes.setImageAddress(DIRECTIONS_IMAGE_ADDRESS);
+        sailingDirectionsMultiPlacemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
+        sailingDirectionsMultiPlacemarkNormalAttributes.setScale(0.6);
 
         sailingDirectionsPolygonNormalAttributes = new BasicShapeAttributes();
         sailingDirectionsPolygonNormalAttributes.setInteriorMaterial(new Material(Color.GREEN));
@@ -468,7 +472,8 @@ public class GpsPlotterWithRouteController {
         placemark.setValue("TYPE", "Avurnav");
         placemark.setValue("TITLE", label);
         placemark.setValue("TEXT", description == null ? DEFAULT_DESCRIPTION : description);
-        aisSurveyZoneLayer.addRenderable(placemark);
+        avurnavZoneLayer.addRenderable(placemark);
+        //differencier type avurnav, sailingdirection,...
     }
 
     private String createText(Avurnav a) {
