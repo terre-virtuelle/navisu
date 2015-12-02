@@ -68,4 +68,28 @@ public class LayersManagerImpl
         return layer;
     }
 
+    @Override
+    public RenderableLayer initLayer(String groupName, String layerName, String onLayerName) {
+        List<String> groups = layerTreeServices.getGroupNames();
+        if (!groups.contains(groupName)) {
+            layerTreeServices.createGroup(groupName);
+            geoViewServices.getLayerManager().createGroup(groupName);
+        }
+        boolean layerExist = false;
+        RenderableLayer layer = null;
+        List<GeoLayer<Layer>> layers = geoViewServices.getLayerManager().getGroup(groupName);
+        for (GeoLayer<Layer> g : layers) {
+            if (g.getName().contains(layerName)) {
+                layer = (RenderableLayer) g.getDisplayLayer();
+                layerExist = true;
+            }
+        }
+        if (!layerExist) {
+            layer = new RenderableLayer();
+            layer.setName(layerName);
+            geoViewServices.getLayerManager().insertGeoLayerBeforeLayerName(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer), onLayerName);
+            layerTreeServices.addGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
+        }
+        return layer;
+    }
 }

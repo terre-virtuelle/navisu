@@ -19,4 +19,5 @@ public interface LayersManagerServices
 
     RenderableLayer initLayer(String groupName, String layerName);
 
+    RenderableLayer initLayer(String groupName, String layerName, String onLayerName);
 }
