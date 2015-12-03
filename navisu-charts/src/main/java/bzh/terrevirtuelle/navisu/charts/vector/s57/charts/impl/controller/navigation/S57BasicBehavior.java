@@ -5,8 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation;
 
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -19,7 +17,7 @@ import gov.nasa.worldwind.render.SurfaceShape;
  * @date 13 oct. 2015
  * @author Serge Morvan
  */
-public class S57BuoyageBehavior
+public class S57BasicBehavior
         extends S57Behavior {
 
     private ShapeAttributes farAttributes;
@@ -27,7 +25,7 @@ public class S57BuoyageBehavior
     private ShapeAttributes nearAttributes;
     private ShapeAttributes highlightAttributes;
 
-    public S57BuoyageBehavior() {
+    public S57BasicBehavior() {
         init();
     }
 
@@ -57,10 +55,15 @@ public class S57BuoyageBehavior
     @Override
     public void doIt(double distance, double azimuth) {
         S57Controller s57Controller = getS57Controller();
+      //  System.out.println("s57Controller " + s57Controller);
         SurfaceShape surveyZone = s57Controller.getSurveyZone();
+      //  System.out.println("surveyZone "+ surveyZone);
         PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
+     // System.out.println("pointPlacemark "+ pointPlacemark);
         double range = s57Controller.getRange();
         distance *= 1000;
+       // System.out.println("wwd " + wwd);
+        
         surveyZone.setHighlightAttributes(highlightAttributes);
         if (distance > range) {
             surveyZone.getAttributes().setDrawInterior(false);
@@ -82,5 +85,6 @@ public class S57BuoyageBehavior
             pointPlacemark.getAttributes().setScale(1.5);
             wwd.redrawNow();
         }
+
     }
 }

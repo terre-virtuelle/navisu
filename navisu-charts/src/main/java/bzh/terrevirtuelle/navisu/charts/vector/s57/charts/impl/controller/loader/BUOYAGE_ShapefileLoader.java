@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageController;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageBehavior;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
@@ -167,7 +167,7 @@ public class BUOYAGE_ShapefileLoader
             }
         });
 
-        buoyageController = new S57BuoyageController(new S57BuoyageBehavior(),object, LIMIT);
+        buoyageController = new S57BuoyageController(new S57BasicBehavior(),object, LIMIT);
        
         s57Controllers.add(buoyageController);
 
