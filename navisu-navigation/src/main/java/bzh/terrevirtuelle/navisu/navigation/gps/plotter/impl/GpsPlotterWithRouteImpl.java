@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
@@ -62,7 +63,7 @@ public class GpsPlotterWithRouteImpl
     private final String NAME2 = "Nautical documents";
     private final String NAME3 = "Transponder";
     protected final String GROUP = "Navigation";
-   // private RenderableLayer transponderZoneLayer;
+    // private RenderableLayer transponderZoneLayer;
     private GpsPlotterWithRouteController gpsPlotterController;
     private GpsEventsController gpsEventsController;
     private boolean withTarget = true;
@@ -82,7 +83,7 @@ public class GpsPlotterWithRouteImpl
     public void on(NavigationDataSet navigationDataSet, boolean withTarget) {
         this.navigationDataSet = navigationDataSet;
         this.withTarget = withTarget;
-         
+
     }
 
     @Override
@@ -134,7 +135,7 @@ public class GpsPlotterWithRouteImpl
         return this;
     }
 
-    public void notifyTransponderActivateEvent(RenderableLayer layer, List<String> targets) {
+    public void notifyTransponderActivateEvent(RenderableLayer layer, List<NavigationData> targets) {
         transponderActivateEvent.notifyAisActivateMessageChanged(layer, targets);
     }
 }

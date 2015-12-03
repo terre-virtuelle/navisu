@@ -36,9 +36,9 @@ public class SailingDirectionController
 
     private String wkt;
 
-    public SailingDirectionController(NavigationData navigationData, double range,
+    public SailingDirectionController(S57Behavior s57Behavior,NavigationData navigationData, double range,
             String displayName, String description) {
-        super(navigationData, range, displayName, description);
+        super(s57Behavior, navigationData, range, displayName, description);
         
     }
 

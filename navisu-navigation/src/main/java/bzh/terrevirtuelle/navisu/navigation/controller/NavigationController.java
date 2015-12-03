@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.navigation.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
@@ -64,9 +65,9 @@ public class NavigationController
     private ShapeAttributes polygonHighlightAttributes;
     private TextAreaController textAreaController;
 
-    public NavigationController(NavigationData navigationData, double range,
+    public NavigationController(S57Behavior s57Behavior, NavigationData navigationData, double range,
             String displayName, String description) {
-        super(navigationData, range);
+        super(s57Behavior, navigationData, range);
         createAttributes();
         wkt = navigationData.getGeometry();
         wktReader = new WKTReader();

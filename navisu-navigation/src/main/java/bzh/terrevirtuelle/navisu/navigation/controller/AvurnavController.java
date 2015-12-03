@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.controller;
 
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
@@ -19,9 +20,9 @@ import gov.nasa.worldwind.avlist.AVKey;
 public class AvurnavController
         extends NavigationController {
 
-    public AvurnavController(NavigationData avurnav, double range,
+    public AvurnavController(S57Behavior s57Behavior,NavigationData avurnav, double range,
             String displayName, String description) {
-        super(avurnav, range,displayName,  description);    
+        super(s57Behavior, avurnav, range,displayName,  description);    
     }
 
     @Override
