@@ -58,7 +58,6 @@ public class GpsEventsController {
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 RMC data = (RMC) d;
                 notifyNmeaMessage(data);
-
             }
         });
     }

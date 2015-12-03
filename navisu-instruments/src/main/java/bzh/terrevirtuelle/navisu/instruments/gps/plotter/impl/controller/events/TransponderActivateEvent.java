@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.List;
 import org.capcaval.c3.component.ComponentEvent;
@@ -16,6 +17,6 @@ import org.capcaval.c3.component.ComponentEvent;
 public interface TransponderActivateEvent
         extends ComponentEvent {
 
-    public void notifyAisActivateMessageChanged(RenderableLayer layer, List<String> target);
+    public void notifyAisActivateMessageChanged(RenderableLayer layer, List<NavigationData> target);
 
 }
