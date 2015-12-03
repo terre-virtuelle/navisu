@@ -7,7 +7,8 @@ package bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
@@ -23,6 +24,8 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
@@ -32,6 +35,7 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRad
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
+import bzh.terrevirtuelle.navisu.navigation.controller.SailingDirectionsController;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.GpsPlotterWithRouteImpl;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
@@ -47,6 +51,7 @@ import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import gov.nasa.worldwind.pick.PickedObject;
+import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.ShapeAttributes;
@@ -81,7 +86,7 @@ public class GpsPlotterWithRouteController {
     protected String group;
     protected WorldWindow wwd;
     protected RenderableLayer gpsLayer;
-    protected RenderableLayer avurnavZoneLayer;
+    protected RenderableLayer sailingDirectionsLayer;
     protected RenderableLayer transponderZoneLayer;
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
@@ -159,7 +164,7 @@ public class GpsPlotterWithRouteController {
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         gpsLayer = layersManagerServices.initLayer(group, name1);
-        avurnavZoneLayer = layersManagerServices.initLayer(group, name2);
+        sailingDirectionsLayer = layersManagerServices.initLayer(group, name2);
         transponderZoneLayer = layersManagerServices.initLayer(group, name3);
         addPanelController();
         addListeners();
@@ -289,11 +294,6 @@ public class GpsPlotterWithRouteController {
     }
 
     public final void activateControllers() {
-        activateS57Controllers();
-        //  activateNavigationControllers();
-    }
-
-    private void activateS57Controllers() {
         File file = IO.fileChooser(guiAgentServices.getStage(),
                 "privateData/nds/", "NDS files (*.nds)", "*.nds", "*.NDS");
         navigationDataSet = new NavigationDataSet();
@@ -302,8 +302,12 @@ public class GpsPlotterWithRouteController {
         } catch (FileNotFoundException | JAXBException ex) {
             Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        List<Class> s57ConList= Arrays.asList(BeaconIsolatedDanger.class,
+        activateS57Controllers();
+        activateNavigationControllers();
+    }
+
+    private void activateS57Controllers() {
+        List<Class> s57ConList = Arrays.asList(BeaconIsolatedDanger.class,
                 BeaconLateral.class,
                 BeaconSafeWater.class,
                 BeaconSpecialPurpose.class,
@@ -315,8 +319,8 @@ public class GpsPlotterWithRouteController {
                 BuoySpecialPurpose.class,
                 MooringWarpingFacility.class,
                 Landmark.class);
-        
-        List<NavigationData> s57NavigationDataList =new ArrayList<>();
+
+        List<NavigationData> s57NavigationDataList = new ArrayList<>();
         s57ConList.stream().forEach((claz) -> {
             s57NavigationDataList.addAll(navigationDataSet.get(claz));
         });
@@ -325,13 +329,13 @@ public class GpsPlotterWithRouteController {
         s57NavigationDataList.stream().forEach((s) -> {
             s57ControllerIdList.add(Long.toString(s.getId()));
         });
-        
+
         component.notifyTransponderActivateEvent(transponderZoneLayer, s57NavigationDataList);
     }
-    /*
+
     private void activateNavigationControllers() {
         // TODO subscribe evts
-        // Fiare des controllers
+        /*
         List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
         wktReader = new WKTReader();
        
@@ -351,19 +355,24 @@ public class GpsPlotterWithRouteController {
                 createMultiLineString(geom);
             }
         });
-       
+         */
         List<SailingDirections> sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
         sailingDirectionsList.stream().forEach((SailingDirections a) -> {
-            String geom = a.getGeometry();
-            String label = "SailingDirections N°" + Long.toString(a.getId());
-         
-            geom = geom.toUpperCase();
-            if (geom.contains("POLYGON")) {
-                createMultiPolygon(geom, label, a.getBook(), a.getDescription(),
-                        sailingDirectionsPolygonNormalAttributes, sailingDirectionsPolygonHighlightAttributes, sailingDirectionsMultiPlacemarkNormalAttributes);
-            }
+            String displayName = "SailingDirections N°" + Long.toString(a.getId());
+            String description = a.getDescription();
+            SailingDirectionsController sc = new SailingDirectionsController(new S57BasicBehavior(), a,
+                    926, displayName, description);
+            sc.setLayer(sailingDirectionsLayer);
+            sc.activate();
         });
     }
-     */
 
+    private String createText(Avurnav a) {
+        String tmp = Translator.tr("navigation.avurnav.globalZone") + " : " + a.getGlobalZone() + "\n"
+                + Translator.tr("navigation.avurnav.broadcastTime") + " : " + a.getBroadcastTime() + "\n"
+                + Translator.tr("navigation.avurnav.expirationDate") + " : " + a.getExpirationDate() + "\n"
+                + Translator.tr("navigation.avurnav.description") + " : " + a.getDescription() + "\n\n";
+        tmp = tmp.replace("\t", "");
+        return tmp;
+    }
 }

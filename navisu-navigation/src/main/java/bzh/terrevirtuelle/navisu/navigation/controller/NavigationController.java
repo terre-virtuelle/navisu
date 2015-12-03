@@ -14,19 +14,16 @@ import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
-import static com.hp.hpl.jena.vocabulary.DCTerms.description;
 import com.vividsolutions.jts.algorithm.CentroidArea;
 import com.vividsolutions.jts.algorithm.CentroidPoint;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.pick.PickedObject;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -36,7 +33,6 @@ import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.render.SurfaceCircle;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -59,11 +55,11 @@ public class NavigationController
     private String wkt;
     private Coordinate[] coordinates = null;
     private Geometry geometry = null;
-    private Point point;
-    private PointPlacemarkAttributes placemarkNormalAttributes;
-    private ShapeAttributes polygonNormalAttributes;
-    private ShapeAttributes polygonHighlightAttributes;
-    private TextAreaController textAreaController;
+    private Polygon pgon = null;
+    protected PointPlacemarkAttributes placemarkNormalAttributes;
+    protected ShapeAttributes polygonNormalAttributes;
+    protected ShapeAttributes polygonHighlightAttributes;
+    protected TextAreaController textAreaController;
 
     public NavigationController(S57Behavior s57Behavior, NavigationData navigationData, double range,
             String displayName, String description) {
@@ -79,6 +75,9 @@ public class NavigationController
         }
         if (wkt.contains("POINT") || wkt.contains("Point")) {
             createMultiPoint();
+        }
+        if (wkt.contains("POLYGON") || wkt.contains("Polygon")) {
+            createMultiPolygon();
         }
     }
 
@@ -102,17 +101,16 @@ public class NavigationController
         }
     }
 
-    private void createMultiPolygon(String geom, String label, String globalZone, String text,
-            ShapeAttributes nAttrs, ShapeAttributes hAttrs, PointPlacemarkAttributes attrs) {
+    private void createMultiPolygon() {
         ArrayList<Position> pathPositions = new ArrayList<>();
         if (coordinates != null) {
             for (Coordinate coordinate : coordinates) {
                 pathPositions.add(Position.fromDegrees(coordinate.y, coordinate.x, 200));
             }
-            Polygon pgon = new Polygon(pathPositions);
-            pgon.setAttributes(nAttrs);
-            pgon.setHighlightAttributes(hAttrs);
-            pgon.setValue(AVKey.DISPLAY_NAME, label + "\n" + globalZone);
+            pgon = new Polygon(pathPositions);
+            pgon.setAttributes(polygonNormalAttributes);
+            pgon.setHighlightAttributes(polygonHighlightAttributes);
+            pgon.setValue(AVKey.DISPLAY_NAME, displayName);
 
             //TODO desarmer sur le layer tree
             CentroidArea centroid = new CentroidArea();
@@ -122,9 +120,11 @@ public class NavigationController
         }
     }
 
-    private void createAttributes() {
+    protected void createAttributes() {
         placemarkNormalAttributes = new PointPlacemarkAttributes();
-        placemarkNormalAttributes.setImageAddress(NavigationIcons.ICONS.get(navigationData.getClass().getName()));
+       String []t = navigationData.getClass().getName().split("\\.");
+        placemarkNormalAttributes.setImageAddress(
+                NavigationIcons.ICONS.get(t[t.length-1]));
         placemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
         placemarkNormalAttributes.setScale(0.3);
 
@@ -144,24 +144,13 @@ public class NavigationController
     }
 
     private void createPointPlacemark(Coordinate coordinate) {
-        pointPlacemark = new PointPlacemark(Position.fromDegrees(point.getY(), point.getX(), 0));
+        pointPlacemark = new PointPlacemark(Position.fromDegrees(coordinate.y, coordinate.x, 0));
         pointPlacemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         pointPlacemark.setValue(AVKey.DISPLAY_NAME, displayName);
         pointPlacemark.setValue("TYPE", navigationData.getClass().getName());
         pointPlacemark.setValue("TITLE", displayName);
         pointPlacemark.setValue("TEXT", description);
-        
         pointPlacemark.setAttributes(placemarkNormalAttributes);
-        layer.addRenderable(pointPlacemark);
-    }
-
-    private String createText(Avurnav a) {
-        String tmp = Translator.tr("navigation.avurnav.globalZone") + " : " + a.getGlobalZone() + "\n"
-                + Translator.tr("navigation.avurnav.broadcastTime") + " : " + a.getBroadcastTime() + "\n"
-                + Translator.tr("navigation.avurnav.expirationDate") + " : " + a.getExpirationDate() + "\n"
-                + Translator.tr("navigation.avurnav.description") + " : " + a.getDescription() + "\n\n";
-        tmp = tmp.replace("\t", "");
-        return tmp;
     }
 
     private void addListeners() {
@@ -192,6 +181,10 @@ public class NavigationController
     public void activate() {
         if (layer != null && first == true) {
             layer.addRenderable(surveyZone);
+            layer.addRenderable(pointPlacemark);
+            if (pgon != null) {
+                layer.addRenderable(pgon);
+            }
             first = false;
         }
         subscribe();
@@ -209,4 +202,37 @@ public class NavigationController
     public void updateTarget(Ship ship) {
         s57Behavior.doIt(distance, azimuth);
     }
+
+    public PointPlacemarkAttributes getPlacemarkNormalAttributes() {
+        return placemarkNormalAttributes;
+    }
+
+    public void setPlacemarkNormalAttributes(PointPlacemarkAttributes placemarkNormalAttributes) {
+        this.placemarkNormalAttributes = placemarkNormalAttributes;
+    }
+
+    public ShapeAttributes getPolygonNormalAttributes() {
+        return polygonNormalAttributes;
+    }
+
+    public void setPolygonNormalAttributes(ShapeAttributes polygonNormalAttributes) {
+        this.polygonNormalAttributes = polygonNormalAttributes;
+    }
+
+    public ShapeAttributes getPolygonHighlightAttributes() {
+        return polygonHighlightAttributes;
+    }
+
+    public void setPolygonHighlightAttributes(ShapeAttributes polygonHighlightAttributes) {
+        this.polygonHighlightAttributes = polygonHighlightAttributes;
+    }
+
+    public TextAreaController getTextAreaController() {
+        return textAreaController;
+    }
+
+    public void setTextAreaController(TextAreaController textAreaController) {
+        this.textAreaController = textAreaController;
+    }
+    
 }

@@ -61,9 +61,8 @@ public class GpsPlotterWithRouteImpl
     private final String NAME0 = "GpsPlotter";
     private final String NAME1 = "GpsPlotterWithRoute";
     private final String NAME2 = "Nautical documents";
-    private final String NAME3 = "Transponder";
+    private final String NAME3 = "S57 Buoyage behavior";
     protected final String GROUP = "Navigation";
-    // private RenderableLayer transponderZoneLayer;
     private GpsPlotterWithRouteController gpsPlotterController;
     private GpsEventsController gpsEventsController;
     private boolean withTarget = true;
