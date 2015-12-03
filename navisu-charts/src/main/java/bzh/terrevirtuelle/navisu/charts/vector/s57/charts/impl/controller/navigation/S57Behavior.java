@@ -16,13 +16,17 @@ import gov.nasa.worldwind.WorldWindow;
  */
 public abstract class S57Behavior {
 
-    protected S57Controller s57Controller;
-    protected WorldWindow wwd;
+    private  S57Controller s57Controller;
+    protected  WorldWindow wwd;
     
-    public S57Behavior(S57Controller s57Controller) {
-        this.s57Controller = s57Controller;
+    public S57Behavior() {
         wwd = GeoWorldWindViewImpl.getWW();
     }
+
+    public void setS57Controller(S57Controller s57Controller) {
+        this.s57Controller = s57Controller;
+    }
+    
     /**
      * Get the value of s57Controller
      *

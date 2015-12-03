@@ -42,6 +42,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
@@ -131,14 +132,9 @@ public class S57ChartController {
     }
 
     public void subscribe() {
-        transponderActivateEvent.subscribe((TransponderActivateEvent) (RenderableLayer layer, List<String> target) -> {
-            List<Long> ids = new ArrayList<>();
-            for (String str : target) {
-                ids.add(Long.parseLong(str));
-            }
-            ids.stream().forEach((id) -> {
-
-                s57Controllers.stream().filter((sc) -> (sc.getNavigationData().getLocation().getId() == id)).map((sc) -> {
+        transponderActivateEvent.subscribe((TransponderActivateEvent) (RenderableLayer layer, List<NavigationData> target) -> {
+            target.stream().forEach((t) -> {
+                s57Controllers.stream().filter((sc) -> (sc.getNavigationData().getId() == t.getId())).map((sc) -> {
                     sc.setLayer(layer);
                     return sc;
                 }).forEach((sc) -> {

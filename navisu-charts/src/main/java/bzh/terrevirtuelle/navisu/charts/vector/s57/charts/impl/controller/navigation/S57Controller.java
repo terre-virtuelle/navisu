@@ -53,18 +53,20 @@ public abstract class S57Controller
     protected double distance;
     protected double azimuth;
 
-    public S57Controller(NavigationData navigationData, double range) {
+    public S57Controller(S57Behavior s57Behavior, NavigationData navigationData, double range) {
+        this.s57Behavior = s57Behavior;
+        s57Behavior.setS57Controller(this);
         this.navigationData = navigationData;
         this.id = navigationData.getId();
         this.lat = navigationData.getLocation().getLat();
         this.lon = navigationData.getLocation().getLon();
-        this.range =range;
+        this.range = range;
         wwd = GeoWorldWindViewImpl.getWW();
 
         surveyZoneNormalAttributes = new BasicShapeAttributes();
         surveyZoneNormalAttributes.setDrawInterior(false);
         surveyZoneNormalAttributes.setDrawOutline(false);
-        
+
         surveyZone = new SurfaceCircle(LatLon.fromDegrees(lat, lon), range);
         surveyZone.setAttributes(surveyZoneNormalAttributes);
     }
@@ -100,7 +102,6 @@ public abstract class S57Controller
     public void setLayer(RenderableLayer layer) {
         this.layer = layer;
     }
-
 
     public void setSurveyZone(SurfaceShape surveyZone) {
         this.surveyZone = surveyZone;

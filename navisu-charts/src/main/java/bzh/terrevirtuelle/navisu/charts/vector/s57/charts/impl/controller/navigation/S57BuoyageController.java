@@ -19,16 +19,13 @@ import gov.nasa.worldwind.avlist.AVKey;
 public class S57BuoyageController
         extends S57Controller {
     
-    public S57BuoyageController(NavigationData buoyage, double range) {
-        super(buoyage, range);
+    public S57BuoyageController(S57Behavior s57Behavior, NavigationData buoyage, double range) {
+        super(s57Behavior, buoyage, range);
     }
 
     @Override
     public void updateTarget(Ship ship) {
-        if (layer != null && first == true) {
-            layer.addRenderable(surveyZone);
-            first = false;
-        }
+       
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
         s57Behavior.doIt(distance, azimuth);

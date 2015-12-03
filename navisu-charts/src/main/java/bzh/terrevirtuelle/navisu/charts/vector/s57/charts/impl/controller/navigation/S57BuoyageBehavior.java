@@ -27,8 +27,7 @@ public class S57BuoyageBehavior
     private ShapeAttributes nearAttributes;
     private ShapeAttributes highlightAttributes;
 
-    public S57BuoyageBehavior(S57Controller s57Controller) {
-        super(s57Controller);
+    public S57BuoyageBehavior() {
         init();
     }
 
@@ -57,6 +56,7 @@ public class S57BuoyageBehavior
 
     @Override
     public void doIt(double distance, double azimuth) {
+        S57Controller s57Controller = getS57Controller();
         SurfaceShape surveyZone = s57Controller.getSurveyZone();
         PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
         double range = s57Controller.getRange();

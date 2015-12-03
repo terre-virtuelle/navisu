@@ -167,8 +167,8 @@ public class BUOYAGE_ShapefileLoader
             }
         });
 
-        buoyageController = new S57BuoyageController(object, LIMIT);
-        S57BuoyageBehavior s57BuoyageBehavior = new S57BuoyageBehavior(buoyageController);
+        buoyageController = new S57BuoyageController(new S57BuoyageBehavior(),object, LIMIT);
+       
         s57Controllers.add(buoyageController);
 
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
