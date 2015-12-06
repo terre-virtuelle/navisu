@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ACHARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPCNT_ShapefileLoader;
@@ -40,7 +42,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.AisActivateEvent;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
@@ -77,6 +79,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
 
 /**
  * @author Serge Morvan
@@ -85,9 +88,10 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 public class S57ChartController {
 
     ComponentManager cm;
-    ComponentEventSubscribe<AisActivateEvent> aisActivateES;
+    ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
 
     private DataAccessServices dataAccessServices;
+    private LayersManagerServices layersManagerServices;
     private final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     private static S57ChartController INSTANCE = null;
     protected String path;
@@ -104,6 +108,9 @@ public class S57ChartController {
     private final Map<Pair<Double, Double>, String> topMarks;
     private String marsys;
     private SurveyZoneController surveyZoneController;
+    private RenderableLayer transponderZoneLayer;
+    private final String NAME = "Transponder";
+    protected final String GROUP = "Navigation";
     private final boolean DEV = false;
     //private final boolean DEV = true;
     private final Set<S57Controller> s57Controllers = new HashSet<>();
@@ -125,15 +132,9 @@ public class S57ChartController {
     }
 
     public void subscribe() {
-
-        aisActivateES.subscribe((AisActivateEvent) (RenderableLayer layer, List<String> target) -> {
-            List<Long> ids = new ArrayList<>();
-            for (String str : target) {
-                ids.add(Long.parseLong(str));
-            }
-            ids.stream().forEach((id) -> {
-
-                s57Controllers.stream().filter((sc) -> (sc.getNavigationData().getLocation().getId() == id)).map((sc) -> {
+        transponderActivateEvent.subscribe((TransponderActivateEvent) (RenderableLayer layer, List<NavigationData> target) -> {
+            target.stream().forEach((t) -> {
+                s57Controllers.stream().filter((sc) -> (sc.getNavigationData().getId() == t.getId())).map((sc) -> {
                     sc.setLayer(layer);
                     return sc;
                 }).forEach((sc) -> {
@@ -369,53 +370,51 @@ public class S57ChartController {
                         if (lightView.isTmp() == true) {
                             airspaceTmpLayer.removeAllRenderables();
                             isDisplay = false;
-                        } else {
-                            if (isDisplay == false) {
-                                isDisplay = true;
-                                airspaceTmpLayer.removeAllRenderables();
-                                Light data = lightView.getLight();
-                                if (data.getSectorLimitOne() != null
-                                        && data.getSectorLimitTwo() != null
-                                        && data.getValueOfNominalRange() != null) {
-                                    lightView = new S57LightView();
-                                    lightView.setTmp(true);
-                                    double lat = data.getLat();
-                                    double lon = data.getLon();
-                                    double elevation = globe.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                                    lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
-                                            Angle.fromDegrees(lon)));
-                                    double range = new Double(data.getValueOfNominalRange());
-                                    lightView.setRadii(0.0, range * 1852);
-                                    lightView.getAttributes().setOpacity(0.2);
-                                    lightView.getAttributes().setOutlineOpacity(0.2);
-                                    lightView.setAltitude(elevation + 35);
-                                    lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
-                                            Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
-                                    String label = "Light \n"
-                                            + "Lat : " + Double.toString(lat) + "\n"
-                                            + "Lon : " + Double.toString(lon) + "\n"
-                                            + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
-                                            + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
-                                            + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
-                                            + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
-                                            + "Sect1 : " + data.getSectorLimitOne() + "\n"
-                                            + "Sect2 : " + data.getSectorLimitTwo() + "\n";
-                                    lightView.setValue(AVKey.DISPLAY_NAME, label);
-                                    lightView.getAttributes().setDrawOutline(true);
-                                    // Si la couleur est blanche, la vue est jaune
-                                    if (data.getColour().contains("1")) {
-                                        lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
-                                        lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
-                                    } else {
-                                        lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                                        lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                                    }
-                                    airspaceTmpLayer.addRenderable(lightView);
+                        } else if (isDisplay == false) {
+                            isDisplay = true;
+                            airspaceTmpLayer.removeAllRenderables();
+                            Light data = lightView.getLight();
+                            if (data.getSectorLimitOne() != null
+                                    && data.getSectorLimitTwo() != null
+                                    && data.getValueOfNominalRange() != null) {
+                                lightView = new S57LightView();
+                                lightView.setTmp(true);
+                                double lat = data.getLat();
+                                double lon = data.getLon();
+                                double elevation = globe.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
+                                lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
+                                        Angle.fromDegrees(lon)));
+                                double range = new Double(data.getValueOfNominalRange());
+                                lightView.setRadii(0.0, range * 1852);
+                                lightView.getAttributes().setOpacity(0.2);
+                                lightView.getAttributes().setOutlineOpacity(0.2);
+                                lightView.setAltitude(elevation + 35);
+                                lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
+                                        Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
+                                String label = "Light \n"
+                                        + "Lat : " + Double.toString(lat) + "\n"
+                                        + "Lon : " + Double.toString(lon) + "\n"
+                                        + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
+                                        + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
+                                        + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
+                                        + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
+                                        + "Sect1 : " + data.getSectorLimitOne() + "\n"
+                                        + "Sect2 : " + data.getSectorLimitTwo() + "\n";
+                                lightView.setValue(AVKey.DISPLAY_NAME, label);
+                                lightView.getAttributes().setDrawOutline(true);
+                                // Si la couleur est blanche, la vue est jaune
+                                if (data.getColour().contains("1")) {
+                                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
+                                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                                } else {
+                                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
                                 }
-                            } else {
-                                airspaceTmpLayer.removeAllRenderables();
-                                isDisplay = false;
+                                airspaceTmpLayer.addRenderable(lightView);
                             }
+                        } else {
+                            airspaceTmpLayer.removeAllRenderables();
+                            isDisplay = false;
                         }
 
                     }
@@ -499,8 +498,12 @@ public class S57ChartController {
         return s57Controllers;
     }
 
-    public void setAisActivateES(ComponentEventSubscribe<AisActivateEvent> aisActivateES) {
-        this.aisActivateES = aisActivateES;
+    public void setTransponderActivateEvent(ComponentEventSubscribe<TransponderActivateEvent> aisActivateES) {
+        this.transponderActivateEvent = aisActivateES;
+    }
+
+    public void setLayersManagerServices(LayersManagerServices layersManagerServices) {
+        this.layersManagerServices = layersManagerServices;
     }
 
 }

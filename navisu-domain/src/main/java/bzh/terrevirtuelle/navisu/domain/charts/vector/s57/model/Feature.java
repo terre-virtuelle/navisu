@@ -17,6 +17,10 @@ public class Feature
         extends S57Object
         implements Serializable {
 
+    public Feature(long id) {
+        super(id);
+    }
+
     /**
      * Constructeur
      */

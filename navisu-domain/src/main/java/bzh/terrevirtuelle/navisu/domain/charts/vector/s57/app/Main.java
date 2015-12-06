@@ -1,28 +1,11 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.app;
 
-import antlr.RecognitionException;
-import antlr.TokenStreamException;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.ConnectedNode;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Edge;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Node;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Point2D;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.VectorUsage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Lexer;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.controller.analyzer.S57Parser;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Coastline;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthArea;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.DepthContour;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.HashMap;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Application NaVisu<br>
@@ -39,23 +22,26 @@ public class Main {
 
     public Main() {
         /* Parser.parse() */
+ /*
         try {
             new S57Parser(new S57Lexer(new FileInputStream(new File(CHART_NAME)))).parse();
         } catch (FileNotFoundException | RecognitionException | TokenStreamException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        /* Results */
+         */
+ /* Results */
+ /*
         System.out.println("File " + CHART_NAME + " loaded");
         System.out.println("Nombre d'objets spatiaux:" + S57Model.getSpatialObjects().size());
         System.out.println("Nombre d'objets de donnees:" + S57Model.getFeatureObjects().size());
         setBounds();
-        /* 
+         */
+ /* 
          S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
          System.out.println(obj + "\n");
          });
          */
-/*
+ /*
         S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
             if (obj.getClass().getSimpleName().equals("DepthArea")) {
                 DepthArea da = (DepthArea) obj;
@@ -91,9 +77,9 @@ public class Main {
                 System.out.println();
             }
         });
-*/
+         */
 
-        /*
+ /*
          S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
          if (obj.getClass().getSimpleName().equals("Coastline")) {
          System.out.println("Coastline Id : " + obj.getId());
@@ -111,7 +97,7 @@ public class Main {
          }
          });
          */
-        /*
+ /*
          S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
          if (obj.getClass().getSimpleName().equals("SurveyReliability")) {
          System.out.println("SurveyReliability : " + obj.getClass().getName());
@@ -127,7 +113,7 @@ public class Main {
          }
          });
          */
-        /*
+ /*
          S57Model.getFeatureObjects().values().stream().forEach((obj) -> {
 
          if (obj.getClass().getSimpleName().equals("BeaconCardinal")) {
@@ -216,6 +202,10 @@ public class Main {
          }
          });
          */
+        BeaconCardinal b = new BeaconCardinal(2.4, 5.0);
+        System.out.println(b);
+        b = new BeaconCardinal("POINT(5.0 2.4)");
+        System.out.println(b);
     }
 
     public static void main(String[] args) {

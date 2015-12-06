@@ -101,6 +101,8 @@ import bzh.terrevirtuelle.navisu.navigation.routeeditor.RoutePhotoViewerServices
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteDataEditorImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoEditorImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoViewerImpl;
+import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
+import bzh.terrevirtuelle.navisu.instruments.transponder.impl.TransponderImpl;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.ontology.data.impl.JenaDataAccessImpl;
 import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
@@ -206,6 +208,7 @@ public class AppMain extends Application {
                         S57ChartImpl.class,
                         S57GlobalCatalogImpl.class,
                         TestDBImpl.class,
+                        TransponderImpl.class,
                         WebDriverManagerImpl.class,
                         WMSImpl.class,
                         WebViewImpl.class
@@ -281,6 +284,7 @@ public class AppMain extends Application {
         S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
+        TransponderServices transponderServices= componentManager.getComponentService(TransponderServices.class);
 
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();

@@ -5,16 +5,16 @@ import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57Chart;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartController;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57Controller;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.AisActivateEvent;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
@@ -48,6 +48,7 @@ import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
 
 /**
  * @author Serge Morvan
@@ -63,9 +64,11 @@ public class S57ChartImpl
     @UsedService
     LayerTreeServices layerTreeServices;
     @UsedService
+    LayersManagerServices layersManagerServices;
+    @UsedService
     DataAccessServices dataAccessServices;
     ComponentManager cm;
-    ComponentEventSubscribe<AisActivateEvent> aisActivateES;
+    ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
 
     private static final String NAME = "S57";
     private static final String EXTENSION_0 = ".000";
@@ -75,7 +78,7 @@ public class S57ChartImpl
     protected static final String GROUP = "S57 charts";
     static private int i = 0;
     protected S57ChartController chartS57Controller;
-    private SurveyZoneController surveyZoneController;
+  //  private SurveyZoneController surveyZoneController;
     protected List<Layer> layers;
     protected Layer layer;
     protected List<Layer> enabledLayers;
@@ -108,7 +111,7 @@ public class S57ChartImpl
             filter();
         });
         cm = ComponentManager.componentManager;
-        aisActivateES = cm.getComponentEventSubscribe(AisActivateEvent.class);
+        transponderActivateEvent = cm.getComponentEventSubscribe(TransponderActivateEvent.class);
     }
 
     private void filter() {
@@ -166,7 +169,8 @@ public class S57ChartImpl
             if (first == true) {
                 first = false;
                 chartS57Controller.setDataAccessServices(dataAccessServices);
-                chartS57Controller.setAisActivateES(aisActivateES); 
+                chartS57Controller.setTransponderActivateEvent(transponderActivateEvent);
+                chartS57Controller.setLayersManagerServices(layersManagerServices);
             }
             /*
             // Test capture des evts par l'AreaController
@@ -181,9 +185,9 @@ public class S57ChartImpl
              chartS57Controller.setSurveyZoneController(surveyZoneController);
              }
              */
-            
+
             chartS57Controller.subscribe(); // A chaque nouvelle carte car S57Controllers est modifie
-            
+
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + i).mkdir();
             new File("data/shp/shp_" + i + "/soundg").mkdir();
@@ -209,16 +213,12 @@ public class S57ChartImpl
 
             if (OS.isWindows()) {
                 cmd = "gdal/win/ogr2ogr";
+            } else if (OS.isLinux()) {
+                cmd = "/usr/bin/ogr2ogr";
+            } else if (OS.isMac()) {
+                cmd = "gdal/osx/ogr2ogr";
             } else {
-                if (OS.isLinux()) {
-                    cmd = "/usr/bin/ogr2ogr";
-                } else {
-                    if (OS.isMac()) {
-                        cmd = "gdal/osx/ogr2ogr";
-                    } else {
-                        System.out.println("OS not found");
-                    }
-                }
+                System.out.println("OS not found");
             }
             try {
                 Path tmp = Paths.get(inputFile.toString());

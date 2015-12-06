@@ -8,8 +8,21 @@ package bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSafeWater;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyInstallation;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyIsolatedDanger;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
@@ -22,20 +35,14 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRad
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
+import bzh.terrevirtuelle.navisu.navigation.controller.SailingDirectionsController;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.GpsPlotterWithRouteImpl;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
-import com.vividsolutions.jts.algorithm.CentroidArea;
-import com.vividsolutions.jts.algorithm.CentroidPoint;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.geom.Angle;
@@ -44,20 +51,16 @@ import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import gov.nasa.worldwind.pick.PickedObject;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
-import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwindx.examples.Placemarks;
-import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -79,10 +82,12 @@ public class GpsPlotterWithRouteController {
 
     protected String name1;
     protected String name2;
+    protected String name3;
     protected String group;
     protected WorldWindow wwd;
     protected RenderableLayer gpsLayer;
-    protected RenderableLayer aisSurveyZoneLayer;
+    protected RenderableLayer sailingDirectionsLayer;
+    protected RenderableLayer transponderZoneLayer;
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
     protected AisServices aisServices;
@@ -123,7 +128,7 @@ public class GpsPlotterWithRouteController {
             AisServices aisServices,
             boolean withTarget,
             NavigationDataSet navigationDataSet,
-            String name1, String name2,
+            String name1, String name2, String name3,
             String group) {
         if (instance == null) {
             instance = new GpsPlotterWithRouteController(component,
@@ -133,7 +138,7 @@ public class GpsPlotterWithRouteController {
                     aisServices,
                     withTarget,
                     navigationDataSet,
-                    name1, name2,
+                    name1, name2, name3,
                     group);
         }
         return instance;
@@ -146,7 +151,7 @@ public class GpsPlotterWithRouteController {
             AisServices aisServices,
             boolean withTarget,
             NavigationDataSet navigationDataSet,
-            String name1, String name2,
+            String name1, String name2, String name3,
             String group) {
         this.component = component;
         this.guiAgentServices = guiAgentServices;
@@ -159,13 +164,11 @@ public class GpsPlotterWithRouteController {
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         gpsLayer = layersManagerServices.initLayer(group, name1);
-        aisSurveyZoneLayer = layersManagerServices.initLayer(group, name2);
-        createAttributes();
+        sailingDirectionsLayer = layersManagerServices.initLayer(group, name2);
+        transponderZoneLayer = layersManagerServices.initLayer(group, name3);
         addPanelController();
         addListeners();
-        if (withTarget == true) {
-            createOwnerShip();
-        }
+        createOwnerShip();
         activateControllers();
     }
 
@@ -259,7 +262,6 @@ public class GpsPlotterWithRouteController {
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         ownerShipView.setField("Ship", ownerShip);
-        aisServices.aisCreateTargetEvent(ownerShip);
     }
 
     public void notifyNmeaMessage(GGA data) {
@@ -267,14 +269,12 @@ public class GpsPlotterWithRouteController {
         ownerShip.setLongitude(data.getLongitude());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-        aisServices.aisUpdateTargetEvent(ownerShip);
     }
 
     public void notifyNmeaMessage(VTG data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-        aisServices.aisUpdateTargetEvent(ownerShip);
     }
 
     public void notifyNmeaMessage(RMC data) {
@@ -289,17 +289,11 @@ public class GpsPlotterWithRouteController {
                 ownerShip.setLongitude(d.getLongitude());
                 ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
                 ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-                aisServices.aisUpdateTargetEvent(ownerShip);
             }
         }
     }
 
     public final void activateControllers() {
-        activateS57Controllers();
-        activateNavigationControllers();
-    }
-
-    private void activateS57Controllers() {
         File file = IO.fileChooser(guiAgentServices.getStage(),
                 "privateData/nds/", "NDS files (*.nds)", "*.nds", "*.NDS");
         navigationDataSet = new NavigationDataSet();
@@ -308,20 +302,43 @@ public class GpsPlotterWithRouteController {
         } catch (FileNotFoundException | JAXBException ex) {
             Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        s57ControllerIdList = new ArrayList<>();
-        List<Location> locations = navigationDataSet.getLocations();
-        locations.stream().forEach((l) -> {
-            long id = l.getId();
-            s57ControllerIdList.add(Long.toString(id));
+        activateS57Controllers();
+        activateNavigationControllers();
+    }
+
+    private void activateS57Controllers() {
+        List<Class> s57ConList = Arrays.asList(BeaconIsolatedDanger.class,
+                BeaconLateral.class,
+                BeaconSafeWater.class,
+                BeaconSpecialPurpose.class,
+                BuoyCardinal.class,
+                BuoyInstallation.class,
+                BuoyIsolatedDanger.class,
+                BuoyLateral.class,
+                BuoySafeWater.class,
+                BuoySpecialPurpose.class,
+                MooringWarpingFacility.class,
+                Landmark.class);
+
+        List<NavigationData> s57NavigationDataList = new ArrayList<>();
+        s57ConList.stream().forEach((claz) -> {
+            s57NavigationDataList.addAll(navigationDataSet.get(claz));
         });
-        component.notifyAisActivateEvent(aisSurveyZoneLayer, s57ControllerIdList);
+
+        s57ControllerIdList = new ArrayList<>();
+        s57NavigationDataList.stream().forEach((s) -> {
+            s57ControllerIdList.add(Long.toString(s.getId()));
+        });
+
+        component.notifyTransponderActivateEvent(transponderZoneLayer, s57NavigationDataList);
     }
 
     private void activateNavigationControllers() {
+        // TODO subscribe evts
+        /*
         List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
         wktReader = new WKTReader();
-        /* Avurnav */
-
+       
         avurnavList.stream().forEach((Avurnav a) -> {
             String geom = a.getGeometry();
             String label = "Avurnav N°" + Long.toString(a.getId());
@@ -338,137 +355,16 @@ public class GpsPlotterWithRouteController {
                 createMultiLineString(geom);
             }
         });
-        /* SailingDirections */
+         */
         List<SailingDirections> sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
         sailingDirectionsList.stream().forEach((SailingDirections a) -> {
-            String geom = a.getGeometry();
-            String label = "SailingDirections N°" + Long.toString(a.getId());
-            String globalZone = a.getZoneName() == null ? "" : a.getZoneName();
-            geom = geom.toUpperCase();
-            // String text = createText(a);
-            if (geom.contains("POLYGON")) {
-                createMultiPolygon(geom, label, a.getBook(), a.getDescription(),
-                       sailingDirectionsPolygonNormalAttributes, sailingDirectionsPolygonHighlightAttributes, sailingDirectionsMultiPlacemarkNormalAttributes);
-            }
+            String displayName = "SailingDirections N°" + Long.toString(a.getId());
+            String description = a.getDescription();
+            SailingDirectionsController sc = new SailingDirectionsController(new S57BasicBehavior(), a,
+                    926, displayName, description);
+            sc.setLayer(sailingDirectionsLayer);
+            sc.activate();
         });
-    }
-
-    private void createMultiPoint(String geom, String label, String globalZone, String description,
-            PointPlacemarkAttributes nAttrs, PointPlacemarkAttributes mAttrs) {
-        Coordinate[] coordinates = null;
-        Geometry geometry = null;
-        try {
-            geometry = wktReader.read(geom);
-            coordinates = geometry.getCoordinates();
-        } catch (ParseException ex) {
-            Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        if (coordinates != null) {
-            if (coordinates.length == 1) {
-                createPointPlacemark(coordinates[0].y, coordinates[0].x, label, globalZone, description);
-                placemark.setAttributes(nAttrs);
-            } else {
-                for (Coordinate coordinate : coordinates) {
-                    createPointPlacemark(coordinate.y, coordinate.x, label, globalZone, description);
-                    placemark.setAttributes(mAttrs);
-                }
-                CentroidPoint centroid = new CentroidPoint();
-                centroid.add(geometry);
-                Coordinate coord = centroid.getCentroid();
-                createPointPlacemark(coord.y, coord.x, label, globalZone, description);
-                placemark.setAttributes(nAttrs);
-            }
-        }
-    }
-
-    private void createMultiPolygon(String geom, String label, String globalZone, String text,
-            ShapeAttributes nAttrs, ShapeAttributes hAttrs, PointPlacemarkAttributes attrs) {
-        Coordinate[] coordinates = null;
-        Geometry geometry = null;
-        try {
-            geometry = wktReader.read(geom);
-            coordinates = geometry.getCoordinates();
-        } catch (ParseException ex) {
-            Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        ArrayList<Position> pathPositions = new ArrayList<>();
-        if (coordinates != null) {
-            for (Coordinate coordinate : coordinates) {
-                pathPositions.add(Position.fromDegrees(coordinate.y, coordinate.x, 200));
-            }
-            Polygon pgon = new Polygon(pathPositions);
-            pgon.setAttributes(nAttrs);
-            pgon.setHighlightAttributes(hAttrs);
-            pgon.setValue(AVKey.DISPLAY_NAME, label + "\n" + globalZone);
-            aisSurveyZoneLayer.addRenderable(pgon);
-
-            CentroidArea centroid = new CentroidArea();
-            centroid.add(geometry);
-            Coordinate coord = centroid.getCentroid();
-            createPointPlacemark(coord.y, coord.x, label, globalZone, text);
-            placemark.setAttributes(attrs);
-        }
-    }
-
-    private void createMultiLineString(String geom) {
-        System.out.println("not yet implemented");
-    }
-
-    private void createAttributes() {
-        avurnavPlacemarkNormalAttributes = new PointPlacemarkAttributes();
-        avurnavPlacemarkNormalAttributes.setImageAddress(AVURNAV_IMAGE_ADDRESS);
-        avurnavPlacemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
-        avurnavPlacemarkNormalAttributes.setScale(0.3);
-
-        avurnavMultiPlacemarkNormalAttributes = new PointPlacemarkAttributes();
-        avurnavMultiPlacemarkNormalAttributes.setImageAddress(DEFAULT_AVURNAV_IMAGE_ADDRESS);
-        avurnavMultiPlacemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
-        avurnavMultiPlacemarkNormalAttributes.setScale(0.3);
-
-        sailingDirectionsMultiPlacemarkNormalAttributes = new PointPlacemarkAttributes();
-        sailingDirectionsMultiPlacemarkNormalAttributes.setImageAddress(DIRECTIONS_IMAGE_ADDRESS);
-        sailingDirectionsMultiPlacemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
-        sailingDirectionsMultiPlacemarkNormalAttributes.setScale(0.6);
-
-        avurnavPolygonNormalAttributes = new BasicShapeAttributes();
-        avurnavPolygonNormalAttributes.setInteriorMaterial(new Material(Color.LIGHT_GRAY));
-        avurnavPolygonNormalAttributes.setDrawInterior(true);
-        avurnavPolygonNormalAttributes.setInteriorOpacity(0.2);
-        avurnavPolygonNormalAttributes.setOutlineMaterial(new Material(Color.LIGHT_GRAY));
-        avurnavPolygonNormalAttributes.setEnableLighting(true);
-
-        avurnavPolygonHighlightAttributes = new BasicShapeAttributes(avurnavPolygonNormalAttributes);
-        avurnavPolygonHighlightAttributes.setOutlineOpacity(1);
-        avurnavPolygonHighlightAttributes.setDrawInterior(true);
-        avurnavPolygonHighlightAttributes.setInteriorMaterial(new Material(Color.LIGHT_GRAY));
-        avurnavPolygonHighlightAttributes.setInteriorOpacity(0.5);
-
-        sailingDirectionsPolygonNormalAttributes = new BasicShapeAttributes();
-        sailingDirectionsPolygonNormalAttributes.setInteriorMaterial(new Material(Color.GREEN));
-        sailingDirectionsPolygonNormalAttributes.setDrawInterior(true);
-        sailingDirectionsPolygonNormalAttributes.setInteriorOpacity(0.03);
-        sailingDirectionsPolygonNormalAttributes.setDrawOutline(false);
-        sailingDirectionsPolygonNormalAttributes.setOutlineMaterial(new Material(Color.GREEN));
-        sailingDirectionsPolygonNormalAttributes.setOutlineOpacity(0.03);
-        sailingDirectionsPolygonNormalAttributes.setEnableLighting(true);
-
-        sailingDirectionsPolygonHighlightAttributes = new BasicShapeAttributes(avurnavPolygonNormalAttributes);
-        sailingDirectionsPolygonHighlightAttributes.setOutlineOpacity(.2);
-        sailingDirectionsPolygonHighlightAttributes.setDrawInterior(true);
-        sailingDirectionsPolygonHighlightAttributes.setInteriorMaterial(new Material(Color.GREEN));
-        sailingDirectionsPolygonHighlightAttributes.setInteriorOpacity(0.2);
-    }
-
-    private void createPointPlacemark(double lat, double lon, String label, String globalZone, String description) {
-        placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 10));
-        placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-        placemark.setValue(AVKey.DISPLAY_NAME, label + "\n" + globalZone);
-        placemark.setValue("TYPE", "Avurnav");
-        placemark.setValue("TITLE", label);
-        placemark.setValue("TEXT", description == null ? DEFAULT_DESCRIPTION : description);
-        aisSurveyZoneLayer.addRenderable(placemark);
     }
 
     private String createText(Avurnav a) {

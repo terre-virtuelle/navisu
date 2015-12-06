@@ -22,7 +22,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @date 18 juin 2015
  * @author Serge Morvan
  */
-public class AisEventsController {
+public abstract class AisEventsController {
 
     ComponentManager cm;
     ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
@@ -42,12 +42,11 @@ public class AisEventsController {
         aisUTEvent = cm.getComponentEventSubscribe(AisUpdateTargetEvent.class);
     }
 
-    public void subscribe() {
-
+    public void subscribe() {//OK
         aisCTEvent.subscribe((AisCreateTargetEvent) (Ship ship) -> {
             createTarget(ship);
         });
-        aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship ship) -> {
+        aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship ship) -> { 
             updateTarget(ship);
         });
         aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship ship) -> {
@@ -90,9 +89,8 @@ public class AisEventsController {
 
     }
 
-    public void updateTarget(Ship ship) {
-
-    }
+    public abstract void updateTarget(Ship ship);
+    
 
     public void deleteTarget(Ship ship) {
 

@@ -17,7 +17,6 @@ import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotter;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterGpsEventsController;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.AisActivateEvent;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -25,6 +24,7 @@ import java.util.List;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.ProducedEvent;
 import org.capcaval.c3.component.annotation.UsedService;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
 
 /**
  * NaVisu
@@ -51,7 +51,7 @@ public class GpsPlotterImpl
     AisServices aisServices;
 
     @ProducedEvent
-    protected AisActivateEvent aisActivateEvent;
+    protected TransponderActivateEvent aisActivateEvent;
 
     protected boolean on = false;
     private final String NAME1 = "GpsPlotter";
@@ -121,9 +121,9 @@ public class GpsPlotterImpl
     public InstrumentDriver getDriver() {
         return this;
     }
-
+/*
     public void notifyAisActivateEvent(RenderableLayer layer, List<String> targets) {
         aisActivateEvent.notifyAisActivateMessageChanged(layer, targets);
     }
-
+*/
 }

@@ -19,6 +19,10 @@ public class Geo
     protected String sourceDate;
     protected String sourceIndication;
 
+    public Geo(long id) {
+        super(id);
+    }
+
     public Geo() {
         this.geos = new ArrayList();
         this.cartos = new ArrayList();

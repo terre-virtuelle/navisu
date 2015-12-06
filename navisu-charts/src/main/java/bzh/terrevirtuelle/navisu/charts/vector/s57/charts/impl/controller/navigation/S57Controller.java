@@ -3,12 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
+package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation;
 
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsController;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.instruments.transponder.impl.controller.TransponderEventsController;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfaceCircle;
 import gov.nasa.worldwind.render.SurfaceShape;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
@@ -21,13 +29,16 @@ import org.gavaghan.geodesy.GlobalCoordinates;
  * @author Serge Morvan
  */
 public abstract class S57Controller
-        extends AisEventsController {
+        extends TransponderEventsController {
 
     protected S57Behavior s57Behavior;
     protected NavigationData navigationData;
-
+    protected WorldWindow wwd;
     protected RenderableLayer layer;
-    protected SurfaceShape shape;
+    protected SurfaceShape surveyZone;
+    protected ShapeAttributes surveyZoneNormalAttributes = null;
+    protected PointPlacemark pointPlacemark;
+    protected double range; // distance of perception
 
     protected long id;
     protected double lat;
@@ -42,11 +53,22 @@ public abstract class S57Controller
     protected double distance;
     protected double azimuth;
 
-    public S57Controller() {
-    }
-
-    public S57Controller(NavigationData navigationData) {
+    public S57Controller(S57Behavior s57Behavior, NavigationData navigationData, double range) {
+        this.s57Behavior = s57Behavior;
+        s57Behavior.setS57Controller(this);
         this.navigationData = navigationData;
+        this.id = navigationData.getId();
+        this.lat = navigationData.getLocation().getLat();
+        this.lon = navigationData.getLocation().getLon();
+        this.range = range;
+        wwd = GeoWorldWindViewImpl.getWW();
+
+        surveyZoneNormalAttributes = new BasicShapeAttributes();
+        surveyZoneNormalAttributes.setDrawInterior(false);
+        surveyZoneNormalAttributes.setDrawOutline(false);
+
+        surveyZone = new SurfaceCircle(LatLon.fromDegrees(lat, lon), range);
+        surveyZone.setAttributes(surveyZoneNormalAttributes);
     }
 
     public double getDistanceNm(Position posA, Position posB) {
@@ -81,8 +103,12 @@ public abstract class S57Controller
         this.layer = layer;
     }
 
-    public SurfaceShape getShape() {
-        return shape;
+    public void setSurveyZone(SurfaceShape surveyZone) {
+        this.surveyZone = surveyZone;
+    }
+
+    public SurfaceShape getSurveyZone() {
+        return surveyZone;
     }
 
     public S57Behavior getS57Behavior() {
@@ -97,34 +123,28 @@ public abstract class S57Controller
         return id;
     }
 
-    public final void setId(long id) {
+    public void setId(long id) {
         this.id = id;
-        navigationData.getLocation().setId(id);
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 
     public final double getLat() {
         return lat;
     }
 
-    public final void setLat(double lat) {
-        this.lat = lat;
-        navigationData.getLocation().setLat(lat);
-    }
-
     public double getLon() {
         return lon;
     }
 
-    public  final void setLon(double lon) {
-        this.lon = lon;
-    }
-
     public boolean isFirst() {
         return first;
-    }
-
-    public void setFirst(boolean first) {
-        this.first = first;
     }
 
     public GeodeticCalculator getGeoCalc() {
@@ -171,11 +191,33 @@ public abstract class S57Controller
         return navigationData;
     }
 
+    public PointPlacemark getPointPlacemark() {
+        return pointPlacemark;
+    }
+
+    public void setPointPlacemark(PointPlacemark pointPlacemark) {
+        this.pointPlacemark = pointPlacemark;
+    }
+
     public void setNavigationData(NavigationData navigationData) {
         this.navigationData = navigationData;
+        this.id = navigationData.getId();
+        this.lat = navigationData.getLocation().getLat();
+        this.lon = navigationData.getLocation().getLon();
+    }
+
+    public double getRange() {
+        return range;
+    }
+
+    public void setRange(double range) {
+        this.range = range;
     }
 
     public abstract void activate();
 
     public abstract void deactivate();
+
+    @Override
+    public abstract void updateTarget(Ship ship);
 }

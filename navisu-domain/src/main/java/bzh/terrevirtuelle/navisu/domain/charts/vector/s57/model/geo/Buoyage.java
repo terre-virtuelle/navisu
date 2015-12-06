@@ -47,21 +47,18 @@ public class Buoyage
     @XmlTransient
     protected String label;
     protected String imageAddress;
-    //  @XmlTransient
-    //   protected PointPlacemark placemark;
 
     public Buoyage() {
     }
 
-    /*
-    public PointPlacemark getPlacemark() {
-        return placemark;
+    public Buoyage(double lat, double lon) {
+        super(lat, lon);
     }
 
-    public void setPlacemark(PointPlacemark placemark) {
-        this.placemark = placemark;
+    public Buoyage(String wkt) {
+        super(wkt);
     }
-     */
+
     /**
      * Get the value of navigationalSystemOfMarks
      *
@@ -364,32 +361,32 @@ public class Buoyage
     @Override
     public String toString() {
         return "Buoyage{"
-                + shape != null ? "shape=" + shape : ""
-                        + ", categoryOfMark=" + categoryOfMark
-                        + ", colour=" + colour
-                        + ", colourPattern=" + colourPattern
-                        + ", navigationalSystemOfMarks=" + navigationalSystemOfMarks
-                        + ", condition=" + condition
-                        + ", conspicuousRadar=" + conspicuousRadar
-                        + ", conspicuousVisually=" + conspicuousVisually
-                        + ", dateEnd=" + dateEnd
-                        + ", dateStart=" + dateStart
-                        + ", elevation=" + elevation
-                        + ", height=" + height
-                        + ", natureOfConstruction=" + natureOfConstruction
-                        + ", objectName=" + objectName
-                        + ", periodicDateStart=" + periodicDateStart
-                        + ", periodicDateEnd=" + periodicDateEnd
-                        + ", pictorialRepresentation=" + pictorialRepresentation
-                        + ", recordIngdate=" + recordIngdate
-                        + ", scaleMaximum=" + scaleMaximum
-                        + ", verticalAccuracy=" + verticalAccuracy
-                        + ", recordingIndication=" + recordingIndication
-                        + ", verticaldatum=" + verticaldatum
-                        + ", verticalLength=" + verticalLength
-                        + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
-                        + ", status=" + status
-                        + '}';
+                + "shape=" + shape
+                + ", categoryOfMark=" + categoryOfMark
+                + ", colour=" + colour
+                + ", colourPattern=" + colourPattern
+                + ", navigationalSystemOfMarks=" + navigationalSystemOfMarks
+                + ", condition=" + condition
+                + ", conspicuousRadar=" + conspicuousRadar
+                + ", conspicuousVisually=" + conspicuousVisually
+                + ", dateEnd=" + dateEnd
+                + ", dateStart=" + dateStart
+                + ", elevation=" + elevation
+                + ", height=" + height
+                + ", natureOfConstruction=" + natureOfConstruction
+                + ", objectName=" + objectName
+                + ", periodicDateStart=" + periodicDateStart
+                + ", periodicDateEnd=" + periodicDateEnd
+                + ", pictorialRepresentation=" + pictorialRepresentation
+                + ", recordIngdate=" + recordIngdate
+                + ", scaleMaximum=" + scaleMaximum
+                + ", verticalAccuracy=" + verticalAccuracy
+                + ", recordingIndication=" + recordingIndication
+                + ", verticaldatum=" + verticaldatum
+                + ", verticalLength=" + verticalLength
+                + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
+                + ", status=" + status
+                + super.toString()+'}';
     }
 
     public String getLabel() {

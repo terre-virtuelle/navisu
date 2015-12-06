@@ -14,12 +14,28 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BCNSHP;
  */
 public class Beacon extends Buoyage {
 
+    public Beacon() {
+    }
+
+    public Beacon(double lat, double lon) {
+        super(lat, lon);
+    }
+
+    public Beacon(String wkt) {
+        super(wkt);
+    }
+
     public String getBeaconShape() {
         return shape;
     }
 
     public void setBeaconShape(String value) {
         shape = value;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     /**
