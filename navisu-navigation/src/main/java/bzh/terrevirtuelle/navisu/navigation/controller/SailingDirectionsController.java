@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
@@ -26,28 +27,31 @@ import java.awt.Color;
 public class SailingDirectionsController
         extends NavigationController {
 
-    public SailingDirectionsController(S57Behavior s57Behavior, NavigationData navigationData, double range,
+    
+
+    public SailingDirectionsController(S57Behavior s57Behavior,
+            GuiAgentServices guiAgentServices,
+            NavigationData navigationData, double range,
             String displayName, String description) {
-        super(s57Behavior, navigationData, range, displayName, description);
+        super(s57Behavior, guiAgentServices, navigationData, range, displayName, description);
+         
     }
 
     @Override
     public void updateTarget(Ship ship) {
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
-        s57Behavior.doIt(distance, azimuth);
         surveyZone.setValue(AVKey.DISPLAY_NAME, ((SailingDirections) navigationData).getDescription() + "\n distance :  "
                 + String.format("%.2f", distance) + " Nm"
                 + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
-
+        s57Behavior.doIt(distance, azimuth);
     }
 
     @Override
     protected void createAttributes() {
         placemarkNormalAttributes = new PointPlacemarkAttributes();
         String[] t = navigationData.getClass().getName().split("\\.");
-        placemarkNormalAttributes.setImageAddress(
-                NavigationIcons.ICONS.get(t[t.length - 1]));
+        placemarkNormalAttributes.setImageAddress(NavigationIcons.ICONS.get(t[t.length - 1]));
         placemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
         placemarkNormalAttributes.setScale(0.3);
 
@@ -64,6 +68,6 @@ public class SailingDirectionsController
         polygonHighlightAttributes.setDrawInterior(true);
         polygonHighlightAttributes.setInteriorMaterial(new Material(Color.GREEN));
         polygonHighlightAttributes.setInteriorOpacity(0.2);
-
     }
+    
 }

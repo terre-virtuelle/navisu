@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
@@ -35,26 +34,21 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRad
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
+import bzh.terrevirtuelle.navisu.navigation.controller.AvurnavController;
 import bzh.terrevirtuelle.navisu.navigation.controller.SailingDirectionsController;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.GpsPlotterWithRouteImpl;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
-import gov.nasa.worldwind.event.SelectListener;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import gov.nasa.worldwind.pick.PickedObject;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemark;
-import gov.nasa.worldwind.render.PointPlacemarkAttributes;
-import gov.nasa.worldwind.render.ShapeAttributes;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -83,14 +77,16 @@ public class GpsPlotterWithRouteController {
     protected String name1;
     protected String name2;
     protected String name3;
+    protected String name4;
     protected String group;
     protected WorldWindow wwd;
     protected RenderableLayer gpsLayer;
-    protected RenderableLayer sailingDirectionsLayer;
+    protected RenderableLayer sailingDirectionsPgonLayer;
+    protected RenderableLayer sailingDirectionsIconsLayer;
     protected RenderableLayer transponderZoneLayer;
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
-    protected AisServices aisServices;
+  //  protected AisServices aisServices;
     protected TargetPanel targetPanel;
     protected Ship ownerShip;
     protected double initRotation;
@@ -101,10 +97,11 @@ public class GpsPlotterWithRouteController {
     protected GpsPlotterWithRouteImpl component;
     protected CircularFifoQueue<RMC> sentenceQueue;
     protected NavigationDataSet navigationDataSet = null;
-    private final int LIMIT = 926; // distance of perception
-    protected WKTReader wktReader;
-    protected Point point;
-    protected PointPlacemark placemark;
+  //  private final int LIMIT = 926; // distance of perception
+   // protected WKTReader wktReader;
+   // protected Point point;
+   // protected PointPlacemark placemark;
+    /*
     protected PointPlacemarkAttributes avurnavPlacemarkNormalAttributes;
     protected PointPlacemarkAttributes avurnavMultiPlacemarkNormalAttributes;
     protected PointPlacemarkAttributes sailingDirectionsMultiPlacemarkNormalAttributes;
@@ -112,11 +109,7 @@ public class GpsPlotterWithRouteController {
     protected ShapeAttributes avurnavPolygonHighlightAttributes;
     protected ShapeAttributes sailingDirectionsPolygonNormalAttributes;
     protected ShapeAttributes sailingDirectionsPolygonHighlightAttributes;
-    protected String AVURNAV_IMAGE_ADDRESS = "images/avurnav.png";
-    protected String DEFAULT_AVURNAV_IMAGE_ADDRESS = "images/pushpins/castshadow-gray.png";
-    protected String SAILING_DIRECTIONS_IMAGE_ADDRESS = "images/sailingDirections.png";
-    protected String DIRECTIONS_IMAGE_ADDRESS = "images/sailingDirections.png";
-    protected String DEFAULT_DESCRIPTION = "Pas de description";
+    */
     static private GpsPlotterWithRouteController instance = null;
     protected TextAreaController textAreaController;
 
@@ -128,7 +121,7 @@ public class GpsPlotterWithRouteController {
             AisServices aisServices,
             boolean withTarget,
             NavigationDataSet navigationDataSet,
-            String name1, String name2, String name3,
+            String name1, String name2, String name3, String name4,
             String group) {
         if (instance == null) {
             instance = new GpsPlotterWithRouteController(component,
@@ -138,7 +131,7 @@ public class GpsPlotterWithRouteController {
                     aisServices,
                     withTarget,
                     navigationDataSet,
-                    name1, name2, name3,
+                    name1, name2, name3, name4,
                     group);
         }
         return instance;
@@ -151,12 +144,11 @@ public class GpsPlotterWithRouteController {
             AisServices aisServices,
             boolean withTarget,
             NavigationDataSet navigationDataSet,
-            String name1, String name2, String name3,
+            String name1, String name2, String name3, String name4,
             String group) {
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.kmlObjectServices = kmlObjectServices;
-        this.aisServices = aisServices;
         this.navigationDataSet = navigationDataSet;
         this.name1 = name1;
         this.name2 = name2;
@@ -164,7 +156,10 @@ public class GpsPlotterWithRouteController {
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         gpsLayer = layersManagerServices.initLayer(group, name1);
-        sailingDirectionsLayer = layersManagerServices.initLayer(group, name2);
+        sailingDirectionsPgonLayer = layersManagerServices.initLayer(group, name2);
+        sailingDirectionsPgonLayer.setPickEnabled(false);
+        sailingDirectionsIconsLayer = layersManagerServices.initLayer(group, name4);
+        
         transponderZoneLayer = layersManagerServices.initLayer(group, name3);
         addPanelController();
         addListeners();
@@ -201,28 +196,27 @@ public class GpsPlotterWithRouteController {
                 }
             }
         });
-
-        wwd.addSelectListener(new SelectListener() {
-            @Override
-            public void selected(SelectEvent event) {
-                PickedObject po = event.getTopPickedObject();
-                if (po != null && po.getObject() instanceof PointPlacemark) {
-                    if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
-                        PointPlacemark placemark = (PointPlacemark) po.getObject();
-                        if (placemark.getValue("TYPE") != null) {
-                            if (placemark.getValue("TYPE").equals("Avurnav")) {
-                                Platform.runLater(() -> {
-                                    textAreaController = new TextAreaController();
-                                    textAreaController.getDataTextArea().setWrapText(true);
-                                    textAreaController.getTitleText().setText((String) placemark.getValue("TITLE"));
-                                    textAreaController.getDataTextArea().setText((String) placemark.getValue("TEXT"));
-                                    guiAgentServices.getRoot().getChildren().add(textAreaController);
-                                });
-                            }
+        wwd.addSelectListener((SelectEvent event) -> {
+            PickedObject po = event.getTopPickedObject();
+            if (po != null && po.getObject() instanceof PointPlacemark) {
+                if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
+                    PointPlacemark placemark = (PointPlacemark) po.getObject();
+                    if (placemark.getValue("TYPE") != null) {
+                        String type = (String)placemark.getValue("TYPE");
+                        if (type.equals("Avurnav") || type.equals("SailingDirections")) {
+                            Platform.runLater(() -> {
+                                textAreaController = new TextAreaController();
+                                textAreaController.getDataTextArea().setWrapText(true);
+                                textAreaController.getTitleText().setText((String) placemark.getValue("TITLE"));
+                                textAreaController.getDataTextArea().setText((String) placemark.getValue("TEXT"));
+                                textAreaController.setVisible(true);
+                                guiAgentServices.getRoot().getChildren().add(textAreaController);
+                            });
+                            event.consume();
                         }
                     }
-                    event.consume();
                 }
+
             }
         });
     }
@@ -334,45 +328,29 @@ public class GpsPlotterWithRouteController {
     }
 
     private void activateNavigationControllers() {
-        // TODO subscribe evts
-        /*
-        List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
-        wktReader = new WKTReader();
        
-        avurnavList.stream().forEach((Avurnav a) -> {
-            String geom = a.getGeometry();
-            String label = "Avurnav N°" + Long.toString(a.getId());
-            String globalZone = a.getGlobalZone() == null ? "" : a.getGlobalZone();
-            geom = geom.toUpperCase();
-            String text = createText(a);
-            if (geom.contains("POINT")) {
-                createMultiPoint(geom, label, globalZone, text,
-                        avurnavPlacemarkNormalAttributes, avurnavMultiPlacemarkNormalAttributes);
-            } else if (geom.contains("POLYGON")) {
-                createMultiPolygon(geom, label, globalZone, text,
-                        avurnavPolygonNormalAttributes, avurnavPolygonHighlightAttributes, avurnavPlacemarkNormalAttributes);
-            } else if (geom.contains("LINESTRING")) {
-                createMultiLineString(geom);
-            }
+      List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
+      avurnavList.stream().forEach((Avurnav a) -> {
+            String displayName = "Avurnav N°" + Long.toString(a.getId());
+            String description = a.getDescription();
+            AvurnavController sc = new AvurnavController(new S57BasicBehavior(),
+                    guiAgentServices, a,
+                    926, displayName, description);
+            sc.setLayer(sailingDirectionsPgonLayer);
+            sc.setIconsLayer(sailingDirectionsIconsLayer);
+            sc.activate();
         });
-         */
+
         List<SailingDirections> sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
         sailingDirectionsList.stream().forEach((SailingDirections a) -> {
             String displayName = "SailingDirections N°" + Long.toString(a.getId());
             String description = a.getDescription();
-            SailingDirectionsController sc = new SailingDirectionsController(new S57BasicBehavior(), a,
+            SailingDirectionsController sc = new SailingDirectionsController(new S57BasicBehavior(),
+                    guiAgentServices, a,
                     926, displayName, description);
-            sc.setLayer(sailingDirectionsLayer);
+            sc.setLayer(sailingDirectionsPgonLayer);
+            sc.setIconsLayer(sailingDirectionsIconsLayer);
             sc.activate();
         });
-    }
-
-    private String createText(Avurnav a) {
-        String tmp = Translator.tr("navigation.avurnav.globalZone") + " : " + a.getGlobalZone() + "\n"
-                + Translator.tr("navigation.avurnav.broadcastTime") + " : " + a.getBroadcastTime() + "\n"
-                + Translator.tr("navigation.avurnav.expirationDate") + " : " + a.getExpirationDate() + "\n"
-                + Translator.tr("navigation.avurnav.description") + " : " + a.getDescription() + "\n\n";
-        tmp = tmp.replace("\t", "");
-        return tmp;
-    }
+    }   
 }

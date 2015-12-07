@@ -29,8 +29,6 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.globes.EarthFlat;
-import gov.nasa.worldwind.globes.FlatGlobe;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -68,7 +66,7 @@ import javax.xml.bind.JAXBException;
  */
 public class RoutePhotoEditorController
         extends Widget2DController {
-    
+
     private final String FXML = "routephotoeditor.fxml";
     @FXML
     public Pane view;
@@ -173,7 +171,7 @@ public class RoutePhotoEditorController
     private List<Position> highwayPathPositions;
     private List<Highway> highways;
     private Polygon highway;
-    
+
     public RoutePhotoEditorController(RoutePhotoEditorImpl instrument,
             LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
@@ -184,7 +182,7 @@ public class RoutePhotoEditorController
             AisServices aisServices,
             String groupName, String layerName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
-        
+
         super(keyCode, keyCombination);
         this.instrument = instrument;
         this.layersManagerServices = layersManagerServices;
@@ -200,12 +198,12 @@ public class RoutePhotoEditorController
         load(FXML);
         initPanel();
     }
-    
+
     final void load(String fxml) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxml));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        
+
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
@@ -218,17 +216,17 @@ public class RoutePhotoEditorController
             });
         });
     }
-    
+
     private void initPanel() {
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
             setVisible(false);
-            
+
         });
         gotoButton.setOnMouseClicked((MouseEvent event) -> {
             Ship ship = ShipBuilder.create().latitude(latitude).longitude(longitude).name("Lithops").build();
-            aisServices.aisUpdateTargetEvent(ship); 
+            aisServices.aisUpdateTargetEvent(ship);
             viewWW.setHeading(Angle.fromDegrees(heading));
             viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
             viewWW.setPitch(Angle.fromDegrees(90.0));
@@ -265,26 +263,31 @@ public class RoutePhotoEditorController
                 fieldOfView = 20;
                 updatePanel();
             }
-            
+
         });
-        
+
         fieldOfViewTF.setOnAction((ActionEvent event) -> {
             fieldOfView = Double.parseDouble(fieldOfViewTF.getText());
             viewWW.setHeading(Angle.fromDegrees(heading));
             viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
             viewWW.setPitch(Angle.fromDegrees(90.0));
+            System.out.println("viewWW.getPitch() "+viewWW.getPitch());
             viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
             updatePanel();
         });
         nearClipDistanceTF.setOnAction((ActionEvent event) -> {
             nearClipDistance = Double.parseDouble(nearClipDistanceTF.getText());
-            
-            System.out.println("getDistance " + viewWW.getFrustumInModelCoordinates().getNear().getDistance());
+
+            //  System.out.println("getDistance " + viewWW.getFrustumInModelCoordinates().getNear().getDistance());
             viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
             updatePanel();
         });
     }
-    
+
+    private void goTo() {
+
+    }
+
     private void updatePanel() {
         latTF.setText(Double.toString(latitude));
         lonTF.setText(Double.toString(longitude));
@@ -314,7 +317,7 @@ public class RoutePhotoEditorController
         viewportZTF.setText(String.format(Integer.toString(viewWW.getViewport().height)));
         viewportTTF.setText(String.format(Integer.toString(viewWW.getViewport().width)));
     }
-    
+
     private void fillHighway() {
         File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(), "privateData/nds", "Route files (*.nds)", "*.xml", "*.XML");
         navigationDataSet = new NavigationDataSet();
@@ -346,7 +349,7 @@ public class RoutePhotoEditorController
             offsetNormalAttributes.setDrawInterior(false);
             offsetNormalAttributes.setEnableLighting(true);
             highway.setAttributes(offsetNormalAttributes);
-            
+
             ShapeAttributes offsetHighlightAttributes = new BasicShapeAttributes(offsetNormalAttributes);
             offsetHighlightAttributes.setOutlineMaterial(Material.GREEN);
             offsetHighlightAttributes.setOutlineOpacity(1);

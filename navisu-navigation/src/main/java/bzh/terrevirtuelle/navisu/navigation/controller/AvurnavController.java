@@ -5,11 +5,19 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Offset;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import java.awt.Color;
 
 /**
  * NaVisu
@@ -20,36 +28,51 @@ import gov.nasa.worldwind.avlist.AVKey;
 public class AvurnavController
         extends NavigationController {
 
-    public AvurnavController(S57Behavior s57Behavior,NavigationData avurnav, double range,
+    public AvurnavController(S57Behavior s57Behavior, GuiAgentServices guiAgentServices,
+            NavigationData avurnav, double range,
             String displayName, String description) {
-        super(s57Behavior, avurnav, range,displayName,  description);    
+        super(s57Behavior, guiAgentServices, avurnav, range, displayName, description);
     }
 
     @Override
     public void updateTarget(Ship ship) {
-            distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
-            azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
-            s57Behavior.doIt(distance, azimuth);
-            surveyZone.setValue(AVKey.DISPLAY_NAME, ((Avurnav) navigationData).getDescription() + "\n distance :  "
-                    + String.format("%.2f", distance) + " Nm"
-                    + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
+        distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
+        azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
+        s57Behavior.doIt(distance, azimuth);
+        surveyZone.setValue(AVKey.DISPLAY_NAME, ((Avurnav) navigationData).getDescription() + "\n distance :  "
+                + String.format("%.2f", distance) + " Nm"
+                + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
     }
 
     @Override
-    public void activate() {
-        if (layer != null && first == true) {
-            layer.addRenderable(surveyZone);
-            first = false;
-        }
-        subscribe();
+    protected void createAttributes() {
+        placemarkNormalAttributes = new PointPlacemarkAttributes();
+        String[] t = navigationData.getClass().getName().split("\\.");
+        placemarkNormalAttributes.setImageAddress(NavigationIcons.ICONS.get(t[t.length - 1]));
+        placemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
+        placemarkNormalAttributes.setScale(0.3);
+
+        polygonNormalAttributes = new BasicShapeAttributes();
+        polygonNormalAttributes.setInteriorMaterial(new Material(Color.GRAY));
+        polygonNormalAttributes.setDrawInterior(true);
+        polygonNormalAttributes.setInteriorOpacity(0.02);
+        polygonNormalAttributes.setOutlineMaterial(new Material(Color.GRAY));
+        polygonNormalAttributes.setOutlineOpacity(0.2);
+        polygonNormalAttributes.setEnableLighting(true);
+
+        polygonHighlightAttributes = new BasicShapeAttributes(polygonNormalAttributes);
+        polygonHighlightAttributes.setOutlineOpacity(0.2);
+        polygonHighlightAttributes.setDrawInterior(true);
+        polygonHighlightAttributes.setInteriorMaterial(new Material(Color.GRAY));
+        polygonHighlightAttributes.setInteriorOpacity(0.2);
     }
 
-    @Override
-    public void deactivate() {
-        if (layer != null) {
-            layer.removeAllRenderables();
-        }
-        unsubscribe();
+    private String createText(Avurnav a) {
+        String tmp = Translator.tr("navigation.avurnav.globalZone") + " : " + a.getGlobalZone() + "\n"
+                + Translator.tr("navigation.avurnav.broadcastTime") + " : " + a.getBroadcastTime() + "\n"
+                + Translator.tr("navigation.avurnav.expirationDate") + " : " + a.getExpirationDate() + "\n"
+                + Translator.tr("navigation.avurnav.description") + " : " + a.getDescription() + "\n\n";
+        tmp = tmp.replace("\t", "");
+        return tmp;
     }
-
 }

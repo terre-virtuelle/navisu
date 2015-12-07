@@ -6,11 +6,9 @@
 package bzh.terrevirtuelle.navisu.navigation.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
@@ -18,13 +16,13 @@ import com.vividsolutions.jts.algorithm.CentroidArea;
 import com.vividsolutions.jts.algorithm.CentroidPoint;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.pick.PickedObject;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -45,7 +43,7 @@ import javafx.application.Platform;
  * @date 7 mai 2015
  * @author Serge Morvan
  */
-public class NavigationController
+public abstract class NavigationController
         extends S57Controller {
 
     private GuiAgentServices guiAgentServices;
@@ -59,11 +57,20 @@ public class NavigationController
     protected PointPlacemarkAttributes placemarkNormalAttributes;
     protected ShapeAttributes polygonNormalAttributes;
     protected ShapeAttributes polygonHighlightAttributes;
-    protected TextAreaController textAreaController;
+    private TextAreaController textAreaController;
+    private String[] navClassNameT;
+    private String navClassName;
+    protected RenderableLayer iconsLayer;
 
-    public NavigationController(S57Behavior s57Behavior, NavigationData navigationData, double range,
+    public NavigationController(S57Behavior s57Behavior, GuiAgentServices guiAgentServices,
+            NavigationData navigationData, double range,
             String displayName, String description) {
         super(s57Behavior, navigationData, range);
+        this.displayName = displayName;
+        this.description = description;
+        this.guiAgentServices = guiAgentServices;
+        navClassNameT = navigationData.getClass().getName().split("\\.");
+        navClassName = navClassNameT[navClassNameT.length - 1];
         createAttributes();
         wkt = navigationData.getGeometry();
         wktReader = new WKTReader();
@@ -120,68 +127,23 @@ public class NavigationController
         }
     }
 
-    protected void createAttributes() {
-        placemarkNormalAttributes = new PointPlacemarkAttributes();
-       String []t = navigationData.getClass().getName().split("\\.");
-        placemarkNormalAttributes.setImageAddress(
-                NavigationIcons.ICONS.get(t[t.length-1]));
-        placemarkNormalAttributes.setImageOffset(Offset.BOTTOM_CENTER);
-        placemarkNormalAttributes.setScale(0.3);
-
-        polygonNormalAttributes = new BasicShapeAttributes();
-        polygonNormalAttributes.setInteriorMaterial(new Material(Color.LIGHT_GRAY));
-        polygonNormalAttributes.setDrawInterior(true);
-        polygonNormalAttributes.setInteriorOpacity(0.2);
-        polygonNormalAttributes.setOutlineMaterial(new Material(Color.LIGHT_GRAY));
-        polygonNormalAttributes.setEnableLighting(true);
-
-        polygonHighlightAttributes = new BasicShapeAttributes(polygonNormalAttributes);
-        polygonHighlightAttributes.setOutlineOpacity(1);
-        polygonHighlightAttributes.setDrawInterior(true);
-        polygonHighlightAttributes.setInteriorMaterial(new Material(Color.LIGHT_GRAY));
-        polygonHighlightAttributes.setInteriorOpacity(0.5);
-
-    }
-
+    protected abstract void createAttributes();
+   
     private void createPointPlacemark(Coordinate coordinate) {
         pointPlacemark = new PointPlacemark(Position.fromDegrees(coordinate.y, coordinate.x, 0));
         pointPlacemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         pointPlacemark.setValue(AVKey.DISPLAY_NAME, displayName);
-        pointPlacemark.setValue("TYPE", navigationData.getClass().getName());
+        pointPlacemark.setValue("TYPE", navClassName);
         pointPlacemark.setValue("TITLE", displayName);
         pointPlacemark.setValue("TEXT", description);
         pointPlacemark.setAttributes(placemarkNormalAttributes);
-    }
-
-    private void addListeners() {
-
-        wwd.addSelectListener((SelectEvent event) -> {
-            PickedObject po = event.getTopPickedObject();
-            if (po != null && po.getObject() instanceof PointPlacemark) {
-                if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
-                    PointPlacemark placemark1 = (PointPlacemark) po.getObject();
-                    if (placemark1.getValue("TYPE") != null) {
-                        if (placemark1.getValue("TYPE").equals(navigationData.getClass().getName())) {
-                            Platform.runLater(() -> {
-                                textAreaController = new TextAreaController();
-                                textAreaController.getDataTextArea().setWrapText(true);
-                                textAreaController.getTitleText().setText((String) placemark1.getValue("TITLE"));
-                                textAreaController.getDataTextArea().setText((String) placemark1.getValue("TEXT"));
-                                guiAgentServices.getRoot().getChildren().add(textAreaController);
-                            });
-                        }
-                    }
-                }
-                event.consume();
-            }
-        });
     }
 
     @Override
     public void activate() {
         if (layer != null && first == true) {
             layer.addRenderable(surveyZone);
-            layer.addRenderable(pointPlacemark);
+            iconsLayer.addRenderable(pointPlacemark);
             if (pgon != null) {
                 layer.addRenderable(pgon);
             }
@@ -194,6 +156,9 @@ public class NavigationController
     public void deactivate() {
         if (layer != null) {
             layer.removeAllRenderables();
+        }
+        if (iconsLayer != null) {
+            iconsLayer.removeAllRenderables();
         }
         unsubscribe();
     }
@@ -234,5 +199,9 @@ public class NavigationController
     public void setTextAreaController(TextAreaController textAreaController) {
         this.textAreaController = textAreaController;
     }
-    
+
+    public void setIconsLayer(RenderableLayer iconsLayer) {
+        this.iconsLayer = iconsLayer;
+    }
+
 }

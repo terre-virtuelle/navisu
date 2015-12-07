@@ -62,6 +62,7 @@ public class GpsPlotterWithRouteImpl
     private final String NAME1 = "GpsPlotterWithRoute";
     private final String NAME2 = "Nautical documents";
     private final String NAME3 = "S57 Buoyage behavior";
+    private final String NAME4 = "Nautical documents icons";
     protected final String GROUP = "Navigation";
     private GpsPlotterWithRouteController gpsPlotterController;
     private GpsEventsController gpsEventsController;
@@ -93,7 +94,7 @@ public class GpsPlotterWithRouteImpl
                     guiAgentServices, kmlObjectServices, aisServices,
                     withTarget,
                     navigationDataSet,
-                    NAME0, NAME2, NAME3, GROUP);
+                    NAME0, NAME2, NAME3, NAME4, GROUP);
             if (withTarget) {
                 gpsPlotterController.createTarget();
             }
