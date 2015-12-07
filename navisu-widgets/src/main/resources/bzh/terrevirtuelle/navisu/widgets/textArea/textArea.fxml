@@ -29,7 +29,7 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <Text fx:id="titleText" layoutX="98.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="AVURNAV" wrappingWidth="149.314453125" />
+                <Text fx:id="titleText" layoutX="99.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="AVURNAV" wrappingWidth="164.314453125" />
                 <TextArea fx:id="dataTextArea" layoutX="14.0" layoutY="101.0" prefHeight="341.0" prefWidth="283.0" styleClass="datatextarea" />
                 <Button fx:id="quit" alignment="CENTER" layoutX="285.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
