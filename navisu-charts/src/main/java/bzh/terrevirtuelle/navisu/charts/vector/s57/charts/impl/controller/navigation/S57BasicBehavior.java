@@ -55,15 +55,11 @@ public class S57BasicBehavior
     @Override
     public void doIt(double distance, double azimuth) {
         S57Controller s57Controller = getS57Controller();
-      //  System.out.println("s57Controller " + s57Controller);
         SurfaceShape surveyZone = s57Controller.getSurveyZone();
-      //  System.out.println("surveyZone "+ surveyZone);
         PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
-     // System.out.println("pointPlacemark "+ pointPlacemark);
         double range = s57Controller.getRange();
         distance *= 1000;
-       // System.out.println("wwd " + wwd);
-        
+        System.out.println("S57BasicBehavior " + range +" "+ distance);
         surveyZone.setHighlightAttributes(highlightAttributes);
         if (distance > range) {
             surveyZone.getAttributes().setDrawInterior(false);
