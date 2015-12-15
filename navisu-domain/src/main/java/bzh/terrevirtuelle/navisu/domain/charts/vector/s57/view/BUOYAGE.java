@@ -26,8 +26,6 @@ public class BUOYAGE {
         }
     });
 
-    
-
     @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
