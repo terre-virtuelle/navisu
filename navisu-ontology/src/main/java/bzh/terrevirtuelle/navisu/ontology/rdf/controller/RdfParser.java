@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.ontology.rdf.controller;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
@@ -13,6 +14,11 @@ import bzh.terrevirtuelle.navisu.domain.rdf.Binding;
 import bzh.terrevirtuelle.navisu.domain.rdf.Result;
 import bzh.terrevirtuelle.navisu.domain.rdf.Sparql;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
+import com.vividsolutions.jts.algorithm.CentroidArea;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -44,15 +50,19 @@ public class RdfParser {
     private String avurnavName = "";
     private String sailingDirectionsName = "";
     private String repFileName;
+    protected WKTReader wktReader;
+    protected Geometry geometry = null;
 
     public RdfParser() {
         navigationDataList = new ArrayList<>();
+        wktReader = new WKTReader();
     }
 
     public RdfParser(File file) {
         navigationDataList = new ArrayList<>();
         path = file.toPath();
         repFileName = path.toString().split("\\.")[0];
+        wktReader = new WKTReader();
     }
 
     public NavigationDataSet parse(String srcDir, String filename) {
@@ -128,13 +138,14 @@ public class RdfParser {
                                         case "broadcastTime":
                                             avurnav.setBroadcastTime(bindings.get(2).getLiteral());
                                             break;
-                                            case "hasGeometry":
-                                            avurnav.setGeometry(bindings.get(2).getLiteral());
+                                        case "hasGeometry":
+                                            String geo = bindings.get(2).getLiteral();
+                                            avurnav.setGeometry(geo);
                                             break;
-                                            case "hasRestriction":
+                                        case "hasRestriction":
                                             avurnav.setRestriction(bindings.get(2).getUri().split("#")[1]);
                                             break;
-                                            case "type":
+                                        case "type":
                                             avurnav.setType(bindings.get(2).getUri().split("#")[1]);
                                             break;
                                         default:
@@ -156,10 +167,8 @@ public class RdfParser {
                                 if (sailingDirections != null) {
                                     switch (tmp[1].trim()) {
                                         case "hasGeometry":
-                                            String tmp = bindings.get(2).getLiteral();
-                                            tmp=tmp.replace("(", "((");
-                                            tmp=tmp.replace(")", "))");
-                                            sailingDirections.setWkt(tmp);
+                                            String geo = bindings.get(2).getLiteral();
+                                            sailingDirections.setWkt(geo);
                                             break;
                                         case "hasChapter":
                                             sailingDirections.setBook(bindings.get(2).getUri().split("#")[1]);
@@ -189,4 +198,21 @@ public class RdfParser {
         return "RdfParser{" + "navigationData=" + navigationDataList + '}';
     }
 
+    private Location createLocation(String wkt) {
+        Location location = null;
+        if (wkt != null) {
+            try {
+                geometry = wktReader.read(wkt);
+            } catch (ParseException ex) {
+                Logger.getLogger(RdfParser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            CentroidArea centroid = new CentroidArea();
+            if (geometry != null) {
+                centroid.add(geometry);
+                Coordinate coord = centroid.getCentroid();
+                location = new Location(coord.y, coord.x);
+            }
+        }
+        return location;
+    }
 }
