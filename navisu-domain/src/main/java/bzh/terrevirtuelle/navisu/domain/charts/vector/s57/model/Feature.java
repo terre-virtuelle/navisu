@@ -5,17 +5,45 @@ import java.util.*;
 import java.lang.reflect.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Recuperation des objets de donnees
  *
  * @author PFE
  */
-
+@XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Feature
         extends S57Object
         implements Serializable {
+
+    /**
+     * Table des m�thodes de l'objet en cours
+     */
+    @XmlTransient
+    protected HashMap<String, Method> methods;
+    /**
+     * Primitive geometrique de l'objet (1->Point, 2->Ligne, 3->Aire 255->Rien)
+     */
+    @XmlTransient
+    protected int prim;
+    /**
+     * Enregistrements spatiaux associes a l'objet reperes par leurs
+     * identifiants
+     */
+    @XmlTransient
+    protected HashMap<Long, VectorUsage> spatialRecordById;
+    /**
+     * Enregistrements spatiaux associes a l'objet
+     */
+    @XmlTransient
+    protected HashMap<Spatial, VectorUsage> spatialRecord;
+    
+    @XmlTransient
+    protected int innerBoundaryIndex = 0;
 
     public Feature(long id) {
         super(id);
@@ -30,28 +58,6 @@ public class Feature
         this.methods = new HashMap<>();
         this.feature = true;
     }
-    /**
-     * Table des m�thodes de l'objet en cours
-     */
-    protected HashMap<String, Method> methods;
-
-    /**
-     * Primitive geometrique de l'objet (1->Point, 2->Ligne, 3->Aire 255->Rien)
-     */
-    protected int prim;
-
-    /**
-     * Enregistrements spatiaux associes a l'objet reperes par leurs
-     * identifiants
-     */
-    protected HashMap<Long, VectorUsage> spatialRecordById;
-
-    /**
-     * Enregistrements spatiaux associes a l'objet
-     */
-    protected HashMap<Spatial, VectorUsage> spatialRecord;
-
-    protected int innerBoundaryIndex = 0;
 
     /**
      * Retourne l'indice de la premiere frontiere interieure
@@ -140,6 +146,7 @@ public class Feature
 
     /**
      * Non traite actuellement
+     *
      * @param fieldValue
      */
     protected void decodNATF(byte[] fieldValue) {
@@ -147,6 +154,7 @@ public class Feature
 
     /**
      * Non traite actuellement
+     *
      * @param fieldValue
      */
     /*
@@ -200,6 +208,7 @@ public class Feature
 
     /**
      * Non traite actuellement
+     *
      * @param fieldValue
      */
     protected void decodFOID(byte[] fieldValue) {

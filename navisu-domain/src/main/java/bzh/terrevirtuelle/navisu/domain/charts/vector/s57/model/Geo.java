@@ -2,21 +2,33 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model;
 
 import java.io.Serializable;
 import java.util.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
-
-
+@XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Geo
         extends Feature
         implements Serializable {
 
+    @XmlTransient
     protected List<Carto> cartos;
+    @XmlTransient
     protected List<Geo> geos;
+    @XmlTransient
     protected String information;
+    @XmlTransient
     protected String informationInNationalLanguage;
+    @XmlTransient
     protected String textualDescriptionInNationalLanguage;
+    @XmlTransient
     protected String textualDescription;
+    @XmlTransient
     protected String scaleMinimum;
+    @XmlTransient
     protected String sourceDate;
+    @XmlTransient
     protected String sourceIndication;
 
     public Geo(long id) {
@@ -37,7 +49,7 @@ public class Geo
     }
 
     public Geo getGeos(int i) {
-        return  this.geos.get(i);
+        return this.geos.get(i);
     }
 
     public int cardGeos() {
@@ -112,13 +124,13 @@ public class Geo
 
     @Override
     public String toString() {
-        return super.toString() + "  Geo{" + "cartos=" + cartos + ", geos=" + geos 
-                + ", information=" + information 
-                + ", informationInNationalLanguage=" + informationInNationalLanguage 
-                + ", textualDescriptionInNationalLanguage=" + textualDescriptionInNationalLanguage 
-                + ", textualDescription=" + textualDescription 
-                + ", scaleMinimum=" + scaleMinimum 
-                + ", sourceDate=" + sourceDate 
+        return super.toString() + "  Geo{" + "cartos=" + cartos + ", geos=" + geos
+                + ", information=" + information
+                + ", informationInNationalLanguage=" + informationInNationalLanguage
+                + ", textualDescriptionInNationalLanguage=" + textualDescriptionInNationalLanguage
+                + ", textualDescription=" + textualDescription
+                + ", scaleMinimum=" + scaleMinimum
+                + ", sourceDate=" + sourceDate
                 + ", sourceIndication=" + sourceIndication + '}' + '\n';
     }
 

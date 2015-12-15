@@ -1,13 +1,20 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model;
 
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 
-
+@XmlTransient
+@XmlAccessorType(XmlAccessType.FIELD)
 public class S57Object implements Serializable {
 
+    @XmlTransient
     protected boolean feature = false;
+    @XmlTransient
     protected boolean spatial = false;
+    @XmlTransient
     protected boolean dataSet = false;
 
     protected long id;

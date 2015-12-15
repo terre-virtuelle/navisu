@@ -18,8 +18,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
-
-
 public class Location extends Geo
         implements Serializable {
 
