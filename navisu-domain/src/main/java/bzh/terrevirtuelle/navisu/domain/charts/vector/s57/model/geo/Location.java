@@ -7,40 +7,53 @@ package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Serge Morvan
  * @date 10 juin 2014 NaVisu project
  */
+@XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "location", propOrder = {"lat", "lon", "wkt"})
+
 
 public class Location extends Geo
         implements Serializable {
 
     protected double lat;
     protected double lon;
-    protected String wkt;
+    protected String centroid;
 
     public Location() {
-        this.wkt = "POINT(0.0 0.0)";
+        this.centroid = "POINT(0.0 0.0)";
     }
 
     public Location(double lat, double lon) {
         this.lat = lat;
         this.lon = lon;
-        this.wkt = "POINT(" + lon + " " + lat + ")";
+        this.centroid = "POINT(" + lon + " " + lat + ")";
+    }
+
+    public final void setLatlon(double lat, double lon) {
+        this.lat = lat;
+        this.lon = lon;
+        this.centroid = "POINT(" + lon + " " + lat + ")";
     }
 
     // Warning : Longitude Latitude format
     // Example : POINT(-4.410364 48.289336)
     public Location(String wkt) {
+        parse(wkt);
+    }
+
+    public String getCentroid() {
+        return centroid;
+    }
+
+    public void setCentroid(String wkt) {
         parse(wkt);
     }
 
@@ -56,29 +69,11 @@ public class Location extends Geo
                     if (t1.length == 2) {
                         this.lon = Double.parseDouble(t1[0]);
                         this.lat = Double.parseDouble(t1[1]);
-                        this.wkt = wkt;
+                        this.centroid = wkt;
                     }
                 }
             }
         }
-    }
-
-    /**
-     * Get the value of wkt
-     *
-     * @return the value of wkt
-     */
-    public String getWkt() {
-        return wkt;
-    }
-
-    /**
-     * Set the value of wkt
-     *
-     * @param wkt new value of wkt
-     */
-    public void setWkt(String wkt) {
-        parse(wkt);
     }
 
     public double getLat() {
@@ -87,6 +82,7 @@ public class Location extends Geo
 
     public void setLat(double lat) {
         this.lat = lat;
+        this.centroid = "POINT(" + this.lon + " " + lat + ")";
     }
 
     public double getLon() {
@@ -95,11 +91,12 @@ public class Location extends Geo
 
     public void setLon(double lon) {
         this.lon = lon;
+        this.centroid = "POINT(" + lon + " " + this.lat + ")";
     }
 
-    @Override
-    public String toString() {
-        return "Location{" + "lat=" + lat + ", lon=" + lon + ", wkt=" + wkt + '}' + super.toString() ;
+    public void setLocation(double lat, double lon) {
+        this.lat = lat;
+        this.lon = lon;
+        this.centroid = "POINT(" + lon + " " + this.lat + ")";
     }
-
 }

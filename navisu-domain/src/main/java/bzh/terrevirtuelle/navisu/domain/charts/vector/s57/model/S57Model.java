@@ -5,9 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.DataSetGeographicReference;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Feature;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.app.Main;
 import java.io.BufferedReader;
 import java.io.File;
