@@ -7,9 +7,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57Chart;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
@@ -49,13 +47,15 @@ import javafx.scene.control.TreeItem;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
 
 /**
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class S57ChartImpl
-        implements S57Chart, S57ChartServices, Driver, ComponentState {
+public class S57ChartComponentImpl
+        implements S57ChartComponent, S57ChartComponentServices, Driver, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -77,14 +77,14 @@ public class S57ChartImpl
     private static final String EXTENSION_3 = ".003";
     protected static final String GROUP = "S57 charts";
     static private int i = 0;
-    protected S57ChartController chartS57Controller;
+    protected S57ChartComponentController chartS57Controller;
   //  private SurveyZoneController surveyZoneController;
     protected List<Layer> layers;
     protected Layer layer;
     protected List<Layer> enabledLayers;
     protected List<CheckBoxTreeItem<GeoLayer>> rootItems;
     protected List<RenderableLayer> airspaceLayers;
-    protected static final Logger LOGGER = Logger.getLogger(S57ChartImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(S57ChartComponentImpl.class.getName());
     protected WorldWindow wwd;
     protected Scene scene;
     private boolean first = true;
@@ -165,7 +165,7 @@ public class S57ChartImpl
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         try {
-            chartS57Controller = S57ChartController.getInstance();
+            chartS57Controller = S57ChartComponentController.getInstance();
             if (first == true) {
                 first = false;
                 chartS57Controller.setDataAccessServices(dataAccessServices);
@@ -338,7 +338,7 @@ public class S57ChartImpl
 
             });
         } catch (IOException ex) {
-            Logger.getLogger(S57ChartImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
+            Logger.getLogger(S57ChartComponentImpl.class.getName()).log(Level.INFO, "Clean tmp directories", ex);
         }
 
     }

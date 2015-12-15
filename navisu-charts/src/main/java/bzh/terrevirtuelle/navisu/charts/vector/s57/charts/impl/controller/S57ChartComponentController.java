@@ -85,7 +85,7 @@ import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class S57ChartController {
+public class S57ChartComponentController {
 
     ComponentManager cm;
     ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
@@ -93,7 +93,7 @@ public class S57ChartController {
     private DataAccessServices dataAccessServices;
     private LayersManagerServices layersManagerServices;
     private final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
-    private static S57ChartController INSTANCE = null;
+    private static S57ChartComponentController INSTANCE = null;
     protected String path;
     private File file;
     private Map<String, String> acronyms;
@@ -117,14 +117,14 @@ public class S57ChartController {
     ;
     boolean first = true;
 
-    public static S57ChartController getInstance() {
+    public static S57ChartComponentController getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new S57ChartController();
+            INSTANCE = new S57ChartComponentController();
         }
         return INSTANCE;
     }
 
-    private S57ChartController() {
+    private S57ChartComponentController() {
         topMarks = new HashMap<>();
         System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
@@ -156,7 +156,7 @@ public class S57ChartController {
                 acronyms.put(tmpTab[0], tmpTab[1]);
             }
         } catch (IOException ex) {
-            Logger.getLogger(S57ChartController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(S57ChartComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -481,7 +481,7 @@ public class S57ChartController {
                     try {
                         ImageIO.write((BufferedImage) image, "bmp", new File("data/images/minou.jpg"));
                     } catch (IOException ex) {
-                        Logger.getLogger(S57ChartController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(S57ChartComponentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     attrs.setImageAddress("data/images/minou.jpg");
                     attrs.setImageOffset(Offset.BOTTOM_CENTER);

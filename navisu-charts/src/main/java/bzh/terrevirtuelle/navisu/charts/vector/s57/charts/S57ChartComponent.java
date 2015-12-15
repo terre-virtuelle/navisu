@@ -8,5 +8,5 @@ import org.capcaval.c3.component.Component;
  * @author tibus
  * @date 11/11/2013 12:49
  */
-public interface S57Chart extends Component {
+public interface S57ChartComponent extends Component {
 }

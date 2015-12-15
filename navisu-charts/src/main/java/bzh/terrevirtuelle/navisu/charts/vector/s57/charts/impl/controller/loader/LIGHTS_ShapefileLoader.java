@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57LightView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR;
@@ -48,12 +48,12 @@ public class LIGHTS_ShapefileLoader
     protected WorldWindow wwd;
     protected Globe globe;
     private double elevation;
-    S57ChartController chartS57Controller;
+    S57ChartComponentController chartS57Controller;
 
     public LIGHTS_ShapefileLoader() {
         dataList = new ArrayList<>();
         airspaceLayer = new RenderableLayer();
-        chartS57Controller = S57ChartController.getInstance();
+        chartS57Controller = S57ChartComponentController.getInstance();
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         chartS57Controller.getLayers().add(layer);
         layer.setName("LIGHTS_SECTORS");

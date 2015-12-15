@@ -11,7 +11,7 @@ import org.capcaval.c3.component.ComponentService;
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public interface S57ChartServices
+public interface S57ChartComponentServices
         extends ComponentService {
 
     Driver getDriver();
