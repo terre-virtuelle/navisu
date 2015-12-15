@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
@@ -57,6 +56,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 
 /**
  * NaVisu
@@ -175,7 +175,7 @@ public class RoutePhotoEditorController
     public RoutePhotoEditorController(RoutePhotoEditorImpl instrument,
             LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
-            S57ChartServices s57ChartServices,
+            S57ChartComponentServices s57ChartServices,
             RoutePhotoViewerServices routePhotoViewerServices,
             ExifComponentServices exifComponentServices,
             GpsPlotterServices gpsPlotterServices,

@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
@@ -24,6 +23,7 @@ import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.ProducedEvent;
 import org.capcaval.c3.component.annotation.UsedService;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 
 /**
  * NaVisu
@@ -37,7 +37,7 @@ public class RoutePhotoEditorImpl
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
-    S57ChartServices s57ChartServices;
+    S57ChartComponentServices s57ChartServices;
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
@@ -107,7 +107,7 @@ public class RoutePhotoEditorImpl
         return guiAgentServices;
     }
 
-    public S57ChartServices getS57ChartServices() {
+    public S57ChartComponentServices getS57ChartServices() {
         return s57ChartServices;
     }
 

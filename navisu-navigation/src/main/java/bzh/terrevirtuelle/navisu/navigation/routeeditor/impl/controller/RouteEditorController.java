@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
@@ -81,6 +80,7 @@ import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GeodeticCurve;
 import org.gavaghan.geodesy.GlobalCoordinates;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 
 /**
  * NaVisu
@@ -133,7 +133,7 @@ public class RouteEditorController
     private final DateTimeFormatter kmlTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
     private WorldWindow wwd;
     private RouteDataEditorController routeDataEditorController;
-    private final S57ChartServices s57ChartServices;
+    private final S57ChartComponentServices s57ChartServices;
     private GuiAgentServices guiAgentServices;
     @FXML
     public Pane view;

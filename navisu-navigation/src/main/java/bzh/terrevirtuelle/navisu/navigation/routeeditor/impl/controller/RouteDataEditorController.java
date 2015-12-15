@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
@@ -40,6 +39,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 
 /**
  * NaVisu
@@ -52,7 +52,7 @@ public class RouteDataEditorController
 
     private final String FXML = "routedataeditor.fxml";
     private final GuiAgentServices guiAgentServices;
-    private final S57ChartServices s57ChartServices;
+    private final S57ChartComponentServices s57ChartServices;
     private final LayersManagerServices layersManagerServices;
     private NavigationDataSet navigationDataSet;
     private List<Avurnav> avurnavList;
@@ -79,7 +79,7 @@ public class RouteDataEditorController
     public RouteDataEditorController(
             LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
-            S57ChartServices s57ChartServices,
+            S57ChartComponentServices s57ChartServices,
             String groupName, String layerName,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 

@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditor;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditorServices;
@@ -19,6 +18,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 
 /**
  * NaVisu
@@ -32,7 +32,7 @@ public class RouteEditorImpl
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
-    S57ChartServices s57ChartServices;
+    S57ChartComponentServices s57ChartServices;
     @UsedService
     private LayersManagerServices layersManagerServices;
     private final String KEY_NAME = "RouteEditor";
@@ -111,7 +111,7 @@ public class RouteEditorImpl
         }
     }
 
-    public S57ChartServices getS57ChartServices() {
+    public S57ChartComponentServices getS57ChartServices() {
         return s57ChartServices;
     }
 
