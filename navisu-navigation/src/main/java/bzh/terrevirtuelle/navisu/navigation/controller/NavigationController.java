@@ -10,7 +10,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.naviga
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
 import com.vividsolutions.jts.algorithm.CentroidArea;
 import com.vividsolutions.jts.algorithm.CentroidPoint;
@@ -20,22 +19,15 @@ import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.pick.PickedObject;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
-import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 
 /**
  * NaVisu
@@ -73,11 +65,13 @@ public abstract class NavigationController
         navClassName = navClassNameT[navClassNameT.length - 1];
         createAttributes();
         wkt = navigationData.getGeometry();
+        System.out.println(navClassName + " wkt "+wkt);
         wktReader = new WKTReader();
         try {
             geometry = wktReader.read(wkt);
             coordinates = geometry.getCoordinates();
         } catch (ParseException ex) {
+            System.out.println("ex "+ex);
             Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (wkt.contains("POINT") || wkt.contains("Point")) {

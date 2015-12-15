@@ -20,6 +20,7 @@ public class NavigationIcons {
         {
             put("Avurnav", "images/avurnav.png");
             put("SailingDirections", "images/sailingDirections.png");
+            put("S57Chart", "images/s57Chart.png");
         }
     });
 

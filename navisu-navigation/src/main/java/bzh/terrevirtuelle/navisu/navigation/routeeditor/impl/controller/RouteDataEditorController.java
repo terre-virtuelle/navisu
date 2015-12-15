@@ -39,6 +39,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
+import java.util.ArrayList;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 
 /**
@@ -88,6 +89,13 @@ public class RouteDataEditorController
         this.guiAgentServices = guiAgentServices;
         this.s57ChartServices = s57ChartServices;
         navigationDataSet = new NavigationDataSet();
+        if(sailingDirectionsList==null){
+            sailingDirectionsList=new ArrayList<>();
+        }
+        if(avurnavList==null){
+            avurnavList=new ArrayList<>();
+        }
+        
         load(FXML);
         create();
         setTranslateX(-220.0);
@@ -257,7 +265,13 @@ public class RouteDataEditorController
         });
         sailingDirection.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (newValue) {
-                System.out.println("The selected item is " + sailingDirection.valueProperty().get());
+                File f = IO.fileChooser(guiAgentServices.getStage(),
+                        "data/rdf", "RDF files (*.rdf)", "*.rdf", "*.RDF");
+                RdfParser rdfParser = new RdfParser(f);
+                NavigationDataSet tmp = rdfParser.parse();
+                navigationDataSet.addAll(tmp.getNavigationDataList());
+                sailingDirectionsList.addAll(tmp.get(SailingDirections.class));
+                sailingDirectionsPrint(sailingDirectionsList);
             }
         });
         listOfLights.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
@@ -295,4 +309,27 @@ public class RouteDataEditorController
         }
         dataTextArea.setText(str);
     }
+
+    public void sailingDirectionsPrint(List<SailingDirections> sailingDirectionsList) {
+        String[] tmp;
+        String str = "";
+        for (SailingDirections a : sailingDirectionsList) {
+            if (a.getId() != 0) {
+                tmp = new String[4];
+                tmp[0] = Translator.tr("navigation.sailingDirections.sailingDirections") + " "
+                        + Translator.tr("navigation.sailingDirections.id").toLowerCase() + " : " + a.getId() + "\n";
+                tmp[1] = Translator.tr("navigation.sailingDirections.zoneName") + " : " + a.getZoneName()+ "\n";
+                tmp[2] = Translator.tr("navigation.sailingDirections.book") + " : " + a.getBook() + "\n";
+                tmp[3] = Translator.tr("navigation.sailingDirections.description") + " : " + a.getDescription() + "\n\n";
+                tmp[3] = tmp[3].replace("\t", "");
+                str += tmp[0] + tmp[1] + tmp[2] + tmp[3];
+            }
+        }
+        dataTextArea.setText(str);
+    }
+
+    public void setNavigationDataSet(NavigationDataSet navigationDataSet) {
+        this.navigationDataSet = navigationDataSet;
+    }
+    
 }

@@ -131,10 +131,10 @@ public class RouteEditorController
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hhmmss");
     private final DateTimeFormatter kmlDateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     private final DateTimeFormatter kmlTimeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
-    private WorldWindow wwd;
+    private final WorldWindow wwd;
     private RouteDataEditorController routeDataEditorController;
-    private final S57ChartComponentServices s57ChartServices;
-    private GuiAgentServices guiAgentServices;
+    private final S57ChartComponentServices s57ChartComponentServices;
+    private final GuiAgentServices guiAgentServices;
     @FXML
     public Pane view;
     @FXML
@@ -191,7 +191,7 @@ public class RouteEditorController
 
         super(keyCode, keyCombination);
         this.instrument = instrument;
-        this.s57ChartServices = instrument.getS57ChartServices();
+        this.s57ChartComponentServices = instrument.getS57ChartServices();
         this.guiAgentServices = instrument.getGuiAgentServices();
         wwd = GeoWorldWindViewImpl.getWW();
         geoCalc = new GeodeticCalculator();
@@ -423,6 +423,7 @@ public class RouteEditorController
     }
 
     private void dataAction() {
+        routeDataEditorController.setNavigationDataSet(navigationDataSet);
         routeDataEditorController.setVisible(true);
     }
 
@@ -792,14 +793,14 @@ public class RouteEditorController
 
     private void exportNavigationDataset() {
         s57Controllers = new HashSet<>();
-        s57Controllers = s57ChartServices.getS57Controllers();
+        s57Controllers = s57ChartComponentServices.getS57Controllers();
         if (s57Controllers != null) {
             navigationDataSet = new NavigationDataSet();
             navigationDataSet.add(gpx);
+            navigationDataSet.addAll(s57ChartComponentServices.getS57Charts());
             Coordinate buoyagePosition;
             for (S57Controller sc : s57Controllers) {
                 buoyagePosition = new Coordinate(sc.getNavigationData().getLocation().getLon(), sc.getNavigationData().getLocation().getLat());
-                System.out.println("buoyagePosition " + buoyagePosition);
                 if (offsetBuffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
                     navigationDataSet.add(sc.getNavigationData());
                 }
