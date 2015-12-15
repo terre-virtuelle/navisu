@@ -39,8 +39,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
-import java.util.ArrayList;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import java.util.ArrayList;
 
 /**
  * NaVisu
@@ -130,6 +130,7 @@ public class RouteDataEditorController
                 navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
             } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("ex " + ex);
             }
             sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
             gpxList = navigationDataSet.get(Gpx.class);
