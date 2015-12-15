@@ -34,8 +34,7 @@ import bzh.terrevirtuelle.navisu.charts.raster.kap.impl.KapChartImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.S57GlobalCatalogImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.S57LocalCatalogServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartImpl;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartComponentImpl;
 import bzh.terrevirtuelle.navisu.client.navigation.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.client.navigation.impl.vertx.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
@@ -127,6 +126,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import org.capcaval.c3.componentmanager.ComponentManager;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -205,7 +205,7 @@ public class AppMain extends Application {
                         SonarImpl.class,
                         SoundImpl.class,
                         SpeakerImpl.class,
-                        S57ChartImpl.class,
+                        S57ChartComponentImpl.class,
                         S57GlobalCatalogImpl.class,
                         TestDBImpl.class,
                         TransponderImpl.class,
@@ -281,7 +281,7 @@ public class AppMain extends Application {
         SpeakerServices speakerServices = componentManager.getComponentService(SpeakerServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
-        S57ChartServices chartS57Services = componentManager.getComponentService(S57ChartServices.class);
+        S57ChartComponentServices chartS57Services = componentManager.getComponentService(S57ChartComponentServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
         TransponderServices transponderServices= componentManager.getComponentService(TransponderServices.class);
