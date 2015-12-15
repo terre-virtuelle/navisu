@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view;
 
-import gov.nasa.worldwind.render.PointPlacemark;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
