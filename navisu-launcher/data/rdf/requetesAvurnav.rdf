@@ -14,7 +14,7 @@
         <uri>http://strdf.di.uoa.gr/ontology#hasGeometry</uri>
       </binding>
       <binding name="o">
-        <literal datatype="http://strdf.di.uoa.gr/ontology#WKT">POINT(-4.683144018680615 48.34776226887777,-4.704118058295461 48.33084757375725,-4.638942223115798 48.33797296435447,-4.683144018680615 48.34776226887777)</literal>
+        <literal datatype="http://strdf.di.uoa.gr/ontology#WKT">MULTIPOINT((-4.683144018680615 48.34776226887777),(-4.704118058295461 48.33084757375725),(-4.638942223115798 48.33797296435447),(-4.683144018680615 48.34776226887777))</literal>
       </binding>
     </result>
     <result>
@@ -234,7 +234,7 @@
         <uri>http://strdf.di.uoa.gr/ontology#hasGeometry</uri>
       </binding>
       <binding name="o">
-        <literal datatype="http://strdf.di.uoa.gr/ontology#WKT">POLYGON(-4.413733 48.305617,-4.396583 48.304733,-4.39742 48.29833,-4.414567 48.29917,-4.413733 48.305617)</literal>
+        <literal datatype="http://strdf.di.uoa.gr/ontology#WKT">POLYGON((-4.413733 48.305617,-4.396583 48.304733,-4.39742 48.29833,-4.414567 48.29917,-4.413733 48.305617))</literal>
       </binding>
     </result>
     <result>
@@ -542,7 +542,7 @@
         <uri>http://strdf.di.uoa.gr/ontology#hasGeometry</uri>
       </binding>
       <binding name="o">
-        <literal datatype="http://strdf.di.uoa.gr/ontology#WKT">POLYGON(-4.420417 48.31105,-4.408583 48.31105,-4.408583 48.305067,-4.420417 48.305067,-4.420417 48.31105)</literal>
+        <literal datatype="http://strdf.di.uoa.gr/ontology#WKT">POLYGON((-4.420417 48.31105,-4.408583 48.31105,-4.408583 48.305067,-4.420417 48.305067,-4.420417 48.31105))</literal>
       </binding>
     </result>
     <result>
