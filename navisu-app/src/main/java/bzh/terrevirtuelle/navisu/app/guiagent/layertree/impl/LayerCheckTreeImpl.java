@@ -3,6 +3,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTree;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
+import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindGeoLayer;
@@ -47,12 +48,11 @@ public class LayerCheckTreeImpl
 
     @Override
     public void componentInitiated() {
-
         this.rootItem0 = new CheckBoxTreeItem<>();
         this.treeView = new TreeView<>(rootItem0);
         this.rootItems = new ArrayList<>();
         this.groupNames = new ArrayList<>();
-        this.geoView = bzh.terrevirtuelle.navisu.core.view.geoview.GeoView.factory.newWorldWindGeo3DView();
+        this.geoView = GeoView.factory.newWorldWindGeo3DView();
         this.layerManager = this.geoView.getLayerManager();
         this.rootItem0.setExpanded(true);
         this.treeView.setShowRoot(false);
@@ -231,5 +231,5 @@ public class LayerCheckTreeImpl
     public List<String> getGroupNames() {
         return groupNames;
     }
-    
+
 }
