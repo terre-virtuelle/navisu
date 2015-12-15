@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "avurnav",
         propOrder = {"id", "globalZone", "broadcastTime",
             "expirationDate", "description",
-            "geometry", "restriction", "type"})
+            "wkt", "restriction", "type"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Avurnav implements NavigationData {
 
@@ -30,20 +30,20 @@ public class Avurnav implements NavigationData {
     private String description;
     private String expirationDate;
     private String broadcastTime;
-    private String geometry;
+    private String wkt;
     private String restriction;
     private String type;
 
     public Avurnav() {
     }
 
-    public Avurnav(long id, String globalZone, String description, String expirationDate, String broadcastTime, String geometry, String restriction, String type) {
+    public Avurnav(long id, String globalZone, String description, String expirationDate, String broadcastTime, String wkt, String restriction, String type) {
         this.id = id;
         this.globalZone = globalZone;
         this.description = description;
         this.expirationDate = expirationDate;
         this.broadcastTime = broadcastTime;
-        this.geometry = geometry;
+        this.wkt = wkt;
         this.restriction = restriction;
         this.type = type;
     }
@@ -73,7 +73,7 @@ public class Avurnav implements NavigationData {
      */
     @Override
     public String getGeometry() {
-        return geometry;
+        return wkt;
     }
 
     /**
@@ -82,7 +82,15 @@ public class Avurnav implements NavigationData {
      * @param geometry new value of geometry
      */
     public void setGeometry(String geometry) {
-        this.geometry = geometry;
+        this.wkt = geometry;
+    }
+
+    public String getWkt() {
+        return wkt;
+    }
+
+    public void setWkt(String wkt) {
+        this.wkt = wkt;
     }
 
     /**
@@ -196,7 +204,7 @@ public class Avurnav implements NavigationData {
 
     @Override
     public String toString() {
-        return "Avurnav{" + "id=" + id + ", globalZone=" + globalZone + ", description=" + description + ", expirationDate=" + expirationDate + ", broadcastTime=" + broadcastTime + ", geometry=" + geometry + ", restriction=" + restriction + ", type=" + type + '}';
+        return "Avurnav{" + "id=" + id + ", globalZone=" + globalZone + ", description=" + description + ", expirationDate=" + expirationDate + ", broadcastTime=" + broadcastTime + ", geometry=" + wkt + ", restriction=" + restriction + ", type=" + type + '}';
     }
 
     public String printf() {

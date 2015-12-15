@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
@@ -55,12 +56,12 @@ public class NavigationDataSet {
         @XmlElement(name = "bcnlat", type = BeaconLateral.class),
         @XmlElement(name = "bcnsaw", type = BeaconSafeWater.class),
         @XmlElement(name = "bcnspp", type = BeaconSpecialPurpose.class),
-        @XmlElement(name = "boycar", type = BuoyCardinal.class),
-        @XmlElement(name = "boyinb", type = BuoyInstallation.class),
-        @XmlElement(name = "boyisd", type = BuoyIsolatedDanger.class),
-        @XmlElement(name = "boylat", type = BuoyLateral.class),
-        @XmlElement(name = "boysaw", type = BuoySafeWater.class),
-        @XmlElement(name = "boyssp", type = BuoySpecialPurpose.class),
+        @XmlElement(name = "buoycar", type = BuoyCardinal.class),
+        @XmlElement(name = "buoyinb", type = BuoyInstallation.class),
+        @XmlElement(name = "buoyisd", type = BuoyIsolatedDanger.class),
+        @XmlElement(name = "buoylat", type = BuoyLateral.class),
+        @XmlElement(name = "buoysaw", type = BuoySafeWater.class),
+        @XmlElement(name = "buoyssp", type = BuoySpecialPurpose.class),
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
         @XmlElement(name = "lndmrk", type = Landmark.class),
         @XmlElement(name = "ship", type = Ship.class),
@@ -69,6 +70,7 @@ public class NavigationDataSet {
         @XmlElement(name = "avurnav", type = Avurnav.class),
         @XmlElement(name = "sailingDirections", type = SailingDirections.class),
         @XmlElement(name = "avurnavSet", type = AvurnavSet.class),
+        @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "gpx", type = Gpx.class)
     })
 
