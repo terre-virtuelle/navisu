@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><navigationDataSet>
+    <gpx version="Route" creator="Route">
+        <trk>
+            <name>Route</name>
+            <cmt></cmt>
+            <desc></desc>
+            <src></src>
+            <number>0</number>
+            <type></type>
+            <extensions/>
+            <trkseg>
+                <trkpt lat="48.36964285783977" lon="-4.471378965866466">
+                    <ele>0.0</ele>
+                    <time>2015-12-15T15:47:46.361+01:00</time>
+                    <magvar>0.0</magvar>
+                    <geoidheight>0.0</geoidheight>
+                    <name>WP0</name>
+                    <sat>0</sat>
+                    <hdop>0.0</hdop>
+                    <vdop>0.0</vdop>
+                    <pdop>0.0</pdop>
+                    <ageofdgpsdata>0.0</ageofdgpsdata>
+                    <dgpsid>0</dgpsid>
+                    <course>239.86752</course>
+                    <speed>10.0</speed>
+                </trkpt>
+                <trkpt lat="48.339266047384626" lon="-4.549807906497895">
+                    <ele>0.0</ele>
+                    <time>2015-12-15T15:47:46.363+01:00</time>
+                    <magvar>0.0</magvar>
+                    <geoidheight>0.0</geoidheight>
+                    <name>WP1</name>
+                    <sat>0</sat>
+                    <hdop>0.0</hdop>
+                    <vdop>0.0</vdop>
+                    <pdop>0.0</pdop>
+                    <ageofdgpsdata>0.0</ageofdgpsdata>
+                    <dgpsid>0</dgpsid>
+                    <course>243.38339</course>
+                    <speed>10.0</speed>
+                </trkpt>
+            </trkseg>
+            <trkseg>
+                <trkpt lat="48.339266047384626" lon="-4.549807906497895">
+                    <ele>0.0</ele>
+                    <time>2015-12-15T15:47:46.363+01:00</time>
+                    <magvar>0.0</magvar>
+                    <geoidheight>0.0</geoidheight>
+                    <name>WP1</name>
+                    <sat>0</sat>
+                    <hdop>0.0</hdop>
+                    <vdop>0.0</vdop>
+                    <pdop>0.0</pdop>
+                    <ageofdgpsdata>0.0</ageofdgpsdata>
+                    <dgpsid>0</dgpsid>
+                    <course>243.38339</course>
+                    <speed>10.0</speed>
+                </trkpt>
+                <trkpt lat="48.303726949324734" lon="-4.655960048521856">
+                    <ele>0.0</ele>
+                    <time>2015-12-15T15:47:46.363+01:00</time>
+                    <magvar>0.0</magvar>
+                    <geoidheight>0.0</geoidheight>
+                    <name>WP2</name>
+                    <sat>0</sat>
+                    <hdop>0.0</hdop>
+                    <vdop>0.0</vdop>
+                    <pdop>0.0</pdop>
+                    <ageofdgpsdata>0.0</ageofdgpsdata>
+                    <dgpsid>0</dgpsid>
+                    <course>238.9052</course>
+                    <speed>10.0</speed>
+                </trkpt>
+            </trkseg>
+            <trkseg>
+                <trkpt lat="48.303726949324734" lon="-4.655960048521856">
+                    <ele>0.0</ele>
+                    <time>2015-12-15T15:47:46.363+01:00</time>
+                    <magvar>0.0</magvar>
+                    <geoidheight>0.0</geoidheight>
+                    <name>WP2</name>
+                    <sat>0</sat>
+                    <hdop>0.0</hdop>
+                    <vdop>0.0</vdop>
+                    <pdop>0.0</pdop>
+                    <ageofdgpsdata>0.0</ageofdgpsdata>
+                    <dgpsid>0</dgpsid>
+                    <course>238.9052</course>
+                    <speed>10.0</speed>
+                </trkpt>
+                <trkpt lat="48.26302175632445" lon="-4.756930988115329">
+                    <ele>0.0</ele>
+                    <time>2015-12-15T15:47:46.363+01:00</time>
+                    <magvar>0.0</magvar>
+                    <geoidheight>0.0</geoidheight>
+                    <name>WP3</name>
+                    <sat>0</sat>
+                    <hdop>0.0</hdop>
+                    <vdop>0.0</vdop>
+                    <pdop>0.0</pdop>
+                    <ageofdgpsdata>0.0</ageofdgpsdata>
+                    <dgpsid>0</dgpsid>
+                    <course>0.0</course>
+                    <speed>10.0</speed>
+                </trkpt>
+            </trkseg>
+        </trk>
+        <extensions/>
+        <boundaries>
+            <bounds lat="48.329941055857724" lon="-4.546196184883042">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.3297833778416" lon="-4.54663316582537">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.294339779065844" lon="-4.652500059935732">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.253747058232406" lon="-4.7531920075989955">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.25319583004265" lon="-4.755073254898573">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.25302220668946" lon="-4.757025893843842">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.25323286042092" lon="-4.758974885615188">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.253819695932286" lon="-4.760845331551844">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.25476016146395" lon="-4.762565351465425">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.25601811545294" lon="-4.764068845955249">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.257545215432934" lon="-4.765298036571242">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.25928277580812" lon="-4.7662056862073685">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.261164023107696" lon="-4.766756914397129">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26311666205296" lon="-4.766930537750322">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26506565382431" lon="-4.766719884018855">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26693609976096" lon="-4.766133048507491">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.268656119674546" lon="-4.765192582975832">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.27015961416437" lon="-4.763934628986839">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.27138880478036" lon="-4.7624075290068415">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.27229645441649" lon="-4.760669968631662">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.313001647416776" lon="-4.659699029038189">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.31320961886776" lon="-4.659134789194381">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.34867495437071" lon="-4.553202969402787">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.378967849366674" lon="-4.474990687481319">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.37949328420212" lon="-4.473102073663448">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.37964017267664" lon="-4.471147241779267">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.379402869948535" lon="-4.469201314921806">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.378790495428575" lon="-4.467339073968907">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.37782658232612" lon="-4.465632083796034">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.37654817328115" lon="-4.464145943078239">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.37500439683632" lon="-4.46293776336987">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.373254579454624" lon="-4.462053974339564">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.371365965636755" lon="-4.461528539504122">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36941113375257" lon="-4.461381651029601">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36746520689511" lon="-4.461618953757703">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36560296594221" lon="-4.4622313282776656">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36389597576934" lon="-4.463195241380113">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.362409835051544" lon="-4.464473650425084">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36120165534317" lon="-4.466017426869923">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36031786631287" lon="-4.467767244251614">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.329941055857724" lon="-4.546196184883042">
+                <ele>0.0</ele>
+            </bounds>
+        </boundaries>
+        <highway>
+            <bounds lat="48.33898629763882" lon="-4.549699554849449">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.33898156729833" lon="-4.5497126642777195">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.30344533421696" lon="-4.655856248864287">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.262743515381686" lon="-4.756818818699839">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.262726978535994" lon="-4.756875256118826">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.2627217698354" lon="-4.756933835287184">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26272808944734" lon="-4.756992305040325">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26274569451268" lon="-4.7570484184184245">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.262773908478636" lon="-4.757100019015832">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.2628116470983" lon="-4.757145123850527">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.262857460097706" lon="-4.757181999569006">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26290958690896" lon="-4.75720922905809">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.262966024327945" lon="-4.757225765903783">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.263024603496305" lon="-4.757230974604378">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26308307324945" lon="-4.757224654992434">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26313918662754" lon="-4.757207049927094">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26319078722495" lon="-4.7571788359611435">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26323589205965" lon="-4.757141097341474">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.263272767778126" lon="-4.757095284342074">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.26329999726721" lon="-4.757043157530819">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.304005190267496" lon="-4.656072217937346">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.30401142941103" lon="-4.656055290742032">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.339548314594225" lon="-4.549909758385008">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36992260758558" lon="-4.471487317514912">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36993837063064" lon="-4.471430659100376">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36994277728488" lon="-4.47137201414385">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36993565820303" lon="-4.4713136363381265">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.369917286967436" lon="-4.47125776910954">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36988836957436" lon="-4.4712065594043535">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.369850017303015" lon="-4.471161975182819">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36980370400967" lon="-4.471125729791568">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.369751209488214" lon="-4.47109921612066">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36969455107368" lon="-4.471083453075596">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36963590611715" lon="-4.471079046421361">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36957752831143" lon="-4.471086165503204">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36952166108284" lon="-4.471104536738802">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.36947045137766" lon="-4.471133454131876">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.369425867156124" lon="-4.471171806403225">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.369389621764874" lon="-4.47121811969657">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.369363108093964" lon="-4.471270614218021">
+                <ele>0.0</ele>
+            </bounds>
+            <bounds lat="48.33898629763882" lon="-4.549699554849449">
+                <ele>0.0</ele>
+            </bounds>
+        </highway>
+    </gpx>
+    <s57Chart>
+        <id>574010</id>
+        <number>FR574010.000</number>
+        <lat>48.320522149211286</lat>
+        <lon>-4.6003783177977216</lon>
+        <geometry>POLYGON((-4.78192 48.24402,-4.6714 48.24402,-4.6714 48.26817,-4.48232 48.26817,-4.4823 48.27712,-4.4481 48.27709,-4.4481 48.39567,-4.59936 48.39567,-4.59936 48.38686,-4.60271 48.38686,-4.60271 48.38483,-4.63482 48.38483,-4.63482 48.38083,-4.67648 48.38083,-4.67648 48.36353,-4.71443 48.36353,-4.71443 48.311,-4.78192 48.311,-4.78192 48.24402))</geometry>
+        <centroid>POINT(-4.6003783177977216 48.320522149211286)</centroid>
+    </s57Chart>
+    <bcnspp>
+        <id>2915</id>
+        <lat>48.32995</lat>
+        <lon>-4.56967</lon>
+        <centroid>POINT(-4.56967 48.32995)</centroid>
+        <shape>0</shape>
+        <categoryOfMark>0</categoryOfMark>
+        <imageAddress>img/buoyage_1/BCNSPP_0_0_1_0_1_1.png</imageAddress>
+    </bcnspp>
+    <buoyisd>
+        <id>2932</id>
+        <lat>48.30458</lat>
+        <lon>-4.64739</lon>
+        <centroid>POINT(-4.64739 48.30458)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>0</categoryOfMark>
+        <colour>2,3,2</colour>
+        <colourPattern>1</colourPattern>
+        <objectName>Swansea Vale</objectName>
+        <imageAddress>img/buoyage_1/BOYISD_4_0_2,3,2_1_4_1.png</imageAddress>
+    </buoyisd>
+    <bcnlat>
+        <id>2902</id>
+        <lat>48.36925</lat>
+        <lon>-4.48685</lon>
+        <centroid>POINT(-4.48685 48.36925)</centroid>
+        <shape>0</shape>
+        <categoryOfMark>2</categoryOfMark>
+        <colour>4,1</colour>
+        <colourPattern>1</colourPattern>
+        <objectName>Jet�e Est</objectName>
+        <imageAddress>img/buoyage_1/BCNLAT_0_2_4,1_1_0_1.png</imageAddress>
+    </bcnlat>
+    <buoylat>
+        <id>2913</id>
+        <lat>48.33383</lat>
+        <lon>-4.58097</lon>
+        <centroid>POINT(-4.58097 48.33383)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>1</categoryOfMark>
+        <colour>3</colour>
+        <colourPattern>0</colourPattern>
+        <objectName>Basse Goudron</objectName>
+        <imageAddress>img/buoyage_1/BOYLAT_4_1_3_0_5_1.png</imageAddress>
+    </buoylat>
+    <bcnlat>
+        <id>2905</id>
+        <lat>48.36842</lat>
+        <lon>-4.49083</lon>
+        <centroid>POINT(-4.49083 48.36842)</centroid>
+        <shape>0</shape>
+        <categoryOfMark>1</categoryOfMark>
+        <colour>3,1</colour>
+        <colourPattern>1</colourPattern>
+        <objectName> </objectName>
+        <imageAddress>img/buoyage_1/BCNLAT_0_1_3,1_1_0_1.png</imageAddress>
+    </bcnlat>
+    <buoylat>
+        <id>2898</id>
+        <lat>48.37536</lat>
+        <lon>-4.46656</lon>
+        <centroid>POINT(-4.46656 48.37536)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>1</categoryOfMark>
+        <colour>3</colour>
+        <colourPattern>0</colourPattern>
+        <objectName>R6</objectName>
+        <imageAddress>img/buoyage_1/BOYLAT_4_1_3_0_5_1.png</imageAddress>
+    </buoylat>
+    <buoylat>
+        <id>2907</id>
+        <lat>48.36392</lat>
+        <lon>-4.47145</lon>
+        <centroid>POINT(-4.47145 48.36392)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>2</categoryOfMark>
+        <colour>4</colour>
+        <colourPattern>0</colourPattern>
+        <objectName>R1</objectName>
+        <imageAddress>img/buoyage_1/BOYLAT_4_2_4_0_1_1.png</imageAddress>
+    </buoylat>
+    <bcnspp>
+        <id>2296</id>
+        <lat>48.34351</lat>
+        <lon>-4.52964</lon>
+        <centroid>POINT(-4.52964 48.34351)</centroid>
+        <shape>1</shape>
+        <categoryOfMark>0</categoryOfMark>
+        <imageAddress>img/buoyage_1/BCNSPP_1_0_1_0_0_1.png</imageAddress>
+    </bcnspp>
+    <morfac>
+        <id>1945</id>
+        <lat>48.37844</lat>
+        <lon>-4.4757</lon>
+        <centroid>POINT(-4.4757 48.37844)</centroid>
+        <shape>0</shape>
+        <categoryOfMark>5</categoryOfMark>
+        <colour>0</colour>
+        <colourPattern>0</colourPattern>
+        <objectName> </objectName>
+        <imageAddress>img/buoyage_1/MORFAC_0_5_0_0_0_1.png</imageAddress>
+        <categoryOfMooring>5</categoryOfMooring>
+    </morfac>
+    <buoylat>
+        <id>2901</id>
+        <lat>48.37031</lat>
+        <lon>-4.46761</lon>
+        <centroid>POINT(-4.46761 48.37031)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>1</categoryOfMark>
+        <colour>3</colour>
+        <colourPattern>0</colourPattern>
+        <objectName>R4</objectName>
+        <imageAddress>img/buoyage_1/BOYLAT_4_1_3_0_5_1.png</imageAddress>
+    </buoylat>
+    <bcnlat>
+        <id>2904</id>
+        <lat>48.37827</lat>
+        <lon>-4.47462</lon>
+        <centroid>POINT(-4.47462 48.37827)</centroid>
+        <shape>5</shape>
+        <categoryOfMark>1</categoryOfMark>
+        <colour>3,1</colour>
+        <colourPattern>1</colourPattern>
+        <objectName> </objectName>
+        <imageAddress>img/buoyage_1/BCNLAT_5_1_3,1_1_0_1.png</imageAddress>
+    </bcnlat>
+    <buoylat>
+        <id>2906</id>
+        <lat>48.36689</lat>
+        <lon>-4.47903</lon>
+        <centroid>POINT(-4.47903 48.36689)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>1</categoryOfMark>
+        <colour>3</colour>
+        <colourPattern>0</colourPattern>
+        <objectName>R2</objectName>
+        <imageAddress>img/buoyage_1/BOYLAT_4_1_3_0_5_1.png</imageAddress>
+    </buoylat>
+    <buoylat>
+        <id>2945</id>
+        <lat>48.27893</lat>
+        <lon>-4.69159</lon>
+        <centroid>POINT(-4.69159 48.27893)</centroid>
+        <shape>1</shape>
+        <categoryOfMark>2</categoryOfMark>
+        <colour>4</colour>
+        <colourPattern>0</colourPattern>
+        <objectName>Tr�pied</objectName>
+        <imageAddress>img/buoyage_1/BOYLAT_1_2_4_0_1_1.png</imageAddress>
+    </buoylat>
+    <morfac>
+        <id>1944</id>
+        <lat>48.37833</lat>
+        <lon>-4.47648</lon>
+        <centroid>POINT(-4.47648 48.37833)</centroid>
+        <shape>0</shape>
+        <categoryOfMark>5</categoryOfMark>
+        <colour>0</colour>
+        <colourPattern>0</colourPattern>
+        <objectName> </objectName>
+        <imageAddress>img/buoyage_1/MORFAC_0_5_0_0_0_1.png</imageAddress>
+        <categoryOfMooring>5</categoryOfMooring>
+    </morfac>
+    <bcnisd>
+        <id>2870</id>
+        <lat>48.33872</lat>
+        <lon>-4.5759</lon>
+        <centroid>POINT(-4.5759 48.33872)</centroid>
+        <shape>3</shape>
+        <categoryOfMark>0</categoryOfMark>
+        <colour>2,3,2</colour>
+        <colourPattern>1</colourPattern>
+        <objectName>Mengam</objectName>
+        <imageAddress>img/buoyage_1/BCNISD_3_0_2,3,2_1_0_1.png</imageAddress>
+    </bcnisd>
+    <buoylat>
+        <id>2914</id>
+        <lat>48.3301</lat>
+        <lon>-4.58753</lon>
+        <centroid>POINT(-4.58753 48.3301)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>1</categoryOfMark>
+        <colour>3</colour>
+        <colourPattern>0</colourPattern>
+        <objectName>Kerviniou</objectName>
+        <imageAddress>img/buoyage_1/BOYLAT_4_1_3_0_5_1.png</imageAddress>
+    </buoylat>
+    <buoycar>
+        <id>2917</id>
+        <lat>48.32926</lat>
+        <lon>-4.59423</lon>
+        <centroid>POINT(-4.59423 48.32926)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>4</categoryOfMark>
+        <colour>6,2,6</colour>
+        <colourPattern>1</colourPattern>
+        <objectName>Fillettes</objectName>
+        <imageAddress>img/buoyage_1/BOYCAR_4_4_6,2,6_1_10_1.png</imageAddress>
+    </buoycar>
+    <bcnspp>
+        <id>2949</id>
+        <lat>48.26501</lat>
+        <lon>-4.73812</lon>
+        <centroid>POINT(-4.73812 48.26501)</centroid>
+        <shape>3</shape>
+        <categoryOfMark>0</categoryOfMark>
+        <imageAddress>img/buoyage_1/BCNSPP_3_0_1,2_3_0_1.png</imageAddress>
+    </bcnspp>
+    <bcnspp>
+        <id>2300</id>
+        <lat>48.36573</lat>
+        <lon>-4.50353</lon>
+        <centroid>POINT(-4.50353 48.36573)</centroid>
+        <shape>3</shape>
+        <categoryOfMark>0</categoryOfMark>
+        <imageAddress>img/buoyage_1/BCNSPP_3_0_7_0_0_1.png</imageAddress>
+    </bcnspp>
+    <buoylat>
+        <id>2909</id>
+        <lat>48.35746</lat>
+        <lon>-4.50866</lon>
+        <centroid>POINT(-4.50866 48.35746)</centroid>
+        <shape>4</shape>
+        <categoryOfMark>1</categoryOfMark>
+        <colour>3</colour>
+        <colourPattern>0</colourPattern>
+        <objectName>P�noup�le</objectName>
+        <imageAddress>img/buoyage_1/BOYLAT_4_1_3_0_5_1.png</imageAddress>
+    </buoylat>
+    <avurnav>
+        <id>0</id>
+        <wkt>MULTIPOINT((-4.683144018680615 48.34776226887777),(-4.704118058295461 48.33084757375725),(-4.638942223115798 48.33797296435447),(-4.683144018680615 48.34776226887777))</wkt>
+        <restriction>AnchoringRestrition400</restriction>
+        <type>ExternEnvironnment</type>
+    </avurnav>
+    <avurnav>
+        <id>256</id>
+        <globalZone>Rade de Brest - Anse du Poulmic</globalZone>
+        <broadcastTime>2015-08-15 20:07:34</broadcastTime>
+        <expirationDate>29-09-15 00:00:00</expirationDate>
+        <description>Dans le cadre des stages d&amp;apos;entrainement à la survie du mois de septembre 2015, des tirs de fusées de détresses
+            et de fumigénes auront lieu aux dates et heures locales suivantes: 
+            - mardi 01 septembre de 08h30 à 16h30
+            - mercredi 02 septembre de 21h30 à 23h59
+            - lundi 07 septembre de 14h00 à 18h00
+            - jeudi 10 septembre de 14h00 à 18h00
+            - mardi 15 septembre de 08h30 à 16h30
+            - mercredi 16 septembre de 21h30 à 23h59
+            - mercredi 23 septembre de 08h30 à 16h30
+            - lundi 28 septembre de 14h00 à 18h00</description>
+        <wkt>POINT(-4.410364 48.289336)</wkt>
+        <type>ExternEnvironnment</type>
+    </avurnav>
+    <avurnav>
+        <id>251</id>
+        <globalZone>Rade de Brest - Zone Rascas</globalZone>
+        <broadcastTime>2015-08-15 20:08:40</broadcastTime>
+        <expirationDate>2015-10-01 00:00:00</expirationDate>
+        <description>le Gesma/DGA a procéder au mouillage de 50 cibles, sur le polygone Rascas (nord-est de la pointe de Pen ar Vir). Ces cibles resteront mouilées dans cette zone jusqu&amp;apos;à fin septembre 2015. 
+            Il est demandé de ne pas pécher, de ne pas mouiller d&amp;apos;engins de pêche et de ne pas mouiller dans cette zone durant cette période.</description>
+        <wkt>POLYGON((-4.413733 48.305617,-4.396583 48.304733,-4.39742 48.29833,-4.414567 48.29917,-4.413733 48.305617))</wkt>
+        <type>ExternEnvironnment</type>
+    </avurnav>
+    <avurnav>
+        <id>220</id>
+        <globalZone>Rade de Brest</globalZone>
+        <broadcastTime>2015-07-15 03:11:52</broadcastTime>
+        <expirationDate>0000-00-00 00:00:00</expirationDate>
+        <description>4 coffres (N 3; 6; 8 et 9) des bases accoustiques grande profondeur aux positions suivantes :</description>
+        <wkt>MULTIPOINT((-4.47655 48.315167),(-4.48425 48.315167),(-4.476233 48.31213),(-4.4828 48.311767))</wkt>
+        <type>ExternEnvironnment</type>
+    </avurnav>
+    <avurnav>
+        <id>218</id>
+        <globalZone>Rade de Brest - Entre la pointe de Pen ar Vir et la pointe de Doubidy</globalZone>
+        <broadcastTime>2015-07-15 02:12:04</broadcastTime>
+        <expirationDate>2015-10-01 00:00:00</expirationDate>
+        <description>12 cibles mouillées en rade de Brest; les navigateurs sont invités à ne pas mouiller dans la zone définie</description>
+        <wkt>POLYGON((-4.420417 48.31105,-4.408583 48.31105,-4.408583 48.305067,-4.420417 48.305067,-4.420417 48.31105))</wkt>
+        <type>ExternEnvironnment</type>
+    </avurnav>
+    <sailingDirections>
+        <id>12</id>
+        <wkt>POLYGON((-4.354777455659617 47.8169400501947, -4.466910431433434 47.81131520875957, -4.460946201484556 47.71077930254558, -3.744528076350235 47.56522614999769, -3.088393486527028 47.44898110037522, -3.063224870187213 47.49197265602007, -3.128985617571787 47.62268270238466, -3.313901279035765 47.76324027297179, -3.714554329713722 47.84978719024253, -3.994866720118631 47.9281609546852, -4.354777455659617 47.8169400501947))</wkt>
+        <book>Chapter2</book>
+        <zoneName>De la Pointe de Penmarc'h à la Presqu'ile de Quiberon</zoneName>
+        <description>De la Pointe de Penmarc'h à la Presqu'ile de Quiberon</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>19</id>
+        <wkt>POLYGON((-3.435722134418984 47.70446377625918,-3.400744862206606 47.68466642510287,-3.351184435708856 47.68831769278008,-3.350651454066915 47.70778450268652,-3.332801730203792 47.72342245177767,-3.324566725225632 47.7377321571793,-3.33634762117211 47.7505887933983,-3.361912844334658 47.74159603071908,-3.435722134418984 47.70446377625918))</wkt>
+        <book>Chapter2.7</book>
+        <zoneName>Rade de Lorient</zoneName>
+        <description>Rade de Lorient</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>4</id>
+        <wkt>POLYGON((-4.548808189683475 48.17423792859702, -4.534479070361678 48.25596680662608, -4.576399492818478 48.2655655299982, -4.536186677574278 48.33740366862433,-4.523412691022271 48.34187116567404, -4.533721363834806 48.34564547680027, -4.588953644750139 48.32263713425822, -4.582059900209964 48.2873827695488, -4.619215004665456 48.30277332586334,-4.643473977114518 48.29112210493447,-4.655285272445746 48.26133718901949,-4.64758047998108 48.23456020711159,-4.584915406712916 48.17131447481997,-4.548808189683475 48.17423792859702))</wkt>
+        <book>Chapter10.4.3.3</book>
+        <zoneName>Du Cap de de la Chèvre à la Pointe des Espagnols</zoneName>
+        <description>Du Cap de de la Chèvre à la Pointe des Espagnols</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>5</id>
+        <wkt>POLYGON((-4.600719819941163 48.26910726268323, -4.564687598152439 48.27538737164171,-4.56402603353721 48.29388197754669, -4.608132185617254 48.29577141220545,-4.643946820168489 48.28498488109778,-4.653894568327451 48.26091548678857,-4.647142931287814 48.2350441938717, -4.569539851718635 48.2319632820995,-4.539942425377187 48.24288421159173,-4.553010561291813 48.26160211306268,-4.600719819941163 48.26910726268323))</wkt>
+        <book>Chapter10.4.3.4</book>
+        <zoneName>Camaret-Sur-Mer</zoneName>
+        <description>Camaret-Sur-Mer</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>17</id>
+        <wkt>POLYGON((-3.540302476499067 47.66072700301618, -3.511608193493787 47.60712925639059, -3.406997703820531 47.59611823256039, -3.378406196535465 47.63953345086654, -3.345289311805174 47.69194652844563, -3.390027136237853 47.71125623651054, -3.453139397672265 47.70148463417016, -3.540302476499067 47.66072700301618))</wkt>
+        <book>Chapter2.6</book>
+        <zoneName>Iles de Groix et abords de Lorient</zoneName>
+        <description>Iles de Groix et abords de Lorient</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>2</id>
+        <wkt>POLYGON((-4.890272844426233 48.30424515599091, -4.887409867862012 48.15067943743088, -4.5484299204862 48.17387831362336, -4.53390109773356 48.25706819936063, -4.574191806463172 48.26537868177186, -4.561315170135054 48.28902760050084, -4.536920766328473 48.33684037863422, -4.453813805343979 48.34104530966794, -4.404446213235365 48.37151437003946, -4.473238045486609 48.3992077128033, -4.620833016964468 48.34788564245471, -4.69257843614013 48.36086123661029, -4.717375781123935 48.33926231216108, -4.769921065581992 48.33544509391047, -4.890272844426233 48.30424515599091))</wkt>
+        <book>Chapter10.4BrestEtSesApproches</book>
+        <zoneName>Brest et ses Approches</zoneName>
+        <description>Brest et ses Approches</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>10</id>
+        <wkt>POLYGON((-4.793043417165998 47.75705359728432, -4.34414940841671 47.80615698996421, -4.314291280917141 47.84034538566674, -4.356675719706699 47.933050342974, -4.448167103667156 48.00759348469229, -4.662438682083035 48.04968992702824,-4.812963962483195 48.12843766647903, -5.09655348029143 48.08814509817403, -4.793043417165998 47.75705359728432))</wkt>
+        <book>Chapter10.7</book>
+        <zoneName>De la Chaussée de Sein à la Pointe de Penmarc'h-Baie d'Audierne</zoneName>
+        <description>De la Chaussée de Sein à la Pointe de Penmarc'h-Baie d'Audierne</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>15</id>
+        <wkt>POLYGON((-4.210048349368382 47.78183349774178, -4.121773031575381 47.81435187175858, -3.97690201845171 47.84371456330496, -3.969743340830561 47.85703372134045, -3.987647853610918 47.86229553859437, -4.03922263795944 47.85447629793947, -4.060969732829386 47.86464939713021, -4.098227898345883 47.87897060548975, -4.124154053548347 47.87189837518739, -4.14812284112299 47.86117633947358, -4.180168980383233 47.86201612746748, -4.186829251976302 47.84733918806826, -4.174663476470121 47.8264661393022, -4.186598595638333 47.81001282894453, -4.224101946165214 47.80219863498539, -4.210048349368382 47.78183349774178))</wkt>
+        <book>Chapter2.4</book>
+        <zoneName>De Lesconil à Beg Mail</zoneName>
+        <description>De Lesconil à Beg Mail</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>3</id>
+        <wkt>POLYGON((-4.77810077437791 48.31997971525035, -4.614861223810768 48.33085859124169, -4.474250074183535 48.37661908549858, -4.481427909306987 48.39437279520745, -4.54814610529618 48.37134111359924, -4.622251856417805 48.34645385321541, -4.692168721468769 48.35919581974149, -4.718203595603169 48.33770995883878, -4.770236450412924 48.33447516748657,-4.77810077437791 48.31997971525035))</wkt>
+        <book>Chapter10.4.3.2</book>
+        <zoneName>De la Pointe de Saint-Mathieu à Brest</zoneName>
+        <description>De la Pointe de Saint-Mathieu à Brest</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>18</id>
+        <wkt>POLYGON((-3.538560391354587 47.6598075800185,-3.509355359579469 47.60796064659818,-3.408639841714546 47.59721043120237,-3.396206627769391 47.64190118378117,-3.495302813565347 47.65834846972471,-3.538560391354587 47.6598075800185))</wkt>
+        <book>Chapter2.6.4</book>
+        <zoneName>Iles de Groix</zoneName>
+        <description>Iles de Groix</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>13</id>
+        <wkt>POLYGON((-4.343319416029021 47.82207618179063, -4.38541987592286 47.80180659736012, -4.370196211692595 47.7848534747146, -4.346037004249769 47.76879419449112, -4.211738597357234 47.77216206830611, -4.20431250023883 47.80301191959682, -4.343319416029021 47.82207618179063))</wkt>
+        <book>Chapter2.2</book>
+        <zoneName>De la Pointe de Penmarc'h à Lesconil</zoneName>
+        <description>De la Pointe de Penmarc'h à Lesconil</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>8</id>
+        <wkt>POLYGON((-4.630554358053488 48.34457325179862, -4.650241010017231 48.31986651246882, -4.657206471665898 48.24162970866282, -4.624116737650623 48.24212876785717, -4.617095541155418 48.25960705061439, -4.61387046046832 48.27713519732638,-4.630554358053488 48.34457325179862))</wkt>
+        <book>Chapter10.4.7.3</book>
+        <zoneName>Chenal du Toulinguet</zoneName>
+        <description>Chenal du Toulinguet</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>16</id>
+        <wkt>POLYGON((-3.986649555592977 47.84919205626352, -3.829646340367352 47.76412709608463, -3.442350096382671 47.69061219444546, -3.452659103152589 47.70957504831456, -3.534481578487808 47.77542238341455, -3.673837544106671 47.79677246162568, -3.711723004032774 47.82033400280657, -3.76139148355757 47.79973651904717, -3.843156171288418 47.80546089039046, -3.883074725530602 47.85331828161905, -3.922111735217083 47.8865090420913, -3.976226760015903 47.90550607097635, -3.995646821384876 47.86924160161401, -3.986649555592977 47.84919205626352))</wkt>
+        <book>Chapter2.5</book>
+        <zoneName>De Beg Mail à la Pointe du Talut</zoneName>
+        <description>De Beg Mail à la Pointe du Talut</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>11</id>
+        <wkt>POLYGON((-4.708389133905766 48.10156219927644, -4.870084558006167 48.09957175446518, -4.875383615144074 48.0181189972106, -4.831045890519599 47.96337473318997, -4.669187363476246 48.02929229859348, -4.725278093315425 48.03796722339766, -4.69067860805432 48.0452077442875, -4.703784458209526 48.05768041895107, -4.708389133905766 48.10156219927644))</wkt>
+        <book>Chapter10.7.5</book>
+        <zoneName>Raz de Sein</zoneName>
+        <description>Raz de Sein</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>9</id>
+        <wkt>POLYGON((-4.52922333597209 48.35158826974171, -4.464525117960703 48.36323201951313,-4.408564117001353 48.39297369984793, -4.433125548453448 48.40047318047574, -4.503763594098206 48.38770772681009, -4.542697418091796 48.36257911561847,-4.52922333597209 48.35158826974171))</wkt>
+        <book>Chapter10.4.9</book>
+        <zoneName>Port de Brest</zoneName>
+        <description>Port de Brest</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>20</id>
+        <wkt>POLYGON((-4.560444 48.325944,-4.553548 48.286806,-4.514255 48.270171,-4.446560 48.281873,-4.391909 48.269320,-4.307692 48.284452,-4.247947 48.272356,-4.226010 48.307738,-4.259776 48.342533,-4.287288 48.364075,-4.384979 48.357411,-4.351941 48.406855,-4.4577524 48.403818,-4.561639 48.358823,-4.560444 48.325944))</wkt>
+        <book>Chapter10.5</book>
+        <zoneName>Rade de Brest</zoneName>
+        <description>Rade de Brest</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>14</id>
+        <wkt>POLYGON((-4.047229245678414 47.68420950788304, -3.945362708573351 47.67499373477612, -3.913665003088261 47.72614054905804, -4.032777239054173 47.80255252553211, -4.097116674865041 47.78317196361911, -4.047229245678414 47.68420950788304))</wkt>
+        <book>Chapter2.3</book>
+        <zoneName>Iles de Glénan</zoneName>
+        <description>Iles de Glénan</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>1</id>
+        <wkt>POLYGON((-4.679749437596908 48.56174421654769, -5.199720191635905 48.53722047529905, -5.079527711262738 47.72685888365362, -4.359725219654969 47.79757127742374, -4.321889330570726 48.02213588596683, -4.232611291414914 48.23733059571508, -4.209477880418033 48.39176485666189, -4.679749437596908 48.56174421654769))</wkt>
+        <book>Chapter10</book>
+        <zoneName>Du Phare du Four à la Pointe de Penmarc'h</zoneName>
+        <description>Du Phare du Four à la Pointe de Penmarc'h</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>7</id>
+        <wkt>POLYGON((-4.62526977831652 48.34175334020249, -4.572574868268844 48.31894511701319, -4.53222394382267 48.34040681948547, -4.535082500003882 48.36767635644268, -4.582813207739179 48.3581673209355, -4.62526977831652 48.34175334020249))</wkt>
+        <book>Chapter10.4.6.3</book>
+        <zoneName>Goulet de Brest</zoneName>
+        <description>Goulet de Brest</description>
+    </sailingDirections>
+    <sailingDirections>
+        <id>6</id>
+        <wkt>POLYGON((-4.708680243705702 48.34431552473787,-4.657742142595941 48.28528388656658, -4.564758970786752 48.3001323273454,-4.567578947102362 48.32237554147825, -4.536968387439798 48.33880422988211, -4.454364451533745 48.35134720798997, -4.473009369214362 48.3945355493745, -4.621946107719525 48.34532761973266, -4.692194983950459 48.35904266078934, -4.708680243705702 48.34431552473787))</wkt>
+        <book>Chapter10.4.6</book>
+        <zoneName>Chenal principal pour l'accès à Brest</zoneName>
+        <description>Chenal principal pour l'accès à Brest</description>
+    </sailingDirections>
+</navigationDataSet>
