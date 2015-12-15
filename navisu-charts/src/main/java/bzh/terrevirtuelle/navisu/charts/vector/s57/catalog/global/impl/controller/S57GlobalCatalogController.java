@@ -26,6 +26,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.xml.stream.XMLStreamException;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import com.vividsolutions.jts.algorithm.CentroidArea;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.ParseException;
+import com.vividsolutions.jts.io.WKTReader;
+import gov.nasa.worldwind.geom.LatLon;
+import java.util.HashSet;
 
 /**
  * @author Serge Morvan
@@ -41,7 +50,11 @@ public class S57GlobalCatalogController
     protected String fileName;
     private Set<Map.Entry<String, Object>> entries;
     private final List<Layer> layers;
-    private S57GlobalCatalogImpl s57GlobalCatalogImpl;
+    private S57GlobalCatalogImpl component;
+    private S57Chart s57Chart;
+    protected Set<NavigationData> s57ChartSet;
+    protected WKTReader wktReader;
+    protected Geometry geometry = null;
 
     static {
         INSTANCE = new S57GlobalCatalogController();
@@ -51,6 +64,8 @@ public class S57GlobalCatalogController
         layers = new ArrayList<>();
         wwd = GeoWorldWindViewImpl.getWW();
         this.wwd.addSelectListener(this);
+        s57ChartSet = new HashSet<>();
+        wktReader = new WKTReader();
     }
 
     public static S57GlobalCatalogController getInstance() {
@@ -83,15 +98,35 @@ public class S57GlobalCatalogController
             Object topObject = event.getTopObject();
             if (topObject != null) {
                 if (topObject.getClass() == KMLSurfacePolygonImpl.class) {
-                    //System.out.println("topObject " + ((KMLSurfacePolygonImpl) topObject).getEntries());
-                    entries = ((KMLSurfacePolygonImpl) topObject).getEntries();
+                    KMLSurfacePolygonImpl polygon = (KMLSurfacePolygonImpl) topObject;
+                    entries = polygon.getEntries();
                     entries.stream().forEach((e) -> {
                         if (e.getKey().contains("DisplayName")) {
                             String filename = e.getValue() + ".000";
-                            if (s57GlobalCatalogImpl.getFiles() != null) {
-                                Path filepath = s57GlobalCatalogImpl.getFiles().get(filename);
+                            if (component.getFiles() != null) {
+                                Path filepath = component.getFiles().get(filename);
                                 if (filepath != null) {
-                                    s57GlobalCatalogImpl.loadFile(filepath.toString());
+                                    component.loadFile(filepath.toString());
+                                    s57Chart = new S57Chart();
+                                    String number = filepathToNumber(filepath.toString());
+                                    s57Chart.setNumber(number);
+                                    s57Chart.setId(numberToId(number));
+                                    String wkt = locationsToWKT(polygon.getLocations());
+                                    if (wkt != null) {
+                                        s57Chart.setGeometry(wkt);
+                                        try {
+                                            geometry = wktReader.read(wkt);
+                                        } catch (ParseException ex) {
+                                            Logger.getLogger(S57GlobalCatalogController.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                        CentroidArea centroid = new CentroidArea();
+                                        if (geometry != null) {
+                                            centroid.add(geometry);
+                                            Coordinate coord = centroid.getCentroid();
+                                            s57Chart.setLocation(coord.y, coord.x);
+                                        }
+                                    }
+                                    s57ChartSet.add(s57Chart);
                                 } else {
                                     System.out.println("La carte: " + filename + " n'est pas dans votre catalogue");
                                 }
@@ -107,7 +142,47 @@ public class S57GlobalCatalogController
     }
 
     public void setS57GlobalCatalogImpl(S57GlobalCatalogImpl s57GlobalCatalogImpl) {
-        this.s57GlobalCatalogImpl = s57GlobalCatalogImpl;
+        this.component = s57GlobalCatalogImpl;
     }
 
+    private String locationsToWKT(Iterable<? extends LatLon> locations) {
+        String[] tab;
+        String result = "POLYGON((";
+        List<String> locList = new ArrayList<>();
+        for (LatLon l : locations) {
+            tab = l.toString().split(",");
+            if (tab.length == 3) {
+                tab[0] = tab[0].replace("(", "");
+                tab[0] = tab[0].replace("°", "");
+                tab[1] = tab[1].replace("°", "");
+                locList.add(tab[1].trim() + " " + tab[0].trim());
+            }
+        }
+        for (int i = 0; i < locList.size() - 1; i++) {
+            result += locList.get(i) + ",";
+        }
+        result += locList.get(locList.size() - 1) + "))";
+        return result;
+    }
+
+    private String filepathToNumber(String filepath) {
+        String result = null;
+        String[] tab = filepath.split("/");
+        if (tab.length != 0) {
+            result = tab[tab.length - 1];
+        }
+        return result;
+    }
+
+    private long numberToId(String number) {
+        String[] tab = number.split("\\.");
+        if (tab.length == 2) {
+            tab[0] = tab[0].substring(2);
+        }
+        return Long.parseLong(tab[0]);
+    }
+
+    public Set<NavigationData> getS57Charts() {
+        return s57ChartSet;
+    }
 }

@@ -2,6 +2,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.util.Set;
 import org.capcaval.c3.component.ComponentService;
 
@@ -22,4 +23,5 @@ public interface S57ChartComponentServices
 
     Set<S57Controller> getS57Controllers();
 
+    Set<NavigationData> getS57Charts();
 }

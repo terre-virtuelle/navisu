@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatal
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controller.S57GlobalCatalogController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
@@ -27,6 +28,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -71,6 +73,7 @@ public class S57GlobalCatalogImpl
     protected float altitude;
     protected Map<String, Pair<Integer, Integer>> clipConditions;
     protected Set<String> clipConditionsKeySet;
+    protected S57GlobalCatalogController s57GlobalCatalogController;
 
     @Override
     public void componentInitiated() {
@@ -109,8 +112,7 @@ public class S57GlobalCatalogImpl
             }
         }
     }
-        
-          
+
     Map<String, Path> listSourceFiles(Path dir) throws IOException {
         Map<String, Path> result = new HashMap<>();
         Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
@@ -152,9 +154,8 @@ public class S57GlobalCatalogImpl
     }
 
     public void handleOpenFile(ProgressHandle pHandle, String fileName) {
-
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
-        S57GlobalCatalogController s57GlobalCatalogController = S57GlobalCatalogController.getInstance();
+        s57GlobalCatalogController = S57GlobalCatalogController.getInstance();
         s57GlobalCatalogController.setS57GlobalCatalogImpl(this);
         layers = s57GlobalCatalogController.init(fileName);
 
@@ -179,7 +180,7 @@ public class S57GlobalCatalogImpl
 
     @Override
     public void load(String... filenames) {
-        
+
         guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
             for (String f : filenames) {
                 File file = new File(f);
@@ -241,9 +242,25 @@ public class S57GlobalCatalogImpl
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
+        /* Nothing to do here */ }
+
+    @Override
+    public Set<NavigationData> getS57Charts() {
+        if (s57GlobalCatalogController != null) {
+            return s57GlobalCatalogController.getS57Charts();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Path getChartPath(String number) {
+        return files.get(number);
+    }
 
 }

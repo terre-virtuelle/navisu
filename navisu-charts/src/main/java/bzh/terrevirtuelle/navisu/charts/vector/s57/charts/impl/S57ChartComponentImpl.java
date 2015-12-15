@@ -7,6 +7,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.core.util.OS;
@@ -15,8 +16,6 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
-import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
-import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -47,6 +46,7 @@ import javafx.scene.control.TreeItem;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
 
@@ -65,6 +65,8 @@ public class S57ChartComponentImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     LayersManagerServices layersManagerServices;
+    @UsedService 
+    S57GlobalCatalogServices s57GlobalCatalogServices;
     @UsedService
     DataAccessServices dataAccessServices;
     ComponentManager cm;
@@ -78,7 +80,7 @@ public class S57ChartComponentImpl
     protected static final String GROUP = "S57 charts";
     static private int i = 0;
     protected S57ChartComponentController chartS57Controller;
-  //  private SurveyZoneController surveyZoneController;
+    //  private SurveyZoneController surveyZoneController;
     protected List<Layer> layers;
     protected Layer layer;
     protected List<Layer> enabledLayers;
@@ -106,7 +108,6 @@ public class S57ChartComponentImpl
         layerTreeServices.createGroup(GROUP);
         geoViewServices.getLayerManager().createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
-        View view = wwd.getView();
         wwd.addPositionListener((PositionEvent event) -> {
             filter();
         });
@@ -350,6 +351,11 @@ public class S57ChartComponentImpl
         } else {
             return null;
         }
+    }
+
+    @Override
+    public Set<NavigationData> getS57Charts() {
+       return s57GlobalCatalogServices.getS57Charts();
     }
 
     @Override
