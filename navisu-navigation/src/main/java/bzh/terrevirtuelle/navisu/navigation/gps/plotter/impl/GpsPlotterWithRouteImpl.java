@@ -10,6 +10,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
@@ -47,6 +49,10 @@ public class GpsPlotterWithRouteImpl
     LayersManagerServices layersManagerServices;
     @UsedService
     KmlObjectServices kmlObjectServices;
+    @UsedService
+    S57GlobalCatalogServices s57GlobalCatalogServices;
+    @UsedService
+    S57ChartComponentServices s57ChartComponentServices;
     @UsedService
     GpsTrackServices gpsTrackServices;
     @UsedService
@@ -91,7 +97,9 @@ public class GpsPlotterWithRouteImpl
         if (gpsPlotterController == null) {
             gpsPlotterController = GpsPlotterWithRouteController.getInstance(this,
                     layersManagerServices,
-                    guiAgentServices, kmlObjectServices, aisServices,
+                    guiAgentServices, kmlObjectServices, 
+                    s57ChartComponentServices, s57GlobalCatalogServices,
+                    aisServices,
                     withTarget,
                     navigationDataSet,
                     NAME0, NAME2, NAME3, NAME4, GROUP);

@@ -7,8 +7,11 @@ package bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconSafeWater;
@@ -35,12 +38,14 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.navigation.controller.AvurnavController;
+import bzh.terrevirtuelle.navisu.navigation.controller.S57ChartController;
 import bzh.terrevirtuelle.navisu.navigation.controller.SailingDirectionsController;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.GpsPlotterWithRouteImpl;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
 import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
@@ -53,6 +58,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -81,8 +87,8 @@ public class GpsPlotterWithRouteController {
     protected String group;
     protected WorldWindow wwd;
     protected RenderableLayer gpsLayer;
-    protected RenderableLayer sailingDirectionsPgonLayer;
-    protected RenderableLayer sailingDirectionsIconsLayer;
+    protected RenderableLayer navigationPgonLayer;
+    protected RenderableLayer navigationIconsLayer;
     protected RenderableLayer transponderZoneLayer;
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
@@ -98,12 +104,16 @@ public class GpsPlotterWithRouteController {
     protected NavigationDataSet navigationDataSet = null;
     static private GpsPlotterWithRouteController instance = null;
     protected TextAreaController textAreaController;
+    protected S57GlobalCatalogServices s57GlobalCatalogServices;
+    protected S57ChartComponentServices s57ChartComponentServices;
 
     public static GpsPlotterWithRouteController getInstance(
             GpsPlotterWithRouteImpl component,
             LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
             KmlObjectServices kmlObjectServices,
+            S57ChartComponentServices s57ChartComponentServices,
+            S57GlobalCatalogServices s57GlobalCatalogServices,
             AisServices aisServices,
             boolean withTarget,
             NavigationDataSet navigationDataSet,
@@ -114,6 +124,8 @@ public class GpsPlotterWithRouteController {
                     layersManagerServices,
                     guiAgentServices,
                     kmlObjectServices,
+                    s57ChartComponentServices,
+                    s57GlobalCatalogServices,
                     aisServices,
                     withTarget,
                     navigationDataSet,
@@ -127,6 +139,8 @@ public class GpsPlotterWithRouteController {
             LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
             KmlObjectServices kmlObjectServices,
+            S57ChartComponentServices s57ChartComponentServices,
+            S57GlobalCatalogServices s57GlobalCatalogServices,
             AisServices aisServices,
             boolean withTarget,
             NavigationDataSet navigationDataSet,
@@ -136,16 +150,17 @@ public class GpsPlotterWithRouteController {
         this.guiAgentServices = guiAgentServices;
         this.kmlObjectServices = kmlObjectServices;
         this.navigationDataSet = navigationDataSet;
+        this.s57ChartComponentServices = s57ChartComponentServices;
+        this.s57GlobalCatalogServices = s57GlobalCatalogServices;
         this.name1 = name1;
         this.name2 = name2;
         this.group = group;
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         gpsLayer = layersManagerServices.initLayer(group, name1);
-        sailingDirectionsPgonLayer = layersManagerServices.initLayer(group, name2);
-        sailingDirectionsPgonLayer.setPickEnabled(false);
-        sailingDirectionsIconsLayer = layersManagerServices.initLayer(group, name4);
-        
+        navigationPgonLayer = layersManagerServices.initLayer(group, name2);
+        navigationPgonLayer.setPickEnabled(false);
+        navigationIconsLayer = layersManagerServices.initLayer(group, name4);
         transponderZoneLayer = layersManagerServices.initLayer(group, name3);
         addPanelController();
         addListeners();
@@ -188,7 +203,7 @@ public class GpsPlotterWithRouteController {
                 if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
                     PointPlacemark placemark = (PointPlacemark) po.getObject();
                     if (placemark.getValue("TYPE") != null) {
-                        String type = (String)placemark.getValue("TYPE");
+                        String type = (String) placemark.getValue("TYPE");
                         if (type.equals("Avurnav") || type.equals("SailingDirections")) {
                             Platform.runLater(() -> {
                                 textAreaController = new TextAreaController();
@@ -198,6 +213,11 @@ public class GpsPlotterWithRouteController {
                                 textAreaController.setVisible(true);
                                 guiAgentServices.getRoot().getChildren().add(textAreaController);
                             });
+                            event.consume();
+                        }
+                        if (type.equals("S57Chart")) {
+                            Path path = s57GlobalCatalogServices.getChartPath((String) placemark.getValue(AVKey.DISPLAY_NAME));
+                            s57ChartComponentServices.openChart(path.toString());
                             event.consume();
                         }
                     }
@@ -314,16 +334,27 @@ public class GpsPlotterWithRouteController {
     }
 
     private void activateNavigationControllers() {
-       
-      List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
-      avurnavList.stream().forEach((Avurnav a) -> {
+        List<S57Chart> chartList = navigationDataSet.get(S57Chart.class);
+        chartList.stream().forEach((S57Chart a) -> {
+            String displayName = a.getNumber();
+            String description = a.getDescription();
+            S57ChartController sc = new S57ChartController(new S57BasicBehavior(),
+                    guiAgentServices,
+                    a,
+                    926, displayName, description);
+            sc.setLayer(navigationPgonLayer);
+            sc.setIconsLayer(navigationIconsLayer);
+            sc.activate();
+        });
+        List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
+        avurnavList.stream().forEach((Avurnav a) -> {
             String displayName = "Avurnav N°" + Long.toString(a.getId());
             String description = a.getDescription();
             AvurnavController sc = new AvurnavController(new S57BasicBehavior(),
                     guiAgentServices, a,
                     926, displayName, description);
-            sc.setLayer(sailingDirectionsPgonLayer);
-            sc.setIconsLayer(sailingDirectionsIconsLayer);
+            sc.setLayer(navigationPgonLayer);
+            sc.setIconsLayer(navigationIconsLayer);
             sc.activate();
         });
 
@@ -334,9 +365,9 @@ public class GpsPlotterWithRouteController {
             SailingDirectionsController sc = new SailingDirectionsController(new S57BasicBehavior(),
                     guiAgentServices, a,
                     926, displayName, description);
-            sc.setLayer(sailingDirectionsPgonLayer);
-            sc.setIconsLayer(sailingDirectionsIconsLayer);
+            sc.setLayer(navigationPgonLayer);
+            sc.setIconsLayer(navigationIconsLayer);
             sc.activate();
         });
-    }   
+    }
 }
