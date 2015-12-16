@@ -202,9 +202,9 @@ public class Main {
          }
          });
          */
-        BeaconCardinal b = new BeaconCardinal(2.4, 5.0);
+        BeaconCardinal b = new BeaconCardinal(1, 2.4, 5.0);
         System.out.println(b);
-        b = new BeaconCardinal("POINT(5.0 2.4)");
+        b = new BeaconCardinal(2, "POINT(5.0 2.4)");
         System.out.println(b);
     }
 

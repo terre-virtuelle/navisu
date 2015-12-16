@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public interface NavigationData {
 
     default Location getLocation() {
-        return (new Location(0.0, 0.0));
+        return (new Location());
     }
 
     String getGeometry();

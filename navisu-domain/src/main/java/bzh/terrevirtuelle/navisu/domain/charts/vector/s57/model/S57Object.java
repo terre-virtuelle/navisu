@@ -5,7 +5,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
 
-
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
 public class S57Object implements Serializable {
@@ -17,7 +16,7 @@ public class S57Object implements Serializable {
     @XmlTransient
     protected boolean dataSet = false;
 
-    protected long id;
+    protected long id = 0;
 
     public S57Object(long id) {
         this.id = id;
@@ -96,13 +95,12 @@ public class S57Object implements Serializable {
         return spatial;
     }
 
-
     public void linkObjects() {
     }
 
     @Override
     public String toString() {
-        return "S57Object{" + "id=" + id + '}' +'\n';
+        return "S57Object{" + "id=" + id + '}' + '\n';
     }
-    
+
 }

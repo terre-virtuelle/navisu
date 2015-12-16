@@ -12,17 +12,22 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BCNSHP;
  * @author Serge Morvan
  * @date 2 oct. 2014 NaVisu project
  */
-public class Beacon extends Buoyage {
+public class Beacon
+        extends Buoyage {
 
     public Beacon() {
     }
 
-    public Beacon(double lat, double lon) {
-        super(lat, lon);
+    public Beacon(long id) {
+        super(id);
     }
 
-    public Beacon(String wkt) {
-        super(wkt);
+    public Beacon(long id, double lat, double lon) {
+        super(id, lat, lon);
+    }
+
+    public Beacon(long id, String geometry) {
+        super(id, geometry);
     }
 
     public String getBeaconShape() {

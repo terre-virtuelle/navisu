@@ -10,18 +10,18 @@ import javax.xml.bind.annotation.XmlType;
 public class BeaconIsolatedDanger extends Beacon
         implements Serializable {
 
+    public BeaconIsolatedDanger() {
+    }
+
     public BeaconIsolatedDanger(Long id) {
         this.id = id;
     }
 
-    public BeaconIsolatedDanger(String wkt) {
-        super(wkt);
+    public BeaconIsolatedDanger(long id, double lat, double lon) {
+        super(id, lat, lon);
     }
 
-    public BeaconIsolatedDanger(double lat, double lon) {
-        super(lat, lon);
-    }
-
-    public BeaconIsolatedDanger() {
+    public BeaconIsolatedDanger(long id, String geometry) {
+        super(id, geometry);
     }
 }

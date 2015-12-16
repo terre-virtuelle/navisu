@@ -11,19 +11,19 @@ import javax.xml.bind.annotation.XmlType;
 public class BeaconCardinal extends Beacon
         implements Serializable {
 
+    public BeaconCardinal() {
+    }
+
     public BeaconCardinal(Long id) {
         this.id = id;
     }
 
-    public BeaconCardinal(String wkt) {
-        super(wkt);
+    public BeaconCardinal(long id, double lat, double lon) {
+        super(id, lat, lon);
     }
 
-    public BeaconCardinal(double lat, double lon) {
-        super(lat, lon);
-    }
-
-    public BeaconCardinal() {
+    public BeaconCardinal(long id, String geometry) {
+        super(id, geometry);
     }
 
     public String getCategoryOfCardinalMark() {
@@ -41,7 +41,9 @@ public class BeaconCardinal extends Beacon
 
     @Override
     public String toString() {
-        return "BeaconCardinal{" + super.toString() + '}';
+        return "BeaconCardinal{" + '}';
     }
+
+    
 
 }

@@ -9,21 +9,21 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcnlat")
 public class BeaconLateral extends Beacon
-        implements  Serializable {
-
-    public BeaconLateral(Long id) {
-        this.id = id;
-    }
+        implements Serializable {
 
     public BeaconLateral() {
     }
 
-    public BeaconLateral(double lat, double lon) {
-        super(lat, lon);
+    public BeaconLateral(Long id) {
+        super(id);
     }
 
-    public BeaconLateral(String wkt) {
-        super(wkt);
+    public BeaconLateral(long id, double lat, double lon) {
+        super(id, lat, lon);
+    }
+
+    public BeaconLateral(long id, String geometry) {
+        super(id, geometry);
     }
 
     public String getCategoryOfLateralMark() {

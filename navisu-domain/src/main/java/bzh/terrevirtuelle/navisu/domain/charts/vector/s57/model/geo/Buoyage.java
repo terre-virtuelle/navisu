@@ -51,12 +51,16 @@ public class Buoyage
     public Buoyage() {
     }
 
-    public Buoyage(double lat, double lon) {
-        super(lat, lon);
+    public Buoyage(long id) {
+        super(id);
     }
 
-    public Buoyage(String wkt) {
-        super(wkt);
+    public Buoyage(long id, double lat, double lon) {
+        super(id, lat, lon);
+    }
+
+    public Buoyage(long id, String geometry) {
+        super(id, geometry);
     }
 
     /**
@@ -386,7 +390,7 @@ public class Buoyage
                 + ", verticalLength=" + verticalLength
                 + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
                 + ", status=" + status
-                + super.toString()+'}';
+                + super.toString() + '}';
     }
 
     public String getLabel() {

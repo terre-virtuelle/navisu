@@ -11,18 +11,19 @@ public class BeaconSafeWater extends Buoyage
         implements  Serializable {
 
     public BeaconSafeWater(Long id) {
-        this.id = id;
+        super(id);
     }
 
     public BeaconSafeWater() {
     }
 
-    public BeaconSafeWater(String wkt) {
-        super(wkt);
+    public BeaconSafeWater(long id, double lat, double lon) {
+        super(id, lat, lon);
     }
 
-    public BeaconSafeWater(double lat, double lon) {
-        super(lat, lon);
+    public BeaconSafeWater(long id, String geometry) {
+        super(id, geometry);
     }
+
     
 }
