@@ -106,6 +106,7 @@ public class GpsPlotterWithRouteController {
     protected TextAreaController textAreaController;
     protected S57GlobalCatalogServices s57GlobalCatalogServices;
     protected S57ChartComponentServices s57ChartComponentServices;
+    private final List<String> NAVIGATION_OBJECTS = Arrays.asList("Avurnav", "SailingDirections");
 
     public static GpsPlotterWithRouteController getInstance(
             GpsPlotterWithRouteImpl component,
@@ -204,7 +205,7 @@ public class GpsPlotterWithRouteController {
                     PointPlacemark placemark = (PointPlacemark) po.getObject();
                     if (placemark.getValue("TYPE") != null) {
                         String type = (String) placemark.getValue("TYPE");
-                        if (type.equals("Avurnav") || type.equals("SailingDirections")) {
+                        if (NAVIGATION_OBJECTS.contains(type)) {
                             Platform.runLater(() -> {
                                 textAreaController = new TextAreaController();
                                 textAreaController.getDataTextArea().setWrapText(true);
