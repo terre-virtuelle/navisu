@@ -28,10 +28,7 @@ import java.util.regex.Pattern;
 import javax.xml.stream.XMLStreamException;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import com.vividsolutions.jts.algorithm.CentroidArea;
-import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.LatLon;
 import java.util.HashSet;
@@ -114,17 +111,6 @@ public class S57GlobalCatalogController
                                     String wkt = locationsToWKT(polygon.getLocations());
                                     if (wkt != null) {
                                         s57Chart.setGeometry(wkt);
-                                        try {
-                                            geometry = wktReader.read(wkt);
-                                        } catch (ParseException ex) {
-                                            Logger.getLogger(S57GlobalCatalogController.class.getName()).log(Level.SEVERE, null, ex);
-                                        }
-                                        CentroidArea centroid = new CentroidArea();
-                                        if (geometry != null) {
-                                            centroid.add(geometry);
-                                            Coordinate coord = centroid.getCentroid();
-                                            s57Chart.setLocation(coord.y, coord.x);
-                                        }
                                     }
                                     s57ChartSet.add(s57Chart);
                                 } else {
