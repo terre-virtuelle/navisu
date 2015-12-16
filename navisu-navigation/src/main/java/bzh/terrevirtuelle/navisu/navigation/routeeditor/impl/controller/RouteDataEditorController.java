@@ -129,8 +129,7 @@ public class RouteDataEditorController
             try {
                 navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
             } catch (FileNotFoundException | JAXBException ex) {
-                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("ex " + ex);
+                Logger.getLogger(RouteDataEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
             sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
             gpxList = navigationDataSet.get(Gpx.class);
@@ -141,7 +140,8 @@ public class RouteDataEditorController
                 try {
                     ImportExportXML.exports(navigationDataSet, file);
                 } catch (JAXBException | FileNotFoundException ex) {
-                    Logger.getLogger(RouteDataEditorController.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RouteDataEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                   // System.out.println("RouteDataEditorController " + ex);
                 }
             }
         });

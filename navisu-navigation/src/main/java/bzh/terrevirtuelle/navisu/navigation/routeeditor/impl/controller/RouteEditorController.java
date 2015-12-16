@@ -81,6 +81,8 @@ import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GeodeticCurve;
 import org.gavaghan.geodesy.GlobalCoordinates;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
 
 /**
  * NaVisu
@@ -94,6 +96,14 @@ public class RouteEditorController
     private final RouteEditorImpl instrument;
     private final String FXML = "routeeditor.fxml";
     private MeasureTool measureTool;
+    
+    private List<Avurnav> avurnavList;
+    private List<SailingDirections> sailingDirectionsList;
+    private List<Gpx> gpxList;
+    private File file;
+    
+    
+    
     private TerrainProfileLayer profile = new TerrainProfileLayer();
     private Gpx gpx;
     private List<Track> tracks;// 1 seul Track par Gpx/Route
@@ -250,11 +260,11 @@ public class RouteEditorController
         openButton.setOnMouseClicked((MouseEvent event) -> {
             initMeasureTool();
             newAction();
-            gpx = new Gpx();
-            File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(),
-                    "data/gpx", "GPX files (*.gpx)", "*.gpx", "*.GPX");
+            file = IO.fileChooser(guiAgentServices.getStage(),
+                    "privateData/nds", "NDS files (*.nds)", "*.nds", "*.NDS");
             try {
-                gpx = ImportExportXML.imports(gpx, file);
+                navigationDataSet = new NavigationDataSet();
+                navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
             } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -808,7 +818,8 @@ public class RouteEditorController
             try {
                 ImportExportXML.exports(navigationDataSet, "privateData/nds/" + routeName + ".nds");
             } catch (JAXBException | FileNotFoundException ex) {
-                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("ex "+ex);
+                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         } else {
             System.out.println("Il faut charger au moins une carte S57");

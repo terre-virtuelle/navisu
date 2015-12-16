@@ -86,7 +86,6 @@ public class GpsPlotterWithRouteController {
     protected RenderableLayer transponderZoneLayer;
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
-  //  protected AisServices aisServices;
     protected TargetPanel targetPanel;
     protected Ship ownerShip;
     protected double initRotation;
@@ -97,19 +96,6 @@ public class GpsPlotterWithRouteController {
     protected GpsPlotterWithRouteImpl component;
     protected CircularFifoQueue<RMC> sentenceQueue;
     protected NavigationDataSet navigationDataSet = null;
-  //  private final int LIMIT = 926; // distance of perception
-   // protected WKTReader wktReader;
-   // protected Point point;
-   // protected PointPlacemark placemark;
-    /*
-    protected PointPlacemarkAttributes avurnavPlacemarkNormalAttributes;
-    protected PointPlacemarkAttributes avurnavMultiPlacemarkNormalAttributes;
-    protected PointPlacemarkAttributes sailingDirectionsMultiPlacemarkNormalAttributes;
-    protected ShapeAttributes avurnavPolygonNormalAttributes;
-    protected ShapeAttributes avurnavPolygonHighlightAttributes;
-    protected ShapeAttributes sailingDirectionsPolygonNormalAttributes;
-    protected ShapeAttributes sailingDirectionsPolygonHighlightAttributes;
-    */
     static private GpsPlotterWithRouteController instance = null;
     protected TextAreaController textAreaController;
 

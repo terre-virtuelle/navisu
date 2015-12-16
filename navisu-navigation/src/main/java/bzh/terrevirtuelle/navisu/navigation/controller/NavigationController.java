@@ -65,7 +65,6 @@ public abstract class NavigationController
         navClassName = navClassNameT[navClassNameT.length - 1];
         createAttributes();
         wkt = navigationData.getGeometry();
-        System.out.println(navClassName + " wkt "+wkt);
         wktReader = new WKTReader();
         try {
             geometry = wktReader.read(wkt);
