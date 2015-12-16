@@ -197,22 +197,4 @@ public class RdfParser {
     public String toString() {
         return "RdfParser{" + "navigationData=" + navigationDataList + '}';
     }
-
-    private Location createLocation(String wkt) {
-        Location location = null;
-        if (wkt != null) {
-            try {
-                geometry = wktReader.read(wkt);
-            } catch (ParseException ex) {
-                Logger.getLogger(RdfParser.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            CentroidArea centroid = new CentroidArea();
-            if (geometry != null) {
-                centroid.add(geometry);
-                Coordinate coord = centroid.getCentroid();
-                location = new Location(coord.y, coord.x);
-            }
-        }
-        return location;
-    }
 }
