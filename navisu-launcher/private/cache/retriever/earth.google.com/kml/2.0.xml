@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>KML 2.0 namespace</title>
+<style>
+<!--
+  body,td,font,h3,p,a{font-family:arial,sans-serif;font-size:12px}
+  body{background-color:#FFFFFF;color:#000000}
+  h3{font-size:16px}
+-->
+</style>
+</head>
+<body>
+<table width="70%"  border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+      <p>&nbsp;</p>
+      <p><img src="http://earth.google.com/images/googleearth.gif" alt="Google Earth namespace image" name="Google Earth" /></p>
+      <p>&nbsp;</p>
+      <h3>KML 2.0 namespace</h3>
+      <p>This is an XML namespace defined in the <a href="http://www.keyhole.com/kml/kml_doc.html">KML
+        Language Reference</a> specification for use with the Google Earth client. </p>
+      <p>For more information on KML, the markup language used to author content
+      for Google Earth, please refer to the <a href="http://keyhole.com/kml/kml_doc.html">KML
+      2.0 specification</a>. A <a href="http://keyhole.com/kml/kml_tut.html">tutorial</a> is
+      also available, and many examples of KML content are available at the <a href="http://bbs.keyhole.com/">Google
+      Earth Community</a>. </p>
+      <p>For more information about XML namespaces, please refer to the <a href="http://www.w3.org/TR/REC-xml-names">Namespaces
+      in XML</a> specification. </p>
+      <p>&nbsp; </p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
