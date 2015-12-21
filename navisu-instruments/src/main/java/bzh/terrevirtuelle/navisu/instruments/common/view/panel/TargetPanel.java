@@ -90,7 +90,8 @@ public class TargetPanel
     SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
     protected GuiAgentServices guiAgentServices;
 
-    public TargetPanel(GuiAgentServices guiAgentServices, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public TargetPanel(GuiAgentServices guiAgentServices, 
+            KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.guiAgentServices = guiAgentServices;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ais.fxml"));
@@ -132,11 +133,11 @@ public class TargetPanel
 
     }
 
-    public void updateAisPanel(Ship ship) {
-        updateAisPanel(ship, null, null);
+    public void updatePanel(Ship ship) {
+        TargetPanel.this.updatePanel(ship, null, null);
     }
 
-    public void updateAisPanel(Ship ship,
+    public void updatePanel(Ship ship,
             Map<Integer, Calendar> timestamps,
             Map<Integer, String> midMap) {
         setVisible(true);

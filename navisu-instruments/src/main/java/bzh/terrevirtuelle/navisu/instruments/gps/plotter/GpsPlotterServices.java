@@ -21,8 +21,6 @@ public interface GpsPlotterServices
 
     void on();
 
-    void on(NavigationDataSet navigationDataSet, boolean withTarget);
-
     default void off() {
     }
 

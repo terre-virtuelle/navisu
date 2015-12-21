@@ -17,6 +17,6 @@ import org.capcaval.c3.component.ComponentEvent;
 public interface TransponderActivateEvent
         extends ComponentEvent {
 
-    public void notifyAisActivateMessageChanged(RenderableLayer layer, List<NavigationData> target);
+    public void notifyActivateMessageChanged(RenderableLayer layer, List<NavigationData> target);
 
 }

@@ -167,7 +167,7 @@ public class AisPlotterController {
     protected final void updateAisPanel(Ship ship) {
         Platform.runLater(() -> {
             targetPanel.setLocation(100, 100);
-            targetPanel.updateAisPanel(ship, timestamps, midMap);
+            targetPanel.updatePanel(ship, timestamps, midMap);
         });
     }
 

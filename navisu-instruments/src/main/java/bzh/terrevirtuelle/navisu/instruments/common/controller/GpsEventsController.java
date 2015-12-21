@@ -21,7 +21,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @date 19 juin 2015
  * @author Serge Morvan
  */
-public class GpsEventsController {
+public abstract class GpsEventsController {
 
     ComponentManager cm;
     ComponentEventSubscribe<GGAEvent> ggaES;
@@ -36,14 +36,12 @@ public class GpsEventsController {
         vtgES = cm.getComponentEventSubscribe(VTGEvent.class);
     }
 
-    public void subscribe() {
+    public final void subscribe() {
         ggaES.subscribe(new GGAEvent() {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-
                 GGA data = (GGA) d;
                 notifyNmeaMessage(data);
-
             }
         });
         vtgES.subscribe(new VTGEvent() {
@@ -62,7 +60,7 @@ public class GpsEventsController {
         });
     }
 
-    public void unsubscribe() {
+    public final void unsubscribe() {
         ggaES.unsubscribe(new GGAEvent() {
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
@@ -80,15 +78,9 @@ public class GpsEventsController {
         });
     }
 
-    public void notifyNmeaMessage(GGA data) {
+    protected abstract void notifyNmeaMessage(GGA data);
 
-    }
+    protected abstract void notifyNmeaMessage(VTG data);
 
-    public void notifyNmeaMessage(VTG data) {
-
-    }
-
-    public void notifyNmeaMessage(RMC data) {
-
-    }
+    protected abstract void notifyNmeaMessage(RMC data);
 }

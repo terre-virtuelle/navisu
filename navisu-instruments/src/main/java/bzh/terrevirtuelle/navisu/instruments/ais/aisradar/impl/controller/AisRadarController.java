@@ -615,7 +615,7 @@ public class AisRadarController
 
     protected final void updateAisPanel(Ship ship) {
         Platform.runLater(() -> {
-            aisTargetPanel.updateAisPanel(ship, timestamps, midMap);
+            aisTargetPanel.updatePanel(ship, timestamps, midMap);
         });
     }
 

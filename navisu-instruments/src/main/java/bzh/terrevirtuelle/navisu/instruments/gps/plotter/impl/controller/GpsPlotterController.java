@@ -8,16 +8,15 @@ package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
-import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
+import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
+import bzh.terrevirtuelle.navisu.instruments.common.controller.ShipController;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -28,7 +27,6 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,84 +42,48 @@ import org.apache.commons.collections4.queue.CircularFifoQueue;
  * @date 7 mai 2015
  * @author Serge Morvan
  */
-public class GpsPlotterController {
+public class GpsPlotterController
+        extends GpsEventsController {
 
-    protected String name1;
-    protected String name2;
-    protected String group;
-    protected WorldWindow wwd;
-    protected RenderableLayer gpsLayer;
-    protected RenderableLayer aisSurveyZoneLayer;
+    protected final String GROUP = "Navigation";
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
-    protected AisServices aisServices;
+    protected WorldWindow wwd;
+    protected RenderableLayer gpsLayer;
     protected TargetPanel targetPanel;
     protected Ship ownerShip;
     protected double initRotation;
     protected Properties properties;
+    protected String PROPERTIES_FILE_NAME = "properties/domain.properties";
     protected ColladaRoot ownerShipView;
-    protected boolean withTarget = true;
-    protected List<String> s57ControllerIdList;
-    protected GpsPlotterImpl component;
     protected CircularFifoQueue<RMC> sentenceQueue;
-    protected NavigationDataSet navigationDataSet = null;
-    private final int LIMIT = 926; // distance of perception
-    static private GpsPlotterController instance;
 
-    public static GpsPlotterController getInstance(
-            GpsPlotterImpl component,
-            LayersManagerServices layersManagerServices,
+    public GpsPlotterController(LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
             KmlObjectServices kmlObjectServices,
-            AisServices aisServices,
-            boolean withTarget,
-            NavigationDataSet navigationDataSet,
-            String name1, String name2,
-            String group) {
-        if (instance == null) {
-            instance = new GpsPlotterController(component,
-                    layersManagerServices,
-                    guiAgentServices,
-                    kmlObjectServices,
-                    aisServices,
-                    withTarget,
-                    navigationDataSet,
-                    name1, name2,
-                    group);
-        }
-        return instance;
-    }
-
-    private GpsPlotterController(GpsPlotterImpl component,
-            LayersManagerServices layersManagerServices,
-            GuiAgentServices guiAgentServices,
-            KmlObjectServices kmlObjectServices,
-            AisServices aisServices,
-            boolean withTarget,
-            NavigationDataSet navigationDataSet,
-            String name1, String name2,
-            String group) {
-        this.component = component;
+            String name) {
         this.guiAgentServices = guiAgentServices;
         this.kmlObjectServices = kmlObjectServices;
-        this.aisServices = aisServices;
-        this.withTarget = withTarget;
-        this.navigationDataSet = navigationDataSet;
-        this.name1 = name1;
-        this.name2 = name2;
-        this.group = group;
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
-        gpsLayer = layersManagerServices.initLayer(group, name1);
-        aisSurveyZoneLayer = layersManagerServices.initLayer(group, name2);
-        addPanelController();
-        addListeners();
-        if (withTarget == true) {
-            createOwnerShip();
-        }
+        gpsLayer = layersManagerServices.initLayer(GROUP, name);
+        properties = new Properties();
     }
 
-    private void addPanelController() {
+    public void init() {
+        try {
+            properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
+        } catch (IOException ex) {
+            Logger.getLogger(AisRadarController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        addPanelController();
+        addListeners();
+        ownerShip = ShipController.createOwnerShip(properties);
+        createTarget();
+        subscribe();
+    }
+
+    protected void addPanelController() {
         Platform.runLater(() -> {
             targetPanel = new TargetPanel(guiAgentServices, KeyCode.B, KeyCombination.CONTROL_DOWN);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, targetPanel);
@@ -131,13 +93,7 @@ public class GpsPlotterController {
         });
     }
 
-    protected final void updateAisPanel(Ship ship) {
-        Platform.runLater(() -> {
-            targetPanel.updateAisPanel(ship);
-        });
-    }
-
-    private void addListeners() {
+    protected void addListeners() {
         wwd.addSelectListener((SelectEvent event) -> {
             Object o = event.getTopObject();
             if (event.isLeftClick() && o != null) {
@@ -145,67 +101,46 @@ public class GpsPlotterController {
                     Object object = ((ColladaRoot) o).getField("Ship");
                     if (object != null && object.getClass() == Ship.class) {
                         Ship ship = (Ship) object;
-                        updateAisPanel(ship);
+                        updateShipPanel(ship);
                     }
                 }
             }
         });
     }
 
-    private void createOwnerShip() {
-        properties = new Properties();
-        try {
-            properties.load(new FileInputStream("properties/domain.properties"));
-        } catch (IOException ex) {
-            Logger.getLogger(AisRadarController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        // creation de l'objet metier central
-        ownerShip = ShipBuilder.create()
-                .mmsi(new Integer(properties.getProperty("mmsi")))
-                .name(properties.getProperty("name"))
-                .latitude(new Float(properties.getProperty("latitude")))
-                .longitude(new Float(properties.getProperty("longitude")))
-                .cog(new Float(properties.getProperty("cog")))
-                .sog(new Float(properties.getProperty("sog")))
-                .heading(new Float(properties.getProperty("heading")))
-                .country(properties.getProperty("country"))
-                .width(new Float(properties.getProperty("width")))
-                .length(new Float(properties.getProperty("length")))
-                .draught(new Float(properties.getProperty("draught")))
-                .shipType(new Integer(properties.getProperty("shipType")))
-                .navigationalStatus(new Integer(properties.getProperty("navigationalStatus")))
-                .electronicPositionDevice(new Integer(properties.getProperty("electronicPositionDevice")))
-                .callSign(properties.getProperty("callSign"))
-                .target(true)
-                .build();
+    protected void updateShipPanel(Ship ship) {
+        Platform.runLater(() -> {
+            targetPanel.updatePanel(ship);
+        });
     }
 
-    public void createTarget() {
+    protected void createTarget() {
+
         initRotation = new Double(properties.getProperty("initRotation"));
         ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae"));
         ownerShipView.setModelScale(new Vec4(new Double(properties.getProperty("scale"))));
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         ownerShipView.setField("Ship", ownerShip);
-        aisServices.aisCreateTargetEvent(ownerShip);
     }
 
-    public void notifyNmeaMessage(GGA data) {
+    @Override
+    protected void notifyNmeaMessage(GGA data) {
         ownerShip.setLatitude(data.getLatitude());
         ownerShip.setLongitude(data.getLongitude());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-        aisServices.aisUpdateTargetEvent(ownerShip);
     }
 
-    public void notifyNmeaMessage(VTG data) {
+    @Override
+    protected void notifyNmeaMessage(VTG data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-        aisServices.aisUpdateTargetEvent(ownerShip);
     }
 
-    public void notifyNmeaMessage(RMC data) {
+    @Override
+    protected void notifyNmeaMessage(RMC data) {
         //filtre sur les doublons
         if (!sentenceQueue.contains(data)) {
             sentenceQueue.add(data);
@@ -217,9 +152,7 @@ public class GpsPlotterController {
                 ownerShip.setLongitude(d.getLongitude());
                 ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
                 ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-                aisServices.aisUpdateTargetEvent(ownerShip);
             }
         }
     }
-
 }
