@@ -14,6 +14,16 @@ public class LightVessel extends Geo
     public LightVessel() {
     }
 
+    @Override
+    public double getLatitude() {
+        return 0.0;
+    }
+
+    @Override
+    public double getLongitude() {
+        return 0.0;
+    }
+
     private String colour;
 
     public String getColour() {

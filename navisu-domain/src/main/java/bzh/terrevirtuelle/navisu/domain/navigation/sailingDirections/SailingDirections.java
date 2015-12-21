@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -18,12 +19,13 @@ import javax.xml.bind.annotation.XmlType;
  * @author Serge Morvan
  */
 @XmlRootElement
-@XmlType(name = "sailingDirections", propOrder = {"id", "wkt", "book", "zoneName", "description"})
+@XmlType(name = "sailingDirections", propOrder = {"id", "wkt", "book", "zoneName",
+    "description", "latitude", "longitude", "geometry"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class SailingDirections
+        extends Location
         implements NavigationData {
 
-    private long id;
     private String wkt;
     private String book;
     private String zoneName;
@@ -112,24 +114,7 @@ public class SailingDirections
         this.wkt = wkt;
     }
 
-    /**
-     * Get the value of id
-     *
-     * @return the value of id
-     */
-    @Override
-    public long getId() {
-        return id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @param id new value of id
-     */
-    public void setId(long id) {
-        this.id = id;
-    }
+    
 
     @Override
     public String getGeometry() {

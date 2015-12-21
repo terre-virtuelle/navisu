@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.domain.navigation;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlTransient;
@@ -9,9 +8,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 public interface NavigationData {
 
-    default Location getLocation() {
-        return (new Location());
-    }
+    double getLatitude();
+
+    double getLongitude();
 
     String getGeometry();
 

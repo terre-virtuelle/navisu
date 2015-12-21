@@ -116,14 +116,6 @@ public class NavigationDataSet {
         navigationDataQueue.clear();
     }
 
-    public List<Location> getLocations() {
-        List<Location> tmp = new ArrayList<>();
-        navigationDataQueue.stream().forEach((nd) -> {
-            tmp.add(nd.getLocation());
-        });
-        return tmp;
-    }
-
     public <T extends NavigationData> List<T> get(Class<T> t) {
         List<T> tmp = new ArrayList<>();
         navigationDataQueue.stream().forEach((data) -> {

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author serge
  */
-public class JTS {
+public class DomJTS {
     
     public static Pair<Double, Double> getCentroid(String wkt) {
       
@@ -27,7 +27,7 @@ public class JTS {
             try {
                 geometry = wktReader.read(wkt);
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(JTS.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DomJTS.class.getName()).log(Level.SEVERE, null, ex);
             }  
             CentroidArea centroid = new CentroidArea();
             if (geometry != null) {

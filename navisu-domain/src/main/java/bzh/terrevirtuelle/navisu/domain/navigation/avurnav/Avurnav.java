@@ -7,8 +7,6 @@ package bzh.terrevirtuelle.navisu.domain.navigation.avurnav;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.util.JTS;
-import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,7 +23,7 @@ import javax.xml.bind.annotation.XmlType;
         propOrder = {"id", "globalZone", "broadcastTime",
             "expirationDate", "description",
             "restriction", "type",
-            "lat", "lon",
+            "latitude", "longitude",
             "geometry"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Avurnav

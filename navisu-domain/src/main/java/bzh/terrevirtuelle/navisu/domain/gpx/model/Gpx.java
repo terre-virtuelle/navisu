@@ -6,6 +6,7 @@
 //
 package bzh.terrevirtuelle.navisu.domain.gpx.model;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,7 @@ public class Gpx
         trk = new ArrayList<>();
         boundaries = new Boundaries();
         highway = new Highway();
+
     }
 
     public Gpx(List<Waypoint> wpt, List<Route> rte, List<Track> trk, Extensions extensions, Boundaries boundaries, Highway highway, String version, String creator) {
@@ -297,6 +299,24 @@ public class Gpx
     @Override
     public String toString() {
         return "Gpx{" + "wpt=" + wpt + ", rte=" + rte + ", trk=" + trk + ", extensions=" + extensions + ", boundaries=" + boundaries + ", highway=" + highway + ", version=" + version + ", creator=" + creator + '}';
+    }
+
+    @Override
+    public double getLatitude() {
+        if (highway != null) {
+            return highway.getLatitude();
+        } else {
+            return 0.0;
+        }
+    }
+
+    @Override
+    public double getLongitude() {
+        if (highway != null) {
+            return highway.getLongitude();
+        } else {
+            return 0.0;
+        }
     }
 
 }

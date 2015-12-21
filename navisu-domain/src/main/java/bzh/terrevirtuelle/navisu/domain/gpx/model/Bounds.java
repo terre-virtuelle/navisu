@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "bounds")
+@XmlType(name = "bounds", propOrder = {"id", "name", "lat", "lon", "geometry"})
 public class Bounds {
 
     @XmlAttribute(name = "minlat", required = true)

@@ -40,11 +40,6 @@ public class Light extends Location
     public Light() {
     }
 
-    @Override
-    public Location getLocation() {
-        return this;
-    }
-
     public String getCategoryOfLight() {
         return categoryOfLight;
     }
@@ -265,6 +260,6 @@ public class Light extends Location
 
     @Override
     public String getGeometry() {
-        return "POINT(" + Double.toString(lon) + " " + Double.toString(lat) + ")";
+        return "POINT(" + Double.toString(longitude) + " " + Double.toString(latitude) + ")";
     }
 }

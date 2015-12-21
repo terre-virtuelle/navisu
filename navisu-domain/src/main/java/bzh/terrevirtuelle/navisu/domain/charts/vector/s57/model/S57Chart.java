@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlRootElement
 @XmlType(name = "s57Chart",
-        propOrder = {"id", "number", "lat", "lon", "geometry", "description"})
+        propOrder = {"id", "number","latitude", "longitude", "geometry", "description"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class S57Chart
         extends Location

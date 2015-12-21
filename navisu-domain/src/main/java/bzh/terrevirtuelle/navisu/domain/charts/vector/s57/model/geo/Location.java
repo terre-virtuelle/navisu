@@ -30,8 +30,8 @@ public class Location
         extends Geo
         implements Serializable {
 
-    protected double lat = 0.0;
-    protected double lon = 0.0;
+    protected double latitude = 0.0;
+    protected double longitude = 0.0;
     protected String geometry = "";
 
     public Location() {
@@ -43,8 +43,8 @@ public class Location
 
     public Location(long id, double lat, double lon) {
         super(id);
-        this.lat = lat;
-        this.lon = lon;
+        this.latitude = lat;
+        this.longitude = lon;
         this.geometry = "POINT(" + lon + " " + lat + ")";
     }
 
@@ -68,27 +68,27 @@ public class Location
     }
 
     public final void setLatLon(double lat, double lon) {
-        this.lat = lat;
-        this.lon = lon;
+        this.latitude = lat;
+        this.longitude = lon;
         this.geometry = "POINT(" + lon + " " + lat + ")";
     }
 
-    public double getLat() {
-        return lat;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLat(double lat) {
-        this.lat = lat;
-        this.geometry = "POINT(" + lon + " " + lat + ")";
+    public double getLongitude() {
+        return longitude;
     }
 
-    public double getLon() {
-        return lon;
+    public void setLatitude(double lat) {
+        this.latitude = lat;
+        this.geometry = "POINT(" + longitude + " " + lat + ")";
     }
 
-    public void setLon(double lon) {
-        this.lon = lon;
-        this.geometry = "POINT(" + lon + " " + lat + ")";
+    public void setLongitude(double lon) {
+        this.longitude = lon;
+        this.geometry = "POINT(" + lon + " " + latitude + ")";
     }
 
     private void parse(String wkt) {
@@ -111,14 +111,14 @@ public class Location
         Coordinate[] coordinates = geometryJTS.getCoordinates();
         if (coordinates != null) {
             if (coordinates.length == 1) {
-                lat = coordinates[0].y;
-                lon = coordinates[0].x;//Simple Point
+                latitude = coordinates[0].y;
+                longitude = coordinates[0].x;//Simple Point
             } else {
                 CentroidPoint centroid = new CentroidPoint(); //Multi point
                 centroid.add(geometryJTS);
                 Coordinate coord = centroid.getCentroid();
-                lat = coord.y;
-                lon = coord.x;
+                latitude = coord.y;
+                longitude = coord.x;
             }
         }
     }
@@ -127,13 +127,13 @@ public class Location
         CentroidArea centroid = new CentroidArea();
         centroid.add(geometryJTS);
         Coordinate coord = centroid.getCentroid();
-        lat = coord.y;
-        lon = coord.x;
+        latitude = coord.y;
+        longitude = coord.x;
     }
 
     @Override
     public String toString() {
-        return "Location{" + super.toString() + "lat=" + lat + ", lon=" + lon + ", geometry=" + geometry + '}';
+        return "Location{" + super.toString() + "lat=" + latitude + ", lon=" + longitude + ", geometry=" + geometry + '}';
     }
 
 }

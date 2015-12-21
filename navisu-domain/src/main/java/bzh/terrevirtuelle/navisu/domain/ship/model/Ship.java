@@ -4,6 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.ship.model;
 
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -282,6 +283,7 @@ public class Ship
         this.country = country;
     }
 
+    @Override
     public double getLatitude() {
         return latitude;
     }
@@ -290,6 +292,7 @@ public class Ship
         this.latitude = latitude;
     }
 
+    @Override
     public double getLongitude() {
         return longitude;
     }

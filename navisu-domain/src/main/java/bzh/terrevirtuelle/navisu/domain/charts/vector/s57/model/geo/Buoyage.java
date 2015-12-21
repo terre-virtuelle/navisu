@@ -353,13 +353,8 @@ public class Buoyage
     }
 
     @Override
-    public Location getLocation() {
-        return this;
-    }
-
-    @Override
     public String getGeometry() {
-        return "POINT(" + Double.toString(lon) + " " + Double.toString(lat) + ")";
+        return "POINT(" + Double.toString(longitude) + " " + Double.toString(latitude) + ")";
     }
 
     @Override
