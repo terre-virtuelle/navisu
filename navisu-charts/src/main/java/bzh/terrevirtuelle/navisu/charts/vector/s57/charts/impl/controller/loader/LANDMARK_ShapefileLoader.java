@@ -76,8 +76,8 @@ public class LANDMARK_ShapefileLoader
         object = new Landmark();
         objects.add(object);
         entries = record.getAttributes().getEntries();
-        object.setLat(latDegrees);
-        object.setLon(lonDegrees);
+        object.setLatitude(latDegrees);
+        object.setLongitude(lonDegrees);
         entries.stream().forEach((e) -> {
             if (e.getKey().equals("RCID")) {
                 object.setId((Long) e.getValue());
@@ -162,8 +162,8 @@ public class LANDMARK_ShapefileLoader
             label = CATLMK.ATT.get(object.getCategoryOfLandMark())
                     + catMark + "\n"
                     + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
-                    + "Lat : " + new Float(object.getLat()).toString() + "\n "
-                    + "Lon : " + new Float(object.getLon()).toString();
+                    + "Lat : " + new Float(object.getLatitude()).toString() + "\n "
+                    + "Lon : " + new Float(object.getLongitude()).toString();
         }
         placemark.setValue(AVKey.DISPLAY_NAME, label);
 

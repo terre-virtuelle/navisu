@@ -59,7 +59,6 @@ public class S57BasicBehavior
         PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
         double range = s57Controller.getRange();
         distance *= 1000;
-        System.out.println("S57BasicBehavior " + range +" "+ distance);
         surveyZone.setHighlightAttributes(highlightAttributes);
         if (distance > range) {
             surveyZone.getAttributes().setDrawInterior(false);

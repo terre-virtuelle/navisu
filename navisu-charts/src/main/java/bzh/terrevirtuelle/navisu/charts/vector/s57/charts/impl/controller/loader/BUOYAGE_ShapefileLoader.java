@@ -101,8 +101,8 @@ public class BUOYAGE_ShapefileLoader
         }
         entries = record.getAttributes().getEntries();
 
-        object.setLat(latDegrees);
-        object.setLon(lonDegrees);
+        object.setLatitude(latDegrees);
+        object.setLongitude(lonDegrees);
         //   String mark = null;
         entries.stream().forEach((e) -> {
             if (e.getKey().equals("RCID")) {
@@ -212,8 +212,8 @@ public class BUOYAGE_ShapefileLoader
             label = claz.getSimpleName() + " "
                     + ((catMark != null && !catMark.equals("0")) ? catMark : "") + "\n"
                     + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
-                    + "Lat : " + new Float(object.getLat()).toString() + "\n"
-                    + "Lon : " + new Float(object.getLon()).toString();
+                    + "Lat : " + new Float(object.getLatitude()).toString() + "\n"
+                    + "Lon : " + new Float(object.getLongitude()).toString();
             object.setLabel(label);
         }
         placemark.setValue(AVKey.DISPLAY_NAME, label);

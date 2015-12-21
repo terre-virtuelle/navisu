@@ -47,8 +47,8 @@ public class SOUNDG_ShapefileLoader
         this.record = record;
         entries = record.getAttributes().getEntries();
         sounding = new Sounding();
-        sounding.setLat(latDegrees);
-        sounding.setLon(lonDegrees);
+        sounding.setLatitude(latDegrees);
+        sounding.setLongitude(lonDegrees);
         entries.stream().forEach((e) -> {
             if (e.getValue() != null) {
                 if (e.getKey().equals("DEPTH")) {
@@ -75,8 +75,8 @@ public class SOUNDG_ShapefileLoader
                     + "%-29s"
                     + "%-29s",
                     "SOUNDING",
-                    "Lat : " + sounding.getLat() + "\n",
-                    "Lon : " + sounding.getLon() + "\n",
+                    "Lat : " + sounding.getLatitude() + "\n",
+                    "Lon : " + sounding.getLongitude() + "\n",
                     "Depth : " + sounding.getDepth() +"\n",
                     "EXPSOU : " + EXPSOU.ATT.get(sounding.getExpositionOfSounding()) + "\n",
                     "QUASOU : " + QUASOU.ATT.get(sounding.getQualityOfSoundingMeasurement()) + "\n"

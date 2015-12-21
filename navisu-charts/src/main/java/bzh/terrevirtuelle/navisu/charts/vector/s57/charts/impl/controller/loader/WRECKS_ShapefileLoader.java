@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wreck;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfaceText;
@@ -48,8 +47,8 @@ public class WRECKS_ShapefileLoader
         this.record = record;
         entries = record.getAttributes().getEntries();
         wreck = new Wreck();
-        wreck.setLat(latDegrees);
-        wreck.setLon(lonDegrees);
+        wreck.setLatitude(latDegrees);
+        wreck.setLongitude(lonDegrees);
         entries.stream().forEach((e) -> {
             if (e.getValue() != null) {
                 if (e.getKey().equals("CATWRK")) {
@@ -119,8 +118,8 @@ public class WRECKS_ShapefileLoader
                     + "%-29s"
                     + "%-29s",
                     "WRECK",
-                    "Lat : " + wreck.getLat() + "\n",
-                    "Lon : " + wreck.getLon() + "\n",
+                    "Lat : " + wreck.getLatitude() + "\n",
+                    "Lon : " + wreck.getLongitude() + "\n",
                     "CATWRK : " + CATWRK.ATT.get(wreck.getCategoryOfWreck()) + "\n",
                     "EXPSOU : " + EXPSOU.ATT.get(wreck.getExpositionOfSounding()) + "\n",
                     "QUASOU : " + QUASOU.ATT.get(wreck.getQualityOfSoundingMeasurement()) + "\n",

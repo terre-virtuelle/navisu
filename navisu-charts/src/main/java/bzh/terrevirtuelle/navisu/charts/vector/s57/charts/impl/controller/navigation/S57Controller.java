@@ -39,7 +39,6 @@ public abstract class S57Controller
     protected ShapeAttributes surveyZoneNormalAttributes = null;
     protected PointPlacemark pointPlacemark;
     protected double range; // distance of perception
-
     protected long id;
     protected double lat;
     protected double lon;
@@ -58,8 +57,8 @@ public abstract class S57Controller
         s57Behavior.setS57Controller(this);
         this.navigationData = navigationData;
         this.id = navigationData.getId();
-        this.lat = navigationData.getLocation().getLat();
-        this.lon = navigationData.getLocation().getLon();
+        this.lat = navigationData.getLatitude();
+        this.lon = navigationData.getLongitude();
         this.range = range;
         wwd = GeoWorldWindViewImpl.getWW();
 
@@ -202,8 +201,8 @@ public abstract class S57Controller
     public void setNavigationData(NavigationData navigationData) {
         this.navigationData = navigationData;
         this.id = navigationData.getId();
-        this.lat = navigationData.getLocation().getLat();
-        this.lon = navigationData.getLocation().getLon();
+        this.lat = navigationData.getLatitude();
+        this.lon = navigationData.getLongitude();
     }
 
     public double getRange() {

@@ -18,8 +18,6 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Globe;
-import gov.nasa.worldwind.layers.AirspaceLayer;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -74,8 +72,8 @@ public class LIGHTS_ShapefileLoader
         data = new Light();
         //System.out.println("entries " + entries);
         dataList.add(data);
-        data.setLat(latDegrees);
-        data.setLon(lonDegrees);
+        data.setLatitude(latDegrees);
+        data.setLongitude(lonDegrees);
         entries.stream().forEach((e) -> {
             if (e.getKey().equals("RCID")) {
                 data.setId((Long) e.getValue());

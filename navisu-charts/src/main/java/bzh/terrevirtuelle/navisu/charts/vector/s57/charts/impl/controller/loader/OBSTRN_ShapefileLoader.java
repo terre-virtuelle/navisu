@@ -10,7 +10,6 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wreck;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -49,8 +48,8 @@ public class OBSTRN_ShapefileLoader
         this.record = record;
         entries = record.getAttributes().getEntries();
         obstruction = new Obstruction();
-        obstruction.setLat(latDegrees);
-        obstruction.setLon(lonDegrees);
+        obstruction.setLatitude(latDegrees);
+        obstruction.setLongitude(lonDegrees);
         entries.stream().forEach((e) -> {
             if (e.getValue() != null) {
                 if (e.getKey().equals("CATOBS")) {
@@ -88,8 +87,8 @@ public class OBSTRN_ShapefileLoader
 
         if (tecsou == null) {
             label = "Obstruction \n"
-                    + "Lat : " + new Float(obstruction.getLat()).toString() + "\n "
-                    + "Lon : " + new Float(obstruction.getLon()).toString() + "\n"
+                    + "Lat : " + new Float(obstruction.getLatitude()).toString() + "\n "
+                    + "Lon : " + new Float(obstruction.getLongitude()).toString() + "\n"
                     + "CATWRK : " + obstruction.getQualityOfSoundingMeasurement() + "\n"
                     + "EXPSOU : " + obstruction.getExpositionOfSounding() + "\n"
                     + "QUASOU : " + obstruction.getQualityOfSoundingMeasurement() + "\n"
@@ -97,8 +96,8 @@ public class OBSTRN_ShapefileLoader
                     + "WATLEV : " + obstruction.getWaterLevelEffect() + "\n";
         } else {
             label = "Obstruction \n"
-                    + "Lat : " + new Float(obstruction.getLat()).toString() + "\n "
-                    + "Lon : " + new Float(obstruction.getLon()).toString() + "\n"
+                    + "Lat : " + new Float(obstruction.getLatitude()).toString() + "\n "
+                    + "Lon : " + new Float(obstruction.getLongitude()).toString() + "\n"
                     + "CATWRK : " + obstruction.getQualityOfSoundingMeasurement() + "\n"
                     + "EXPSOU : " + obstruction.getExpositionOfSounding() + "\n"
                     + "QUASOU : " + obstruction.getQualityOfSoundingMeasurement() + "\n"

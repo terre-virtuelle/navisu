@@ -379,8 +379,8 @@ public class S57ChartComponentController {
                                     && data.getValueOfNominalRange() != null) {
                                 lightView = new S57LightView();
                                 lightView.setTmp(true);
-                                double lat = data.getLat();
-                                double lon = data.getLon();
+                                double lat = data.getLatitude();
+                                double lon = data.getLongitude();
                                 double elevation = globe.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
                                 lightView.setCenter(new LatLon(Angle.fromDegrees(lat),
                                         Angle.fromDegrees(lon)));
@@ -476,7 +476,7 @@ public class S57ChartComponentController {
                     dataAccessServices.test();
                     Image image = dataAccessServices.queryImage("Phare du Petit Minou");
                     PointPlacemarkAttributes attrs = new PointPlacemarkAttributes();
-                    PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(landmark.getLat(), landmark.getLon(), 0));
+                    PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(landmark.getLatitude(), landmark.getLongitude(), 0));
                     placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
                     try {
                         ImageIO.write((BufferedImage) image, "bmp", new File("data/images/minou.jpg"));
