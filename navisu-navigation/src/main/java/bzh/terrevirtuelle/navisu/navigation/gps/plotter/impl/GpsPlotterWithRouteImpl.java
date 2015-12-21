@@ -13,16 +13,12 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
-import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
 import bzh.terrevirtuelle.navisu.instruments.gpstrack.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
 import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.GpsPlotterWithRoute;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.GpsPlotterWithRouteServices;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.controller.GpsPlotterWithRouteController;
-import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.controller.GpsPlotterWithRouteGpsEventsController;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.List;
 import org.capcaval.c3.component.ComponentState;
@@ -56,25 +52,14 @@ public class GpsPlotterWithRouteImpl
     @UsedService
     GpsTrackServices gpsTrackServices;
     @UsedService
-    AisServices aisServices;
-    @UsedService
     TransponderServices transponderServices;
-
+    
     @ProducedEvent
     protected TransponderActivateEvent transponderActivateEvent;
 
     protected boolean on = false;
-    private final String NAME0 = "GpsPlotter";
-    private final String NAME1 = "GpsPlotterWithRoute";
-    private final String NAME2 = "Nautical documents";
-    private final String NAME3 = "S57 Buoyage behavior";
-    private final String NAME4 = "Nautical documents icons";
-    protected final String GROUP = "Navigation";
-    private GpsPlotterWithRouteController gpsPlotterController;
-    private GpsEventsController gpsEventsController;
-    private boolean withTarget = true;
-    protected List<String> s57Controllers;
-    protected NavigationDataSet navigationDataSet = null;
+    private final String NAME0 = "GpsPlotterWithRoute";
+    private final String NAME1 = "GpsPlotter";
 
     @Override
     public void componentInitiated() {
@@ -86,37 +71,22 @@ public class GpsPlotterWithRouteImpl
     }
 
     @Override
-    public void on(NavigationDataSet navigationDataSet, boolean withTarget) {
-        this.navigationDataSet = navigationDataSet;
-        this.withTarget = withTarget;
-
-    }
-
-    @Override
     public void on(String... files) {
-        if (gpsPlotterController == null) {
-            gpsPlotterController = GpsPlotterWithRouteController.getInstance(this,
+        if (on == false) {
+            on = true;
+            new GpsPlotterWithRouteController(this,
                     layersManagerServices,
-                    guiAgentServices, kmlObjectServices, 
-                    s57ChartComponentServices, s57GlobalCatalogServices,
-                    aisServices,
-                    withTarget,
-                    navigationDataSet,
-                    NAME0, NAME2, NAME3, NAME4, GROUP);
-            if (withTarget) {
-                gpsPlotterController.createTarget();
-            }
-            transponderServices.on();
-            gpsEventsController = new GpsPlotterWithRouteGpsEventsController(gpsPlotterController);
-            gpsEventsController.subscribe();
+                    guiAgentServices, kmlObjectServices,
+                    s57ChartComponentServices, s57GlobalCatalogServices, 
+                    transponderServices,
+                    NAME1).init();
             gpsTrackServices.on(files);
-        } else {
-            gpsPlotterController.activateControllers();
         }
     }
 
     @Override
     public void off() {
+        on = false;
     }
 
     @Override
@@ -135,7 +105,7 @@ public class GpsPlotterWithRouteImpl
 
     @Override
     public boolean canOpen(String category) {
-        return category.equals(NAME1);
+        return category.equals(NAME0);
     }
 
     @Override
@@ -144,6 +114,6 @@ public class GpsPlotterWithRouteImpl
     }
 
     public void notifyTransponderActivateEvent(RenderableLayer layer, List<NavigationData> targets) {
-        transponderActivateEvent.notifyAisActivateMessageChanged(layer, targets);
+        transponderActivateEvent.notifyActivateMessageChanged(layer, targets);
     }
 }

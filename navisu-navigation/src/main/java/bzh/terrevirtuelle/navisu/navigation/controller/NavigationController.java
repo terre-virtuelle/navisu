@@ -64,13 +64,14 @@ public abstract class NavigationController
         navClassNameT = navigationData.getClass().getName().split("\\.");
         navClassName = navClassNameT[navClassNameT.length - 1];
         createAttributes();
+       // createPointPlacemark(navigationData.getLocation().getLat(), navigationData.getLocation().getLon());
+
         wkt = navigationData.getGeometry();
         wktReader = new WKTReader();
         try {
             geometry = wktReader.read(wkt);
             coordinates = geometry.getCoordinates();
         } catch (ParseException ex) {
-            System.out.println("ex "+ex);
             Logger.getLogger(NavigationController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (wkt.contains("POINT") || wkt.contains("Point")) {

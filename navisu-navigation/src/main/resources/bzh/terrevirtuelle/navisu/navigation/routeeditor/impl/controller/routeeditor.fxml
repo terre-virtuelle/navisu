@@ -75,9 +75,9 @@
                                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <TextField fx:id="descText" alignment="CENTER" prefHeight="26.0" prefWidth="121.0" text="Waypoint" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <TextField fx:id="wpDescText" alignment="CENTER" prefHeight="26.0" prefWidth="121.0" text="Waypoint" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label text="Desc" GridPane.rowIndex="1" />
-                                <TextField fx:id="nameText" alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="Waypoint" GridPane.columnIndex="1" />
+                                <TextField fx:id="wpNameText" alignment="CENTER" prefHeight="26.0" prefWidth="91.0" text="Waypoint" GridPane.columnIndex="1" />
                                 <Label text="Name" />
                             </children>
                         </GridPane>

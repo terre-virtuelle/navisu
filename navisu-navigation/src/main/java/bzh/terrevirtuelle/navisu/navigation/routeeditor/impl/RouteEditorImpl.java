@@ -47,7 +47,9 @@ public class RouteEditorImpl
 
     @Override
     public void on(String... files) {
-        routeEditorController = new RouteEditorController(this, KeyCode.M, KeyCombination.CONTROL_DOWN);
+        routeEditorController = new RouteEditorController(this,
+                layersManagerServices ,
+                KeyCode.M, KeyCombination.CONTROL_DOWN);
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, routeEditorController);
         guiAgentServices.getRoot().getChildren().add(routeEditorController);
         routeEditorController.setVisible(true);

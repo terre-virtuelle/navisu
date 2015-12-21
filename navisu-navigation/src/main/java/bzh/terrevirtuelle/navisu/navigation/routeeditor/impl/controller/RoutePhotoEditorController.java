@@ -57,6 +57,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.navigation.util.NavJTS;
 
 /**
  * NaVisu
@@ -271,7 +272,7 @@ public class RoutePhotoEditorController
             viewWW.setHeading(Angle.fromDegrees(heading));
             viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
             viewWW.setPitch(Angle.fromDegrees(90.0));
-            System.out.println("viewWW.getPitch() "+viewWW.getPitch());
+            System.out.println("viewWW.getPitch() " + viewWW.getPitch());
             viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
             updatePanel();
         });
@@ -319,7 +320,7 @@ public class RoutePhotoEditorController
     }
 
     private void fillHighway() {
-        File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(), "privateData/nds", "Route files (*.nds)", "*.xml", "*.XML");
+        File file = IO.fileChooser(instrument.getGuiAgentServices().getStage(), "privateData/nds", "Route files (*.nds)", "*.nds", "*.NDS");
         navigationDataSet = new NavigationDataSet();
         try {
             navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
@@ -333,14 +334,7 @@ public class RoutePhotoEditorController
         tmp.stream().forEach((g) -> {
             highways.add(g.getHighway());
         });
-        highways.stream().map((h) -> h.getBounds()).forEach((pts) -> {
-            pts.stream().forEach((p) -> {
-                highwayPathPositions.add(Position.fromDegrees(p.getLatitude(), p.getLongitude(), 5));
-            });
-        });
-        if (!highwayPathPositions.isEmpty()) {
-            highway = new Polygon(highwayPathPositions);
-        }
+        highway = NavJTS.wktPolygonToPolygon(highways.get(0).getGeometry());
         if (highway != null) {
             ShapeAttributes offsetNormalAttributes = new BasicShapeAttributes();
             offsetNormalAttributes.setOutlineMaterial(Material.RED);
@@ -360,6 +354,6 @@ public class RoutePhotoEditorController
             str = file.getName().split("\\.");
         }
         highway.setValue(AVKey.DISPLAY_NAME, str[0]);
-        gpsPlotterServices.on(navigationDataSet, false);
+//        gpsPlotterServices.on(navigationDataSet, false);
     }
 }

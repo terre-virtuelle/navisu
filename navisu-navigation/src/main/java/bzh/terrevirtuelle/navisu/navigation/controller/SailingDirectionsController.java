@@ -39,6 +39,7 @@ public class SailingDirectionsController
 
     @Override
     public void updateTarget(Ship ship) {
+
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
         surveyZone.setValue(AVKey.DISPLAY_NAME, ((SailingDirections) navigationData).getDescription() + "\n distance :  "

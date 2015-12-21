@@ -6,10 +6,9 @@
 package bzh.terrevirtuelle.navisu.navigation.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -20,18 +19,17 @@ import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import java.awt.Color;
 
 /**
- * NaVisu
  *
- * @date 12 sept. 2015
- * @author Serge Morvan
+ * @author serge
  */
-public class AvurnavController
+public class HighwayController
         extends NavigationController {
 
-    public AvurnavController(S57Behavior s57Behavior, GuiAgentServices guiAgentServices,
-            NavigationData avurnav, double range,
+    public HighwayController(S57Behavior s57Behavior,
+            GuiAgentServices guiAgentServices,
+            NavigationData navigationData, double range,
             String displayName, String description) {
-        super(s57Behavior, guiAgentServices, avurnav, range, displayName, description);
+        super(s57Behavior, guiAgentServices, navigationData, range, displayName, description);
     }
 
     @Override
@@ -39,10 +37,10 @@ public class AvurnavController
 
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
-        s57Behavior.doIt(distance, azimuth);
-        surveyZone.setValue(AVKey.DISPLAY_NAME, ((Avurnav) navigationData).getDescription() + "\n distance :  "
+        surveyZone.setValue(AVKey.DISPLAY_NAME, ((S57Chart) navigationData).getDescription() + "\n distance :  "
                 + String.format("%.2f", distance) + " Nm"
                 + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
+        s57Behavior.doIt(distance, azimuth);
     }
 
     @Override
@@ -54,26 +52,18 @@ public class AvurnavController
         placemarkNormalAttributes.setScale(0.3);
 
         polygonNormalAttributes = new BasicShapeAttributes();
-        polygonNormalAttributes.setInteriorMaterial(new Material(Color.GRAY));
-        polygonNormalAttributes.setDrawInterior(true);
+        polygonNormalAttributes.setInteriorMaterial(new Material(Color.YELLOW));
+        polygonNormalAttributes.setDrawInterior(false);
         polygonNormalAttributes.setInteriorOpacity(0.02);
-        polygonNormalAttributes.setOutlineMaterial(new Material(Color.GRAY));
-        polygonNormalAttributes.setOutlineOpacity(0.2);
+        polygonNormalAttributes.setOutlineMaterial(new Material(Color.YELLOW));
+        polygonNormalAttributes.setOutlineOpacity(1.0);
         polygonNormalAttributes.setEnableLighting(true);
 
         polygonHighlightAttributes = new BasicShapeAttributes(polygonNormalAttributes);
-        polygonHighlightAttributes.setOutlineOpacity(0.2);
+        polygonHighlightAttributes.setOutlineOpacity(1.0);
         polygonHighlightAttributes.setDrawInterior(true);
-        polygonHighlightAttributes.setInteriorMaterial(new Material(Color.GRAY));
-        polygonHighlightAttributes.setInteriorOpacity(0.2);
+        polygonHighlightAttributes.setInteriorMaterial(new Material(Color.YELLOW));
+        polygonHighlightAttributes.setInteriorOpacity(1.0);
     }
 
-    private String createText(Avurnav a) {
-        String tmp = Translator.tr("navigation.avurnav.globalZone") + " : " + a.getGlobalZone() + "\n"
-                + Translator.tr("navigation.avurnav.broadcastTime") + " : " + a.getBroadcastTime() + "\n"
-                + Translator.tr("navigation.avurnav.expirationDate") + " : " + a.getExpirationDate() + "\n"
-                + Translator.tr("navigation.avurnav.description") + " : " + a.getDescription() + "\n\n";
-        tmp = tmp.replace("\t", "");
-        return tmp;
-    }
 }

@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
@@ -81,8 +82,11 @@ import org.gavaghan.geodesy.GeodeticCalculator;
 import org.gavaghan.geodesy.GeodeticCurve;
 import org.gavaghan.geodesy.GlobalCoordinates;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
+import bzh.terrevirtuelle.navisu.navigation.util.NavJTS;
+import gov.nasa.worldwind.layers.RenderableLayer;
 
 /**
  * NaVisu
@@ -96,22 +100,20 @@ public class RouteEditorController
     private final RouteEditorImpl instrument;
     private final String FXML = "routeeditor.fxml";
     private MeasureTool measureTool;
-    
+
     private List<Avurnav> avurnavList;
     private List<SailingDirections> sailingDirectionsList;
     private List<Gpx> gpxList;
     private File file;
-    
-    
-    
-    private TerrainProfileLayer profile = new TerrainProfileLayer();
+
+    private TerrainProfileLayer profile;
     private Gpx gpx;
     private List<Track> tracks;// 1 seul Track par Gpx/Route
     private Track track;
     private List<List<Waypoint>> waypoints;// 1 Liste de WP par TS
     private List<TrackSegment> trackSegments;
     private List<Point> boundaries;
-    private List<Point> highways;
+   // private List<Point> highways;
     private List<Position> positions;
     private List<Position> offsetPathPositions;
     private List<Position> highwayPathPositions;
@@ -130,7 +132,8 @@ public class RouteEditorController
     private Geometry offsetBuffer;
     private Geometry highwayBuffer;
     private Polygon offset;
-    private Polygon highway;
+    private Polygon highwayPoly;
+    private Highway highway;
     private final GeodeticCalculator geoCalc;
     private final Ellipsoid reference = Ellipsoid.WGS84;//default
     private final double KM_TO_NAUTICAL = 0.53879310;
@@ -145,6 +148,8 @@ public class RouteEditorController
     private RouteDataEditorController routeDataEditorController;
     private final S57ChartComponentServices s57ChartComponentServices;
     private final GuiAgentServices guiAgentServices;
+    private final LayersManagerServices layersManagerServices;
+    private RenderableLayer profileLayer;
     @FXML
     public Pane view;
     @FXML
@@ -178,42 +183,51 @@ public class RouteEditorController
     @FXML
     public TextField headingText;
     @FXML
-    TextField namesText;
+    public TextField namesText;
     @FXML
-    TextField nameText;
+    public TextField wpNameText;
     @FXML
-    TextField descText;
+    public TextField wpDescText;
     @FXML
-    TextField routeNameText;
+    public TextField routeNameText;
     @FXML
-    TextField versionText;
+    public TextField versionText;
     @FXML
-    TextField authorText;
+    public TextField authorText;
     @FXML
-    TextField speedText;
+    public TextField speedText;
     @FXML
-    TextField distPoText;
+    public TextField distPoText;
     @FXML
-    TextField distOffsetText;
+    public TextField distOffsetText;
 
     public RouteEditorController(RouteEditorImpl instrument,
+            LayersManagerServices layersManagerServices,
             KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
         super(keyCode, keyCombination);
+        this.layersManagerServices = layersManagerServices;
         this.instrument = instrument;
         this.s57ChartComponentServices = instrument.getS57ChartServices();
         this.guiAgentServices = instrument.getGuiAgentServices();
         wwd = GeoWorldWindViewImpl.getWW();
+        profile = new TerrainProfileLayer();
         geoCalc = new GeodeticCalculator();
         bufferDistance = OFFSET_BUFFER_DISTANCE;
         highwayDistance = HIGHWAY_BUFFER_DISTANCE;
-
         /*
-         // Add terrain profile layer
-         profile.setEventSource(GeoWorldWindViewImpl.getWW());
-         profile.setFollow(TerrainProfileLayer.FOLLOW_PATH);
-         profile.setShowProfileLine(false);
-         */
+        // OK pour toutes les layers
+        List<Layer> layers = wwd.getModel().getLayers();
+        for(Layer l : layers){
+            System.out.println(l.getName());
+        }
+        */
+        /*
+        // Add terrain profile layer
+        profile.setEventSource(GeoWorldWindViewImpl.getWW());
+        profile.setFollow(TerrainProfileLayer.FOLLOW_PATH);
+        profile.setShowProfileLine(false);
+*/
         load(FXML);
         initPanel();
         setTranslateX(280.0);
@@ -287,7 +301,7 @@ public class RouteEditorController
             showBuffer();
             fillGpx();
             fillGpxBoundaries();
-            fillGpxHighway();
+            //  fillGpxHighway();
             exportGpx();
             exportKML();
             exportNmea();
@@ -320,12 +334,12 @@ public class RouteEditorController
                 author = authorText.getText();
             }
         });
-        nameText.textProperty().addListener((ov, oldvalue, newvalue) -> {
+        wpNameText.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
                 //  track.getTrkseg().get(track.getTrkseg().size() - 1).getTrkpt().get(i)
             }
         });
-        descText.textProperty().addListener((ov, oldvalue, newvalue) -> {
+        wpDescText.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
                 //  route.getRtept().get(route.getRtept().size() - 1).setDesc(newvalue);
             }
@@ -344,26 +358,16 @@ public class RouteEditorController
             String item = (String) unitsCombo.getSelectionModel().getSelectedItem();
             if (item.trim().equals("M")) {
                 measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.METERS);
-            } else {
-                if (item.trim().equals("Km")) {
-                    measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.KILOMETERS);
-                } else {
-                    if (item.trim().equals("Feet")) {
-                        measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.FEET);
-                    } else {
-                        if (item.trim().equals("Miles")) {
-                            measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.MILES);
-                        } else {
-                            if (item.trim().equals("Nm")) {
-                                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.NAUTICAL_MILES);
-                            } else {
-                                if (item.trim().equals("Yards")) {
-                                    measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.YARDS);
-                                }
-                            }
-                        }
-                    }
-                }
+            } else if (item.trim().equals("Km")) {
+                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.KILOMETERS);
+            } else if (item.trim().equals("Feet")) {
+                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.FEET);
+            } else if (item.trim().equals("Miles")) {
+                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.MILES);
+            } else if (item.trim().equals("Nm")) {
+                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.NAUTICAL_MILES);
+            } else if (item.trim().equals("Yards")) {
+                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.YARDS);
             }
         });
     }
@@ -384,8 +388,8 @@ public class RouteEditorController
                 case MeasureTool.EVENT_POSITION_ADD:
                 case MeasureTool.EVENT_POSITION_REPLACE:
                     Platform.runLater(() -> {
-                        nameText.clear();
-                        descText.clear();
+                        wpNameText.clear();
+                        wpDescText.clear();
                     });
                     fillPointsPanel();    // Update position list when changed
                     break;
@@ -420,11 +424,14 @@ public class RouteEditorController
         author = authorText.getText();
         positions = new CopyOnWriteArrayList();
         waypoints = new ArrayList();
-        track = TrackBuilder.create().name(routeName).build();
+        track = TrackBuilder.create()
+                .name(routeName)
+                .build();
         tracks = new ArrayList<>();
         tracks.add(track);
-        // boundaries = new ArrayList();
-        gpx = GpxBuilder.create().creator(author).version(version)
+        gpx = GpxBuilder.create()
+                .creator(author)
+                .version(version)
                 .trk(tracks)
                 .build();
         trackSegments = new ArrayList<>();
@@ -506,15 +513,6 @@ public class RouteEditorController
         }
     }
 
-    private void fillGpxHighway() {
-        highways = gpx.getHighway().getBounds();
-        if (highways != null && highwayPathPositions != null) {
-            highwayPathPositions.stream().forEach((p) -> {
-                highways.add(new Point(p.getLatitude().getDegrees(), p.getLongitude().getDegrees()));
-            });
-        }
-    }
-
     private void bufferFromJTS() {
 
         if (measureTool.isArmed() == false) {
@@ -543,16 +541,21 @@ public class RouteEditorController
             highwayBuffer = bufferOp.getResultGeometry(highwayDistance);
             highwayPathPositions = new ArrayList<>();
             for (Coordinate c : highwayBuffer.getCoordinates()) {
-                highwayPathPositions.add(Position.fromDegrees(c.y, c.x, 5));
+                highwayPathPositions.add(Position.fromDegrees(c.y, c.x, 1));
             }
             if (!highwayPathPositions.isEmpty()) {
-                highway = new Polygon(highwayPathPositions);
+                highwayPoly = new Polygon(highwayPathPositions);
+                highway = new Highway(1);
+                highway.setName(routeName);
+                highway.setGeometry(NavJTS.positionsToWkt(highwayPathPositions));
+                highway.setDescription("Range : " + Integer.toString((int)(highwayDistance*3600))+" sec");
+                gpx.setHighway(highway);
             }
-            highway.setValue(AVKey.DISPLAY_NAME, routeName);
+            highwayPoly.setValue(AVKey.DISPLAY_NAME, routeName);
         }
     }
 
-    public  void showBuffer() {
+    public void showBuffer() {
         if (offset != null) {
             ShapeAttributes offsetNormalAttributes = new BasicShapeAttributes();
             offsetNormalAttributes.setInteriorMaterial(Material.WHITE);
@@ -571,20 +574,20 @@ public class RouteEditorController
             offset.setHighlightAttributes(offsetHighlightAttributes);
             measureTool.getLayer().addRenderable(offset);
         }
-        if (highway != null) {
+        if (highwayPoly != null) {
             ShapeAttributes offsetNormalAttributes = new BasicShapeAttributes();
             offsetNormalAttributes.setOutlineMaterial(Material.RED);
             offsetNormalAttributes.setOutlineWidth(2);
             offsetNormalAttributes.setDrawOutline(true);
             offsetNormalAttributes.setDrawInterior(false);
             offsetNormalAttributes.setEnableLighting(true);
-            highway.setAttributes(offsetNormalAttributes);
+            highwayPoly.setAttributes(offsetNormalAttributes);
 
             ShapeAttributes offsetHighlightAttributes = new BasicShapeAttributes(offsetNormalAttributes);
             offsetHighlightAttributes.setOutlineMaterial(Material.GREEN);
             offsetHighlightAttributes.setOutlineOpacity(1);
-            highway.setHighlightAttributes(offsetHighlightAttributes);
-            measureTool.getLayer().addRenderable(highway);
+            highwayPoly.setHighlightAttributes(offsetHighlightAttributes);
+            measureTool.getLayer().addRenderable(highwayPoly);
         }
     }
 
@@ -747,6 +750,7 @@ public class RouteEditorController
                         + "<br>Lon : " + String.format("%.4f", positions.get(i).getLongitude().degrees)
                         + "<br>Time : " + LocalTime.now(Clock.systemUTC()).format(kmlTimeFormatter)
                         + "<br>Day : " + LocalDate.now(Clock.systemUTC()).format(kmlDateFormatter)
+                        + "<br>Speed : " + speed + " Kts"
                         + "]]>"
                         + "</description>"
                         + "<Point>"
@@ -779,6 +783,7 @@ public class RouteEditorController
                     + "<br>Lon : " + String.format("%.4f", positions.get(i).getLongitude().degrees)
                     + "<br>Time : " + LocalTime.now(Clock.systemUTC()).format(kmlTimeFormatter)
                     + "<br>Day : " + LocalDate.now(Clock.systemUTC()).format(kmlDateFormatter)
+                    + "<br>Speed : " + speed + " Kts"
                     + "]]>"
                     + "</description>"
                     + "<Point>"
@@ -810,7 +815,7 @@ public class RouteEditorController
             navigationDataSet.addAll(s57ChartComponentServices.getS57Charts());
             Coordinate buoyagePosition;
             for (S57Controller sc : s57Controllers) {
-                buoyagePosition = new Coordinate(sc.getNavigationData().getLocation().getLon(), sc.getNavigationData().getLocation().getLat());
+                buoyagePosition = new Coordinate(sc.getNavigationData().getLongitude(), sc.getNavigationData().getLatitude());
                 if (offsetBuffer.contains(new GeometryFactory().createPoint(buoyagePosition))) {
                     navigationDataSet.add(sc.getNavigationData());
                 }
@@ -818,7 +823,7 @@ public class RouteEditorController
             try {
                 ImportExportXML.exports(navigationDataSet, "privateData/nds/" + routeName + ".nds");
             } catch (JAXBException | FileNotFoundException ex) {
-                System.out.println("ex "+ex);
+                System.out.println("ex " + ex);
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         } else {
