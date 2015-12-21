@@ -53,6 +53,7 @@ public class LayersManagerImpl
         boolean layerExist = false;
         RenderableLayer layer = null;
         List<GeoLayer<Layer>> layers = geoViewServices.getLayerManager().getGroup(groupName);
+        
         for (GeoLayer<Layer> g : layers) {
             if (g.getName().contains(layerName)) {
                 layer = (RenderableLayer) g.getDisplayLayer();
