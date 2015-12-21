@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.gpx.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -34,6 +35,8 @@ public class GpxObjectImpl
     GeoViewServices geoViewServices;
     @UsedService
     LayerTreeServices layerTreeServices;
+    @UsedService
+    GuiAgentServices guiAgentServices;
 
     private static final String NAME = "GPX";
     private static final String EXTENSION_0 = ".gpx";
@@ -81,7 +84,7 @@ public class GpxObjectImpl
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
 
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
-        GpxController controller = GpxController.getInstance();
+        GpxController controller = GpxController.getInstance(guiAgentServices);
         layers = controller.init(fileName);
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));

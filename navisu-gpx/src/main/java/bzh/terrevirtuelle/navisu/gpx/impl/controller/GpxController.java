@@ -5,9 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.gpx.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.formats.gpx.GpxReader;
 import gov.nasa.worldwind.geom.Position;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javafx.application.Platform;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
@@ -34,29 +36,57 @@ import org.xml.sax.SAXException;
  */
 public class GpxController {
 
-    private static final GpxController INSTANCE;
+    private static GpxController INSTANCE;
     protected String path;
     protected WorldWindow wwd;
     private final List<Layer> layers;
+    private TextAreaController textAreaController;
 
-    static {
-        INSTANCE = new GpxController();
-    }
-
-    private GpxController() {
+    private GpxController(GuiAgentServices guiAgentServices) {
         layers = new ArrayList<>();
         wwd = GeoWorldWindViewImpl.getWW();
+        Platform.runLater(() -> {
+            textAreaController = new TextAreaController();
+            textAreaController.getDataTextArea().setWrapText(true);
+            textAreaController.getTitleText().setText("Track positions \n");
+            textAreaController.setVisible(false);
+            guiAgentServices.getRoot().getChildren().add(textAreaController);
+        });
+        addListeners();
+    }
+
+    private void addListeners() {
         wwd.addSelectListener((SelectEvent event) -> {
-            if (event.getTopObject() != null) {
-                if (event.getTopPickedObject().getParentLayer() instanceof MarkerLayer) {
-                    PickedObject po = event.getTopPickedObject();
-                    System.out.printf("Track position %s\n", po.getPosition());
+            PickedObject po = event.getTopPickedObject();
+            if (po != null && po.getObject() instanceof BasicMarker) {
+                if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
+                    Platform.runLater(() -> {
+                        Position position = po.getPosition();
+                        double lat = position.getLatitude().getDegrees();
+                        double lon = position.getLongitude().getDegrees();
+                        String ns = "N";
+                        if (lat < 0) {
+                            ns = "S";
+                        }
+                        String ew = "E";
+                        if (lon < 0) {
+                            ew = "W";
+                        }
+                        textAreaController.getDataTextArea()
+                                .appendText("Latitude : " + String.format("%.4f", Math.abs(lat)) + "° " + ns
+                                        + "     Longitude : " + String.format("%.4f", Math.abs(lon)) + "° " + ew + "\n");
+                        textAreaController.setVisible(true);
+                    });
+                    event.consume();
                 }
             }
         });
     }
 
-    public static GpxController getInstance() {
+    public static GpxController getInstance(GuiAgentServices guiAgentServices) {
+        if (INSTANCE == null) {
+            INSTANCE = new GpxController(guiAgentServices);
+        }
         return INSTANCE;
     }
 
@@ -66,6 +96,7 @@ public class GpxController {
             GpxReader reader = new GpxReader();
             reader.readStream(WWIO.openFileOrResourceStream(path, this.getClass()));
             Iterator<Position> positions = reader.getTrackPositionIterator();
+            //  List<Track> tracks = reader.getTracks();//TODO
 
             BasicMarkerAttributes attrs
                     = new BasicMarkerAttributes(Material.RED, BasicMarkerShape.SPHERE, 1.d);
