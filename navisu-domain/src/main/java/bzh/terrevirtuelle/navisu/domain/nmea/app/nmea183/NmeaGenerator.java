@@ -54,7 +54,7 @@ public class NmeaGenerator {
         new NmeaGenerator();
     }
 
-    private static String getSum(String in) {
+    private  String getSum(String in) {
         int checksum = 0;
         if (in.startsWith("$")) {
             in = in.substring(1, in.length());
