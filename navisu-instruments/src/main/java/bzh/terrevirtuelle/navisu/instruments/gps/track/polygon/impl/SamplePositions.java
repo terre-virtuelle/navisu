@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
+package bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.impl;
 
 import gov.nasa.worldwind.geom.Position;
 

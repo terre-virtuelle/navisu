@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
+package bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.impl;
 
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
@@ -65,8 +65,8 @@ import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.Ais
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.controller.events.AisUpdateTargetEvent;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TrackPanel;
 import bzh.terrevirtuelle.navisu.instruments.common.view.targets.GShip;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygon;
-import bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.GpsTrackPolygonServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.GpsTrackPolygon;
+import bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.GpsTrackPolygonServices;
 
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;

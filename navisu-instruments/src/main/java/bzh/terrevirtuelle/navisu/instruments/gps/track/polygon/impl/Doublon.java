@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.instruments.gpstrack.polygon.impl;
+package bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.impl;
 
 public class Doublon {
 	

@@ -47,6 +47,8 @@ public class GpsPlotterController
     protected final String GROUP = "Navigation";
     protected GuiAgentServices guiAgentServices;
     protected KmlObjectServices kmlObjectServices;
+    protected LayersManagerServices layersManagerServices;
+    protected String name;
     protected WorldWindow wwd;
     protected RenderableLayer gpsLayer;
     protected TargetPanel targetPanel;
@@ -61,15 +63,23 @@ public class GpsPlotterController
             GuiAgentServices guiAgentServices,
             KmlObjectServices kmlObjectServices,
             String name) {
-        this.guiAgentServices = guiAgentServices;
+        this(layersManagerServices, guiAgentServices, name);
         this.kmlObjectServices = kmlObjectServices;
+    }
+
+    public GpsPlotterController(LayersManagerServices layersManagerServices,
+            GuiAgentServices guiAgentServices,
+            String name) {
+        this.layersManagerServices = layersManagerServices;
+        this.guiAgentServices = guiAgentServices;
+        this.name = name;
+    }
+
+    public void init() {
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         gpsLayer = layersManagerServices.initLayer(GROUP, name);
         properties = new Properties();
-    }
-
-    public void init() {
         try {
             properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
         } catch (IOException ex) {
@@ -114,7 +124,6 @@ public class GpsPlotterController
     }
 
     protected void createTarget() {
-
         initRotation = new Double(properties.getProperty("initRotation"));
         ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae"));
         ownerShipView.setModelScale(new Vec4(new Double(properties.getProperty("scale"))));
@@ -123,19 +132,23 @@ public class GpsPlotterController
         ownerShipView.setField("Ship", ownerShip);
     }
 
+    private void updateTarget(double latitude, double longitude) {
+        ownerShip.setLatitude(latitude);
+        ownerShip.setLongitude(longitude);
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
+    }
+
     @Override
     protected void notifyNmeaMessage(GGA data) {
-        ownerShip.setLatitude(data.getLatitude());
-        ownerShip.setLongitude(data.getLongitude());
-        ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        updateTarget(data.getLatitude(), data.getLongitude());
     }
 
     @Override
     protected void notifyNmeaMessage(VTG data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+      //  ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
     }
 
     @Override
@@ -147,10 +160,8 @@ public class GpsPlotterController
             if (d != null) {
                 ownerShip.setCog(d.getCog());
                 ownerShip.setSog(d.getSog());
-                ownerShip.setLatitude(d.getLatitude());
-                ownerShip.setLongitude(d.getLongitude());
-                ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-                ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+               // ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+                updateTarget(data.getLatitude(), data.getLongitude());
             }
         }
     }

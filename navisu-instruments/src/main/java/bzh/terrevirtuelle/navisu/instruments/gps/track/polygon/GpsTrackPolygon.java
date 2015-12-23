@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter;
+package bzh.terrevirtuelle.navisu.instruments.gps.track.polygon;
 
 import org.capcaval.c3.component.Component;
 
@@ -11,7 +11,7 @@ import org.capcaval.c3.component.Component;
  * @date 3 mars 2015
  * @author Serge Morvan
  */
-public interface GpsTrackPlotter
+public interface GpsTrackPolygon
         extends Component {
 
 }

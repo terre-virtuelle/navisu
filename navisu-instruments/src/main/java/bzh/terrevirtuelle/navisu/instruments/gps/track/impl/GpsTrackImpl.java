@@ -3,40 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl;
+package bzh.terrevirtuelle.navisu.instruments.gps.track.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotter;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
+import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.GpsTrackPlotter;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrackServices;
-import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
+import bzh.terrevirtuelle.navisu.instruments.gps.track.impl.controller.GpsTrackController;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 /**
- * NaVisu
- *
- * @date 7 mai 2015
+ * @date 3 mars 2015
  * @author Serge Morvan
  */
-public class GpsPlotterImpl
-        implements GpsPlotter, GpsPlotterServices, InstrumentDriver, ComponentState {
+public class GpsTrackImpl
+        implements GpsTrackPlotter, GpsTrackServices, InstrumentDriver, ComponentState {
 
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
     LayersManagerServices layersManagerServices;
-    @UsedService
-    KmlObjectServices kmlObjectServices;
-    @UsedService
-    GpsTrackServices gpsTrackServices;
 
     protected boolean on = false;
-    private final String NAME = "GpsPlotter";
-
+    private final String NAME = "GpsTrack";
+   
     @Override
     public void componentInitiated() {
 
@@ -47,31 +39,28 @@ public class GpsPlotterImpl
     }
 
     @Override
+    public void componentStopped() {
+    }
+
+    @Override
     public void on(String... files) {
         if (on == false) {
             on = true;
-            new GpsPlotterController(layersManagerServices, guiAgentServices, kmlObjectServices, NAME).init();
-           // gpsTrackServices.on(files);
+            new GpsTrackController(layersManagerServices, guiAgentServices, NAME).init();
         }
     }
 
     @Override
     public void off() {
-        on = false;
+        // Pb dans la lib C3 ? objet non retiré de la liste
+        if (on == true) {
+            on = false;
+        }
     }
 
     @Override
-    public void componentStopped() {
-    }
-
-    @Override
-    public void on() {
-        this.on("");
-    }
-
-    @Override
-    public boolean isOn() {
-        return on;
+    public InstrumentDriver getDriver() {
+        return this;
     }
 
     @Override
@@ -80,7 +69,8 @@ public class GpsPlotterImpl
     }
 
     @Override
-    public InstrumentDriver getDriver() {
-        return this;
+    public boolean isOn() {
+        return on;
     }
+
 }

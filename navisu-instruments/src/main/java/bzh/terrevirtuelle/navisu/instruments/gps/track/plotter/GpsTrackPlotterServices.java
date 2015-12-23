@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.gpstrack.plotter;
+package bzh.terrevirtuelle.navisu.instruments.gps.track.plotter;
 
 import java.util.LinkedList;
 
