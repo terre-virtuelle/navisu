@@ -226,6 +226,8 @@ public class AppMain extends Application {
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
+        
+        
         //CameraServices cameraServices = componentManager.getComponentService(CameraServices.class);
         //ClockServices clockServices = componentManager.getComponentService(ClockServices.class);
         ClocksServices clocksServices = componentManager.getComponentService(ClocksServices.class);
