@@ -357,6 +357,8 @@ public class AppMain extends Application {
         // Initialisation des paramètres de diffusion des data.
         dataServerServices.init("localhost", 8585);
 
+        
+        
         /* Test connexion GPS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
