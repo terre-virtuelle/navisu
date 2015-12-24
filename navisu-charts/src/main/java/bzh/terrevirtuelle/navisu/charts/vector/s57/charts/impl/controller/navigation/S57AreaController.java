@@ -19,7 +19,8 @@ import javafx.scene.input.KeyEvent;
  * @author Serge Morvan
  * @date 18 oct. 2014 NaVisu project
  */
-public class S57AreaController implements EventHandler<KeyEvent> {
+public class S57AreaController
+        implements EventHandler<KeyEvent> {
 
     private static final S57AreaController instance = new S57AreaController();
     private final List<SurfacePolygons> shapes;

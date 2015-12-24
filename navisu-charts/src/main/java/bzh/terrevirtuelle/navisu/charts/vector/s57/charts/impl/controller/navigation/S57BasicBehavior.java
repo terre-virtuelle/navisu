@@ -13,7 +13,8 @@ import gov.nasa.worldwind.render.SurfaceShape;
 
 /**
  * NaVisu
- *
+ * Simple behavior for object whith a single point and for representation a
+ * Placemark
  * @date 13 oct. 2015
  * @author Serge Morvan
  */
@@ -54,7 +55,6 @@ public class S57BasicBehavior
 
     @Override
     public void doIt(double distance, double azimuth) {
-        S57Controller s57Controller = getS57Controller();
         SurfaceShape surveyZone = s57Controller.getSurveyZone();
         PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
         double range = s57Controller.getRange();
@@ -80,6 +80,5 @@ public class S57BasicBehavior
             pointPlacemark.getAttributes().setScale(1.5);
             wwd.redrawNow();
         }
-
     }
 }
