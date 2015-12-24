@@ -148,21 +148,13 @@ public class GpsPlotterController
     protected void notifyNmeaMessage(VTG data) {
         ownerShip.setCog(data.getCog());
         ownerShip.setSog(data.getSog());
-      //  ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
     }
 
     @Override
     protected void notifyNmeaMessage(RMC data) {
-        //filtre sur les doublons
-        if (!sentenceQueue.contains(data)) {
-            sentenceQueue.add(data);
-            RMC d = sentenceQueue.element();
-            if (d != null) {
-                ownerShip.setCog(d.getCog());
-                ownerShip.setSog(d.getSog());
-               // ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-                updateTarget(data.getLatitude(), data.getLongitude());
-            }
-        }
+        ownerShip.setCog(data.getCog());
+        ownerShip.setSog(data.getSog());
+        updateTarget(data.getLatitude(), data.getLongitude());
     }
 }
