@@ -152,7 +152,6 @@ public class AppMain extends Application {
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
 
         final ComponentManager componentManager = ComponentManager.componentManager;
-
         /* Deploy components */
         LOGGER.info("\n"
                 + componentManager.startApplication(GuiAgentImpl.class,//in first
