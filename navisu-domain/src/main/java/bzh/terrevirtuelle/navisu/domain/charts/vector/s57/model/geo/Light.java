@@ -262,4 +262,10 @@ public class Light extends Location
     public String getGeometry() {
         return "POINT(" + Double.toString(longitude) + " " + Double.toString(latitude) + ")";
     }
+
+    @Override
+    public String toString() {
+        return "Light{" + "categoryOfLight=" + categoryOfLight + ", colour=" + colour + ", dateEnd=" + dateEnd + ", dateStart=" + dateStart + ", exhibitionConditionOfLight=" + exhibitionConditionOfLight + ", height=" + height + ", lightCharacteristic=" + lightCharacteristic + ", marksNavigationalSystemof=" + marksNavigationalSystemof + ", lightVisibility=" + lightVisibility + ", multiplicityOfLights=" + multiplicityOfLights + ", objectName=" + objectName + ", orientation=" + orientation + ", periodicDateEnd=" + periodicDateEnd + ", periodicDateStart=" + periodicDateStart + ", recordIngdate=" + recordIngdate + ", recordingIndication=" + recordingIndication + ", sectorLimitTwo=" + sectorLimitTwo + ", sectorLimitOne=" + sectorLimitOne + ", scaleMaximum=" + scaleMaximum + ", signalGroup=" + signalGroup + ", signalPeriod=" + signalPeriod + ", signalsequence=" + signalsequence + ", status=" + status + ", valueOfNominalRange=" + valueOfNominalRange + ", verticaldatum=" + verticaldatum + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage + ", verticalAccuracy=" + verticalAccuracy + '}';
+    }
+    
 }
