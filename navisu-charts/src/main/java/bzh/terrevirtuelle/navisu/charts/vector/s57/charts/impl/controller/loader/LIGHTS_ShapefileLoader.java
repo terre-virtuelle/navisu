@@ -37,18 +37,17 @@ import java.util.Set;
 public class LIGHTS_ShapefileLoader
         extends LayerShapefileLoader {
 
-    private final List<Light> dataList;
-
+    private final List<Light> lightList;
     private Set<Map.Entry<String, Object>> entries;
     private Light data;
     private final RenderableLayer airspaceLayer;
     protected WorldWindow wwd;
     protected Globe globe;
     private double elevation;
-    S57ChartComponentController chartS57Controller;
+    private S57ChartComponentController chartS57Controller;
 
     public LIGHTS_ShapefileLoader() {
-        dataList = new ArrayList<>();
+        lightList = new ArrayList<>();
         chartS57Controller = S57ChartComponentController.getInstance();
         layer = chartS57Controller.getLayersManagerServices().initLayer("S57 charts", "LIGHTS");
         layer.setPickEnabled(true);
@@ -74,7 +73,7 @@ public class LIGHTS_ShapefileLoader
         elevation = globe.getElevation(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees));
         data = new Light();
         //System.out.println("entries " + entries);
-        dataList.add(data);
+        lightList.add(data);
         data.setLatitude(latDegrees);
         data.setLongitude(lonDegrees);
         entries.stream().forEach((e) -> {
@@ -209,7 +208,7 @@ public class LIGHTS_ShapefileLoader
     }
 
     public List<Light> getLights() {
-        return dataList;
+        return lightList;
     }
 
     public RenderableLayer getAirspaceLayer() {

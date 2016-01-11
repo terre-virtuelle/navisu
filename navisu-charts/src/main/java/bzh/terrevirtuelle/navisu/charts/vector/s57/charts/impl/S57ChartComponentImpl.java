@@ -49,8 +49,8 @@ import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
-import static java.lang.System.console;
 import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
@@ -68,7 +68,7 @@ public class S57ChartComponentImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     LayersManagerServices layersManagerServices;
-    @UsedService 
+    @UsedService
     S57GlobalCatalogServices s57GlobalCatalogServices;
     @UsedService
     DataAccessServices dataAccessServices;
@@ -114,7 +114,7 @@ public class S57ChartComponentImpl
         wwd.addPositionListener((PositionEvent event) -> {
             filter();
         });
-        
+
         cm = ComponentManager.componentManager;
         transponderActivateEvent = cm.getComponentEventSubscribe(TransponderActivateEvent.class);
     }
@@ -169,6 +169,7 @@ public class S57ChartComponentImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
+        
         try {
             chartS57Controller = S57ChartComponentController.getInstance();
             if (first == true) {
@@ -177,6 +178,7 @@ public class S57ChartComponentImpl
                 chartS57Controller.setTransponderActivateEvent(transponderActivateEvent);
                 chartS57Controller.setLayersManagerServices(layersManagerServices);
                 chartS57Controller.setGeoViewServices(geoViewServices);
+                chartS57Controller.setGuiAgentServices(guiAgentServices);
             }
             /*
             // Test capture des evts par l'AreaController
@@ -259,7 +261,7 @@ public class S57ChartComponentImpl
             }
 
             chartS57Controller.init("data/shp/shp_" + i++);
-            
+
             layers = chartS57Controller.getLayers();
 
             chartsOpen = true;
@@ -281,7 +283,7 @@ public class S57ChartComponentImpl
             wwd.addSelectListener(new ViewControlsSelectListener(wwd, viewControlsLayer));
             geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(viewControlsLayer));
 
-           /* airspaceLayers = chartS57Controller.getAirspaceLayers();
+            /* airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
                 String name = l.getName();
                 if (name.contains("LIGHTS")) {
@@ -294,8 +296,7 @@ public class S57ChartComponentImpl
             }).forEach((l) -> {
              //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
-*/
-
+             */
         } catch (Exception e) {
             System.out.println("handleOpenFile e " + e);
         }
@@ -362,7 +363,7 @@ public class S57ChartComponentImpl
 
     @Override
     public Set<NavigationData> getS57Charts() {
-       return s57GlobalCatalogServices.getS57Charts();
+        return s57GlobalCatalogServices.getS57Charts();
     }
 
     public GeoViewServices getGeoViewServices() {
