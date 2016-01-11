@@ -42,7 +42,6 @@ public class LIGHTS_ShapefileLoader
     private Set<Map.Entry<String, Object>> entries;
     private Light data;
     private final RenderableLayer airspaceLayer;
-    RenderableLayer layer = new RenderableLayer();
     protected WorldWindow wwd;
     protected Globe globe;
     private double elevation;
@@ -50,11 +49,15 @@ public class LIGHTS_ShapefileLoader
 
     public LIGHTS_ShapefileLoader() {
         dataList = new ArrayList<>();
-        airspaceLayer = new RenderableLayer();
         chartS57Controller = S57ChartComponentController.getInstance();
+        layer = chartS57Controller.getLayersManagerServices().initLayer("S57 charts", "LIGHTS");
+        layer.setPickEnabled(true);
+        airspaceLayer = chartS57Controller.getLayersManagerServices().initLayer("S57 charts", "LIGHTS_SECTORS");
+        airspaceLayer.setPickEnabled(true);
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
-        chartS57Controller.getLayers().add(layer);
-        layer.setName("LIGHTS_SECTORS");
+        if (!chartS57Controller.getLayers().contains(layer)) {
+            chartS57Controller.getLayers().add(layer);
+        }
     }
 
     @Override
@@ -77,39 +80,27 @@ public class LIGHTS_ShapefileLoader
         entries.stream().forEach((e) -> {
             if (e.getKey().equals("RCID")) {
                 data.setId((Long) e.getValue());
-            } else {
-                if (e.getKey().equals("COLOUR")) {
-                    data.setColour((String) e.getValue());
-                } else {
-                    if (e.getKey().equals("SIGPER")) {
-                        if (e.getValue() != null) {
-                            data.setSignalPeriod(e.getValue().toString());
-                        }
-                    } else {
-                        if (e.getKey().equals("VALNMR")) {
-                            if (e.getValue() != null) {
-                                data.setValueOfNominalRange(e.getValue().toString());
-                            }
-                        } else {
-                            if (e.getKey().equals("HEIGHT")) {
-                                if (e.getValue() != null) {
-                                    data.setHeight(e.getValue().toString());
-                                }
-                            } else {
-                                if (e.getKey().equals("SECTR1")) {
-                                    if (e.getValue() != null) {
-                                        data.setSectorLimitOne(e.getValue().toString());
-                                    }
-                                } else {
-                                    if (e.getKey().equals("SECTR2")) {
-                                        if (e.getValue() != null) {
-                                            data.setSectorLimitTwo(e.getValue().toString());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+            } else if (e.getKey().equals("COLOUR")) {
+                data.setColour((String) e.getValue());
+            } else if (e.getKey().equals("SIGPER")) {
+                if (e.getValue() != null) {
+                    data.setSignalPeriod(e.getValue().toString());
+                }
+            } else if (e.getKey().equals("VALNMR")) {
+                if (e.getValue() != null) {
+                    data.setValueOfNominalRange(e.getValue().toString());
+                }
+            } else if (e.getKey().equals("HEIGHT")) {
+                if (e.getValue() != null) {
+                    data.setHeight(e.getValue().toString());
+                }
+            } else if (e.getKey().equals("SECTR1")) {
+                if (e.getValue() != null) {
+                    data.setSectorLimitOne(e.getValue().toString());
+                }
+            } else if (e.getKey().equals("SECTR2")) {
+                if (e.getValue() != null) {
+                    data.setSectorLimitTwo(e.getValue().toString());
                 }
             }
         });

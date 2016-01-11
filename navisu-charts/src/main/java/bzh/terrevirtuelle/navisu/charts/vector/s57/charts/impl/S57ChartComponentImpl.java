@@ -49,6 +49,9 @@ import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
+import static java.lang.System.console;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 
 /**
  * @author Serge Morvan
@@ -111,6 +114,7 @@ public class S57ChartComponentImpl
         wwd.addPositionListener((PositionEvent event) -> {
             filter();
         });
+        
         cm = ComponentManager.componentManager;
         transponderActivateEvent = cm.getComponentEventSubscribe(TransponderActivateEvent.class);
     }
@@ -172,6 +176,7 @@ public class S57ChartComponentImpl
                 chartS57Controller.setDataAccessServices(dataAccessServices);
                 chartS57Controller.setTransponderActivateEvent(transponderActivateEvent);
                 chartS57Controller.setLayersManagerServices(layersManagerServices);
+                chartS57Controller.setGeoViewServices(geoViewServices);
             }
             /*
             // Test capture des evts par l'AreaController
@@ -254,6 +259,7 @@ public class S57ChartComponentImpl
             }
 
             chartS57Controller.init("data/shp/shp_" + i++);
+            
             layers = chartS57Controller.getLayers();
 
             chartsOpen = true;
@@ -275,7 +281,7 @@ public class S57ChartComponentImpl
             wwd.addSelectListener(new ViewControlsSelectListener(wwd, viewControlsLayer));
             geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(viewControlsLayer));
 
-            airspaceLayers = chartS57Controller.getAirspaceLayers();
+           /* airspaceLayers = chartS57Controller.getAirspaceLayers();
             airspaceLayers.stream().filter((l) -> (l != null)).map((l) -> {
                 String name = l.getName();
                 if (name.contains("LIGHTS")) {
@@ -283,11 +289,12 @@ public class S57ChartComponentImpl
                 } else {
                     l.setPickEnabled(false);
                 }
-                geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
+              //  geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
                 return l;
             }).forEach((l) -> {
-                layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
+             //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(l));
             });
+*/
 
         } catch (Exception e) {
             System.out.println("handleOpenFile e " + e);
@@ -356,6 +363,10 @@ public class S57ChartComponentImpl
     @Override
     public Set<NavigationData> getS57Charts() {
        return s57GlobalCatalogServices.getS57Charts();
+    }
+
+    public GeoViewServices getGeoViewServices() {
+        return geoViewServices;
     }
 
     @Override

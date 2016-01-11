@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.ACHARE_ShapefileLoader;
@@ -36,6 +37,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.WRECKS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57Lights;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
@@ -80,6 +82,8 @@ import javax.imageio.ImageIO;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
 
 /**
  * @author Serge Morvan
@@ -92,6 +96,7 @@ public class S57ChartComponentController {
 
     private DataAccessServices dataAccessServices;
     private LayersManagerServices layersManagerServices;
+    private GeoViewServices geoViewServices;
     private final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
     private static S57ChartComponentController INSTANCE = null;
     protected String path;
@@ -352,14 +357,19 @@ public class S57ChartComponentController {
         loader.createLayersFromSource(new File(path + "/LIGHTS.shp"));
 
         RenderableLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
-        la.setName("LIGHTS");
-        layers.add(la);
-        // airspaceTmpLayer = new AirspaceLayer();
         airspaceTmpLayer = new RenderableLayer();
         airspaceTmpLayer.setName("LIGHTS_1");
         airspaceLayers.add(la);
         airspaceLayers.add(airspaceTmpLayer);
 
+        geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(airspaceTmpLayer));
+       /*
+        geoViewServices.getDisplayService().getDisplayable().setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent ke) {
+                System.out.println("Key Pressed: " + ke.getText());
+            }
+        });
+*/
         wwd.addSelectListener((SelectEvent event) -> {
             S57LightView lightView;
             Object o = event.getTopObject();
@@ -431,8 +441,7 @@ public class S57ChartComponentController {
             l = new RenderableLayer();
             l.setName(group);
             if (acronym.contains("DEPARE")
-                    || acronym.contains("OBSTRN")
-                    || acronym.contains("LIGHTS")) {
+                    || acronym.contains("OBSTRN")) {
                 l.setPickEnabled(false);
             }
             layers.add(l);
@@ -462,6 +471,10 @@ public class S57ChartComponentController {
 
     public void setDataAccessServices(DataAccessServices dataAccessServices) {
         this.dataAccessServices = dataAccessServices;
+    }
+
+    public void setGeoViewServices(GeoViewServices geoViewServices) {
+        this.geoViewServices = geoViewServices;
     }
 
     private void showImage(PointPlacemark pointPlacemark) {
@@ -504,6 +517,10 @@ public class S57ChartComponentController {
 
     public void setLayersManagerServices(LayersManagerServices layersManagerServices) {
         this.layersManagerServices = layersManagerServices;
+    }
+
+    public LayersManagerServices getLayersManagerServices() {
+        return layersManagerServices;
     }
 
 }
