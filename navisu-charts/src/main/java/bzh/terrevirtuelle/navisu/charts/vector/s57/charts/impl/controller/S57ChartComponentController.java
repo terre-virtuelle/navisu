@@ -35,13 +35,11 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.UWTROC_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.WRECKS_CNT_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.WRECKS_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57LightView;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57Lights;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
@@ -84,6 +82,7 @@ import javax.imageio.ImageIO;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -112,7 +111,8 @@ public class S57ChartComponentController {
     private final List<RenderableLayer> airspaceLayers = new ArrayList<>();
     private RenderableLayer airspaceTmpLayer;
     private LIGHTS_ShapefileLoader loader;
-    private List<Light> lightList;
+    private final List<Light> lightList;
+    private final List<Light> lightDisplayedList;
     protected Scene scene;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected Globe globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
@@ -138,6 +138,7 @@ public class S57ChartComponentController {
     private S57ChartComponentController() {
         topMarks = new HashMap<>();
         lightList = new ArrayList<>();
+        lightDisplayedList = new ArrayList<>();
         System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
         addImageListeners();
@@ -363,11 +364,13 @@ public class S57ChartComponentController {
         loader = new LIGHTS_ShapefileLoader();
         loader.createLayersFromSource(new File(path + "/LIGHTS.shp"));
         RenderableLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
-        airspaceTmpLayer = new RenderableLayer();
-        airspaceTmpLayer.setName("LIGHTS_1");
+        if (airspaceTmpLayer == null) {
+            airspaceTmpLayer = new RenderableLayer();
+            airspaceTmpLayer.setName("LIGHTS_1");
+            airspaceLayers.add(airspaceTmpLayer);
+            geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(airspaceTmpLayer));
+        }
         airspaceLayers.add(la);
-        airspaceLayers.add(airspaceTmpLayer);
-        geoViewServices.getLayerManager().insertGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(airspaceTmpLayer));
         addLightListeners();
     }
 
@@ -403,17 +406,17 @@ public class S57ChartComponentController {
                 }
             }
         });
-
     }
 
     private void addLightListeners() {
         scene = guiAgentServices.getScene();
-        List<Light> lights = loader.getLights();
+        lightList.addAll(loader.getLights());
         scene.setOnKeyPressed((KeyEvent t) -> {
             KeyCode key = t.getCode();
             if (key == KeyCode.L) {
-                lights.stream().forEach((l) -> {
-                    displayLightSectors(l);
+                System.out.println("lightList " + lightList.size());
+                lightList.stream().forEach((l) -> {
+                    showLightSectors(l);
                 });
             }
         });
@@ -425,15 +428,13 @@ public class S57ChartComponentController {
                 if (o.getClass().getInterfaces().length != 0) {
                     if (o.getClass().getInterfaces()[0].equals(S57Lights.class)) {
                         lightView = ((S57LightView) o);
+                        airspaceTmpLayer.removeAllRenderables();
+                        lightDisplayedList.clear();
                         if (isDisplay == false) {
                             isDisplay = true;
-                            airspaceTmpLayer.removeAllRenderables();
-                            lightList.clear();
                             Light data = lightView.getLight();
-                            displayLightSectors(data);
+                            showLightSectors(data);
                         } else {
-                            airspaceTmpLayer.removeAllRenderables();
-                            lightList.clear();
                             isDisplay = false;
                         }
                     }
@@ -442,11 +443,11 @@ public class S57ChartComponentController {
         });
     }
 
-    private void displayLightSectors(Light data) {
-        if (!lightList.contains(data)) {
+    private void showLightSectors(Light data) {
+        if (!lightDisplayedList.contains(data)) {
             S57LightView lightView;
-            if (data != null 
-                    &&data.getSectorLimitOne() != null
+            if (data != null
+                    && data.getSectorLimitOne() != null
                     && data.getSectorLimitTwo() != null
                     && data.getValueOfNominalRange() != null) {
                 lightView = new S57LightView();
@@ -460,7 +461,8 @@ public class S57ChartComponentController {
                 lightView.setRadii(0.0, range * 1852);
                 lightView.getAttributes().setInteriorOpacity(0.2);
                 lightView.getAttributes().setOutlineOpacity(0.2);
-             //   lightView.getHighlightAttributes().setInteriorOpacity(1.0);
+                lightView.setHighlightAttributes(new BasicShapeAttributes(lightView.getAttributes()));
+                lightView.getHighlightAttributes().setInteriorOpacity(1.0);
                 lightView.setAltitude(elevation + 35);
                 lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
                         Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
@@ -475,27 +477,21 @@ public class S57ChartComponentController {
                         + "Sect2 : " + data.getSectorLimitTwo() + "\n";
                 lightView.setValue(AVKey.DISPLAY_NAME, label);
                 lightView.getAttributes().setDrawOutline(true);
+
                 // Si la couleur est blanche, la vue est jaune
                 if (data.getColour().contains("1")) {
                     lightView.getAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get("6")));
+                    lightView.getHighlightAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get("6")));
                     lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
                 } else {
                     lightView.getAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                 //   lightView.getHighlightAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                    lightView.getHighlightAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get(data.getColour())));
                     lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
                 }
                 airspaceTmpLayer.addRenderable(lightView);
-                lightList.add(data);
+                lightDisplayedList.add(data);
             }
         }
-    }
-
-    public void setDataAccessServices(DataAccessServices dataAccessServices) {
-        this.dataAccessServices = dataAccessServices;
-    }
-
-    public void setGeoViewServices(GeoViewServices geoViewServices) {
-        this.geoViewServices = geoViewServices;
     }
 
     private void showImage(PointPlacemark pointPlacemark) {
@@ -534,6 +530,14 @@ public class S57ChartComponentController {
 
     public void setTransponderActivateEvent(ComponentEventSubscribe<TransponderActivateEvent> aisActivateES) {
         this.transponderActivateEvent = aisActivateES;
+    }
+
+    public void setDataAccessServices(DataAccessServices dataAccessServices) {
+        this.dataAccessServices = dataAccessServices;
+    }
+
+    public void setGeoViewServices(GeoViewServices geoViewServices) {
+        this.geoViewServices = geoViewServices;
     }
 
     public void setLayersManagerServices(LayersManagerServices layersManagerServices) {
