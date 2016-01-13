@@ -44,7 +44,7 @@ public class LayersManagerImpl
     }
 
     @Override
-    public RenderableLayer initLayer(String groupName, String layerName) {
+    public RenderableLayer getInstance(String groupName, String layerName) {
         List<String> groups = layerTreeServices.getGroupNames();
         if (!groups.contains(groupName)) {
             layerTreeServices.createGroup(groupName);
@@ -70,7 +70,7 @@ public class LayersManagerImpl
     }
 
     @Override
-    public RenderableLayer initLayer(String groupName, String layerName, String onLayerName) {
+    public RenderableLayer getInstance(String groupName, String layerName, String onLayerName) {
         List<String> groups = layerTreeServices.getGroupNames();
         if (!groups.contains(groupName)) {
             layerTreeServices.createGroup(groupName);
