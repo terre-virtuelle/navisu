@@ -35,8 +35,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatal
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.S57GlobalCatalogImpl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.S57LocalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartComponentImpl;
-import bzh.terrevirtuelle.navisu.client.navigation.NavigationServerServices;
-import bzh.terrevirtuelle.navisu.client.navigation.impl.vertx.NavigationServerImpl;
+import bzh.terrevirtuelle.navisu.navigation.server.NavigationServerServices;
+import bzh.terrevirtuelle.navisu.navigation.server.impl.vertx.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -462,7 +462,7 @@ public class AppMain extends Application {
          */
 
         /* Test Navigation RA */
-        // navigationServerServices.open("localhost", 8686, 1000);
+         navigationServerServices.init("localhost", 8787);
     }
 
     public static void main(String[] args) throws Exception {
