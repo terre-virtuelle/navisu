@@ -70,16 +70,33 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
     private final String NAME3 = "S57 Buoyage behavior";
     private final String NAME4 = "Nautical documents icons";
     private final List<String> NAVIGATION_OBJECTS = Arrays.asList("Avurnav", "SailingDirections");
+    private final List<Class> S57_CONTROLLER_TYPE_LIST = Arrays.asList(
+            BeaconIsolatedDanger.class,
+            BeaconLateral.class,
+            BeaconSafeWater.class,
+            BeaconSpecialPurpose.class,
+            BuoyCardinal.class,
+            BuoyInstallation.class,
+            BuoyIsolatedDanger.class,
+            BuoyLateral.class,
+            BuoySafeWater.class,
+            BuoySpecialPurpose.class,
+            MooringWarpingFacility.class,
+            Landmark.class);
+    
+    protected GpsPlotterWithRouteImpl component;
+    protected S57GlobalCatalogServices s57GlobalCatalogServices;
+    protected S57ChartComponentServices s57ChartComponentServices;
+    protected TransponderServices transponderServices; 
+    
     protected RenderableLayer navigationPgonLayer;
     protected RenderableLayer navigationIconsLayer;
     protected RenderableLayer transponderZoneLayer;
+    
+    protected NavigationDataSet navigationDataSet;
     protected List<String> s57ControllerIdList;
-    protected GpsPlotterWithRouteImpl component;
-    protected NavigationDataSet navigationDataSet = null;
     protected TextAreaController textAreaController;
-    protected S57GlobalCatalogServices s57GlobalCatalogServices;
-    protected S57ChartComponentServices s57ChartComponentServices;
-    protected TransponderServices transponderServices;
+    
 
     public GpsPlotterWithRouteController(GpsPlotterWithRouteImpl component,
             LayersManagerServices layersManagerServices,
@@ -97,10 +114,10 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.s57GlobalCatalogServices = s57GlobalCatalogServices;
         this.transponderServices = transponderServices;
-        navigationPgonLayer = layersManagerServices.initLayer(GROUP, NAME2);
+        navigationPgonLayer = layersManagerServices.getInstance(GROUP, NAME2);
         navigationPgonLayer.setPickEnabled(false);
-        navigationIconsLayer = layersManagerServices.initLayer(GROUP, NAME4);
-        transponderZoneLayer = layersManagerServices.initLayer(GROUP, NAME3);
+        navigationIconsLayer = layersManagerServices.getInstance(GROUP, NAME4);
+        transponderZoneLayer = layersManagerServices.getInstance(GROUP, NAME3);
     }
 
     @Override
@@ -146,7 +163,6 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
                         if (type.equals("S57Chart")) {
                             Path path = s57GlobalCatalogServices.getChartPath((String) placemark.getValue(AVKey.DISPLAY_NAME));
                             s57ChartComponentServices.openChart(path.toString());
-                          //  System.out.println("navigationDataSet " + navigationDataSet);
                             activateS57Controllers();
                             event.consume();
                         }
@@ -171,24 +187,10 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
     }
 
     private void activateS57Controllers() {
-        List<Class> s57ConList = Arrays.asList(BeaconIsolatedDanger.class,
-                BeaconLateral.class,
-                BeaconSafeWater.class,
-                BeaconSpecialPurpose.class,
-                BuoyCardinal.class,
-                BuoyInstallation.class,
-                BuoyIsolatedDanger.class,
-                BuoyLateral.class,
-                BuoySafeWater.class,
-                BuoySpecialPurpose.class,
-                MooringWarpingFacility.class,
-                Landmark.class);
-
         List<NavigationData> s57NavigationDataList = new ArrayList<>();
-        s57ConList.stream().forEach((claz) -> {
+        S57_CONTROLLER_TYPE_LIST.stream().forEach((claz) -> {
             s57NavigationDataList.addAll(navigationDataSet.get(claz));
         });
-
         s57ControllerIdList = new ArrayList<>();
         s57NavigationDataList.stream().forEach((s) -> {
             s57ControllerIdList.add(Long.toString(s.getId()));

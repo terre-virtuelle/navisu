@@ -240,7 +240,7 @@ public class RoutePhotoEditorController
         });
         routeChoiceButton.setOnMouseClicked((MouseEvent event) -> {
             fillHighway();
-            layer = layersManagerServices.initLayer(groupName, layerName);
+            layer = layersManagerServices.getInstance(groupName, layerName);
             layer.addRenderable(highway);
         });
         photoChoiceButton.setOnMouseClicked((MouseEvent event) -> {
