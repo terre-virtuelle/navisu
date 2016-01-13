@@ -78,7 +78,7 @@ public class GpsPlotterController
     public void init() {
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
-        gpsLayer = layersManagerServices.initLayer(GROUP, name);
+        gpsLayer = layersManagerServices.getInstance(GROUP, name);
         properties = new Properties();
         try {
             properties.load(new FileInputStream(PROPERTIES_FILE_NAME));

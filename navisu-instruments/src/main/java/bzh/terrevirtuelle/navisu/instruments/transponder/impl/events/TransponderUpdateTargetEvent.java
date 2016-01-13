@@ -16,5 +16,4 @@ public interface TransponderUpdateTargetEvent
         extends ComponentEvent {
 
     public void notifyTransponderMessageChanged(Ship updatedData);
-
 }

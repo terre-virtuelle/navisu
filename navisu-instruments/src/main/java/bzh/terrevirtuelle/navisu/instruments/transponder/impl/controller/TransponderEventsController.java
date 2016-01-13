@@ -30,10 +30,12 @@ public abstract class TransponderEventsController {
             updateTarget(ship);
         });
     }
+
     public void unsubscribe() {
         transponderUpdateTargetEvent.unsubscribe((TransponderUpdateTargetEvent) (Ship ship) -> {
         });
     }
+
     public abstract void updateTarget(Ship ship);
 
 }
