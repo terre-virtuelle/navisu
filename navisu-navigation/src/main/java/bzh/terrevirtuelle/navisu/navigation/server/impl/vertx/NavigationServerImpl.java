@@ -86,7 +86,6 @@ public class NavigationServerImpl
         } catch (Exception e) {
             System.out.println("e " + e);
         }
-    
     }
 
     @Override
