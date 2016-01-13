@@ -469,6 +469,7 @@ public class S57ChartComponentController {
                 lightView.setAltitude(elevation + 35);
                 lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
                         Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
+                
                 S57Controller dummy = new S57BuoyageController(new S57Behavior() {
                     @Override
                     public void doIt(double distance, double azimuth) {
@@ -480,6 +481,7 @@ public class S57ChartComponentController {
                         System.out.println(((Buoyage) s57c.getNavigationData()).getObjectName());
                     }
                 }
+
                 String label = "Light \n"
                         + "Lat : " + Double.toString(lat) + "\n"
                         + "Lon : " + Double.toString(lon) + "\n"

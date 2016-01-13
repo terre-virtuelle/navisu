@@ -82,7 +82,7 @@ public class S57ChartComponentImpl
     private static final String EXTENSION_3 = ".003";
     protected static final String GROUP = "S57 charts";
     static private int i = 0;
-    protected S57ChartComponentController chartS57Controller;
+    protected S57ChartComponentController s57ChartComponentController;
     //  private SurveyZoneController surveyZoneController;
     protected List<Layer> layers;
     protected Layer layer;
@@ -170,14 +170,14 @@ public class S57ChartComponentImpl
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         try {
-            chartS57Controller = S57ChartComponentController.getInstance();
+            s57ChartComponentController = S57ChartComponentController.getInstance();
             if (first == true) {
                 first = false;
-                chartS57Controller.setDataAccessServices(dataAccessServices);
-                chartS57Controller.setTransponderActivateEvent(transponderActivateEvent);
-                chartS57Controller.setLayersManagerServices(layersManagerServices);
-                chartS57Controller.setGeoViewServices(geoViewServices);
-                chartS57Controller.setGuiAgentServices(guiAgentServices);
+                s57ChartComponentController.setDataAccessServices(dataAccessServices);
+                s57ChartComponentController.setTransponderActivateEvent(transponderActivateEvent);
+                s57ChartComponentController.setLayersManagerServices(layersManagerServices);
+                s57ChartComponentController.setGeoViewServices(geoViewServices);
+                s57ChartComponentController.setGuiAgentServices(guiAgentServices);
             }
             /*
             // Test capture des evts par l'AreaController
@@ -192,7 +192,7 @@ public class S57ChartComponentImpl
              chartS57Controller.setSurveyZoneController(surveyZoneController);
              }
              */
-            chartS57Controller.subscribe(); // A chaque nouvelle carte car S57Controllers est modifie
+            s57ChartComponentController.subscribe(); // A chaque nouvelle carte car S57Controllers est modifie
 
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + i).mkdir();
@@ -258,9 +258,9 @@ public class S57ChartComponentImpl
                 LOGGER.log(Level.SEVERE, null, e);
             }
 
-            chartS57Controller.init("data/shp/shp_" + i++);
+            s57ChartComponentController.init("data/shp/shp_" + i++);
 
-            layers = chartS57Controller.getLayers();
+            layers = s57ChartComponentController.getLayers();
 
             chartsOpen = true;
             geoLayerList = geoViewServices.getLayerManager().getGroup(GROUP);
@@ -352,8 +352,8 @@ public class S57ChartComponentImpl
 
     @Override
     public Set<S57Controller> getS57Controllers() {
-        if (chartS57Controller != null) {
-            return chartS57Controller.getS57Controllers();
+        if (s57ChartComponentController != null) {
+            return s57ChartComponentController.getS57Controllers();
         } else {
             return null;
         }

@@ -49,9 +49,9 @@ public class LIGHTS_ShapefileLoader
     public LIGHTS_ShapefileLoader() {
         lightList = new ArrayList<>();
         chartS57Controller = S57ChartComponentController.getInstance();
-        layer = chartS57Controller.getLayersManagerServices().initLayer("S57 charts", "LIGHTS");
+        layer = chartS57Controller.getLayersManagerServices().getInstance("S57 charts", "LIGHTS");
         layer.setPickEnabled(true);
-        airspaceLayer = chartS57Controller.getLayersManagerServices().initLayer("S57 charts", "LIGHTS_SECTORS");
+        airspaceLayer = chartS57Controller.getLayersManagerServices().getInstance("S57 charts", "LIGHTS_SECTORS");
         airspaceLayer.setPickEnabled(true);
         globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
         if (!chartS57Controller.getLayers().contains(layer)) {

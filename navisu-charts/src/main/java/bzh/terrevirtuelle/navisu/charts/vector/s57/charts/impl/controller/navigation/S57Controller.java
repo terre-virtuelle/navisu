@@ -31,6 +31,9 @@ import org.gavaghan.geodesy.GlobalCoordinates;
 public abstract class S57Controller
         extends TransponderEventsController {
 
+    protected final Ellipsoid REFERENCE = Ellipsoid.WGS84;
+    protected final double KM_TO_NAUTICAL = 0.53879310;
+    protected final double KM_TO_METER = 1000;
     protected S57Behavior s57Behavior;
     protected NavigationData navigationData;
     protected WorldWindow wwd;
@@ -44,9 +47,6 @@ public abstract class S57Controller
     protected double lon;
     protected boolean first = true;
     protected GeodeticCalculator geoCalc = new GeodeticCalculator();
-    protected final Ellipsoid reference = Ellipsoid.WGS84;
-    protected final double KM_TO_NAUTICAL = 0.53879310;
-    protected final double KM_TO_METER = 1000;
     protected GlobalCoordinates waypointA;
     protected GlobalCoordinates waypointB;
     protected double distance;
@@ -73,25 +73,25 @@ public abstract class S57Controller
     public double getDistanceNm(Position posA, Position posB) {
         waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
-        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getEllipsoidalDistance() / KM_TO_METER * KM_TO_NAUTICAL;
+        return geoCalc.calculateGeodeticCurve(REFERENCE, waypointA, waypointB).getEllipsoidalDistance() / KM_TO_METER * KM_TO_NAUTICAL;
     }
 
     public double getAzimuth(Position posA, Position posB) {
         waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
-        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getAzimuth();
+        return geoCalc.calculateGeodeticCurve(REFERENCE, waypointA, waypointB).getAzimuth();
     }
 
     public double getDistanceNm(double latA, double lonA, double latB, double lonB) {
         waypointA = new GlobalCoordinates(latA, lonA);
         waypointB = new GlobalCoordinates(latB, lonB);
-        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getEllipsoidalDistance() / KM_TO_METER * KM_TO_NAUTICAL;
+        return geoCalc.calculateGeodeticCurve(REFERENCE, waypointA, waypointB).getEllipsoidalDistance() / KM_TO_METER * KM_TO_NAUTICAL;
     }
 
     public double getAzimuth(double latA, double lonA, double latB, double lonB) {
         waypointA = new GlobalCoordinates(latA, lonA);
         waypointB = new GlobalCoordinates(latB, lonB);
-        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getAzimuth();
+        return geoCalc.calculateGeodeticCurve(REFERENCE, waypointA, waypointB).getAzimuth();
     }
 
     public RenderableLayer getLayer() {
@@ -213,12 +213,12 @@ public abstract class S57Controller
         this.range = range;
     }
 
+    @Override
+    public abstract void updateTarget(Ship ship);
+
     public abstract void activate();
 
     public abstract void deactivate();
-
-    @Override
-    public abstract void updateTarget(Ship ship);
 
     @Override
     public int hashCode() {
@@ -248,5 +248,5 @@ public abstract class S57Controller
         }
         return true;
     }
-  
+
 }
