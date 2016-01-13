@@ -169,7 +169,6 @@ public class S57ChartComponentImpl
     }
 
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        
         try {
             chartS57Controller = S57ChartComponentController.getInstance();
             if (first == true) {
@@ -193,7 +192,6 @@ public class S57ChartComponentImpl
              chartS57Controller.setSurveyZoneController(surveyZoneController);
              }
              */
-
             chartS57Controller.subscribe(); // A chaque nouvelle carte car S57Controllers est modifie
 
             new File("data/shp").mkdir();

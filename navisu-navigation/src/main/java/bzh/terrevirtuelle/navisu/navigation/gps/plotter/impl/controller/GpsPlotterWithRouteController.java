@@ -146,6 +146,8 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
                         if (type.equals("S57Chart")) {
                             Path path = s57GlobalCatalogServices.getChartPath((String) placemark.getValue(AVKey.DISPLAY_NAME));
                             s57ChartComponentServices.openChart(path.toString());
+                          //  System.out.println("navigationDataSet " + navigationDataSet);
+                            activateS57Controllers();
                             event.consume();
                         }
                     }
@@ -203,7 +205,6 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
                     guiAgentServices,
                     a,
                     926, displayName, description);
-            System.out.println("a.getLat() " + a.getLatitude() + " " + a.getLongitude());
             sc.setLayer(navigationPgonLayer);
             sc.setIconsLayer(navigationIconsLayer);
             sc.activate();

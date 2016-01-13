@@ -248,6 +248,5 @@ public abstract class S57Controller
         }
         return true;
     }
-    
-    
+  
 }
