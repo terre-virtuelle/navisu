@@ -198,6 +198,7 @@ public class RoutePhotoEditorController
         this.viewWW = wwd.getView();
         load(FXML);
         initPanel();
+        System.out.println(""+viewWW.getFieldOfView()+"  "+viewWW.getPitch()+"  "+viewWW.getNearClipDistance());
     }
 
     final void load(String fxml) {
