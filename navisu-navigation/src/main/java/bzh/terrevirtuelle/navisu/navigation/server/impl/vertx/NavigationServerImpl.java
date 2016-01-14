@@ -5,15 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.server.impl.vertx;
 
+import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.navigation.server.NavigationServer;
 import bzh.terrevirtuelle.navisu.navigation.server.NavigationServerServices;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Properties;
-import java.util.logging.Formatter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -38,6 +39,7 @@ public class NavigationServerImpl
     private Marshaller marshaller;
     private int port;
     private String hostName;
+    private NavigationDataSet navigationDataSet;
 
     // private StringWriter response;
     // private StringWriter stringWriter = null;
@@ -50,6 +52,7 @@ public class NavigationServerImpl
 
     @Override
     public void init() {
+        navigationDataSet = new NavigationDataSet();
         initProperties();
         this.hostName = properties.getProperty("hostName").trim();
         this.port = new Integer(properties.getProperty("port").trim());
@@ -58,6 +61,7 @@ public class NavigationServerImpl
 
     @Override
     public void init(String hostName, int port) {
+        navigationDataSet = new NavigationDataSet();
         initProperties();
         this.hostName = hostName;
         this.port = port;
@@ -80,8 +84,10 @@ public class NavigationServerImpl
             vertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
                 if (ws.path().equals("/navigation")) {
                     ws.dataHandler((Buffer data) -> {
-                        ws.writeTextFrame(data.toString() + i);
-                        i++;
+                        StringWriter stringWriter = response(ws, data);
+                        if (stringWriter != null) {
+                            ws.writeTextFrame(stringWriter.toString());
+                        }
                     });
                 } else {
                     ws.reject();
@@ -94,6 +100,19 @@ public class NavigationServerImpl
         } catch (Exception e) {
             System.out.println("e " + e);
         }
+    }
+
+    private StringWriter response(ServerWebSocket ws, Buffer data) {
+        Camera camera = new Camera();
+        StringWriter stringWriter = new StringWriter();
+        navigationDataSet.add(camera);
+        try {
+            marshaller.marshal(navigationDataSet, stringWriter);
+        } catch (JAXBException ex) {
+            System.out.println("ex " + ex);
+            Logger.getLogger(NavigationServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return stringWriter;
     }
 
     @Override
