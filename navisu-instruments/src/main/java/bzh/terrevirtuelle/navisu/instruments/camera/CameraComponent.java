@@ -13,7 +13,7 @@ import org.capcaval.c3.component.Component;
  * @date 5 octobre 2015
  * @author Serge Morvan
  */
-public interface Camera
+public interface CameraComponent
         extends Component {
 
 }

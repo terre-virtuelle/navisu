@@ -6,11 +6,11 @@
 package bzh.terrevirtuelle.navisu.instruments.camera.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.instruments.camera.Camera;
-import bzh.terrevirtuelle.navisu.instruments.camera.CameraServices;
-import bzh.terrevirtuelle.navisu.instruments.camera.impl.controller.CameraController;
+import bzh.terrevirtuelle.navisu.instruments.camera.impl.controller.CameraComponentController;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.componentmanager.ComponentManager;
+import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponent;
+import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
 
 /**
  * NaVisu
@@ -18,14 +18,14 @@ import org.capcaval.c3.componentmanager.ComponentManager;
  * @date 15 octobre 2015
  * @author Serge Morvan
  */
-public class CameraImpl
-        implements Camera, CameraServices, InstrumentDriver, ComponentState {
+public class CameraComponentImpl
+        implements CameraComponent, CameraComponentServices, InstrumentDriver, ComponentState {
 
     private final String KEY_NAME = "Camera";
 
     ComponentManager cm;
 
-    private CameraController controller;
+    private CameraComponentController controller;
 
     @Override
     public void componentInitiated() {
@@ -52,7 +52,7 @@ public class CameraImpl
 
     @Override
     public void on(String... files) {
-        controller = CameraController.getInstance();
+        controller = CameraComponentController.getInstance();
         controller.subscribe();
     }
 

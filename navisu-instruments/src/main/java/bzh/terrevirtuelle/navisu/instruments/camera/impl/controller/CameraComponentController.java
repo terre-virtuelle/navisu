@@ -20,19 +20,19 @@ import gov.nasa.worldwind.view.orbit.BasicOrbitView;
  * @date 15 oct. 2015
  * @author Serge Morvan
  */
-public class CameraController
+public class CameraComponentController
         extends AisEventsController {
 
-    private static CameraController INSTANCE;
-    private View view;
+    private static CameraComponentController INSTANCE;
+    private View viewWW;
 
-    private CameraController() {
-        view = (BasicOrbitView) GeoWorldWindViewImpl.getWW().getView();
+    private CameraComponentController() {
+        viewWW = (BasicOrbitView) GeoWorldWindViewImpl.getWW().getView();
     }
 
-    public static CameraController getInstance() {
+    public static CameraComponentController getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new CameraController();
+            INSTANCE = new CameraComponentController();
         }
         return INSTANCE;
     }
@@ -40,12 +40,21 @@ public class CameraController
     @Override
     public void updateTarget(Ship ship) {
         if (ship.isGpsTarget()) {
-            view.setPitch(Angle.fromDegrees(90.0));
-            view.setHeading(Angle.fromDegrees(ship.getHeading() + 90.0));
-            view.goTo(
+            viewWW.setPitch(Angle.fromDegrees(90.0));
+            viewWW.setHeading(Angle.fromDegrees(ship.getHeading() + 90.0));
+            viewWW.goTo(
                     new Position(new LatLon(Angle.fromDegrees(ship.getLatitude()),
-                                    Angle.fromDegrees(ship.getLongitude() - 0.0010)), 100.0), 100
+                            Angle.fromDegrees(ship.getLongitude() - 0.0010)), 100.0), 100
             );
         }
     }
+
+    public void updateTarget() {
+        /*
+        viewWW.setHeading(Angle.fromDegrees(heading));
+        viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
+        viewWW.setPitch(Angle.fromDegrees(90.0));
+        viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
+   */
+}
 }

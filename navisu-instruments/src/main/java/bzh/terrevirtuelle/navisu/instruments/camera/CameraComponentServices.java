@@ -14,7 +14,7 @@ import org.capcaval.c3.component.ComponentService;
  * @date 15 oct. 2015
  * @author Serge Morvan
  */
-public interface CameraServices
+public interface CameraComponentServices
         extends ComponentService {
 
     void on(String... files);
