@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation;
 
+import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
@@ -19,7 +20,6 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
@@ -71,7 +71,8 @@ public class NavigationDataSet {
         @XmlElement(name = "sailingDirections", type = SailingDirections.class),
         @XmlElement(name = "avurnavSet", type = AvurnavSet.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
-        @XmlElement(name = "gpx", type = Gpx.class)
+        @XmlElement(name = "gpx", type = Gpx.class),
+        @XmlElement(name = "camera", type = Camera.class)
     })
 
     private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;

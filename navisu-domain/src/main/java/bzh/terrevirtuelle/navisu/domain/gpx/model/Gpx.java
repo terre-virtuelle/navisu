@@ -6,7 +6,6 @@
 //
 package bzh.terrevirtuelle.navisu.domain.gpx.model;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import java.util.ArrayList;
 import java.util.List;

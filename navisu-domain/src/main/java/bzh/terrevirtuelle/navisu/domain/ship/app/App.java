@@ -15,11 +15,15 @@ import java.util.GregorianCalendar;
  */
 public class App {
 
-    public static void main(String[] args) {
+    public App() {
         Ship ship = ShipBuilder.create()
                 .eta(new GregorianCalendar())
                 .cog(102)
                 .build();
         System.out.println("Default ship : " + ship);
+    }
+
+    public static void main(String[] args) {
+        new App();
     }
 }
