@@ -230,7 +230,7 @@ The following methods return computed values using state that was updated in the
 
     @Override
     public String toString() {
-        return "Camera{" + ", latitude=" + latitude + ", longitude=" + longitude
+        return "Camera{" + " latitude=" + latitude + ", longitude=" + longitude
                 + "heading=" + heading + ", pitch=" + pitch
                 + ", fieldOfView=" + fieldOfView + ", nearClipDistance=" + nearClipDistance 
                 + '}';
