@@ -6,13 +6,18 @@
 package bzh.terrevirtuelle.navisu.navigation.server.impl.vertx;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.navigation.server.NavigationServer;
 import bzh.terrevirtuelle.navisu.navigation.server.NavigationServerServices;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,10 +45,11 @@ public class NavigationServerImpl
     private int port;
     private String hostName;
     private NavigationDataSet navigationDataSet;
-
-    // private StringWriter response;
-    // private StringWriter stringWriter = null;
+    private File file;
+    private FileWriter fileWriter;
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerImpl.class.getName());
+    private List<Camera> cameraList;
+    private Camera camera;
 
     @Override
     public void componentInitiated() {
@@ -53,6 +59,7 @@ public class NavigationServerImpl
     @Override
     public void init() {
         navigationDataSet = new NavigationDataSet();
+        cameraList = new ArrayList<>();
         initProperties();
         this.hostName = properties.getProperty("hostName").trim();
         this.port = new Integer(properties.getProperty("port").trim());
@@ -62,9 +69,11 @@ public class NavigationServerImpl
     @Override
     public void init(String hostName, int port) {
         navigationDataSet = new NavigationDataSet();
+        cameraList = new ArrayList<>();
         initProperties();
         this.hostName = hostName;
         this.port = port;
+        file = new File("data/tests/server.txt");
         initVertx();
     }
 
@@ -84,10 +93,14 @@ public class NavigationServerImpl
             vertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
                 if (ws.path().equals("/navigation")) {
                     ws.dataHandler((Buffer data) -> {
-                        StringWriter stringWriter = response(ws, data);
-                        if (stringWriter != null) {
-                            ws.writeTextFrame(stringWriter.toString());
+                        try {
+                            fileWriter = new FileWriter(file, true);
+                            fileWriter.write(response(data).toString());
+                            fileWriter.close();
+                        } catch (IOException ex) {
+                            System.out.println("ex " + ex);
                         }
+                        ws.writeTextFrame("ACK");
                     });
                 } else {
                     ws.reject();
@@ -102,17 +115,15 @@ public class NavigationServerImpl
         }
     }
 
-    private StringWriter response(ServerWebSocket ws, Buffer data) {
-        Camera camera = new Camera();
-        StringWriter stringWriter = new StringWriter();
-        navigationDataSet.add(camera);
+    private Camera response(Buffer data) {
         try {
-            marshaller.marshal(navigationDataSet, stringWriter);
+            navigationDataSet = new NavigationDataSet();
+            navigationDataSet = ImportExportXML.imports(navigationDataSet, new StringReader(data.toString()));
         } catch (JAXBException ex) {
-            System.out.println("ex " + ex);
-            Logger.getLogger(NavigationServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return stringWriter;
+        cameraList = navigationDataSet.get(Camera.class);
+        return cameraList.get(0);
     }
 
     @Override
