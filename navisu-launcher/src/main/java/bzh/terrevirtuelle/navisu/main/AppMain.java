@@ -127,6 +127,8 @@ import javafx.stage.Stage;
 
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
+import bzh.terrevirtuelle.navisu.instruments.camera.impl.CameraComponentImpl;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -164,6 +166,7 @@ public class AppMain extends Application {
                         BathymetryImpl.class,
                         BathymetryLocalCatalogImpl.class,
                         Bezier2DImpl.class,
+                        CameraComponentImpl.class,
                         ClocksImpl.class,
                         CompassImpl.class,
                         CurrentsImpl.class,
@@ -225,8 +228,7 @@ public class AppMain extends Application {
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
 
-        //CameraServices cameraServices = componentManager.getComponentService(CameraServices.class);
-        //ClockServices clockServices = componentManager.getComponentService(ClockServices.class);
+        CameraComponentServices cameraComponentServices = componentManager.getComponentService(CameraComponentServices.class);
         ClocksServices clocksServices = componentManager.getComponentService(ClocksServices.class);
 
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
@@ -318,6 +320,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(cameraComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(clocksServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
@@ -462,7 +465,7 @@ public class AppMain extends Application {
          */
 
         /* Test Navigation RA */
-         navigationServerServices.init("localhost", 8787);
+         navigationServerServices.init(8787);
     }
 
     public static void main(String[] args) throws Exception {
