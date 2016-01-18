@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.camera;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -25,4 +26,5 @@ public interface CameraComponentServices
 
     public InstrumentDriver getDriver();
 
+    public void updateTarget(Camera camera);
 }

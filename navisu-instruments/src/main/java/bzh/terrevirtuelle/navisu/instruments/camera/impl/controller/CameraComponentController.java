@@ -6,13 +6,19 @@
 package bzh.terrevirtuelle.navisu.instruments.camera.impl.controller;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsController;
 import gov.nasa.worldwind.View;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.view.orbit.BasicOrbitView;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * NaVisu
@@ -24,10 +30,12 @@ public class CameraComponentController
         extends AisEventsController {
 
     private static CameraComponentController INSTANCE;
-    private View viewWW;
-
+    private final View viewWW;
+    private final WorldWindow wwd;
+   
     private CameraComponentController() {
-        viewWW = (BasicOrbitView) GeoWorldWindViewImpl.getWW().getView();
+        this.wwd = GeoWorldWindViewImpl.getWW();
+        this.viewWW = wwd.getView();
     }
 
     public static CameraComponentController getInstance() {
@@ -49,12 +57,15 @@ public class CameraComponentController
         }
     }
 
-    public void updateTarget() {
-        /*
-        viewWW.setHeading(Angle.fromDegrees(heading));
-        viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
-        viewWW.setPitch(Angle.fromDegrees(90.0));
-        viewWW.goTo(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), altitude), altitude);
-   */
-}
+    public void updateTarget(Camera camera) {                        
+        if (camera != null) {
+            viewWW.setHeading(Angle.fromDegrees(camera.getHeading()));
+            viewWW.setFieldOfView(Angle.fromDegrees(camera.getFieldOfView()));
+            viewWW.setPitch(Angle.fromDegrees(camera.getPitch()));
+            viewWW.goTo(new Position(Angle.fromDegrees(camera.getLatitude()),
+                    Angle.fromDegrees(camera.getLongitude()), 100.0), 100.0);
+            wwd.redrawNow();
+        }
+    }
+
 }
