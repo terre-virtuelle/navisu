@@ -15,7 +15,7 @@ public class CameraBuilder {
 
     private double latitude = 0.0;
     private double longitude = 0.0;
-    private int heading = 0;
+    private double heading = 0;
     private double pitch = 0.0;
     private double fieldOfView = 0.78;
     private double nearClipDistance = 4000.0;
@@ -66,7 +66,7 @@ public class CameraBuilder {
      * @param heading
      * @return
      */
-    public CameraBuilder heading(int heading) {
+    public CameraBuilder heading(double heading) {
         this.heading = heading;
         return this;
     }

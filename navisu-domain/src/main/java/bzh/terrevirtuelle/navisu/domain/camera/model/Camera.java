@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 public class Camera
         implements NavigationData {
 
-    private int heading;
+    private double heading;
     private double latitude;
     private double longitude;
     private double fieldOfView = 0.78;//45 deg
@@ -59,7 +59,7 @@ public class Camera
      * @param longitude
      * @param heading
      */
-    public Camera(double latitude, double longitude, int heading) {
+    public Camera(double latitude, double longitude, double heading) {
         this.heading = heading;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -75,7 +75,7 @@ public class Camera
      * @param nearClipDistance
      */
     public Camera(double latitude, double longitude,
-            int heading, double pitch,
+            double heading, double pitch,
             double fieldOfView, double nearClipDistance) {
         this.heading = heading;
         this.latitude = latitude;
@@ -204,7 +204,7 @@ The following methods return computed values using state that was updated in the
      *
      * @return the value of heading
      */
-    public int getHeading() {
+    public double getHeading() {
         return heading;
     }
 
@@ -213,7 +213,7 @@ The following methods return computed values using state that was updated in the
      *
      * @param heading new value of heading
      */
-    public void setHeading(int heading) {
+    public void setHeading(double heading) {
         this.heading = heading;
     }
 
