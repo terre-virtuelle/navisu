@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.server;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -14,8 +15,12 @@ import org.capcaval.c3.component.ComponentService;
 public interface NavigationServerServices
         extends ComponentService {
 
+    public boolean canOpen(String category);
+
+    public InstrumentDriver getDriver();
+
     public void init();
 
-    public void init(String hostName, int port);
+    public void init(int port);
 
 }
