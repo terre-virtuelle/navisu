@@ -36,7 +36,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.S57Global
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.local.S57LocalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.S57ChartComponentImpl;
 import bzh.terrevirtuelle.navisu.navigation.server.NavigationServerServices;
-import bzh.terrevirtuelle.navisu.navigation.server.impl.vertx.NavigationServerImpl;
+import bzh.terrevirtuelle.navisu.navigation.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.client.nmea.NmeaClientServices;
 import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
@@ -129,6 +129,8 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.instruments.camera.impl.CameraComponentImpl;
+import bzh.terrevirtuelle.navisu.navigation.controller.cmd.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.navigation.controller.cmd.impl.NavigationCmdComponentImpl;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -196,6 +198,7 @@ public class AppMain extends Application {
                         MagneticImpl.class,
                         MeasureToolsImpl.class,
                         NavigationServerImpl.class,
+                        NavigationCmdComponentImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
                         RouteDataEditorImpl.class,
@@ -266,7 +269,9 @@ public class AppMain extends Application {
 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         NavigationServerServices navigationServerServices = componentManager.getComponentService(NavigationServerServices.class);
-
+        NavigationCmdComponentServices navigationCmdComponentServices = componentManager.getComponentService(NavigationCmdComponentServices.class);
+        navigationCmdComponentServices.init();
+       
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
