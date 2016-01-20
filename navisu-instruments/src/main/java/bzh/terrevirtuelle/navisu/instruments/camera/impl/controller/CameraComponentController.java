@@ -14,11 +14,6 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * NaVisu
@@ -32,7 +27,8 @@ public class CameraComponentController
     private static CameraComponentController INSTANCE;
     private final View viewWW;
     private final WorldWindow wwd;
-   
+    private boolean first = true;
+
     private CameraComponentController() {
         this.wwd = GeoWorldWindViewImpl.getWW();
         this.viewWW = wwd.getView();
@@ -57,13 +53,19 @@ public class CameraComponentController
         }
     }
 
-    public void updateTarget(Camera camera) {                        
+    public void updateTarget(Camera camera) {
         if (camera != null) {
             viewWW.setHeading(Angle.fromDegrees(camera.getHeading()));
             viewWW.setFieldOfView(Angle.fromDegrees(camera.getFieldOfView()));
             viewWW.setPitch(Angle.fromDegrees(camera.getPitch()));
-            viewWW.goTo(new Position(Angle.fromDegrees(camera.getLatitude()),
-                    Angle.fromDegrees(camera.getLongitude()), 100.0), 100.0);
+            if (first == true) {
+                viewWW.setEyePosition(new Position(Angle.fromDegrees(camera.getLatitude()),
+                        Angle.fromDegrees(camera.getLongitude()), 100.0));
+                first = false;
+            } else {
+                viewWW.goTo(new Position(Angle.fromDegrees(camera.getLatitude()),
+                        Angle.fromDegrees(camera.getLongitude()), 100.0), 100.0);
+            }
             wwd.redrawNow();
         }
     }
