@@ -6,26 +6,21 @@
 package bzh.terrevirtuelle.navisu.navigation.server.impl.controller;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
+import bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog.ArCommand;
+import bzh.terrevirtuelle.navisu.navigation.controller.cmd.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.server.impl.vertx.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import org.capcaval.c3.component.annotation.UsedService;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.VertxFactory;
 import org.vertx.java.core.buffer.Buffer;
@@ -42,9 +37,8 @@ public class NavigationServerController {
 
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerImpl.class.getName());
     private static NavigationServerController INSTANCE;
-    
-    private CameraComponentServices cameraComponentServices;
-    private S57ChartComponentServices s57ChartComponentServices;
+
+    private NavigationCmdComponentServices navigationCmdComponentServices;
 
     private Properties properties;
     private final String PROPERTIES_NAME = "properties/navigation.properties";
@@ -52,17 +46,16 @@ public class NavigationServerController {
     private final String HTML_RESPONSE = "data/html/response.html";
     private final String HTML_RESPONSE_CMD = "/";
 
-    private Vertx vertx;
+    private Vertx dataVertx;
+    private Vertx cmdVertx;
+
     private Marshaller marshaller;
     private int port;
     private NavigationDataSet navigationDataSet;
+    private ArCommand navigationCmd;
 
-    private List<Camera> cameraList;
-    private Camera camera;
-    
     private NavigationServerController() {
         navigationDataSet = new NavigationDataSet();
-        cameraList = new ArrayList<>();
         initProperties();
     }
 
@@ -94,9 +87,30 @@ public class NavigationServerController {
     }
 
     private void initVertx() {
-        vertx = VertxFactory.newVertx();
+        cmdVertx = VertxFactory.newVertx();
         try {
-            vertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
+            cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
+                if (ws.path().equals(START_CMD)) {
+                    ws.dataHandler((Buffer data) -> {
+                        navigationCmd = command(data.toString());
+                        if (navigationCmd != null) {
+                            navigationCmdComponentServices.doIt(navigationCmd);
+                            ws.writeTextFrame("ACK");
+                        } else {
+                            ws.writeTextFrame("NACK");
+                        }
+                    });
+                } else {
+                    ws.reject();
+                }
+            }).requestHandler((HttpServerRequest req) -> {
+                if (req.path().equals(HTML_RESPONSE_CMD)) {
+                    req.response().sendFile(HTML_RESPONSE);
+                }
+            }).listen(port);
+            /*
+            dataVertx = VertxFactory.newVertx();
+            dataVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
                 if (ws.path().equals(START_CMD)) {
                     ws.dataHandler((Buffer data) -> {
                         camera = command(data.toString());
@@ -114,37 +128,30 @@ public class NavigationServerController {
                 if (req.path().equals(HTML_RESPONSE_CMD)) {
                     req.response().sendFile(HTML_RESPONSE);
                 }
-            }).listen(port);
+            }).listen(8989);
+             */
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
     }
 
-    private Camera command(String data) {
-        Camera tmp = null;
+    private ArCommand command(String data) {
+        ArCommand navCmd = null;
         try {
-            navigationDataSet = new NavigationDataSet();
-            navigationDataSet = ImportExportXML.imports(navigationDataSet, new StringReader(data));
+            navCmd = new ArCommand();
+            navCmd = ImportExportXML.imports(navCmd, new StringReader(data));
         } catch (JAXBException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
-        cameraList = navigationDataSet.get(Camera.class);
-        if (cameraList.size() >= 1) {
-            tmp = cameraList.get(0);
-        }
-        return tmp;
+        return navCmd;
     }
 
     private String response() {
         return "";
     }
 
-    public void setCameraComponentServices(CameraComponentServices cameraComponentServices) {
-        this.cameraComponentServices = cameraComponentServices;
-    }
-
-    public void setS57ChartComponentServices(S57ChartComponentServices s57ChartComponentServices) {
-        this.s57ChartComponentServices = s57ChartComponentServices;
+    public void setNavigationCmdComponentServices(NavigationCmdComponentServices navigationCmdComponentServices) {
+        this.navigationCmdComponentServices = navigationCmdComponentServices;
     }
 
 }
