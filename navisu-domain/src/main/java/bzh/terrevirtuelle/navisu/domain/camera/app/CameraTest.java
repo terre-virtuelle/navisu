@@ -7,9 +7,11 @@ package bzh.terrevirtuelle.navisu.domain.camera.app;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.camera.model.CameraBuilder;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
@@ -22,7 +24,7 @@ import javax.xml.bind.JAXBException;
  */
 public class CameraTest {
 
-    Camera camera;
+    NavigationData camera;
 
     public CameraTest() {
         camera = new Camera(44.25, -4.28, 10);
@@ -32,9 +34,9 @@ public class CameraTest {
         
         try {
             navigationDataSet = ImportExportXML.exports(navigationDataSet, "data/cameraTest.xml");
-        } catch (FileNotFoundException | JAXBException ex) {
+        } catch (JAXBException | IOException ex) {
             Logger.getLogger(CameraTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
         System.out.println(navigationDataSet);
         
         try {

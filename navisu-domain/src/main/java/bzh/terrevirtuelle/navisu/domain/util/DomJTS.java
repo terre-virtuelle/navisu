@@ -29,10 +29,10 @@ public class DomJTS {
             } catch (com.vividsolutions.jts.io.ParseException ex) {
                 Logger.getLogger(DomJTS.class.getName()).log(Level.SEVERE, null, ex);
             }  
-            CentroidArea centroid = new CentroidArea();
+            CentroidArea centroidArea = new CentroidArea();
             if (geometry != null) {
-                centroid.add(geometry);
-                Coordinate coord = centroid.getCentroid();
+                centroidArea.add(geometry);
+                Coordinate coord = centroidArea.getCentroid();
                 location = new Pair(coord.y, coord.x);
             }
         }

@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  * @date Jan 14, 2016
  *
  */
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "camera", propOrder = {
     "latitude",
@@ -28,7 +29,7 @@ import javax.xml.bind.annotation.XmlType;
 })
 @XmlRootElement
 public class Camera
-        implements NavigationData {
+        implements NavigationData{
 
     private double heading;
     private double latitude;
