@@ -23,13 +23,8 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpi
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.AvurnavSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.AvurnavRSS;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -80,15 +75,6 @@ public class ArCommand {
         this.cmd = cmd;
         this.arg = navigationData;
 
-    }
-
-    public void parse() {
-        String path = getClass().getPackage().getName();
-        try {
-            ((NavigationCmd) (Class.forName(path + "." + cmd).newInstance())).doIt(arg);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            Logger.getLogger(ArCommand.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public NavigationData getArg() {

@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.controller.cmd;
 
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog.ArCommand;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -16,6 +16,7 @@ public interface NavigationCmdComponentServices
         extends ComponentService {
 
     public void init();
+    
+    public NavigationData doIt(String cmd, NavigationData navigationData);
 
-    public void doIt(ArCommand navigationCmd);
 }

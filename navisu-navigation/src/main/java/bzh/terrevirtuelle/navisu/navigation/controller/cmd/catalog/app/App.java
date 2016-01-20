@@ -25,7 +25,7 @@ public class App {
     public App() {
         //Emission
         NavigationData camera = new Camera();
-        ArCommand cmd = new ArCommand("CameraCmd", camera);
+        ArCommand cmd = new ArCommand("cmd",camera);
         try {
             ImportExportXML.exports(cmd, "cmd.xml");
         } catch (JAXBException | FileNotFoundException ex) {
@@ -38,10 +38,7 @@ public class App {
         } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //Parser
-        if (cmd != null) {
-            cmd.parse();
-        }
+        System.out.println("cmd : " + cmd);
     }
 
     public static void main(String[] args) {

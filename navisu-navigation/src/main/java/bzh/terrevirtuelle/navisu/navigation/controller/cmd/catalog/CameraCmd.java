@@ -5,7 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog;
 
+import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,12 +23,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class CameraCmd
         implements NavigationCmd {
 
-    public CameraCmd() {
+    CameraComponentServices cameraComponentServices;
+    
+    public static CameraCmd INSTANCE;
+
+    public static CameraCmd getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new CameraCmd();
+        }
+        return INSTANCE;
+    }
+
+    private CameraCmd() {
+    }
+
+    public void setCameraComponentServices(CameraComponentServices cameraComponentServices) {
+        this.cameraComponentServices = cameraComponentServices;
     }
 
     @Override
     public NavigationData doIt(NavigationData arg) {
-        System.out.println("arg " + arg);
+        cameraComponentServices.updateTarget((Camera)arg);
         return arg;
     }
 

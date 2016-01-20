@@ -14,4 +14,5 @@ import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 public interface NavigationCmd {
 
     public NavigationData doIt(NavigationData arg);
+    
 }

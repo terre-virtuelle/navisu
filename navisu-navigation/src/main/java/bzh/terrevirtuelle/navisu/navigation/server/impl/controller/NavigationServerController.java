@@ -5,12 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.server.impl.controller;
 
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog.ArCommand;
 import bzh.terrevirtuelle.navisu.navigation.controller.cmd.NavigationCmdComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.server.impl.vertx.NavigationServerImpl;
+import bzh.terrevirtuelle.navisu.navigation.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,9 +16,7 @@ import java.io.StringReader;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.VertxFactory;
 import org.vertx.java.core.buffer.Buffer;
@@ -39,7 +35,8 @@ public class NavigationServerController {
     private static NavigationServerController INSTANCE;
 
     private NavigationCmdComponentServices navigationCmdComponentServices;
-
+    private NavigationData navigationData;
+    
     private Properties properties;
     private final String PROPERTIES_NAME = "properties/navigation.properties";
     private final String START_CMD = "/navigation";
@@ -49,13 +46,10 @@ public class NavigationServerController {
     private Vertx dataVertx;
     private Vertx cmdVertx;
 
-    private Marshaller marshaller;
     private int port;
-    private NavigationDataSet navigationDataSet;
-    private ArCommand navigationCmd;
+    private ArCommand arCommand;
 
     private NavigationServerController() {
-        navigationDataSet = new NavigationDataSet();
         initProperties();
     }
 
@@ -80,8 +74,7 @@ public class NavigationServerController {
         properties = new Properties();
         try {
             properties.load(new FileInputStream(PROPERTIES_NAME));
-            marshaller = JAXBContext.newInstance(NavigationDataSet.class).createMarshaller();
-        } catch (IOException | JAXBException ex) {
+        } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
     }
@@ -92,9 +85,9 @@ public class NavigationServerController {
             cmdVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
                 if (ws.path().equals(START_CMD)) {
                     ws.dataHandler((Buffer data) -> {
-                        navigationCmd = command(data.toString());
-                        if (navigationCmd != null) {
-                            navigationCmdComponentServices.doIt(navigationCmd);
+                        arCommand = command(data.toString());
+                        if (arCommand != null) {
+                            navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getArg());
                             ws.writeTextFrame("ACK");
                         } else {
                             ws.writeTextFrame("NACK");
@@ -143,6 +136,7 @@ public class NavigationServerController {
         } catch (JAXBException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
+        System.out.println("navCmd " + navCmd);
         return navCmd;
     }
 
