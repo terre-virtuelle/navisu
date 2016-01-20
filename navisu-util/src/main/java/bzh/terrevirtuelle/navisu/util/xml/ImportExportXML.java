@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import javax.xml.bind.JAXBContext;
@@ -47,7 +46,6 @@ public class ImportExportXML<T> {
         jAXBContext = JAXBContext.newInstance(data.getClass());
         marshaller = jAXBContext.createMarshaller();
         marshaller.marshal(data, outputFile);
-       // outputFile.close();
         return data;
     }
 
@@ -56,7 +54,7 @@ public class ImportExportXML<T> {
         Marshaller marshaller;
         jAXBContext = JAXBContext.newInstance(data.getClass());
         marshaller = jAXBContext.createMarshaller();
-        marshaller.marshal(jAXBContext, xmlString);
+        marshaller.marshal(data, xmlString);
         return data;
     }
 
