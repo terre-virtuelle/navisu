@@ -14,6 +14,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +48,7 @@ public class App {
         // sauvegarde du NavigationDataSet dans un fic
         try {
             ImportExportXML.exports(navigationDataSet, DIR_SRC + RESULT + ".xml");
-        } catch (JAXBException | FileNotFoundException ex) {
+        } catch (JAXBException | IOException ex) {
             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
         }
         // Lecture du fic et instanciation des entitees
