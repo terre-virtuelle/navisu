@@ -43,6 +43,9 @@ import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import gov.nasa.worldwind.pick.PickedObject;
@@ -83,20 +86,19 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
             BuoySpecialPurpose.class,
             MooringWarpingFacility.class,
             Landmark.class);
-    
+
     protected GpsPlotterWithRouteImpl component;
     protected S57GlobalCatalogServices s57GlobalCatalogServices;
     protected S57ChartComponentServices s57ChartComponentServices;
-    protected TransponderServices transponderServices; 
-    
+    protected TransponderServices transponderServices;
+
     protected RenderableLayer navigationPgonLayer;
     protected RenderableLayer navigationIconsLayer;
     protected RenderableLayer transponderZoneLayer;
-    
+
     protected NavigationDataSet navigationDataSet;
     protected List<String> s57ControllerIdList;
     protected TextAreaController textAreaController;
-    
 
     public GpsPlotterWithRouteController(GpsPlotterWithRouteImpl component,
             LayersManagerServices layersManagerServices,
@@ -180,6 +182,7 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
         try {
             navigationDataSet = ImportExportXML.imports(navigationDataSet, file);
         } catch (FileNotFoundException | JAXBException ex) {
+            System.out.println("ex " + ex);
             Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
         }
         activateS57Controllers();
@@ -191,16 +194,33 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
         S57_CONTROLLER_TYPE_LIST.stream().forEach((claz) -> {
             s57NavigationDataList.addAll(navigationDataSet.get(claz));
         });
+
         s57ControllerIdList = new ArrayList<>();
         s57NavigationDataList.stream().forEach((s) -> {
             s57ControllerIdList.add(Long.toString(s.getId()));
         });
+
         component.notifyTransponderActivateEvent(transponderZoneLayer, s57NavigationDataList);
     }
 
     private void activateNavigationControllers() {
         List<S57Chart> chartList = navigationDataSet.get(S57Chart.class);
         chartList.stream().forEach((S57Chart a) -> {
+
+            Position orgPos = new Position(
+                    Angle.fromDegrees(a.getLatitude()),
+                    Angle.fromDegrees(a.getLongitude()), 0.0);
+/*
+            System.out.println("orgPos" + orgPos);
+            System.out.println("ModelviewMatrix" + wwd.getView().getModelviewMatrix());
+            System.out.println("ProjectionMatrix"+wwd.getView().getProjectionMatrix());
+            System.out.println("Viewport" + wwd.getView().getViewport().x + " " + wwd.getView().getViewport().y + " "
+                    + wwd.getView().getViewport().width + "  " + wwd.getView().getViewport().height);
+            Vec4 cartesianLoc = wwd.getModel().getGlobe().computePointFromPosition(orgPos);
+            Vec4 screenLoc = wwd.getView().project(cartesianLoc);
+            System.out.println("screenLoc " + screenLoc);
+     */      
+           
             String displayName = a.getNumber();
             String description = a.getDescription();
             S57ChartController sc = new S57ChartController(new S57BasicBehavior(),
