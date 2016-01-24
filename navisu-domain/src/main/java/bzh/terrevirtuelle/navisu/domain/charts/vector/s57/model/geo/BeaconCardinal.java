@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATCAM;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATCAM;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -41,9 +41,7 @@ public class BeaconCardinal extends Beacon
 
     @Override
     public String toString() {
-        return "BeaconCardinal{" + '}';
+        return "BeaconCardinal{" + super.toString() + '}';
     }
-
-    
 
 }

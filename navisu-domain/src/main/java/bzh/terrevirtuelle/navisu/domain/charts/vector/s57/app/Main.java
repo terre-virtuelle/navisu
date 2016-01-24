@@ -4,8 +4,17 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BuoyageView;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationView;
+import bzh.terrevirtuelle.navisu.domain.navigation.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
+import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 
 /**
  * Application NaVisu<br>
@@ -205,7 +214,29 @@ public class Main {
         BeaconCardinal b = new BeaconCardinal(1, 2.4, 5.0);
         System.out.println(b);
         b = new BeaconCardinal(2, "POINT(5.0 2.4)");
+        b.setColour(CHART_NAME);
         System.out.println(b);
+
+        BuoyageView buoyageView = new BuoyageView(b, 450, 200);
+        System.out.println(buoyageView);
+        NavigationViewSet navigationViewSet = new NavigationViewSet();
+        navigationViewSet.add(buoyageView);
+
+        try {
+            ImportExportXML.exports(navigationViewSet, "data/test.xml");
+        } catch (JAXBException | FileNotFoundException ex) {
+            System.out.println("ex " + ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        NavigationViewSet navigationViewSet1 = new NavigationViewSet();
+        try {
+            navigationViewSet1 = ImportExportXML.imports(navigationViewSet1, "data/test.xml");
+        } catch (FileNotFoundException | JAXBException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        List<BuoyageView> navigationViewList = navigationViewSet1.get(BuoyageView.class);
+        System.out.println(navigationViewList);
     }
 
     public static void main(String[] args) {

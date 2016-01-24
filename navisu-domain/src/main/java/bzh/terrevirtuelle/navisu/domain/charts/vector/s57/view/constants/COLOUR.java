@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view;
+package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants;
 
 import java.awt.Color;
 import java.util.Collections;

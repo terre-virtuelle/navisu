@@ -5,9 +5,12 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLPAT;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLPAT;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -15,6 +18,8 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Serge Morvan
  * @date 2 oct. 2014 NaVisu project
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Buoyage
         extends Location
         implements NavigationData {
@@ -46,7 +51,7 @@ public class Buoyage
     protected String status;
     @XmlTransient
     protected String label;
-    protected String imageAddress;
+    protected String imageAddress="";
 
     public Buoyage() {
     }

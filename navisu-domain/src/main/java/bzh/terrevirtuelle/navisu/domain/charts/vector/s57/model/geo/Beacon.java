@@ -5,13 +5,20 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BCNSHP;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BCNSHP;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Serge Morvan
  * @date 2 oct. 2014 NaVisu project
  */
+@XmlTransient
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Beacon
         extends Buoyage {
 

@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BOYSHP;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BOYSHP;
 
 /**
  *

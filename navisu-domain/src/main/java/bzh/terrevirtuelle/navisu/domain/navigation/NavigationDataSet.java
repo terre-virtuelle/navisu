@@ -50,7 +50,6 @@ import javax.xml.bind.annotation.XmlType;
 public class NavigationDataSet {
 
     @XmlElements({
-        @XmlElement(name = "navigationData", type = NavigationData.class),
         @XmlElement(name = "bcncar", type = BeaconCardinal.class),
         @XmlElement(name = "bcnisd", type = BeaconIsolatedDanger.class),
         @XmlElement(name = "bcnlat", type = BeaconLateral.class),
@@ -72,9 +71,8 @@ public class NavigationDataSet {
         @XmlElement(name = "avurnavSet", type = AvurnavSet.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "gpx", type = Gpx.class),
-        @XmlElement(name = "camera", type = Camera.class)
+        @XmlElement(name = "camera", type = Camera.class),
     })
-
     private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;
 
     public NavigationDataSet() {
