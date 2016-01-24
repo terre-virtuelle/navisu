@@ -8,11 +8,11 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATCAM;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BUOYAGE;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATLAM;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATSPM;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.BUOYAGE;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATLAM;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATSPM;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;

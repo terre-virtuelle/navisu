@@ -44,8 +44,8 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOUR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOUR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;

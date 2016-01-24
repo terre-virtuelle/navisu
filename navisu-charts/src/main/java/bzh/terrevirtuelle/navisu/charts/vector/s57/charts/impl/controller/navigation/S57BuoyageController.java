@@ -25,7 +25,6 @@ public class S57BuoyageController
 
     @Override
     public void updateTarget(Ship ship) {
-        System.out.println("S57BuoyageController ");
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
         s57Behavior.doIt(distance, azimuth);

@@ -5,9 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.CATWRK;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.EXPSOU;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.QUASOU;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATWRK;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.EXPSOU;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.QUASOU;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Wreck;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
