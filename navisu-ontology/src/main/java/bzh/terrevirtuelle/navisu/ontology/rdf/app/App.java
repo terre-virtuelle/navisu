@@ -6,8 +6,8 @@
 package bzh.terrevirtuelle.navisu.ontology.rdf.app;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.ontology.rdf.controller.RdfParser;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import com.vividsolutions.jts.geom.Geometry;
