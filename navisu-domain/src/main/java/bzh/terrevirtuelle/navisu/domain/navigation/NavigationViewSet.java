@@ -6,6 +6,11 @@
 package bzh.terrevirtuelle.navisu.domain.navigation;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BuoyageView;
+import bzh.terrevirtuelle.navisu.domain.gpx.view.GpxView;
+import bzh.terrevirtuelle.navisu.domain.gpx.view.HighwayView;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.view.AvurnavView;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsView;
+import bzh.terrevirtuelle.navisu.domain.ship.view.ShipView;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,6 +35,12 @@ public class NavigationViewSet {
 
     @XmlElements({
         @XmlElement(name = "buoyageView", type = BuoyageView.class),
+        @XmlElement(name = "shipView", type = ShipView.class),
+        @XmlElement(name = "gpxView", type = GpxView.class),
+        @XmlElement(name = "highwayView", type = HighwayView.class),
+        @XmlElement(name = "sailingDirectionsView", type = SailingDirectionsView.class),
+        @XmlElement(name = "avurnavView", type = AvurnavView.class)
+        
     })
     private ConcurrentLinkedQueue<NavigationView> navigationViewQueue;
 

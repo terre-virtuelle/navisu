@@ -4,9 +4,19 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BuoyageView;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationView;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
+import bzh.terrevirtuelle.navisu.domain.gpx.view.GpxView;
+import bzh.terrevirtuelle.navisu.domain.gpx.view.HighwayView;
 import bzh.terrevirtuelle.navisu.domain.navigation.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.view.AvurnavView;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsView;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.domain.ship.view.ShipView;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
@@ -212,16 +222,39 @@ public class Main {
          });
          */
         BeaconCardinal b = new BeaconCardinal(1, 2.4, 5.0);
-        System.out.println(b);
         b = new BeaconCardinal(2, "POINT(5.0 2.4)");
         b.setColour(CHART_NAME);
-        System.out.println(b);
 
         BuoyageView buoyageView = new BuoyageView(b, 450, 200);
-        System.out.println(buoyageView);
         NavigationViewSet navigationViewSet = new NavigationViewSet();
         navigationViewSet.add(buoyageView);
 
+        Landmark landmark = new Landmark();
+        landmark.setCategoryOfLandMark("test");
+        landmark.setGeometry("POINT(8.0 6.4)");
+        buoyageView = new BuoyageView(landmark, 450, 200);
+        navigationViewSet.add(buoyageView);
+
+        Ship ship = new Ship();
+        ShipView shipView = new ShipView(ship, 632, 124);
+        navigationViewSet.add(shipView);
+
+        Gpx gpx = new Gpx();
+        GpxView gpxView = new GpxView(gpx, 56, 518);
+        navigationViewSet.add(gpxView);
+
+        Highway highway = new Highway();
+        HighwayView highwayView = new HighwayView(highway, 1204, 235);
+        navigationViewSet.add(highwayView);
+        
+        SailingDirections sailingDirections = new SailingDirections();
+        SailingDirectionsView sailingDirectionsView = new SailingDirectionsView(sailingDirections, 245, 489);
+        navigationViewSet.add(sailingDirectionsView);
+        
+        Avurnav avurnav =new Avurnav();
+        AvurnavView avurnavView=new AvurnavView(avurnav,568,759);
+        navigationViewSet.add(avurnavView);
+        
         try {
             ImportExportXML.exports(navigationViewSet, "data/test.xml");
         } catch (JAXBException | FileNotFoundException ex) {
@@ -235,6 +268,8 @@ public class Main {
         } catch (FileNotFoundException | JAXBException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
         List<BuoyageView> navigationViewList = navigationViewSet1.get(BuoyageView.class);
         System.out.println(navigationViewList);
     }

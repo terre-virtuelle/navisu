@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.domain.navigation;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.Rss;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
@@ -22,10 +22,10 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialP
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.SailingDirections;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.Avurnav;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.AvurnavSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.rss.AvurnavRSS;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.AvurnavSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.rss.AvurnavRSS;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import java.util.ArrayList;
 import java.util.Collection;

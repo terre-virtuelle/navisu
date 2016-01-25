@@ -45,8 +45,7 @@ public class BuoyageView
         @XmlElement(name = "buoysaw", type = BuoySafeWater.class),
         @XmlElement(name = "buoyssp", type = BuoySpecialPurpose.class),
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
-        @XmlElement(name = "lndmrk", type = Landmark.class),
-    })
+        @XmlElement(name = "lndmrk", type = Landmark.class)})
     private NavigationData data;
     private double x;
     private double y;
@@ -58,6 +57,15 @@ public class BuoyageView
         this.data = data;
         this.x = x;
         this.y = y;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public long getId() {
+        return data.getId();
     }
 
     /**
@@ -102,7 +110,6 @@ public class BuoyageView
     public NavigationData getData() {
         return data;
     }
-
 
     @Override
     public double getLatitude() {
