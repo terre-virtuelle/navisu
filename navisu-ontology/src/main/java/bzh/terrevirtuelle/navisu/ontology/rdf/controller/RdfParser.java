@@ -6,10 +6,10 @@
 package bzh.terrevirtuelle.navisu.ontology.rdf.controller;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.rdf.Binding;
 import bzh.terrevirtuelle.navisu.domain.rdf.Result;
 import bzh.terrevirtuelle.navisu.domain.rdf.Sparql;
@@ -43,7 +43,7 @@ public class RdfParser {
     private final List<NavigationData> navigationDataList;
     private final String AVURNAV = "Avurnav";
     private final String SAILING_DIRECTIONS = "Area";
-    private Avurnav avurnav = null;
+    private NavigationalWarnings avurnav = null;
     private SailingDirections sailingDirections = null;
     private Path path;
     private String[] tmp;
@@ -114,7 +114,7 @@ public class RdfParser {
                     if (tmp[1].trim().contains(AVURNAV)) {
 
                         if (!avurnavName.equals(tmp[1].trim())) {
-                            avurnav = new Avurnav();
+                            avurnav = new NavigationalWarnings();
                             navigationDataList.add(avurnav);
                             avurnavName = tmp[1].trim();
                         }

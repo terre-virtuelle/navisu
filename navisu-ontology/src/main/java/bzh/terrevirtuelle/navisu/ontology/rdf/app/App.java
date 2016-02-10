@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.ontology.rdf.app;
 
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.ontology.rdf.controller.RdfParser;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
@@ -64,12 +64,12 @@ public class App {
         String wkt = null;
         Geometry geometry;
         WKTReader wktReader = new WKTReader();
-        List<Avurnav> avurnavList = null;
+        List<NavigationalWarnings> avurnavList = null;
         if (nds != null) {
-            avurnavList = nds.get(Avurnav.class);
+            avurnavList = nds.get(NavigationalWarnings.class);
         }
         if (avurnavList != null) {
-            for (Avurnav a : avurnavList) {
+            for (NavigationalWarnings a : avurnavList) {
                 wkt = a.getGeometry();
                 try {
                     geometry = wktReader.read(wkt);
