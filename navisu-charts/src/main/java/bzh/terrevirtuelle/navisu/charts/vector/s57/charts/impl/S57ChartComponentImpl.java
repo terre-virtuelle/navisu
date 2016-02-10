@@ -381,6 +381,9 @@ public class S57ChartComponentImpl
 
     @Override
     public List<SurfacePolylines> getCoastalLines() {
-        return s57ChartComponentController.getCoastalSurfacePolylinesList();
+        if (s57ChartComponentController != null) {
+            return s57ChartComponentController.getCoastalSurfacePolylinesList();
+        }else
+            return null;
     }
 }
