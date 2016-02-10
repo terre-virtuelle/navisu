@@ -90,12 +90,12 @@ public class DockManagerImpl<TrackTool>
     private ZoneDriver zone;
 
     public final DockItem[] ICONS = new DockItem[]{
-        /*
+       /* 
         DockItemFactory.newImageItem("tracks", ICON_PATH + "dock_icons/tracks.png",
         (e) -> {
             tracksRadialMenu.setVisible(!tracksRadialMenu.isVisible());
         }),
-        */
+     */   
         DockItemFactory.newImageItem("system I/O", ICON_PATH + "dock_icons/system.png",
         (e) -> {
             systemRadialMenu.setVisible(!systemRadialMenu.isVisible());
@@ -156,7 +156,7 @@ public class DockManagerImpl<TrackTool>
         createToolsRadialWidget();
         createNavigationRadialWidget();
         createSystemRadialWidget();
-      //  createTracksRadialWidget();
+    //    createTracksRadialWidget();
     }
 
     private void createDockWidget(Scene scene) {

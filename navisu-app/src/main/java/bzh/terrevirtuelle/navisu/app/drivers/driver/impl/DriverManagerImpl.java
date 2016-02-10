@@ -89,7 +89,7 @@ public class DriverManagerImpl
             System.out.println("Load : " + selectedFile.getAbsolutePath());
         }
     }
-    
+
     @Override
     public void open(String category, String[] ext) {
 
@@ -103,13 +103,17 @@ public class DriverManagerImpl
                 this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             }
         }
-        System.out.println("userInitialDirectory "+userInitialDirectory);
+        System.out.println("userInitialDirectory " + userInitialDirectory);
         this.fileChooserDock.getExtensionFilters().clear();
         this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(category, ext));
-        File selectedFile = this.fileChooserDock.showOpenDialog(null);
-        if (selectedFile != null) {
-            this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
-            System.out.println("Load : " + selectedFile.getAbsolutePath());
+        try {
+            File selectedFile = this.fileChooserDock.showOpenDialog(null);
+            if (selectedFile != null) {
+                this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
+                System.out.println("Load : " + selectedFile.getAbsolutePath());
+            }
+        } catch (Exception e) {
+            System.out.println("Attention userInitialDirectory is not valide. Clean your caches.properties file");
         }
     }
 
@@ -130,7 +134,8 @@ public class DriverManagerImpl
             properties.store(out, "Last directory choosed by user");
             out.close();
         } catch (IOException ex) {
-            Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Le répertoire choisit n'apparait pas de le cache");
         }
     }
 
@@ -142,11 +147,9 @@ public class DriverManagerImpl
             if (driver.canOpen(category, file)) {
                 compatibleDriver = driver;
                 break;
-            } else {
-                if (driver.canOpen(file)) {
-                    compatibleDriver = driver;
-                    break;
-                }
+            } else if (driver.canOpen(file)) {
+                compatibleDriver = driver;
+                break;
             }
         }
         return compatibleDriver;
