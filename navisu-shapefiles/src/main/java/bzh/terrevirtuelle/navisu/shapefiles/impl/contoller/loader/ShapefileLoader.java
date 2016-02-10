@@ -313,6 +313,7 @@ public class ShapefileLoader {
 
             ShapeAttributes attrs = this.createPolylineAttributes(record);
             layer.addRenderable(this.createPolyline(record, attrs));
+          //  System.out.println(layer.getRenderables());
         }
 
         // Une seule Shapefile pas de sélection possible
