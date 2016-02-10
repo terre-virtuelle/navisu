@@ -37,37 +37,41 @@ public class WWJ_JTS {
 
     public static String surfacePolylinesToWkt(List<SurfacePolylines> polylines) {
         //MULTILINESTRING((3 4,10 50,20 25),(-5 -8,-10 -8,-15 -4))
-        List<List<LatLon>> listListLatLon = new ArrayList<>();
-        polylines.stream().map((s) -> s.getLocations()).map((ll) -> {
-            List<LatLon> listLatLon = new ArrayList<>();
-            for (LatLon lll : ll) {
-                listLatLon.add(lll);
+        if (polylines != null) {
+            List<List<LatLon>> listListLatLon = new ArrayList<>();
+            polylines.stream().map((s) -> s.getLocations()).map((ll) -> {
+                List<LatLon> listLatLon = new ArrayList<>();
+                for (LatLon lll : ll) {
+                    listLatLon.add(lll);
+                }
+                return listLatLon;
+            }).forEach((listLatLon) -> {
+                listListLatLon.add(listLatLon);
+            });
+            String geometry = "MULTILINESTRING(";
+            int size0 = listListLatLon.size();
+            for (int i = 0; i < size0 - 1; i++) {
+                List<LatLon> l = listListLatLon.get(i);
+                int size1 = l.size();
+                geometry += "(";
+                for (int j = 0; j < size1 - 1; j++) {
+                    geometry += l.get(j).longitude.degrees + " " + l.get(j).latitude.degrees + ",";
+                }
+                geometry += l.get(size1 - 1).longitude.degrees + " " + l.get(size1 - 1).latitude.degrees;
+                geometry += "),";
             }
-            return listLatLon;
-        }).forEach((listLatLon) -> {
-            listListLatLon.add(listLatLon);
-        });
-        String geometry = "MULTILINESTRING(";
-        int size0 = listListLatLon.size();
-        for (int i = 0; i < size0 - 1; i++) { 
-            List<LatLon> l = listListLatLon.get(i);
+            List<LatLon> l = listListLatLon.get(size0 - 1);
             int size1 = l.size();
             geometry += "(";
             for (int j = 0; j < size1 - 1; j++) {
                 geometry += l.get(j).longitude.degrees + " " + l.get(j).latitude.degrees + ",";
             }
             geometry += l.get(size1 - 1).longitude.degrees + " " + l.get(size1 - 1).latitude.degrees;
-            geometry += "),"; 
+            geometry += "))";
+            return geometry;
+        } else {
+            return null;
         }
-         List<LatLon> l = listListLatLon.get(size0 - 1);
-            int size1 = l.size();
-            geometry += "(";
-            for (int j = 0; j < size1 - 1; j++) {
-                geometry += l.get(j).longitude.degrees + " " + l.get(j).latitude.degrees + ",";
-            }
-            geometry += l.get(size1 - 1).longitude.degrees + " " + l.get(size1 - 1).latitude.degrees;
-            geometry += "))"; 
-        return geometry;
     }
 
     public static Pair<Double, Double> getCentroid(String wkt) {

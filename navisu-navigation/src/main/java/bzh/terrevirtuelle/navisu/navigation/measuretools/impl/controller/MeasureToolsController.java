@@ -468,20 +468,26 @@ public class MeasureToolsController
     private void coastalLineDisplay(List<SurfacePolylines> data) {
         coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
         // coastalLinesLayer.setPickEnabled(false);
-        coastalLinesLayer.addRenderables(data);
+        if (data != null) {
+            coastalLinesLayer.addRenderables(data);
+        }
     }
 
     private Geometry coastalLineToJTS(List<SurfacePolylines> data) {
-        WKTReader wkt = new WKTReader();
-        Geometry coastalLines = null;
-        try {
-            coastalLines = wkt.read(WWJ_JTS.surfacePolylinesToWkt(data));
-        } catch (ParseException ex) {
-            Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
+        if (data != null) {
+            WKTReader wkt = new WKTReader();
+            Geometry coastalLines = null;
+            try {
+                coastalLines = wkt.read(WWJ_JTS.surfacePolylinesToWkt(data));
+            } catch (ParseException ex) {
+                Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (coastalLines != null) {
+                System.out.println(coastalLines.toText());
+            }
+            return coastalLines;
+        } else {
+            return null;
         }
-        if (coastalLines != null) {
-            System.out.println(coastalLines.toText());
-        }
-        return coastalLines;
     }
 }
