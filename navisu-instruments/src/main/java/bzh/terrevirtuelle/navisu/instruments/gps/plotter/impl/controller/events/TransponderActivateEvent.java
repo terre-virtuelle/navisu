@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events;
 
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.List;
 import org.capcaval.c3.component.ComponentEvent;

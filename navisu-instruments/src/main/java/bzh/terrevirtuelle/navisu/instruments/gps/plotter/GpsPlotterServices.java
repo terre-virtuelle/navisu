@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.gps.plotter;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import org.capcaval.c3.component.ComponentService;
 
