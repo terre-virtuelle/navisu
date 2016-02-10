@@ -3,33 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.navigation.gps.plotter;
+package bzh.terrevirtuelle.navisu.navigation.measuretools;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import org.capcaval.c3.component.ComponentService;
 
 /**
  * NaVisu
  *
- * @date 7 mai 2015
+ * @date 18 juil. 2015
  * @author Serge Morvan
  */
-public interface GpsPlotterWithRouteServices
+public interface MeasureToolsServices
         extends ComponentService {
 
-    void on();
-
-   
+    void on(String... files);
 
     default void off() {
     }
 
-    boolean isOn();
-
     boolean canOpen(String category);
 
     InstrumentDriver getDriver();
-
 }

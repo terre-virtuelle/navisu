@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog;
+package bzh.terrevirtuelle.navisu.navigation.camera.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmd;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,9 +44,8 @@ public class CameraCmd
     }
 
     @Override
-    public NavigationData doIt(NavigationData arg) {
-        cameraComponentServices.updateTarget((Camera)arg);
-        return arg;
+    public NavigationViewSet doIt(NavigationData arg) {
+       return cameraComponentServices.updateTarget((Camera)arg);
     }
 
 }

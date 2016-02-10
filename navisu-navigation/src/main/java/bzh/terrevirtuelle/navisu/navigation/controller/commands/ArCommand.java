@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog;
+package bzh.terrevirtuelle.navisu.navigation.controller.commands;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
@@ -21,8 +21,8 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialP
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -60,7 +60,7 @@ public class ArCommand {
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
         @XmlElement(name = "lndmrk", type = Landmark.class),
         @XmlElement(name = "ship", type = Ship.class),
-        @XmlElement(name = "avurnav", type = Avurnav.class),
+        @XmlElement(name = "avurnav", type = NavigationalWarnings.class),
         @XmlElement(name = "sailingDirections", type = SailingDirections.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "gpx", type = Gpx.class),
@@ -69,6 +69,10 @@ public class ArCommand {
     private NavigationData arg = null;
 
     public ArCommand() {
+    }
+
+    public ArCommand(String cmd) {
+        this.cmd = cmd;
     }
 
     public ArCommand(String cmd, NavigationData navigationData) {

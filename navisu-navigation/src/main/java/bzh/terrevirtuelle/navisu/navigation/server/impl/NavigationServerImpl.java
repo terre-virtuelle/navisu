@@ -7,8 +7,8 @@ package bzh.terrevirtuelle.navisu.navigation.server.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.server.NavigationServer;
 import bzh.terrevirtuelle.navisu.navigation.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.navigation.server.impl.controller.NavigationServerController;

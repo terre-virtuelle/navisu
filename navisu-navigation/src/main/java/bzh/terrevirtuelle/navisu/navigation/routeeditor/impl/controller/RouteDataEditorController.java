@@ -9,8 +9,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.ontology.rdf.controller.RdfParser;
 import bzh.terrevirtuelle.navisu.util.io.IO;
@@ -56,7 +56,7 @@ public class RouteDataEditorController
     private final S57ChartComponentServices s57ChartServices;
     private final LayersManagerServices layersManagerServices;
     private NavigationDataSet navigationDataSet;
-    private List<Avurnav> avurnavList;
+    private List<NavigationalWarnings> avurnavList;
     private List<SailingDirections> sailingDirectionsList;
     private List<Gpx> gpxList;
     private File file;
@@ -133,7 +133,7 @@ public class RouteDataEditorController
             }
             sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
             gpxList = navigationDataSet.get(Gpx.class);
-            avurnavList = navigationDataSet.get(Avurnav.class);
+            avurnavList = navigationDataSet.get(NavigationalWarnings.class);
         });
         saveButton.setOnMouseClicked((MouseEvent event) -> {
             if (navigationDataSet != null) {
@@ -255,7 +255,7 @@ public class RouteDataEditorController
                 RdfParser rdfParser = new RdfParser(f);
                 NavigationDataSet tmp = rdfParser.parse();
                 navigationDataSet.addAll(tmp.getNavigationDataList());
-                avurnavList.addAll(tmp.get(Avurnav.class));
+                avurnavList.addAll(tmp.get(NavigationalWarnings.class));
                 avurnavPrint(avurnavList);
             }
         });
@@ -292,10 +292,10 @@ public class RouteDataEditorController
         });
     }
 
-    public void avurnavPrint(List<Avurnav> avurnavList) {
+    public void avurnavPrint(List<NavigationalWarnings> avurnavList) {
         String[] tmp;
         String str = "";
-        for (Avurnav a : avurnavList) {
+        for (NavigationalWarnings a : avurnavList) {
             if (a.getId() != 0) {
                 tmp = new String[5];
                 tmp[0] = Translator.tr("navigation.avurnav.avurnav") + " "

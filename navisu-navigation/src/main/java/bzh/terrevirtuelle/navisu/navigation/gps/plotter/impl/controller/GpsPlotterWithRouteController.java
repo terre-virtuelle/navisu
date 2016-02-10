@@ -25,9 +25,9 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
@@ -45,7 +45,6 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import gov.nasa.worldwind.pick.PickedObject;
@@ -67,7 +66,8 @@ import javax.xml.bind.JAXBException;
  * @date 7 mai 2015
  * @author Serge Morvan
  */
-public class GpsPlotterWithRouteController extends GpsPlotterController {
+public class GpsPlotterWithRouteController
+        extends GpsPlotterController {
 
     private final String NAME2 = "Nautical documents";
     private final String NAME3 = "S57 Buoyage behavior";
@@ -210,7 +210,7 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
             Position orgPos = new Position(
                     Angle.fromDegrees(a.getLatitude()),
                     Angle.fromDegrees(a.getLongitude()), 0.0);
-/*
+            /*
             System.out.println("orgPos" + orgPos);
             System.out.println("ModelviewMatrix" + wwd.getView().getModelviewMatrix());
             System.out.println("ProjectionMatrix"+wwd.getView().getProjectionMatrix());
@@ -219,8 +219,8 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
             Vec4 cartesianLoc = wwd.getModel().getGlobe().computePointFromPosition(orgPos);
             Vec4 screenLoc = wwd.getView().project(cartesianLoc);
             System.out.println("screenLoc " + screenLoc);
-     */      
-           
+             */
+
             String displayName = a.getNumber();
             String description = a.getDescription();
             S57ChartController sc = new S57ChartController(new S57BasicBehavior(),
@@ -232,8 +232,8 @@ public class GpsPlotterWithRouteController extends GpsPlotterController {
             sc.activate();
         });
 
-        List<Avurnav> avurnavList = navigationDataSet.get(Avurnav.class);
-        avurnavList.stream().forEach((Avurnav a) -> {
+        List<NavigationalWarnings> avurnavList = navigationDataSet.get(NavigationalWarnings.class);
+        avurnavList.stream().forEach((NavigationalWarnings a) -> {
             String displayName = "Avurnav N°" + Long.toString(a.getId());
             String description = a.getDescription();
             AvurnavController sc = new AvurnavController(new S57BasicBehavior(),

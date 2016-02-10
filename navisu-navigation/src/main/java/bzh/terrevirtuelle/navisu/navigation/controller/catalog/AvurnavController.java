@@ -8,8 +8,8 @@ package bzh.terrevirtuelle.navisu.navigation.controller.catalog;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -40,7 +40,7 @@ public class AvurnavController
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
         s57Behavior.doIt(distance, azimuth);
-        surveyZone.setValue(AVKey.DISPLAY_NAME, ((Avurnav) navigationData).getDescription() + "\n distance :  "
+        surveyZone.setValue(AVKey.DISPLAY_NAME, ((NavigationalWarnings) navigationData).getDescription() + "\n distance :  "
                 + String.format("%.2f", distance) + " Nm"
                 + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
     }
@@ -68,7 +68,7 @@ public class AvurnavController
         polygonHighlightAttributes.setInteriorOpacity(0.2);
     }
 
-    private String createText(Avurnav a) {
+    private String createText(NavigationalWarnings a) {
         String tmp = Translator.tr("navigation.avurnav.globalZone") + " : " + a.getGlobalZone() + "\n"
                 + Translator.tr("navigation.avurnav.broadcastTime") + " : " + a.getBroadcastTime() + "\n"
                 + Translator.tr("navigation.avurnav.expirationDate") + " : " + a.getExpirationDate() + "\n"

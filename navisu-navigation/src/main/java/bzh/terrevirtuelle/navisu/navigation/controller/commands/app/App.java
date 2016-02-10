@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog.app;
+package bzh.terrevirtuelle.navisu.navigation.controller.commands.app;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog.ArCommand;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.ArCommand;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;

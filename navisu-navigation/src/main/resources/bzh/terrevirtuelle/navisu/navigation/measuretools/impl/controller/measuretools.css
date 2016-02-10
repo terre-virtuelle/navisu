@@ -1,0 +1,105 @@
+/* CSS Document */
+
+@import "commonTemplate.css";
+
+/*******************************************************************************
+ *                                                                             *
+ * Infos et valeurs AIS / measuretools                                         *
+ *                                                                             *
+ ******************************************************************************/
+.sliderlabel{
+    -fx-font: 10px "Roboto Cn";
+}
+.metriclabel{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+}
+.measuretoolvalue{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : #fff900;
+}
+.measuretoollabel{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.measuretoolcombolabel{
+    -fx-font: 10px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.measuretoolname{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : #fff900;
+    -fx-underline : true;
+}
+.info-text{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : #fff900;
+}
+/*******************************************************************************
+ *                                                                             *
+ * Measure tools                                                               *
+ *                                                                             *
+ ******************************************************************************/
+.ais-panel{
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: -fx-base;
+    -fx-stroke: -fx-line-base;
+}
+.measuretool-panel{
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: -fx-base;
+    -fx-stroke: -fx-line-base;
+}
+.measuretool-circle, .measuretool-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: -fx-base-trans10;  
+}
+.measuretool-line, .measuretool-ticks {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 2;
+}
+.measuretool-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.measuretool-degrees{
+    -fx-font: 20pt "Roboto";
+    -fx-fill:-fx-line-base;
+}
+.measuretool-screen {
+    /*
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 4px;
+    */
+    -fx-arc-height:30;
+    -fx-arc-width:30;
+    -fx-fill: #143b28;    
+}
+.measuretool-info-pane {
+    -fx-stroke: -fx-line-base;
+    -fx-arc-height:20;
+    -fx-arc-width:20;
+    -fx-fill: -fx-base-trans20;
+}
+.measuretool-buttonlabel{
+    -fx-font: 14px "Roboto";
+    -fx-fill : whitesmoke;
+}
+.measuretool-buttonlabel-nlines{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.measuretool-togglebutton{
+    -fx-background-color: linear-gradient(to bottom, ladder(-fx-toggle-color,derive(-fx-toggle-color,8%) 75%,derive(-fx-toggle-color,10%) 80%),derive(-fx-toggle-color,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-toggle-color,10%) ,derive(-fx-toggle-color,-6%));
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 3px, 3px, 2px, 1px;
+    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : whitesmoke;
+    -fx-alignment: CENTER;
+}
+

@@ -5,14 +5,16 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.server.impl.controller;
 
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog.ArCommand;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.ArCommand;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +38,8 @@ public class NavigationServerController {
 
     private NavigationCmdComponentServices navigationCmdComponentServices;
     private NavigationData navigationData;
-    
+    private NavigationViewSet navigationViewSet;
+
     private Properties properties;
     private final String PROPERTIES_NAME = "properties/navigation.properties";
     private final String START_CMD = "/navigation";
@@ -87,8 +90,14 @@ public class NavigationServerController {
                     ws.dataHandler((Buffer data) -> {
                         arCommand = command(data.toString());
                         if (arCommand != null) {
-                            navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getArg());
-                            ws.writeTextFrame("ACK");
+                            navigationViewSet = navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getArg());
+                            if (navigationViewSet != null) {
+                                if (navigationViewSet.size() > 0) {
+                                    ws.writeTextFrame(response(navigationViewSet));
+                                }else{
+                                    ws.writeTextFrame("");
+                                }
+                            }
                         } else {
                             ws.writeTextFrame("NACK");
                         }
@@ -136,12 +145,17 @@ public class NavigationServerController {
         } catch (JAXBException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
-        System.out.println("navCmd " + navCmd);
         return navCmd;
     }
 
-    private String response() {
-        return "";
+    private String response(NavigationViewSet navigationViewSet) {
+        StringWriter xmlString = new StringWriter();
+        try {
+            ImportExportXML.exports(navigationViewSet, xmlString);
+        } catch (JAXBException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+        }
+        return xmlString.toString();
     }
 
     public void setNavigationCmdComponentServices(NavigationCmdComponentServices navigationCmdComponentServices) {

@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.navigation.controller.cmd.impl;
+package bzh.terrevirtuelle.navisu.navigation.controller.commands.impl;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
 import org.capcaval.c3.component.ComponentState;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.NavigationCmdComponent;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.NavigationCmdComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog.CameraCmd;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.catalog.NavigationCmd;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponent;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.navigation.camera.impl.controller.CameraCmd;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmd;
 import java.util.HashMap;
 import java.util.Map;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -61,8 +63,13 @@ public class NavigationCmdComponentImpl
     }
 
     @Override
-    public NavigationData doIt(String cmd, NavigationData navigationData) {
+    public NavigationViewSet doIt(String cmd, NavigationData navigationData) {
        return  ((NavigationCmd)navigationCmdMap.get(cmd)).doIt(navigationData);
+    }
+
+    @Override
+    public NMEA doIt(String cmd) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

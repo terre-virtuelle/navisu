@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.navigation.controller.cmd;
+package bzh.terrevirtuelle.navisu.navigation.controller.commands;
 
 import org.capcaval.c3.component.Component;
 

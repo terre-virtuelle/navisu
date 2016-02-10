@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.GpxBuilder;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
@@ -83,9 +83,9 @@ import org.gavaghan.geodesy.GeodeticCurve;
 import org.gavaghan.geodesy.GlobalCoordinates;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
-import bzh.terrevirtuelle.navisu.navigation.util.NavJTS;
+import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 import gov.nasa.worldwind.layers.RenderableLayer;
 
 /**
@@ -101,7 +101,7 @@ public class RouteEditorController
     private final String FXML = "routeeditor.fxml";
     private MeasureTool measureTool;
 
-    private List<Avurnav> avurnavList;
+    private List<NavigationalWarnings> avurnavList;
     private List<SailingDirections> sailingDirectionsList;
     private List<Gpx> gpxList;
     private File file;
@@ -113,7 +113,7 @@ public class RouteEditorController
     private List<List<Waypoint>> waypoints;// 1 Liste de WP par TS
     private List<TrackSegment> trackSegments;
     private List<Point> boundaries;
-   // private List<Point> highways;
+    // private List<Point> highways;
     private List<Position> positions;
     private List<Position> offsetPathPositions;
     private List<Position> highwayPathPositions;
@@ -221,13 +221,13 @@ public class RouteEditorController
         for(Layer l : layers){
             System.out.println(l.getName());
         }
-        */
-        /*
+         */
+ /*
         // Add terrain profile layer
         profile.setEventSource(GeoWorldWindViewImpl.getWW());
         profile.setFollow(TerrainProfileLayer.FOLLOW_PATH);
         profile.setShowProfileLine(false);
-*/
+         */
         load(FXML);
         initPanel();
         setTranslateX(280.0);
@@ -253,16 +253,6 @@ public class RouteEditorController
 
     private void initPanel() {
         speed = Float.parseFloat(speedText.getText());
-        quit.setOnMouseClicked((MouseEvent event) -> {
-            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
-            guiAgentServices.getRoot().getChildren().remove(this);
-            setVisible(false);
-            measureTool.clear();
-            measureTool.setArmed(false);
-            if (offset != null) {
-                measureTool.getLayer().removeRenderable(offset);
-            }
-        });
 
         initMeasureTool();
         newButton.setOnMouseClicked((MouseEvent event) -> {
@@ -293,6 +283,18 @@ public class RouteEditorController
             });
             ((Component) wwd).setCursor(!measureTool.isArmed() ? Cursor.getDefaultCursor()
                     : Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        });
+        quit.setOnMouseClicked((MouseEvent event) -> {
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
+            guiAgentServices.getRoot().getChildren().remove(this);
+            setVisible(false);
+            if (measureTool != null) {
+                measureTool.clear();
+                measureTool.setArmed(false);
+                if (offset != null) {
+                    measureTool.getLayer().removeRenderable(offset);
+                }
+            }
         });
         endButton.setOnMouseClicked((MouseEvent event) -> {
             filter();
@@ -547,8 +549,8 @@ public class RouteEditorController
                 highwayPoly = new Polygon(highwayPathPositions);
                 highway = new Highway(1);
                 highway.setName(routeName);
-                highway.setGeometry(NavJTS.positionsToWkt(highwayPathPositions));
-                highway.setDescription("Range : " + Integer.toString((int)(highwayDistance*3600))+" sec");
+                highway.setGeometry(WWJ_JTS.toWkt(highwayPathPositions));
+                highway.setDescription("Range : " + Integer.toString((int) (highwayDistance * 3600)) + " sec");
                 gpx.setHighway(highway);
             }
             highwayPoly.setValue(AVKey.DISPLAY_NAME, routeName);

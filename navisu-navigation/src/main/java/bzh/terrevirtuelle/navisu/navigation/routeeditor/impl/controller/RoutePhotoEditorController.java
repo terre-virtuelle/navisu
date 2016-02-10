@@ -10,7 +10,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.model.ShipBuilder;
@@ -57,7 +57,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.util.NavJTS;
+import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 
 /**
  * NaVisu
@@ -335,7 +335,7 @@ public class RoutePhotoEditorController
         tmp.stream().forEach((g) -> {
             highways.add(g.getHighway());
         });
-        highway = NavJTS.wktPolygonToPolygon(highways.get(0).getGeometry());
+        highway = WWJ_JTS.wktPolygonToPolygon(highways.get(0).getGeometry());
         if (highway != null) {
             ShapeAttributes offsetNormalAttributes = new BasicShapeAttributes();
             offsetNormalAttributes.setOutlineMaterial(Material.RED);
