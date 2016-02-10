@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlTransient
 @XmlAccessorType(XmlAccessType.FIELD)
-public class NMEA {
+public class NMEA  {
 
     protected String device;
     protected String sentence;
@@ -98,5 +98,6 @@ public class NMEA {
     public Object clone() throws CloneNotSupportedException {
         return super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }

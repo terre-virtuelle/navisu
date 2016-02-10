@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model;
+package bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model;
 
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,30 +23,30 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @XmlType(name = "avurnavSet")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AvurnavSet {
+public class NavigationalWarningsSet {
 
     @XmlElements({
-        @XmlElement(name = "avurnav", type = Avurnav.class)
+        @XmlElement(name = "avurnav", type = NavigationalWarnings.class)
     })
-    private List<Avurnav> avurnavs;
+    private List<NavigationalWarnings> avurnavs;
 
-    public AvurnavSet() {
+    public NavigationalWarningsSet() {
         avurnavs = new ArrayList<>();
     }
 
-    public AvurnavSet(List<Avurnav> avurnavs) {
+    public NavigationalWarningsSet(List<NavigationalWarnings> avurnavs) {
         this.avurnavs = avurnavs;
     }
 
-    public List<Avurnav> getAvurnavs() {
+    public List<NavigationalWarnings> getAvurnavs() {
         return avurnavs;
     }
 
-    public void setAvurnavs(List<Avurnav> avurnavs) {
+    public void setAvurnavs(List<NavigationalWarnings> avurnavs) {
         this.avurnavs = avurnavs;
     }
 
-    public void add(Avurnav avurnav) {
+    public void add(NavigationalWarnings avurnav) {
         avurnavs.add(avurnav);
     }
 }

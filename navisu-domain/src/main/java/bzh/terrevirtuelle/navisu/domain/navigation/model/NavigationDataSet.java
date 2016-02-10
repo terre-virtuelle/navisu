@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.navigation;
+package bzh.terrevirtuelle.navisu.domain.navigation.model;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.rss.Rss;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.Rss;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
@@ -23,9 +23,10 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.AvurnavSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.rss.AvurnavRSS;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarningsSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.NavigationalWarningsRSS;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,13 +66,13 @@ public class NavigationDataSet {
         @XmlElement(name = "lndmrk", type = Landmark.class),
         @XmlElement(name = "ship", type = Ship.class),
         @XmlElement(name = "rss", type = Rss.class),
-        @XmlElement(name = "avurnavss", type = AvurnavRSS.class),
-        @XmlElement(name = "avurnav", type = Avurnav.class),
+        @XmlElement(name = "avurnavss", type = NavigationalWarningsRSS.class),
+        @XmlElement(name = "avurnav", type = NavigationalWarnings.class),
         @XmlElement(name = "sailingDirections", type = SailingDirections.class),
-        @XmlElement(name = "avurnavSet", type = AvurnavSet.class),
+        @XmlElement(name = "avurnavSet", type = NavigationalWarningsSet.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "gpx", type = Gpx.class),
-        @XmlElement(name = "camera", type = Camera.class),
+        @XmlElement(name = "camera", type = Camera.class)
     })
     private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;
 

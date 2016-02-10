@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.gpx.view;
+package bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.view;
 
-import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationView;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
@@ -17,26 +17,27 @@ import javax.xml.bind.annotation.XmlElements;
  * @date Jan 25, 2016
  *
  */
-public class HighwayView
+public class AvurnavView
         extends NavigationView {
 
     @XmlElements({
-        @XmlElement(name = "highway", type = Highway.class)
+        @XmlElement(name = "avurnav", type = NavigationalWarnings.class)
     })
-    private Highway data;
+    private NavigationalWarnings data;
 
-    public HighwayView() {
+    public AvurnavView() {
     }
 
-    public HighwayView(double x, double y) {
+    public AvurnavView(double x, double y) {
         super(x, y);
     }
 
-    public HighwayView(Highway data, double x, double y) {
+    public AvurnavView(NavigationalWarnings data, double x, double y) {
         super(x, y);
         this.data = data;
     }
 
+   
     /**
      * Get the value of data
      *
@@ -76,7 +77,7 @@ public class HighwayView
 
     @Override
     public String toString() {
-        return "HighwayView{" + "data=" + data + super.toString() + '}';
+        return "AvurnavView{" + "data=" + data + super.toString() + '}';
     }
 
 }

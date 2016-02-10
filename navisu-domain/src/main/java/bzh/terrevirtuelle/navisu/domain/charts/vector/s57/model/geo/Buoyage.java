@@ -5,9 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLPAT;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -158,7 +158,7 @@ public class Buoyage
      * @return the value of colour
      */
     public String getColourMeaning(String col) {
-        return COLOUR_NAME.ATT.get(col);
+        return COLOR_NAME.getColor(col);
     }
 
     /**
@@ -390,7 +390,8 @@ public class Buoyage
                 + ", verticalLength=" + verticalLength
                 + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
                 + ", status=" + status
-                + super.toString() + '}';
+              //  + super.toString() 
+                + '}';
     }
 
     public String getLabel() {

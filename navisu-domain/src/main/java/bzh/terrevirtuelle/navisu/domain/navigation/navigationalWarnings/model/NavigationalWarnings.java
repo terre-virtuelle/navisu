@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model;
+package bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
             "latitude", "longitude",
             "geometry"})
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Avurnav
+public class NavigationalWarnings
         extends Location
         implements NavigationData {
 
@@ -37,19 +37,19 @@ public class Avurnav
     private String restriction;
     private String type;
 
-    public Avurnav() {
+    public NavigationalWarnings() {
         super(0, 0.0, 0.0);
     }
 
-    public Avurnav(long id, double lat, double lon) {
+    public NavigationalWarnings(long id, double lat, double lon) {
         super(id, lat, lon);
     }
 
-    public Avurnav(long id, String geometry) {
+    public NavigationalWarnings(long id, String geometry) {
         super(id, geometry);
     }
 
-    public Avurnav(long id, double lat, double lon,
+    public NavigationalWarnings(long id, double lat, double lon,
             String globalZone, String description, String expirationDate,
             String broadcastTime, String restriction, String type) {
         super(id, lat, lon);

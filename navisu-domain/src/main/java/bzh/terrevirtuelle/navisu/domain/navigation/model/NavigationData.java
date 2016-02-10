@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.domain.navigation;
+package bzh.terrevirtuelle.navisu.domain.navigation.model;
 
 
 public interface NavigationData {

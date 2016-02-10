@@ -16,10 +16,11 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyIsolated
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationView;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationView;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
@@ -30,7 +31,7 @@ import javax.xml.bind.annotation.XmlElements;
  *
  */
 public class BuoyageView
-        implements NavigationView {
+        extends NavigationView{
 
     @XmlElements({
         @XmlElement(name = "bcncar", type = BeaconCardinal.class),
@@ -46,18 +47,20 @@ public class BuoyageView
         @XmlElement(name = "buoyssp", type = BuoySpecialPurpose.class),
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
         @XmlElement(name = "lndmrk", type = Landmark.class)})
-    private NavigationData data;
-    private double x;
-    private double y;
-
+    private Buoyage data;
+    
     public BuoyageView() {
     }
 
-    public BuoyageView(NavigationData data, double x, double y) {
+    public BuoyageView(Buoyage data, double x, double y) {
+        super(x, y);
         this.data = data;
-        this.x = x;
-        this.y = y;
     }
+
+    public BuoyageView(double x, double y) {
+        super(x, y);
+    }
+
 
     /**
      *
@@ -66,44 +69,6 @@ public class BuoyageView
     @Override
     public long getId() {
         return data.getId();
-    }
-
-    /**
-     * Get the value of y
-     *
-     * @return the value of y
-     */
-    @Override
-    public double getY() {
-        return y;
-    }
-
-    /**
-     * Set the value of y
-     *
-     * @param y new value of y
-     */
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    /**
-     * Get the value of x
-     *
-     * @return the value of x
-     */
-    @Override
-    public double getX() {
-        return x;
-    }
-
-    /**
-     * Set the value of x
-     *
-     * @param x new value of x
-     */
-    public void setX(double x) {
-        this.x = x;
     }
 
     @Override
@@ -140,7 +105,7 @@ public class BuoyageView
 
     @Override
     public String toString() {
-        return "BuoyageView{" + "data=" + data + ", x=" + x + ", y=" + y + '}';
+        return "BuoyageView{" + "data=" + data + super.toString() + '}';
     }
 
 }

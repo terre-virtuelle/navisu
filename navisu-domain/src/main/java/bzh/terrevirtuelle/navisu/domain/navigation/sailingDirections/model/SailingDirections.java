@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;

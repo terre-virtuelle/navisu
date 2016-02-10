@@ -5,8 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.domain.ship.view;
 
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationView;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationView;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
@@ -18,45 +18,33 @@ import javax.xml.bind.annotation.XmlElements;
  *
  */
 public class ShipView
-        implements NavigationView {
+        extends NavigationView {
 
     @XmlElements({
         @XmlElement(name = "ship", type = Ship.class)
     })
-    private NavigationData data;
-    private double x;
-    private double y;
+    private Ship data;
 
     public ShipView() {
     }
 
-    public ShipView(NavigationData data, double x, double y) {
-        this.data = data;
-        this.x = x;
-        this.y = y;
+    public ShipView(double x, double y) {
+        super(x, y);
     }
 
+    public ShipView(Ship data, double x, double y) {
+        super(x, y);
+        this.data = data;
+    }
+
+    /**
+     * Get the value of data
+     *
+     * @return the value of data
+     */
     @Override
     public NavigationData getData() {
         return data;
-    }
-
-    @Override
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    @Override
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
     }
 
     @Override
@@ -94,4 +82,10 @@ public class ShipView
     public long getId() {
         return data.getId();
     }
+
+    @Override
+    public String toString() {
+        return "ShipView{" + "data=" + data + super.toString() + '}';
+    }
+
 }

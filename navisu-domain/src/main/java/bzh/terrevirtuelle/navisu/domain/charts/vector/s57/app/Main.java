@@ -6,13 +6,15 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BuoyageView;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.gpx.view.GpxView;
 import bzh.terrevirtuelle.navisu.domain.gpx.view.HighwayView;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationViewSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.model.Avurnav;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.view.AvurnavView;
+import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.view.AvurnavView;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsView;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
@@ -221,12 +223,13 @@ public class Main {
          }
          });
          */
-        BeaconCardinal b = new BeaconCardinal(1, 2.4, 5.0);
-        b = new BeaconCardinal(2, "POINT(5.0 2.4)");
-        b.setColour(CHART_NAME);
+ NavigationViewSet navigationViewSet = new NavigationViewSet();
 
-        BuoyageView buoyageView = new BuoyageView(b, 450, 200);
-        NavigationViewSet navigationViewSet = new NavigationViewSet();
+        BeaconCardinal beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
+        beaconCardinal.setColour(COLOR_NAME.getColor("3"));
+        beaconCardinal.setImageAddress("img/buoyage_1/BCNCAR_3_3_6.2_1_14_1.png");
+
+        BuoyageView buoyageView = new BuoyageView(beaconCardinal, 450, 200);
         navigationViewSet.add(buoyageView);
 
         Landmark landmark = new Landmark();
@@ -248,11 +251,15 @@ public class Main {
         navigationViewSet.add(highwayView);
         
         SailingDirections sailingDirections = new SailingDirections();
+        sailingDirections.setLatitude(4.25);
+        sailingDirections.setLongitude(56.6);
         SailingDirectionsView sailingDirectionsView = new SailingDirectionsView(sailingDirections, 245, 489);
         navigationViewSet.add(sailingDirectionsView);
         
-        Avurnav avurnav =new Avurnav();
+        NavigationalWarnings avurnav =new NavigationalWarnings();
+        avurnav.setLatitude(21.26);
         AvurnavView avurnavView=new AvurnavView(avurnav,568,759);
+        
         navigationViewSet.add(avurnavView);
         
         try {
@@ -270,7 +277,7 @@ public class Main {
         }
         
         
-        List<BuoyageView> navigationViewList = navigationViewSet1.get(BuoyageView.class);
+        List<BuoyageView> navigationViewList = navigationViewSet.get(BuoyageView.class);
         System.out.println(navigationViewList);
     }
 

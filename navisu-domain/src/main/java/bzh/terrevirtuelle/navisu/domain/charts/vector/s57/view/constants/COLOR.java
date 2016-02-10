@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class COLOUR {
+public class COLOR {
 
     public static final Map<String, Color> ATT = Collections.unmodifiableMap(new HashMap<String, Color>() {
         {
@@ -26,10 +26,15 @@ public class COLOUR {
         }
     });
 
+    public static Color getColor(String type) {
+        return ATT.get(type);
+    }
+
     @Override
+
     public String toString() {
         StringBuilder buffer = new StringBuilder();
-        Set<Map.Entry<String, Color>> entries = COLOUR.ATT.entrySet();
+        Set<Map.Entry<String, Color>> entries = COLOR.ATT.entrySet();
         buffer.append("[");
         entries.stream().forEach((e) -> {
             buffer.append("[").append(e.getKey()).append(", ").append(e.getValue()).append("]");

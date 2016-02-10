@@ -5,9 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view;
 
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationView;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationView;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
@@ -18,67 +18,27 @@ import javax.xml.bind.annotation.XmlElements;
  *
  */
 public class SailingDirectionsView
-        implements NavigationView {
+        extends NavigationView {
 
     @XmlElements({
         @XmlElement(name = "sailingDirections", type = SailingDirections.class)
     })
-    private NavigationData data;
-
-    private double x;
-
-    private double y;
+    
+    private SailingDirections data;
 
     public SailingDirectionsView() {
     }
 
-    public SailingDirectionsView(NavigationData data) {
+    public SailingDirectionsView(double x, double y) {
+        super(x, y);
+    }
+
+    public SailingDirectionsView(SailingDirections data, double x, double y) {
+        super(x, y);
         this.data = data;
     }
 
-    public SailingDirectionsView(NavigationData data, double x, double y) {
-        this.data = data;
-        this.x = x;
-        this.y = y;
-    }
-
-    /**
-     * Get the value of y
-     *
-     * @return the value of y
-     */
-    @Override
-    public double getY() {
-        return y;
-    }
-
-    /**
-     * Set the value of y
-     *
-     * @param y new value of y
-     */
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    /**
-     * Get the value of x
-     *
-     * @return the value of x
-     */
-    @Override
-    public double getX() {
-        return x;
-    }
-
-    /**
-     * Set the value of x
-     *
-     * @param x new value of x
-     */
-    public void setX(double x) {
-        this.x = x;
-    }
+    
 
     /**
      * Get the value of data
@@ -119,7 +79,8 @@ public class SailingDirectionsView
 
     @Override
     public String toString() {
-        return "SailingDirectionsView{" + "data=" + data + ", x=" + x + ", y=" + y + '}';
+        return "SailingDirectionsView{" + "data=" + data + super.toString() + '}';
     }
+
 
 }

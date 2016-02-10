@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.navigation;
+package bzh.terrevirtuelle.navisu.domain.navigation.view;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.domain.gpx.view.GpxView;
 import bzh.terrevirtuelle.navisu.domain.gpx.view.HighwayView;
-import bzh.terrevirtuelle.navisu.domain.navigation.avurnav.view.AvurnavView;
+import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.view.AvurnavView;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsView;
 import bzh.terrevirtuelle.navisu.domain.ship.view.ShipView;
 import java.util.ArrayList;
@@ -64,15 +64,15 @@ public class NavigationViewSet {
         return navigationViewQueue.isEmpty();
     }
 
-    public void setNavigationDataQueue(ConcurrentLinkedQueue<NavigationView> navigationViewQueue) {
+    public void setNavigationViewQueue(ConcurrentLinkedQueue<NavigationView> navigationViewQueue) {
         this.navigationViewQueue = navigationViewQueue;
     }
 
-    public List<NavigationView> getNavigationDataList() {
+    public List<NavigationView> getNNavigationViewList() {
         return new ArrayList(navigationViewQueue);
     }
 
-    public ConcurrentLinkedQueue<NavigationView> getNavigationDataQueue() {
+    public ConcurrentLinkedQueue<NavigationView> getNavigationViewQueue() {
         return navigationViewQueue;
     }
 

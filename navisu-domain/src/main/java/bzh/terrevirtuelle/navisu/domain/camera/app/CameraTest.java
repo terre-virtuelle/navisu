@@ -7,8 +7,8 @@ package bzh.terrevirtuelle.navisu.domain.camera.app;
 
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.camera.model.CameraBuilder;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
 import java.io.IOException;
