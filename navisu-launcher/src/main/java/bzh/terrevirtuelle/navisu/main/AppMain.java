@@ -78,8 +78,8 @@ import bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.GpsTrackPolygonSe
 import bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.impl.GpsTrackPolygonImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.impl.GpsTrackImpl;
-import bzh.terrevirtuelle.navisu.instruments.measuretools.MeasureToolsServices;
-import bzh.terrevirtuelle.navisu.instruments.measuretools.impl.MeasureToolsImpl;
+import bzh.terrevirtuelle.navisu.navigation.measuretools.MeasureToolsServices;
+import bzh.terrevirtuelle.navisu.navigation.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
 import bzh.terrevirtuelle.navisu.instruments.webview.WebViewServices;
@@ -127,10 +127,10 @@ import javafx.stage.Stage;
 
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.instruments.camera.CameraComponentServices;
-import bzh.terrevirtuelle.navisu.instruments.camera.impl.CameraComponentImpl;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.NavigationCmdComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.controller.cmd.impl.NavigationCmdComponentImpl;
+import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
+import bzh.terrevirtuelle.navisu.navigation.camera.impl.CameraComponentImpl;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.navigation.controller.commands.impl.NavigationCmdComponentImpl;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -417,7 +417,7 @@ public class AppMain extends Application {
          System.out.println(headings);*/
 
         /* Test CPA zone et reconnaissance de trajectoire */
-        dataServerServices.openFile("data/ais/ais.txt");  //AIS
+ // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
         //dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
@@ -470,7 +470,7 @@ public class AppMain extends Application {
          */
 
         /* Test Navigation RA */
-         navigationServerServices.init(8787);
+        // navigationServerServices.init(8787);
     }
 
     public static void main(String[] args) throws Exception {
