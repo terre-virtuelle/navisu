@@ -1,7 +1,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;

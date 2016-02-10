@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation;
 
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.transponder.impl.controller.TransponderEventsController;
 import gov.nasa.worldwind.WorldWindow;

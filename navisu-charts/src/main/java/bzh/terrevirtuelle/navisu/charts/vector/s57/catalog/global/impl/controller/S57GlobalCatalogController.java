@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.xml.stream.XMLStreamException;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.LatLon;

@@ -46,9 +46,10 @@ import javafx.scene.control.TreeItem;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
+import gov.nasa.worldwind.render.SurfacePolylines;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -378,4 +379,8 @@ public class S57ChartComponentImpl
         return chartsOpen;
     }
 
+    @Override
+    public List<SurfacePolylines> getCoastalLines() {
+        return s57ChartComponentController.getCoastalSurfacePolylinesList();
+    }
 }

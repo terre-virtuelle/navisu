@@ -8,8 +8,8 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.view.S57LightView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOUR;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -147,7 +147,7 @@ public class LIGHTS_ShapefileLoader
             String label = "Light \n"
                     + "Lat : " + Double.toString(latDegrees) + "\n"
                     + "Lon : " + Double.toString(lonDegrees) + "\n"
-                    + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
+                    + "Color : " + COLOR_NAME.getColor(data.getColour()) + "\n"
                     + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
                     + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
                     + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
@@ -157,11 +157,11 @@ public class LIGHTS_ShapefileLoader
             lightView.getAttributes().setDrawOutline(true);
             // Si la couleur est blanche, la vue est jaune
             if (data.getColour().contains("1")) {
-                lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
-                lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                lightView.getAttributes().setMaterial(new Material(COLOR.ATT.get("6")));
+                lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get("6")));
             } else {
-                lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                lightView.getAttributes().setMaterial(new Material(COLOR.ATT.get(data.getColour())));
+                lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get(data.getColour())));
             }
 
             airspaceLayer.addRenderable(lightView);
@@ -184,7 +184,7 @@ public class LIGHTS_ShapefileLoader
             String label = "Light \n"
                     + "Lat : " + Double.toString(latDegrees) + "\n"
                     + "Lon : " + Double.toString(lonDegrees) + "\n"
-                    + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
+                    + "Color : " + COLOR_NAME.getColor(data.getColour()) + "\n"
                     + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
                     + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
                     + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "");
@@ -194,11 +194,11 @@ public class LIGHTS_ShapefileLoader
             // Si la couleur est blanche, la vue est jaune
             if (data.getColour() != null) {
                 if (data.getColour().contains("1")) {
-                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get("6")));
-                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                    lightView.getAttributes().setMaterial(new Material(COLOR.ATT.get("6")));
+                    lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get("6")));
                 } else {
-                    lightView.getAttributes().setMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                    lightView.getAttributes().setMaterial(new Material(COLOR.ATT.get(data.getColour())));
+                    lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get(data.getColour())));
                 }
             }
         }

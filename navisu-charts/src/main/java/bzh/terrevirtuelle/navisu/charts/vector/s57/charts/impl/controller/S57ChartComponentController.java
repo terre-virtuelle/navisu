@@ -20,6 +20,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.AREA_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.BRIDGE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.CBLSUB_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.COALNE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DAYMAR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DOCARE_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.LAKE_ShapefileLoader;
@@ -44,10 +45,10 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Object;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOUR;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOUR_NAME;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
-import bzh.terrevirtuelle.navisu.domain.navigation.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
@@ -86,6 +87,8 @@ import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.SurfacePolylines;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -116,6 +119,7 @@ public class S57ChartComponentController {
     private LIGHTS_ShapefileLoader loader;
     private final List<Light> lightList;
     private final List<Light> lightDisplayedList;
+    private final List<SurfacePolylines> coastalSurfacePolylinesList;
     protected Scene scene;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected Globe globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
@@ -127,7 +131,7 @@ public class S57ChartComponentController {
     private final String NAME = "Transponder";
     protected final String GROUP = "Navigation";
     private final boolean DEV = false;
-    //private final boolean DEV = true;
+    //  private final boolean DEV = true;
     private final Set<S57Controller> s57Controllers = new HashSet<>();
     boolean first = true;
 
@@ -142,6 +146,7 @@ public class S57ChartComponentController {
         topMarks = new HashMap<>();
         lightList = new ArrayList<>();
         lightDisplayedList = new ArrayList<>();
+        coastalSurfacePolylinesList = new ArrayList<>();
         System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
         addImageListeners();
@@ -283,6 +288,9 @@ public class S57ChartComponentController {
                     case "BOYSPP.shp":
                         load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSPP", s57Controllers), "BUOYAGE", "BOYSPP", "/");
                         break;
+                    case "COALNE.shp":
+                        load(new COALNE_ShapefileLoader(), "COALNE", "/");
+                        break;
                     case "CBLSUB.shp":
                         load(new CBLSUB_ShapefileLoader(), "CBLSUB", "CBLSUB", "/");
                         break;
@@ -393,6 +401,15 @@ public class S57ChartComponentController {
         loader.createLayerFromSource(new File(path + sep + acronym + ".shp"));
     }
 
+    private void load(LayerShapefileLoader loader, String acronym, String sep) {
+        RenderableLayer l = new RenderableLayer();
+        loader.setLayer(l);
+        loader.createLayerFromSource(new File(path + sep + acronym + ".shp"));
+        for (Renderable r : l.getRenderables()) {
+            coastalSurfacePolylinesList.add((SurfacePolylines) r);
+        }
+    }
+
     public SurveyZoneController getSurveyZoneController() {
         return surveyZoneController;
     }
@@ -469,7 +486,7 @@ public class S57ChartComponentController {
                 lightView.setAltitude(elevation + 35);
                 lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
                         Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
-                
+
                 S57Controller dummy = new S57BuoyageController(new S57Behavior() {
                     @Override
                     public void doIt(double distance, double azimuth) {
@@ -485,7 +502,7 @@ public class S57ChartComponentController {
                 String label = "Light \n"
                         + "Lat : " + Double.toString(lat) + "\n"
                         + "Lon : " + Double.toString(lon) + "\n"
-                        + "Color : " + COLOUR_NAME.ATT.get(data.getColour()) + "\n"
+                        + "Color : " + COLOR_NAME.getColor(data.getColour()) + "\n"
                         + (data.getSignalPeriod() != null ? "Period : " + data.getSignalPeriod() + " s" + "\n" : "")
                         + (data.getHeight() != null ? "Height : " + data.getHeight() + " m" + "\n" : "")
                         + (data.getValueOfNominalRange() != null ? "Nominal range : " + data.getValueOfNominalRange() + " Nm" + "\n" : "")
@@ -496,13 +513,13 @@ public class S57ChartComponentController {
 
                 // Si la couleur est blanche, la vue est jaune
                 if (data.getColour().contains("1")) {
-                    lightView.getAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get("6")));
-                    lightView.getHighlightAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get("6")));
-                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get("6")));
+                    lightView.getAttributes().setInteriorMaterial(new Material(COLOR.ATT.get("6")));
+                    lightView.getHighlightAttributes().setInteriorMaterial(new Material(COLOR.ATT.get("6")));
+                    lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get("6")));
                 } else {
-                    lightView.getAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                    lightView.getHighlightAttributes().setInteriorMaterial(new Material(COLOUR.ATT.get(data.getColour())));
-                    lightView.getAttributes().setOutlineMaterial(new Material(COLOUR.ATT.get(data.getColour())));
+                    lightView.getAttributes().setInteriorMaterial(new Material(COLOR.ATT.get(data.getColour())));
+                    lightView.getHighlightAttributes().setInteriorMaterial(new Material(COLOR.ATT.get(data.getColour())));
+                    lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get(data.getColour())));
                 }
                 airspaceTmpLayer.addRenderable(lightView);
                 lightDisplayedList.add(data);
@@ -566,6 +583,10 @@ public class S57ChartComponentController {
 
     public void setGuiAgentServices(GuiAgentServices guiAgentServices) {
         this.guiAgentServices = guiAgentServices;
+    }
+
+    public List<SurfacePolylines> getCoastalSurfacePolylinesList() {
+        return coastalSurfacePolylinesList;
     }
 
 }
