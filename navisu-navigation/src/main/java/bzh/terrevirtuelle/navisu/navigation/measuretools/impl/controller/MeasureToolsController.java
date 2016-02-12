@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.navigation.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
@@ -21,6 +22,9 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.Path;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import gov.nasa.worldwind.util.UnitsFormat;
 import gov.nasa.worldwind.util.measure.MeasureTool;
@@ -30,6 +34,7 @@ import java.awt.Cursor;
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -100,6 +105,10 @@ public class MeasureToolsController
     @FXML
     public Button pauseButton;
     @FXML
+    public Button saveButton;
+    @FXML
+    public Button selectButton;
+    @FXML
     public Button endButton;
     @FXML
     public Text lengthLabel;
@@ -114,12 +123,13 @@ public class MeasureToolsController
     @FXML
     public Text centerLabel;
 
-    MeasureTool measureTool;
+    private MeasureTool measureTool;
     private JLabel[] pointsLabel;
     private String unit = "Km/Km\u00b2";
     private final String NAME = "CoastalLines";
     private final String GROUP = "Navigation";
-    protected RenderableLayer coastalLinesLayer;
+    private RenderableLayer coastalLinesLayer;
+    private Geometry coastalLines = null;
 
     public static MeasureToolsController getInstance(MeasureToolsImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -151,14 +161,12 @@ public class MeasureToolsController
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
         view.setOpacity(0.8);
-
         measureTool = new MeasureTool(wwd);
         measureTool.setController(new MeasureToolController());
         addlisteners();
@@ -218,7 +226,6 @@ public class MeasureToolsController
                     break;
             }
         });
-
     }
 
     @Override
@@ -252,10 +259,9 @@ public class MeasureToolsController
                     measureTool.setMeasureShapeType(MeasureTool.SHAPE_QUAD);
                     break;
                 case "CoastalLine":
-                    measureTool.setMeasureShapeType(MeasureTool.SHAPE_PATH);
-                    List<SurfacePolylines> coastalLines = s57ChartComponentServices.getCoastalLines();
-                    coastalLineDisplay(coastalLines);
-                    coastalLineToJTS(coastalLines);
+                    measureTool.setMeasureShapeType(MeasureTool.SHAPE_QUAD);
+                    coastalLine(s57ChartComponentServices.getCoastalLines());
+
                     break;
                 default:
                     break;
@@ -358,6 +364,14 @@ public class MeasureToolsController
             measureTool.clear();
             measureTool.setArmed(true);
         });
+        saveButton.setOnMouseClicked((MouseEvent event) -> {
+            //TODO
+            System.out.println("saveButton");
+        });
+        selectButton.setOnMouseClicked((MouseEvent event) -> {
+            //TODO
+            coastalLineControlSelected();
+        });
         pauseButton.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(!measureTool.isArmed());
             pauseButton.setText(!measureTool.isArmed() ? "Resume" : "Pause");
@@ -454,7 +468,6 @@ public class MeasureToolsController
             s = "na";
         }
         headingLabel.setText(s);
-
         // Update center label
         Position center = measureTool.getCenterPosition();
         if (center != null) {
@@ -465,7 +478,96 @@ public class MeasureToolsController
         centerLabel.setText(s);
     }
 
+    private void coastalLine(List<SurfacePolylines> coastalLines) {
+        coastalLineDisplay(coastalLines);
+        coastalLineToJTS(coastalLines);
+        //System.out.println("coastalLines " + coastalLines);
+    }
+
+    private void coastalLineControlSelected() {
+        List<Geometry> geometries = new ArrayList<>();
+        ArrayList<Position> positions = new ArrayList<>();
+        WKTReader wkt = new WKTReader();
+        Geometry rectangle = null;
+
+        try {
+            rectangle = wkt.read(WWJ_JTS.toPolygonWkt(measureTool.getPositions()));
+        } catch (ParseException ex) {
+            Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (rectangle != null && coastalLines != null) {
+            Geometry intersection = rectangle.intersection(coastalLines);
+            int nb = intersection.getNumGeometries();
+            for (int i = 0; i < nb; i++) {
+                Coordinate[] coordinates = intersection.getGeometryN(i).getCoordinates();
+                if (coordinates[0].x != coordinates[coordinates.length - 1].x
+                        && coordinates[0].y != coordinates[coordinates.length - 1].y) {
+                    geometries.add(intersection.getGeometryN(i));
+                }
+            }
+            geometries.stream().map((g) -> g.getCoordinates()).forEach((coord) -> {
+                for (Coordinate coord1 : coord) {
+                    positions.add(new Position(LatLon.fromDegrees(coord1.y, coord1.x), 15.0));
+                }
+            });
+            //Essai de simplification, DouglasPeuckerLineSimplifier non trouvée ?
+/*
+            Geometry simpleGeometry = null;
+            try {
+                simpleGeometry = wkt.read(WWJ_JTS.toLineStringWkt(positions));
+            } catch (ParseException ex) {
+                Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DouglasPeuckerLineSimplifier vWSimplifier = new DouglasPeuckerLineSimplifier(simpleGeometry.getCoordinates());
+            vWSimplifier.setDistanceTolerance(0.010);
+            simpleGeometry= vWSimplifier.getResultGeometry();
+            Coordinate[] coordinates1 = simpleGeometry.getCoordinates();
+            System.out.println("coordinates1 " + coordinates1.length);
+            positions.clear();
+            for (Coordinate coord1 : coordinates1) {
+                    positions.add(new Position(LatLon.fromDegrees(coord1.y, coord1.x), 15.0));
+                }
+            System.out.println("positions "+ positions.size());
+         */   
+            positions.add(new Position(LatLon.fromDegrees(rectangle.getCoordinates()[0].y, positions.get(positions.size() - 1).longitude.degrees), 15.0));
+            positions.add(new Position(LatLon.fromDegrees(rectangle.getCoordinates()[0].y, positions.get(0).longitude.degrees), 15.0));
+            positions.add(positions.get(0));
+            measureTool.setPositions(positions);
+        }
+    }
+
+    private void coastalLinePathDisplay(List<Position> data) {
+        coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
+        // coastalLinesLayer.setPickEnabled(false);
+        Path path = new Path(data);
+        coastalLinesLayer.addRenderable(path);
+
+    }
+
+    private void coastalLinePolygonDisplay(List<Position> data) {
+        coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
+        // coastalLinesLayer.setPickEnabled(false);
+        Polygon polygon = new Polygon(data);
+        coastalLinesLayer.addRenderable(polygon);
+
+    }
+
+    private void coastalLinePosDisplay(List<Position> data) {
+        coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
+        // coastalLinesLayer.setPickEnabled(false);
+        for (Position p : data) {
+            PointPlacemark placemark = new PointPlacemark(p);
+            coastalLinesLayer.addRenderable(placemark);
+        }
+
+    }
+
     private void coastalLineDisplay(List<SurfacePolylines> data) {
+
+        /*for(SurfacePolylines sp : data){
+            System.out.println("sp : "+sp);
+        }
+         */
         coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
         // coastalLinesLayer.setPickEnabled(false);
         if (data != null) {
@@ -474,16 +576,18 @@ public class MeasureToolsController
     }
 
     private Geometry coastalLineToJTS(List<SurfacePolylines> data) {
+
         if (data != null) {
             WKTReader wkt = new WKTReader();
-            Geometry coastalLines = null;
             try {
                 coastalLines = wkt.read(WWJ_JTS.surfacePolylinesToWkt(data));
+                // coastalLines = wkt.read(WWJ_JTS.surfacePolylinesToWktWithCoalescence(data));
             } catch (ParseException ex) {
                 Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (coastalLines != null) {
-                System.out.println(coastalLines.toText());
+                //   System.out.println(coastalLines.toText());
+                //   System.out.println("coastalLines.getNumGeometries() " + coastalLines.getNumGeometries());
             }
             return coastalLines;
         } else {

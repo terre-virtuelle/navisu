@@ -25,13 +25,23 @@ import java.util.logging.Logger;
  */
 public class WWJ_JTS {
 
-    public static String toWkt(List<Position> positions) {
+    public static String toPolygonWkt(List<? extends Position> positions) {
         String geometry = "POLYGON((";
         int l = positions.size();
         for (int i = 0; i < l - 1; i++) {
             geometry += positions.get(i).getLongitude().getDegrees() + " " + positions.get(i).getLatitude().getDegrees() + ",";
         }
         geometry += positions.get(l - 1).getLongitude().getDegrees() + " " + positions.get(l - 1).getLatitude().getDegrees() + "))";
+        return geometry;
+    }
+
+    public static String toLineStringWkt(List<? extends Position> positions) {
+        String geometry = "LINESTRING(";
+        int l = positions.size();
+        for (int i = 0; i < l - 1; i++) {
+            geometry += positions.get(i).getLongitude().getDegrees() + " " + positions.get(i).getLatitude().getDegrees() + ",";
+        }
+        geometry += positions.get(l - 1).getLongitude().getDegrees() + " " + positions.get(l - 1).getLatitude().getDegrees() + ")";
         return geometry;
     }
 
@@ -72,6 +82,35 @@ public class WWJ_JTS {
         } else {
             return null;
         }
+    }
+
+    public static String surfacePolylinesToWktWithCoalescence(List<SurfacePolylines> polylines) {
+        List<LatLon> tmp = new ArrayList<>();
+        // Iterable<? extends LatLon> tmp;
+
+        List<LatLon> listLatLon = new ArrayList<>();
+        for (SurfacePolylines s : polylines) {
+            tmp.clear();
+
+            for (LatLon i : s.getLocations()) {
+                tmp.add(i);
+            }
+
+            int size = tmp.size();
+            if (tmp.get(0) != tmp.get(size - 1)) {
+                for (LatLon ll : tmp) {
+                    listLatLon.add(ll);
+                }
+            }
+        }
+        String geometry = "LINESTRING(";
+        int size = listLatLon.size();
+        for (int j = 0; j < size - 1; j++) {
+            geometry += listLatLon.get(j).longitude.degrees + " " + listLatLon.get(j).latitude.degrees + ",";
+        }
+        geometry += listLatLon.get(size - 1).longitude.degrees + " " + listLatLon.get(size - 1).latitude.degrees;
+        geometry += ")";
+        return geometry;
     }
 
     public static Pair<Double, Double> getCentroid(String wkt) {

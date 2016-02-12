@@ -16,22 +16,34 @@
 <fx:root stylesheets="@measuretools.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="450.0" styleClass="measuretool-panel" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="340.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="340.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
         <Group layoutY="10.0" styleClass="measuretool-panel">
             <children>
-                <Button fx:id="newButton" layoutX="38.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" text="NEW">
+                <Button fx:id="newButton" layoutX="23.0" layoutY="45.0" prefHeight="23.0" prefWidth="75.0" text="NEW">
                     <styleClass>
                         <String fx:value="measuretools-togglebutton" />
                         <String fx:value="measuretoollabel" />
                     </styleClass>
                 </Button>
-                <Button fx:id="pauseButton" layoutX="167.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" text="PAUSE">
+                <Button fx:id="pauseButton" layoutX="100.0" layoutY="45.0" prefHeight="23.0" prefWidth="75.0" text="PAUSE">
                     <styleClass>
                         <String fx:value="measuretools-togglebutton" />
                         <String fx:value="measuretoollabel" />
                     </styleClass>
                 </Button>
-                <Button fx:id="endButton" layoutX="311.0" layoutY="45.0" prefHeight="15.0" prefWidth="100.0" text="END">
+                <Button fx:id="endButton" layoutX="329.0" layoutY="45.0" prefHeight="23.0" prefWidth="75.0" text="END">
+                    <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="saveButton" layoutX="177.0" layoutY="45.0" prefHeight="23.0" prefWidth="75.0" text="SAVE">
+                    <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="selectButton" layoutX="252.0" layoutY="45.0" prefHeight="23.0" prefWidth="75.0" text="SELECT">
                     <styleClass>
                         <String fx:value="measuretools-togglebutton" />
                         <String fx:value="measuretoollabel" />
@@ -128,6 +140,7 @@
                         <Glow />
                     </effect>
                 </ImageView>
+            
             </children>
         </Group>
     </children>
