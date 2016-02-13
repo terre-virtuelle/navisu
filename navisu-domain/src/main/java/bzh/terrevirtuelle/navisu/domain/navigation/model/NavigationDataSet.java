@@ -21,12 +21,12 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWate
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
+import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarningsSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.NavigationalWarningsRSS;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,7 +72,8 @@ public class NavigationDataSet {
         @XmlElement(name = "avurnavSet", type = NavigationalWarningsSet.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "gpx", type = Gpx.class),
-        @XmlElement(name = "camera", type = Camera.class)
+        @XmlElement(name = "camera", type = Camera.class),
+        @XmlElement(name = "area", type = Area.class)
     })
     private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;
 
