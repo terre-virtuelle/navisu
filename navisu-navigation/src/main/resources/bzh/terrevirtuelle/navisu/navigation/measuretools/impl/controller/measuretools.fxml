@@ -123,7 +123,6 @@
                 <CheckBox fx:id="rubberBandCheck" layoutX="28.0" layoutY="248.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Rubber band" />
                 <CheckBox fx:id="freeHandCheck" layoutX="128.0" layoutY="218.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Free Hand" />
                 <CheckBox fx:id="showAnnotationCheck" layoutX="128.0" layoutY="248.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Tooltip" />
-                <ScrollPane hbarPolicy="ALWAYS" layoutX="217.0" layoutY="216.0" prefHeight="100.0" prefWidth="224.0" styleClass="measuretool-info-pane" vbarPolicy="ALWAYS" />
                 <Text layoutX="154.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="NAVIGATION EDITOR" />
                 <Text fx:id="lengthLabel" layoutX="290.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="lengthLabel" wrappingWidth="100.0" />
                 <Text fx:id="areaLabel" layoutX="290.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="areaLabel" wrappingWidth="100.0" />
@@ -140,6 +139,24 @@
                         <Glow />
                     </effect>
                 </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="99.0" layoutX="217.0" layoutY="215.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
+            <GridPane layoutX="222.0" layoutY="232.0" prefHeight="50.0" prefWidth="185.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="20.0" prefHeight="20.0" />
+                <RowConstraints maxHeight="5.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Id" />
+                  <TextField fx:id="idTF" prefHeight="25.0" prefWidth="91.0" styleClass="combo-box-base" GridPane.columnIndex="1" />
+                  <Label text="Zone name" GridPane.rowIndex="2" />
+                  <TextField fx:id="zoneNameTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
             
             </children>
         </Group>

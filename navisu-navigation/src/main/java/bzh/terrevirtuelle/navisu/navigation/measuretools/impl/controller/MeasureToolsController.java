@@ -9,13 +9,18 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
+import bzh.terrevirtuelle.navisu.domain.geometry.model.AreaBuilder;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
+import com.vividsolutions.jts.io.WKTWriter;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
@@ -32,6 +37,7 @@ import gov.nasa.worldwind.util.measure.MeasureToolController;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.beans.PropertyChangeEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -49,6 +55,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -56,6 +63,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javax.swing.JLabel;
+import javax.xml.bind.JAXBException;
 
 /**
  * NaVisu
@@ -73,9 +81,9 @@ public class MeasureToolsController
     private GuiAgentServices guiAgentServices;
     private S57ChartComponentServices s57ChartComponentServices;
     private LayersManagerServices layersManagerServices;
-
-    private JLabel[] pointLabels;
     private final String FXML = "measuretools.fxml";
+    private NavigationDataSet navigationDataSet;
+
     @FXML
     public Pane view;
     @FXML
@@ -122,14 +130,22 @@ public class MeasureToolsController
     public Text headingLabel;
     @FXML
     public Text centerLabel;
+    @FXML
+    public TextField idTF;
+    @FXML
+    public TextField zoneNameTF;
 
-    private MeasureTool measureTool;
-    private JLabel[] pointsLabel;
+    private final MeasureTool measureTool;
+    private JLabel[] pointLabels;
     private String unit = "Km/Km\u00b2";
     private final String NAME = "CoastalLines";
     private final String GROUP = "Navigation";
     private RenderableLayer coastalLinesLayer;
     private Geometry coastalLines = null;
+    private long id = 0;
+    private String zoneName = "DefaultZoneName";
+    ArrayList<Position> positions;
+    WKTReader wkt;
 
     public static MeasureToolsController getInstance(MeasureToolsImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -171,6 +187,8 @@ public class MeasureToolsController
         measureTool.setController(new MeasureToolController());
         addlisteners();
         makePanel();
+        positions = new ArrayList<>();
+        wkt = new WKTReader();
     }
 
     private void addlisteners() {
@@ -365,11 +383,9 @@ public class MeasureToolsController
             measureTool.setArmed(true);
         });
         saveButton.setOnMouseClicked((MouseEvent event) -> {
-            //TODO
-            System.out.println("saveButton");
+            save();
         });
         selectButton.setOnMouseClicked((MouseEvent event) -> {
-            //TODO
             coastalLineControlSelected();
         });
         pauseButton.setOnMouseClicked((MouseEvent event) -> {
@@ -386,6 +402,16 @@ public class MeasureToolsController
         for (int i = 0; i < this.pointLabels.length; i++) {
             this.pointLabels[i] = new JLabel("");
         }
+        idTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                id = Long.getLong(idTF.getText());
+            }
+        });
+        zoneNameTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                zoneName = zoneNameTF.getText();
+            }
+        });
         quit.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(false);
             instrument.off();
@@ -486,8 +512,7 @@ public class MeasureToolsController
 
     private void coastalLineControlSelected() {
         List<Geometry> geometries = new ArrayList<>();
-        ArrayList<Position> positions = new ArrayList<>();
-        WKTReader wkt = new WKTReader();
+
         Geometry rectangle = null;
 
         try {
@@ -511,14 +536,24 @@ public class MeasureToolsController
                 }
             });
             //Essai de simplification, DouglasPeuckerLineSimplifier non trouvée ?
-/*
+
             Geometry simpleGeometry = null;
             try {
                 simpleGeometry = wkt.read(WWJ_JTS.toLineStringWkt(positions));
             } catch (ParseException ex) {
                 Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            DouglasPeuckerLineSimplifier vWSimplifier = new DouglasPeuckerLineSimplifier(simpleGeometry.getCoordinates());
+            WKTWriter wktWriter = new WKTWriter();
+            String simpleGeometryWKT = wktWriter.write(simpleGeometry);
+            Area area = AreaBuilder
+                    .create()
+                    .id(id)
+                    .name(zoneName)
+                    .geometry(simpleGeometryWKT)
+                    .build();
+            /*
+            DouglasPeuckerLineSimplifier vWSimplifier=null;
+            //= new DouglasPeuckerLineSimplifier(simpleGeometry.getCoordinates());
             vWSimplifier.setDistanceTolerance(0.010);
             simpleGeometry= vWSimplifier.getResultGeometry();
             Coordinate[] coordinates1 = simpleGeometry.getCoordinates();
@@ -528,7 +563,7 @@ public class MeasureToolsController
                     positions.add(new Position(LatLon.fromDegrees(coord1.y, coord1.x), 15.0));
                 }
             System.out.println("positions "+ positions.size());
-         */   
+             */
             positions.add(new Position(LatLon.fromDegrees(rectangle.getCoordinates()[0].y, positions.get(positions.size() - 1).longitude.degrees), 15.0));
             positions.add(new Position(LatLon.fromDegrees(rectangle.getCoordinates()[0].y, positions.get(0).longitude.degrees), 15.0));
             positions.add(positions.get(0));
@@ -592,6 +627,32 @@ public class MeasureToolsController
             return coastalLines;
         } else {
             return null;
+        }
+    }
+
+    private void save() {
+        Geometry simpleGeometry = null;
+        try {
+            simpleGeometry = wkt.read(WWJ_JTS.toLineStringWkt(positions));
+        } catch (ParseException ex) {
+            Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        WKTWriter wktWriter = new WKTWriter();
+        String simpleGeometryWKT = wktWriter.write(simpleGeometry);
+        Area area = AreaBuilder
+                .create()
+                .id(id)
+                .name(zoneName)
+                .geometry(simpleGeometryWKT)
+                .build();
+        navigationDataSet = new NavigationDataSet();
+        navigationDataSet.add(area);
+        if (area != null) {
+            try {
+                ImportExportXML.exports(navigationDataSet, "privateData/nds/" + zoneName + ".nds");
+            } catch (JAXBException | FileNotFoundException ex) {
+                Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
