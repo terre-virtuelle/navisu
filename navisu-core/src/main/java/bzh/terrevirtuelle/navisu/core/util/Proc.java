@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class Proc {
 
-    public static final Builder builder = new BuilderImpl();
+    public static final Builder BUILDER = new BuilderImpl();
 
     protected static final String SPACE = " ";
 
@@ -59,7 +59,8 @@ public class Proc {
         this.returnCode = process.waitFor();
     }
 
-    protected void exec(Map<String, String> environment) throws IOException, InterruptedException {
+    protected void exec(Map<String, String> environment) 
+            throws IOException, InterruptedException {
 
         Checker.notNull(cmd, "Command is null.");
 
