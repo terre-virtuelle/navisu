@@ -12,7 +12,6 @@ import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -35,8 +34,10 @@ public class DAYMAR_ShapefileLoader
     private final List<Daymark> objects;
     private Set<Map.Entry<String, Object>> entries;
     private String label;
+    private Class claz;
     private final String acronym = "DAYMAR";
     private final String marsys;
+    private boolean dev = false;
     private PointPlacemarkAttributes attrs;
 
     public DAYMAR_ShapefileLoader(String marsys) {
@@ -138,8 +139,8 @@ public class DAYMAR_ShapefileLoader
                 + ".png");
         attrs.setImageOffset(Offset.BOTTOM_CENTER);
         attrs.setScale(0.6);//0.7
-
-        label = acronym + "_"
+        if (dev) {
+            label = acronym + "_"
                 + object.getShape() + "_"
                 + object.getCategoryOfMark() + "_"
                 + object.getColour() + "_"
@@ -147,7 +148,14 @@ public class DAYMAR_ShapefileLoader
                 + object.getNatureOfConstruction() + "_"
                 + marsys
                 + ".png";
-
+        } else {
+            label = claz.getSimpleName() + " "
+                    + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
+                    + "Lat : " + new Float(object.getLatitude()).toString() + "\n"
+                    + "Lon : " + new Float(object.getLongitude()).toString();
+            object.setLabel(label);
+        }
+ 
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setValue(AVKey.DISPLAY_NAME, label);

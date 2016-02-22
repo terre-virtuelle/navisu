@@ -123,21 +123,21 @@ public class LIGHTS_ShapefileLoader
             }
 
             ArrayList<Position> pathPositions = new ArrayList<>();
-            pathPositions.add(Position.fromDegrees(latDegrees, lonDegrees, elevation + 35.0));
+            pathPositions.add(Position.fromDegrees(latDegrees, lonDegrees, elevation));//35.0
             LatLon latLon = Position.greatCircleEndPosition(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)),
                     Angle.fromDegrees(new Double(data.getSectorLimitOne()) - 180),
                     Angle.fromDegrees(.0015 * range));
-            pathPositions.add(new Position(latLon.getLatitude(), latLon.getLongitude(), elevation + 35.0));
+            pathPositions.add(new Position(latLon.getLatitude(), latLon.getLongitude(), elevation ));//+35.0
             Polyline line = new Polyline(pathPositions);
             line.setColor(Color.BLACK);
             layer.addRenderable(line);
 
             pathPositions.clear();
-            pathPositions.add(Position.fromDegrees(latDegrees, lonDegrees, elevation + 35.0));
+            pathPositions.add(Position.fromDegrees(latDegrees, lonDegrees, elevation ));//+ 35.0
             latLon = Position.greatCircleEndPosition(new LatLon(Angle.fromDegrees(latDegrees), Angle.fromDegrees(lonDegrees)),
                     Angle.fromDegrees(new Double(data.getSectorLimitTwo()) - 180),
                     Angle.fromDegrees(.0015 * range));
-            pathPositions.add(new Position(latLon.getLatitude(), latLon.getLongitude(), elevation + 35.0));
+            pathPositions.add(new Position(latLon.getLatitude(), latLon.getLongitude(), elevation));// + 35.0
             line = new Polyline(pathPositions);
             line.setColor(Color.BLACK);
             layer.addRenderable(line);
@@ -178,7 +178,7 @@ public class LIGHTS_ShapefileLoader
             if (data.getHeight() != null) {
                 lightView.setAltitude(elevation + new Double(data.getHeight()));
             } else {
-                lightView.setAltitude(elevation + 35.0);
+                lightView.setAltitude(elevation );//+ 35.0
             }
             lightView.setAzimuths(Angle.fromDegrees(0), Angle.fromDegrees(360));
             String label = "Light \n"
@@ -194,10 +194,10 @@ public class LIGHTS_ShapefileLoader
             // Si la couleur est blanche, la vue est jaune
             if (data.getColour() != null) {
                 if (data.getColour().contains("1")) {
-                    lightView.getAttributes().setMaterial(new Material(COLOR.ATT.get("6")));
+                    lightView.getAttributes().setInteriorMaterial(new Material(COLOR.ATT.get("6")));
                     lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get("6")));
                 } else {
-                    lightView.getAttributes().setMaterial(new Material(COLOR.ATT.get(data.getColour())));
+                    lightView.getAttributes().setInteriorMaterial(new Material(COLOR.ATT.get(data.getColour())));
                     lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get(data.getColour())));
                 }
             }

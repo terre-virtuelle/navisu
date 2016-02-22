@@ -50,9 +50,6 @@ import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponent;
 import gov.nasa.worldwind.render.SurfacePolylines;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 /**
  * @author Serge Morvan
@@ -229,7 +226,7 @@ public class S57ChartComponentImpl
             }
             try {
                 Path tmp = Paths.get(inputFile.toString());
-                Proc.builder.create()
+                Proc.BUILDER.create()
                         .setCmd(cmd)
                         .addArg("-skipfailures ").addArg("-overwrite ")
                         .addArg("data/shp/shp_" + i)// + "/out.shp ")
@@ -245,7 +242,7 @@ public class S57ChartComponentImpl
             cmd = cmd + " -nlt POINT25D";
             try {
                 Path tmp = Paths.get(inputFile.toString());
-                Proc.builder.create()
+                Proc.BUILDER.create()
                         .setCmd(cmd)
                         .addArg("-skipfailures ").addArg("-append ")
                         .addArg("data/shp/shp_" + i + "/soundg/SOUNDG.shp")

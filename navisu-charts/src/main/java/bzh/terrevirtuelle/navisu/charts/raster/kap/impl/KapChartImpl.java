@@ -96,7 +96,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
 
             Path tmpTif = Paths.get(inputFile.toString() + ".tif");
             System.out.print(tmpTif);
-            Proc.builder.create()
+            Proc.BUILDER.create()
                     .setCmd(cmd)
                     .addArg("-b 1")
                     .addArg(file)

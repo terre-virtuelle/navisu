@@ -132,7 +132,7 @@ public class S57LocalCatalogImpl
         cmd = "gdal/" + (OS.isMac() ? "osx" : "win") + "/ogr2ogr";
         try {
             Path tmp = Paths.get(inputFile.toString());
-            p = Proc.builder.create()
+            p = Proc.BUILDER.create()
                     .setCmd(cmd)
                     .addArg("-skipfailures ").addArg("-f \"ESRI Shapefile\" ").addArg("-append")
                     .addArg("data/shp/catalog/shp_" + i++)
