@@ -23,7 +23,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpi
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -61,7 +61,7 @@ public class ArCommand {
         @XmlElement(name = "lndmrk", type = Landmark.class),
         @XmlElement(name = "ship", type = Ship.class),
         @XmlElement(name = "avurnav", type = NavigationalWarnings.class),
-        @XmlElement(name = "sailingDirections", type = SailingDirections.class),
+        @XmlElement(name = "sailingDirections", type = SailingDirectionsOld.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "gpx", type = Gpx.class),
         @XmlElement(name = "camera", type = Camera.class)

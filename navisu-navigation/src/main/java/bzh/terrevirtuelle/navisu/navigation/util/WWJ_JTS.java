@@ -5,10 +5,13 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.util;
 
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import com.vividsolutions.jts.algorithm.CentroidArea;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -16,6 +19,7 @@ import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,13 +40,27 @@ public class WWJ_JTS {
     }
 
     public static String toLineStringWkt(List<? extends Position> positions) {
-        String geometry = "LINESTRING(";
-        int l = positions.size();
-        for (int i = 0; i < l - 1; i++) {
-            geometry += positions.get(i).getLongitude().getDegrees() + " " + positions.get(i).getLatitude().getDegrees() + ",";
+        if (positions != null && positions.size() > 2) {
+            String geometry = "LINESTRING(";
+            int l = positions.size();
+            for (int i = 0; i < l - 1; i++) {
+                geometry += positions.get(i).getLongitude().getDegrees() + " " + positions.get(i).getLatitude().getDegrees() + ",";
+            }
+            geometry += positions.get(l - 1).getLongitude().getDegrees() + " " + positions.get(l - 1).getLatitude().getDegrees() + ")";
+            return geometry;
+        } else {
+            return "";
         }
-        geometry += positions.get(l - 1).getLongitude().getDegrees() + " " + positions.get(l - 1).getLatitude().getDegrees() + ")";
-        return geometry;
+    }
+
+    public static MultiPoint toMultiPoint(Set<Pair<Double, Double>> positions) {
+        List<Coordinate> coordinates = new ArrayList<>();
+        for (Pair<Double, Double> c : positions) {
+            coordinates.add(new Coordinate(c.getX(), c.getY()));
+        }
+        Coordinate coordinates1[] = coordinates.toArray(new Coordinate[coordinates.size()]);
+        GeometryFactory geometryFactory = new GeometryFactory();
+        return geometryFactory.createMultiPoint(coordinates.toArray(coordinates1));
     }
 
     public static String surfacePolylinesToWkt(List<SurfacePolylines> polylines) {

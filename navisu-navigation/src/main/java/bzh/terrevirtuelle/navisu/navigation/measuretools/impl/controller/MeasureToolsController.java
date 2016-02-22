@@ -144,8 +144,9 @@ public class MeasureToolsController
     private Geometry coastalLines = null;
     private long id = 0;
     private String zoneName = "DefaultZoneName";
-    ArrayList<Position> positions;
-    WKTReader wkt;
+    private final ArrayList<Position> positions;
+    private final WKTReader wkt;
+    private String shape = "Shape";
 
     public static MeasureToolsController getInstance(MeasureToolsImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -182,9 +183,12 @@ public class MeasureToolsController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        idTF.setText(String.valueOf(id));
+        zoneNameTF.setText(zoneName);
         view.setOpacity(0.8);
         measureTool = new MeasureTool(wwd);
-        measureTool.setController(new MeasureToolController());
+        MeasureToolController measureToolController = new MeasureToolController();
+        measureTool.setController(measureToolController);
         addlisteners();
         makePanel();
         positions = new ArrayList<>();
@@ -251,10 +255,9 @@ public class MeasureToolsController
     }
 
     private void makePanel() {
-
         shapeCombo.setOnAction((event) -> {
-            String item = shapeCombo.getSelectionModel().getSelectedItem().toString();
-            switch (item) {
+            shape = shapeCombo.getSelectionModel().getSelectedItem().toString();
+            switch (shape) {
                 case "Line":
                     measureTool.setMeasureShapeType(MeasureTool.SHAPE_LINE);
                     break;
@@ -279,7 +282,6 @@ public class MeasureToolsController
                 case "CoastalLine":
                     measureTool.setMeasureShapeType(MeasureTool.SHAPE_QUAD);
                     coastalLine(s57ChartComponentServices.getCoastalLines());
-
                     break;
                 default:
                     break;
@@ -383,10 +385,14 @@ public class MeasureToolsController
             measureTool.setArmed(true);
         });
         saveButton.setOnMouseClicked((MouseEvent event) -> {
-            save();
+            if (shape.equals("CoastalLine")) {
+                save();
+            }
         });
         selectButton.setOnMouseClicked((MouseEvent event) -> {
-            coastalLineControlSelected();
+            if (shape.equals("CoastalLine")) {
+                coastalLineControlSelected();
+            }
         });
         pauseButton.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(!measureTool.isArmed());

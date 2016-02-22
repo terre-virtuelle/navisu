@@ -11,7 +11,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
 import bzh.terrevirtuelle.navisu.ontology.rdf.controller.RdfParser;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
@@ -57,7 +57,7 @@ public class RouteDataEditorController
     private final LayersManagerServices layersManagerServices;
     private NavigationDataSet navigationDataSet;
     private List<NavigationalWarnings> avurnavList;
-    private List<SailingDirections> sailingDirectionsList;
+    private List<SailingDirectionsOld> sailingDirectionsList;
     private List<Gpx> gpxList;
     private File file;
     @FXML
@@ -131,7 +131,7 @@ public class RouteDataEditorController
             } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(RouteDataEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
+            sailingDirectionsList = navigationDataSet.get(SailingDirectionsOld.class);
             gpxList = navigationDataSet.get(Gpx.class);
             avurnavList = navigationDataSet.get(NavigationalWarnings.class);
         });
@@ -271,7 +271,7 @@ public class RouteDataEditorController
                 RdfParser rdfParser = new RdfParser(f);
                 NavigationDataSet tmp = rdfParser.parse();
                 navigationDataSet.addAll(tmp.getNavigationDataList());
-                sailingDirectionsList.addAll(tmp.get(SailingDirections.class));
+                sailingDirectionsList.addAll(tmp.get(SailingDirectionsOld.class));
                 sailingDirectionsPrint(sailingDirectionsList);
             }
         });
@@ -311,10 +311,10 @@ public class RouteDataEditorController
         dataTextArea.setText(str);
     }
 
-    public void sailingDirectionsPrint(List<SailingDirections> sailingDirectionsList) {
+    public void sailingDirectionsPrint(List<SailingDirectionsOld> sailingDirectionsList) {
         String[] tmp;
         String str = "";
-        for (SailingDirections a : sailingDirectionsList) {
+        for (SailingDirectionsOld a : sailingDirectionsList) {
             if (a.getId() != 0) {
                 tmp = new String[4];
                 tmp[0] = Translator.tr("navigation.sailingDirections.sailingDirections") + " "

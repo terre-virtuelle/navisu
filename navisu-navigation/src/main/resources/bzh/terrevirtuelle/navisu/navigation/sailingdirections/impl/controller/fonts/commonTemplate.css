@@ -1,0 +1,239 @@
+/* CSS Document */
+@font-face {
+    -fx-font-family: 'Roboto Cn';
+    src: url('fonts/Roboto-Condensed.ttf');
+}
+/*******************************************************************************
+ *                                                                             *
+ *                     partie commune aux instruments                          *
+ *                  couleurs - surlignage - typo titres                        *
+ *                                                                             *
+ ******************************************************************************/
+*{
+    -fx-font-family: "Roboto Cn" ;
+    /*---------- couleurs ----------------------*/    
+    -fx-base : #143b28;
+    -fx-base-trans : #143b2800;
+    -fx-base-trans10 : #143b2810;
+    -fx-base-trans20 : #143b2820;
+    -fx-color : #143b28;
+    -fx-no-border: #143b28;
+    -fx-line-base : #04fff2;
+    -fx-focus-color: derive(-fx-color,80%); /* tonalité claire de la couleur de base*/
+    -fx-faint-focus-color: derive(-fx-color,80%);
+    -fx-color-typo: #c2f8c4;
+    -fx-color-title: #fff900;
+    -fx-color-backround-value: -fx-base-trans; /* background transparent boutons*/
+    -fx-cell-hover-color:#cce3f4;
+    /*------- dégradés des boutons----------*/
+    -fx-color-button: derive(-fx-color,30%);
+    -fx-button-background-color: linear-gradient(to bottom,
+        ladder(
+        -fx-color-button,
+        derive(-fx-color-button,8%) 75%,
+        derive(-fx-color-button,10%) 80%
+        ),
+        derive(-fx-color-button,-8%));
+    /*------- dégradé principal des boutons----------*/
+    -fx-body-color: linear-gradient(to bottom,
+        ladder(
+        -fx-color-button,
+        derive(-fx-color-button,8%) 75%,
+        derive(-fx-color-button,10%) 80%
+        ),
+        derive(-fx-color-button,-8%));
+    -fx-body-color-bottomup: linear-gradient(to top, derive(-fx-color,10%) ,derive(-fx-color,-6%));
+    -fx-body-color-to-right: linear-gradient(to right, derive(-fx-color,10%) ,derive(-fx-color,-6%)); 
+    -fx-outer-border: -fx-no-border ;
+    -fx-inner-border: -fx-no-border ;
+}
+/*------------- boutons actifs -------*/
+.button:focused,
+.toggle-button:focused,
+.radio-button:focused > .radio,
+.check-box:focused > .box,
+.menu-button:focused,
+.choice-box:focused,
+.color-picker.split-button:focused > .color-picker-label,
+.combo-box-base:focused {
+    /*-fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;*/
+    /*-fx-background-insets: -0.2, 0.5, 2, -1.4, 2.6;*/
+    /*-fx-background-radius: 3, 2, 1, 4, 1;*/
+    -fx-background-color: -fx-focus-color, -fx-inner-border, -fx-body-color, -fx-faint-focus-color, -fx-body-color;
+    -fx-background-insets: 0, 1, 2, 4, 4;
+    -fx-background-radius: 3, 2, 1, 4, 1;
+}
+/*---------- QUIT -----------*/ 
+.quitbutton
+{
+    -fx-background-image: url(quit.png) ;
+    -fx-background-repeat:no-repeat;
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 10;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
+.quitbutton:focused {
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 20;
+}
+/*----------- typos communes ----------- */
+.instrumenttitle{
+    -fx-font: 20px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+
+}
+.infotittle{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+
+}
+.instrumentvalue{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill: -fx-color-typo;
+}
+/*---------------- contours et entourages --------------*/
+.instrumentcadres{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
+    -fx-fill:-fx-color-backround-value;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
+}
+.instrumentcontour{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
+}
+.imageviewcontour{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 0.01em;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 0;	 
+    -fx-arc-width: 0;
+}
+/*--------- background instruments ----------------*/
+.foot-pane {
+    -fx-border-radius: 0 0 20 20;
+    -fx-background-radius: 0 0 20 20;
+    -fx-background-color: #143b28;
+}
+.top-pane {
+    -fx-border-radius: 20 20 0 0;
+    -fx-background-radius: 20 20 0 0;
+    -fx-background-color: #143b28;    
+}
+.left-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.right-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.center-pane {
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #143b28;    
+}
+.background-pane{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color: -fx-base;
+} 
+/*------- Slider --------*/
+
+.slider .thumb {
+    -fx-background-color:   -fx-line-base;
+    -fx-background-insets: 2;
+    -fx-background-radius: 1.0em; /* makes sure this remains circular */
+    -fx-padding: 0.583333em;  /* 7 */
+    -fx-effect: dropshadow(two-pass-box , rgba(0, 0, 0, 0.1), 5, 0.0 , 0, 2);
+}
+.slider:focused .thumb {
+    -fx-background-radius: 1.0em; /* makes sure this remains circular */
+
+}
+.slider .track {
+    -fx-background-color:  #04fff2, -fx-line-base;
+    -fx-background-insets: 2, 1;
+    -fx-background-radius: 0.25em, 0.166667em; /* 3 3 2 */
+    -fx-padding: 0.25em; /* 3 */
+}
+.slider:vertical .track {
+    -fx-background-color: -fx-line-base;
+}
+.slider .axis {
+    -fx-tick-label-fill: derive(-fx-background, 30%);
+    -fx-tick-length: 5px;
+    -fx-minor-tick-length: 3px;
+    -fx-border-color: null;
+}
+.sliderlabel{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+    /*-fx-font-weight: bold;*/
+}
+
+/*--------- ScrollPane ---------*/
+.scrolling-pane > .viewport {
+    -fx-background-color: -fx-base-trans95;
+    -fx-background-radius: 0.5em;
+}
+.scrolling-pane > .scroll-bar:horizontal {
+    -fx-background-insets: 0 1 1 1, 1;
+    -fx-padding: 0 1 0 1;
+}
+.scrolling-pane > .scroll-bar:horizontal > .increment-button,
+.scrolling-pane > .scroll-bar:horizontal > .decrement-button {
+    -fx-padding: 0.166667em 0.25em 0.25em  0.25em; /* 2 3 3 3 */
+    -fx-background-radius: 0.5em;
+}
+.scrolling-pane > .scroll-bar:vertical > .increment-button,
+.scrolling-pane > .scroll-bar:vertical > .decrement-button {
+    -fx-padding: 0.25em 0.25em 0.25em 0.166667em; /* 3 3 3 2 */
+}
+.scrolling-pane > .scroll-bar:vertical {
+    -fx-background-insets: 1 1 1 0, 1;
+    -fx-padding: 1 0 1 0;
+}
+.scrolling-pane > .corner {
+    -fx-background-color: -fx-base;
+    -fx-background-insets: 0 1 1 0;
+    -fx-background-radius: 0.25em;
+}
+/* new styleclass for edge to edge scrollpanes that don't want to draw a border */
+.scrolling-pane.edge-to-edge,
+.tab-pane > * > .scrolling-pane {
+    -fx-background-color: #ff0000;
+    -fx-background-radius: 5;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scrolling-pane.edge-to-edge > .scroll-bar,
+.tab-pane > * > .scrolling-pane > .scroll-bar,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.scrolling-pane.edge-to-edge > .scroll-bar > .increment-button, 
+.scrolling-pane.edge-to-edge > .scroll-bar > .decrement-button,
+.tab-pane > * > .scrolling-pane > .scroll-bar > .increment-button, 
+.tab-pane > * > .scrolling-pane > .scroll-bar > .decrement-button,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar > .increment-button,
+.titled-pane > * > * > .scrolling-pane > .scroll-bar > .decrement-button {
+    -fx-padding: 0.25em; /* 3px */
+}
+/*------------------ GridPane -----------------*/
+.grid-pane {
+    -fx-background-color: -fx-base;  
+}
+/*******************************************************************************
+ *                                                                             *
+ * Fin des déclarations communes                                               *
+ *                                                                             *
+ ******************************************************************************/

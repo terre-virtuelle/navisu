@@ -28,7 +28,7 @@ import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
 import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
@@ -244,8 +244,8 @@ public class GpsPlotterWithRouteController
             sc.activate();
         });
 
-        List<SailingDirections> sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
-        sailingDirectionsList.stream().forEach((SailingDirections a) -> {
+        List<SailingDirectionsOld> sailingDirectionsList = navigationDataSet.get(SailingDirectionsOld.class);
+        sailingDirectionsList.stream().forEach((SailingDirectionsOld a) -> {
             String displayName = "SailingDirections N°" + Long.toString(a.getId());
             String description = a.getDescription();
             SailingDirectionsController sc = new SailingDirectionsController(new S57BasicBehavior(),
