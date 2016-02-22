@@ -7,7 +7,7 @@ package bzh.terrevirtuelle.navisu.ontology.rdf.app;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
 import bzh.terrevirtuelle.navisu.ontology.rdf.controller.RdfParser;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import com.vividsolutions.jts.geom.Geometry;
@@ -78,12 +78,12 @@ public class App {
                 }
             }
         }
-        List<SailingDirections> sailingDirectionsList = null;
+        List<SailingDirectionsOld> sailingDirectionsList = null;
         if (nds != null) {
-            sailingDirectionsList = nds.get(SailingDirections.class);
+            sailingDirectionsList = nds.get(SailingDirectionsOld.class);
         }
         if (sailingDirectionsList != null) {
-            for (SailingDirections a : sailingDirectionsList) {
+            for (SailingDirectionsOld a : sailingDirectionsList) {
                 wkt = a.getGeometry();
                 try {
                     geometry = wktReader.read(wkt);

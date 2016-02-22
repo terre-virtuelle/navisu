@@ -5,19 +5,15 @@
  */
 package bzh.terrevirtuelle.navisu.ontology.rdf.controller;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.rdf.Binding;
 import bzh.terrevirtuelle.navisu.domain.rdf.Result;
 import bzh.terrevirtuelle.navisu.domain.rdf.Sparql;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
-import com.vividsolutions.jts.algorithm.CentroidArea;
-import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,7 +40,7 @@ public class RdfParser {
     private final String AVURNAV = "Avurnav";
     private final String SAILING_DIRECTIONS = "Area";
     private NavigationalWarnings avurnav = null;
-    private SailingDirections sailingDirections = null;
+    private SailingDirectionsOld sailingDirections = null;
     private Path path;
     private String[] tmp;
     private String avurnavName = "";
@@ -155,7 +151,7 @@ public class RdfParser {
                         }
                     } else if (tmp[1].trim().contains(SAILING_DIRECTIONS)) {
                         if (!sailingDirectionsName.equals(tmp[1].trim())) {
-                            sailingDirections = new SailingDirections();
+                            sailingDirections = new SailingDirectionsOld();
                             navigationDataList.add(sailingDirections);
                             sailingDirectionsName = tmp[1].trim();
                             String number = sailingDirectionsName.replace(SAILING_DIRECTIONS, "");
