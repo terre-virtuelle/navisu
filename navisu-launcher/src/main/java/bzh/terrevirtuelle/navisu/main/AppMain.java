@@ -131,6 +131,8 @@ import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.impl.NavigationCmdComponentImpl;
+import bzh.terrevirtuelle.navisu.navigation.sailingdirections.impl.SailingDirectionsComponentImpl;
+import bzh.terrevirtuelle.navisu.navigation.sailingdirections.SailingDirectionsComponentServices;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -205,6 +207,7 @@ public class AppMain extends Application {
                         RouteEditorImpl.class,
                         RoutePhotoEditorImpl.class,
                         RoutePhotoViewerImpl.class,
+                        SailingDirectionsComponentImpl.class,
                         SedimentologyImpl.class,
                         ShapefileObjectImpl.class,
                         SonarImpl.class,
@@ -280,6 +283,7 @@ public class AppMain extends Application {
         RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
         RoutePhotoViewerServices routePhotoViewerServices = componentManager.getComponentService(RoutePhotoViewerServices.class);
 
+        SailingDirectionsComponentServices sailingDirectionsServices = componentManager.getComponentService(SailingDirectionsComponentServices.class);
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
         SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
@@ -339,6 +343,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(routeDataEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(sailingDirectionsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());
