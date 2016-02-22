@@ -15,8 +15,8 @@ import bzh.terrevirtuelle.navisu.domain.gpx.view.HighwayView;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.view.AvurnavView;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsView;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsViewOld;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.domain.ship.view.ShipView;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
@@ -250,10 +250,10 @@ public class Main {
         HighwayView highwayView = new HighwayView(highway, 1204, 235);
         navigationViewSet.add(highwayView);
         
-        SailingDirections sailingDirections = new SailingDirections();
+        SailingDirectionsOld sailingDirections = new SailingDirectionsOld();
         sailingDirections.setLatitude(4.25);
         sailingDirections.setLongitude(56.6);
-        SailingDirectionsView sailingDirectionsView = new SailingDirectionsView(sailingDirections, 245, 489);
+        SailingDirectionsViewOld sailingDirectionsView = new SailingDirectionsViewOld(sailingDirections, 245, 489);
         navigationViewSet.add(sailingDirectionsView);
         
         NavigationalWarnings avurnav =new NavigationalWarnings();

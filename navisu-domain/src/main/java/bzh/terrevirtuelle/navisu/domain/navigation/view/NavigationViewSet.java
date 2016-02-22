@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BuoyageView;
 import bzh.terrevirtuelle.navisu.domain.gpx.view.GpxView;
 import bzh.terrevirtuelle.navisu.domain.gpx.view.HighwayView;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.view.AvurnavView;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsView;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsViewOld;
 import bzh.terrevirtuelle.navisu.domain.ship.view.ShipView;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +38,7 @@ public class NavigationViewSet {
         @XmlElement(name = "shipView", type = ShipView.class),
         @XmlElement(name = "gpxView", type = GpxView.class),
         @XmlElement(name = "highwayView", type = HighwayView.class),
-        @XmlElement(name = "sailingDirectionsView", type = SailingDirectionsView.class),
+        @XmlElement(name = "sailingDirectionsViewOld", type = SailingDirectionsViewOld.class),
         @XmlElement(name = "avurnavView", type = AvurnavView.class)
         
     })

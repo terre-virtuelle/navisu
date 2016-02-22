@@ -1,13 +1,18 @@
 package bzh.terrevirtuelle.navisu.domain.navigation.model;
 
-
 public interface NavigationData {
 
-    double getLatitude();
+    default double getLatitude() {
+        return 0.0;
+    }
 
-    double getLongitude();
+    default double getLongitude() {
+        return 0.0;
+    }
 
-    String getGeometry();
+    default String getGeometry() {
+        return "";
+    }
 
     default long getId() {
         return ((long) 0);

@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;

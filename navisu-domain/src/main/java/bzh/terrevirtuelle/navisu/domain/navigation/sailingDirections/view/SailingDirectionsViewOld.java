@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationView;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
@@ -17,23 +17,23 @@ import javax.xml.bind.annotation.XmlElements;
  * @date Jan 25, 2016
  *
  */
-public class SailingDirectionsView
+public class SailingDirectionsViewOld
         extends NavigationView {
 
     @XmlElements({
-        @XmlElement(name = "sailingDirections", type = SailingDirections.class)
+        @XmlElement(name = "sailingDirections", type = SailingDirectionsOld.class)
     })
     
-    private SailingDirections data;
+    private SailingDirectionsOld data;
 
-    public SailingDirectionsView() {
+    public SailingDirectionsViewOld() {
     }
 
-    public SailingDirectionsView(double x, double y) {
+    public SailingDirectionsViewOld(double x, double y) {
         super(x, y);
     }
 
-    public SailingDirectionsView(SailingDirections data, double x, double y) {
+    public SailingDirectionsViewOld(SailingDirectionsOld data, double x, double y) {
         super(x, y);
         this.data = data;
     }
