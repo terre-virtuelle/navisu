@@ -156,10 +156,13 @@ public class SailingDirectionsComponentController
             System.out.println("No data");
         });
         d22Button.setOnMouseClicked((MouseEvent event) -> {
-            MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(readData(IN_D22)));
-            Point point = multiPoint.getCentroid();
-            instrument.off();
-            wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
+            Map<Pair<Double, Double>, String> result = readData(IN_D22);
+            if (result != null) {
+                MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
+                Point point = multiPoint.getCentroid();
+                instrument.off();
+                wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
+            }
         });
         d23Button.setOnMouseClicked((MouseEvent event) -> {
             System.out.println("No data");
@@ -183,7 +186,8 @@ public class SailingDirectionsComponentController
         try {
             document = ImportExportXML.imports(document, filename);
         } catch (JAXBException | FileNotFoundException ex) {
-            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No data");
+            return null;
         }
 
         Book ouvrage = document.getBook();
