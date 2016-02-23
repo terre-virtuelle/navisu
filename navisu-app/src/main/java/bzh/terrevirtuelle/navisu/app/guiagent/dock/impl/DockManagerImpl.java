@@ -190,7 +190,8 @@ public class DockManagerImpl<TrackTool>
                 .createNode(1, "lightsbook.png", 1, "vide.png", 1, "vide.png", (e) -> open())
                 .createNode(2, "sailingbook.png", 0, "worldwide_sailing_directions.png", 0, "vide.png", (e) -> open())
                 .createNode(2, "sailingbook.png", 1, "IrelandSouth_sailing_directions.png", 0, "vide.png", (e) -> open())
-                .createNode(2, "sailingbook.png", 2, "shom.png", 0, "shomviewer.png", (e) -> open("SailingDirections"))
+                .createNode(2, "sailingbook.png", 2, "shom.png", 0, "shomviewer.png", (e) -> open("SailingDirectionsViewer"))
+                .createNode(2, "sailingbook.png", 2, "shom.png", 0, "shomeditor.png", (e) -> open("SailingDirectionsEditor"))
                 .build();
 
         booksRadialMenu.setLayoutX((width / 2) - 10);
