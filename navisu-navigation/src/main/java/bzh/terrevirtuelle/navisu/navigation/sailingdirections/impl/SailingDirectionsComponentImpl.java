@@ -96,7 +96,7 @@ public class SailingDirectionsComponentImpl
             controller0.setVisible(false);
         }
         if (controller1 != null) {
-            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller0);
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller1);
             guiAgentServices.getRoot().getChildren().remove(controller1);
             controller1.setVisible(false);
         }
