@@ -1,0 +1,9 @@
+dependencies {
+    compile project(':navisu-domain')
+    compile project(':navisu-core')
+    compile project(':navisu-app')
+    compile project(':navisu-charts')
+    compile project(':navisu-photos')
+    compile fileTree(dir: 'lib', include: '*.jar') 
+}
+
