@@ -14,7 +14,8 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 import bzh.terrevirtuelle.navisu.navigation.sailingdirections.SailingDirectionsComponent;
 import bzh.terrevirtuelle.navisu.navigation.sailingdirections.SailingDirectionsComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.sailingdirections.impl.controller.SailingDirectionsComponentController;
+import bzh.terrevirtuelle.navisu.navigation.sailingdirections.impl.controller.SailingDirectionsEditorComponentController;
+import bzh.terrevirtuelle.navisu.navigation.sailingdirections.impl.controller.SailingDirectionsViewerComponentController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -28,7 +29,9 @@ import javafx.scene.input.KeyEvent;
 public class SailingDirectionsComponentImpl
         implements SailingDirectionsComponent, SailingDirectionsComponentServices, InstrumentDriver, ComponentState {
 
-    private final String COMPONENT_KEY_NAME = "SailingDirections";
+    private final String COMPONENT_KEY_NAME_0 = "SailingDirectionsViewer";
+    private final String COMPONENT_KEY_NAME_1 = "SailingDirectionsEditor";
+
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
@@ -36,18 +39,36 @@ public class SailingDirectionsComponentImpl
     @UsedService
     LayersManagerServices layersManagerServices;
 
-    private SailingDirectionsComponentController controller;
+    private SailingDirectionsViewerComponentController controller0;
+    private SailingDirectionsEditorComponentController controller1;
 
     @Override
     public void on(String... files) {
-        controller = SailingDirectionsComponentController.getInstance(this, KeyCode.S, KeyCombination.CONTROL_DOWN,
-                guiAgentServices, s57ChartComponentServices, layersManagerServices);
-        controller.setVisible(true);
+        String[] cmd = files;
+        if (cmd != null) {
+            if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
+                controller0 = SailingDirectionsViewerComponentController.getInstance(this, KeyCode.S, KeyCombination.CONTROL_DOWN,
+                        guiAgentServices, s57ChartComponentServices, layersManagerServices);
+                controller0.setVisible(true);
+
+            } else if (cmd[0].equals(COMPONENT_KEY_NAME_1)) {
+                controller1 = SailingDirectionsEditorComponentController.getInstance(this, KeyCode.S, KeyCombination.CONTROL_DOWN,
+                        guiAgentServices, s57ChartComponentServices, layersManagerServices);
+                controller1.setVisible(true);
+
+            }
+        }
+
     }
 
     @Override
     public boolean canOpen(String category) {
-        return category.equals(COMPONENT_KEY_NAME);
+        boolean canOpen = false;
+
+        if (category.equals(COMPONENT_KEY_NAME_0) || category.equals(COMPONENT_KEY_NAME_1)) {
+            canOpen = true;
+        }
+        return canOpen;
     }
 
     @Override
@@ -69,8 +90,15 @@ public class SailingDirectionsComponentImpl
 
     @Override
     public void off() {
-        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
-        guiAgentServices.getRoot().getChildren().remove(controller);
-        controller.setVisible(false);
+        if (controller0 != null) {
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller0);
+            guiAgentServices.getRoot().getChildren().remove(controller0);
+            controller0.setVisible(false);
+        }
+        if (controller1 != null) {
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller0);
+            guiAgentServices.getRoot().getChildren().remove(controller1);
+            controller1.setVisible(false);
+        }
     }
 }

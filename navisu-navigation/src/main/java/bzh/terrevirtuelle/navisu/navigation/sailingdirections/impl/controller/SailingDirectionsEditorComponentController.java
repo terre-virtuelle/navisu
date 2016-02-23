@@ -10,7 +10,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.app.App;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Alinea;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
@@ -45,8 +44,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -67,11 +64,11 @@ import javax.xml.bind.JAXBException;
  * @date Feb 22, 2016
  *
  */
-public class SailingDirectionsComponentController
+public class SailingDirectionsEditorComponentController
         extends Widget2DController
         implements Initializable {
 
-    private static SailingDirectionsComponentController INSTANCE;
+    private static SailingDirectionsEditorComponentController INSTANCE;
     private final String FXML = "sailingDirectionsViewer.fxml";
     private final String LAYER_NAME_0 = "SailingDirectionsPoi";
     private final String LAYER_NAME_1 = "SailingDirectionsZones";
@@ -104,13 +101,13 @@ public class SailingDirectionsComponentController
     @FXML
     public Button d23Button;
 
-    public static SailingDirectionsComponentController getInstance(SailingDirectionsComponentImpl instrument,
+    public static SailingDirectionsEditorComponentController getInstance(SailingDirectionsComponentImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
             S57ChartComponentServices s57ChartComponentServices,
             LayersManagerServices layersManagerServices) {
         if (INSTANCE == null) {
-            INSTANCE = new SailingDirectionsComponentController(instrument, keyCode, keyCombination,
+            INSTANCE = new SailingDirectionsEditorComponentController(instrument, keyCode, keyCombination,
                     guiAgentServices, s57ChartComponentServices, layersManagerServices);
         }
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, INSTANCE);
@@ -119,7 +116,7 @@ public class SailingDirectionsComponentController
         return INSTANCE;
     }
 
-    public SailingDirectionsComponentController(SailingDirectionsComponentImpl instrument,
+    public SailingDirectionsEditorComponentController(SailingDirectionsComponentImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
             S57ChartComponentServices s57ChartComponentServices,
