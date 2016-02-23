@@ -130,8 +130,8 @@ public class S57ChartComponentController {
     private RenderableLayer transponderZoneLayer;
     private final String NAME = "Transponder";
     protected final String GROUP = "Navigation";
-    //private final boolean DEV = false;
-    private final boolean DEV = true;
+    private final boolean DEV = false;
+    //private final boolean DEV = true;
     private final Set<S57Controller> s57Controllers = new HashSet<>();
     boolean first = true;
 
