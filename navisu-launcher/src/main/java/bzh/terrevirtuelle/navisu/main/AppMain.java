@@ -131,8 +131,9 @@ import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.impl.NavigationCmdComponentImpl;
-import bzh.terrevirtuelle.navisu.navigation.sailingdirections.impl.SailingDirectionsComponentImpl;
-import bzh.terrevirtuelle.navisu.navigation.sailingdirections.SailingDirectionsComponentServices;
+import bzh.terrevirtuelle.navisu.sailingdirections.SailingDirectionsComponentServices;
+import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
+
 
 /**
  * @author Serge Morvan <morvan at enib.fr>

@@ -24,6 +24,7 @@ dependencies {
     compile project(':navisu-ontology')
     compile project(':navisu-photos')
     compile project(':navisu-shapefiles')
+    compile project(':navisu-sailingDirections')
     compile project(':navisu-sedimentology')
     compile project(':navisu-speech')
     compile project(':navisu-system')
