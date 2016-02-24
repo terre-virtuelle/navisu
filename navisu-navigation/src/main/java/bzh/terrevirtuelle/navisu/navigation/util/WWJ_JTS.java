@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.util;
 
-import bzh.terrevirtuelle.navisu.domain.gpx.model.Point;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import com.vividsolutions.jts.algorithm.CentroidArea;
 import com.vividsolutions.jts.geom.Coordinate;
