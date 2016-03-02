@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -43,6 +45,7 @@ public class DAYMAR_ShapefileLoader
     public DAYMAR_ShapefileLoader(String marsys) {
         this.marsys = marsys;
         objects = new ArrayList<>();
+        claz = Daymark.class;
     }
 
     @Override
@@ -141,13 +144,13 @@ public class DAYMAR_ShapefileLoader
         attrs.setScale(0.6);//0.7
         if (dev) {
             label = acronym + "_"
-                + object.getShape() + "_"
-                + object.getCategoryOfMark() + "_"
-                + object.getColour() + "_"
-                + object.getColourPattern() + "_"
-                + object.getNatureOfConstruction() + "_"
-                + marsys
-                + ".png";
+                    + object.getShape() + "_"
+                    + object.getCategoryOfMark() + "_"
+                    + object.getColour() + "_"
+                    + object.getColourPattern() + "_"
+                    + object.getNatureOfConstruction() + "_"
+                    + marsys
+                    + ".png";
         } else {
             label = claz.getSimpleName() + " "
                     + (object.getObjectName() != null ? object.getObjectName() : "") + "\n"
@@ -155,7 +158,7 @@ public class DAYMAR_ShapefileLoader
                     + "Lon : " + new Float(object.getLongitude()).toString();
             object.setLabel(label);
         }
- 
+
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setValue(AVKey.DISPLAY_NAME, label);

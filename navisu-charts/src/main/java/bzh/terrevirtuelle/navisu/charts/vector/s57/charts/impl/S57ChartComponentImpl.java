@@ -255,11 +255,8 @@ public class S57ChartComponentImpl
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, null, e);
             }
-
             s57ChartComponentController.init("data/shp/shp_" + i++);
-
             layers = s57ChartComponentController.getLayers();
-
             chartsOpen = true;
             geoLayerList = geoViewServices.getLayerManager().getGroup(GROUP);
             groupNames.clear();
