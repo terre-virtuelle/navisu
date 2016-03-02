@@ -107,6 +107,7 @@ public class CameraComponentController
             });
             first = false;
         }
+        /*
         simpleS57Buoyages.stream().forEach((Buoyage s) -> {
             lat = s.getLatitude();
             lon = s.getLongitude();
@@ -121,7 +122,23 @@ public class CameraComponentController
                 }
             }
         });
-        System.out.println("navigationViewSet "+ navigationViewSet);
+*/
+        s57Controllers.stream().forEach((S57Controller s0) -> {
+            Buoyage s = (Buoyage) s0.getNavigationData();
+            lat = s.getLatitude();
+            lon = s.getLongitude();
+            orgPos = new Position(
+                    Angle.fromDegrees(lat),
+                    Angle.fromDegrees(lon), 0.0);
+            cartesianLoc = globe.computePointFromPosition(orgPos);
+            if (frustum.contains(cartesianLoc)) {
+                screenLoc = viewWW.project(cartesianLoc);
+                if (screenLoc.x >= 0 && screenLoc.y >= 0 && screenLoc.x <= 1080 && screenLoc.y <= 700) {
+                    navigationViewSet.add(new BuoyageView(s, (int) screenLoc.x, (int) screenLoc.y));
+                }
+            }
+        });
+      //  System.out.println("navigationViewSet "+ navigationViewSet);
         return navigationViewSet;
     }
 
