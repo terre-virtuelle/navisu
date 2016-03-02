@@ -78,6 +78,7 @@ public class SailingDirectionsViewerComponentController
     private final String ICON_NAME = "SailingDirections";
     private final String GROUP_NAME = "Navigation";
     private final String IN_D22 = "data/sd/shom/d22.xml";
+    private final String IN_D21 = "data/sd/shom/d21.xml";
     private final WorldWindow wwd;
     private final SailingDirectionsComponentImpl instrument;
     private final GuiAgentServices guiAgentServices;
@@ -154,7 +155,13 @@ public class SailingDirectionsViewerComponentController
             System.out.println("No data");
         });
         d21Button.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
+            Map<Pair<Double, Double>, String> result = readData(IN_D21);
+            if (result != null) {
+                MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
+                Point point = multiPoint.getCentroid();
+                instrument.off();
+                wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
+            }
         });
         d22Button.setOnMouseClicked((MouseEvent event) -> {
             Map<Pair<Double, Double>, String> result = readData(IN_D22);
