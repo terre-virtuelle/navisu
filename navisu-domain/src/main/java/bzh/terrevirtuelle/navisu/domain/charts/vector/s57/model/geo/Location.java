@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -30,9 +31,12 @@ public class Location
         extends Geo
         implements Serializable {
 
+    @XmlElement(name = "lat")
     protected double latitude = 0.0;
+    @XmlElement(name = "lon")
     protected double longitude = 0.0;
-    protected String geometry = "";
+    @XmlElement(name = "geom")
+    protected String geometry;
 
     public Location() {
     }
@@ -45,7 +49,7 @@ public class Location
         super(id);
         this.latitude = lat;
         this.longitude = lon;
-        this.geometry = "POINT(" + lon + " " + lat + ")";
+      //  this.geometry = "POINT(" + lon + " " + lat + ")";
     }
 
     public Location(long id, String geometry) {

@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlElements;
  *
  */
 public class BuoyageView
-        extends NavigationView{
+        extends NavigationView {
 
     @XmlElements({
         @XmlElement(name = "bcncar", type = BeaconCardinal.class),
@@ -48,7 +48,7 @@ public class BuoyageView
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
         @XmlElement(name = "lndmrk", type = Landmark.class)})
     private Buoyage data;
-    
+
     public BuoyageView() {
     }
 
@@ -60,7 +60,6 @@ public class BuoyageView
     public BuoyageView(double x, double y) {
         super(x, y);
     }
-
 
     /**
      *

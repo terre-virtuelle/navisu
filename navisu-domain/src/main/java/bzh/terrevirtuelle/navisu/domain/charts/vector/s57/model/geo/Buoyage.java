@@ -25,7 +25,7 @@ public class Buoyage
         implements NavigationData {
 
     protected String shape;
-    protected String categoryOfMark = "0";
+    protected String categoryOfMark;
     protected String colour;
     protected String colourPattern;
     protected String navigationalSystemOfMarks;
@@ -51,7 +51,7 @@ public class Buoyage
     protected String status;
     @XmlTransient
     protected String label;
-    protected String imageAddress="";
+    protected String imageAddress;
 
     public Buoyage() {
     }
@@ -390,7 +390,7 @@ public class Buoyage
                 + ", verticalLength=" + verticalLength
                 + ", objectNameInNationalLanguage=" + objectNameInNationalLanguage
                 + ", status=" + status
-              //  + super.toString() 
+                //  + super.toString() 
                 + '}';
     }
 
