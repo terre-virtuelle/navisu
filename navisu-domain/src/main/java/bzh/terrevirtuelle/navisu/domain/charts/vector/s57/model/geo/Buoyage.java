@@ -25,7 +25,7 @@ public class Buoyage
         implements NavigationData {
 
     protected String shape;
-    protected String categoryOfMark;
+    protected String categoryOfMark = "0";
     protected String colour;
     protected String colourPattern;
     protected String navigationalSystemOfMarks;
