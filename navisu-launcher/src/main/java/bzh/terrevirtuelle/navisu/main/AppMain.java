@@ -476,7 +476,7 @@ public class AppMain extends Application {
          */
 
         /* Test Navigation RA */
-         //navigationServerServices.init(8787);
+         navigationServerServices.init(8787);
     }
 
     public static void main(String[] args) throws Exception {
