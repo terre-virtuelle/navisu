@@ -17,10 +17,13 @@ import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsControll
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.Frustum;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.Globe;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,17 +43,24 @@ public class CameraComponentController
     private boolean first = true;
     private final NavigationViewSet navigationViewSet;
     private Set<S57Controller> s57Controllers;
-    double width;
-    double height;
+    private List<Buoyage> simpleS57Buoyages;
+    private final double width;
+    private final double height;
+    private Frustum frustum;
+    private double lat;
+    private double lon;
+    private Position orgPos;
+    private Vec4 cartesianLoc;
+    private Vec4 screenLoc;
 
     private CameraComponentController() {
         this.wwd = GeoWorldWindViewImpl.getWW();
         this.viewWW = wwd.getView();
         navigationViewSet = new NavigationViewSet();
         globe = wwd.getModel().getGlobe();
-        width = wwd.getView().getViewport().width;
-        height = wwd.getView().getViewport().height;
-
+        width = viewWW.getViewport().width;
+        height = viewWW.getViewport().height;
+        simpleS57Buoyages = new ArrayList<>();
     }
 
     public static CameraComponentController getInstance() {
@@ -80,32 +90,42 @@ public class CameraComponentController
             if (first == true) {
                 viewWW.setEyePosition(new Position(Angle.fromDegrees(camera.getLatitude()),
                         Angle.fromDegrees(camera.getLongitude()), 100.0));
-                first = false;
+                //  first = false;
             } else {
                 viewWW.goTo(new Position(Angle.fromDegrees(camera.getLatitude()),
                         Angle.fromDegrees(camera.getLongitude()), 100.0), 100.0);
             }
             wwd.redrawNow();
         }
+        frustum = viewWW.getFrustumInModelCoordinates();
         s57Controllers = s57ChartComponentServices.getS57Controllers();
         navigationViewSet.clear();
-        s57Controllers.stream().forEach((s) -> {
-            Buoyage buoyage = (Buoyage) s.getNavigationData();
-            Position orgPos = new Position(
-                    Angle.fromDegrees(buoyage.getLatitude()),
-                    Angle.fromDegrees(buoyage.getLongitude()), 0.0);
-            Vec4 cartesianLoc = globe.computePointFromPosition(orgPos);
-            Vec4 screenLoc = viewWW.project(cartesianLoc);
-            if (screenLoc.x >= 0 && screenLoc.y >= 0 && screenLoc.x<= 1080 && screenLoc.y<=700) {
-                navigationViewSet.add(new BuoyageView(buoyage, (int) screenLoc.x, (int) screenLoc.y));
+        if (first) {
+            s57Controllers.stream().forEach((S57Controller s) -> {
+                Buoyage buoyage = (Buoyage) s.getNavigationData();
+                simpleS57Buoyages.add(new Buoyage(buoyage.getId(), buoyage.getLatitude(),buoyage.getLongitude()));
+            });
+            first = false;
+        }
+        simpleS57Buoyages.stream().forEach((Buoyage s) -> {
+            lat = s.getLatitude();
+            lon = s.getLongitude();
+            orgPos = new Position(
+                    Angle.fromDegrees(lat),
+                    Angle.fromDegrees(lon), 0.0);
+            cartesianLoc = globe.computePointFromPosition(orgPos);
+            if (frustum.contains(cartesianLoc)) {
+                screenLoc = viewWW.project(cartesianLoc);
+                if (screenLoc.x >= 0 && screenLoc.y >= 0 && screenLoc.x <= 1080 && screenLoc.y <= 700) {
+                    navigationViewSet.add(new BuoyageView(s, (int) screenLoc.x, (int) screenLoc.y));
+                }
             }
         });
-
+        System.out.println("navigationViewSet "+ navigationViewSet);
         return navigationViewSet;
     }
 
     public void setS57ChartComponentServices(S57ChartComponentServices s57ChartComponentServices) {
         this.s57ChartComponentServices = s57ChartComponentServices;
     }
-
 }

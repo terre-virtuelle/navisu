@@ -64,7 +64,7 @@ public class NavigationCmdComponentImpl
 
     @Override
     public NavigationViewSet doIt(String cmd, NavigationData navigationData) {
-       return  ((NavigationCmd)navigationCmdMap.get(cmd)).doIt(navigationData);
+       return  navigationCmdMap.get(cmd).doIt(navigationData);
     }
 
     @Override
