@@ -124,9 +124,9 @@ public class GpsPlotterController
     }
 
     protected void createTarget() {
-        initRotation = new Double(properties.getProperty("initRotation"));
-        ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae"));
-        ownerShipView.setModelScale(new Vec4(new Double(properties.getProperty("scale"))));
+        initRotation = new Double(properties.getProperty("initRotation").trim());
+        ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae").trim());
+        ownerShipView.setModelScale(new Vec4(new Double(properties.getProperty("scale").trim())));
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         ownerShipView.setField("Ship", ownerShip);
