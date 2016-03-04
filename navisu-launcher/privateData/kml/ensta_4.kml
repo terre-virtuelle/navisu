@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+    <Document>
+<Placemark>
+<name>ensta_4</name>
+<Polygon>
+<extrude>1</extrude>
+<altitudeMode> relativeToGround </altitudeMode>
+<outerBoundaryIs>
+<Style id="transBluePoly">
+<LineStyle>
+<width>1.5</width>
+</LineStyle>
+<PolyStyle>
+<color>7dff0000</color>
+</PolyStyle>
+</Style>
+<LinearRing>
+<coordinates>
+-4.471726149573741,48.418533271107876,10.0
+-4.471726149573741,48.418533271107876,10.0
+-4.471720491537573,48.418460115179336,10.0
+-4.47170821313299,48.41845017556792,10.0
+-4.4716741484524105,48.418206741811616,10.0
+-4.471555977984441,48.41820926781955,10.0
+-4.471586907098864,48.41853900055052,10.0
+-4.471726149573741,48.418533271107876,10.0
+</coordinates>
+</LinearRing>
+</outerBoundaryIs>
+<styleUrl>#transBluePoly</styleUrl>
+</Polygon>
+</Placemark>
+
+ </Document>
+</kml>
+
