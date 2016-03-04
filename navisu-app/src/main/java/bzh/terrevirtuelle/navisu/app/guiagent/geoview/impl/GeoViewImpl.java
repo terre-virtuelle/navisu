@@ -1,6 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentEvents;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
@@ -33,7 +34,9 @@ import java.util.logging.Logger;
  * @author tibus
  * @date 02/11/2013 11:54
  */
-public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoViewServices {
+public class GeoViewImpl
+        extends ComponentStateAdaptor
+        implements InstrumentDriver, GeoView, GeoViewServices {
 
     private static final Logger LOGGER = Logger.getLogger(GeoViewImpl.class.getName());
 
@@ -212,7 +215,7 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         );
 
         layerManager.createGroup("On-screen layers",
-              //  WorldWindLayers.WorldMap.newInstance(),
+                //  WorldWindLayers.WorldMap.newInstance(),
                 WorldWindLayers.ScaleBar.newInstance(),
                 WorldWindLayers.Compass.newInstance()
         );
@@ -229,4 +232,18 @@ public class GeoViewImpl extends ComponentStateAdaptor implements GeoView, GeoVi
         return this.layerManager;
     }
 
+    @Override
+    public boolean canOpen(String category) {
+        return false;
+    }
+
+    @Override
+    public void on(String... files) {
+
+    }
+
+    @Override
+    public void off() {
+
+    }
 }
