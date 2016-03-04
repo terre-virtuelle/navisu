@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.AreaBuilder;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.impl.MeasureToolsImpl;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -31,6 +32,7 @@ import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.SurfacePolylines;
+import gov.nasa.worldwind.terrain.ZeroElevationModel;
 import gov.nasa.worldwind.util.UnitsFormat;
 import gov.nasa.worldwind.util.measure.MeasureTool;
 import gov.nasa.worldwind.util.measure.MeasureToolController;
@@ -40,6 +42,9 @@ import java.beans.PropertyChangeEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -115,6 +120,8 @@ public class MeasureToolsController
     @FXML
     public Button saveButton;
     @FXML
+    public Button save3DButton;
+    @FXML
     public Button selectButton;
     @FXML
     public Button endButton;
@@ -134,6 +141,8 @@ public class MeasureToolsController
     public TextField idTF;
     @FXML
     public TextField zoneNameTF;
+    @FXML
+    public TextField elevationTF;
 
     private final MeasureTool measureTool;
     private JLabel[] pointLabels;
@@ -144,6 +153,7 @@ public class MeasureToolsController
     private Geometry coastalLines = null;
     private long id = 0;
     private String zoneName = "DefaultZoneName";
+    private double elevation = 0;
     private final ArrayList<Position> positions;
     private final WKTReader wkt;
     private String shape = "Shape";
@@ -174,6 +184,9 @@ public class MeasureToolsController
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.layersManagerServices = layersManagerServices;
         wwd = GeoWorldWindViewImpl.getWW();
+
+        //ZeroElevationModel
+        wwd.getModel().getGlobe().setElevationModel(new ZeroElevationModel());
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
@@ -381,17 +394,31 @@ public class MeasureToolsController
             wwd.redraw();
         });
         newButton.setOnMouseClicked((MouseEvent event) -> {
+            positions.clear();
             measureTool.clear();
             measureTool.setArmed(true);
         });
         saveButton.setOnMouseClicked((MouseEvent event) -> {
-            if (shape.equals("CoastalLine")) {
-                save();
+            switch (shape) {
+                case "CoastalLine":
+                    exportNDS();
+                    break;
+                default:
+                    break;
             }
         });
         selectButton.setOnMouseClicked((MouseEvent event) -> {
             if (shape.equals("CoastalLine")) {
                 coastalLineControlSelected();
+            }
+        });
+        save3DButton.setOnMouseClicked((MouseEvent event) -> {
+            switch (shape) {
+                case "Polygon":
+                    exportKML3D();
+                    break;
+                default:
+                    break;
             }
         });
         pauseButton.setOnMouseClicked((MouseEvent event) -> {
@@ -416,6 +443,11 @@ public class MeasureToolsController
         zoneNameTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
                 zoneName = zoneNameTF.getText();
+            }
+        });
+        elevationTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                elevation = Double.parseDouble(elevationTF.getText());
             }
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
@@ -636,7 +668,7 @@ public class MeasureToolsController
         }
     }
 
-    private void save() {
+    private void exportNDS() {
         Geometry simpleGeometry = null;
         try {
             simpleGeometry = wkt.read(WWJ_JTS.toLineStringWkt(positions));
@@ -658,6 +690,92 @@ public class MeasureToolsController
                 ImportExportXML.exports(navigationDataSet, "privateData/nds/" + zoneName + ".nds");
             } catch (JAXBException | FileNotFoundException ex) {
                 Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void exportKML() {
+        positions.addAll(measureTool.getPositions());
+        if (positions != null) {
+            List<String> kml = new ArrayList<>();
+            String header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                    + "<kml xmlns=\"http://earth.google.com/kml/2.0\">\n"
+                    + "    <Document>";
+            kml.add(header);
+            String body;
+            for (int i = 0; i < positions.size() - 1; i++) {
+                body = "<Placemark>"
+                        + "<Style>"
+                        + "<LineStyle>"
+                        + "<color>501400FF</color>"
+                        + "<width>2</width>"
+                        + "</LineStyle>"
+                        + "</Style>"
+                        + "<LineString>"
+                        + "<coordinates>"
+                        + positions.get(i).getLongitude().degrees + "," + positions.get(i).getLatitude().degrees + ",10\n"
+                        + positions.get(i + 1).getLongitude().degrees + "," + positions.get(i + 1).getLatitude().degrees + ",10"
+                        + "</coordinates>"
+                        + "</LineString>"
+                        + "</Placemark>";
+                kml.add(body);
+            }
+
+            String footer = " </Document>"
+                    + "</kml>";
+            kml.add(footer);
+            java.nio.file.Path path = Paths.get("privateData/kml/" + zoneName + ".kml");
+            try {
+                Files.write(path, kml, Charset.defaultCharset());
+            } catch (IOException ex) {
+                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void exportKML3D() {
+        positions.addAll(measureTool.getPositions());
+        if (positions != null) {
+            List<String> kml = new ArrayList<>();
+            String header = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                    + "<kml xmlns=\"http://earth.google.com/kml/2.0\">\n"
+                    + "    <Document>";
+            kml.add(header);
+
+            String body = "<Placemark>\n"
+                    + "<name>" + zoneName + "</name>\n"
+                    + "<Polygon>\n"
+                    + "<extrude>" + 1 + "</extrude>\n"
+                    + "<altitudeMode> relativeToGround </altitudeMode>\n"
+                    + "<outerBoundaryIs>\n"
+                    + "<Style id=\"transBluePoly\">\n"
+                    + "<LineStyle>\n"
+                    + "<width>1.5</width>\n"
+                    + "</LineStyle>\n"
+                    + "<PolyStyle>\n"
+                    + "<color>7dff0000</color>\n"
+                    + "</PolyStyle>\n"
+                    + "</Style>\n"
+                    + "<LinearRing>\n"
+                    + "<coordinates>\n";
+            for (int i = 0; i < positions.size(); i++) {
+                body += positions.get(i).getLongitude().degrees + "," + positions.get(i).getLatitude().degrees + "," + elevation + "\n";
+            }
+            body += "</coordinates>\n"
+                    + "</LinearRing>\n"
+                    + "</outerBoundaryIs>\n"
+                    + "<styleUrl>#transBluePoly</styleUrl>\n"
+                    + "</Polygon>\n"
+                    + "</Placemark>\n";
+            kml.add(body);
+            String footer = " </Document>\n"
+                    + "</kml>\n";
+            kml.add(footer);
+            java.nio.file.Path path = Paths.get("privateData/kml/" + zoneName + ".kml");
+            try {
+                Files.write(path, kml, Charset.defaultCharset());
+            } catch (IOException ex) {
+                Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
