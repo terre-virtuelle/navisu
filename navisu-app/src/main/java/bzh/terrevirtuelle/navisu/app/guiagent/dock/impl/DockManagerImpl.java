@@ -302,8 +302,12 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp", ".SHP"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
-                .createNode(2, "earth.png", 0, "models.png", 0, "noElevation.png", (e) -> open())
-                .createNode(2, "earth.png", 0, "models.png", 1, "withElevation.png", (e) -> open())
+                .createNode(2, "earth.png", 0, "models.png", 0, "noElevation.png", (e) -> open("noElevation"))
+                .createNode(2, "earth.png", 0, "models.png", 1, "elevation.png", (e) -> open("Elevation"))
+                .createNode(2, "earth.png", 0, "models.png", 2, "noBathy.png", (e) -> open("noBathymetry"))
+                .createNode(2, "earth.png", 0, "models.png", 3, "bathy.png", (e) -> open("Bathymetry"))
+             //   .createNode(2, "earth.png", 0, "models.png", 4, "flatGlobe.png", (e) -> open("FlatGlobe"))
+              //  .createNode(2, "earth.png", 0, "models.png", 5, "roundGlobe.png", (e) -> open("RoundGlobe"))
                 .build();
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);

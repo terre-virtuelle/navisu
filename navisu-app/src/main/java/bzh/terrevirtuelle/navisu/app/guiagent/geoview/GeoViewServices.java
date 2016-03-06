@@ -16,8 +16,9 @@ import org.capcaval.c3.component.ComponentService;
 public interface GeoViewServices extends ComponentService {
 
     LayerManager<Layer> getLayerManager();
+
     Display<Node> getDisplayService();
 
     void registerProcessor(final GObjectCUDProcessor processor);
- 
+
 }

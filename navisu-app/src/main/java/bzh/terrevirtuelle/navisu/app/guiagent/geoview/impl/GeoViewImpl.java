@@ -15,9 +15,13 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayers;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.globes.ElevationModel;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.terrain.ZeroElevationModel;
 import javafx.scene.Node;
 import org.capcaval.c3.component.ComponentStateAdaptor;
 import org.capcaval.c3.component.annotation.ConsumedEvent;
@@ -36,7 +40,7 @@ import java.util.logging.Logger;
  */
 public class GeoViewImpl
         extends ComponentStateAdaptor
-        implements InstrumentDriver, GeoView, GeoViewServices {
+        implements GeoView, GeoViewServices {
 
     private static final Logger LOGGER = Logger.getLogger(GeoViewImpl.class.getName());
 
@@ -49,7 +53,6 @@ public class GeoViewImpl
 
     protected GeoWorldWindView geoView;
     protected LayerManager<Layer> layerManager;
-
     protected Model<GObject> model;
     protected List<GObjectCUDProcessor> processors;
 
@@ -133,12 +136,12 @@ public class GeoViewImpl
             @Override
             public void notifyCreated(TObject tObject) {
                 //  LOGGER.info("notifyCreated(" + tObject.getID() + ")");
-                GObjectCUDProcessor processor = null;
+                GObjectCUDProcessor processor;
 
                 processor = findProcessor(tObject);
 
                 if (processor == null) {
-                    LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
+                    LOGGER.log(Level.WARNING, "Cannot find processor for TObject : {0}", tObject.getClass());
                     return;
                 }
                 createGObject(processor, tObject);
@@ -150,7 +153,7 @@ public class GeoViewImpl
 
                 GObjectCUDProcessor processor = findProcessor(tObject);
                 if (processor == null) {
-                    LOGGER.warning("Cannot find processor for TObject : " + tObject.getClass());
+                    LOGGER.log(Level.WARNING, "Cannot find processor for TObject : {0}", tObject.getClass());
                     return;
                 }
 
@@ -232,18 +235,5 @@ public class GeoViewImpl
         return this.layerManager;
     }
 
-    @Override
-    public boolean canOpen(String category) {
-        return false;
-    }
-
-    @Override
-    public void on(String... files) {
-
-    }
-
-    @Override
-    public void off() {
-
-    }
+   
 }
