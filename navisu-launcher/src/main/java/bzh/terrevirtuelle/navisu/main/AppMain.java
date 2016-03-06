@@ -27,6 +27,8 @@ import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.Bathymetry
 import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.impl.BathymetryEventProducerImpl;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDBServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.impl.BathymetryDBImpl;
+import bzh.terrevirtuelle.navisu.charts.earth.ProjectionsComponentServices;
+import bzh.terrevirtuelle.navisu.charts.earth.impl.ProjectionsComponentImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.GeoTiffChartServices;
 import bzh.terrevirtuelle.navisu.charts.raster.geotiff.impl.GeoTiffChartImpl;
 import bzh.terrevirtuelle.navisu.charts.raster.kap.KapChartServices;
@@ -204,6 +206,7 @@ public class AppMain extends Application {
                         NavigationCmdComponentImpl.class,
                         NmeaClientImpl.class,
                         OptionsManagerImpl.class,
+                        ProjectionsComponentImpl.class,
                         RouteDataEditorImpl.class,
                         RouteEditorImpl.class,
                         RoutePhotoEditorImpl.class,
@@ -279,6 +282,7 @@ public class AppMain extends Application {
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
+        ProjectionsComponentServices projectionsComponentServices=componentManager.getComponentService(ProjectionsComponentServices.class);
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
         RouteDataEditorServices routeDataEditorServices = componentManager.getComponentService(RouteDataEditorServices.class);
         RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
@@ -341,6 +345,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(projectionsComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeDataEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
