@@ -55,10 +55,8 @@ public class SailingDirectionsComponentImpl
                 controller1 = SailingDirectionsEditorComponentController.getInstance(this, KeyCode.S, KeyCombination.CONTROL_DOWN,
                         guiAgentServices, s57ChartComponentServices, layersManagerServices);
                 controller1.setVisible(true);
-
             }
         }
-
     }
 
     @Override
