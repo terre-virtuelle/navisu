@@ -12,6 +12,9 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.AreaBuilder;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.Face;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.Point3D;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.WavefrontOBJBuilder;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
@@ -88,7 +91,7 @@ public class MeasureToolsController
     private LayersManagerServices layersManagerServices;
     private final String FXML = "measuretools.fxml";
     private NavigationDataSet navigationDataSet;
-
+    private WavefrontOBJBuilder wavefrontOBJBuilder;
     @FXML
     public Pane view;
     @FXML
@@ -155,6 +158,8 @@ public class MeasureToolsController
     private String zoneName = "DefaultZoneName";
     private double elevation = 0;
     private final ArrayList<Position> positions;
+    private List<Point3D> points3D;
+    private List<Face> faces;
     private final WKTReader wkt;
     private String shape = "Shape";
 
@@ -416,6 +421,7 @@ public class MeasureToolsController
             switch (shape) {
                 case "Polygon":
                     exportKML3D();
+                    exportOBJ3D();
                     break;
                 default:
                     break;
@@ -772,11 +778,63 @@ public class MeasureToolsController
                     + "</kml>\n";
             kml.add(footer);
             java.nio.file.Path path = Paths.get("privateData/kml/" + zoneName + ".kml");
+
             try {
                 Files.write(path, kml, Charset.defaultCharset());
             } catch (IOException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+    }
+
+    private void exportOBJ3D() {
+        java.nio.file.Path path = Paths.get("privateData/obj/" + zoneName + ".obj");
+        List<String> obj = new ArrayList<>();
+        String header = "##\n"
+                + "##  Test generation fichier obj depuis Navisu\n"
+                + "## " + zoneName + "\n"
+                + "##\n"
+                + "\n";
+             //   + "mtllib blue.mtl\n"
+              //  + "usemtl blue \n";
+        obj.add(header);
+        
+        wavefrontOBJBuilder = new WavefrontOBJBuilder();
+        positions.addAll(measureTool.getPositions());
+        int size = positions.size();
+        int f = 1;
+        for (int i = 0; i < size - 1; i++) {
+            wavefrontOBJBuilder.indexForVertex(positions.get(i).getLatitude().getDegrees(), positions.get(i).getLongitude().getDegrees(), 0.0);
+        }
+        String normals = "vn 0.577350 0.577350 -0.577350\n"
+                + "vn 0.577350 -0.577350 -0.577350\n"
+                + "vn -0.577350 -0.577350 -0.577350\n"
+                + "vn -0.577350 0.577350 -0.577350\n"
+                + "vn 0.577350 0.577350 0.577350\n"
+                + "vn 0.577350 -0.577350 0.577350\n"
+                + "vn -0.577350 -0.577350 0.577350\n"
+                + "vn -0.577350 0.577350 0.577350\n"
+                + "\n";
+        
+        obj.add(normals);
+        
+        for (int i = 0; i < size - 1; i++) {
+            wavefrontOBJBuilder.indexForVertex(positions.get(i).getLatitude().getDegrees(), positions.get(i).getLongitude().getDegrees(), elevation / 115072.0);
+        }
+        wavefrontOBJBuilder.addFace(4, 3, 2, 1);
+        wavefrontOBJBuilder.addFace(1, 2, 6, 5);
+        wavefrontOBJBuilder.addFace(7, 6, 2, 3);
+        wavefrontOBJBuilder.addFace(4, 8, 7, 3);
+        wavefrontOBJBuilder.addFace(5, 8, 4, 1);
+        wavefrontOBJBuilder.addFace(5, 6, 7, 8);
+
+        obj.add(wavefrontOBJBuilder.toString());
+        try {
+            Files.write(path, obj, Charset.defaultCharset());
+        } catch (IOException ex) {
+            Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(wavefrontOBJBuilder);
     }
 }
