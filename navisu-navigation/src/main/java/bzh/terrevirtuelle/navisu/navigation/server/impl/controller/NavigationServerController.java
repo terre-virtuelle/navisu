@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.server.impl.controller;
 
-import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.ArCommand;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
@@ -33,11 +33,11 @@ import org.vertx.java.core.http.ServerWebSocket;
  */
 public class NavigationServerController {
 
-    protected static final Logger LOGGER = Logger.getLogger(NavigationServerImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(NavigationServerController.class.getName());
     private static NavigationServerController INSTANCE;
 
     private NavigationCmdComponentServices navigationCmdComponentServices;
-    private NavigationData navigationData;
+    private NavigationDataSet navigationDataSet;
     private NavigationViewSet navigationViewSet;
 
     private Properties properties;
@@ -90,12 +90,15 @@ public class NavigationServerController {
                     ws.dataHandler((Buffer data) -> {
                         arCommand = command(data.toString());
                         if (arCommand != null) {
-                            navigationViewSet = navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getArg());
-                            if (navigationViewSet != null) {
-                                if (navigationViewSet.size() > 0) {
-                                    ws.writeTextFrame(response(navigationViewSet));
-                                }else{
-                                    ws.writeTextFrame("");
+                            if (arCommand.getArg() != null) {
+                                navigationDataSet = navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getArg());
+                                if (navigationDataSet != null) {
+                                    if (navigationDataSet.size() > 0) {
+                                        String r = response(navigationDataSet);
+                                        ws.writeTextFrame(r);
+                                    } else {
+                                        ws.writeTextFrame("");
+                                    }
                                 }
                             }
                         } else {
@@ -110,28 +113,6 @@ public class NavigationServerController {
                     req.response().sendFile(HTML_RESPONSE);
                 }
             }).listen(port);
-            /*
-            dataVertx = VertxFactory.newVertx();
-            dataVertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
-                if (ws.path().equals(START_CMD)) {
-                    ws.dataHandler((Buffer data) -> {
-                        camera = command(data.toString());
-                        if (camera != null) {
-                            cameraComponentServices.updateTarget(camera);
-                            ws.writeTextFrame("ACK");
-                        } else {
-                            ws.writeTextFrame("NACK");
-                        }
-                    });
-                } else {
-                    ws.reject();
-                }
-            }).requestHandler((HttpServerRequest req) -> {
-                if (req.path().equals(HTML_RESPONSE_CMD)) {
-                    req.response().sendFile(HTML_RESPONSE);
-                }
-            }).listen(8989);
-             */
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, null, ex);
         }
@@ -148,12 +129,12 @@ public class NavigationServerController {
         return navCmd;
     }
 
-    private String response(NavigationViewSet navigationViewSet) {
+    private String response(NavigationDataSet response) {
         StringWriter xmlString = new StringWriter();
         try {
-            ImportExportXML.exports(navigationViewSet, xmlString);
+            ImportExportXML.exports(response, xmlString);
         } catch (JAXBException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         return xmlString.toString();
     }

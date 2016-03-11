@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.navigation.controller.commands.impl;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
@@ -63,13 +64,9 @@ public class NavigationCmdComponentImpl
     }
 
     @Override
-    public NavigationViewSet doIt(String cmd, NavigationData navigationData) {
+    public NavigationDataSet doIt(String cmd, NavigationData navigationData) {
        return  navigationCmdMap.get(cmd).doIt(navigationData);
     }
 
-    @Override
-    public NMEA doIt(String cmd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }

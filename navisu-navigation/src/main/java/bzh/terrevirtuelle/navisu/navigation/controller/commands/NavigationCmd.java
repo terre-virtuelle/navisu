@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.navigation.controller.commands;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 
 /**
  *
@@ -14,6 +14,6 @@ import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
  */
 public interface NavigationCmd {
 
-    public NavigationViewSet doIt(NavigationData arg);
+    public NavigationDataSet doIt(NavigationData arg);
     
 }
