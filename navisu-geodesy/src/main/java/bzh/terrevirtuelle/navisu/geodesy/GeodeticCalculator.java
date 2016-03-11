@@ -343,7 +343,9 @@ public class GeodeticCalculator {
     * @param end ending position
     * @return
     */
-   public GeodeticMeasurement calculateGeodeticMeasurement(Ellipsoid refEllipsoid, GlobalLocation start, GlobalLocation end)
+   public GeodeticMeasurement calculateGeodeticMeasurement(Ellipsoid refEllipsoid, 
+           GlobalLocation start, 
+           GlobalLocation end)
    {
       // calculate elevation differences
       double elev1 = start.getAltitude();
