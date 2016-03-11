@@ -73,7 +73,7 @@ import javax.xml.bind.annotation.XmlType;
     "cmt",
     "desc",
     "src",
-    "link",
+    "links",
     "sym",
     "type",
     "fix",
@@ -98,7 +98,7 @@ public class Waypoint {
     protected String cmt;
     protected String desc;
     protected String src;
-    protected List<Link> link = new ArrayList<>();
+    protected List<Links> links = new ArrayList<>();
     protected String sym;
     protected String type;
     protected String fix;
@@ -160,7 +160,7 @@ public class Waypoint {
     }
 
     public Waypoint(double ele, GregorianCalendar time, double magvar, double geoidheight,
-            String name, String cmt, String desc, String src, List<Link> link,
+            String name, String cmt, String desc, String src, List<Links> link,
             String sym, String type, String fix, int sat, double hdop,
             double vdop, double pdop, double ageofdgpsdata, float course,float speed,
             int dgpsid, Extensions extensions, double lat, double lon) {
@@ -172,7 +172,7 @@ public class Waypoint {
         this.cmt = cmt;
         this.desc = desc;
         this.src = src;
-        this.link = link;
+        this.links = link;
         this.sym = sym;
         this.type = type;
         this.fix = fix;
@@ -366,15 +366,15 @@ public class Waypoint {
      *
      *
      * <p>
-     * Objects of the following type(s) are allowed in the list {@link Link }
+     * Objects of the following type(s) are allowed in the list {@link Links }
      *
      *
      */
-    public List<Link> getLink() {
-        if (link == null) {
-            link = new ArrayList<Link>();
+    public List<Links> getLinkList() {
+        if (links == null) {
+            links = new ArrayList<Links>();
         }
-        return this.link;
+        return this.links;
     }
 
     /**
@@ -628,7 +628,7 @@ public class Waypoint {
                 + (cmt != null ? ", cmt=" + cmt : "")
                 + (desc != null ? ", desc=" + desc : "")
                 + (src != null ? ", src=" + src : "")
-                + (!link.isEmpty() ? ", link=" + link : "")
+                + (!links.isEmpty() ? ", link=" + links : "")
                 + (sym != null ? ", sym=" + sym : "")
                 + (type != null ? ", type=" + type : "")
                 + (fix != null ? ", fix=" + fix : "")

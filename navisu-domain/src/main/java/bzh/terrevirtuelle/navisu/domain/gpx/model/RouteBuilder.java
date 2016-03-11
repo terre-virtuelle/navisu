@@ -18,7 +18,7 @@ public class RouteBuilder {
     protected String cmt="";
     protected String desc="";
     protected String src="";
-    protected List<Link> link = new ArrayList<>();
+    protected List<Links> link = new ArrayList<>();
     protected int number;
     protected String type="";
     protected Extensions extensions = new Extensions();
@@ -55,7 +55,7 @@ public class RouteBuilder {
         return this;
     }
 
-    public RouteBuilder link(List<Link> link) {
+    public RouteBuilder link(List<Links> link) {
         this.link = link;
         return this;
     }

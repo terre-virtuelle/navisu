@@ -22,8 +22,8 @@ public class LinkBuilder {
         return new LinkBuilder();
     }
 
-    public Link build() {
-        return new Link(text, type, href);
+    public Links build() {
+        return new Links(text, type, href);
     }
 
     public LinkBuilder text(String text) {

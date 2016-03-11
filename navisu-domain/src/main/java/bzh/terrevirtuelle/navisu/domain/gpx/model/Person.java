@@ -48,12 +48,12 @@ public class Person {
 
     protected String name;
     protected Email email;
-    protected Link link;
+    protected Links link;
 
     public Person() {
     }
 
-    public Person(String name, Email email, Link link) {
+    public Person(String name, Email email, Links link) {
         this.name = name;
         this.email = email;
         this.link = link;
@@ -112,10 +112,10 @@ public class Person {
      * 
      * @return
      *     possible object is
-     *     {@link Link }
+     *     {@link Links }
      *     
      */
-    public Link getLink() {
+    public Links getLink() {
         return link;
     }
 
@@ -124,10 +124,10 @@ public class Person {
      * 
      * @param value
      *     allowed object is
-     *     {@link Link }
+     *     {@link Links }
      *     
      */
-    public void setLink(Link value) {
+    public void setLink(Links value) {
         this.link = value;
     }
 

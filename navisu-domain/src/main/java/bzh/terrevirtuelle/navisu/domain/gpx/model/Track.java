@@ -66,7 +66,7 @@ public class Track {
     protected String cmt;
     protected String desc;
     protected String src;
-    protected List<Link> link= new ArrayList<>();
+    protected List<Links> link= new ArrayList<>();
     @XmlSchemaType(name = "nonNegativeInteger")
     protected int number;
     protected String type;
@@ -76,7 +76,7 @@ public class Track {
     public Track() {
     }
 
-    public Track(String name, String cmt, String desc, String src, List<Link> link, int number, String type, Extensions extensions, List<TrackSegment> trkseg) {
+    public Track(String name, String cmt, String desc, String src, List<Links> link, int number, String type, Extensions extensions, List<TrackSegment> trkseg) {
         this.name = name;
         this.cmt = cmt;
         this.desc = desc;
@@ -202,13 +202,13 @@ public class Track {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Link }
+     * {@link Links }
      * 
      * 
      */
-    public List<Link> getLink() {
+    public List<Links> getLink() {
         if (link == null) {
-            link = new ArrayList<Link>();
+            link = new ArrayList<Links>();
         }
         return this.link;
     }
