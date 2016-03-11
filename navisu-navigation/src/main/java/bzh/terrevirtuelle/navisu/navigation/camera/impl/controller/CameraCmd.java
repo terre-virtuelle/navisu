@@ -27,7 +27,7 @@ public class CameraCmd
 
     CameraComponentServices cameraComponentServices;
     
-    public static CameraCmd INSTANCE;
+    private static CameraCmd INSTANCE;
 
     public static CameraCmd getInstance() {
         if (INSTANCE == null) {

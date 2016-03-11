@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.navigation.controller.commands;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -20,5 +19,7 @@ public interface NavigationCmdComponentServices
     public void init();
 
     public NavigationDataSet doIt(String cmd, NavigationData navigationData);
+
+    public NavigationDataSet doIt(String cmd, String arg);
 
 }

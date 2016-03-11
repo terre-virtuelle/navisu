@@ -14,6 +14,11 @@ import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
  */
 public interface NavigationCmd {
 
-    public NavigationDataSet doIt(NavigationData arg);
-    
+    default NavigationDataSet doIt(NavigationData arg) {
+        return null;
+    }
+
+    default NavigationDataSet doIt(String arg) {
+        return null;
+    }
 }

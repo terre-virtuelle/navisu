@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.ArCommand;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -90,6 +89,17 @@ public class NavigationServerController {
                     ws.dataHandler((Buffer data) -> {
                         arCommand = command(data.toString());
                         if (arCommand != null) {
+                            if (arCommand.getNavigationData()!= null) {
+                                navigationDataSet = navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getNavigationData());
+                                if (navigationDataSet != null) {
+                                    if (navigationDataSet.size() > 0) {
+                                        String r = response(navigationDataSet);
+                                        ws.writeTextFrame(r);
+                                    } else {
+                                        ws.writeTextFrame("");
+                                    }
+                                }
+                            }
                             if (arCommand.getArg() != null) {
                                 navigationDataSet = navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getArg());
                                 if (navigationDataSet != null) {
@@ -124,7 +134,7 @@ public class NavigationServerController {
             navCmd = new ArCommand();
             navCmd = ImportExportXML.imports(navCmd, new StringReader(data));
         } catch (JAXBException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         return navCmd;
     }
@@ -134,6 +144,7 @@ public class NavigationServerController {
         try {
             ImportExportXML.exports(response, xmlString);
         } catch (JAXBException ex) {
+            System.out.println("ex "+ ex);
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         return xmlString.toString();

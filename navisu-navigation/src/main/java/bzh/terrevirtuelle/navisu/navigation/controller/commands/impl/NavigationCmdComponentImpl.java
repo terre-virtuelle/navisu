@@ -8,8 +8,6 @@ package bzh.terrevirtuelle.navisu.navigation.controller.commands.impl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponent;
@@ -35,6 +33,7 @@ public class NavigationCmdComponentImpl
     S57ChartComponentServices s57ChartComponentServices;
 
     private CameraCmd cameraCmd;
+    private NaVigationDataSetCmd naVigationDataSetCmd;
     private Map<String, NavigationCmd> navigationCmdMap;
 
     public NavigationCmdComponentImpl() {
@@ -56,17 +55,23 @@ public class NavigationCmdComponentImpl
     @Override
     public void init() {
         navigationCmdMap = new HashMap<>();
-        
+
         cameraCmd = CameraCmd.getInstance();
         cameraCmd.setCameraComponentServices(cameraComponentServices);
-        
+
+        naVigationDataSetCmd = NaVigationDataSetCmd.getInstance();
+
         navigationCmdMap.put("CameraCmd", cameraCmd);
+        navigationCmdMap.put("NaVigationDataSetCmd", naVigationDataSetCmd);
     }
 
     @Override
     public NavigationDataSet doIt(String cmd, NavigationData navigationData) {
-       return  navigationCmdMap.get(cmd).doIt(navigationData);
+        return navigationCmdMap.get(cmd).doIt(navigationData);
     }
 
-
+    @Override
+    public NavigationDataSet doIt(String cmd, String arg) {
+        return navigationCmdMap.get(cmd).doIt(arg);
+    }
 }
