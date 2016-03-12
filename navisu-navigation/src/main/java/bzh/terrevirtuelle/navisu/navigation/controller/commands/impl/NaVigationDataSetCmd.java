@@ -7,6 +7,12 @@ package bzh.terrevirtuelle.navisu.navigation.controller.commands.impl;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmd;
+import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteDataEditorController;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -18,6 +24,8 @@ public class NaVigationDataSetCmd
         implements NavigationCmd {
 
     private static NaVigationDataSetCmd INSTANCE;
+    private final String REP = "privateData/nds/";
+    private NavigationDataSet navigationDataSet;
 
     public static NaVigationDataSetCmd getInstance() {
         if (INSTANCE == null) {
@@ -31,8 +39,14 @@ public class NaVigationDataSetCmd
 
     @Override
     public NavigationDataSet doIt(String arg) {
-        System.out.println("NaVigationDataCmd " + arg);
-        return null;
+        String filename = REP + arg;
+        navigationDataSet = new NavigationDataSet();
+        try {
+            navigationDataSet = ImportExportXML.imports(navigationDataSet, filename);
+        } catch (FileNotFoundException | JAXBException ex) {
+            Logger.getLogger(NaVigationDataSetCmd.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return navigationDataSet;
     }
 
 }

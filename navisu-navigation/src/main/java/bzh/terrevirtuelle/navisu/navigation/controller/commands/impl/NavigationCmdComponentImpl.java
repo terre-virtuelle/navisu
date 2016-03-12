@@ -60,18 +60,26 @@ public class NavigationCmdComponentImpl
         cameraCmd.setCameraComponentServices(cameraComponentServices);
 
         naVigationDataSetCmd = NaVigationDataSetCmd.getInstance();
-
+        
         navigationCmdMap.put("CameraCmd", cameraCmd);
         navigationCmdMap.put("NaVigationDataSetCmd", naVigationDataSetCmd);
     }
 
     @Override
     public NavigationDataSet doIt(String cmd, NavigationData navigationData) {
-        return navigationCmdMap.get(cmd).doIt(navigationData);
+        NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
+        if (tmp != null) {
+            return tmp.doIt(navigationData);
+        }
+        return new NavigationDataSet();
     }
 
     @Override
     public NavigationDataSet doIt(String cmd, String arg) {
-        return navigationCmdMap.get(cmd).doIt(arg);
+        NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
+        if (tmp != null) {
+            return tmp.doIt(arg);
+        }
+        return new NavigationDataSet();
     }
 }
