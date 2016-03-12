@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -25,7 +26,8 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Serge Morvan
  * @date 10 juin 2014 NaVisu project
  */
-@XmlTransient
+//@XmlTransient
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Location
         extends Geo
@@ -49,7 +51,6 @@ public class Location
         super(id);
         this.latitude = lat;
         this.longitude = lon;
-      //  this.geometry = "POINT(" + lon + " " + lat + ")";
     }
 
     public Location(long id, String geometry) {

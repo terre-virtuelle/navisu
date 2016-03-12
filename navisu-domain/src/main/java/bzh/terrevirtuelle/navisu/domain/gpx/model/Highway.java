@@ -10,10 +10,22 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "highway", propOrder = {"id", "name", "description", "latitude", "longitude", "geometry"})
+/*
+@XmlType(name = "highway", propOrder = {
+    "id",
+    "name",
+  //  "latitude",
+  //  "longitude",
+ //   "geometry",
+    "description"
+}
+)
+*/
 public class Highway
         extends Location
         implements NavigationData {

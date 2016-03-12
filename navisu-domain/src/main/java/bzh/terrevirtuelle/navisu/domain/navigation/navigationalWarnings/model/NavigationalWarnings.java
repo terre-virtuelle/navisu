@@ -23,8 +23,9 @@ import javax.xml.bind.annotation.XmlType;
         propOrder = {"id", "globalZone", "broadcastTime",
             "expirationDate", "description",
             "restriction", "type",
-            "latitude", "longitude",
-            "geometry"})
+           // "latitude", "longitude",
+           // "geometry"
+        })
 @XmlAccessorType(XmlAccessType.FIELD)
 public class NavigationalWarnings
         extends Location

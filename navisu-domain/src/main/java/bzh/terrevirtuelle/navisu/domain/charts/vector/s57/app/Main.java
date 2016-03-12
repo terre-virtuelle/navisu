@@ -4,21 +4,15 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.BuoyageView;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
-import bzh.terrevirtuelle.navisu.domain.gpx.view.GpxView;
-import bzh.terrevirtuelle.navisu.domain.gpx.view.HighwayView;
-import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.view.AvurnavView;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.view.SailingDirectionsViewOld;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.domain.ship.view.ShipView;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
@@ -223,7 +217,8 @@ public class Main {
          }
          });
          */
- NavigationViewSet navigationViewSet = new NavigationViewSet();
+ /*
+        NavigationViewSet navigationViewSet = new NavigationViewSet();
 
         BeaconCardinal beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
         beaconCardinal.setColour(COLOR_NAME.getColor("3"));
@@ -249,19 +244,19 @@ public class Main {
         Highway highway = new Highway();
         HighwayView highwayView = new HighwayView(highway, 1204, 235);
         navigationViewSet.add(highwayView);
-        
+
         SailingDirectionsOld sailingDirections = new SailingDirectionsOld();
         sailingDirections.setLatitude(4.25);
         sailingDirections.setLongitude(56.6);
         SailingDirectionsViewOld sailingDirectionsView = new SailingDirectionsViewOld(sailingDirections, 245, 489);
         navigationViewSet.add(sailingDirectionsView);
-        
-        NavigationalWarnings avurnav =new NavigationalWarnings();
+
+        NavigationalWarnings avurnav = new NavigationalWarnings();
         avurnav.setLatitude(21.26);
-        AvurnavView avurnavView=new AvurnavView(avurnav,568,759);
-        
+        AvurnavView avurnavView = new AvurnavView(avurnav, 568, 759);
+
         navigationViewSet.add(avurnavView);
-        
+
         try {
             ImportExportXML.exports(navigationViewSet, "data/test.xml");
         } catch (JAXBException | FileNotFoundException ex) {
@@ -275,10 +270,54 @@ public class Main {
         } catch (FileNotFoundException | JAXBException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         List<BuoyageView> navigationViewList = navigationViewSet.get(BuoyageView.class);
         System.out.println(navigationViewList);
+        
+        */
+        NavigationDataSet navigationDataSet = new NavigationDataSet();
+
+        Buoyage beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
+        beaconCardinal.setColour(COLOR_NAME.getColor("3"));
+        beaconCardinal.setImageAddress("img/buoyage_1/BCNCAR_3_3_6.2_1_14_1.png");
+        navigationDataSet.add(beaconCardinal);
+
+        Landmark landmark = new Landmark();
+        landmark.setCategoryOfLandMark("test");
+        landmark.setGeometry("POINT(8.0 6.4)");
+        
+        navigationDataSet.add(landmark);
+
+        Ship ship = new Ship();
+        navigationDataSet.add(ship);
+
+        Gpx gpx = new Gpx();
+        Highway highway = new Highway();
+        gpx.setHighway(highway);
+        navigationDataSet.add(gpx);
+
+        SailingDirectionsOld sailingDirections = new SailingDirectionsOld();
+        sailingDirections.setLatitude(4.25);
+        sailingDirections.setLongitude(56.6);
+        navigationDataSet.add(sailingDirections);
+        try {
+            ImportExportXML.exports(navigationDataSet, "data/test.xml");
+        } catch (JAXBException | FileNotFoundException ex) {
+            System.out.println("ex " + ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+         navigationDataSet.clear();
+        try {
+            navigationDataSet = ImportExportXML.imports(navigationDataSet, "data/test.xml");
+        } catch (FileNotFoundException | JAXBException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      //  System.out.println(navigationDataSet);
+        List<BeaconCardinal> navigationList = navigationDataSet.get(BeaconCardinal.class);
+        navigationList.stream().forEach((b) -> {
+            System.out.println(b.getLatitude() + "  " + b.getLongitude() + "  " + b.getImageAddress());
+        });
     }
 
     public static void main(String[] args) {

@@ -1,14 +1,17 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATCAM;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "bcncar")
-public class BeaconCardinal extends Beacon
+public class BeaconCardinal 
+        extends Beacon
         implements Serializable {
 
     public BeaconCardinal() {
