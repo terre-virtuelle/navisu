@@ -15,8 +15,8 @@
 
 <fx:root stylesheets="@measuretools.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="450.0" styleClass="measuretool-panel" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" height="340.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="450.0" styleClass="measuretool-panel" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="411.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
         <Group layoutY="10.0" styleClass="measuretool-panel">
             <children>
                 <Button fx:id="newButton" layoutX="23.0" layoutY="45.0" prefHeight="23.0" prefWidth="65.0" text="NEW">
@@ -167,6 +167,28 @@
                         <TextField fx:id="elevationTF" prefHeight="32.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                     </children>
                 </GridPane>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="56.0" layoutX="18.0" layoutY="321.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="399.0" />
+            <GridPane layoutX="30.0" layoutY="325.0" prefHeight="56.0" prefWidth="385.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="latitudeTF" prefHeight="25.0" prefWidth="91.0" styleClass="combo-box-base" GridPane.rowIndex="2" />
+                  <TextField fx:id="longitudeTF" prefHeight="25.0" prefWidth="91.0" styleClass="combo-box-base" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label prefHeight="15.0" prefWidth="126.0" text="Latitude" />
+                  <Label prefHeight="15.0" prefWidth="127.0" text="Longitude" GridPane.columnIndex="1" />
+                  <Button fx:id="placeMarkButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="PlaceMark" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button fx:id="clearPlaceMarkButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Clear" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
                 
             
             </children>

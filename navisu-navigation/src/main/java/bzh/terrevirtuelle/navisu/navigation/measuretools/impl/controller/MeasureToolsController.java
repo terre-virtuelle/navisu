@@ -34,6 +34,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import gov.nasa.worldwind.terrain.ZeroElevationModel;
 import gov.nasa.worldwind.util.UnitsFormat;
@@ -146,6 +147,14 @@ public class MeasureToolsController
     public TextField zoneNameTF;
     @FXML
     public TextField elevationTF;
+    @FXML
+    public TextField latitudeTF;
+    @FXML
+    public TextField longitudeTF;
+    @FXML
+    public Button placeMarkButton;
+    @FXML
+    public Button clearPlaceMarkButton;
 
     private final MeasureTool measureTool;
     private JLabel[] pointLabels;
@@ -162,6 +171,9 @@ public class MeasureToolsController
     private List<Face> faces;
     private final WKTReader wkt;
     private String shape = "Shape";
+    private double latitude;
+    private double longitude;
+    private String sign;
 
     public static MeasureToolsController getInstance(MeasureToolsImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -211,6 +223,7 @@ public class MeasureToolsController
         makePanel();
         positions = new ArrayList<>();
         wkt = new WKTReader();
+
     }
 
     private void addlisteners() {
@@ -453,8 +466,30 @@ public class MeasureToolsController
         });
         elevationTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
-                elevation = Double.parseDouble(elevationTF.getText());
+                if (!"-".contains(newvalue)) {
+                    elevation = Double.parseDouble(elevationTF.getText());
+                }
             }
+        });
+        latitudeTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    latitude = Double.parseDouble(latitudeTF.getText());
+                }
+            }
+        });
+        longitudeTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    longitude = Double.parseDouble(longitudeTF.getText());
+                }
+            }
+        });
+        placeMarkButton.setOnMouseClicked((MouseEvent event) -> {
+            placeMarkButtonAction();
+        });
+        clearPlaceMarkButton.setOnMouseClicked((MouseEvent event) -> {
+            clearPlaceMarkButtonAction();
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(false);
@@ -465,6 +500,21 @@ public class MeasureToolsController
                 view.setOpacity(opacitySlider.getValue());
             });
         });
+    }
+
+    private void placeMarkButtonAction() {
+        PointPlacemark pp = new PointPlacemark(Position.fromDegrees(latitude, longitude, 100));
+        measureTool.getLayer().addRenderable(pp);
+    }
+
+    private void clearPlaceMarkButtonAction() {
+
+        Iterable<Renderable> renderables = measureTool.getLayer().getRenderables();
+        for(Renderable r : renderables){
+            if(r.getClass()==PointPlacemark.class){
+                measureTool.getLayer().removeRenderable(r);
+            }
+        }
     }
 
     private void fillPointsPanel() {
@@ -796,10 +846,10 @@ public class MeasureToolsController
                 + "## " + zoneName + "\n"
                 + "##\n"
                 + "\n";
-             //   + "mtllib blue.mtl\n"
-              //  + "usemtl blue \n";
+        //   + "mtllib blue.mtl\n"
+        //  + "usemtl blue \n";
         obj.add(header);
-        
+
         wavefrontOBJBuilder = new WavefrontOBJBuilder();
         positions.addAll(measureTool.getPositions());
         int size = positions.size();
@@ -816,9 +866,9 @@ public class MeasureToolsController
                 + "vn -0.577350 -0.577350 0.577350\n"
                 + "vn -0.577350 0.577350 0.577350\n"
                 + "\n";
-        
+
         obj.add(normals);
-        
+
         for (int i = 0; i < size - 1; i++) {
             wavefrontOBJBuilder.indexForVertex(positions.get(i).getLatitude().getDegrees(), positions.get(i).getLongitude().getDegrees(), elevation / 115072.0);
         }
