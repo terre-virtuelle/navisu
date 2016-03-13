@@ -25,6 +25,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.io.WKTWriter;
+import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
@@ -152,7 +153,17 @@ public class MeasureToolsController
     @FXML
     public TextField longitudeTF;
     @FXML
+    public TextField latitudeCamTF;
+    @FXML
+    public TextField longitudeCamTF;
+    @FXML
+    public TextField headingCamTF;
+    @FXML
+    public TextField pitchCamTF;
+    @FXML
     public Button placeMarkButton;
+    @FXML
+    public Button gotoCamButton;
     @FXML
     public Button clearPlaceMarkButton;
 
@@ -173,7 +184,12 @@ public class MeasureToolsController
     private String shape = "Shape";
     private double latitude;
     private double longitude;
-    private String sign;
+    private double latitudeCam;
+    private double longitudeCam;
+    private double heading = 0;
+    private double pitch = 90;
+    private final View viewWW;
+    private final double ALTITUDE = 100;
 
     public static MeasureToolsController getInstance(MeasureToolsImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -201,7 +217,7 @@ public class MeasureToolsController
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.layersManagerServices = layersManagerServices;
         wwd = GeoWorldWindViewImpl.getWW();
-
+        this.viewWW = wwd.getView();
         //ZeroElevationModel
         wwd.getModel().getGlobe().setElevationModel(new ZeroElevationModel());
 
@@ -485,11 +501,42 @@ public class MeasureToolsController
                 }
             }
         });
+        latitudeCamTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    latitudeCam = Double.parseDouble(latitudeCamTF.getText());
+                }
+            }
+        });
+        longitudeCamTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    longitudeCam = Double.parseDouble(longitudeCamTF.getText());
+                }
+            }
+        });
+        headingCamTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    heading = Double.parseDouble(headingCamTF.getText());
+                }
+            }
+        });
+        pitchCamTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    pitch = Double.parseDouble(pitchCamTF.getText());
+                }
+            }
+        });
         placeMarkButton.setOnMouseClicked((MouseEvent event) -> {
             placeMarkButtonAction();
         });
         clearPlaceMarkButton.setOnMouseClicked((MouseEvent event) -> {
             clearPlaceMarkButtonAction();
+        });
+        gotoCamButton.setOnMouseClicked((MouseEvent event) -> {
+            gotoCamButtonAction();
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(false);
@@ -507,11 +554,19 @@ public class MeasureToolsController
         measureTool.getLayer().addRenderable(pp);
     }
 
+    private void gotoCamButtonAction() {
+        viewWW.setHeading(Angle.fromDegrees(heading));
+        viewWW.setPitch(Angle.fromDegrees(90.0));
+        viewWW.goTo(new Position(Angle.fromDegrees(latitudeCam),
+                Angle.fromDegrees(longitudeCam), ALTITUDE), ALTITUDE);
+
+    }
+
     private void clearPlaceMarkButtonAction() {
 
         Iterable<Renderable> renderables = measureTool.getLayer().getRenderables();
-        for(Renderable r : renderables){
-            if(r.getClass()==PointPlacemark.class){
+        for (Renderable r : renderables) {
+            if (r.getClass() == PointPlacemark.class) {
                 measureTool.getLayer().removeRenderable(r);
             }
         }
