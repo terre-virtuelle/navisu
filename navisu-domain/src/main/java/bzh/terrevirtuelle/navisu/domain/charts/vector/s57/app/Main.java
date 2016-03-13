@@ -217,64 +217,7 @@ public class Main {
          }
          });
          */
- /*
-        NavigationViewSet navigationViewSet = new NavigationViewSet();
-
-        BeaconCardinal beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
-        beaconCardinal.setColour(COLOR_NAME.getColor("3"));
-        beaconCardinal.setImageAddress("img/buoyage_1/BCNCAR_3_3_6.2_1_14_1.png");
-
-        BuoyageView buoyageView = new BuoyageView(beaconCardinal, 450, 200);
-        navigationViewSet.add(buoyageView);
-
-        Landmark landmark = new Landmark();
-        landmark.setCategoryOfLandMark("test");
-        landmark.setGeometry("POINT(8.0 6.4)");
-        buoyageView = new BuoyageView(landmark, 450, 200);
-        navigationViewSet.add(buoyageView);
-
-        Ship ship = new Ship();
-        ShipView shipView = new ShipView(ship, 632, 124);
-        navigationViewSet.add(shipView);
-
-        Gpx gpx = new Gpx();
-        GpxView gpxView = new GpxView(gpx, 56, 518);
-        navigationViewSet.add(gpxView);
-
-        Highway highway = new Highway();
-        HighwayView highwayView = new HighwayView(highway, 1204, 235);
-        navigationViewSet.add(highwayView);
-
-        SailingDirectionsOld sailingDirections = new SailingDirectionsOld();
-        sailingDirections.setLatitude(4.25);
-        sailingDirections.setLongitude(56.6);
-        SailingDirectionsViewOld sailingDirectionsView = new SailingDirectionsViewOld(sailingDirections, 245, 489);
-        navigationViewSet.add(sailingDirectionsView);
-
-        NavigationalWarnings avurnav = new NavigationalWarnings();
-        avurnav.setLatitude(21.26);
-        AvurnavView avurnavView = new AvurnavView(avurnav, 568, 759);
-
-        navigationViewSet.add(avurnavView);
-
-        try {
-            ImportExportXML.exports(navigationViewSet, "data/test.xml");
-        } catch (JAXBException | FileNotFoundException ex) {
-            System.out.println("ex " + ex);
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        NavigationViewSet navigationViewSet1 = new NavigationViewSet();
-        try {
-            navigationViewSet1 = ImportExportXML.imports(navigationViewSet1, "data/test.xml");
-        } catch (FileNotFoundException | JAXBException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        List<BuoyageView> navigationViewList = navigationViewSet.get(BuoyageView.class);
-        System.out.println(navigationViewList);
-        
-        */
+ 
         NavigationDataSet navigationDataSet = new NavigationDataSet();
 
         Buoyage beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
@@ -293,13 +236,13 @@ public class Main {
 
         Gpx gpx = new Gpx();
         Highway highway = new Highway();
+        highway.setDescription("Range : 1 sec");
+        highway.setLatitude(2.0);
+        highway.setLongitude(-5.0);
+        highway.setGeometry("POLYGON((-4.488563780922933 48.34339883168431,-4.48858282060117 48.34334764433006,-4.488610824537018 48.34330075686735,-4.488646864663059 48.34325972317513,-4.488689746587659 48.343225903134844,-4.507352133611914 48.33108804961321,-4.5074069585995 48.33105993897154,-4.507466370012336 48.33104362114499,-4.507527862017346 48.33103978438094,-4.5075888410269895 48.33104859050503,-4.507646735090659 48.33106966809574,-4.507699102373484 48.331102128150086,-4.507743734147155 48.33114460157964,-4.507778747948869 48.33119529695544,-4.507802666979166 48.331252076066285,-4.513068926170632 48.348531033107854,-4.541709053820411 48.3508800980555,-4.558533602312241 48.34822013423315,-4.597115585253378 48.33607708200947,-4.621413185915269 48.32368019545076,-4.626677834193586 48.308385735495264,-4.626702333937507 48.308332271375754,-4.62673679325801 48.308284614217236,-4.6267798879027335 48.308244595457595,-4.626829961768649 48.30821375299531,-4.626885090545169 48.308193272088914,-4.626943155664332 48.30818393980816,-4.6270019257161685 48.308186114787354,-4.6270591422005465 48.30819971344327,-4.627112606320059 48.308224213187195,-4.627160263478576 48.3082586725077,-4.627200282238221 48.30830176715242,-4.627231124700506 48.308351841018336,-4.6272516056069 48.30840696979486,-4.627260937887656 48.30846503491402,-4.627258762908459 48.30852380496586,-4.627245164252541 48.30858102145024,-4.621941091018168 48.32399001582091,-4.6219172648819065 48.32404231866555,-4.621883901872033 48.3240891180448,-4.621842226511958 48.32412869627984,-4.621793768413501 48.324159600729686,-4.597365922887377 48.33662293956198,-4.5973196451193745 48.336641873094486,-4.558692500211961 48.348799139313236,-4.558649283716739 48.34880929740067,-4.541767224668697 48.3514783536512,-4.54169585284018 48.35148103011447,-4.512816830169306 48.3491123709832,-4.512758247958866 48.34910163429484,-4.512702941183618 48.34907953650154,-4.512653089638345 48.349046948539176,-4.512610658111951 48.34900515479055,-4.512577318949633 48.348955802464225,-4.512554386141075 48.348900836673515,-4.507344985970079 48.33180843797182,-4.489112860632482 48.343666453050396,-4.484241601531106 48.36161948255613,-4.484220712057134 48.36167445781788,-4.484189498827029 48.361724301411186,-4.48414916134772 48.36176709787471,-4.484101249765914 48.361801202564365,-4.484047605296832 48.36182530485605,-4.483990289467335 48.361838478512205,-4.483931504892609 48.361840217276615,-4.483873510630893 48.36183045432955,-4.483818535369142 48.36180956485558,-4.483768691775834 48.361778351625475,-4.483725895312308 48.36173801414616,-4.483691790622656 48.36169010256435,-4.483667688330975 48.361636458095276,-4.483654514674818 48.361579142265775,-4.483652775910403 48.36152035769105,-4.483662538857472 48.36146236342933,-4.488563780922933 48.34339883168431))");
         gpx.setHighway(highway);
         navigationDataSet.add(gpx);
 
-        SailingDirectionsOld sailingDirections = new SailingDirectionsOld();
-        sailingDirections.setLatitude(4.25);
-        sailingDirections.setLongitude(56.6);
-        navigationDataSet.add(sailingDirections);
         try {
             ImportExportXML.exports(navigationDataSet, "data/test.xml");
         } catch (JAXBException | FileNotFoundException ex) {
@@ -309,7 +252,8 @@ public class Main {
 
          navigationDataSet.clear();
         try {
-            navigationDataSet = ImportExportXML.imports(navigationDataSet, "data/test.xml");
+            navigationDataSet = ImportExportXML.imports(navigationDataSet, "data/Route.nds");
+           // navigationDataSet = ImportExportXML.imports(navigationDataSet, "data/test.xml");
         } catch (FileNotFoundException | JAXBException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -317,6 +261,10 @@ public class Main {
         List<BeaconCardinal> navigationList = navigationDataSet.get(BeaconCardinal.class);
         navigationList.stream().forEach((b) -> {
             System.out.println(b.getLatitude() + "  " + b.getLongitude() + "  " + b.getImageAddress());
+        });
+        List<Gpx> navigationList1 = navigationDataSet.get(Gpx.class);
+        navigationList1.stream().forEach((b) -> {
+            System.out.println(b.getHighway());
         });
     }
 
