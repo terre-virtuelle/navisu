@@ -138,7 +138,7 @@ public class Location
 
     @Override
     public String toString() {
-        return "Location{" + super.toString() + "lat=" + latitude + ", lon=" + longitude + ", geometry=" + geometry + '}';
+        return "Location{" + "lat=" + latitude + ", lon=" + longitude + ", geometry=" + geometry + '}';
     }
 
 }

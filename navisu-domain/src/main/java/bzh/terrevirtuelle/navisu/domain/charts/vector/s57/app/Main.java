@@ -4,6 +4,7 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Node;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Spatial;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Model;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconCardinal;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
@@ -258,7 +259,7 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
       //  System.out.println(navigationDataSet);
-        List<BeaconCardinal> navigationList = navigationDataSet.get(BeaconCardinal.class);
+        List<BeaconLateral> navigationList = navigationDataSet.get(BeaconLateral.class);
         navigationList.stream().forEach((b) -> {
             System.out.println(b.getLatitude() + "  " + b.getLongitude() + "  " + b.getImageAddress());
         });

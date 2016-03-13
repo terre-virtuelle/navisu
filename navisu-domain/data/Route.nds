@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><navigationDataSet>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<navigationDataSet>
     <gpx version="Route" creator="Route">
         <trk>
             <name>Route</name>
@@ -40,230 +41,6 @@
                     <speed>10.0</speed>
                 </trkpt>
             </trkseg>
-            <trkseg>
-                <trkpt lat="48.34347739124771" lon="-4.488853312259749">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP1</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>225.71736</course>
-                    <speed>10.0</speed>
-                </trkpt>
-                <trkpt lat="48.33133953772607" lon="-4.507515699284004">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP2</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>348.5163</course>
-                    <speed>10.0</speed>
-                </trkpt>
-            </trkseg>
-            <trkseg>
-                <trkpt lat="48.33133953772607" lon="-4.507515699284004">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP2</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>348.5163</course>
-                    <speed>10.0</speed>
-                </trkpt>
-                <trkpt lat="48.34881337501373" lon="-4.5128413538362375">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP3</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>277.0258</course>
-                    <speed>10.0</speed>
-                </trkpt>
-            </trkseg>
-            <trkseg>
-                <trkpt lat="48.34881337501373" lon="-4.5128413538362375">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP3</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>277.0258</course>
-                    <speed>10.0</speed>
-                </trkpt>
-                <trkpt lat="48.351182034145" lon="-4.5417203765071115">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP4</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>256.66296</course>
-                    <speed>10.0</speed>
-                </trkpt>
-            </trkseg>
-            <trkseg>
-                <trkpt lat="48.351182034145" lon="-4.5417203765071115">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP4</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>256.66296</course>
-                    <speed>10.0</speed>
-                </trkpt>
-                <trkpt lat="48.348512977894465" lon="-4.558602435555153">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP5</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>244.74207</course>
-                    <speed>10.0</speed>
-                </trkpt>
-            </trkseg>
-            <trkseg>
-                <trkpt lat="48.348512977894465" lon="-4.558602435555153">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP5</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>244.74207</course>
-                    <speed>10.0</speed>
-                </trkpt>
-                <trkpt lat="48.336355711675715" lon="-4.5972295804625665">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP6</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>232.58801</course>
-                    <speed>10.0</speed>
-                </trkpt>
-            </trkseg>
-            <trkseg>
-                <trkpt lat="48.336355711675715" lon="-4.5972295804625665">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP6</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>232.58801</course>
-                    <speed>10.0</speed>
-                </trkpt>
-                <trkpt lat="48.323892372843424" lon="-4.6216574259886904">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP7</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>192.9327</course>
-                    <speed>10.0</speed>
-                </trkpt>
-            </trkseg>
-            <trkseg>
-                <trkpt lat="48.323892372843424" lon="-4.6216574259886904">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.264+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP7</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>192.9327</course>
-                    <speed>10.0</speed>
-                </trkpt>
-                <trkpt lat="48.30848337847275" lon="-4.626961499223063">
-                    <ele>0.0</ele>
-                    <time>2015-12-21T20:34:55.265+01:00</time>
-                    <magvar>0.0</magvar>
-                    <geoidheight>0.0</geoidheight>
-                    <name>WP8</name>
-                    <sat>0</sat>
-                    <hdop>0.0</hdop>
-                    <vdop>0.0</vdop>
-                    <pdop>0.0</pdop>
-                    <ageofdgpsdata>0.0</ageofdgpsdata>
-                    <dgpsid>0</dgpsid>
-                    <course>0.0</course>
-                    <speed>10.0</speed>
-                </trkpt>
-            </trkseg>
         </trk>
         <extensions/>
         <boundaries>
@@ -273,247 +50,22 @@
             <bounds lat="48.33915249399284" lon="-4.479836923640418">
                 <ele>0.0</ele>
             </bounds>
-            <bounds lat="48.33758957856912" lon="-4.480770388168688">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.33622178882837" lon="-4.481971725703405">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.33509445415211" lon="-4.483401123190089">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32295660063048" lon="-4.502063510214343">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32201957924179" lon="-4.503891009800576">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32147565169014" lon="-4.505871390228446">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32134775955502" lon="-4.507921123728758">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32164129702462" lon="-4.5099537573835216">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32234388338175" lon="-4.511883559505838">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32342588519324" lon="-4.513629135599988">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.324841666178145" lon="-4.515116861389011">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.3265315120383" lon="-4.5162839881128285">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32842414906639" lon="-4.5170812891227445">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.33940197815136" lon="-4.520427098316087">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.34111749782846" lon="-4.541342953617266">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.338751522517654" lon="-4.556307994123748">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.32706805613396" lon="-4.593429740156403">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.316819793087994" lon="-4.613516090208071">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.30522861255664" lon="-4.617505998240497">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.30344647523956" lon="-4.618322656371185">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.301857903289" lon="-4.619471300387952">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.30052394463414" lon="-4.6209077885454">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.299495862558004" lon="-4.622576917409232">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.29881316567821" lon="-4.624414543293266">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.29850208965299" lon="-4.626350047265334">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.298574588959546" lon="-4.628309048993231">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.29902787749018" lon="-4.6302162651391745">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.29984453562087" lon="-4.631998402456256">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.300993179637636" lon="-4.633586974406814">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.30242966779509" lon="-4.63492093306167">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.30409879665892" lon="-4.635949015137809">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.305936422542956" lon="-4.636631712017603">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.30787192651502" lon="-4.63694278804282">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.30983092824292" lon="-4.636870288736264">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.31173814438886" lon="-4.63641700020563">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.327147138759535" lon="-4.631112926971257">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.328890566914154" lon="-4.630318722429254">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.3304505462226" lon="-4.62920662210011">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.33176982072399" lon="-4.627817443430953">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.332799969052196" lon="-4.626202173482384">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.34526330788449" lon="-4.60177432795626">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.34589442563481" lon="-4.600231735689498">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.35805169185356" lon="-4.561604590782085">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.35839029476788" lon="-4.5601640409413475">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36105935101841" lon="-4.543281981893306">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36114856646071" lon="-4.540902920942711">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.35877990732944" lon="-4.5120238982718375">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.35842201771741" lon="-4.510071157923858">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.357685424607496" lon="-4.50822759874893">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.35659915919546" lon="-4.506565880573173">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.35520603424101" lon="-4.505151496360062">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.353560956697116" lon="-4.504040190949463">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.35172876367341" lon="-4.503275763997497">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.34696954591774" lon="-4.501825255486497">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.34977945133743" lon="-4.497504924684141">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36415957510593" lon="-4.4936031147548565">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36599208383096" lon="-4.492906798955797">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.367653536941226" lon="-4.491866357952303">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36908008572544" lon="-4.490521775308653">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.37021690871385" lon="-4.48892472258179">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.37102031843654" lon="-4.487136573612371">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.37145944030844" lon="-4.485226045962486">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.37151739912226" lon="-4.483266560138283">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.3711919675533" lon="-4.481333418081093">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.37049565175424" lon="-4.479500909356056">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36945521075074" lon="-4.4778394562457935">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.3681106281071" lon="-4.476412907461578">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36651357538023" lon="-4.475276084473169">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.364725426410814" lon="-4.474472674750474">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36281489876093" lon="-4.474033552878579">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.36085541293672" lon="-4.473975594064758">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.35892227087953" lon="-4.4743010256337215">
-                <ele>0.0</ele>
-            </bounds>
-            <bounds lat="48.34085873913451" lon="-4.479202267699182">
-                <ele>0.0</ele>
-            </bounds>
         </boundaries>
         <highway>
             <id>1</id>
             <name>Route</name>
             <description>Range : 1 sec</description>
-            <latitude>48.34038774352087</latitude>
-            <longitude>-4.551318086106917</longitude>
-            <geometry>POLYGON((-4.488563780922933 48.34339883168431,-4.48858282060117 48.34334764433006,-4.488610824537018 48.34330075686735,-4.488646864663059 48.34325972317513,-4.488689746587659 48.343225903134844,-4.507352133611914 48.33108804961321,-4.5074069585995 48.33105993897154,-4.507466370012336 48.33104362114499,-4.507527862017346 48.33103978438094,-4.5075888410269895 48.33104859050503,-4.507646735090659 48.33106966809574,-4.507699102373484 48.331102128150086,-4.507743734147155 48.33114460157964,-4.507778747948869 48.33119529695544,-4.507802666979166 48.331252076066285,-4.513068926170632 48.348531033107854,-4.541709053820411 48.3508800980555,-4.558533602312241 48.34822013423315,-4.597115585253378 48.33607708200947,-4.621413185915269 48.32368019545076,-4.626677834193586 48.308385735495264,-4.626702333937507 48.308332271375754,-4.62673679325801 48.308284614217236,-4.6267798879027335 48.308244595457595,-4.626829961768649 48.30821375299531,-4.626885090545169 48.308193272088914,-4.626943155664332 48.30818393980816,-4.6270019257161685 48.308186114787354,-4.6270591422005465 48.30819971344327,-4.627112606320059 48.308224213187195,-4.627160263478576 48.3082586725077,-4.627200282238221 48.30830176715242,-4.627231124700506 48.308351841018336,-4.6272516056069 48.30840696979486,-4.627260937887656 48.30846503491402,-4.627258762908459 48.30852380496586,-4.627245164252541 48.30858102145024,-4.621941091018168 48.32399001582091,-4.6219172648819065 48.32404231866555,-4.621883901872033 48.3240891180448,-4.621842226511958 48.32412869627984,-4.621793768413501 48.324159600729686,-4.597365922887377 48.33662293956198,-4.5973196451193745 48.336641873094486,-4.558692500211961 48.348799139313236,-4.558649283716739 48.34880929740067,-4.541767224668697 48.3514783536512,-4.54169585284018 48.35148103011447,-4.512816830169306 48.3491123709832,-4.512758247958866 48.34910163429484,-4.512702941183618 48.34907953650154,-4.512653089638345 48.349046948539176,-4.512610658111951 48.34900515479055,-4.512577318949633 48.348955802464225,-4.512554386141075 48.348900836673515,-4.507344985970079 48.33180843797182,-4.489112860632482 48.343666453050396,-4.484241601531106 48.36161948255613,-4.484220712057134 48.36167445781788,-4.484189498827029 48.361724301411186,-4.48414916134772 48.36176709787471,-4.484101249765914 48.361801202564365,-4.484047605296832 48.36182530485605,-4.483990289467335 48.361838478512205,-4.483931504892609 48.361840217276615,-4.483873510630893 48.36183045432955,-4.483818535369142 48.36180956485558,-4.483768691775834 48.361778351625475,-4.483725895312308 48.36173801414616,-4.483691790622656 48.36169010256435,-4.483667688330975 48.361636458095276,-4.483654514674818 48.361579142265775,-4.483652775910403 48.36152035769105,-4.483662538857472 48.36146236342933,-4.488563780922933 48.34339883168431))</geometry>
+            <lat>48.34038774352087</lat>
+            <lon>-4.551318086106917</lon>
+            <geom>POLYGON((-4.488563780922933 48.34339883168431,-4.48858282060117 48.34334764433006,-4.488610824537018 48.34330075686735,-4.488646864663059 48.34325972317513,-4.488689746587659 48.343225903134844,-4.507352133611914 48.33108804961321,-4.5074069585995 48.33105993897154,-4.507466370012336 48.33104362114499,-4.507527862017346 48.33103978438094,-4.5075888410269895 48.33104859050503,-4.507646735090659 48.33106966809574,-4.507699102373484 48.331102128150086,-4.507743734147155 48.33114460157964,-4.507778747948869 48.33119529695544,-4.507802666979166 48.331252076066285,-4.513068926170632 48.348531033107854,-4.541709053820411 48.3508800980555,-4.558533602312241 48.34822013423315,-4.597115585253378 48.33607708200947,-4.621413185915269 48.32368019545076,-4.626677834193586 48.308385735495264,-4.626702333937507 48.308332271375754,-4.62673679325801 48.308284614217236,-4.6267798879027335 48.308244595457595,-4.626829961768649 48.30821375299531,-4.626885090545169 48.308193272088914,-4.626943155664332 48.30818393980816,-4.6270019257161685 48.308186114787354,-4.6270591422005465 48.30819971344327,-4.627112606320059 48.308224213187195,-4.627160263478576 48.3082586725077,-4.627200282238221 48.30830176715242,-4.627231124700506 48.308351841018336,-4.6272516056069 48.30840696979486,-4.627260937887656 48.30846503491402,-4.627258762908459 48.30852380496586,-4.627245164252541 48.30858102145024,-4.621941091018168 48.32399001582091,-4.6219172648819065 48.32404231866555,-4.621883901872033 48.3240891180448,-4.621842226511958 48.32412869627984,-4.621793768413501 48.324159600729686,-4.597365922887377 48.33662293956198,-4.5973196451193745 48.336641873094486,-4.558692500211961 48.348799139313236,-4.558649283716739 48.34880929740067,-4.541767224668697 48.3514783536512,-4.54169585284018 48.35148103011447,-4.512816830169306 48.3491123709832,-4.512758247958866 48.34910163429484,-4.512702941183618 48.34907953650154,-4.512653089638345 48.349046948539176,-4.512610658111951 48.34900515479055,-4.512577318949633 48.348955802464225,-4.512554386141075 48.348900836673515,-4.507344985970079 48.33180843797182,-4.489112860632482 48.343666453050396,-4.484241601531106 48.36161948255613,-4.484220712057134 48.36167445781788,-4.484189498827029 48.361724301411186,-4.48414916134772 48.36176709787471,-4.484101249765914 48.361801202564365,-4.484047605296832 48.36182530485605,-4.483990289467335 48.361838478512205,-4.483931504892609 48.361840217276615,-4.483873510630893 48.36183045432955,-4.483818535369142 48.36180956485558,-4.483768691775834 48.361778351625475,-4.483725895312308 48.36173801414616,-4.483691790622656 48.36169010256435,-4.483667688330975 48.361636458095276,-4.483654514674818 48.361579142265775,-4.483652775910403 48.36152035769105,-4.483662538857472 48.36146236342933,-4.488563780922933 48.34339883168431))</geom>
         </highway>
     </gpx>
-    <s57Chart>
-        <id>574010</id>
-        <number>FR574010.000</number>
-        <latitude>48.320522149211286</latitude>
-        <longitude>-4.6003783177977216</longitude>
-        <geometry>POLYGON((-4.78192 48.24402,-4.6714 48.24402,-4.6714 48.26817,-4.48232 48.26817,-4.4823 48.27712,-4.4481 48.27709,-4.4481 48.39567,-4.59936 48.39567,-4.59936 48.38686,-4.60271 48.38686,-4.60271 48.38483,-4.63482 48.38483,-4.63482 48.38083,-4.67648 48.38083,-4.67648 48.36353,-4.71443 48.36353,-4.71443 48.311,-4.78192 48.311,-4.78192 48.24402))</geometry>
-    </s57Chart>
+    
     <bcnisd>
         <id>2870</id>
-        <latitude>48.33872</latitude>
-        <longitude>-4.5759</longitude>
-        <geometry>POINT(-4.5759 48.33872)</geometry>
+        <lat>48.33872</lat>
+        <lon>-4.5759</lon>
+        <geom>POINT(-4.5759 48.33872)</geom>
         <shape>3</shape>
         <categoryOfMark>0</categoryOfMark>
         <colour>2,3,2</colour>
@@ -523,9 +75,9 @@
     </bcnisd>
     <bcnlat>
         <id>2902</id>
-        <latitude>48.36925</latitude>
-        <longitude>-4.48685</longitude>
-        <geometry>POINT(-4.48685 48.36925)</geometry>
+        <lat>48.36925</lat>
+        <lon>-4.48685</lon>
+        <geom>POINT(-4.48685 48.36925)</geom>
         <shape>0</shape>
         <categoryOfMark>2</categoryOfMark>
         <colour>4,1</colour>
@@ -535,9 +87,9 @@
     </bcnlat>
     <buoylat>
         <id>2909</id>
-        <latitude>48.35746</latitude>
-        <longitude>-4.50866</longitude>
-        <geometry>POINT(-4.50866 48.35746)</geometry>
+        <lat>48.35746</lat>
+        <lon>-4.50866</lon>
+        <geom>POINT(-4.50866 48.35746)</geom>
         <shape>4</shape>
         <categoryOfMark>1</categoryOfMark>
         <colour>3</colour>
@@ -547,9 +99,9 @@
     </buoylat>
     <buoylat>
         <id>2906</id>
-        <latitude>48.36689</latitude>
-        <longitude>-4.47903</longitude>
-        <geometry>POINT(-4.47903 48.36689)</geometry>
+        <lat>48.36689</lat>
+        <lon>-4.47903</lon>
+        <geom>POINT(-4.47903 48.36689)</geom>
         <shape>4</shape>
         <categoryOfMark>1</categoryOfMark>
         <colour>3</colour>
@@ -559,9 +111,9 @@
     </buoylat>
     <morfac>
         <id>2039</id>
-        <latitude>48.32686</latitude>
-        <longitude>-4.49899</longitude>
-        <geometry>POINT(-4.49899 48.32686)</geometry>
+        <lat>48.32686</lat>
+        <lon>-4.49899</lon>
+        <geom>POINT(-4.49899 48.32686)</geom>
         <shape>0</shape>
         <categoryOfMark>7</categoryOfMark>
         <colour>0</colour>
@@ -571,88 +123,4 @@
         <imageAddress>img/buoyage_1/MORFAC_0_7_0_0_0_1.png</imageAddress>
         <categoryOfMooring>7</categoryOfMooring>
     </morfac>
-    <bcnspp>
-        <id>2296</id>
-        <latitude>48.34351</latitude>
-        <longitude>-4.52964</longitude>
-        <geometry>POINT(-4.52964 48.34351)</geometry>
-        <shape>1</shape>
-        <categoryOfMark>0</categoryOfMark>
-        <colour>1</colour>
-        <colourPattern>0</colourPattern>
-        <objectName>La Cormorandi�re</objectName>
-        <imageAddress>img/buoyage_1/BCNSPP_1_0_1_0_0_1.png</imageAddress>
-    </bcnspp>
-    <bcnisd>
-        <id>2892</id>
-        <latitude>48.35964</latitude>
-        <longitude>-4.54863</longitude>
-        <geometry>POINT(-4.54863 48.35964)</geometry>
-        <shape>5</shape>
-        <categoryOfMark>0</categoryOfMark>
-        <colour>2,3,2</colour>
-        <colourPattern>1</colourPattern>
-        <objectName> </objectName>
-        <imageAddress>img/buoyage_1/BCNISD_5_0_2,3,2_1_4_1.png</imageAddress>
-    </bcnisd>
-    <buoylat>
-        <id>2914</id>
-        <latitude>48.3301</latitude>
-        <longitude>-4.58753</longitude>
-        <geometry>POINT(-4.58753 48.3301)</geometry>
-        <shape>4</shape>
-        <categoryOfMark>1</categoryOfMark>
-        <colour>3</colour>
-        <colourPattern>0</colourPattern>
-        <objectName>Kerviniou</objectName>
-        <imageAddress>img/buoyage_1/BOYLAT_4_1_3_0_5_1.png</imageAddress>
-    </buoylat>
-    <bcnlat>
-        <id>2905</id>
-        <latitude>48.36842</latitude>
-        <longitude>-4.49083</longitude>
-        <geometry>POINT(-4.49083 48.36842)</geometry>
-        <shape>0</shape>
-        <categoryOfMark>1</categoryOfMark>
-        <colour>3,1</colour>
-        <colourPattern>1</colourPattern>
-        <objectName> </objectName>
-        <imageAddress>img/buoyage_1/BCNLAT_0_1_3,1_1_0_1.png</imageAddress>
-    </bcnlat>
-    <bcnspp>
-        <id>2908</id>
-        <latitude>48.35926</latitude>
-        <longitude>-4.55068</longitude>
-        <geometry>POINT(-4.55068 48.35926)</geometry>
-        <shape>5</shape>
-        <categoryOfMark>0</categoryOfMark>
-        <colour>7</colour>
-        <colourPattern>0</colourPattern>
-        <objectName> </objectName>
-        <imageAddress>img/buoyage_1/BCNSPP_5_0_7_0_0_1.png</imageAddress>
-    </bcnspp>
-    <buoycar>
-        <id>2917</id>
-        <latitude>48.32926</latitude>
-        <longitude>-4.59423</longitude>
-        <geometry>POINT(-4.59423 48.32926)</geometry>
-        <shape>4</shape>
-        <categoryOfMark>4</categoryOfMark>
-        <colour>6,2,6</colour>
-        <colourPattern>1</colourPattern>
-        <objectName>Fillettes</objectName>
-        <imageAddress>img/buoyage_1/BOYCAR_4_4_6,2,6_1_10_1.png</imageAddress>
-    </buoycar>
-    <buoylat>
-        <id>2913</id>
-        <latitude>48.33383</latitude>
-        <longitude>-4.58097</longitude>
-        <geometry>POINT(-4.58097 48.33383)</geometry>
-        <shape>4</shape>
-        <categoryOfMark>1</categoryOfMark>
-        <colour>3</colour>
-        <colourPattern>0</colourPattern>
-        <objectName>Basse Goudron</objectName>
-        <imageAddress>img/buoyage_1/BOYLAT_4_1_3_0_5_1.png</imageAddress>
-    </buoylat>
 </navigationDataSet>
