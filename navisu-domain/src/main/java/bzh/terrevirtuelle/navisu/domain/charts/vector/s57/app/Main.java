@@ -258,7 +258,7 @@ public class Main {
         } catch (FileNotFoundException | JAXBException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
-      //  System.out.println(navigationDataSet);
+
         List<BeaconLateral> navigationList = navigationDataSet.get(BeaconLateral.class);
         navigationList.stream().forEach((b) -> {
             System.out.println(b.getLatitude() + "  " + b.getLongitude() + "  " + b.getImageAddress());
