@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotter;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
@@ -36,6 +37,7 @@ public class GpsPlotterImpl
 
     protected boolean on = false;
     private final String NAME = "GpsPlotter";
+    private GpsPlotterController gpsPlotterController;
 
     @Override
     public void componentInitiated() {
@@ -50,8 +52,8 @@ public class GpsPlotterImpl
     public void on(String... files) {
         if (on == false) {
             on = true;
-            new GpsPlotterController(layersManagerServices, guiAgentServices, kmlObjectServices, NAME).init();
-           // gpsTrackServices.on(files);
+            gpsPlotterController = new GpsPlotterController(layersManagerServices, guiAgentServices, kmlObjectServices, NAME);
+            gpsPlotterController.init();
         }
     }
 
@@ -83,4 +85,19 @@ public class GpsPlotterImpl
     public InstrumentDriver getDriver() {
         return this;
     }
+
+    @Override
+    public double getLatitude() {
+        return gpsPlotterController.getLatitude();
+    }
+
+    @Override
+    public double getLongitude() {
+        return gpsPlotterController.getLongitude();
+    }
+
+    @Override
+    public Ship getOwnerShip() {
+        return gpsPlotterController.getOwnerShip();
+   }
 }

@@ -6,8 +6,7 @@
 package bzh.terrevirtuelle.navisu.instruments.gps.plotter;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
-import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -23,6 +22,12 @@ public interface GpsPlotterServices
 
     default void off() {
     }
+
+    double getLatitude();
+
+    double getLongitude();
+
+    Ship getOwnerShip();
 
     boolean isOn();
 
