@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.navigation.controller.commands.impl;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponent;
@@ -31,9 +32,11 @@ public class NavigationCmdComponentImpl
     CameraComponentServices cameraComponentServices;
     @UsedService
     S57ChartComponentServices s57ChartComponentServices;
+    @UsedService
+    GpsPlotterServices gpsPlotterServices;
 
     private CameraCmd cameraCmd;
-    private NaVigationDataSetCmd naVigationDataSetCmd;
+
     private Map<String, NavigationCmd> navigationCmdMap;
 
     public NavigationCmdComponentImpl() {
@@ -58,11 +61,10 @@ public class NavigationCmdComponentImpl
 
         cameraCmd = CameraCmd.getInstance();
         cameraCmd.setCameraComponentServices(cameraComponentServices);
-
-        naVigationDataSetCmd = NaVigationDataSetCmd.getInstance();
-        
         navigationCmdMap.put("CameraCmd", cameraCmd);
-        navigationCmdMap.put("NaVigationDataSetCmd", naVigationDataSetCmd);
+
+        navigationCmdMap.put("NaVigationDataSetCmd", NaVigationDataSetCmd.getInstance());
+        navigationCmdMap.put("OwnerShipCmd", OwnerShipCmd.getInstance(gpsPlotterServices));
     }
 
     @Override
