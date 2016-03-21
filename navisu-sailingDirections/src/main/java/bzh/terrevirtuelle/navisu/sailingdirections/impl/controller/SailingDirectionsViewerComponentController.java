@@ -10,23 +10,14 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Alinea;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Document;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Para;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SubChapter;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SubParagrah;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.TextPart;
-import bzh.terrevirtuelle.navisu.domain.util.Degrees;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.ShomSailingDirections;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
 //import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 //import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
-import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
@@ -37,16 +28,11 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.function.Consumer;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -59,7 +45,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -88,6 +73,7 @@ public class SailingDirectionsViewerComponentController
     protected RenderableLayer sailingDirectionsPgonLayer;
     protected RenderableLayer sailingDirectionsIconsLayer;
     private NavigationDataSet navigationDataSet;
+    SailingDirections sailingDirections;
     @FXML
     public Pane view;
     @FXML
@@ -147,7 +133,7 @@ public class SailingDirectionsViewerComponentController
     }
 
     private void makePanel() {
-        
+
         c2aButton.setOnMouseClicked((MouseEvent event) -> {
             System.out.println("No data");
         });
@@ -155,7 +141,7 @@ public class SailingDirectionsViewerComponentController
             System.out.println("No data");
         });
         d21Button.setOnMouseClicked((MouseEvent event) -> {
-            Map<Pair<Double, Double>, String> result = readData(IN_D21);
+            Map<Pair<Double, Double>, String> result = new ShomSailingDirections(IN_D21).getPoiMap();
             if (result != null) {
                 MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
                 Point point = multiPoint.getCentroid();
@@ -164,7 +150,7 @@ public class SailingDirectionsViewerComponentController
             }
         });
         d22Button.setOnMouseClicked((MouseEvent event) -> {
-            Map<Pair<Double, Double>, String> result = readData(IN_D22);
+            Map<Pair<Double, Double>, String> result = new ShomSailingDirections(IN_D22).getPoiMap();
             if (result != null) {
                 MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
                 Point point = multiPoint.getCentroid();
@@ -186,83 +172,9 @@ public class SailingDirectionsViewerComponentController
 
     }
 
-    public Map<Pair<Double, Double>, String> readData(String filename) {
-        Set<Text> textSet;
-        textSet = new HashSet<>();
-        Map<Pair<Double, Double>, String> poiMap = new HashMap<>();
-        Document document = new Document();
-
-        try {
-            document = ImportExportXML.imports(document, filename);
-        } catch (JAXBException | FileNotFoundException ex) {
-            System.out.println("No data");
-            return null;
-        }
-
-        Book ouvrage = document.getBook();
-        if (ouvrage != null) {
-            List<Chapter> chapitres = ouvrage.getChapitre();
-            chapitres.stream().map((c) -> c.getsChapitre()).forEach((sc) -> {
-                sc.stream().map((ssc) -> ssc.getPara()).forEach((p) -> {
-                    p.stream().map((pa) -> pa.getSpara()).forEach((sparaList) -> {
-                        sparaList.stream().map((spara) -> spara.getAlinea()).forEach((alienaList) -> {
-                            alienaList.stream().map((alinea) -> alinea.getTexte()).forEach((Text texte) -> {
-                                List<TextPart> textPartList;
-                                if (texte != null) {
-                                    textPartList = texte.getTextParts();
-                                    textPartList.stream().filter((textpart) -> (textpart.getClass().getSimpleName().equals("Principal"))).filter((_item) -> (texte.contains("°"))).forEach((_item) -> {
-                                        textSet.add(texte);
-                                    });
-                                }
-                            });
-                        });
-                    });
-                });
-            });
-            textSet.stream().map((t) -> t.shorten()).map((data) -> {
-                if (data.contains("(")) {
-                    String[] tab = data.split("\\(");
-                    for (String s : tab) {
-                        String[] sTab = s.split("\\)");
-                        for (String ss : sTab) {
-                            if (ss.contains("°")) {
-                                if (!data.contains("[")) {
-                                    try {
-                                        poiMap.put(Degrees.degTodecimal(ss.trim()), data);
-                                    } catch (Exception e) {
-                                        //nombre mal forme possible
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-                return data;
-            }).filter((data) -> (data.contains("["))).forEach((data) -> {
-                String[] tab1 = data.split("\\[");
-                for (String s : tab1) {
-                    String[] sTab = s.split("\\]");
-                    for (String ss : sTab) {
-                        if (ss.contains("°")) {
-                            if (!data.contains("(")) {
-                                try {
-                                    poiMap.put(Degrees.degTodecimal(ss.trim()), data);
-                                } catch (Exception e) {
-                                    //nombre mal forme possible
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        return poiMap;
-    }
-
     public Set<Pair<Double, Double>> showPoi(Map<Pair<Double, Double>, String> data) {
         Set<Pair<Double, Double>> latLonSet = data.keySet();
-        
+
         latLonSet.stream().map((ll) -> {
             String imageAddress = NavigationIcons.ICONS.get(ICON_NAME);
             PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(ll.getX(), ll.getY(), 0));

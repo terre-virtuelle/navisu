@@ -10,13 +10,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Alinea;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Document;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Para;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SubChapter;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SubParagrah;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.TextPart;
 import bzh.terrevirtuelle.navisu.domain.util.Degrees;
@@ -145,27 +141,21 @@ public class SailingDirectionsEditorComponentController
     }
 
     private void makePanel() {
-        
+
         c2aButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
+            System.out.println("Work in progress");
         });
         c2bButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
+            System.out.println("Work in progress");
         });
         d21Button.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
+            System.out.println("Work in progress");
         });
         d22Button.setOnMouseClicked((MouseEvent event) -> {
-            Map<Pair<Double, Double>, String> result = readData(IN_D22);
-            if (result != null) {
-                MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
-                Point point = multiPoint.getCentroid();
-                instrument.off();
-                wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
-            }
+            System.out.println("Work in progress");
         });
         d23Button.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
+            System.out.println("Work in progress");
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
@@ -175,106 +165,6 @@ public class SailingDirectionsEditorComponentController
                 view.setOpacity(opacitySlider.getValue());
             });
         });
-
-    }
-
-    public Map<Pair<Double, Double>, String> readData(String filename) {
-        Set<Text> textSet;
-        textSet = new HashSet<>();
-        Map<Pair<Double, Double>, String> poiMap = new HashMap<>();
-        Document document = new Document();
-
-        try {
-            document = ImportExportXML.imports(document, filename);
-        } catch (JAXBException | FileNotFoundException ex) {
-            System.out.println("No data");
-            return null;
-        }
-
-        Book ouvrage = document.getBook();
-        if (ouvrage != null) {
-            List<Chapter> chapitres = ouvrage.getChapitre();
-            chapitres.stream().map((c) -> c.getsChapitre()).forEach((sc) -> {
-                sc.stream().map((ssc) -> ssc.getPara()).forEach((p) -> {
-                    p.stream().map((pa) -> pa.getSpara()).forEach((sparaList) -> {
-                        sparaList.stream().map((spara) -> spara.getAlinea()).forEach((alienaList) -> {
-                            alienaList.stream().map((alinea) -> alinea.getTexte()).forEach((texte) -> {
-                                List<TextPart> textPartList;
-                                if (texte != null) {
-                                    textPartList = texte.getTextParts();
-                                    for (TextPart textpart : textPartList) {
-                                        if (textpart.getClass().getSimpleName().equals("Principal")) {
-                                            if (texte.contains("°")) {
-                                                textSet.add(texte);
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    });
-                });
-            });
-            textSet.stream().map((t) -> t.shorten()).map((data) -> {
-                if (data.contains("(")) {
-                    String[] tab = data.split("\\(");
-                    for (String s : tab) {
-                        String[] sTab = s.split("\\)");
-                        for (String ss : sTab) {
-                            if (ss.contains("°")) {
-                                if (!data.contains("[")) {
-                                    try {
-                                        poiMap.put(Degrees.degTodecimal(ss.trim()), data);
-                                    } catch (Exception e) {
-                                        //nombre mal forme possible
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-                return data;
-            }).filter((data) -> (data.contains("["))).forEach((data) -> {
-                String[] tab1 = data.split("\\[");
-                for (String s : tab1) {
-                    String[] sTab = s.split("\\]");
-                    for (String ss : sTab) {
-                        if (ss.contains("°")) {
-                            if (!data.contains("(")) {
-                                try {
-                                    poiMap.put(Degrees.degTodecimal(ss.trim()), data);
-                                } catch (Exception e) {
-                                    //nombre mal forme possible
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        return poiMap;
-    }
-
-    public Set<Pair<Double, Double>> showPoi(Map<Pair<Double, Double>, String> data) {
-    
-        Set<Pair<Double, Double>> latLonSet = data.keySet();
-        
-        latLonSet.stream().map((ll) -> {
-            String imageAddress = NavigationIcons.ICONS.get(ICON_NAME);
-            PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(ll.getX(), ll.getY(), 0));
-            placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-            placemark.setValue(AVKey.DISPLAY_NAME, data.get(ll));
-            PointPlacemarkAttributes normalAttributes = new PointPlacemarkAttributes();
-            normalAttributes.setImageAddress(imageAddress);
-            normalAttributes.setScale(0.4);
-            placemark.setAttributes(normalAttributes);
-            return placemark;
-        }).forEach((placemark) -> {
-            sailingDirectionsIconsLayer.addRenderable(placemark);
-        });
-
-        return latLonSet;
     }
 
     @Override
