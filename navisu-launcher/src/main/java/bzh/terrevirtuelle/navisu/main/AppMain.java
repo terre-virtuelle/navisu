@@ -380,6 +380,7 @@ public class AppMain extends Application {
         /* Test connexion GPS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
+        // dataServerServices.openSerialPort("/dev/ttyS1", 4800, 8, 1, 0);
         /* Test connexion Gpsd */
         //dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<kml xmlns="http://earth.google.com/kml/2.0">
-    <Document>
-<Placemark><description><![CDATA[WP0<br>Lat : 48.3823<br>Lon : -4.8134<br>Time : 01:06:14<br>Day : 13/03/16<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.8133784468604865,48.382290430338735,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.8133784468604865,48.382290430338735,10
--4.844520273172092,48.39563893349681,0</coordinates></LineString></Placemark>
-<Placemark><description><![CDATA[WP1<br>Lat : 48.3956<br>Lon : -4.8445<br>Time : 01:06:14<br>Day : 13/03/16<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.844520273172092,
-48.39563893349681,10</coordinates></Point></Placemark>
- </Document></kml>
