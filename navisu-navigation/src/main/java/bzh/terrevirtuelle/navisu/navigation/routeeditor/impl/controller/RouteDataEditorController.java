@@ -11,8 +11,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
-import bzh.terrevirtuelle.navisu.ontology.rdf.controller.RdfParser;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.util.io.IO;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -57,7 +56,7 @@ public class RouteDataEditorController
     private final LayersManagerServices layersManagerServices;
     private NavigationDataSet navigationDataSet;
     private List<NavigationalWarnings> avurnavList;
-    private List<SailingDirectionsOld> sailingDirectionsList;
+    private List<SailingDirections> sailingDirectionsList;
     private List<Gpx> gpxList;
     private File file;
     @FXML
@@ -131,7 +130,7 @@ public class RouteDataEditorController
             } catch (FileNotFoundException | JAXBException ex) {
                 Logger.getLogger(RouteDataEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            sailingDirectionsList = navigationDataSet.get(SailingDirectionsOld.class);
+            sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
             gpxList = navigationDataSet.get(Gpx.class);
             avurnavList = navigationDataSet.get(NavigationalWarnings.class);
         });
@@ -248,33 +247,7 @@ public class RouteDataEditorController
                 System.out.println("The selected item is " + tide.valueProperty().get());
             }
         });
-        avurnav.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if (newValue) {
-                File f = IO.fileChooser(guiAgentServices.getStage(),
-                        "data/rdf", "RDF files (*.rdf)", "*.rdf", "*.RDF");
-                RdfParser rdfParser = new RdfParser(f);
-                NavigationDataSet tmp = rdfParser.parse();
-                navigationDataSet.addAll(tmp.getNavigationDataList());
-                avurnavList.addAll(tmp.get(NavigationalWarnings.class));
-                avurnavPrint(avurnavList);
-            }
-        });
-        nauticalDocumentation.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if (newValue) {
-                System.out.println("The selected item is " + nauticalDocumentation.valueProperty().get());
-            }
-        });
-        sailingDirection.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if (newValue) {
-                File f = IO.fileChooser(guiAgentServices.getStage(),
-                        "data/rdf", "RDF files (*.rdf)", "*.rdf", "*.RDF");
-                RdfParser rdfParser = new RdfParser(f);
-                NavigationDataSet tmp = rdfParser.parse();
-                navigationDataSet.addAll(tmp.getNavigationDataList());
-                sailingDirectionsList.addAll(tmp.get(SailingDirectionsOld.class));
-                sailingDirectionsPrint(sailingDirectionsList);
-            }
-        });
+        
         listOfLights.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (newValue) {
                 System.out.println("The selected item is " + listOfLights.valueProperty().get());
@@ -311,17 +284,17 @@ public class RouteDataEditorController
         dataTextArea.setText(str);
     }
 
-    public void sailingDirectionsPrint(List<SailingDirectionsOld> sailingDirectionsList) {
+    public void sailingDirectionsPrint(List<SailingDirections> sailingDirectionsList) {
         String[] tmp;
         String str = "";
-        for (SailingDirectionsOld a : sailingDirectionsList) {
+        for (SailingDirections a : sailingDirectionsList) {
             if (a.getId() != 0) {
                 tmp = new String[4];
                 tmp[0] = Translator.tr("navigation.sailingDirections.sailingDirections") + " "
                         + Translator.tr("navigation.sailingDirections.id").toLowerCase() + " : " + a.getId() + "\n";
-                tmp[1] = Translator.tr("navigation.sailingDirections.zoneName") + " : " + a.getZoneName()+ "\n";
+             //   tmp[1] = Translator.tr("navigation.sailingDirections.zoneName") + " : " + a.getZoneName()+ "\n";
                 tmp[2] = Translator.tr("navigation.sailingDirections.book") + " : " + a.getBook() + "\n";
-                tmp[3] = Translator.tr("navigation.sailingDirections.description") + " : " + a.getDescription() + "\n\n";
+              //  tmp[3] = Translator.tr("navigation.sailingDirections.description") + " : " + a.getDescription() + "\n\n";
                 tmp[3] = tmp[3].replace("\t", "");
                 str += tmp[0] + tmp[1] + tmp[2] + tmp[3];
             }

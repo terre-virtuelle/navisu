@@ -629,16 +629,26 @@ public class MeasureToolsController
             s = String.format("%,7.1f " + lengthUnit, value * convertLengthCoeff);
         }
         heightLabel.setText(s);
-
         updateOrientationPosition();
     }
 
     private void updateOrientationPosition() {
+        if (measureTool.getOrientation() != null) {
+            if (measureTool.getOrientation().degrees < 0) {
+                double o = measureTool.getOrientation().degrees;
+                o += 180.0;
+                measureTool.setValue(MeasureTool.HEADING_LABEL, o);
+            }
+        }
         String s;
         // Update heading label
         Angle angle = measureTool.getOrientation();
         if (angle != null) {
-            s = String.format("%,6.2f\u00B0", angle.degrees);
+            double o = measureTool.getOrientation().degrees;
+            if (measureTool.getOrientation().degrees < 0) {
+                o += 360 ;
+            }
+            s = String.format("%,6.2f\u00B0", o);
         } else {
             s = "na";
         }
@@ -656,7 +666,6 @@ public class MeasureToolsController
     private void coastalLine(List<SurfacePolylines> coastalLines) {
         coastalLineDisplay(coastalLines);
         coastalLineToJTS(coastalLines);
-        //System.out.println("coastalLines " + coastalLines);
     }
 
     private void coastalLineControlSelected() {

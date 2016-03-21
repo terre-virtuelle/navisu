@@ -84,7 +84,7 @@ import org.gavaghan.geodesy.GlobalCoordinates;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -103,7 +103,7 @@ public class RouteEditorController
     private MeasureTool measureTool;
 
     private List<NavigationalWarnings> avurnavList;
-    private List<SailingDirectionsOld> sailingDirectionsList;
+    private List<SailingDirections> sailingDirectionsList;
     private List<Gpx> gpxList;
     private File file;
 
