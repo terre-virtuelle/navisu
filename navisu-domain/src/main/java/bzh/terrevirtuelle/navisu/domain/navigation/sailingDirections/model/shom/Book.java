@@ -22,8 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ouvrage")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Book
-        implements NavigationData {
+public class Book{
 
     @XmlElements({
         @XmlElement(type = Illustration.class)

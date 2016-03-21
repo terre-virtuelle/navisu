@@ -12,7 +12,7 @@ import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
