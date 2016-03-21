@@ -63,7 +63,7 @@ public class TransponderImpl
     @Override
     public void on() {
         if (on == false) {
-            subscribe();
+          //  subscribe();
         }
         on = true;
     }
@@ -86,6 +86,7 @@ public class TransponderImpl
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
 
                 GGA data = (GGA) d;
+                data.setDevice("TR");
                 notifyNmeaMessage(data);
             }
         });
@@ -93,6 +94,7 @@ public class TransponderImpl
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 VTG data = (VTG) d;
+                data.setDevice("TR");
                 notifyNmeaMessage(data);
             }
         });
@@ -100,6 +102,7 @@ public class TransponderImpl
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
                 RMC data = (RMC) d;
+                data.setDevice("TR");
                 notifyNmeaMessage(data);
             }
         });
@@ -125,24 +128,30 @@ public class TransponderImpl
 
     public void notifyNmeaMessage(GGA data) {
         //update ship
+        /*
         ship.setLatitude(data.getLatitude());
         ship.setLongitude(data.getLongitude());
+        */
         transponderUpdateTargetEvent(ship);
     }
 
     public void notifyNmeaMessage(VTG data) {
         //update ship
+        /*
         ship.setCog(data.getCog());
         ship.setSog(data.getSog());
+        */
         transponderUpdateTargetEvent(ship);
     }
 
     public void notifyNmeaMessage(RMC data) {
         //update ship
+        /*
         ship.setCog(data.getCog());
         ship.setSog(data.getSog());
         ship.setLatitude(data.getLatitude());
         ship.setLongitude(data.getLongitude());
+*/
         transponderUpdateTargetEvent(ship);
     }
 

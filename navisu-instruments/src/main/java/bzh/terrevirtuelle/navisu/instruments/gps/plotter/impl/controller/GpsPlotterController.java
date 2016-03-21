@@ -77,7 +77,7 @@ public class GpsPlotterController
         this.name = name;
     }
 
-    public void init() {
+    public void init(boolean subscribe) {
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         gpsLayer = layersManagerServices.getInstance(GROUP, name);
@@ -91,7 +91,9 @@ public class GpsPlotterController
         addListeners();
         ownerShip = ShipController.createOwnerShip(properties);
         createTarget();
-        subscribe();
+        if (subscribe == true) {
+            subscribe();
+        }
     }
 
     protected void addPanelController() {
@@ -175,5 +177,5 @@ public class GpsPlotterController
     public Ship getOwnerShip() {
         return ownerShip;
     }
-    
+
 }

@@ -53,7 +53,7 @@ public class GpsPlotterImpl
         if (on == false) {
             on = true;
             gpsPlotterController = new GpsPlotterController(layersManagerServices, guiAgentServices, kmlObjectServices, NAME);
-            gpsPlotterController.init();
+            gpsPlotterController.init(true);
         }
     }
 
