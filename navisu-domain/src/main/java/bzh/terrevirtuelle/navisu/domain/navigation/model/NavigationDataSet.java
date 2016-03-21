@@ -76,7 +76,7 @@ public class NavigationDataSet {
         @XmlElement(name = "lndmrk", type = Landmark.class),
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
         @XmlElement(name = "rss", type = Rss.class),
-      //  @XmlElement(name = "sailingDirectionsOld", type = SailingDirectionsOld.class),
+      //  @XmlElement(name = "sailingDirections", type = SailingDirections.class),
         @XmlElement(name = "ship", type = Ship.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "ouvrage", type = Book.class),
