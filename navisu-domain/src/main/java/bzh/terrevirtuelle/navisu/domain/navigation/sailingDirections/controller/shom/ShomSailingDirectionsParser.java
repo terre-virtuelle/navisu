@@ -11,6 +11,12 @@ import bzh.terrevirtuelle.navisu.domain.util.Degrees;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,21 +39,35 @@ public class ShomSailingDirectionsParser
 
     @Override
     protected void readData(String filename) {
+        String content = null;
         try {
-            document = ImportExportXML.imports(document, filename);
-        } catch (FileNotFoundException | JAXBException ex) {
-            Logger.getLogger(ShomSailingDirectionsParser.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            content = new String(Files.readAllBytes(Paths.get(filename)), Charset.forName("UTF-16"));
+        } catch (IOException ex) {
+            Logger.getLogger(ShomSailingDirectionsParser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (document != null) {
-            book = document.getBook();
+        if (content != null) {
+            content = content.replaceAll("md:", "");
+           // content = content.replaceAll("xmlns:md=\"metaData.xsd\" ", "");
+           // System.out.println(content);
+            try {
+                document = ImportExportXML.imports(document, new StringReader(content));
+            } catch (JAXBException ex) {
+                Logger.getLogger(ShomSailingDirectionsParser.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+           // System.out.println(document);
+            if (document != null) {
+                book = document.getBook();
+                metadata = document.getMetadata();
+            }
         }
+
     }
 
     @Override
     protected Set<Text> parseText() {
         if (book != null) {
-            chapitres = book.getChapitre();
-            chapitres.stream().map((c) -> c.getsChapitre()).forEach((sc) -> {
+            chapters = book.getChapters();
+            chapters.stream().map((c) -> c.getsChapitre()).forEach((sc) -> {
                 sc.stream().map((ssc) -> ssc.getPara()).forEach((p) -> {
                     p.stream().map((pa) -> pa.getSpara()).forEach((sparaList) -> {
                         sparaList.stream().map((spara) -> spara.getAlinea()).forEach((alienaList) -> {
@@ -82,7 +102,7 @@ public class ShomSailingDirectionsParser
                                     poiMap.put(Degrees.degTodecimal(ss.trim()), data);
                                 } catch (Exception ex) {
                                     //nombre mal forme possible
-                                  //  Logger.getLogger(ShomSailingDirectionsParser.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                                    //  Logger.getLogger(ShomSailingDirectionsParser.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                                 }
                             }
 
@@ -102,7 +122,7 @@ public class ShomSailingDirectionsParser
                                 poiMap.put(Degrees.degTodecimal(ss.trim()), data);
                             } catch (Exception ex) {
                                 //nombre mal forme possible
-                               // Logger.getLogger(ShomSailingDirectionsParser.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                                // Logger.getLogger(ShomSailingDirectionsParser.class.getName()).log(Level.SEVERE, ex.toString(), ex);
                             }
                         }
                     }

@@ -18,20 +18,20 @@ import javax.xml.bind.annotation.XmlType;
  *
  */
 @XmlRootElement
-@XmlType(name = "document", propOrder = {"metaData","book"})
+@XmlType(name = "document", propOrder = {"metadata","book"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Document {
 
     @XmlElement(name = "metaData")
-    private Metadata metaData;
+    private Metadata metadata;
     @XmlElement(name = "ouvrage")
     private Book book;
 
     public Document() {
     }
 
-    public Document(Metadata metaData, Book book) {
-        this.metaData = metaData;
+    public Document(Metadata metadata, Book book) {
+        this.metadata = metadata;
         this.book = book;
     }
 
@@ -58,22 +58,22 @@ public class Document {
      *
      * @return the value of metaData
      */
-    public Metadata getMetaData() {
-        return metaData;
+    public Metadata getMetadata() {
+        return metadata;
     }
 
     /**
      * Set the value of metaData
      *
-     * @param metaData new value of metaData
+     * @param metadata new value of metadata
      */
-    public void setMetaData(Metadata metaData) {
-        this.metaData = metaData;
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
     }
 
     @Override
     public String toString() {
-        return "Document{" + "metaData=" + metaData + ", book=" + book + '}';
+        return "Document{" + "metadata=" + metadata + ", book=" + book + '}';
     }
 
 }

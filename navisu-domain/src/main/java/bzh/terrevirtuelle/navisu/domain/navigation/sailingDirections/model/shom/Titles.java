@@ -24,20 +24,48 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Titles {
 
     @XmlElements({
-        @XmlElement(type = MdTitle.class)
+        @XmlElement(type = Title.class, name = "titre")
     })
-    private final List<MdTitle> mdTitles= new ArrayList<>();
+    private final List<Title> titles = new ArrayList<>();
 
     public Titles() {
     }
 
-    public List<MdTitle> getMdTitles() {
-        return mdTitles;
+    public List<Title> getTitles() {
+        return titles;
+    }
+
+    public void add(Title title) {
+        titles.add(title);
+    }
+
+    public String getStitle() {
+        List<String> tmp = new ArrayList<>();
+        titles.stream().map((t) -> t.getStitle()).filter((ti) -> (ti != null)).forEach((ti) -> {
+            tmp.add(ti);
+        });
+        return tmp.get(0);
+    }
+
+    public String getCountry() {
+        List<String> tmp = new ArrayList<>();
+        titles.stream().map((t) -> t.getCountry()).filter((ti) -> (ti != null)).forEach((ti) -> {
+            tmp.add(ti);
+        });
+        return tmp.get(0);
+    }
+
+    public String getRegion() {
+        List<String> tmp = new ArrayList<>();
+        titles.stream().map((t) -> t.getRegion()).filter((ti) -> (ti != null)).forEach((ti) -> {
+            tmp.add(ti);
+        });
+        return tmp.get(0);
     }
 
     @Override
     public String toString() {
-        return "Titles{" + "mdTitles=" + mdTitles + '}';
+        return "Titles{" + "titles=" + titles + '}';
     }
 
 }

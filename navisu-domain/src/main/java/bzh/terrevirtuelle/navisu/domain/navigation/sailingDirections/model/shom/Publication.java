@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom;
 
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -130,6 +131,18 @@ public class Publication {
      */
     public void setTitles(Titles titles) {
         this.titles = titles;
+    }
+
+    public String getStitle() {
+        return titles.getStitle();
+    }
+
+    public String getCountry() {
+        return titles.getCountry();
+    }
+
+    public String getRegion() {
+        return titles.getRegion();
     }
 
     @Override

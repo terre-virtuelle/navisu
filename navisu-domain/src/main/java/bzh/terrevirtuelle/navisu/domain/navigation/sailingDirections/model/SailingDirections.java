@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Document;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Metadata;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import java.util.List;
@@ -57,7 +58,12 @@ public class SailingDirections
         return sailingDirectionsParser.getBook();
     }
 
+    public Metadata getMetadata() {
+        return sailingDirectionsParser.getMetadata();
+    }
+
     public List<Chapter> getChapters() {
         return sailingDirectionsParser.getChapters();
     }
+
 }

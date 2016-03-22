@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "ouvrage")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Book{
+public class Book {
 
     @XmlElements({
         @XmlElement(type = Illustration.class)
@@ -32,18 +32,37 @@ public class Book{
         @XmlElement(type = Chapter.class)
     })
     private final List<Chapter> chapitre = new ArrayList<>();
+    @XmlElement(name = "nomCourt")
+    private String name;
+    @XmlElement(name = "nomLong")
+    private String longname;
+    @XmlElement(name = "nota")
+    private String nota;
 
     public Book() {
     }
 
-    public List<Chapter> getChapitre() {
+    public List<Chapter> getChapters() {
         return chapitre;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLongname() {
+        return longname;
+    }
+
+    public String getNota() {
+        return nota;
     }
 
     @Override
     public String toString() {
-        return "Book{" + "illustration=" + illustration + ", chapitre=" + chapitre + '}';
+        return "Book{" + "illustration=" + illustration + ", chapitre=" + chapitre + ", name=" + name + ", longname=" + longname + ", nota=" + nota + '}';
     }
 
-  
+    
+
 }

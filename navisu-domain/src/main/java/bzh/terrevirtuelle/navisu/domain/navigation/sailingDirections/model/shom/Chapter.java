@@ -28,7 +28,7 @@ public class Chapter {
     @XmlElements({
         @XmlElement(type = SubChapter.class)
     })
-    private final List<SubChapter> sChapitre=new ArrayList<>();
+    private final List<SubChapter> sChapitre = new ArrayList<>();
 
     public Chapter() {
     }
@@ -42,9 +42,6 @@ public class Chapter {
      *
      * @return the value of sChapitreList
      */
-    
-
-    
     /**
      * Get the value of titre
      *
@@ -62,11 +59,19 @@ public class Chapter {
     public void setTitre(Title titre) {
         this.titre = titre;
     }
+/*
+    @Override
+    public String toString() {
+        return "Chapitre{"
+                + titre != null ? "titre=" + titre : ""
+                        + sChapitre != null ? ", sChapitre=" + sChapitre : ""
+                                + '}';
+    }
+*/
 
     @Override
     public String toString() {
-        return "Chapitre{" + "titre=" + titre + ", sChapitre=" + sChapitre + '}';
+        return "Chapter{" + "titre=" + titre + ", sChapitre=" + sChapitre + '}';
     }
-
     
 }

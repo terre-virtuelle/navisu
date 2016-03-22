@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Document;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Metadata;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import java.util.HashMap;
@@ -25,10 +26,11 @@ import java.util.Set;
 public abstract class SailingDirectionsParser {
 
     protected Document document;
+    protected Metadata metadata;
     protected Set<Text> textSet;
     protected Map<Pair<Double, Double>, String> poiMap;
     protected Book book;
-    protected List<Chapter> chapitres;
+    protected List<Chapter> chapters;
 
     public SailingDirectionsParser(String filename) {
         document = new Document();
@@ -55,9 +57,13 @@ public abstract class SailingDirectionsParser {
         return book;
     }
 
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
     public List<Chapter> getChapters() {
         if (book != null) {
-            return book.getChapitre();
+            return book.getChapters();
         }
         return null;
     }

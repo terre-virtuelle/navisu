@@ -21,6 +21,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Metadata {
 
+    @XmlAttribute(name = "xmlns:xsi")
+    private String xmlns;
+
     @XmlElement(name = "auteur")
     private Author author;
     @XmlElement(name = "editeur")
@@ -43,7 +46,13 @@ public class Metadata {
         this.copyright = copyright;
     }
 
-    
+    public String getXmlns() {
+        return xmlns;
+    }
+
+    public void setXmlns(String xmlns) {
+        this.xmlns = xmlns;
+    }
 
     /**
      * Get the value of copyright
@@ -139,7 +148,5 @@ public class Metadata {
     public String toString() {
         return "Metadata{" + "author=" + author + ", editor=" + editor + ", publisher=" + publisher + ", publication=" + publication + ", copyright=" + copyright + '}';
     }
-
-    
 
 }

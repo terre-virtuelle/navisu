@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ShomSailingDirections
         extends SailingDirections {
 
-    private Document document;
+    
     private String filename;
 
     public ShomSailingDirections() {
@@ -52,22 +52,6 @@ public class ShomSailingDirections
         this.filename = filename;
     }
 
-    /**
-     * Get the value of document
-     *
-     * @return the value of document
-     */
-    public Document getDocument() {
-        return document;
-    }
-
-    /**
-     * Set the value of document
-     *
-     * @param document new value of document
-     */
-    public void setDocument(Document document) {
-        this.document = document;
-    }
+    
 
 }
