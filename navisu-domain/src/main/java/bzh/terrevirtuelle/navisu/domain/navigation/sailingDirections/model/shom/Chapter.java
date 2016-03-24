@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Chapter {
 
+    @XmlElement(name = "titre")
     private Title titre;
 
     @XmlElements({
@@ -59,7 +60,8 @@ public class Chapter {
     public void setTitre(Title titre) {
         this.titre = titre;
     }
-/*
+
+    /*
     @Override
     public String toString() {
         return "Chapitre{"
@@ -67,11 +69,11 @@ public class Chapter {
                         + sChapitre != null ? ", sChapitre=" + sChapitre : ""
                                 + '}';
     }
-*/
+     */
 
     @Override
     public String toString() {
         return "Chapter{" + "titre=" + titre + ", sChapitre=" + sChapitre + '}';
     }
-    
+
 }

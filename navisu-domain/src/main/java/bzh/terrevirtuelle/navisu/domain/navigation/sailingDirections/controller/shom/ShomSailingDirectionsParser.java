@@ -5,15 +5,15 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.shom;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.TextPart;
 import bzh.terrevirtuelle.navisu.domain.util.Degrees;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -47,17 +47,10 @@ public class ShomSailingDirectionsParser
         }
         if (content != null) {
             content = content.replaceAll("md:", "");
-           // content = content.replaceAll("xmlns:md=\"metaData.xsd\" ", "");
-           // System.out.println(content);
             try {
                 document = ImportExportXML.imports(document, new StringReader(content));
             } catch (JAXBException ex) {
                 Logger.getLogger(ShomSailingDirectionsParser.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-           // System.out.println(document);
-            if (document != null) {
-                book = document.getBook();
-                metadata = document.getMetadata();
             }
         }
 
@@ -65,6 +58,8 @@ public class ShomSailingDirectionsParser
 
     @Override
     protected Set<Text> parseText() {
+        Book book = document.getBook();
+        List<Chapter> chapters;
         if (book != null) {
             chapters = book.getChapters();
             chapters.stream().map((c) -> c.getsChapitre()).forEach((sc) -> {

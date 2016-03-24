@@ -50,7 +50,6 @@ public class SailingDirections
     }
 
     public Map<Pair<Double, Double>, String> getPoiMap() {
-
         return sailingDirectionsParser.getPoiMap();
     }
 

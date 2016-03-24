@@ -26,11 +26,8 @@ import java.util.Set;
 public abstract class SailingDirectionsParser {
 
     protected Document document;
-    protected Metadata metadata;
     protected Set<Text> textSet;
     protected Map<Pair<Double, Double>, String> poiMap;
-    protected Book book;
-    protected List<Chapter> chapters;
 
     public SailingDirectionsParser(String filename) {
         document = new Document();
@@ -49,19 +46,20 @@ public abstract class SailingDirectionsParser {
     }
 
     public Map<Pair<Double, Double>, String> getPoiMap() {
-        textSet = parseText();
+        textSet = getTextSet();
         return parsePoi();
     }
 
     public Book getBook() {
-        return book;
+        return document.getBook();
     }
 
     public Metadata getMetadata() {
-        return metadata;
+        return document.getMetadata();
     }
 
     public List<Chapter> getChapters() {
+        Book book = document.getBook();
         if (book != null) {
             return book.getChapters();
         }

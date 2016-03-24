@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom;
 
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.shom.SailingDirectionsParser;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.shom.ShomSailingDirectionsParser;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import javax.xml.bind.annotation.XmlAccessType;
