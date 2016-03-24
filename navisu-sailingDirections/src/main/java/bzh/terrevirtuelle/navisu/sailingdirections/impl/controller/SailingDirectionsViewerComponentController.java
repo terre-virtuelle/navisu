@@ -77,6 +77,7 @@ public class SailingDirectionsViewerComponentController
     private final String GROUP_NAME = "Navigation";
     private final String ROOT = "data/sd/shom/";
     private final String IN_SHOM_CATALOG_FILE_NAME = ROOT + "instructionsNautiquesShom.xml";
+    private final double POI_ALTITUDE = 500000.0;
     private final WorldWindow wwd;
     private final SailingDirectionsComponentImpl instrument;
     private final GuiAgentServices guiAgentServices;
@@ -131,7 +132,6 @@ public class SailingDirectionsViewerComponentController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        makePanel();
         sailingDirectionsPgonLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_1);
         sailingDirectionsPgonLayer.setPickEnabled(false);
         sailingDirectionsIconsLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_0);
@@ -155,17 +155,15 @@ public class SailingDirectionsViewerComponentController
 
         sdComboBox.setOnAction((event) -> {
             String filename = sdShomCatalogMap.get(sdComboBox.getSelectionModel().getSelectedItem().toString());
-            Map<Pair<Double, Double>, String> result = new ShomSailingDirections(ROOT + filename).getPoiMap();
-            if (result != null) {
-                MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
-                Point point = multiPoint.getCentroid();
-                instrument.off();
-                wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
-            }
-        });
-    }
 
-    private void makePanel() {
+            ShomSailingDirections shomSailingDirections = new ShomSailingDirections(ROOT + filename);
+            showPoi(shomSailingDirections.getPoiMap());
+
+            instrument.off();
+
+            Point point = shomSailingDirections.getCentroid();
+            wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), POI_ALTITUDE);
+        });
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
