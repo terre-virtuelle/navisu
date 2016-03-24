@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.shom;
+package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
@@ -11,6 +11,11 @@ import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Metadata;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.Point;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -66,9 +71,24 @@ public abstract class SailingDirectionsParser {
         return null;
     }
 
+    public Point getCentroid() {
+        Map<Pair<Double, Double>, String> result = getPoiMap();
+        if (result != null) {
+            List<Coordinate> coordinates = new ArrayList<>();
+            result.keySet().stream().forEach((c) -> {
+                coordinates.add(new Coordinate(c.getX(), c.getY()));
+            });
+            Coordinate coordinates1[] = coordinates.toArray(new Coordinate[coordinates.size()]);
+            GeometryFactory geometryFactory = new GeometryFactory();
+            return geometryFactory.createMultiPoint(coordinates.toArray(coordinates1)).getCentroid();
+        }
+        return null;
+    }
+
     protected abstract void readData(String filename);
 
     protected abstract Set<Text> parseText();
 
     protected abstract Map<Pair<Double, Double>, String> parsePoi();
+
 }

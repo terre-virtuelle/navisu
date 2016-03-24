@@ -7,13 +7,14 @@ package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.shom.SailingDirectionsParser;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.SailingDirectionsParser;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Document;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Metadata;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
+import com.vividsolutions.jts.geom.Point;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,4 +66,7 @@ public class SailingDirections
         return sailingDirectionsParser.getChapters();
     }
 
+    public Point getCentroid() {
+        return sailingDirectionsParser.getCentroid();
+    }
 }

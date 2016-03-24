@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.shom;
 
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.controller.SailingDirectionsParser;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
