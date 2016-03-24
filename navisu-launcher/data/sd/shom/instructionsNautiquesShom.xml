@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template filename, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<sdshomcatalog>
+    <sdshom>
+        <filename></filename>
+        <name>B4--INA</name>
+        <description>Mer du Nord (partie Sud) : de la frontière franco-belge à Scheveningen et côtes Sud-Est de l'Angleterre de North Foreland à Southwold</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>C1--INA</name>
+        <description>Angleterre (côte Sud)</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>C2A-INA</name>
+        <description>France (côtes Nord et Ouest) : de la frontière belge à la Pointe de Penmarc'h</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>C2B-INA</name>
+        <description>France (côte Ouest) : de la Pointe de Penmarc'h à la frontière espagnole </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>C3--INA</name>
+        <description>Espagne (côtes Nord et Ouest) - Portugal</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>C4--INA</name>
+        <description>Afrique (côte Ouest) : de Râs Spartel à Cape Palmas - Îles du Large</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>C5--INA</name>
+        <description>Afrique (côte Ouest) - De Cape Palmas à Cape Agulhas</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>D1--INA</name>
+        <description>Détroit de Gibraltar - Espagne (côtes Sud et Est, Islas Baleares)</description>
+    </sdshom>
+    <sdshom>
+        <filename>d21.xml</filename>
+        <name>D21-INA</name>
+        <description>France (côte Sud) : de la frontière espagnole au cap de l'Aigle </description>
+    </sdshom>
+    <sdshom>
+        <filename>d22.xml</filename>
+        <name>D22-INA</name>
+        <description>France (côte Sud) : du cap Croisette à la frontière italienne </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>D23-INA</name>
+        <description>France : côtes de Corse</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>D3--INA</name>
+        <description>Italie (côte Ouest, Sardaigne et Sicile) - Îles Maltaises </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>D4--INA</name>
+        <description>Italie (côte Sud-Est) - Mer Adriatique </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>D5--INA</name>
+        <description>Grèce - Turquie (côte Ouest)</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>D6--INA </name>
+        <description>Afrique (côte Nord) - Levant : entre la Mer Égée et le Canal de Suez</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>G4--INA</name>
+        <description>Saint-Pierre et Miquelon</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>H5--INA</name>
+        <description>Antilles Orientales - Amérique du Sud (côte Nord-Est) : de Cabo Orange (Brésil) à Boca del Drago (Panama) </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>K10-INA</name>
+        <description>Îles de l'Océan Pacifique : Nouvelle-Calédonie - Vanuatu - Santa Cruz Islands  </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>K11-INA 
+        </name>
+        <description>Îles de l'Océan Pacifique (partie centrale) - Île Clipperton </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>L3--INA</name>
+        <description>Océan Indien (partie Nord-Ouest) : du Sri Lanka au Pakistan</description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>L4--INA</name>
+        <description>Golfe Persique et ses abords </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>L7--INA </name>
+        <description>Mer Rouge - Golfe d'Aden </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>L8--INA </name>
+        <description>Afrique (côte Est) : de Cape Agulhas à Ras Hafun </description>
+    </sdshom>
+    <sdshom>
+        <filename></filename>
+        <name>L9--INA  </name>
+        <description>Terre Adélie - Îles de l'Océan Indien (partie Sud)</description>
+    </sdshom>
+</sdshomcatalog>
