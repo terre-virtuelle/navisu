@@ -118,5 +118,9 @@
     -fx-font: 12px "Roboto Cn";
     -fx-fill : whitesmoke;
 }
+.infosd{
+    -fx-font: 14px "Roboto Cn";
+    -fx-fill : -fx-color-title;
 
+}
 

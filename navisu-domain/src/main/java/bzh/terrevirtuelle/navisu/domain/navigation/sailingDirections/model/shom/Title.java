@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,10 +25,18 @@ public class Title {
 
     @XmlAttribute
     private String tDate;
+    @XmlAttribute(name = "tTitre")
+    private String ttitle;
     @XmlAttribute
     private String tMaj;
     private Text texte;
     private String numero;
+    @XmlElement(name = "sTitre")
+    private String stitle;
+    @XmlElement(name = "pays")
+    private String country;
+    @XmlElement(name = "region")
+    private String region;
 
     public Title() {
     }
@@ -39,6 +48,20 @@ public class Title {
         this.texte = texte;
         this.numero = numero;
         this.illustration = illustration;
+    }
+
+    public Title(String stitle, String country, String region) {
+        this.stitle = stitle;
+        this.country = country;
+        this.region = region;
+    }
+
+    public String getTtitle() {
+        return ttitle;
+    }
+
+    public void setTtitle(String ttitle) {
+        this.ttitle = ttitle;
     }
 
     /**
@@ -150,9 +173,44 @@ public class Title {
         this.nmrAlinea = nmrAlinea;
     }
 
+    public String getStitle() {
+        return stitle;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setStitle(String stitle) {
+        this.stitle = stitle;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
     @Override
     public String toString() {
-        return "Titre{" + nmrAlinea + tDate + ", " + tMaj + ", " + texte + ", " + numero + ", " + illustration + '}';
+        return "Title{"
+                + nmrAlinea != null ? "nmrAlinea=" + nmrAlinea : ""
+                        + tDate != null ? ", tDate=" + tDate : ""
+                                + ttitle != null ? ", ttitle=" + ttitle : ""
+                                        + tMaj != null ? ", tMaj=" + tMaj : ""
+                                                + texte != null ? ", texte=" + texte : ""
+                                                        + numero != null ? ", numero=" + numero : ""
+                                                                + stitle != null ? ", stitle=" + stitle : ""
+                                                                        + country != null ? ", country=" + country : ""
+                                                                                + region != null ? ", region=" + region : ""
+                                                                                        + illustration != null ? ", illustration=" + illustration : ""
+                                                                                                + '}';
     }
 
 }

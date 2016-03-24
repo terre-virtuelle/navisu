@@ -42,10 +42,10 @@ public class GpsTrackController extends GpsPlotterController {
     }
 
     @Override
-    public void init() {
+    public void init(boolean subscribe) {
         pathPositions = new ArrayList<>();
         createAttributes();
-        super.init();
+        super.init(subscribe);
     }
 
     @Override
@@ -82,13 +82,13 @@ public class GpsTrackController extends GpsPlotterController {
     }
 
     private void updateTarget(double latitude, double longitude) {
-        ownerShip.setLatitude(latitude);
-        ownerShip.setLongitude(longitude);
+     //   ownerShip.setLatitude(latitude);
+      //  ownerShip.setLongitude(longitude);
         pathPositions.add(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), 10));
         path.setPositions(pathPositions);
         wwd.redrawNow();
     }
-
+/*
     @Override
     protected void notifyNmeaMessage(GGA data) {
         updateTarget(data.getLatitude(), data.getLongitude());
@@ -107,10 +107,11 @@ public class GpsTrackController extends GpsPlotterController {
             sentenceQueue.add(data);
             RMC d = sentenceQueue.element();
             if (d != null) {
-                ownerShip.setCog(d.getCog());
-                ownerShip.setSog(d.getSog());
-                updateTarget(data.getLatitude(), data.getLongitude());
+             //   ownerShip.setCog(d.getCog());
+            //    ownerShip.setSog(d.getSog());
+             //   updateTarget(data.getLatitude(), data.getLongitude());
             }
         }
     }
+*/
 }

@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.navigation.controller.catalog;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -42,9 +42,9 @@ public class SailingDirectionsController
 
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
-        surveyZone.setValue(AVKey.DISPLAY_NAME, ((SailingDirectionsOld) navigationData).getDescription() + "\n distance :  "
-                + String.format("%.2f", distance) + " Nm"
-                + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
+        //surveyZone.setValue(AVKey.DISPLAY_NAME, ((SailingDirections) navigationData).getDescription() + "\n distance :  "
+        //        + String.format("%.2f", distance) + " Nm"
+        //        + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
         s57Behavior.doIt(distance, azimuth);
     }
 

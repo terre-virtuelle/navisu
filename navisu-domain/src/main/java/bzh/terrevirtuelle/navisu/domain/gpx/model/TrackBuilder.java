@@ -18,7 +18,7 @@ public class TrackBuilder {
     protected String cmt = "";
     protected String desc = "";
     protected String src = "";
-    protected List<Link> link = new ArrayList<>();
+    protected List<Links> link = new ArrayList<>();
     protected int number;
     protected String type = "";
     protected Extensions extensions = new Extensions();
@@ -56,7 +56,7 @@ public class TrackBuilder {
         return this;
     }
 
-    public TrackBuilder link(List<Link> link) {
+    public TrackBuilder link(List<Links> link) {
         this.link = link;
         return this;
     }

@@ -46,7 +46,7 @@ public class GpsTrackImpl
     public void on(String... files) {
         if (on == false) {
             on = true;
-            new GpsTrackController(layersManagerServices, guiAgentServices, NAME).init();
+            new GpsTrackController(layersManagerServices, guiAgentServices, NAME).init(true);
         }
     }
 

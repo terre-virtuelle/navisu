@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Serge Morvan
  * @date 2 oct. 2014 NaVisu project
  */
-@XmlTransient
+//@XmlTransient
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Beacon

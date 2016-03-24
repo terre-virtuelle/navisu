@@ -84,9 +84,10 @@ import org.gavaghan.geodesy.GlobalCoordinates;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.PointPlacemark;
 
 /**
  * NaVisu
@@ -102,7 +103,7 @@ public class RouteEditorController
     private MeasureTool measureTool;
 
     private List<NavigationalWarnings> avurnavList;
-    private List<SailingDirectionsOld> sailingDirectionsList;
+    private List<SailingDirections> sailingDirectionsList;
     private List<Gpx> gpxList;
     private File file;
 
@@ -126,7 +127,7 @@ public class RouteEditorController
     private float speed;
     private final double MIN_DISTANCE = 0.1; // minimal distance between 2 Wp
     private final double OFFSET_BUFFER_DISTANCE = 0.01; //unit is decimal degrees
-    private final double HIGHWAY_BUFFER_DISTANCE = 0.0003; //unit is decimal degrees
+    private final double HIGHWAY_BUFFER_DISTANCE = 0.0003; //0.0003; //unit is decimal degrees
     private double bufferDistance;
     private double highwayDistance;
     private Geometry offsetBuffer;
@@ -150,6 +151,7 @@ public class RouteEditorController
     private final GuiAgentServices guiAgentServices;
     private final LayersManagerServices layersManagerServices;
     private RenderableLayer profileLayer;
+    private GeodeticCurve geoCurve;
     @FXML
     public Pane view;
     @FXML
@@ -526,7 +528,7 @@ public class RouteEditorController
             Geometry geom = new GeometryFactory().createLineString(coordinates);
 
             BufferOp bufferOp = new BufferOp(geom);
-            bufferOp.setEndCapStyle(BufferParameters.CAP_ROUND);
+            bufferOp.setEndCapStyle(BufferParameters.CAP_FLAT);//CAP_ROUND);
             offsetBuffer = bufferOp.getResultGeometry(bufferDistance);
             offsetPathPositions = new ArrayList<>();
             for (Coordinate c : offsetBuffer.getCoordinates()) {
@@ -538,13 +540,28 @@ public class RouteEditorController
             offset.setValue(AVKey.DISPLAY_NAME, routeName);
 
             bufferOp = new BufferOp(geom);
-            bufferOp.setEndCapStyle(BufferParameters.CAP_ROUND);
+            bufferOp.setEndCapStyle(BufferParameters.CAP_FLAT);
+            bufferOp.setQuadrantSegments(1);
 
             highwayBuffer = bufferOp.getResultGeometry(highwayDistance);
             highwayPathPositions = new ArrayList<>();
             for (Coordinate c : highwayBuffer.getCoordinates()) {
                 highwayPathPositions.add(Position.fromDegrees(c.y, c.x, 1));
             }
+            int i = 0;
+            for (Position p : highwayPathPositions) {
+                PointPlacemark pp = new PointPlacemark(p);
+                pp.setLabelText(Integer.toString(i));
+                pp.setValue(AVKey.DISPLAY_NAME, i);
+                measureTool.getLayer().addRenderable(pp);
+                i++;
+            }
+            int highwayPathPositionsSize = highwayPathPositions.size();
+            System.out.println("highwayPathPositionsSize " + highwayPathPositionsSize);
+            for (int j = 0; j < highwayPathPositionsSize - 1; j++) {
+                System.out.println(getDistanceM(highwayPathPositions.get(j), highwayPathPositions.get(j + 1)));
+            }
+
             if (!highwayPathPositions.isEmpty()) {
                 highwayPoly = new Polygon(highwayPathPositions);
                 highway = new Highway(1);
@@ -662,7 +679,7 @@ public class RouteEditorController
             Position endPos = positions.get(k + 1);
             end = new GlobalCoordinates(endPos.getLatitude().getDegrees(), endPos.getLongitude().getDegrees());
 
-            GeodeticCurve geoCurve = geoCalc.calculateGeodeticCurve(reference, start, end);
+            geoCurve = geoCalc.calculateGeodeticCurve(reference, start, end);
             double ellipseMeters = geoCurve.getEllipsoidalDistance();
             double i = 2 * ellipseMeters / speed;
 
@@ -841,6 +858,12 @@ public class RouteEditorController
         waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
         return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getEllipsoidalDistance() / KM_TO_METER * KM_TO_NAUTICAL;
+    }
+
+    private double getDistanceM(Position posA, Position posB) {
+        waypointA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
+        waypointB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
+        return geoCalc.calculateGeodeticCurve(reference, waypointA, waypointB).getEllipsoidalDistance() / KM_TO_METER;
     }
 
     private double getAzimuth(Position posA, Position posB) {

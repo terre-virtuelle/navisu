@@ -70,6 +70,7 @@ public class S57ChartComponentImpl
     S57GlobalCatalogServices s57GlobalCatalogServices;
     @UsedService
     DataAccessServices dataAccessServices;
+    
     ComponentManager cm;
     ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
 

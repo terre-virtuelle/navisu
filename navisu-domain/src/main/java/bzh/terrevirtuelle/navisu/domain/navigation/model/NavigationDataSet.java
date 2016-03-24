@@ -19,16 +19,15 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyIsolated
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
+import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Daymark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
+import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirectionsOld;
-import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarningsSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.NavigationalWarningsRSS;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import java.util.ArrayList;
@@ -55,9 +54,10 @@ public class NavigationDataSet {
 
     @XmlElements({
         @XmlElement(name = "area", type = Area.class),
-        @XmlElement(name = "avurnav", type = NavigationalWarnings.class),
-        @XmlElement(name = "avurnavSet", type = NavigationalWarningsSet.class),
+      //  @XmlElement(name = "avurnav", type = NavigationalWarnings.class),
+      //  @XmlElement(name = "avurnavSet", type = NavigationalWarningsSet.class),
         @XmlElement(name = "avurnavss", type = NavigationalWarningsRSS.class),
+      //  @XmlElement(name = "buoyage", type = Buoyage.class),
         @XmlElement(name = "bcncar", type = BeaconCardinal.class),
         @XmlElement(name = "bcnisd", type = BeaconIsolatedDanger.class),
         @XmlElement(name = "bcnlat", type = BeaconLateral.class),
@@ -72,14 +72,15 @@ public class NavigationDataSet {
         @XmlElement(name = "camera", type = Camera.class),
         @XmlElement(name = "daymark", type = Daymark.class),
         @XmlElement(name = "gpx", type = Gpx.class),
+     //   @XmlElement(name = "highway", type = Highway.class),
         @XmlElement(name = "lndmrk", type = Landmark.class),
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
         @XmlElement(name = "rss", type = Rss.class),
-        @XmlElement(name = "sailingDirectionsOld", type = SailingDirectionsOld.class),
+      //  @XmlElement(name = "sailingDirections", type = SailingDirections.class),
         @XmlElement(name = "ship", type = Ship.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "ouvrage", type = Book.class),
-        @XmlElement(name = "texte", type = Text.class)
+        @XmlElement(name = "texte", type = Text.class),
     })
     private ConcurrentLinkedQueue<NavigationData> navigationDataQueue;
 

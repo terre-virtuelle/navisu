@@ -58,6 +58,8 @@ public class GpsPlotterController
     protected String PROPERTIES_FILE_NAME = "properties/domain.properties";
     protected ColladaRoot ownerShipView;
     protected CircularFifoQueue<RMC> sentenceQueue;
+    protected double latitude = 0.0;
+    protected double longitude = 0.0;
 
     public GpsPlotterController(LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
@@ -75,7 +77,7 @@ public class GpsPlotterController
         this.name = name;
     }
 
-    public void init() {
+    public void init(boolean subscribe) {
         sentenceQueue = new CircularFifoQueue<>(6);
         wwd = GeoWorldWindViewImpl.getWW();
         gpsLayer = layersManagerServices.getInstance(GROUP, name);
@@ -89,7 +91,9 @@ public class GpsPlotterController
         addListeners();
         ownerShip = ShipController.createOwnerShip(properties);
         createTarget();
-        subscribe();
+        if (subscribe == true) {
+            subscribe();
+        }
     }
 
     protected void addPanelController() {
@@ -124,6 +128,8 @@ public class GpsPlotterController
     }
 
     protected void createTarget() {
+        this.latitude = ownerShip.getLatitude();
+        this.longitude = ownerShip.getLongitude();
         initRotation = new Double(properties.getProperty("initRotation").trim());
         ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae").trim());
         ownerShipView.setModelScale(new Vec4(new Double(properties.getProperty("scale").trim())));
@@ -133,6 +139,8 @@ public class GpsPlotterController
     }
 
     private void updateTarget(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
         ownerShip.setLatitude(latitude);
         ownerShip.setLongitude(longitude);
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
@@ -157,4 +165,17 @@ public class GpsPlotterController
         ownerShip.setSog(data.getSog());
         updateTarget(data.getLatitude(), data.getLongitude());
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public Ship getOwnerShip() {
+        return ownerShip;
+    }
+
 }

@@ -12,6 +12,9 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.AreaBuilder;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.Face;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.Point3D;
+import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.WavefrontOBJBuilder;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
@@ -22,6 +25,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
 import com.vividsolutions.jts.io.WKTWriter;
+import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Angle;
@@ -31,6 +35,7 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Polygon;
+import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfacePolylines;
 import gov.nasa.worldwind.terrain.ZeroElevationModel;
 import gov.nasa.worldwind.util.UnitsFormat;
@@ -88,7 +93,7 @@ public class MeasureToolsController
     private LayersManagerServices layersManagerServices;
     private final String FXML = "measuretools.fxml";
     private NavigationDataSet navigationDataSet;
-
+    private WavefrontOBJBuilder wavefrontOBJBuilder;
     @FXML
     public Pane view;
     @FXML
@@ -143,6 +148,24 @@ public class MeasureToolsController
     public TextField zoneNameTF;
     @FXML
     public TextField elevationTF;
+    @FXML
+    public TextField latitudeTF;
+    @FXML
+    public TextField longitudeTF;
+    @FXML
+    public TextField latitudeCamTF;
+    @FXML
+    public TextField longitudeCamTF;
+    @FXML
+    public TextField headingCamTF;
+    @FXML
+    public TextField pitchCamTF;
+    @FXML
+    public Button placeMarkButton;
+    @FXML
+    public Button gotoCamButton;
+    @FXML
+    public Button clearPlaceMarkButton;
 
     private final MeasureTool measureTool;
     private JLabel[] pointLabels;
@@ -155,8 +178,18 @@ public class MeasureToolsController
     private String zoneName = "DefaultZoneName";
     private double elevation = 0;
     private final ArrayList<Position> positions;
+    private List<Point3D> points3D;
+    private List<Face> faces;
     private final WKTReader wkt;
     private String shape = "Shape";
+    private double latitude;
+    private double longitude;
+    private double latitudeCam;
+    private double longitudeCam;
+    private double heading = 0;
+    private double pitch = 90;
+    private final View viewWW;
+    private final double ALTITUDE = 100;
 
     public static MeasureToolsController getInstance(MeasureToolsImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -184,7 +217,7 @@ public class MeasureToolsController
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.layersManagerServices = layersManagerServices;
         wwd = GeoWorldWindViewImpl.getWW();
-
+        this.viewWW = wwd.getView();
         //ZeroElevationModel
         wwd.getModel().getGlobe().setElevationModel(new ZeroElevationModel());
 
@@ -206,6 +239,7 @@ public class MeasureToolsController
         makePanel();
         positions = new ArrayList<>();
         wkt = new WKTReader();
+
     }
 
     private void addlisteners() {
@@ -416,6 +450,7 @@ public class MeasureToolsController
             switch (shape) {
                 case "Polygon":
                     exportKML3D();
+                    exportOBJ3D();
                     break;
                 default:
                     break;
@@ -447,8 +482,61 @@ public class MeasureToolsController
         });
         elevationTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
             if (!"".equals(newvalue)) {
-                elevation = Double.parseDouble(elevationTF.getText());
+                if (!"-".contains(newvalue)) {
+                    elevation = Double.parseDouble(elevationTF.getText());
+                }
             }
+        });
+        latitudeTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    latitude = Double.parseDouble(latitudeTF.getText());
+                }
+            }
+        });
+        longitudeTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    longitude = Double.parseDouble(longitudeTF.getText());
+                }
+            }
+        });
+        latitudeCamTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    latitudeCam = Double.parseDouble(latitudeCamTF.getText());
+                }
+            }
+        });
+        longitudeCamTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    longitudeCam = Double.parseDouble(longitudeCamTF.getText());
+                }
+            }
+        });
+        headingCamTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    heading = Double.parseDouble(headingCamTF.getText());
+                }
+            }
+        });
+        pitchCamTF.textProperty().addListener((ov, oldvalue, newvalue) -> {
+            if (!"".equals(newvalue)) {
+                if (!"-".equals(newvalue)) {
+                    pitch = Double.parseDouble(pitchCamTF.getText());
+                }
+            }
+        });
+        placeMarkButton.setOnMouseClicked((MouseEvent event) -> {
+            placeMarkButtonAction();
+        });
+        clearPlaceMarkButton.setOnMouseClicked((MouseEvent event) -> {
+            clearPlaceMarkButtonAction();
+        });
+        gotoCamButton.setOnMouseClicked((MouseEvent event) -> {
+            gotoCamButtonAction();
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             measureTool.setArmed(false);
@@ -459,6 +547,29 @@ public class MeasureToolsController
                 view.setOpacity(opacitySlider.getValue());
             });
         });
+    }
+
+    private void placeMarkButtonAction() {
+        PointPlacemark pp = new PointPlacemark(Position.fromDegrees(latitude, longitude, 100));
+        measureTool.getLayer().addRenderable(pp);
+    }
+
+    private void gotoCamButtonAction() {
+        viewWW.setHeading(Angle.fromDegrees(heading));
+        viewWW.setPitch(Angle.fromDegrees(90.0));
+        viewWW.goTo(new Position(Angle.fromDegrees(latitudeCam),
+                Angle.fromDegrees(longitudeCam), ALTITUDE), ALTITUDE);
+
+    }
+
+    private void clearPlaceMarkButtonAction() {
+
+        Iterable<Renderable> renderables = measureTool.getLayer().getRenderables();
+        for (Renderable r : renderables) {
+            if (r.getClass() == PointPlacemark.class) {
+                measureTool.getLayer().removeRenderable(r);
+            }
+        }
     }
 
     private void fillPointsPanel() {
@@ -518,16 +629,26 @@ public class MeasureToolsController
             s = String.format("%,7.1f " + lengthUnit, value * convertLengthCoeff);
         }
         heightLabel.setText(s);
-
         updateOrientationPosition();
     }
 
     private void updateOrientationPosition() {
+        if (measureTool.getOrientation() != null) {
+            if (measureTool.getOrientation().degrees < 0) {
+                double o = measureTool.getOrientation().degrees;
+                o += 180.0;
+                measureTool.setValue(MeasureTool.HEADING_LABEL, o);
+            }
+        }
         String s;
         // Update heading label
         Angle angle = measureTool.getOrientation();
         if (angle != null) {
-            s = String.format("%,6.2f\u00B0", angle.degrees);
+            double o = measureTool.getOrientation().degrees;
+            if (measureTool.getOrientation().degrees < 0) {
+                o += 360 ;
+            }
+            s = String.format("%,6.2f\u00B0", o);
         } else {
             s = "na";
         }
@@ -545,7 +666,6 @@ public class MeasureToolsController
     private void coastalLine(List<SurfacePolylines> coastalLines) {
         coastalLineDisplay(coastalLines);
         coastalLineToJTS(coastalLines);
-        //System.out.println("coastalLines " + coastalLines);
     }
 
     private void coastalLineControlSelected() {
@@ -772,11 +892,63 @@ public class MeasureToolsController
                     + "</kml>\n";
             kml.add(footer);
             java.nio.file.Path path = Paths.get("privateData/kml/" + zoneName + ".kml");
+
             try {
                 Files.write(path, kml, Charset.defaultCharset());
             } catch (IOException ex) {
                 Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+    }
+
+    private void exportOBJ3D() {
+        java.nio.file.Path path = Paths.get("privateData/obj/" + zoneName + ".obj");
+        List<String> obj = new ArrayList<>();
+        String header = "##\n"
+                + "##  Test generation fichier obj depuis Navisu\n"
+                + "## " + zoneName + "\n"
+                + "##\n"
+                + "\n";
+        //   + "mtllib blue.mtl\n"
+        //  + "usemtl blue \n";
+        obj.add(header);
+
+        wavefrontOBJBuilder = new WavefrontOBJBuilder();
+        positions.addAll(measureTool.getPositions());
+        int size = positions.size();
+        int f = 1;
+        for (int i = 0; i < size - 1; i++) {
+            wavefrontOBJBuilder.indexForVertex(positions.get(i).getLatitude().getDegrees(), positions.get(i).getLongitude().getDegrees(), 0.0);
+        }
+        String normals = "vn 0.577350 0.577350 -0.577350\n"
+                + "vn 0.577350 -0.577350 -0.577350\n"
+                + "vn -0.577350 -0.577350 -0.577350\n"
+                + "vn -0.577350 0.577350 -0.577350\n"
+                + "vn 0.577350 0.577350 0.577350\n"
+                + "vn 0.577350 -0.577350 0.577350\n"
+                + "vn -0.577350 -0.577350 0.577350\n"
+                + "vn -0.577350 0.577350 0.577350\n"
+                + "\n";
+
+        obj.add(normals);
+
+        for (int i = 0; i < size - 1; i++) {
+            wavefrontOBJBuilder.indexForVertex(positions.get(i).getLatitude().getDegrees(), positions.get(i).getLongitude().getDegrees(), elevation / 115072.0);
+        }
+        wavefrontOBJBuilder.addFace(4, 3, 2, 1);
+        wavefrontOBJBuilder.addFace(1, 2, 6, 5);
+        wavefrontOBJBuilder.addFace(7, 6, 2, 3);
+        wavefrontOBJBuilder.addFace(4, 8, 7, 3);
+        wavefrontOBJBuilder.addFace(5, 8, 4, 1);
+        wavefrontOBJBuilder.addFace(5, 6, 7, 8);
+
+        obj.add(wavefrontOBJBuilder.toString());
+        try {
+            Files.write(path, obj, Charset.defaultCharset());
+        } catch (IOException ex) {
+            Logger.getLogger(RouteEditorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(wavefrontOBJBuilder);
     }
 }

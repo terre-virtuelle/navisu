@@ -10,10 +10,11 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "highway", propOrder = {"id", "name", "description", "latitude", "longitude", "geometry"})
+
 public class Highway
         extends Location
         implements NavigationData {
@@ -72,7 +73,7 @@ public class Highway
 
     @Override
     public String toString() {
-        return "Highway{" + "name=" + name + super.toString() + '}';
+        return "Highway{" + "name=" + name + ", "+ super.toString() + '}';
     }
 
 }

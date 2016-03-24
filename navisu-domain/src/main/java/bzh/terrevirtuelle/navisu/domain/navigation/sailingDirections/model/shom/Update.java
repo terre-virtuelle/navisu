@@ -132,4 +132,9 @@ public class Update {
         this.gan = gan;
     }
 
+    @Override
+    public String toString() {
+        return "Update{" + "gan=" + gan + ", bat=" + bat + ", dms=" + dms + ", oldPub=" + oldPub + ", text=" + text + '}';
+    }
+
 }

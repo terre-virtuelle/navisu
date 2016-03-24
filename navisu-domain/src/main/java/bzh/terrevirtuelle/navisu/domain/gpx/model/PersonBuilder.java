@@ -13,7 +13,7 @@ public class PersonBuilder {
 
     protected String name= "noname";
     protected Email email= new Email();
-    protected Link link=new Link();
+    protected Links link=new Links();
 
     private PersonBuilder() {
     }
@@ -36,7 +36,7 @@ public class PersonBuilder {
         return this;
     }
 
-    public PersonBuilder link(Link link) {
+    public PersonBuilder link(Links link) {
         this.link = link;
         return this;
     }

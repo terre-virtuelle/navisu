@@ -7,8 +7,8 @@ package bzh.terrevirtuelle.navisu.navigation.controller.commands.impl;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
+import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponent;
@@ -32,8 +32,11 @@ public class NavigationCmdComponentImpl
     CameraComponentServices cameraComponentServices;
     @UsedService
     S57ChartComponentServices s57ChartComponentServices;
+    @UsedService
+    GpsPlotterServices gpsPlotterServices;
 
     private CameraCmd cameraCmd;
+
     private Map<String, NavigationCmd> navigationCmdMap;
 
     public NavigationCmdComponentImpl() {
@@ -55,21 +58,30 @@ public class NavigationCmdComponentImpl
     @Override
     public void init() {
         navigationCmdMap = new HashMap<>();
-        
+
         cameraCmd = CameraCmd.getInstance();
         cameraCmd.setCameraComponentServices(cameraComponentServices);
-        
         navigationCmdMap.put("CameraCmd", cameraCmd);
+
+        navigationCmdMap.put("NaVigationDataSetCmd", NaVigationDataSetCmd.getInstance());
+        navigationCmdMap.put("OwnerShipCmd", OwnerShipCmd.getInstance(gpsPlotterServices));
     }
 
     @Override
-    public NavigationViewSet doIt(String cmd, NavigationData navigationData) {
-       return  navigationCmdMap.get(cmd).doIt(navigationData);
+    public NavigationDataSet doIt(String cmd, NavigationData navigationData) {
+        NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
+        if (tmp != null) {
+            return tmp.doIt(navigationData);
+        }
+        return new NavigationDataSet();
     }
 
     @Override
-    public NMEA doIt(String cmd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public NavigationDataSet doIt(String cmd, String arg) {
+        NavigationCmd tmp = navigationCmdMap.get(cmd.trim());
+        if (tmp != null) {
+            return tmp.doIt(arg);
+        }
+        return new NavigationDataSet();
     }
-
 }

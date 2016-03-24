@@ -27,7 +27,7 @@ public abstract class TransponderEventsController {
 
     public void subscribe() {
         transponderUpdateTargetEvent.subscribe((TransponderUpdateTargetEvent) (Ship ship) -> {
-            updateTarget(ship);
+           updateTarget(ship);
         });
     }
 

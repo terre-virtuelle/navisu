@@ -6,8 +6,7 @@
 package bzh.terrevirtuelle.navisu.navigation.controller.commands;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -19,8 +18,8 @@ public interface NavigationCmdComponentServices
 
     public void init();
 
-    public NavigationViewSet doIt(String cmd, NavigationData navigationData);
+    public NavigationDataSet doIt(String cmd, NavigationData navigationData);
 
-    public NMEA doIt(String cmd);
+    public NavigationDataSet doIt(String cmd, String arg);
 
 }

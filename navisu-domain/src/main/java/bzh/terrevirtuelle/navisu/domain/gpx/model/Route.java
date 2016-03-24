@@ -68,7 +68,7 @@ public class Route {
     protected String cmt;
     protected String desc;
     protected String src;
-    protected List<Link> link;
+    protected List<Links> link;
     @XmlSchemaType(name = "nonNegativeInteger")
     protected int number;
     protected String type;
@@ -79,7 +79,7 @@ public class Route {
     }
 
     public Route(String name, String cmt, String desc, String src,
-            List<Link> link, int number, String type,
+            List<Links> link, int number, String type,
             Extensions extensions, List<Waypoint> rtept) {
         this.name = name;
         this.cmt = cmt;
@@ -189,13 +189,13 @@ public class Route {
      *
      *
      * <p>
-     * Objects of the following type(s) are allowed in the list {@link Link }
+     * Objects of the following type(s) are allowed in the list {@link Links }
      *
      *
      */
-    public List<Link> getLink() {
+    public List<Links> getLink() {
         if (link == null) {
-            link = new ArrayList<Link>();
+            link = new ArrayList<Links>();
         }
         return this.link;
     }

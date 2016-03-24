@@ -10,25 +10,17 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Alinea;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Document;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Para;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SubChapter;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SubParagrah;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.TextPart;
-import bzh.terrevirtuelle.navisu.domain.util.Degrees;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SdShom;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SdShomCatalog;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.ShomSailingDirections;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
-import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 //import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 //import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
-import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
-import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
@@ -40,19 +32,22 @@ import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -77,8 +72,9 @@ public class SailingDirectionsViewerComponentController
     private final String LAYER_NAME_1 = "SailingDirectionsZones";
     private final String ICON_NAME = "SailingDirections";
     private final String GROUP_NAME = "Navigation";
-    private final String IN_D22 = "data/sd/shom/d22.xml";
-    private final String IN_D21 = "data/sd/shom/d21.xml";
+    private final String ROOT = "data/sd/shom/";
+    private final String IN_SHOM_CATALOG_FILE_NAME = ROOT + "instructionsNautiquesShom.xml";
+    private final double POI_ALTITUDE = 500000.0;
     private final WorldWindow wwd;
     private final SailingDirectionsComponentImpl instrument;
     private final GuiAgentServices guiAgentServices;
@@ -88,6 +84,7 @@ public class SailingDirectionsViewerComponentController
     protected RenderableLayer sailingDirectionsPgonLayer;
     protected RenderableLayer sailingDirectionsIconsLayer;
     private NavigationDataSet navigationDataSet;
+    SailingDirections sailingDirections;
     @FXML
     public Pane view;
     @FXML
@@ -95,15 +92,7 @@ public class SailingDirectionsViewerComponentController
     @FXML
     public Slider opacitySlider;
     @FXML
-    public Button c2aButton;
-    @FXML
-    public Button c2bButton;
-    @FXML
-    public Button d21Button;
-    @FXML
-    public Button d22Button;
-    @FXML
-    public Button d23Button;
+    public ComboBox sdComboBox;
 
     public static SailingDirectionsViewerComponentController getInstance(SailingDirectionsComponentImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -140,40 +129,37 @@ public class SailingDirectionsViewerComponentController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        makePanel();
         sailingDirectionsPgonLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_1);
         sailingDirectionsPgonLayer.setPickEnabled(false);
         sailingDirectionsIconsLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_0);
     }
 
-    private void makePanel() {
-        
-        c2aButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Map<String, String> sdShomCatalogMap = new HashMap<>();
+        SdShomCatalog sdShomCatalog = new SdShomCatalog();
+        try {
+            sdShomCatalog = ImportExportXML.imports(sdShomCatalog, IN_SHOM_CATALOG_FILE_NAME);
+        } catch (FileNotFoundException | JAXBException ex) {
+            Logger.getLogger(SailingDirectionsViewerComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        List<SdShom> sdShoms = sdShomCatalog.getSdShoms();
+        sdShoms.stream().filter((sd) -> (sd.getFilename() != null && sd.getFilename().length() != 0)).forEach((sd) -> {
+            sdShomCatalogMap.put(sd.getName() + " : " + sd.getDescription(), sd.getFilename());
         });
-        c2bButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
-        });
-        d21Button.setOnMouseClicked((MouseEvent event) -> {
-            Map<Pair<Double, Double>, String> result = readData(IN_D21);
-            if (result != null) {
-                MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
-                Point point = multiPoint.getCentroid();
-                instrument.off();
-                wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
-            }
-        });
-        d22Button.setOnMouseClicked((MouseEvent event) -> {
-            Map<Pair<Double, Double>, String> result = readData(IN_D22);
-            if (result != null) {
-                MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
-                Point point = multiPoint.getCentroid();
-                instrument.off();
-                wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
-            }
-        });
-        d23Button.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
+        sdComboBox.getItems().clear();
+        sdComboBox.setItems(FXCollections.observableList(new ArrayList<>(sdShomCatalogMap.keySet())));
+
+        sdComboBox.setOnAction((event) -> {
+            String filename = sdShomCatalogMap.get(sdComboBox.getSelectionModel().getSelectedItem().toString());
+
+            ShomSailingDirections shomSailingDirections = new ShomSailingDirections(ROOT + filename);
+            showPoi(shomSailingDirections.getPoiMap());
+
+            instrument.off();
+
+            Point point = shomSailingDirections.getCentroid();
+            wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), POI_ALTITUDE);
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
@@ -183,86 +169,11 @@ public class SailingDirectionsViewerComponentController
                 view.setOpacity(opacitySlider.getValue());
             });
         });
-
-    }
-
-    public Map<Pair<Double, Double>, String> readData(String filename) {
-        Set<Text> textSet;
-        textSet = new HashSet<>();
-        Map<Pair<Double, Double>, String> poiMap = new HashMap<>();
-        Document document = new Document();
-
-        try {
-            document = ImportExportXML.imports(document, filename);
-        } catch (JAXBException | FileNotFoundException ex) {
-            System.out.println("No data");
-            return null;
-        }
-
-        Book ouvrage = document.getBook();
-        if (ouvrage != null) {
-            List<Chapter> chapitres = ouvrage.getChapitre();
-            chapitres.stream().map((c) -> c.getsChapitre()).forEach((sc) -> {
-                sc.stream().map((ssc) -> ssc.getPara()).forEach((p) -> {
-                    p.stream().map((pa) -> pa.getSpara()).forEach((sparaList) -> {
-                        sparaList.stream().map((spara) -> spara.getAlinea()).forEach((alienaList) -> {
-                            alienaList.stream().map((alinea) -> alinea.getTexte()).forEach((Text texte) -> {
-                                List<TextPart> textPartList;
-                                if (texte != null) {
-                                    textPartList = texte.getTextParts();
-                                    textPartList.stream().filter((textpart) -> (textpart.getClass().getSimpleName().equals("Principal"))).filter((_item) -> (texte.contains("°"))).forEach((_item) -> {
-                                        textSet.add(texte);
-                                    });
-                                }
-                            });
-                        });
-                    });
-                });
-            });
-            textSet.stream().map((t) -> t.shorten()).map((data) -> {
-                if (data.contains("(")) {
-                    String[] tab = data.split("\\(");
-                    for (String s : tab) {
-                        String[] sTab = s.split("\\)");
-                        for (String ss : sTab) {
-                            if (ss.contains("°")) {
-                                if (!data.contains("[")) {
-                                    try {
-                                        poiMap.put(Degrees.degTodecimal(ss.trim()), data);
-                                    } catch (Exception e) {
-                                        //nombre mal forme possible
-                                    }
-                                }
-
-                            }
-                        }
-                    }
-                }
-                return data;
-            }).filter((data) -> (data.contains("["))).forEach((data) -> {
-                String[] tab1 = data.split("\\[");
-                for (String s : tab1) {
-                    String[] sTab = s.split("\\]");
-                    for (String ss : sTab) {
-                        if (ss.contains("°")) {
-                            if (!data.contains("(")) {
-                                try {
-                                    poiMap.put(Degrees.degTodecimal(ss.trim()), data);
-                                } catch (Exception e) {
-                                    //nombre mal forme possible
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        return poiMap;
     }
 
     public Set<Pair<Double, Double>> showPoi(Map<Pair<Double, Double>, String> data) {
         Set<Pair<Double, Double>> latLonSet = data.keySet();
-        
+
         latLonSet.stream().map((ll) -> {
             String imageAddress = NavigationIcons.ICONS.get(ICON_NAME);
             PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(ll.getX(), ll.getY(), 0));
@@ -276,11 +187,6 @@ public class SailingDirectionsViewerComponentController
         }).forEach((placemark) -> {
             sailingDirectionsIconsLayer.addRenderable(placemark);
         });
-
         return latLonSet;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
     }
 }

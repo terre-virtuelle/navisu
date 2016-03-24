@@ -79,7 +79,7 @@ public class GpsPlotterWithRouteImpl
                     guiAgentServices, kmlObjectServices,
                     s57ChartComponentServices, s57GlobalCatalogServices, 
                     transponderServices,
-                    NAME1).init();
+                    NAME1).init(true);
             gpsTrackServices.on(files);
         }
     }

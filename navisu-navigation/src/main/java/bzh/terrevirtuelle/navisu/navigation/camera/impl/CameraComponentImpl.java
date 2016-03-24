@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
-import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.navigation.camera.impl.controller.CameraComponentController;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponent;
@@ -69,7 +69,7 @@ public class CameraComponentImpl
     }
 
     @Override
-    public NavigationViewSet updateTarget(Camera camera) {
+    public NavigationDataSet updateTarget(Camera camera) {
         return controller.updateTarget(camera);
     }
 

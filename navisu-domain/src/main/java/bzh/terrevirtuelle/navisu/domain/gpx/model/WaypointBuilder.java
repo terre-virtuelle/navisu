@@ -23,7 +23,7 @@ public class WaypointBuilder {
     protected String cmt;
     protected String desc;
     protected String src;
-    protected List<Link> link = new ArrayList<>();
+    protected List<Links> link = new ArrayList<>();
     protected String sym;
     protected String type;
     protected String fix;
@@ -94,7 +94,7 @@ public class WaypointBuilder {
         return this;
     }
 
-    public WaypointBuilder link(List<Link> link) {
+    public WaypointBuilder link(List<Links> link) {
         this.link = link;
         return this;
     }
