@@ -11,11 +11,14 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SdShom;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SdShomCatalog;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.ShomSailingDirections;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
+import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 //import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 //import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -28,23 +31,33 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javax.xml.bind.JAXBException;
 
 /**
  *
@@ -62,8 +75,8 @@ public class SailingDirectionsViewerComponentController
     private final String LAYER_NAME_1 = "SailingDirectionsZones";
     private final String ICON_NAME = "SailingDirections";
     private final String GROUP_NAME = "Navigation";
-    private final String IN_D22 = "data/sd/shom/d22.xml";
-    private final String IN_D21 = "data/sd/shom/d21.xml";
+    private final String ROOT = "data/sd/shom/";
+    private final String IN_SHOM_CATALOG_FILE_NAME = ROOT + "instructionsNautiquesShom.xml";
     private final WorldWindow wwd;
     private final SailingDirectionsComponentImpl instrument;
     private final GuiAgentServices guiAgentServices;
@@ -81,15 +94,7 @@ public class SailingDirectionsViewerComponentController
     @FXML
     public Slider opacitySlider;
     @FXML
-    public Button c2aButton;
-    @FXML
-    public Button c2bButton;
-    @FXML
-    public Button d21Button;
-    @FXML
-    public Button d22Button;
-    @FXML
-    public Button d23Button;
+    public ComboBox sdComboBox;
 
     public static SailingDirectionsViewerComponentController getInstance(SailingDirectionsComponentImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
@@ -132,16 +137,25 @@ public class SailingDirectionsViewerComponentController
         sailingDirectionsIconsLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_0);
     }
 
-    private void makePanel() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Map<String, String> sdShomCatalogMap = new HashMap<>();
+        SdShomCatalog sdShomCatalog = new SdShomCatalog();
+        try {
+            sdShomCatalog = ImportExportXML.imports(sdShomCatalog, IN_SHOM_CATALOG_FILE_NAME);
+        } catch (FileNotFoundException | JAXBException ex) {
+            Logger.getLogger(SailingDirectionsViewerComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        List<SdShom> sdShoms = sdShomCatalog.getSdShoms();
+        sdShoms.stream().filter((sd) -> (sd.getFilename() != null && sd.getFilename().length() != 0)).forEach((sd) -> {
+            sdShomCatalogMap.put(sd.getName() + " : " + sd.getDescription(), sd.getFilename());
+        });
+        sdComboBox.getItems().clear();
+        sdComboBox.setItems(FXCollections.observableList(new ArrayList<>(sdShomCatalogMap.keySet())));
 
-        c2aButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
-        });
-        c2bButton.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
-        });
-        d21Button.setOnMouseClicked((MouseEvent event) -> {
-            Map<Pair<Double, Double>, String> result = new ShomSailingDirections(IN_D21).getPoiMap();
+        sdComboBox.setOnAction((event) -> {
+            String filename = sdShomCatalogMap.get(sdComboBox.getSelectionModel().getSelectedItem().toString());
+            Map<Pair<Double, Double>, String> result = new ShomSailingDirections(ROOT + filename).getPoiMap();
             if (result != null) {
                 MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
                 Point point = multiPoint.getCentroid();
@@ -149,18 +163,9 @@ public class SailingDirectionsViewerComponentController
                 wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
             }
         });
-        d22Button.setOnMouseClicked((MouseEvent event) -> {
-            Map<Pair<Double, Double>, String> result = new ShomSailingDirections(IN_D22).getPoiMap();
-            if (result != null) {
-                MultiPoint multiPoint = WWJ_JTS.toMultiPoint(showPoi(result));
-                Point point = multiPoint.getCentroid();
-                instrument.off();
-                wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), 500000.0);
-            }
-        });
-        d23Button.setOnMouseClicked((MouseEvent event) -> {
-            System.out.println("No data");
-        });
+    }
+
+    private void makePanel() {
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
@@ -169,7 +174,6 @@ public class SailingDirectionsViewerComponentController
                 view.setOpacity(opacitySlider.getValue());
             });
         });
-
     }
 
     public Set<Pair<Double, Double>> showPoi(Map<Pair<Double, Double>, String> data) {
@@ -188,11 +192,6 @@ public class SailingDirectionsViewerComponentController
         }).forEach((placemark) -> {
             sailingDirectionsIconsLayer.addRenderable(placemark);
         });
-
         return latLonSet;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
     }
 }
