@@ -44,10 +44,10 @@ import bzh.terrevirtuelle.navisu.client.nmea.impl.vertx.NmeaClientImpl;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.currents.CurrentsServices;
 import bzh.terrevirtuelle.navisu.currents.impl.CurrentsImpl;
-import bzh.terrevirtuelle.navisu.database.DatabaseServices;
+import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.database.app.TestDBServices;
 import bzh.terrevirtuelle.navisu.database.app.impl.TestDBImpl;
-import bzh.terrevirtuelle.navisu.database.impl.DatabaseImpl;
+import bzh.terrevirtuelle.navisu.database.relational.impl.derby.DatabaseImpl;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.Bezier2DImpl;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
@@ -129,6 +129,8 @@ import javafx.stage.Stage;
 
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
+import bzh.terrevirtuelle.navisu.database.graph.neo4J.impl.GraphDatabaseComponentImpl;
 import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
@@ -194,6 +196,7 @@ public class AppMain extends Application {
                         GpsPlotterImpl.class,
                         GpsPlotterWithRouteImpl.class,
                         GpxObjectImpl.class,
+                        GraphDatabaseComponentImpl.class,
                         GribImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
@@ -260,6 +263,7 @@ public class AppMain extends Application {
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
+        GraphDatabaseComponentServices graphDatabaseComponentServices=componentManager.getComponentService(GraphDatabaseComponentServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
@@ -435,10 +439,15 @@ public class AppMain extends Application {
         //dataServerServices.openGpsd("fridu.net", 2947);
 
         /* Test DB */
-       // testDBServices.connect("data/databases/TestJDBC", "navisu", "!!navisu??");
+        //testDBServices.connect("data/databases/TestJdbcDB", "navisu", "!!navisu??");
         // testDBServices.runJDBC();//OK
+        
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
-        //testDBServices.runJPA();//OK
+        // testDBServices.runJPA();//OK
+        
+        //Pas de connect() pour GraphDB, la DB est TestNeo4JDB dans data/databases
+        //testDBServices.runNeo4J("data/databases/TestNeo4JDB");
+        
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         // speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
