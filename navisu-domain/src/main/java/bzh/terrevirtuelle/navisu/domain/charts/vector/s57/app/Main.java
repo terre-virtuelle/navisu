@@ -10,9 +10,9 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
-import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.ShomSailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileNotFoundException;
@@ -218,7 +218,6 @@ public class Main {
          }
          });
          */
- 
         NavigationDataSet navigationDataSet = new NavigationDataSet();
 
         Buoyage beaconCardinal = new BeaconCardinal(2, "POINT(5.0 2.4)");
@@ -229,7 +228,7 @@ public class Main {
         Landmark landmark = new Landmark();
         landmark.setCategoryOfLandMark("test");
         landmark.setGeometry("POINT(8.0 6.4)");
-        
+
         navigationDataSet.add(landmark);
 
         Ship ship = new Ship();
@@ -244,6 +243,9 @@ public class Main {
         gpx.setHighway(highway);
         navigationDataSet.add(gpx);
 
+        SailingDirections sailingDirections = new ShomSailingDirections("data/in/d21.xml");
+        navigationDataSet.add(sailingDirections);
+        
         try {
             ImportExportXML.exports(navigationDataSet, "data/test.xml");
         } catch (JAXBException | FileNotFoundException ex) {
@@ -251,10 +253,10 @@ public class Main {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-         navigationDataSet.clear();
+        navigationDataSet.clear();
         try {
-            navigationDataSet = ImportExportXML.imports(navigationDataSet, "data/Route.nds");
-           // navigationDataSet = ImportExportXML.imports(navigationDataSet, "data/test.xml");
+           // navigationDataSet = ImportExportXML.imports(navigationDataSet, "data/Route.nds");
+             navigationDataSet = ImportExportXML.imports(navigationDataSet, "data/test.xml");
         } catch (FileNotFoundException | JAXBException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -266,6 +268,10 @@ public class Main {
         List<Gpx> navigationList1 = navigationDataSet.get(Gpx.class);
         navigationList1.stream().forEach((b) -> {
             System.out.println(b.getHighway());
+        });
+        List<SailingDirections> navigationList2 = navigationDataSet.get(SailingDirections.class);
+        navigationList2.stream().forEach((b) -> {
+            System.out.println(b);
         });
     }
 

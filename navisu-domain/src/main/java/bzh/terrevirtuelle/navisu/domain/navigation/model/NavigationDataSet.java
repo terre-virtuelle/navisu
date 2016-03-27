@@ -19,16 +19,15 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyIsolated
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoyLateral;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySafeWater;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BuoySpecialPurpose;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Daymark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.geometry.model.Area;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
-import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.rss.NavigationalWarningsRSS;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,7 +75,7 @@ public class NavigationDataSet {
         @XmlElement(name = "lndmrk", type = Landmark.class),
         @XmlElement(name = "morfac", type = MooringWarpingFacility.class),
         @XmlElement(name = "rss", type = Rss.class),
-      //  @XmlElement(name = "sailingDirections", type = SailingDirections.class),
+        @XmlElement(name = "sailingDirections", type = SailingDirections.class),
         @XmlElement(name = "ship", type = Ship.class),
         @XmlElement(name = "s57Chart", type = S57Chart.class),
         @XmlElement(name = "ouvrage", type = Book.class),
