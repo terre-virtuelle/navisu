@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.database.app;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import java.sql.Connection;
 import org.capcaval.c3.component.ComponentService;
+import org.neo4j.graphdb.GraphDatabaseService;
 
 /**
  * NaVisu
@@ -20,6 +21,8 @@ public interface TestDBServices
 
     Connection connect(String dbName, String user, String passwd);
 
+    GraphDatabaseService newEmbeddedDatabase(String dbName);
+
     void close();
 
     DatabaseDriver getDriver();
@@ -27,4 +30,6 @@ public interface TestDBServices
     void runJDBC();
 
     void runJPA();
+
+    void runNeo4J(String dbName);
 }
