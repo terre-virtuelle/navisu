@@ -48,14 +48,14 @@ import org.neo4j.graphdb.Transaction;
  */
 public class TestDBImpl
         implements TestDB, TestDBServices, DatabaseDriver, ComponentState {
-
+    
     @UsedService
     DatabaseServices databaseServices;
     @UsedService
     GraphDatabaseComponentServices graphDatabaseComponentServices;
     @UsedService
     GuiAgentServices guiAgentServices;
-
+    
     private List<Ship> ships;
     private final String SHIP = "SHIP";
     private final String NAME = "TestDB";
@@ -75,48 +75,16 @@ public class TestDBImpl
     private final String retrieveQuery = "SELECT * FROM " + SHIP;
     private EntityManager em;
     private Query query;
-
-    private static enum RelTypes
-            implements RelationshipType {
-        KNOWS
-    }
-    GraphDatabaseService graphDb;
-    Node firstNode;
-    Node secondNode;
-    Relationship relationship;
-
+    
     @Override
     public Connection connect(String dbName, String user, String passwd) {
         connection = databaseServices.connect(dbName, user, passwd);
         return connection;
     }
-
+    
     @Override
     public void close() {
         databaseServices.close();
-    }
-
-    @Override
-    public void componentInitiated() {
-        ships = new ArrayList<>();
-    }
-
-    @Override
-    public void componentStarted() {
-    }
-
-    @Override
-    public void componentStopped() {
-    }
-
-    @Override
-    public boolean canOpen(String dbName) {
-        return dbName.equalsIgnoreCase(NAME);
-    }
-
-    @Override
-    public DatabaseDriver getDriver() {
-        return this;
     }
 
     /*
@@ -247,7 +215,7 @@ public class TestDBImpl
             System.out.println(ships);
         });
     }
-
+    
     public void persistAllShips() {
         em.getTransaction().begin();
         ships.stream().forEach((s) -> {
@@ -255,7 +223,7 @@ public class TestDBImpl
         });
         em.getTransaction().commit();
     }
-
+    
     public Collection<Ship> findAllShips() {
         query = em.createQuery("SELECT s FROM Ship s");
         return (Collection<Ship>) query.getResultList();
@@ -266,33 +234,62 @@ public class TestDBImpl
      Neo4J Section 
      *
      */
+    private static enum RelTypes
+            implements RelationshipType {
+        KNOWS
+    }
+    GraphDatabaseService graphDb;
+    Node firstNode;
+    Node secondNode;
+    Node ownerShipNode;
+    Relationship relationship;
+    
     @Override
     public GraphDatabaseService newEmbeddedDatabase(String dbName) {
         return graphDatabaseComponentServices.newEmbeddedDatabase(dbName);
     }
-
+    
     @Override
     public void runNeo4J(String dbName) {
         graphDb = newEmbeddedDatabase(dbName);
         try (Transaction tx = graphDb.beginTx()) {
-            // Database operations go here
             firstNode = graphDb.createNode();
             firstNode.setProperty("message", "Hello, ");
             secondNode = graphDb.createNode();
             secondNode.setProperty("message", "World!");
-
             relationship = firstNode.createRelationshipTo(secondNode, RelTypes.KNOWS);
             relationship.setProperty("message", "brave Neo4j ");
-
             System.out.print(firstNode.getProperty("message"));
             System.out.print(relationship.getProperty("message"));
             System.out.println(secondNode.getProperty("message"));
-
             // let's remove the data
             firstNode.getSingleRelationship(RelTypes.KNOWS, Direction.OUTGOING).delete();
             firstNode.delete();
             secondNode.delete();
             tx.success();
         }
+    }
+    
+    @Override
+    public void componentInitiated() {
+        ships = new ArrayList<>();
+    }
+    
+    @Override
+    public void componentStarted() {
+    }
+    
+    @Override
+    public void componentStopped() {
+    }
+    
+    @Override
+    public boolean canOpen(String dbName) {
+        return dbName.equalsIgnoreCase(NAME);
+    }
+    
+    @Override
+    public DatabaseDriver getDriver() {
+        return this;
     }
 }
