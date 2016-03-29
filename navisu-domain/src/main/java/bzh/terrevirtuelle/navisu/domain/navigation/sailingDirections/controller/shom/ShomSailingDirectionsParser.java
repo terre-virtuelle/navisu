@@ -71,7 +71,10 @@ public class ShomSailingDirectionsParser
                                 List<TextPart> textPartList;
                                 if (texte != null) {
                                     textPartList = texte.getTextParts();
-                                    textPartList.stream().filter((textpart) -> (textpart.getClass().getSimpleName().equals("Principal"))).filter((_item) -> (texte.contains("°"))).forEach((_item) -> {
+                                    textPartList.stream().filter((textpart)
+                                            -> (textpart.getClass().getSimpleName().equals("Principal"))).filter((_item)
+                                            -> (texte.contains("°"))).forEach((_item)
+                                            -> {
                                         textSet.add(texte);
                                     });
                                 }
