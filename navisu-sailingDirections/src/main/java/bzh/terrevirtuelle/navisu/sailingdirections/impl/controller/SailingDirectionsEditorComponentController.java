@@ -67,7 +67,7 @@ public class SailingDirectionsEditorComponentController
         implements Initializable {
 
     private static SailingDirectionsEditorComponentController INSTANCE;
-    private final String FXML = "sailingDirectionsViewer.fxml";
+    private final String FXML = "sailingDirectionsEditor.fxml";
     private final String LAYER_NAME_0 = "SailingDirectionsPoi";
     private final String LAYER_NAME_1 = "SailingDirectionsZones";
     private final String ICON_NAME = "SailingDirections";
