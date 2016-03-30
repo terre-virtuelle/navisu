@@ -25,6 +25,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -38,6 +40,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
+import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 
 /**
@@ -48,14 +51,14 @@ import org.neo4j.graphdb.Transaction;
  */
 public class TestDBImpl
         implements TestDB, TestDBServices, DatabaseDriver, ComponentState {
-    
+
     @UsedService
     DatabaseServices databaseServices;
     @UsedService
     GraphDatabaseComponentServices graphDatabaseComponentServices;
     @UsedService
     GuiAgentServices guiAgentServices;
-    
+
     private List<Ship> ships;
     private final String SHIP = "SHIP";
     private final String NAME = "TestDB";
@@ -75,13 +78,13 @@ public class TestDBImpl
     private final String retrieveQuery = "SELECT * FROM " + SHIP;
     private EntityManager em;
     private Query query;
-    
+
     @Override
     public Connection connect(String dbName, String user, String passwd) {
         connection = databaseServices.connect(dbName, user, passwd);
         return connection;
     }
-    
+
     @Override
     public void close() {
         databaseServices.close();
@@ -92,17 +95,19 @@ public class TestDBImpl
      * Recuperation des Ship dans un fichier csv
      *
      */
-    public void readAllShips() {
+    public List<Ship> readAllShips() {
+        List<Ship> tmp = null;
         Stream<String> lines = null;
         try {
             lines = Files.lines(Paths.get("data/saved", "savedAisShips.csv"));
-            ships = lines.filter(string -> !string.contains("MMSI")).map(Ship::parseCsv).collect(Collectors.toList());
+            tmp = lines.filter(string -> !string.contains("MMSI")).map(Ship::parseCsv).collect(Collectors.toList());
         } catch (IOException ex) {
             Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (lines != null) {
             lines.close();
         }
+        return tmp;
     }
 
     /*
@@ -113,7 +118,7 @@ public class TestDBImpl
     @Override
     public void runJDBC() {
         guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
-            readAllShips();
+            ships = readAllShips();
             createTable();
             populateTable();
             ships.clear();
@@ -208,14 +213,14 @@ public class TestDBImpl
     public void runJPA() {
         em = databaseServices.getEntityManager();
         guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
-            readAllShips();
+            ships = readAllShips();
             persistAllShips();
             ships.clear();
             ships.addAll(findAllShips());
             System.out.println(ships);
         });
     }
-    
+
     public void persistAllShips() {
         em.getTransaction().begin();
         ships.stream().forEach((s) -> {
@@ -223,7 +228,7 @@ public class TestDBImpl
         });
         em.getTransaction().commit();
     }
-    
+
     public Collection<Ship> findAllShips() {
         query = em.createQuery("SELECT s FROM Ship s");
         return (Collection<Ship>) query.getResultList();
@@ -242,52 +247,95 @@ public class TestDBImpl
     Node firstNode;
     Node secondNode;
     Node ownerShipNode;
+    Node shipNode;
+    Ship ownerShip;
     Relationship relationship;
-    
+    List<Relationship> relationshipList;
+
     @Override
     public GraphDatabaseService newEmbeddedDatabase(String dbName) {
         return graphDatabaseComponentServices.newEmbeddedDatabase(dbName);
     }
-    
+
     @Override
     public void runNeo4J(String dbName) {
         graphDb = newEmbeddedDatabase(dbName);
+        ownerShip = new Ship();
+        ownerShip.setName("Lithops");
+        relationshipList = new ArrayList<>();
+        ships = readAllShips();
         try (Transaction tx = graphDb.beginTx()) {
+
             firstNode = graphDb.createNode();
             firstNode.setProperty("message", "Hello, ");
+
             secondNode = graphDb.createNode();
             secondNode.setProperty("message", "World!");
+
             relationship = firstNode.createRelationshipTo(secondNode, RelTypes.KNOWS);
             relationship.setProperty("message", "brave Neo4j ");
+
             System.out.print(firstNode.getProperty("message"));
             System.out.print(relationship.getProperty("message"));
             System.out.println(secondNode.getProperty("message"));
+
             // let's remove the data
             firstNode.getSingleRelationship(RelTypes.KNOWS, Direction.OUTGOING).delete();
             firstNode.delete();
             secondNode.delete();
+
+            ownerShipNode = graphDb.createNode();
+            ownerShipNode.setProperty("name", ownerShip.getName());
+            System.out.println(ownerShipNode.getProperty("name"));
+
+            ships.stream().filter((s) -> (s.getShipName() != null)).map((s) -> {
+                shipNode = graphDb.createNode();
+                return s;
+            }).map((s) -> {
+                shipNode.setProperty("name", s.getName());
+                return s;
+            }).forEach((_item) -> {
+                ownerShipNode.createRelationshipTo(shipNode, RelTypes.KNOWS);
+            });
             tx.success();
+            /*
+            String rows = null;
+            
+            try (Transaction ignored = graphDb.beginTx();
+                    
+                    Result result = graphDb.execute("match (n {name: 'shipNode'}) return n, n.name")) {
+                while (result.hasNext()) {
+                    Map<String, Object> row = result.next();
+                    for (Entry<String, Object> column : row.entrySet()) {
+                        rows += column.getKey() + ": " + column.getValue() + "; ";
+                    }
+                    rows += "\n";
+                }
+                System.out.println(rows);
+                ignored.success();
+            }
+*/
         }
     }
-    
+
     @Override
     public void componentInitiated() {
         ships = new ArrayList<>();
     }
-    
+
     @Override
     public void componentStarted() {
     }
-    
+
     @Override
     public void componentStopped() {
     }
-    
+
     @Override
     public boolean canOpen(String dbName) {
         return dbName.equalsIgnoreCase(NAME);
     }
-    
+
     @Override
     public DatabaseDriver getDriver() {
         return this;
