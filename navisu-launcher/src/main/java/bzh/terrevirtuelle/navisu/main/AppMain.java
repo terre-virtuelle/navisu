@@ -446,7 +446,7 @@ public class AppMain extends Application {
         // testDBServices.runJPA();//OK
         
         //Pas de connect() pour GraphDB, la DB est TestNeo4JDB dans data/databases
-        //testDBServices.runNeo4J("data/databases/TestNeo4JDB");
+        testDBServices.runNeo4J("data/databases/TestNeo4JDB");
         
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
