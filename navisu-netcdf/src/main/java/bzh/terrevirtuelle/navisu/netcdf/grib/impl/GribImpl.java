@@ -50,6 +50,7 @@ public class GribImpl implements Grib, GribServices, ComponentState {
             private static final String EXTENSION_4 = ".grb.gzip";
             private static final String EXTENSION_5 = ".grb.gz";
             private static final String EXTENSION_6 = ".grib2";
+            private static final String EXTENSION_7 = ".nc";
 
             @Override
             public boolean canOpen(String file) {
@@ -60,7 +61,8 @@ public class GribImpl implements Grib, GribServices, ComponentState {
                         || file.toLowerCase().endsWith(EXTENSION_3)
                         || file.toLowerCase().endsWith(EXTENSION_4)
                         || file.toLowerCase().endsWith(EXTENSION_5)
-                        || file.toLowerCase().endsWith(EXTENSION_6)) {
+                        || file.toLowerCase().endsWith(EXTENSION_6)
+                        || file.toLowerCase().endsWith(EXTENSION_7)) {
                     canOpen = true;
                 }
                 return canOpen;
@@ -87,7 +89,9 @@ public class GribImpl implements Grib, GribServices, ComponentState {
                     "*" + EXTENSION_3,
                     "*" + EXTENSION_4,
                     "*" + EXTENSION_5,
-                    "*" + EXTENSION_6
+                    "*" + EXTENSION_6,
+                    "*" + EXTENSION_7
+
                 };
             }
         };
