@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,8 +26,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -40,7 +40,6 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.RelationshipType;
-import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 
 /**
@@ -78,10 +77,17 @@ public class TestDBImpl
     private final String retrieveQuery = "SELECT * FROM " + SHIP;
     private EntityManager em;
     private Query query;
+    private List<String> polygons;
 
     @Override
     public Connection connect(String dbName, String user, String passwd) {
         connection = databaseServices.connect(dbName, user, passwd);
+        return connection;
+    }
+
+    @Override
+    public Connection connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd) {
+        connection = databaseServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
         return connection;
     }
 
@@ -116,14 +122,22 @@ public class TestDBImpl
      *
      */
     @Override
-    public void runJDBC() {
+    public void runJdbcDerby() {
         guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
             ships = readAllShips();
             createTable();
             populateTable();
             ships.clear();
-            ships.addAll(retrieveAll());
+            ships.addAll(retrieveAllShips());
             System.out.println(ships);
+        });
+    }
+
+    @Override
+    public void runJdbcMySql() {
+        guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
+            polygons = retrieveAllpolygons();
+            System.out.println(polygons);
         });
     }
 
@@ -176,7 +190,7 @@ public class TestDBImpl
                 preparedStatement.setString(6, ship.getLocalTime().toString());
                 preparedStatement.executeUpdate();
             } catch (SQLException ex) {
-                Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         });
     }
@@ -186,7 +200,7 @@ public class TestDBImpl
      *
      * @return
      */
-    public List<Ship> retrieveAll() {
+    public List<Ship> retrieveAllShips() {
         List<Ship> tmp = new ArrayList<>();
         try {
             ResultSet rs = statement.executeQuery(retrieveQuery);
@@ -199,7 +213,29 @@ public class TestDBImpl
                         LocalTime.parse(rs.getString("time"))));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return tmp;
+    }
+
+    public List<String> retrieveAllpolygons() {
+        List<String> tmp = new ArrayList<>();
+
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException ex) {
+            Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        try {
+            //ResultSet rs = statement.executeQuery("SELECT * FROM inpolygons;");
+            ResultSet rs = statement.executeQuery("SELECT polygon_id, name, AsText(polygon) FROM inpolygons;");
+            while (rs.next()) {
+                tmp.add(rs.getString(1));
+                tmp.add(rs.getString(2));
+                tmp.add(rs.getString(3));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return tmp;
     }
@@ -253,13 +289,14 @@ public class TestDBImpl
     List<Relationship> relationshipList;
 
     @Override
-    public GraphDatabaseService newEmbeddedDatabase(String dbName) {
-        return graphDatabaseComponentServices.newEmbeddedDatabase(dbName);
+    public Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd) {
+        connection = databaseServices.connect(hostName, protocol, port, driverName, userName, passwd);
+        return connection;
     }
 
     @Override
-    public void runNeo4J(String dbName) {
-        graphDb = newEmbeddedDatabase(dbName);
+    public void runEmbeddedNeo4J(String dbName) {
+        graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(dbName);
         ownerShip = new Ship();
         ownerShip.setName("Lithops");
         relationshipList = new ArrayList<>();
@@ -314,7 +351,7 @@ public class TestDBImpl
                 System.out.println(rows);
                 ignored.success();
             }
-*/
+             */
         }
     }
 

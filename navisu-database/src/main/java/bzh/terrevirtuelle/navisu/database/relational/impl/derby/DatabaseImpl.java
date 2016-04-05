@@ -8,11 +8,13 @@ package bzh.terrevirtuelle.navisu.database.relational.impl.derby;
 import bzh.terrevirtuelle.navisu.database.relational.Database;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
@@ -54,7 +56,7 @@ public class DatabaseImpl
             connection = DriverManager.getConnection(url, userName, passwd);
             statement = connection.createStatement();
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return connection;
     }
@@ -77,7 +79,32 @@ public class DatabaseImpl
         try {
             connection = DriverManager.getConnection(url);
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        return connection;
+    }
+
+    /**
+     * Cas particulier de Neo4J
+     *
+     * @param hostName
+     * @param protocol
+     * @param passwd
+     * @param port
+     * @param driverName
+     * @param userName
+     * @return
+     */
+    @Override
+    public Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd) {
+        try {
+            Class.forName(driverName);
+            String url = protocol + hostName + ":" + port + "/";
+            System.out.println("url "+ url);
+            connection = DriverManager.getConnection(url, userName, passwd);
+            System.out.println("connection "+ connection);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return connection;
     }
@@ -87,7 +114,7 @@ public class DatabaseImpl
         try {
             this.statement.execute(stmt);
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -97,7 +124,7 @@ public class DatabaseImpl
         try {
             r = this.statement.executeQuery(query);
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return r;
     }
@@ -107,7 +134,7 @@ public class DatabaseImpl
         try {
             preparedStatement = connection.prepareStatement(statement);
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return preparedStatement;
     }
@@ -117,7 +144,7 @@ public class DatabaseImpl
         try {
             statement.execute("CREATE INDEX " + indexName + " ON " + tableName + " USING GIST (" + columnName + ")");
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -126,7 +153,7 @@ public class DatabaseImpl
         try {
             statement.execute("DROP TABLE " + tableName);
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -143,7 +170,7 @@ public class DatabaseImpl
                 connection.close();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -165,4 +192,5 @@ public class DatabaseImpl
         }
         return entityManager;
     }
+
 }

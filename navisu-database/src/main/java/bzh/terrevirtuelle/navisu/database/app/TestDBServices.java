@@ -21,15 +21,19 @@ public interface TestDBServices
 
     Connection connect(String dbName, String user, String passwd);
 
-    GraphDatabaseService newEmbeddedDatabase(String dbName);
+    Connection connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd);
+
+    Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd);
 
     void close();
 
     DatabaseDriver getDriver();
 
-    void runJDBC();
+    void runJdbcDerby();
+
+    void runJdbcMySql();
 
     void runJPA();
 
-    void runNeo4J(String dbName);
+    void runEmbeddedNeo4J(String dbName);
 }
