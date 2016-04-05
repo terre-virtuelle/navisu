@@ -104,8 +104,6 @@ import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoEditorImp
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RoutePhotoViewerImpl;
 import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
 import bzh.terrevirtuelle.navisu.instruments.transponder.impl.TransponderImpl;
-import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
-import bzh.terrevirtuelle.navisu.ontology.data.impl.JenaDataAccessImpl;
 import bzh.terrevirtuelle.navisu.photos.exif.ExifComponentServices;
 import bzh.terrevirtuelle.navisu.photos.exif.impl.ExifComponentImpl;
 import bzh.terrevirtuelle.navisu.sedimentology.SedimentologyServices;
@@ -137,7 +135,7 @@ import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdCom
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.impl.NavigationCmdComponentImpl;
 import bzh.terrevirtuelle.navisu.sailingdirections.SailingDirectionsComponentServices;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
-
+import java.sql.Connection;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -179,7 +177,6 @@ public class AppMain extends Application {
                         ClocksImpl.class,
                         CompassImpl.class,
                         CurrentsImpl.class,
-                        JenaDataAccessImpl.class,
                         DataServerImpl.class,
                         DatabaseImpl.class,
                         DatabaseDriverManagerImpl.class,
@@ -247,7 +244,6 @@ public class AppMain extends Application {
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
 
-        DataAccessServices dataAccessServices = componentManager.getComponentService(DataAccessServices.class);
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
 
@@ -263,7 +259,7 @@ public class AppMain extends Application {
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
-        GraphDatabaseComponentServices graphDatabaseComponentServices=componentManager.getComponentService(GraphDatabaseComponentServices.class);
+        GraphDatabaseComponentServices graphDatabaseComponentServices = componentManager.getComponentService(GraphDatabaseComponentServices.class);
         GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
@@ -274,7 +270,7 @@ public class AppMain extends Application {
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
         LayersManagerServices layersManagerServices = componentManager.getComponentService(LayersManagerServices.class);
-        
+
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         MeasureToolsServices measureToolsServices = componentManager.getComponentService(MeasureToolsServices.class);
 
@@ -282,11 +278,11 @@ public class AppMain extends Application {
         NavigationServerServices navigationServerServices = componentManager.getComponentService(NavigationServerServices.class);
         NavigationCmdComponentServices navigationCmdComponentServices = componentManager.getComponentService(NavigationCmdComponentServices.class);
         navigationCmdComponentServices.init();
-       
+
         OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
         //optionsManagerServices.show();
 
-        ProjectionsComponentServices projectionsComponentServices=componentManager.getComponentService(ProjectionsComponentServices.class);
+        ProjectionsComponentServices projectionsComponentServices = componentManager.getComponentService(ProjectionsComponentServices.class);
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
         RouteDataEditorServices routeDataEditorServices = componentManager.getComponentService(RouteDataEditorServices.class);
         RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
@@ -303,7 +299,7 @@ public class AppMain extends Application {
         S57ChartComponentServices chartS57Services = componentManager.getComponentService(S57ChartComponentServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
-        TransponderServices transponderServices= componentManager.getComponentService(TransponderServices.class);
+        TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);
 
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
@@ -379,14 +375,13 @@ public class AppMain extends Application {
         // Initialisation des paramètres de diffusion des data.
         dataServerServices.init("localhost", 8585);
 
-        
-        
         /* Test connexion GPS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("/dev/ttyS1", 4800, 8, 1, 0);
         /* Test connexion Gpsd */
         //dataServerServices.openGpsd("sinagot.net", 2947);
+        // dataServerServices.openGpsd("sinagot.net", 5121);
         //dataServerServices.openGpsd("fridu.net", 2947);
         // dataServerServices.openGpsd("sinagot.net", 4002); 
         //dataServerServices.openGpsd("hd-sf.com", 9009);
@@ -416,7 +411,7 @@ public class AppMain extends Application {
         //gpsPlotterServices.on();
 
         /* Test Bezier, approxiamtion trajectoire */
-        /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
+ /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
          bezier2DServices.toKML("path.kml", data);
 
          List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
@@ -432,22 +427,25 @@ public class AppMain extends Application {
          bezier2DServices.toKML2("data/kml/", "testTgBezier.kml", vectorTg, "5014F0FF", "2");
          System.out.println(headings);*/
 
-        /* Test CPA zone et reconnaissance de trajectoire */
- // dataServerServices.openFile("data/ais/ais.txt");  //AIS
+ /* Test CPA zone et reconnaissance de trajectoire */
+        // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
         //dataServerServices.openGpsd("sinagot.net", 2947);
         //dataServerServices.openGpsd("fridu.net", 2947);
 
         /* Test DB */
         //testDBServices.connect("data/databases/TestJdbcDB", "navisu", "!!navisu??");
-        // testDBServices.runJDBC();//OK
-        
+        // testDBServices.runJdbcDerby();//OK
+        //String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd
+        // testDBServices.connect("inpolygons", "localhost", "jdbc:mysql://", "3306", "com.mysql.jdbc.Driver", "root", "lithops");
+        // testDBServices.runJdbcMySql();
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
         // testDBServices.runJPA();//OK
-        
         //Pas de connect() pour GraphDB, la DB est TestNeo4JDB dans data/databases
-        testDBServices.runNeo4J("data/databases/TestNeo4JDB");
-        
+        //  testDBServices.runEmbeddedNeo4J("data/databases/TestNeo4JDB");
+        // connectNeo4J(String hostName, String protocol, String port, String userName, String passwd)
+        // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
+        // System.out.println("con : " + con);
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         // speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
@@ -476,9 +474,9 @@ public class AppMain extends Application {
          }
          System.out.println(exif1);
          */
-        /* Test read Sparql file and creatio Avurnav object */
-        /* Have a look at  App in navisu-domain */
-        /*
+ /* Test read Sparql file and creatio Avurnav object */
+ /* Have a look at  App in navisu-domain */
+ /*
          String NAME = "requeteRdf";
          Sparql sparql = new Sparql();
          try {
@@ -490,8 +488,8 @@ public class AppMain extends Application {
          System.out.println(sparql);
          */
 
-        /* Test Navigation RA */
-         navigationServerServices.init(8787);
+ /* Test Navigation RA */
+        navigationServerServices.init(8787);
     }
 
     public static void main(String[] args) throws Exception {

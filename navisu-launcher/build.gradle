@@ -21,7 +21,6 @@ dependencies {
     compile project(':navisu-magnetic')
     compile project(':navisu-media')
     compile project(':navisu-navigation')
-    compile project(':navisu-ontology')
     compile project(':navisu-photos')
     compile project(':navisu-shapefiles')
     compile project(':navisu-sailingDirections')
