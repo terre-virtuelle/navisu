@@ -38,6 +38,7 @@ public class AISMessageFactory {
      * @return
      */
     static private AISMessageImpl getAISMessageWithinSpecification(Sixbit sb, VDMMessageProvenance provenance) {
+                
         int messageid = AISMessageImpl.getMessageID(sb);
         switch (messageid) {
             case 1:
@@ -199,7 +200,6 @@ public class AISMessageFactory {
         AISMessageImpl retval;
 
         int assumedMessageId = AISMessageImpl.getMessageID(sb);
-
         switch (assumedMessageId) {
             case 1: {
                 int diff = AIS01.differenceInBits(sb);
