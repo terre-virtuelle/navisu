@@ -5,7 +5,6 @@ dependencies {
     compile project(':navisu-app')
     compile project(':navisu-util')
     compile project(':navisu-topology')
-    compile project(':navisu-ontology')
     compile project(':navisu-kml')
     compile fileTree(dir: 'lib', include: '*.jar') 
 }

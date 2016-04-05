@@ -14,7 +14,6 @@ import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
@@ -68,9 +67,7 @@ public class S57ChartComponentImpl
     LayersManagerServices layersManagerServices;
     @UsedService
     S57GlobalCatalogServices s57GlobalCatalogServices;
-    @UsedService
-    DataAccessServices dataAccessServices;
-    
+
     ComponentManager cm;
     ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
 
@@ -172,7 +169,6 @@ public class S57ChartComponentImpl
             s57ChartComponentController = S57ChartComponentController.getInstance();
             if (first == true) {
                 first = false;
-                s57ChartComponentController.setDataAccessServices(dataAccessServices);
                 s57ChartComponentController.setTransponderActivateEvent(transponderActivateEvent);
                 s57ChartComponentController.setLayersManagerServices(layersManagerServices);
                 s57ChartComponentController.setGeoViewServices(geoViewServices);

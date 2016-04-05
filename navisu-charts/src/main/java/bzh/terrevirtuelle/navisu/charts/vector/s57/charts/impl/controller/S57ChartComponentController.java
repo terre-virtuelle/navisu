@@ -49,7 +49,6 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.COLOR_NAME;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Light;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.ontology.data.DataAccessServices;
 import bzh.terrevirtuelle.navisu.widgets.surveyZone.controller.SurveyZoneController;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.WorldWind;
@@ -102,7 +101,6 @@ public class S57ChartComponentController {
     ComponentManager cm;
     ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
 
-    private DataAccessServices dataAccessServices;
     private LayersManagerServices layersManagerServices;
     private GeoViewServices geoViewServices;
     private GuiAgentServices guiAgentServices;
@@ -149,7 +147,7 @@ public class S57ChartComponentController {
         coastalSurfacePolylinesList = new ArrayList<>();
         System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
-        addImageListeners();
+       // addImageListeners();//Test recuparation d'une image sur clic
     }
 
     public void subscribe() {
@@ -529,6 +527,8 @@ public class S57ChartComponentController {
     }
 
     private void showImage(PointPlacemark pointPlacemark) {
+        //Test recuperation de l'image d'un landmark
+        /*
         String label = ((PointPlacemark) pointPlacemark).getLabelText();
         if (label != null && !"".equals(label)) {
             // Image image = dataAccessServices.queryImage(label);
@@ -554,8 +554,11 @@ public class S57ChartComponentController {
                     RenderableLayer l = getLayer("BUOYAGE");
                     l.addRenderable(placemark);
                 }
+
             }
+
         }
+         */
     }
 
     public Set<S57Controller> getS57Controllers() {
@@ -564,10 +567,6 @@ public class S57ChartComponentController {
 
     public void setTransponderActivateEvent(ComponentEventSubscribe<TransponderActivateEvent> aisActivateES) {
         this.transponderActivateEvent = aisActivateES;
-    }
-
-    public void setDataAccessServices(DataAccessServices dataAccessServices) {
-        this.dataAccessServices = dataAccessServices;
     }
 
     public void setGeoViewServices(GeoViewServices geoViewServices) {
