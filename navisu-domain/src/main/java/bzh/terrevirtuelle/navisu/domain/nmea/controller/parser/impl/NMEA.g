@@ -284,7 +284,7 @@ entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT
 		|VDM|TXT|ALR
 		//GPSD
 		|GPSD_AIS
-		//|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH
+		|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH|GPSD_ERROR
 		//PRO
 		|PRO)+;
 
@@ -1317,6 +1317,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"scaled":' scaled=LETTERS SEP
     	//Type 1 ou 2 ou 3
     	('"status":' status=NUMBER SEP 
+    	 '"status_text":' status_text=NAME SEP
     	 '"turn":' turn=SIGNED SEP 
     	 '"speed":' speed=NUMBER SEP 
     	 '"accuracy":' accuracy=LETTERS SEP
@@ -1325,7 +1326,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	 '"course":' course=NUMBER SEP
     	 '"heading":' heading=NUMBER SEP
     	 '"second":' second=NUMBER SEP 
-    	 '"maneuver":' maneuvrer=NUMBER SEP 
+    	 '"maneuver":' maneuver=NUMBER SEP 
     	 '"raim":' raim=LETTERS SEP 
     	 '"radio":' radio=NUMBER
     	 '}'
@@ -1345,6 +1346,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"callsign":'  callsign=NAME  SEP
     	'"shipname":' shipname=NAME SEP
     	'"shiptype":' shiptype=NUMBER SEP
+    	'"shiptype_text":' shiptype_text=NAME SEP
     	'"to_bow":' to_bow=NUMBER SEP
     	'"to_stern":' to_stern=NUMBER SEP
     	'"to_port":' to_port=NUMBER SEP
@@ -1450,12 +1452,13 @@ GPSD_AIS : '{"class":"AIS"' SEP
                         ais01.setCourseOverGround(new Float(course.getText()).intValue());
                         ais01.setSpeedOverGround(new Float(speed.getText()).intValue());
                         ais01.setNavigationalStatus(new Integer(status.getText()));
+                        ais01.setNavigationalStatusText(status_text.getText());
                         ais01.setTrueHeading(new Integer(heading.getText()));
                         ais01.setLatitude(degConvert(new Float(latitude.getText())));
                         ais01.setLongitude(degConvert(new Float(longitude.getText())));
                         ais01.setMmsi(new Integer(mmsi.getText()));
                         ais01.setDevice(dev.getText()); 
-                        ais01.setSpecialManoeuvreIndicator(new Integer(maneuvrer.getText()));
+                        ais01.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
                         ais01.setRaimFlag(Boolean.getBoolean(raim.getText())); 
                         ais01.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
              // System.out.println(ais01);                                    
@@ -1472,12 +1475,13 @@ GPSD_AIS : '{"class":"AIS"' SEP
                         ais02.setCourseOverGround(new Float(course.getText()).intValue());  
                         ais02.setSpeedOverGround(new Float(speed.getText()).intValue());
                         ais02.setNavigationalStatus(new Integer(status.getText()));
+                        ais02.setNavigationalStatusText(status_text.getText());
                         ais02.setTrueHeading(new Integer(heading.getText()));
                         ais02.setLatitude(degConvert(new Float(latitude.getText())));
                         ais02.setLongitude(degConvert(new Float(longitude.getText())));
                         ais02.setMmsi(new Integer(mmsi.getText()));
                         ais02.setDevice(dev.getText());
-                        ais02.setSpecialManoeuvreIndicator(new Integer(maneuvrer.getText()));
+                        ais02.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
                         ais02.setRaimFlag(Boolean.getBoolean(raim.getText())); 
                         ais02.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
             handler.doIt(ais02);
@@ -1491,12 +1495,13 @@ GPSD_AIS : '{"class":"AIS"' SEP
                         ais03.setCourseOverGround(new Float(course.getText()).intValue());
                         ais03.setSpeedOverGround(new Float(speed.getText()).intValue());
                         ais03.setNavigationalStatus(new Integer(status.getText()));
+                        ais03.setNavigationalStatusText(status_text.getText());
                         ais03.setTrueHeading(new Integer(heading.getText()));
                         ais03.setLatitude(degConvert(new Float(latitude.getText())));
                         ais03.setLongitude(degConvert(new Float(longitude.getText())));
                         ais03.setMmsi(new Integer(mmsi.getText()));
                         ais03.setDevice(dev.getText());
-                        ais03.setSpecialManoeuvreIndicator(new Integer(maneuvrer.getText()));
+                        ais03.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
                         ais03.setRaimFlag(Boolean.getBoolean(raim.getText())); 
                         ais03.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
             handler.doIt(ais03);
@@ -1577,7 +1582,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
             
             handler.doIt(ais18);
            */ 
-           System.out.println("ais18" + getText()); 
+          // System.out.println("ais18" + getText()); 
                                  
           }
           
@@ -1601,7 +1606,7 @@ GPSD_DEVICES
     	;
 GPSD_VERSION
     	:	
-    	'{''"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#'|  SEP | NUMBER | SIGN | LETTERS)*
     	{
 	//System.out.println("GPSD VERSION sentence : " + getText());
 	}
@@ -1613,7 +1618,13 @@ GPSD_WATCH
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
     	;      	
-    	
+ GPSD_ERROR 
+ 	:		
+    	'{''"class":"ERROR"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  '\'' | SEP | NUMBER | SIGN | LETTERS)*
+    	{
+	//System.out.println("GPSD WATCH sentence : " + getText());
+	}
+    	;   	
  /*   		
 PGN
     	:	
@@ -1741,7 +1752,7 @@ CHECKSUM : (('*'('0'..'9')('0'..'9')) |
  	| '(' | ')' | '&' | '\^'| '_' | '{' | '}' | '$' | '\;'
  	| '<' | '>' | '\*')* '"'
  	;
- LETTERS : (('A'..'Z')|('a'..'z')|' ')+
+ LETTERS : (('A'..'Z')|('a'..'z')|' '|'~')+
          ;// {System.out.println(getText());};        
 
 	         

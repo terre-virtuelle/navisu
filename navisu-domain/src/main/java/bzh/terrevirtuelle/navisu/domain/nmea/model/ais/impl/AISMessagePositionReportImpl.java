@@ -79,6 +79,28 @@ abstract class AISMessagePositionReportImpl
      */
     @XmlElement(name = "ns")
     private int navigationalStatus;
+    
+    @XmlElement(name = "nst")
+    private String navigationalStatusText;
+
+    /**
+     * Get the value of navigationalStatusText
+     *
+     * @return the value of navigationalStatusText
+     */
+    public String getNavigationalStatusText() {
+        return navigationalStatusText;
+    }
+
+    /**
+     * Set the value of navigationalStatusText
+     *
+     * @param navigationalStatusText new value of navigationalStatusText
+     */
+    public void setNavigationalStatusText(String navigationalStatusText) {
+        this.navigationalStatusText = navigationalStatusText;
+    }
+
 
     /**
      * Returns the navigational status. This can be further analyzed using
@@ -574,6 +596,7 @@ abstract class AISMessagePositionReportImpl
         String result = super.toString();
 
         result += SEPARATOR + UtilsNavStatus.toString(navigationalStatus);
+        result += SEPARATOR + navigationalStatusText;
         result += SEPARATOR + UtilsRateOfTurn8.toString(rateOfTurn);
         result += SEPARATOR + getSpeedOverGroundString();
         result += SEPARATOR + (positionAccuracy ? "high" : "low") + " accuracy";
