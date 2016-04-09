@@ -29,6 +29,7 @@ public class NetReaderImpl
                     socket.dataHandler((Buffer buffer) -> {
                         String source = buffer.toString().trim();
                         System.out.println(source);
+                        
                         if ((source.startsWith("{") && source.endsWith("}")) // Gpsd well formatted
                                 || source.startsWith("!") // AIS
                                 || source.startsWith("$") // NMEA0183
@@ -38,6 +39,7 @@ public class NetReaderImpl
                                 //System.out.println("source "+ source);
                             }
                         }
+
                     });
                     socket.write(new Buffer("?WATCH={\"enable\":true,\"json\":true};"));
                 }
