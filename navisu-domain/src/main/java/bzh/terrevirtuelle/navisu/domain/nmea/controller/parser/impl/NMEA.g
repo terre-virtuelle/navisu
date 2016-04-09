@@ -1337,6 +1337,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"lon":' longitude=SIGNED SEP 
     	'"lat":' latitude=SIGNED SEP
     	'"epfd":' epfd=NUMBER SEP 
+    	'"epfd_text":' epfd_text=NAME SEP
     	'"raim":' raim=LETTERS SEP 
     	'"radio":' radio=NUMBER
     	|
@@ -1352,6 +1353,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"to_port":' to_port=NUMBER SEP
     	'"to_starboard":' to_starboard=NUMBER SEP
     	'"epfd":' epfd=NUMBER SEP
+    	'"epfd_text":' epfd_text=NAME SEP
     	'"eta":' eta=TIME_STAMP SEP
     	'"draught":' draught=NUMBER SEP
     	'"destination":'  destination=NAME  SEP 
@@ -1433,7 +1435,10 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	//Type 24
     	'"shipname":' shipname=NAME  SEP
     	'"shiptype":' shiptype=NUMBER SEP
+    	'"shiptype_text":' shiptype_text=NAME SEP
     	'"vendorid":' vendorid=NAME SEP
+    	'"model":' model=NUMBER SEP
+    	'"serial":' model=NUMBER SEP
     	'"callsign":'  callsign=NAME  SEP
     	'"to_bow":' to_bow=NUMBER SEP
     	'"to_stern":' to_stern=NUMBER SEP
