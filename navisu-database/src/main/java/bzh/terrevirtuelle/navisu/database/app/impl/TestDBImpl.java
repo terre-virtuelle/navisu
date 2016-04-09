@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +25,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -133,14 +131,6 @@ public class TestDBImpl
         });
     }
 
-    @Override
-    public void runJdbcMySql() {
-        guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
-            polygons = retrieveAllpolygons();
-            System.out.println(polygons);
-        });
-    }
-
     /**
      * Execute a query.
      *
@@ -216,6 +206,14 @@ public class TestDBImpl
             Logger.getLogger(TestDBImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return tmp;
+    }
+
+    @Override
+    public void runJdbcMySql() {
+        guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
+            polygons = retrieveAllpolygons();
+            System.out.println(polygons);
+        });
     }
 
     public List<String> retrieveAllpolygons() {
