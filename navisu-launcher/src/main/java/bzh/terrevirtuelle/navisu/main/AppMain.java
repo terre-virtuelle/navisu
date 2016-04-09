@@ -379,8 +379,9 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("/dev/ttyS1", 4800, 8, 1, 0);
+        
         /* Test connexion Gpsd */
-        //dataServerServices.openGpsd("sinagot.net", 2947);
+        dataServerServices.openGpsd("sinagot.net", 2947);
         // dataServerServices.openGpsd("sinagot.net", 5121);
         //dataServerServices.openGpsd("fridu.net", 2947);
         // dataServerServices.openGpsd("sinagot.net", 4002); 
@@ -388,6 +389,7 @@ public class AppMain extends Application {
         // A tester, ref OCPN
         //tcp://sinagot.net:4002 NMEA/GPRMC
         //tcp://sinagot.net:4003 AIS
+        
         /* Test lecture fichier */
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/nmea/Route.nmea"); //NMEA0183 //gps.txt //gpsLostennic.txt
@@ -395,8 +397,10 @@ public class AppMain extends Application {
         //dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
+        
         /* Test serveur Web Http */
         // dataServerServices.openHttpServer("localhost", 8181);
+        
         /* Instanciation d'un client */
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
@@ -441,11 +445,18 @@ public class AppMain extends Application {
         // testDBServices.runJdbcMySql();
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
         // testDBServices.runJPA();//OK
-        //Pas de connect() pour GraphDB, la DB est TestNeo4JDB dans data/databases
-        //  testDBServices.runEmbeddedNeo4J("data/databases/TestNeo4JDB");
-        // connectNeo4J(String hostName, String protocol, String port, String userName, String passwd)
+        
+        // Tests Neo4J
+        // Neo4J embedded
+        // Pas de connect() pour GraphDB, la DB est TestNeo4JDB dans data/databases
+        // testDBServices.runEmbeddedNeo4J("data/databases/TestNeo4JDB");
+
+        // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
+        
+        
+        
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         // speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
@@ -474,19 +485,7 @@ public class AppMain extends Application {
          }
          System.out.println(exif1);
          */
- /* Test read Sparql file and creatio Avurnav object */
- /* Have a look at  App in navisu-domain */
- /*
-         String NAME = "requeteRdf";
-         Sparql sparql = new Sparql();
-         try {
-         sparql = ImportExportXML.imports(sparql, new File("data/rdf/" + NAME + ".rdf"));
-         } catch (JAXBException | FileNotFoundException ex) {
-         Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
-         System.out.println("ex " + ex);
-         }
-         System.out.println(sparql);
-         */
+ 
 
  /* Test Navigation RA */
         navigationServerServices.init(8787);
