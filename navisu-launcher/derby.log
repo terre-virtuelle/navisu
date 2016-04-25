@@ -1,19 +1,6 @@
 ----------------------------------------------------------------
-Sun Mar 27 14:59:12 CEST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-0153-b828-26cd-00000c720a00 
-on database directory /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-launcher/data/databases/TestJdbcDB with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
-Loaded from file:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-database/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_65-b17
-user.dir=/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-launcher
-os.name=Linux
-os.arch=amd64
-os.version=4.2.0-34-generic
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-Sun Mar 27 14:59:23 CEST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance ce8780ad-0153-b828-26cd-00000c720a00 
+Mon Apr 25 10:23:04 CEST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-0154-4c83-c3e3-000009823648 
 on database directory /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-launcher/data/databases/NavisuDB with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
 Loaded from file:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-database/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -21,6 +8,6 @@ java.runtime.version=1.8.0_65-b17
 user.dir=/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-launcher
 os.name=Linux
 os.arch=amd64
-os.version=4.2.0-34-generic
+os.version=4.2.0-35-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

@@ -135,7 +135,10 @@ import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdCom
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.impl.NavigationCmdComponentImpl;
 import bzh.terrevirtuelle.navisu.sailingdirections.SailingDirectionsComponentServices;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
-import java.sql.Connection;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -159,6 +162,11 @@ public class AppMain extends Application {
         Translator.setLang(I18nLangEnum.FRENCH);
 
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
+
+        Path userHomePath = Paths.get(System.getProperty("user.home")+"/.navisu");
+        if (!Files.exists(userHomePath, LinkOption.NOFOLLOW_LINKS)) {
+            Files.createDirectory(userHomePath);
+        }
 
         final ComponentManager componentManager = ComponentManager.componentManager;
         /* Deploy components */
@@ -379,17 +387,21 @@ public class AppMain extends Application {
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("/dev/ttyS1", 4800, 8, 1, 0);
-        
         /* Test connexion Gpsd */
-        dataServerServices.openGpsd("sinagot.net", 2947);
+ /*
+        Fulup 12 avril 2016
+        Pour info, le service de simulation AIS de Sinagot.net est toujours dispo 
+        mais les ports ont changés.
+        - tcp://sinagot.net:5001 Simulateur AIS+NMEA
+        - tcp://sinagot.net:5002 Simulateur NMEA
+        - tcp://sinagot.net:5003 Simulateur AIS
+        - gpsd://sinagot.net:2947 AIS zone Bretagne 
+         */
+        dataServerServices.openGpsd("sinagot.net", 2947);//Bretagne AIS Fulup
+        // dataServerServices.openGpsd("sinagot.net", 5003);
         // dataServerServices.openGpsd("sinagot.net", 5121);
-        //dataServerServices.openGpsd("fridu.net", 2947);
-        // dataServerServices.openGpsd("sinagot.net", 4002); 
         //dataServerServices.openGpsd("hd-sf.com", 9009);
-        // A tester, ref OCPN
-        //tcp://sinagot.net:4002 NMEA/GPRMC
-        //tcp://sinagot.net:4003 AIS
-        
+
         /* Test lecture fichier */
         //dataServerServices.openFile("data/ais/ais.txt");  //AIS
         // dataServerServices.openFile("data/nmea/Route.nmea"); //NMEA0183 //gps.txt //gpsLostennic.txt
@@ -397,19 +409,16 @@ public class AppMain extends Application {
         //dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
         //dataServerServices.openFile("data/n2k/out1.json");//N2K
         //dataServerServices.openFile("data/n2k/sample.json");//N2K
-        
         /* Test serveur Web Http */
         // dataServerServices.openHttpServer("localhost", 8181);
-        
         /* Instanciation d'un client */
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
 
         /* Test clients à l'écoute des événements Nmea */
         aisServices.on();
-        //aisLoggerServices.on();
+        //  aisLoggerServices.on();
         aisPlotterServices.on();
-        //gpsTrackPolygonServices.on();
         //aisRadarServices.on();
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
@@ -445,18 +454,13 @@ public class AppMain extends Application {
         // testDBServices.runJdbcMySql();
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
         // testDBServices.runJPA();//OK
-        
         // Tests Neo4J
         // Neo4J embedded
         // Pas de connect() pour GraphDB, la DB est TestNeo4JDB dans data/databases
         // testDBServices.runEmbeddedNeo4J("data/databases/TestNeo4JDB");
-
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
-        
-        
-        
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         // speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
@@ -485,8 +489,6 @@ public class AppMain extends Application {
          }
          System.out.println(exif1);
          */
- 
-
  /* Test Navigation RA */
         navigationServerServices.init(8787);
     }

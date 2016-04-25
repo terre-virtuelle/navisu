@@ -12,7 +12,7 @@
             <property name="javax.persistence.jdbc.url"    value="jdbc:derby:data/databases/NavisuDB;create=true" />
             <property name="javax.persistence.jdbc.user" value="navisu" />
             <property name="javax.persistence.jdbc.password" value="!!navisu??" />
-            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
         </properties>
     </persistence-unit>
 </persistence>
