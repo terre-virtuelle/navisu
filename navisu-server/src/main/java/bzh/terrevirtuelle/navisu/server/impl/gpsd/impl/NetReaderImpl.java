@@ -28,8 +28,7 @@ public class NetReaderImpl
                     NetSocket socket = asyncResult.result();
                     socket.dataHandler((Buffer buffer) -> {
                         String source = buffer.toString().trim();
-                        System.out.println(source);
-                        
+                        //System.out.println(source);
                         if ((source.startsWith("{") && source.endsWith("}")) // Gpsd well formatted
                                 || source.startsWith("!") // AIS
                                 || source.startsWith("$") // NMEA0183
