@@ -7,18 +7,30 @@ package bzh.terrevirtuelle.navisu.database.relational.impl.derby;
 
 import bzh.terrevirtuelle.navisu.database.relational.Database;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.spi.PersistenceUnitTransactionType;
 import org.capcaval.c3.component.ComponentState;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
+import static org.eclipse.persistence.config.PersistenceUnitProperties.JDBC_DRIVER;
+import static org.eclipse.persistence.config.PersistenceUnitProperties.JDBC_PASSWORD;
+import static org.eclipse.persistence.config.PersistenceUnitProperties.JDBC_URL;
+import static org.eclipse.persistence.config.PersistenceUnitProperties.JDBC_USER;
+import static org.eclipse.persistence.config.PersistenceUnitProperties.TRANSACTION_TYPE;
 
 /**
  * @date 13 mars 2015
@@ -32,6 +44,9 @@ public class DatabaseImpl
     private Connection connection;
     private EntityManager entityManager = null;
     private final String PERSISTENCE_UNIT = "navisuPU";
+    private final String DB_HOME = ".navisu/databases/";
+    private String userHome;
+    private final String NAVISU_DB = "NaVisuDB";
 
     @Override
     public void componentInitiated() {
@@ -98,9 +113,9 @@ public class DatabaseImpl
         try {
             Class.forName(driverName);
             String url = protocol + hostName + ":" + port + "/";
-            System.out.println("url "+ url);
+            System.out.println("url " + url);
             connection = DriverManager.getConnection(url, userName, passwd);
-            System.out.println("connection "+ connection);
+            System.out.println("connection " + connection);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
@@ -170,6 +185,12 @@ public class DatabaseImpl
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        try {
+            Files.deleteIfExists(Paths.get(userHome + "/" + DB_HOME + NAVISU_DB + "/dbex.lck"));
+            Files.deleteIfExists(Paths.get(userHome + "/" + DB_HOME + NAVISU_DB + "/db.lck"));
+        } catch (IOException ex) {
+            Logger.getLogger(DatabaseImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     @Override
@@ -184,8 +205,27 @@ public class DatabaseImpl
 
     @Override
     public EntityManager getEntityManager() {
+
         if (entityManager == null) {
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+            userHome = System.getProperty("user.home");
+            Map propertiesMap = new HashMap();
+
+            // Ensure RESOURCE_LOCAL transactions is used.
+            propertiesMap.put(TRANSACTION_TYPE, PersistenceUnitTransactionType.RESOURCE_LOCAL.name());
+
+            // Configure the internal EclipseLink connection pool
+            propertiesMap.put(JDBC_DRIVER, "org.apache.derby.jdbc.EmbeddedDriver");
+            // propertiesMap.put(JDBC_URL, "jdbc:derby:/home/serge/.navisu/databases/NaVisuDB;create=true");
+            propertiesMap.put(JDBC_URL, "jdbc:derby:" + userHome + "/" + DB_HOME + NAVISU_DB + ";create=true");
+            propertiesMap.put(JDBC_USER, "navisu");
+            propertiesMap.put(JDBC_PASSWORD, "navisu");
+
+            // Developpement conf
+            //propertiesMap.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.DROP_AND_CREATE);
+            // Production conf
+            propertiesMap.put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_ONLY);
+
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT, propertiesMap);
             entityManager = emf.createEntityManager();
         }
         return entityManager;

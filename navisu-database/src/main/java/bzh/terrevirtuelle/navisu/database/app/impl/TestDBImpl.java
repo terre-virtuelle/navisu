@@ -62,7 +62,7 @@ public class TestDBImpl
     private Connection connection;
     private Statement statement;
     private PreparedStatement preparedStatement;
-    private final static String createTableShip = "CREATE TABLE SHIP("
+    private final static String CREATE_TABLE_SHIP = "CREATE TABLE SHIP("
             + "mmsi        INT NOT NULL PRIMARY KEY,"
             + "shipName    VARCHAR(128),"
             + "latitude    DOUBLE,"
@@ -135,6 +135,7 @@ public class TestDBImpl
      * Execute a query.
      *
      * @param query The query to execute
+     * @throws java.sql.SQLException
      */
     public void executeCommand(String query) throws SQLException {
         statement = connection.createStatement();
@@ -147,14 +148,14 @@ public class TestDBImpl
     public void createTable() {
         try {
             System.out.println("Creating table : " + SHIP);
-            executeCommand(createTableShip);
+            executeCommand(CREATE_TABLE_SHIP);
         } catch (SQLException e) {
             try {
                 System.out.println(SHIP + " already exists : " + e);
                 System.out.println("Drop table : " + SHIP);
                 executeCommand("DROP TABLE " + SHIP);
                 System.out.println("Creating table : " + SHIP);
-                executeCommand(createTableShip);
+                executeCommand(CREATE_TABLE_SHIP);
             } catch (SQLException f) {
                 System.out.println("Error DROP TABLE :" + f);
             }
@@ -246,6 +247,7 @@ public class TestDBImpl
     @Override
     public void runJPA() {
         em = databaseServices.getEntityManager();
+        
         guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
             ships = readAllShips();
             persistAllShips();
