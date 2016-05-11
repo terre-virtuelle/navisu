@@ -38,10 +38,13 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 
 
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 /**
  * NaVisu
@@ -128,14 +131,17 @@ public class GuiAgentImpl
          // this.menuServices.setMenuComponent(ctrl.menuBar);
          // this.initializeMenuItems(this.menuServices);
         stage.setTitle(TITLE);
+        /*
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application");
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
+        */
         stage.setScene(scene);
        // stage.setFullScreen(true);
         stage.show();
+
 
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
         stage1 = new Stage();

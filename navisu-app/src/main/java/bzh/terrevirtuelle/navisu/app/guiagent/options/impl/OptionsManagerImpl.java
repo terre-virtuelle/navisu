@@ -52,7 +52,7 @@ public class OptionsManagerImpl
 
     @Override
     public void componentStopped() {
-        LOGGER.info("Options Component Stopped");
+      //  LOGGER.info("Options Component Stopped");
         this.stage.close();
     }
 
