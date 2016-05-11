@@ -75,9 +75,7 @@ import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.GpsTrackPlotterServices;
-import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.impl.GpsTrackPlotterImpl;
-import bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.GpsTrackPolygonServices;
-import bzh.terrevirtuelle.navisu.instruments.gps.track.polygon.impl.GpsTrackPolygonImpl;
+//import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.impl.GpsTrackPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.impl.GpsTrackImpl;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.MeasureToolsServices;
@@ -129,6 +127,7 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
 import bzh.terrevirtuelle.navisu.database.graph.neo4J.impl.GraphDatabaseComponentImpl;
+import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.impl.GpsTrackPlotterImpl;
 import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.navigation.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
@@ -158,14 +157,19 @@ public class AppMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        
+        
+        
         Translator.setLang(I18nLangEnum.FRENCH);
 
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
 
-        Path userHomePath = Paths.get(System.getProperty("user.home")+"/.navisu");
-        if (!Files.exists(userHomePath, LinkOption.NOFOLLOW_LINKS)) {
-            Files.createDirectory(userHomePath);
+        String navisuHome = System.getProperty("user.home") + "/.navisu";
+        Path navisuHomePath = Paths.get(navisuHome);
+        if (!Files.exists(navisuHomePath, LinkOption.NOFOLLOW_LINKS)) {
+            Files.createDirectory(navisuHomePath);
+            Files.createDirectory(Paths.get(navisuHome + "/databases/"));
+            Files.createDirectory(Paths.get(navisuHome + "/properties/"));
         }
 
         final ComponentManager componentManager = ComponentManager.componentManager;
@@ -197,7 +201,6 @@ public class AppMain extends Application {
                         GpsLoggerImpl.class,
                         GpsTrackImpl.class,
                         GpsTrackPlotterImpl.class,
-                        GpsTrackPolygonImpl.class,
                         GpsPlotterImpl.class,
                         GpsPlotterWithRouteImpl.class,
                         GpxObjectImpl.class,
@@ -263,7 +266,6 @@ public class AppMain extends Application {
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
         GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
-        GpsTrackPolygonServices gpsTrackPolygonServices = componentManager.getComponentService(GpsTrackPolygonServices.class);
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
@@ -350,7 +352,6 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterWithRouteServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(gpsTrackPolygonServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(projectionsComponentServices.getDriver());
@@ -453,7 +454,8 @@ public class AppMain extends Application {
         // testDBServices.connect("inpolygons", "localhost", "jdbc:mysql://", "3306", "com.mysql.jdbc.Driver", "root", "lithops");
         // testDBServices.runJdbcMySql();
         //Pas de connect() pour JPA, la DB est NavisuDB dans data/databases
-        // testDBServices.runJPA();//OK
+        //Modifier le mode ddl classe DatabaseImpl avant le test
+        //testDBServices.runJPA();//OK
         // Tests Neo4J
         // Neo4J embedded
         // Pas de connect() pour GraphDB, la DB est TestNeo4JDB dans data/databases
@@ -489,8 +491,21 @@ public class AppMain extends Application {
          }
          System.out.println(exif1);
          */
- /* Test Navigation RA */
+        
+        /* Test Navigation RA Communication with external client 
+        */
         navigationServerServices.init(8787);
+        
+        /* Stop Applicaton */
+        stage.setOnCloseRequest(e -> {
+            LOGGER.info("Stop Application.........");
+            LOGGER.info("Databases closed");
+            databaseServices.close();
+            LOGGER.info("Components Stopped");
+            ComponentManager.componentManager.stopApplication();
+            LOGGER.info("System exit");
+            System.exit(0);
+        });
     }
 
     public static void main(String[] args) throws Exception {

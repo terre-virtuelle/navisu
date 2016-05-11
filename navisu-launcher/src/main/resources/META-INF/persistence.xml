@@ -7,12 +7,5 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>bzh.terrevirtuelle.navisu.domain.ship.model.Ship</class> 
         <class>bzh.terrevirtuelle.navisu.domain.ship.model.LocalDateTimePersistenceConverter</class>     
-        <properties>
-            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
-            <property name="javax.persistence.jdbc.url"    value="jdbc:derby:data/databases/NavisuDB;create=true" />
-            <property name="javax.persistence.jdbc.user" value="navisu" />
-            <property name="javax.persistence.jdbc.password" value="!!navisu??" />
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
-        </properties>
     </persistence-unit>
 </persistence>
