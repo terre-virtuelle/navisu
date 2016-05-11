@@ -17,6 +17,7 @@ import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
+import bzh.terrevirtuelle.navisu.sailingdirections.view.Poimark;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 //import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 //import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
@@ -25,6 +26,7 @@ import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
@@ -132,6 +134,8 @@ public class SailingDirectionsViewerComponentController
         sailingDirectionsPgonLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_1);
         sailingDirectionsPgonLayer.setPickEnabled(false);
         sailingDirectionsIconsLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_0);
+
+        addListeners();
     }
 
     @Override
@@ -173,9 +177,10 @@ public class SailingDirectionsViewerComponentController
 
     public Set<Pair<Double, Double>> showPoi(Map<Pair<Double, Double>, String> data) {
         Set<Pair<Double, Double>> latLonSet = data.keySet();
-
+        /*
         latLonSet.stream().map((ll) -> {
             String imageAddress = NavigationIcons.ICONS.get(ICON_NAME);
+           
             PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(ll.getX(), ll.getY(), 0));
             placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
             placemark.setValue(AVKey.DISPLAY_NAME, data.get(ll));
@@ -187,6 +192,32 @@ public class SailingDirectionsViewerComponentController
         }).forEach((placemark) -> {
             sailingDirectionsIconsLayer.addRenderable(placemark);
         });
+         */
+        latLonSet.stream().map((ll) -> {
+            String imageAddress = NavigationIcons.ICONS.get(ICON_NAME);
+
+            Poimark poimark = new Poimark(Position.fromDegrees(ll.getX(), ll.getY(), 0));
+            poimark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+            poimark.setValue(AVKey.DISPLAY_NAME, data.get(ll));
+            PointPlacemarkAttributes normalAttributes = new PointPlacemarkAttributes();
+            normalAttributes.setImageAddress(imageAddress);
+            normalAttributes.setScale(0.4);
+            poimark.setAttributes(normalAttributes);
+            return poimark;
+        }).forEach((placemark) -> {
+            sailingDirectionsIconsLayer.addRenderable(placemark);
+        });
         return latLonSet;
+    }
+
+    private void addListeners() {
+        wwd.addSelectListener((SelectEvent event) -> {
+            Object o = event.getTopObject();
+            if (event.isLeftClick() && o != null) {
+                if (o.getClass() == Poimark.class) {
+                    System.out.println("Action");
+                }
+            }
+        });
     }
 }
