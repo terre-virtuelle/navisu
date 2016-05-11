@@ -33,7 +33,7 @@ public interface AisServices
 
     Map<Integer, String> getMidMap();
 
-    void aisCreateTargetEvent(Ship ship);
+  //  void aisCreateTargetEvent(Ship ship);
 
-    void aisUpdateTargetEvent(Ship ship);
+  //  void aisUpdateTargetEvent(Ship ship);
 }

@@ -7,11 +7,13 @@
 package bzh.terrevirtuelle.navisu.instruments.ais.base.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS01Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS02Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS03Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS04Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS05Event;
+import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS01;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS02;
@@ -38,6 +40,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -45,6 +48,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.component.ComponentState;
@@ -62,6 +67,10 @@ public class AisImpl
     @UsedService
     InstrumentDriverManagerServices instrumentDriverManagerServices;
     @UsedService
+    DatabaseServices databaseServices;
+    @UsedService
+    GuiAgentServices guiAgentServices;
+    @UsedService
     SpeakerServices speakerServices;
 
     @ProducedEvent
@@ -77,10 +86,14 @@ public class AisImpl
     @ProducedEvent
     protected AisDeleteStationEvent aisDeleteStationEvent;
 
+    private EntityManager entityManager;
+    private Query query;
+
     protected boolean on = false;
     protected Ship ship;
     protected BaseStation station;
     protected HashMap<Integer, Ship> ships;
+    protected HashMap<Integer, Ship> shipEntityMap;
     protected HashMap<Integer, BaseStation> stations;
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
@@ -113,6 +126,9 @@ public class AisImpl
         ais4ES = cm.getComponentEventSubscribe(AIS04Event.class);
         ais5ES = cm.getComponentEventSubscribe(AIS05Event.class);
 
+        entityManager = databaseServices.getEntityManager();
+        shipEntityMap = new HashMap<>();
+
         ships = new HashMap<>();
         stations = new HashMap<>();
         midMap = new HashMap<>();
@@ -131,6 +147,16 @@ public class AisImpl
     @Override
     public void on() {
         on = true;
+        //Update ships from database
+        Collection<Ship> col = findAllShips();
+        if (col != null) {
+            guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
+                col.stream().forEach((s) -> {
+                    shipEntityMap.put(s.getMMSI(), s);
+                });
+            });
+        }
+
         ais1ES.subscribe(new AIS01Event() {
 
             @Override
@@ -146,6 +172,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    ship.setName(getNameOfShip(mmsi));
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -157,7 +184,7 @@ public class AisImpl
                     ship.setLatitude(ais.getLatitude());
                     ship.setLongitude(ais.getLongitude());
                     ship.setNavigationalStatus(ais.getNavigationalStatus());
-                    aisUpdateTargetEvent.notifyAisMessageChanged(ship);
+                    aisUpdateTargetEvent.notifyAisMessageChanged(ship);//OK
                 }
                 timestamps.put(mmsi, Calendar.getInstance());
             }
@@ -177,6 +204,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    ship.setName(getNameOfShip(mmsi));
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -200,7 +228,6 @@ public class AisImpl
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
 
                 AIS03 ais = (AIS03) data;
-                //System.out.println("reception ais " + ais);
                 int mmsi = ais.getMMSI();
                 if (!ships.containsKey(mmsi)) {
                     ship = ShipBuilder.create()
@@ -210,6 +237,7 @@ public class AisImpl
                             .latitude(ais.getLatitude()).longitude(ais.getLongitude())
                             .navigationalStatus(ais.getNavigationalStatus())
                             .build();
+                    ship.setName(getNameOfShip(mmsi));
                     ships.put(mmsi, ship);
                     aisCreateTargetEvent.notifyAisMessageChanged(ship);
                 } else {
@@ -230,11 +258,8 @@ public class AisImpl
 
             @Override
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
-
                 AIS04 ais = (AIS04) data;
-                //System.out.println("reception ais " + ais);
                 int mmsi = ais.getMMSI();
-
                 if (!stations.containsKey(mmsi)) {
                     station = new BaseStation(
                             ais.getMMSI(),
@@ -266,6 +291,14 @@ public class AisImpl
                             .shipType(ais.getShipType())
                             .name(ais.getName())
                             .build();
+                    if (ship.getName() != null
+                            && !"".equals(ship.getName())
+                            && !shipEntityMap.containsKey(ship.getMMSI())) {
+                        entityManager.getTransaction().begin();
+                        shipEntityMap.put(ship.getMMSI(), ship);
+                        entityManager.persist(ship);
+                        entityManager.getTransaction().commit();
+                    }
                     ships.put(mmsi, ship);
                 } else {
                     ship = ships.get(mmsi);
@@ -396,13 +429,18 @@ public class AisImpl
         };
     }
 
-    @Override
-    public void aisCreateTargetEvent(Ship ship) {
-        aisCreateTargetEvent.notifyAisMessageChanged(ship);
+    public Collection<Ship> findAllShips() {
+
+        query = entityManager.createQuery("SELECT s FROM Ship s");
+        return (Collection<Ship>) query.getResultList();
     }
 
-    @Override
-    public void aisUpdateTargetEvent(Ship ship) {
-        aisUpdateTargetEvent.notifyAisMessageChanged(ship);
+    private String getNameOfShip(int mmsi) {
+        String name = "";
+        Ship tmp = shipEntityMap.get(mmsi);
+        if (tmp != null) {
+            name = tmp.getShipName();
+        }
+        return name;
     }
 }

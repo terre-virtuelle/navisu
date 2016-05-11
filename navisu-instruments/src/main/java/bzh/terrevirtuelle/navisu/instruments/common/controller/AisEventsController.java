@@ -25,86 +25,64 @@ import org.capcaval.c3.componentmanager.ComponentManager;
 public abstract class AisEventsController {
 
     ComponentManager cm;
-    ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
+
     ComponentEventSubscribe<AisCreateTargetEvent> aisCTEvent;
-    ComponentEventSubscribe<AisDeleteStationEvent> aisDSEvent;
-    ComponentEventSubscribe<AisDeleteTargetEvent> aisDTEvent;
-    ComponentEventSubscribe<AisUpdateStationEvent> aisUSEvent;
     ComponentEventSubscribe<AisUpdateTargetEvent> aisUTEvent;
+    ComponentEventSubscribe<AisDeleteTargetEvent> aisDTEvent;
+
+    ComponentEventSubscribe<AisCreateStationEvent> aisCSEvent;
+    ComponentEventSubscribe<AisUpdateStationEvent> aisUSEvent;
+    ComponentEventSubscribe<AisDeleteStationEvent> aisDSEvent;
 
     public AisEventsController() {
         cm = ComponentManager.componentManager;
-        aisCSEvent = cm.getComponentEventSubscribe(AisCreateStationEvent.class);
         aisCTEvent = cm.getComponentEventSubscribe(AisCreateTargetEvent.class);
-        aisDSEvent = cm.getComponentEventSubscribe(AisDeleteStationEvent.class);
-        aisDTEvent = cm.getComponentEventSubscribe(AisDeleteTargetEvent.class);
-        aisUSEvent = cm.getComponentEventSubscribe(AisUpdateStationEvent.class);
         aisUTEvent = cm.getComponentEventSubscribe(AisUpdateTargetEvent.class);
+        aisDTEvent = cm.getComponentEventSubscribe(AisDeleteTargetEvent.class);
+
+        aisCSEvent = cm.getComponentEventSubscribe(AisCreateStationEvent.class);
+        aisUSEvent = cm.getComponentEventSubscribe(AisUpdateStationEvent.class);
+        aisDSEvent = cm.getComponentEventSubscribe(AisDeleteStationEvent.class);
     }
 
-    public void subscribe() {//OK
-        aisCTEvent.subscribe((AisCreateTargetEvent) (Ship ship) -> {
-            createTarget(ship);
-        });
-        aisUTEvent.subscribe((AisUpdateTargetEvent) (Ship ship) -> { 
-            updateTarget(ship);
-        });
-        aisDTEvent.subscribe((AisDeleteTargetEvent) (Ship ship) -> {
-            deleteTarget(ship);
-        });
-        aisCSEvent.subscribe((AisCreateStationEvent) (BaseStation baseStation) -> {
-            createBaseStation(baseStation);
-        });
-        aisUSEvent.subscribe((AisUpdateStationEvent) (BaseStation baseStation) -> {
-            updateBaseStation(baseStation);
-        });
-        aisDSEvent.subscribe((AisDeleteStationEvent) (BaseStation baseStation) -> {
-            deleteBaseStation(baseStation);
-        });
+    public void subscribe() {
+        aisCTEvent.subscribe((AisCreateTargetEvent) this::createTarget);
+        aisUTEvent.subscribe((AisUpdateTargetEvent) this::updateTarget);
+        aisDTEvent.subscribe((AisDeleteTargetEvent) this::deleteTarget);
 
+        aisCSEvent.subscribe((AisCreateStationEvent) this::createBaseStation);
+        aisUSEvent.subscribe((AisUpdateStationEvent) this::updateBaseStation);
+        aisDSEvent.subscribe((AisDeleteStationEvent) this::deleteBaseStation);
     }
 
     public void unsubscribe() {
         aisCTEvent.unsubscribe((AisCreateTargetEvent) (Ship ship) -> {
-
         });
         aisUTEvent.unsubscribe((AisUpdateTargetEvent) (Ship ship) -> {
-
         });
         aisDTEvent.unsubscribe((AisDeleteTargetEvent) (Ship ship) -> {
-
         });
         aisCSEvent.unsubscribe((AisCreateStationEvent) (BaseStation baseStation) -> {
-
         });
         aisUSEvent.unsubscribe((AisUpdateStationEvent) (BaseStation baseStation) -> {
-
         });
         aisDSEvent.unsubscribe((AisDeleteStationEvent) (BaseStation baseStation) -> {
-
         });
     }
 
-    public void createTarget(Ship ship) {
-
-    }
+    public abstract void createTarget(Ship ship);
 
     public abstract void updateTarget(Ship ship);
-    
 
     public void deleteTarget(Ship ship) {
-
     }
 
     public void createBaseStation(BaseStation baseStation) {
-
     }
 
     public void updateBaseStation(BaseStation baseStation) {
-
     }
 
     public void deleteBaseStation(BaseStation baseStation) {
-
     }
 }

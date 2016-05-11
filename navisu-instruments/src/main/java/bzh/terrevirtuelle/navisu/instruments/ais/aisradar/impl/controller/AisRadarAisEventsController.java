@@ -34,4 +34,20 @@ public class AisRadarAisEventsController
         controller.updateTarget(ship);
     }
 
+    @Override
+    public void deleteTarget(Ship ship) {
+    }
+
+    @Override
+    public void createBaseStation(BaseStation baseStation) {
+    }
+
+    @Override
+    public void updateBaseStation(BaseStation baseStation) {
+     }
+
+    @Override
+    public void deleteBaseStation(BaseStation baseStation) {
+    }
+
 }

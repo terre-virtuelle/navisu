@@ -119,12 +119,12 @@ public class AisPlotterController {
     }
 
     public void deleteTarget(Ship target) {
-        // System.out.println("target " +target);
         GShip gTarget = gShips.get(target.getMMSI());
-        //System.out.println("gTarget " + gTarget);
-        Renderable[] renderables = gTarget.getRenderables();
-        for (Renderable r : renderables) {
-            aisLayer.removeRenderable(r);
+        if (gTarget != null) {
+            Renderable[] renderables = gTarget.getRenderables();
+            for (Renderable r : renderables) {
+                aisLayer.removeRenderable(r);
+            }
         }
         gShips.remove(target.getMMSI());
         wwd.redrawNow();
