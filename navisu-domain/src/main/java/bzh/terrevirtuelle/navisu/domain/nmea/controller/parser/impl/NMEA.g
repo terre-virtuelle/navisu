@@ -1447,7 +1447,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	)
          ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
         {
-        //System.out.println(getText());
+        System.out.println(getText());
     	switch(type.getText()){
 	case "1" :
 	  if(dev != null && mmsi != null && status != null && turn != null 
@@ -1541,6 +1541,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
 	 }
 	   break;
 	case "5" :
+	//System.out.println(getText());
 	  if(dev != null && mmsi != null && imo != null && callsign != null && shipname != null &&
 	  to_bow != null && to_port != null && to_starboard != null && eta != null && draught != null && destination != null){
 
@@ -1611,7 +1612,7 @@ GPSD_DEVICES
     	;
 GPSD_VERSION
     	:	
-    	'{''"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#'|  SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#'| SEP | NUMBER | SIGN | LETTERS)*
     	{
 	//System.out.println("GPSD VERSION sentence : " + getText());
 	}
