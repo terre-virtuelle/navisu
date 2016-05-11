@@ -10,19 +10,15 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.naviga
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.camera.model.Camera;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
+import bzh.terrevirtuelle.navisu.domain.devices.model.BaseStation;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.AisEventsController;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
-import gov.nasa.worldwind.geom.Frustum;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Vec4;
-import gov.nasa.worldwind.globes.Globe;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -97,4 +93,10 @@ public class CameraComponentController
     public void setS57ChartComponentServices(S57ChartComponentServices s57ChartComponentServices) {
         this.s57ChartComponentServices = s57ChartComponentServices;
     }
+
+    @Override
+    public void createTarget(Ship ship) {
+    }
+
+    
 }

@@ -228,7 +228,8 @@ public class RoutePhotoEditorController
         });
         gotoButton.setOnMouseClicked((MouseEvent event) -> {
             Ship ship = ShipBuilder.create().latitude(latitude).longitude(longitude).name("Lithops").build();
-            aisServices.aisUpdateTargetEvent(ship);
+          //  aisServices.aisUpdateTargetEvent(ship);
+          // Voir Transpondeur
             viewWW.setHeading(Angle.fromDegrees(heading));
             viewWW.setFieldOfView(Angle.fromDegrees(fieldOfView));
             viewWW.setPitch(Angle.fromDegrees(90.0));

@@ -48,8 +48,8 @@ public class RoutePhotoEditorImpl
     ExifComponentServices exifComponentServices;
     @UsedService
     RoutePhotoViewerServices routePhotoViewerServices;
-    @ProducedEvent
-    protected AisUpdateTargetEvent aisUpdateTargetEvent;
+  //  @ProducedEvent
+  //  protected AisUpdateTargetEvent aisUpdateTargetEvent;
     @UsedService
     AisServices aisServices;
    
