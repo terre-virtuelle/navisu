@@ -56,10 +56,13 @@
 \BOOKMARK [2][-]{subsection.6.3.2}{Choix des callbacks}{section.6.3}% 56
 \BOOKMARK [2][-]{subsection.6.3.3}{Module navisu-widgets}{section.6.3}% 57
 \BOOKMARK [1][-]{section.6.4}{Principe des DriverManager}{chapter.6}% 58
-\BOOKMARK [0][-]{chapter.7}{Cartographie}{}% 59
-\BOOKMARK [1][-]{section.7.1}{Pr\351sentation}{chapter.7}% 60
-\BOOKMARK [2][-]{subsection.7.1.1}{La projection Equirectangulaire}{section.7.1}% 61
-\BOOKMARK [2][-]{subsection.7.1.2}{Tuilage}{section.7.1}% 62
-\BOOKMARK [1][-]{section.7.2}{Cartographie raster}{chapter.7}% 63
-\BOOKMARK [2][-]{subsection.7.2.1}{Les cartes BSB/KAP}{section.7.2}% 64
-\BOOKMARK [2][-]{subsection.7.2.2}{Acquisition}{section.7.2}% 65
+\BOOKMARK [0][-]{chapter.7}{Gestion des \351v\351nements}{}% 59
+\BOOKMARK [1][-]{section.7.1}{Architecture}{chapter.7}% 60
+\BOOKMARK [2][-]{subsection.7.1.1}{Principes}{section.7.1}% 61
+\BOOKMARK [0][-]{chapter.8}{Cartographie}{}% 62
+\BOOKMARK [1][-]{section.8.1}{Pr\351sentation}{chapter.8}% 63
+\BOOKMARK [2][-]{subsection.8.1.1}{La projection Equirectangulaire}{section.8.1}% 64
+\BOOKMARK [2][-]{subsection.8.1.2}{Tuilage}{section.8.1}% 65
+\BOOKMARK [1][-]{section.8.2}{Cartographie raster}{chapter.8}% 66
+\BOOKMARK [2][-]{subsection.8.2.1}{Les cartes BSB/KAP}{section.8.2}% 67
+\BOOKMARK [2][-]{subsection.8.2.2}{Acquisition}{section.8.2}% 68
