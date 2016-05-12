@@ -1447,7 +1447,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	)
          ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
         {
-        System.out.println(getText());
+       // System.out.println(getText());
     	switch(type.getText()){
 	case "1" :
 	  if(dev != null && mmsi != null && status != null && turn != null 

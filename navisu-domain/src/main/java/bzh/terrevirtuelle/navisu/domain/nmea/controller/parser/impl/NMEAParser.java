@@ -1,4 +1,4 @@
-// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g 2016-05-05 18:53:44
+// $ANTLR 3.5.1 /home/serge/Data/developement/ProjetNaVisu/navisu/navisu-domain/src/main/java/bzh/terrevirtuelle/navisu/domain/nmea/controller/parser/impl/NMEA.g 2016-05-12 20:47:08
 
 package bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl;
 
