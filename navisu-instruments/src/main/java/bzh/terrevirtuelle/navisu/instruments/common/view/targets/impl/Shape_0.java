@@ -25,15 +25,12 @@ public class Shape_0
         implements Shape {
 
     Button button;
-    //  WorldWindow wwd;
     Ship ship;
     boolean first = true;
 
     public Shape_0(Ship ship, ShapeAttributes sa, LatLon latlon, double d) {
         super(sa, latlon, d);
         this.ship = ship;
-        //  wwd = GeoWorldWindViewImpl.getWW();
-        // pick();
     }
 
     @Override
@@ -56,33 +53,7 @@ public class Shape_0
     public String toString() {
         return "Shape_1{" + super.toString() + '}';
     }
-    /*
-     private void pick() {
-     wwd.addSelectListener((SelectEvent event) -> {
-     if (event.getEventAction().equals(SelectEvent.HOVER) && event.getObjects() != null) {
-     if (first == true) {
-     first = false;
-     if (button == null) {
-     button = new Button();
-     }
-     button.setText("       Quit        ");
-     button.setOnAction((ActionEvent evt) -> {
-     System.exit(0);
-     });
-                    
-     offset = wwd.getView().project(
-     wwd.getModel().getGlobe().computePointFromLocation(
-     new LatLon(Angle.fromDegrees(lat), Angle.fromDegrees(lon))));
-     Platform.runLater(() -> {
-     pane.getChildren().add(button);
-     wwd.addPositionListener(Ship.this);
-     });
-     }
-     }
-     });
-     }
-     */
-
+  
     @Override
     public Ship getShip() {
         return ship;

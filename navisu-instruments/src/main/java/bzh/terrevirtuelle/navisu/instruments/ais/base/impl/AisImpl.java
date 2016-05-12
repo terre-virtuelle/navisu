@@ -101,7 +101,7 @@ public class AisImpl
     protected NumberFormat nf = new DecimalFormat("0.###");
     protected SimpleDateFormat dt = new SimpleDateFormat("hh:mm dd-MM");
     protected TimerTask task;
-    protected static final long TIME_OUT = 300000;
+    protected static final long TIME_OUT = 800000;
     protected static final long DELAY = 300000;
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String DELETE_TARGET_SOUND = "/data/sounds/mechanic.wav";
@@ -435,6 +435,7 @@ public class AisImpl
         return (Collection<Ship>) query.getResultList();
     }
 
+    /* Find name in the DB */
     private String getNameOfShip(int mmsi) {
         String name = "";
         Ship tmp = shipEntityMap.get(mmsi);

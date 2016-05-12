@@ -90,7 +90,7 @@ public class GShip {
             case 0:
                 shape = new Shape_0(this.ship, makeAttributes(),
                         new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
-                        40.0);
+                        500.0);
                 break;
             case 15:
                 shape = new Shape_1(this.ship, makeAttributes(),
@@ -104,7 +104,7 @@ public class GShip {
             default:
                 shape = new Shape_0(this.ship, makeAttributes(),
                         new LatLon(Angle.fromDegrees(this.ship.getLatitude()), Angle.fromDegrees(this.ship.getLongitude())),
-                        40.0);
+                        500.0);
         }
     }
 
