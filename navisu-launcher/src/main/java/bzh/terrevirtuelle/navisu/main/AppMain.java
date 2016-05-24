@@ -15,8 +15,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.impl.LayersManagerImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ServerOptionsComponentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.BathymetryLocalCatalogServices;
@@ -138,6 +137,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -145,6 +145,7 @@ import java.nio.file.Paths;
  * @author Jordan Mens <jordan.mens at gmail.com>
  * @author Dominique Marques <dom.marques at free.fr>
  */
+
 public class AppMain extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
@@ -156,6 +157,7 @@ public class AppMain extends Application {
     private final String DATA_S57_CATALOG_6 = "data/charts/vector/s57/catalog/ENC_NP6.kmz";
 
     @Override
+    @SuppressWarnings({"unchecked", "varargs"})
     public void start(Stage stage) throws Exception {
         
         
@@ -174,7 +176,9 @@ public class AppMain extends Application {
 
         final ComponentManager componentManager = ComponentManager.componentManager;
         /* Deploy components */
+        
         LOGGER.info("\n"
+
                 + componentManager.startApplication(GuiAgentImpl.class,//in first
                         AisImpl.class,
                         AisLoggerImpl.class,
@@ -216,7 +220,7 @@ public class AppMain extends Application {
                         NavigationServerImpl.class,
                         NavigationCmdComponentImpl.class,
                         NmeaClientImpl.class,
-                        OptionsManagerImpl.class,
+                        ServerOptionsComponentImpl.class,
                         ProjectionsComponentImpl.class,
                         RouteDataEditorImpl.class,
                         RouteEditorImpl.class,
@@ -224,6 +228,7 @@ public class AppMain extends Application {
                         RoutePhotoViewerImpl.class,
                         SailingDirectionsComponentImpl.class,
                         SedimentologyImpl.class,
+                        ServerOptionsComponentImpl.class,
                         ShapefileObjectImpl.class,
                         SonarImpl.class,
                         SoundImpl.class,
@@ -289,8 +294,7 @@ public class AppMain extends Application {
         NavigationCmdComponentServices navigationCmdComponentServices = componentManager.getComponentService(NavigationCmdComponentServices.class);
         navigationCmdComponentServices.init();
 
-        OptionsManagerServices optionsManagerServices = componentManager.getComponentService(OptionsManagerServices.class);
-        //optionsManagerServices.show();
+        ServerOptionsComponentServices serverOptionsComponentServices = componentManager.getComponentService(ServerOptionsComponentServices.class);
 
         ProjectionsComponentServices projectionsComponentServices = componentManager.getComponentService(ProjectionsComponentServices.class);
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
@@ -359,6 +363,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sailingDirectionsServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(serverOptionsComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());
@@ -387,7 +392,7 @@ public class AppMain extends Application {
         /* Test connexion GPS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-        // dataServerServices.openSerialPort("/dev/ttyS1", 4800, 8, 1, 0);
+        // dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
         /* Test connexion Gpsd */
  /*
         Fulup 12 avril 2016
