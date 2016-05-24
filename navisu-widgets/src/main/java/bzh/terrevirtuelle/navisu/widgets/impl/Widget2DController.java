@@ -30,7 +30,6 @@ public class Widget2DController
         implements Widget2D, EventHandler<KeyEvent> {
 
     private KeyCombination keyComb = null;
-    private boolean first = true;
     protected double initX;
     protected double initY;
     protected Point2D dragAnchor;
@@ -63,7 +62,7 @@ public class Widget2DController
     }
 
     @Override
-    public void initEvt() {
+    public final void initEvt() {
         setOnMouseEntered((MouseEvent me) -> {
             toFront();
         });
@@ -149,10 +148,10 @@ public class Widget2DController
         translate.setFromY(y);
         translate.setToY(yy);
 
-        ScaleTransition scale = new ScaleTransition(SEC_2);
-        scale.setToX(scaleXX);
-        scale.setToY(scaleYY);
-        ParallelTransition pt = new ParallelTransition(group, fade, translate, scale);
+        ScaleTransition scaleTransition = new ScaleTransition(SEC_2);
+        scaleTransition.setToX(scaleXX);
+        scaleTransition.setToY(scaleYY);
+        ParallelTransition pt = new ParallelTransition(group, fade, translate, scaleTransition);
         pt.play();
     }
     // Define an event handler
