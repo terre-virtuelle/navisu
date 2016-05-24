@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<fx:root stylesheets="@serverOptionsController.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="557.0" styleClass="background-pane">
+            <children>
+                <Button fx:id="addConnectionB" layoutX="22.0" layoutY="208.0" minWidth="75.0" mnemonicParsing="false" prefWidth="75.0" text="Add " />
+                <Button fx:id="removeConnectionB" layoutX="97.0" layoutY="208.0" mnemonicParsing="false" prefWidth="75.0" text="Remove " />
+                <TabPane fx:id="parameterTP" layoutX="14.0" layoutY="246.0" prefHeight="246.0" prefWidth="511.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab fx:id="serialT" text="Serial">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="185.0" prefWidth="511.0">
+                                    <children>
+                                        <GridPane layoutY="14.0" prefHeight="156.0" prefWidth="253.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="103.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="27.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="166.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Port name" />
+                                                <Label text="Baud rate" GridPane.rowIndex="1" />
+                                                <Label text="Data bits" GridPane.rowIndex="2" />
+                                                <Label text="Stop bits" GridPane.rowIndex="3" />
+                                                <Label text="Parity" GridPane.rowIndex="4" />
+                                                <ChoiceBox fx:id="portNameCB" prefWidth="150.0" GridPane.columnIndex="2">
+                                                </ChoiceBox>
+                                                <ChoiceBox fx:id="baudRateCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                    <items>
+                                                        <FXCollections fx:factory="observableArrayList">
+                                                            <String fx:value="BAUDRATE_4800" />
+                                                            <String fx:value="BAUDRATE_9600" />
+                                                            <String fx:value="BAUDRATE_38400" />
+                                                        </FXCollections>
+                                                    </items>
+                                                </ChoiceBox>
+                                                <ChoiceBox fx:id="databitsCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                    <items>
+                                                        <FXCollections fx:factory="observableArrayList">
+                                                            <String fx:value="DATABITS_5" />
+                                                            <String fx:value="DATABITS_6" />
+                                                            <String fx:value="DATABITS_7" />
+                                                            <String fx:value="DATABITS_8" />
+                                                        </FXCollections>
+                                                    </items>
+                                                </ChoiceBox>
+                                                <ChoiceBox fx:id="stopBitsCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                    <items>
+                                                        <FXCollections fx:factory="observableArrayList">
+                                                            <String fx:value="STOPBITS_1" />
+                                                            <String fx:value="STOPBITS_1_5" />
+                                                            <String fx:value="STOPBITS_2" />
+                                                        </FXCollections>
+                                                    </items>
+                                                </ChoiceBox>
+                                                <ChoiceBox fx:id="parityCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                    <items>
+                                                        <FXCollections fx:factory="observableArrayList">
+                                                           <String fx:value="PARITY_EVEN" />
+                                                            <String fx:value="PARITY_NONE" />
+                                                            <String fx:value="PARITY_ODD" />
+                                                        </FXCollections>
+                                                    </items>
+                                                </ChoiceBox>
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab fx:id="networkT" text="Network">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="172.0" prefWidth="511.0">
+                                    <children>
+                                        <GridPane prefHeight="90.0" prefWidth="412.0">
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="10.0" prefWidth="103.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="27.0" minWidth="10.0" prefWidth="27.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <Label text="Protocol" />
+                                                <Label text="Address" GridPane.rowIndex="1" />
+                                                <Label text="Data port" GridPane.rowIndex="2" />
+                                                <GridPane GridPane.columnIndex="2">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <RadioButton fx:id="tcpRB" mnemonicParsing="false" text="TCP">
+                                                            <toggleGroup>
+                                                                <ToggleGroup fx:id="protocol" />
+                                                            </toggleGroup>
+                                                        </RadioButton>
+                                                        <RadioButton fx:id="udpRB" mnemonicParsing="false" text="UDP" toggleGroup="$protocol" GridPane.columnIndex="1" />
+                                                        <RadioButton fx:id="gpsdRB" mnemonicParsing="false" text="GPSD" toggleGroup="$protocol" GridPane.columnIndex="2" />
+                                                    </children>
+                                                </GridPane>
+                                                <TextField fx:id="dataPortTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                <TextField fx:id="addressTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            <Button fx:id="openConnectionB" layoutX="375.0" layoutY="208.0" mnemonicParsing="false" prefWidth="75.0" text="Open" />
+            <Button fx:id="closeConnectionB" layoutX="450.0" layoutY="208.0" mnemonicParsing="false" prefWidth="75.0" text="Close" />
+            </children>
+        </Pane>
+        <Group styleClass="routeeditor-panel">
+            <children>
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@logoTV64AIS.png" />
+                    </image>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </ImageView>
+                <Slider fx:id="opacitySlider" layoutX="526.0" layoutY="51.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.4">
+                </Slider>
+                <Text layoutX="121.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="SERVER CONNECTIONS OPTIONS" />
+                <Button fx:id="quit" alignment="CENTER" layoutX="496.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
+                </Button>
+                <StackPane layoutX="14.0" layoutY="51.0" prefHeight="143.0" prefWidth="511.0" styleClass="instrumentcontour">
+                    <children>
+                        <TableView fx:id="connectionsTV" prefHeight="143.0" prefWidth="496.0">
+                            <columns>
+                                <TableColumn fx:id="typeTC" prefWidth="75.0" text="Type" />
+                                <TableColumn fx:id="dataPortTC" prefWidth="121.0" text="Data port" />
+                                <TableColumn fx:id="parametersTC" prefWidth="200.0" text="Parameters" />
+                        <TableColumn fx:id="statusTC" prefWidth="114.0" text="Status" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </StackPane>
+            </children>
+        </Group>
+    </children>
+</fx:root>

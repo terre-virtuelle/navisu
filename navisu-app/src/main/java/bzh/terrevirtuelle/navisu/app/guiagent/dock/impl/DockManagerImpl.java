@@ -298,14 +298,11 @@ public class DockManagerImpl<TrackTool>
     private void createToolsRadialWidget() {
         toolsRadialMenu = RadialMenuBuilder.create()
                 .centralImage("toolsradialmenu150.png")
-                .createNode(0, "system.png", 1, "devices.png", 2, "aisConf.png", (e) -> open())
-                .createNode(0, "system.png", 1, "devices.png", 5, "gpsConf.png", (e) -> open())
-                .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp", ".SHP"))
-                .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
-                .createNode(2, "earth.png", 0, "models.png", 0, "noElevation.png", (e) -> open("noElevation"))
-                .createNode(2, "earth.png", 0, "models.png", 1, "elevation.png", (e) -> open("Elevation"))
-                .createNode(2, "earth.png", 0, "models.png", 2, "noBathy.png", (e) -> open("noBathymetry"))
-                .createNode(2, "earth.png", 0, "models.png", 3, "bathy.png", (e) -> open("Bathymetry"))
+                .createNode(0, "system.png", 1, "options.png", 2, "devices.png", (e) -> open("ServerOptions"))
+                .createNode(1, "earth.png", 0, "models.png", 0, "noElevation.png", (e) -> open("noElevation"))
+                .createNode(1, "earth.png", 0, "models.png", 1, "elevation.png", (e) -> open("Elevation"))
+                .createNode(1, "earth.png", 0, "models.png", 2, "noBathy.png", (e) -> open("noBathymetry"))
+                .createNode(1, "earth.png", 0, "models.png", 3, "bathy.png", (e) -> open("Bathymetry"))
              //   .createNode(2, "earth.png", 0, "models.png", 4, "flatGlobe.png", (e) -> open("FlatGlobe"))
               //  .createNode(2, "earth.png", 0, "models.png", 5, "roundGlobe.png", (e) -> open("RoundGlobe"))
                 .build();
@@ -319,8 +316,10 @@ public class DockManagerImpl<TrackTool>
     private void createSystemRadialWidget() {
         systemRadialMenu = RadialMenuBuilder.create()
                 .centralImage("systemradialmenu150.png")
-                .createNode(0, "system.png", 0, "files.png", 1, "fileReadOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais", ".txt"))
-                .createNode(0, "system.png", 0, "files.png", 2, "fileReadOff.png", (e) -> open())
+                .createNode(0, "simu.png", 0, "files.png", 1, "nmeaOn.png", (e) -> open("NMEA", ".nmea", ".n2k", ".ais", ".txt"))
+                .createNode(0, "simu.png", 0, "files.png", 2, "nmeaOff.png", (e) -> open())
+                .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp", ".SHP"))
+                .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
              //   .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
              //   .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
                 .build();

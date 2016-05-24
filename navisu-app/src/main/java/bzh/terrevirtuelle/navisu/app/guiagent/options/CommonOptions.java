@@ -4,7 +4,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options;
  * User: Jordan
  * Date: 09/11/2013
  */
-public interface OptionsController {
+public interface CommonOptions {
 
     String getName();
 
@@ -14,5 +14,4 @@ public interface OptionsController {
 
     void load();
 
-    OptionsView getOptionsView();
 }

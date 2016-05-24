@@ -18,8 +18,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerCheckTreeImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.OptionsManagerServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.OptionsManagerImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ServerOptionsComponentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.widgets.alarms.Alarm;
 import bzh.terrevirtuelle.navisu.widgets.alarms.Mob;
@@ -45,6 +44,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
 
 /**
  * NaVisu
@@ -60,9 +60,9 @@ public class GuiAgentImpl
    private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
 
     @SubComponent
-    OptionsManagerImpl optionsManager;
+    ServerOptionsComponentImpl optionsManager;
     @UsedService
-    OptionsManagerServices optionsManagerServices;
+    ServerOptionsComponentServices optionsManagerServices;
 
     @SubComponent
     MenuManagerImpl menu;
@@ -181,22 +181,7 @@ public class GuiAgentImpl
         scene.getStylesheets().add(getClass().getResource(NAVISU_LOOK_AND_FEEL_PATH).toExternalForm());
     }
 
-    protected void initializeMenuItems(final MenuManagerServices menuServices) {
-
-        MenuItem fileMenuItem = new MenuItem(Translator.tr("menu.file.exit"));
-        fileMenuItem.setOnAction(e -> {
-
-            ComponentManager.componentManager.stopApplication();
-            System.exit(0);
-        });
-        menuServices.addMenuItem(DefaultMenuEnum.FILE, fileMenuItem);
-
-        MenuItem preferenceMenuItem = new MenuItem(Translator.tr("menu.edit.preferences"));
-        preferenceMenuItem.setOnAction(e -> optionsManagerServices.show());
-
-        menuServices.addMenuItem(DefaultMenuEnum.EDIT, preferenceMenuItem);
-    }
-
+    
     @Override
     public JobsManager getJobsManager() {
         return this.jobsManager;
