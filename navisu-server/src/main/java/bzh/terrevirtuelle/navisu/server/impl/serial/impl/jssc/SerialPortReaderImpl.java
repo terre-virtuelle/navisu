@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.server.impl.serial.SerialPortReader;
 import jssc.*;
 
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.vertx.java.core.Vertx;
 
 /**
@@ -26,6 +27,11 @@ public class SerialPortReaderImpl
     public SerialPortReaderImpl(int index, Vertx vertx) {
         this.vertx = vertx;
         this.index = index;
+        String[] portNames = SerialPortList.getPortNames();
+        for (String portName : portNames) {
+            System.out.println(portName);
+        }
+
     }
 
     @Override
@@ -51,10 +57,13 @@ public class SerialPortReaderImpl
     @Override
     public boolean closePort() {
         boolean result = false;
-        try {
-            result = serialPort.closePort();
-        } catch (SerialPortException e) {
-            e.printStackTrace();
+        if (serialPort.isOpened()) {
+            try {
+                result = serialPort.closePort();
+            } catch (SerialPortException ex) {
+                Logger.getLogger(SerialPortReaderImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+            
         }
         return result;
     }
@@ -73,7 +82,7 @@ public class SerialPortReaderImpl
                 }
             } while (!s.equals("\n"));
             sentence = buffer.toString();
-           // System.out.println("sentence " + sentence);
+            // System.out.println("sentence " + sentence);
         } catch (SerialPortException ex) {
             java.util.logging.Logger.getLogger(SerialPortReader.class.getName()).log(Level.SEVERE, null, ex);
         }

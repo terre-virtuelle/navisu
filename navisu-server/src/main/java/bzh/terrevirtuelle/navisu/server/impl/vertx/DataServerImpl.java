@@ -103,7 +103,7 @@ public class DataServerImpl
                             readers.get(currentReaderIndex).read();
                         }
                         response = response(currentReaderIndex);
-                       // System.out.println(response);
+                        // System.out.println(response);
                         if (response != null) {
                             ws.writeTextFrame(response.toString());
                         }
@@ -135,21 +135,21 @@ public class DataServerImpl
             sentences.clear();
             try {
                 sentenceQueues.get(currentReader).stream().forEach((s) -> {
-                   //LOGGER.info(s);
-                  //  System.out.println(s);
+                    //LOGGER.info(s);
+                    //  System.out.println(s);
                     parser.parse(s.trim());//parser load sentences
                 });
                 stringWriter = new StringWriter();
                 if (!sentences.isEmpty()) {
                     marshaller.marshal(sentences, stringWriter);
-                   // System.out.println("DataServerImpl stringWriter " + stringWriter);
+                    // System.out.println("DataServerImpl stringWriter " + stringWriter);
                 }
             } catch (Exception e) {
                 // System.out.println("sentenceQueues "+ sentenceQueues);
-                 // System.out.println("DataServerImpl Exception" + sentences);
+                // System.out.println("DataServerImpl Exception" + sentences);
             }
         }
-       // System.out.println("DataServerImpl " + stringWriter);
+        // System.out.println("DataServerImpl " + stringWriter);
         return stringWriter;
     }
 
@@ -213,6 +213,14 @@ public class DataServerImpl
     @Override
     public void openHttpServer(String hostname, int port) {
         HttpServer httpserver = new HttpServer(vertx, hostname, port);
+    }
+
+    @Override
+    public String[] getSerialPortNames() {
+        if (serialPortReader != null) {
+            return serialPortReader.getPortNames();
+        }
+        return null;
     }
 }
 
