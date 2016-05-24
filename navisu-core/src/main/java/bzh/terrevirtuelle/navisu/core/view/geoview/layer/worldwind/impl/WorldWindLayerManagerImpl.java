@@ -76,7 +76,8 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     // Insertion
     //
     @Override
-    public void insertGeoLayer(GeoLayer<Layer>... layers) {
+    @SafeVarargs
+    public final void insertGeoLayer(GeoLayer<Layer>... layers) {
 
         final List<GeoLayer<Layer>> defaultGroup = this.groupMap.get(DEFAULT_GROUP);
 
