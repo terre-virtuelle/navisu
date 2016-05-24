@@ -247,7 +247,7 @@ public class TestDBImpl
     @Override
     public void runJPA() {
         em = databaseServices.getEntityManager();
-        
+
         guiAgentServices.getJobsManager().newJob(null, (progressHandle) -> {
             ships = readAllShips();
             persistAllShips();
@@ -297,6 +297,7 @@ public class TestDBImpl
     @Override
     public void runEmbeddedNeo4J(String dbName) {
         graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(dbName);
+
         ownerShip = new Ship();
         ownerShip.setName("Lithops");
         relationshipList = new ArrayList<>();

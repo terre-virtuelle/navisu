@@ -215,7 +215,6 @@ public class DatabaseImpl
 
             // Configure the internal EclipseLink connection pool
             propertiesMap.put(JDBC_DRIVER, "org.apache.derby.jdbc.EmbeddedDriver");
-            // propertiesMap.put(JDBC_URL, "jdbc:derby:/home/serge/.navisu/databases/NaVisuDB;create=true");
             propertiesMap.put(JDBC_URL, "jdbc:derby:" + userHome + "/" + DB_HOME + NAVISU_DB + ";create=true");
             propertiesMap.put(JDBC_USER, "navisu");
             propertiesMap.put(JDBC_PASSWORD, "navisu");
