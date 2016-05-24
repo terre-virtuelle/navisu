@@ -75,10 +75,19 @@ import java.util.StringTokenizer;
 
 @rulecatch {
   catch (RecognitionException e) {
+  //System.out.println("eeeeee"+e.toString());
     throw e;
    }
 }
 
+@parser::members { 
+    @Override    
+    public void displayRecognitionError(String[] tokenNames, RecognitionException e) {
+        String hdr = getErrorHeader(e);
+        String msg = getErrorMessage(e, tokenNames);
+        throw new RuntimeException(hdr + ":" + msg);
+    }
+}
 
 @lexer::members{
    protected NMEA nmea = null;
@@ -246,15 +255,15 @@ import java.util.StringTokenizer;
    }
    
    protected void mismatch(IntStream input, int ttype, BitSet follow)
-throws RecognitionException {
+   throws RecognitionException {
         System.out.println("mismatch");
-        throw new MismatchedTokenException(ttype, input);
+       throw new MismatchedTokenException(ttype, input);
     }
 
     public Object recoverFromMismatchedSet(IntStream input,
-RecognitionException e, BitSet follow) throws RecognitionException {
+                          RecognitionException e, BitSet follow) throws RecognitionException {
         System.out.println("recoverFromMismatchedSet");
-        throw e;
+       throw e;
     }
     
     private Calendar timestampFactory(String timestamp){
@@ -1447,7 +1456,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	)
          ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
         {
-       // System.out.println(getText());
+      // System.out.println(getText());
     	switch(type.getText()){
 	case "1" :
 	  if(dev != null && mmsi != null && status != null && turn != null 
@@ -1598,35 +1607,41 @@ GPSD_AIS : '{"class":"AIS"' SEP
    	
 GPSD_DEVICE 
         :	
-    	'{''"class":"DEVICE"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	//'{''"class":"DEVICE"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"DEVICE"'(.)*'}'
     	{
 	 //System.out.println("GPSD DEVICE sentence : " + getText());
 	}
     	; 
 GPSD_DEVICES 
         :	
-    	'{''"class":"DEVICES"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	//'{''"class":"DEVICES"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"DEVICES"'(.)*'}'
     	{
 	//System.out.println("GPSD DEVICES sentence : " + getText());
 	}
     	;
 GPSD_VERSION
     	:	
-    	'{''"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#'| SEP | NUMBER | SIGN | LETTERS)*
+    	//{"class":"VERSION","release":"3.11~dev","rev":"3.10-5.20140524gitd6b65b.el7","proto_major":3,"proto_minor":9}
+    	//'{''"class":"VERSION"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#'| SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"VERSION"' (.)*'}'
     	{
 	//System.out.println("GPSD VERSION sentence : " + getText());
 	}
     	;
 GPSD_WATCH
     	:	
-    	'{''"class":"WATCH"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	//'{''"class":"WATCH"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"WATCH"'(.)*'}' 
     	{
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
     	;      	
  GPSD_ERROR 
  	:		
-    	'{''"class":"ERROR"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  '\'' | SEP | NUMBER | SIGN | LETTERS)*
+    	//'{''"class":"ERROR"' ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' |  '\'' | SEP | NUMBER | SIGN | LETTERS)*
+    	'{''"class":"ERROR"'(.)*'}' 
     	{
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
