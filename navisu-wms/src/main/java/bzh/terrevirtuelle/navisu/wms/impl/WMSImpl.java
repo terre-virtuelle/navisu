@@ -232,7 +232,7 @@ public class WMSImpl
             layer.setPickEnabled(true);
             if (enable) {
                 if (!layers.contains(layer)) {
-                    GeoLayer geoLayer = GeoLayer.factory.newWorldWindGeoLayer(layer);
+                    GeoLayer<Layer> geoLayer = GeoLayer.factory.newWorldWindGeoLayer(layer);
                     geoViewServices
                             .getLayerManager()
                             .insertGeoLayer(geoLayer);
