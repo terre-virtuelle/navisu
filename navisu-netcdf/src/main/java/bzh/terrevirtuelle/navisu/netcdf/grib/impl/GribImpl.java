@@ -22,7 +22,8 @@ import java.util.logging.Logger;
 /**
  * User: jordan Date: 23/11/2013
  */
-public class GribImpl implements Grib, GribServices, ComponentState {
+public class GribImpl 
+        implements Grib, GribServices, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
