@@ -284,31 +284,33 @@ public class AisImpl
             public <T extends NMEA> void notifyNmeaMessageChanged(T data) {
                 AIS05 ais = (AIS05) data;
                 int mmsi = ais.getMMSI();
-                if (!ships.containsKey(mmsi)) {
-                    ship = ShipBuilder.create()
-                            .mmsi(ais.getMMSI())
-                            .destination(ais.getDestination())
-                            .shipType(ais.getShipType())
-                            .name(ais.getName())
-                            .build();
-                    if (ship.getName() != null
-                            && !"".equals(ship.getName())
-                            && !shipEntityMap.containsKey(ship.getMMSI())) {
-                        entityManager.getTransaction().begin();
-                        shipEntityMap.put(ship.getMMSI(), ship);
-                        entityManager.persist(ship);
-                        entityManager.getTransaction().commit();
+                if (mmsi != 0) {
+                    if (!ships.containsKey(mmsi)) {
+                        ship = ShipBuilder.create()
+                                .mmsi(ais.getMMSI())
+                                .destination(ais.getDestination())
+                                .shipType(ais.getShipType())
+                                .name(ais.getName())
+                                .build();
+                        if (ship.getName() != null
+                                && !"".equals(ship.getName())
+                                && !shipEntityMap.containsKey(ship.getMMSI())) {
+                            entityManager.getTransaction().begin();
+                            shipEntityMap.put(ship.getMMSI(), ship);
+                            entityManager.persist(ship);
+                            entityManager.getTransaction().commit();
+                        }
+                        ships.put(mmsi, ship);
+                    } else {
+                        ship = ships.get(mmsi);
+                        ship.setShipType(ais.getShipType());
+                        ship.setName(ais.getShipName());
+                        ship.setETA(ais.getETA());
+                        ship.setDestination(ais.getDestination());
+                        aisUpdateTargetEvent.notifyAisMessageChanged(ship);
                     }
-                    ships.put(mmsi, ship);
-                } else {
-                    ship = ships.get(mmsi);
-                    ship.setShipType(ais.getShipType());
-                    ship.setName(ais.getShipName());
-                    ship.setETA(ais.getETA());
-                    ship.setDestination(ais.getDestination());
-                    aisUpdateTargetEvent.notifyAisMessageChanged(ship);
+                    timestamps.put(mmsi, Calendar.getInstance());
                 }
-                timestamps.put(mmsi, Calendar.getInstance());
             }
         });
         Timer timer = new Timer();
