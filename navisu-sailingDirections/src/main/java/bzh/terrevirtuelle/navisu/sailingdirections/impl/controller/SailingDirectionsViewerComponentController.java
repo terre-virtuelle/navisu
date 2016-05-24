@@ -29,7 +29,6 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -78,7 +77,7 @@ public class SailingDirectionsViewerComponentController
     private final String IN_SHOM_CATALOG_FILE_NAME = ROOT + "instructionsNautiquesShom.xml";
     private final double POI_ALTITUDE = 500000.0;
     private final WorldWindow wwd;
-    private final SailingDirectionsComponentImpl instrument;
+    private final SailingDirectionsComponentImpl component;
     private final GuiAgentServices guiAgentServices;
     private final S57ChartComponentServices s57ChartComponentServices;
     private final LayersManagerServices layersManagerServices;
@@ -111,13 +110,14 @@ public class SailingDirectionsViewerComponentController
         return INSTANCE;
     }
 
+    @SuppressWarnings("LeakingThisInConstructor")
     public SailingDirectionsViewerComponentController(SailingDirectionsComponentImpl instrument,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
             S57ChartComponentServices s57ChartComponentServices,
             LayersManagerServices layersManagerServices) {
         super(keyCode, keyCombination);
-        this.instrument = instrument;
+        this.component = instrument;
         this.guiAgentServices = guiAgentServices;
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.layersManagerServices = layersManagerServices;
@@ -160,13 +160,13 @@ public class SailingDirectionsViewerComponentController
             ShomSailingDirections shomSailingDirections = new ShomSailingDirections(ROOT + filename);
             showPoi(shomSailingDirections.getPoiMap());
 
-            instrument.off();
+            component.off();
 
             Point point = shomSailingDirections.getCentroid();
             wwd.getView().goTo(Position.fromDegrees(point.getX(), point.getY()), POI_ALTITUDE);
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
-            instrument.off();
+            component.off();
         });
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {

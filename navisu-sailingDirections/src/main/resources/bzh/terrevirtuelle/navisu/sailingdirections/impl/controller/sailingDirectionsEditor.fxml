@@ -46,7 +46,7 @@
                         </ComboBox>
                     </children>
                 </GridPane>
-                <Text layoutX="119.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="SAILING DIRECTIONS VIEWER" />
+                <Text layoutX="119.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="SAILING DIRECTIONS EDITOR" />
                 <Button fx:id="quit" alignment="CENTER" layoutX="402.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
             </children>

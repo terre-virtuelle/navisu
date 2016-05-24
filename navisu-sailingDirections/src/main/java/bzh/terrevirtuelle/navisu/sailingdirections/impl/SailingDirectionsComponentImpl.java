@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
 
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -38,7 +39,9 @@ public class SailingDirectionsComponentImpl
     S57ChartComponentServices s57ChartComponentServices;
     @UsedService
     LayersManagerServices layersManagerServices;
-
+    @UsedService
+    GraphDatabaseComponentServices graphDatabaseComponentServices;
+    
     private SailingDirectionsViewerComponentController controller0;
     private SailingDirectionsEditorComponentController controller1;
 
@@ -53,7 +56,7 @@ public class SailingDirectionsComponentImpl
 
             } else if (cmd[0].equals(COMPONENT_KEY_NAME_1)) {
                 controller1 = SailingDirectionsEditorComponentController.getInstance(this, KeyCode.S, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices, s57ChartComponentServices, layersManagerServices);
+                        guiAgentServices, s57ChartComponentServices, layersManagerServices, graphDatabaseComponentServices);
                 controller1.setVisible(true);
             }
         }

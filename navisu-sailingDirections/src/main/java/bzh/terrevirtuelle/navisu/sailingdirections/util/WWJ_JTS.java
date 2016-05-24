@@ -144,7 +144,7 @@ public class WWJ_JTS {
             if (geometry != null) {
                 centroid.add(geometry);
                 Coordinate coord = centroid.getCentroid();
-                location = new Pair(coord.y, coord.x);
+                location = new Pair<>(coord.y, coord.x);
             }
         }
         return location;

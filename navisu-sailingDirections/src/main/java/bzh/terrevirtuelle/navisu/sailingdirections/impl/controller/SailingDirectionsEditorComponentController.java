@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SdShom;
@@ -32,6 +33,8 @@ import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +58,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Result;
+import org.neo4j.graphdb.Transaction;
 
 /**
  *
@@ -73,14 +79,22 @@ public class SailingDirectionsEditorComponentController
     private final String ICON_NAME = "SailingDirections";
     private final String GROUP_NAME = "Navigation";
     private final String ROOT = "data/sd/shom/";
+    private final String GRAPH_DB_IN = "data/databases/TestNeo4JDB_IN";
     private final String IN_SHOM_CATALOG_FILE_NAME = ROOT + "instructionsNautiquesShom.xml";
+    private final String IN_SHOM_GRAPH_21_FILE_NAME = ROOT + "d21.cypher";
     private final double POI_ALTITUDE = 500000.0;
     private final WorldWindow wwd;
     private final SailingDirectionsComponentImpl instrument;
     private final GuiAgentServices guiAgentServices;
     private final S57ChartComponentServices s57ChartComponentServices;
     private final LayersManagerServices layersManagerServices;
-
+    private final GraphDatabaseComponentServices graphDatabaseComponentServices;
+    private GraphDatabaseService graphDb;
+    private String createRequest;
+    private final String REQUEST_0 = "MATCH (n) WHERE n.ID =~ 'D21.*' RETURN n";
+    private final String REQUEST_2 = "MATCH (n)  RETURN n";
+    private final String REQUEST_1 = " MATCH (n:`RACINE`)-[r*]->(b:`SECTION`) WHERE n.ID='D21' "
+            + "RETURN n.TITRE AS racineTitre, n.ID as racineId,r,b.TITRE AS sectionTitre, b.ID AS sectionId";
     protected RenderableLayer sailingDirectionsPgonLayer;
     protected RenderableLayer sailingDirectionsIconsLayer;
     private NavigationDataSet navigationDataSet;
@@ -98,10 +112,12 @@ public class SailingDirectionsEditorComponentController
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
             S57ChartComponentServices s57ChartComponentServices,
-            LayersManagerServices layersManagerServices) {
+            LayersManagerServices layersManagerServices,
+            GraphDatabaseComponentServices graphDatabaseComponentServices) {
         if (INSTANCE == null) {
             INSTANCE = new SailingDirectionsEditorComponentController(instrument, keyCode, keyCombination,
-                    guiAgentServices, s57ChartComponentServices, layersManagerServices);
+                    guiAgentServices, s57ChartComponentServices,
+                    layersManagerServices, graphDatabaseComponentServices);
         }
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, INSTANCE);
         guiAgentServices.getRoot().getChildren().add(INSTANCE);
@@ -113,12 +129,14 @@ public class SailingDirectionsEditorComponentController
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
             S57ChartComponentServices s57ChartComponentServices,
-            LayersManagerServices layersManagerServices) {
+            LayersManagerServices layersManagerServices,
+            GraphDatabaseComponentServices graphDatabaseComponentServices) {
         super(keyCode, keyCombination);
         this.instrument = instrument;
         this.guiAgentServices = guiAgentServices;
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.layersManagerServices = layersManagerServices;
+        this.graphDatabaseComponentServices = graphDatabaseComponentServices;
         wwd = GeoWorldWindViewImpl.getWW();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
@@ -169,6 +187,18 @@ public class SailingDirectionsEditorComponentController
                 view.setOpacity(opacitySlider.getValue());
             });
         });
+        guiAgentServices.getJobsManager().newJob("retrieveAll", (progressHandle) -> {
+            try {
+                createRequest = new String(Files.readAllBytes(Paths.get(IN_SHOM_GRAPH_21_FILE_NAME)));
+            } catch (IOException ex) {
+                Logger.getLogger(SailingDirectionsEditorComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+            createGraphDB(GRAPH_DB_IN);
+            Result result = graphDb.execute(REQUEST_2);
+            while (result.hasNext()) {
+                System.out.println(result.resultAsString());
+            }
+        });
     }
 
     public Set<Pair<Double, Double>> showPoi(Map<Pair<Double, Double>, String> data) {
@@ -188,5 +218,17 @@ public class SailingDirectionsEditorComponentController
             sailingDirectionsIconsLayer.addRenderable(placemark);
         });
         return latLonSet;
+    }
+
+    private void createGraphDB(String dbName) {
+
+        graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(dbName);
+        Transaction tx = graphDb.beginTx();
+        try {
+            graphDb.execute(createRequest);
+            tx.success();
+        } finally {
+            tx.close();
+        }
     }
 }
