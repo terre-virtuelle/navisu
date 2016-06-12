@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.navigation.view;
+package bzh.terrevirtuelle.navisu.sailingdirections.view;
 
 import java.util.Collections;
 import java.util.HashMap;

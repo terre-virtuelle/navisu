@@ -33,6 +33,7 @@
                 <GridPane layoutX="15.0" layoutY="50.0" prefHeight="54.0" prefWidth="419.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -44,6 +45,7 @@
                                 <FXCollections fx:factory="observableArrayList" />
                             </items>
                         </ComboBox>
+                  <Button fx:id="createKBButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Create KB" GridPane.columnIndex="1" />
                     </children>
                 </GridPane>
                 <Text layoutX="119.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="SAILING DIRECTIONS EDITOR" />

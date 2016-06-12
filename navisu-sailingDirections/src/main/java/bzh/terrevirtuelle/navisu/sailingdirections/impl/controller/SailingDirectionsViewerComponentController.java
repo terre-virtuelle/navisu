@@ -15,8 +15,8 @@ import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SdShomCatalog;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.ShomSailingDirections;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
-import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
+import bzh.terrevirtuelle.navisu.sailingdirections.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.sailingdirections.view.Poimark;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 //import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
@@ -134,7 +134,7 @@ public class SailingDirectionsViewerComponentController
         sailingDirectionsPgonLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_1);
         sailingDirectionsPgonLayer.setPickEnabled(false);
         sailingDirectionsIconsLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_0);
-
+        sailingDirectionsIconsLayer.setPickEnabled(true);
         addListeners();
     }
 
@@ -177,22 +177,6 @@ public class SailingDirectionsViewerComponentController
 
     public Set<Pair<Double, Double>> showPoi(Map<Pair<Double, Double>, String> data) {
         Set<Pair<Double, Double>> latLonSet = data.keySet();
-        /*
-        latLonSet.stream().map((ll) -> {
-            String imageAddress = NavigationIcons.ICONS.get(ICON_NAME);
-           
-            PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(ll.getX(), ll.getY(), 0));
-            placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-            placemark.setValue(AVKey.DISPLAY_NAME, data.get(ll));
-            PointPlacemarkAttributes normalAttributes = new PointPlacemarkAttributes();
-            normalAttributes.setImageAddress(imageAddress);
-            normalAttributes.setScale(0.4);
-            placemark.setAttributes(normalAttributes);
-            return placemark;
-        }).forEach((placemark) -> {
-            sailingDirectionsIconsLayer.addRenderable(placemark);
-        });
-         */
         latLonSet.stream().map((ll) -> {
             String imageAddress = NavigationIcons.ICONS.get(ICON_NAME);
 
