@@ -392,7 +392,7 @@ public class AppMain extends Application {
         /* Test connexion GPS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-        // dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
+       //  dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
         /* Test connexion Gpsd */
  /*
         Fulup 12 avril 2016
@@ -403,7 +403,7 @@ public class AppMain extends Application {
         - tcp://sinagot.net:5003 Simulateur AIS
         - gpsd://sinagot.net:2947 AIS zone Bretagne 
          */
-        dataServerServices.openGpsd("sinagot.net", 2947);//Bretagne AIS Fulup
+        //dataServerServices.openGpsd("sinagot.net", 2947);//Bretagne AIS Fulup
         // dataServerServices.openGpsd("sinagot.net", 5003);
         // dataServerServices.openGpsd("sinagot.net", 5121);
         //dataServerServices.openGpsd("hd-sf.com", 9009);
