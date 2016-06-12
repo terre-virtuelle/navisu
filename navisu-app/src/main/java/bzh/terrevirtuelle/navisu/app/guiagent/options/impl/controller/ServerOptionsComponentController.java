@@ -127,6 +127,13 @@ public class ServerOptionsComponentController
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.dataServerServices = dataServerServices;
+        serialPortNames = dataServerServices.getSerialPortNames();
+        System.out.println("serialPortNames "+ serialPortNames);
+            if (serialPortNames != null) {
+                for (String pn : serialPortNames) {
+                    portNameCB.setValue(pn);
+                }
+            }
     }
 
     public static ServerOptionsComponentController getInstance(ServerOptionsComponentImpl component,
