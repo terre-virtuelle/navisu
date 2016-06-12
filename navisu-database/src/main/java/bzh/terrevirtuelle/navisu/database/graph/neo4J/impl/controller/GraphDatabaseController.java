@@ -27,9 +27,7 @@ public class GraphDatabaseController {
                 // .setConfig(GraphDatabaseSettings.string_block_size, "60")
                 // .setConfig(GraphDatabaseSettings.array_block_size, "300")
                 .newGraphDatabase();
-
         registerShutdownHook(graphDb);
-
     }
 
     public static GraphDatabaseController getInstance(String dbName) {
