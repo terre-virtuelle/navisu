@@ -184,33 +184,10 @@ public class SailingDirectionsTreeViewController
             });
         });
         guiAgentServices.getJobsManager().newJob("retrieveAll", (ProgressHandle progressHandle) -> {
-            String createRequest = null;
-            try {
-                createRequest = new String(Files.readAllBytes(Paths.get(IN_SHOM_KB_FILE_NAME)));
-            } catch (IOException ex) {
-                Logger.getLogger(SailingDirectionsEditorComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-            graphDb = createGraphDB(GRAPH_KB_IN, createRequest);
+            graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(GRAPH_KB_IN);
             Result result = graphDb.execute(REQUEST_5);
             createVolumeTree(result);
         });
-    }
-// A mettre plus en amont, options ?
-
-    private GraphDatabaseService createGraphDB(String dbName, String createRequest) {
-
-        graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(dbName);
-       
-        /*
-        // La KB doit etre creee ailleurs
-        if (graphDb != null) {
-            try (Transaction tx = graphDb.beginTx()) {
-                graphDb.execute(createRequest);
-                tx.success();
-            }
-        }
-         */
-        return graphDb;
     }
 
     private void createVolumeTree(Result result) {
