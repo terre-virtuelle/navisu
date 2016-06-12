@@ -24,6 +24,47 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Para {
 
     private Title titre;
+//Pour compatibilite avec travaux Julie Niveau 3
+    @XmlElement(name = "title")
+    private String title;
+@XmlElement(name = "id")
+    private String id;
+
+    /**
+     * Get the value of id
+     *
+     * @return the value of id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param id new value of id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Get the value of title
+     *
+     * @return the value of title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Set the value of title
+     *
+     * @param title new value of title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     @XmlElements({
         @XmlElement(type = Alinea.class)
