@@ -94,6 +94,7 @@ public class SailingDirectionsEditorComponentController
     private final String DB_HOME = USER_HOME + "/" + ".navisu/databases/";
     private final String GRAPH_KB_IN = DB_HOME + "InKB";
     private final String IN_SHOM_KB_FILE_NAME = ROOT + "KB-v2.4.cypher";
+    private final String REQUEST_3 = "MATCH (n:`POLYGONE`) RETURN n";
     private final WorldWindow wwd;
     private final SailingDirectionsComponentImpl instrument;
     private final GuiAgentServices guiAgentServices;
@@ -172,7 +173,9 @@ public class SailingDirectionsEditorComponentController
                     Platform.runLater(() -> {
                         sailingDirectionsTreeViewController
                                 = SailingDirectionsTreeViewController.getInstance(KeyCode.S, KeyCombination.CONTROL_DOWN,
-                                        guiAgentServices, graphDatabaseComponentServices);
+                                        guiAgentServices, layersManagerServices, graphDatabaseComponentServices);
+                       // graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(GRAPH_KB_IN);
+                        
                     });
                 }
             }
@@ -276,4 +279,5 @@ public class SailingDirectionsEditorComponentController
         }
         return graphDb;
     }
+
 }

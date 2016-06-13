@@ -7,17 +7,28 @@ package bzh.terrevirtuelle.navisu.sailingdirections.impl.controller;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolygon;
+import java.awt.Color;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -25,7 +36,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -57,6 +67,10 @@ public class SailingDirectionsTreeViewController
 
     private static SailingDirectionsTreeViewController INSTANCE;
     private final GuiAgentServices guiAgentServices;
+    private final LayersManagerServices layersManagerServices;
+
+    private final String GROUP_NAME = "Navigation";
+    private final String LAYER_NAME_1 = "SailingDirectionsZones";
     private final String FXML = "sailingDirectionsTreeView.fxml";
     private final String USER_HOME = System.getProperty("user.home");
     private final String DB_HOME = USER_HOME + "/" + ".navisu/databases/";
@@ -131,6 +145,8 @@ public class SailingDirectionsTreeViewController
     String[] titre = null;
     String[] niveau = null;
     String[] id;
+    String[] polygonTab;
+    String[] zoneNameTab;
     String bookId;
     String chapterId = "X";
     int chapterSize = 0;
@@ -139,13 +155,17 @@ public class SailingDirectionsTreeViewController
     String paraId = "X";
     int paraSize = 0;
 
+    private final WorldWindow wwd;
+    private final RenderableLayer sailingDirectionsPgonLayer;
+
     public static SailingDirectionsTreeViewController getInstance(
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
+            LayersManagerServices layersManagerServices,
             GraphDatabaseComponentServices graphDatabaseComponentServices) {
         if (INSTANCE == null) {
             INSTANCE = new SailingDirectionsTreeViewController(keyCode, keyCombination,
-                    guiAgentServices, graphDatabaseComponentServices);
+                    guiAgentServices, layersManagerServices, graphDatabaseComponentServices);
         }
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, INSTANCE);
         guiAgentServices.getRoot().getChildren().add(INSTANCE);
@@ -157,9 +177,11 @@ public class SailingDirectionsTreeViewController
     public SailingDirectionsTreeViewController(
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
+            LayersManagerServices layersManagerServices,
             GraphDatabaseComponentServices graphDatabaseComponentServices) {
         super(keyCode, keyCombination);
         this.guiAgentServices = guiAgentServices;
+        this.layersManagerServices = layersManagerServices;
         this.graphDatabaseComponentServices = graphDatabaseComponentServices;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
@@ -169,7 +191,9 @@ public class SailingDirectionsTreeViewController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
+        wwd = GeoWorldWindViewImpl.getWW();
+        sailingDirectionsPgonLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_1);
+        sailingDirectionsPgonLayer.setPickEnabled(true);
     }
 
     @Override
@@ -187,13 +211,15 @@ public class SailingDirectionsTreeViewController
             graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(GRAPH_KB_IN);
             Result result = graphDb.execute(REQUEST_5);
             createVolumeTree(result);
+            Result result1 = graphDb.execute(REQUEST_3);
+            displayPolygons(result1);
+            Result result2 = graphDb.execute(REQUEST_4);
+            System.out.println(result2.resultAsString());
         });
     }
 
     private void createVolumeTree(Result result) {
-        String res;
-
-        res = result.resultAsString();
+        String res = result.resultAsString();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -205,7 +231,6 @@ public class SailingDirectionsTreeViewController
                 while (!stack.empty()) {
                     s = stack.pop();
                     if (s.contains("Node")) {
-                        // System.out.println(s);
                         nodeTab = s.split("\\|");
                         for (String nt : nodeTab) {
                             valueTab = nt.split("\\{");
@@ -279,12 +304,62 @@ public class SailingDirectionsTreeViewController
         );
     }
 
+    private void displayPolygons(Result result) {
+        String res = result.resultAsString();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                tab = res.split("\n");
+                for (String s : tab) {
+                    if (s.contains("Node")) {
+                        polygonTab = s.split("POLYGON\\(\\(");
+                        String polygon = polygonTab[1].replace("))\"}", "");
+                        polygon = polygon.replace("|", "").trim();
+                        String[] polygons = polygon.split(",");
+                        List<LatLon> positions = new ArrayList<>();
+                        for (String ss : polygons) {
+                            String[] pt = ss.split(" ");
+                            positions.add(new LatLon(Angle.fromDegrees(Double.parseDouble(pt[0])),
+                                    Angle.fromDegrees(Double.parseDouble(pt[1]))));
+                        }
+                        SurfacePolygon surfacePolygon = new SurfacePolygon(positions);
+                        createPolygonAttributes(surfacePolygon);
+                        zoneNameTab = polygonTab[0].split("NOM_ZONE:\"\\[");
+                        String zoneName = zoneNameTab[1].replace("]\",COORD:\"POLYGON((", "");
+                        zoneName = zoneName.replace("]\",COORD:\"", "");
+                        surfacePolygon.setValue(AVKey.DISPLAY_NAME, zoneName);
+                        sailingDirectionsPgonLayer.addRenderable(surfacePolygon);
+                    }
+                }
+            }
+        }
+        );
+    }
+
+    protected void createPolygonAttributes(SurfacePolygon shape) {
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setInteriorMaterial(new Material(Color.ORANGE));
+        normalAttributes.setDrawInterior(false);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(new Material(Color.ORANGE));
+        normalAttributes.setEnableLighting(true);
+        shape.setAttributes(normalAttributes);
+
+        ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
+        highlightAttributes.setOutlineOpacity(1);
+        highlightAttributes.setDrawInterior(true);
+        highlightAttributes.setInteriorMaterial(new Material(Color.RED));
+        highlightAttributes.setInteriorOpacity(0.5);
+        shape.setHighlightAttributes(highlightAttributes);
+    }
+
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
 
         private TextField textField;
         private final ContextMenu addMenu = new ContextMenu();
 
         public TextFieldTreeCellImpl() {
+
             MenuItem addMenuItem = new MenuItem("Add item");
             addMenu.getItems().add(addMenuItem);
             addMenuItem.setOnAction(new EventHandler() {
