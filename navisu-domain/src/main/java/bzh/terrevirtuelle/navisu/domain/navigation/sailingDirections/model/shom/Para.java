@@ -21,50 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "para")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Para {
-
-    private Title titre;
-//Pour compatibilite avec travaux Julie Niveau 3
-    @XmlElement(name = "title")
-    private String title;
-@XmlElement(name = "id")
-    private String id;
-
-    /**
-     * Get the value of id
-     *
-     * @return the value of id
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @param id new value of id
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * Get the value of title
-     *
-     * @return the value of title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Set the value of title
-     *
-     * @param title new value of title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
+public class Para extends Part {
 
     @XmlElements({
         @XmlElement(type = Alinea.class)
@@ -82,43 +39,9 @@ public class Para {
         return alinea;
     }
 
-    public List<SubParagrah> getSpara() {
+    public List<SubParagrah> getParas() {
         return sPara;
     }
 
-    /**
-     * Get the value of alineaList
-     *
-     * @return the value of alineaList
-     */
-    
-
-    
-
-    /**
-     * Get the value of titre
-     *
-     * @return the value of titre
-     */
-    public Title getTitre() {
-        return titre;
-    }
-
-    /**
-     * Set the value of titre
-     *
-     * @param titre new value of titre
-     */
-    public void setTitre(Title titre) {
-        this.titre = titre;
-    }
-
-    @Override
-    public String toString() {
-        return "Para{" + "titre=" + titre + ", alinea=" + alinea + ", sPara=" + sPara + '}';
-    }
-
-    
-   
 
 }

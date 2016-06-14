@@ -63,9 +63,9 @@ public class ShomSailingDirectionsParser
         List<Chapter> chapters;
         if (book != null) {
             chapters = book.getChapters();
-            chapters.stream().map((c) -> c.getsChapitre()).forEach((sc) -> {
+            chapters.stream().map((c) -> c.getChapitres()).forEach((sc) -> {
                 sc.stream().map((ssc) -> ssc.getPara()).forEach((p) -> {
-                    p.stream().map((pa) -> pa.getSpara()).forEach((sparaList) -> {
+                    p.stream().map((pa) -> pa.getParas()).forEach((sparaList) -> {
                         sparaList.stream().map((spara) -> spara.getAlinea()).forEach((alienaList) -> {
                             alienaList.stream().map((alinea) -> alinea.getTexte()).forEach((Text texte) -> {
                                 List<TextPart> textPartList;
