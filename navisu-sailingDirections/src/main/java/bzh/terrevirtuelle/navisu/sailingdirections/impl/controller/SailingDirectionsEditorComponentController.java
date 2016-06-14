@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.sailingdirections.impl.controller;
 
-import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
@@ -16,7 +15,6 @@ import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServ
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SdShom;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SdShomCatalog;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.ShomSailingDirections;
-import bzh.terrevirtuelle.navisu.domain.photos.exif.Exif;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
 import bzh.terrevirtuelle.navisu.sailingdirections.view.NavigationIcons;
@@ -26,7 +24,6 @@ import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 //import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
 //import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
-import com.drew.imaging.ImageProcessingException;
 import com.vividsolutions.jts.geom.Point;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.WorldWindow;
@@ -40,8 +37,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +54,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -67,7 +61,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 
 /**

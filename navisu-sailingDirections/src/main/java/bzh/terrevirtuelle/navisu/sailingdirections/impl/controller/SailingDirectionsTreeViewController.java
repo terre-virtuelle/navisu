@@ -10,10 +10,15 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Book;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Chapter;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Para;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Part;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.SubChapter;
+import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.shom.Text;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -36,6 +41,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -129,15 +135,15 @@ public class SailingDirectionsTreeViewController
     @FXML
     public GridPane bookGP;
 
-    TreeView<String> treeView;
-    TreeItem<String> rootNode;
+    TreeView<Part> treeView;
+    TreeItem<Part> rootNode;
     private String ROOT_ICON = "folder_16.png";
     private String CHAPTER_ICON = "folder_16.png";
 
-    String book = null;
-    String chapter = "";
-    String subChapter = "";
-    String para = "";
+    String bookTitle = null;
+    String chapterTitle = "";
+    String subChapterTitle = "";
+    String paraTitle = "";
     String[] tab;
     String[] nodeTab;
     String[] valueTab;
@@ -194,6 +200,7 @@ public class SailingDirectionsTreeViewController
         wwd = GeoWorldWindViewImpl.getWW();
         sailingDirectionsPgonLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_1);
         sailingDirectionsPgonLayer.setPickEnabled(true);
+
     }
 
     @Override
@@ -214,7 +221,7 @@ public class SailingDirectionsTreeViewController
             Result result1 = graphDb.execute(REQUEST_3);
             displayPolygons(result1);
             Result result2 = graphDb.execute(REQUEST_4);
-            System.out.println(result2.resultAsString());
+            // System.out.println(result2.resultAsString());
         });
     }
 
@@ -248,21 +255,30 @@ public class SailingDirectionsTreeViewController
                                     }
                                 }
                                 if (niveau != null && titre != null && id != null) {
-                                    if (book == null) {
+                                    if (bookTitle == null) {
                                         if (niveau[1].contains("0")) {
-                                            book = titre[1];
+                                            bookTitle = titre[1];
                                             bookId = id[1];
+                                            Book book = new Book();
+                                            book.setTitle(bookTitle);
+                                            book.setId(bookId);
                                             rootNode = new TreeItem<>(book, new ImageView(new Image(getClass().getResourceAsStream(ROOT_ICON))));
                                             treeView = new TreeView<>(rootNode);
                                             treeView.setEditable(true);
-                                            treeView.setCellFactory((TreeView<String> p) -> new TextFieldTreeCellImpl());
+                                            treeView.getSelectionModel()
+                                                    .selectedItemProperty()
+                                                    .addListener((observable, oldValue, newValue) -> System.out.println("Selected item : " + newValue.getValue()));
+                                            //  treeView.setCellFactory((TreeView<Part> p) -> new TextFieldTreeCellImpl());
                                             bookGP.getChildren().add(treeView);
                                         }
                                     } else if (niveau[1].contains("1")) {
                                         if (!id[1].equals(chapterId)) {
                                             chapterId = id[1];
-                                            chapter = titre[1];
-                                            TreeItem chapterItem
+                                            chapterTitle = titre[1];
+                                            Chapter chapter = new Chapter();
+                                            chapter.setTitle(chapterTitle);
+                                            chapter.setId(chapterId);
+                                            TreeItem<Part> chapterItem
                                                     = new TreeItem<>(chapter, new ImageView(new Image(getClass().getResourceAsStream(CHAPTER_ICON))));
                                             rootNode.getChildren().add(chapterItem);
                                             chapterSize++;
@@ -273,8 +289,11 @@ public class SailingDirectionsTreeViewController
                                         if (!id[1].contains(subChapterId)) {
                                             paraSize = 0;
                                             subChapterId = id[1];
-                                            subChapter = titre[1];
-                                            TreeItem subChapterItem
+                                            subChapterTitle = titre[1];
+                                            SubChapter subChapter = new SubChapter();
+                                            subChapter.setTitle(subChapterTitle);
+                                            subChapter.setId(subChapterId);
+                                            TreeItem<Part> subChapterItem
                                                     = new TreeItem<>(subChapter, new ImageView(new Image(getClass().getResourceAsStream(CHAPTER_ICON))));
                                             rootNode.getChildren().get(chapterSize - 1)
                                                     .getChildren().add(subChapterItem);
@@ -283,8 +302,11 @@ public class SailingDirectionsTreeViewController
                                     } else if (niveau[1].contains("3")) {
                                         if (!id[1].contains(paraId)) {
                                             paraId = id[1];
-                                            para = titre[1];
-                                            TreeItem paraItem
+                                            paraTitle = titre[1];
+                                            Para para = new Para();
+                                            para.setTitle(paraTitle);
+                                            para.setId(paraId);
+                                            TreeItem<Part> paraItem
                                                     = new TreeItem<>(para, new ImageView(new Image(getClass().getResourceAsStream(CHAPTER_ICON))));
                                             rootNode.getChildren().get(chapterSize - 1)
                                                     .getChildren().get(subChapterSize - 1)
@@ -299,9 +321,12 @@ public class SailingDirectionsTreeViewController
                     }
 
                 }
+
             }
+
         }
         );
+
     }
 
     private void displayPolygons(Result result) {
@@ -329,6 +354,7 @@ public class SailingDirectionsTreeViewController
                         zoneName = zoneName.replace("]\",COORD:\"", "");
                         surfacePolygon.setValue(AVKey.DISPLAY_NAME, zoneName);
                         sailingDirectionsPgonLayer.addRenderable(surfacePolygon);
+                        wwd.redrawNow();
                     }
                 }
             }
