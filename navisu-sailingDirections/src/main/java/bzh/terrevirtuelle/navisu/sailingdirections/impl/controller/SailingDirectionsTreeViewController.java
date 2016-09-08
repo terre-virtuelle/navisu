@@ -220,7 +220,7 @@ public class SailingDirectionsTreeViewController
             createVolumeTree(result);
             Result result1 = graphDb.execute(REQUEST_3);
             displayPolygons(result1);
-            Result result2 = graphDb.execute(REQUEST_4);
+           // Result result2 = graphDb.execute(REQUEST_4);
             // System.out.println(result2.resultAsString());
         });
     }
