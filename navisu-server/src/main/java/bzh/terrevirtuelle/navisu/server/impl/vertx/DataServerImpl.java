@@ -75,7 +75,6 @@ public class DataServerImpl
         queueSize = new Integer(properties.getProperty("queueSize").trim());
         sentences = new Sentences();
         parser = new NmeaStringParser(sentences);
-
     }
 
     @Override
@@ -177,9 +176,12 @@ public class DataServerImpl
         serialPortReader.connect(serialPort, baudRate, dataBits, stopBits, parity);
     }
 
-    private void initSerialReader() {
-        serialPortReader = new SerialPortReaderImpl(readerIndex, vertx);
-        readers.add(serialPortReader);
+    @Override
+    public void initSerialReader() {
+        if (serialPortReader == null) {
+            serialPortReader = new SerialPortReaderImpl(readerIndex, vertx);
+            readers.add(serialPortReader);
+        }
         initEventBus();
     }
 

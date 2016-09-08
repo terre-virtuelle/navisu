@@ -14,6 +14,7 @@ public interface DataServerServices
         extends ComponentService {
     public void init();
     public void init(String hostName, int port);
+    public void initSerialReader();
     public String[] getSerialPortNames();
     public void openGpsd(String hostName, int port);
     public void openSerialPort();
