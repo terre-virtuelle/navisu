@@ -36,7 +36,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import org.capcaval.c3.component.annotation.UsedService;
 
 /**
  *
@@ -127,13 +126,17 @@ public class ServerOptionsComponentController
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.dataServerServices = dataServerServices;
+        //dataServerServices.initSerialReader();
         serialPortNames = dataServerServices.getSerialPortNames();
-        System.out.println("serialPortNames "+ serialPortNames);
+        //   System.out.println("serialPortNames "+ serialPortNames);
+        Platform.runLater(() -> {
             if (serialPortNames != null) {
                 for (String pn : serialPortNames) {
+                //    System.out.println("pn ");
                     portNameCB.setValue(pn);
                 }
             }
+        });
     }
 
     public static ServerOptionsComponentController getInstance(ServerOptionsComponentImpl component,

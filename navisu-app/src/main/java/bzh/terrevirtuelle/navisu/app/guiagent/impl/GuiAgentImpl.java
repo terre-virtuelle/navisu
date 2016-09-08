@@ -15,35 +15,28 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl.GeoViewImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerCheckTreeImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ServerOptionsComponentImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.widgets.alarms.Alarm;
 import bzh.terrevirtuelle.navisu.widgets.alarms.Mob;
 import gov.nasa.worldwind.util.StatusBar;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import org.capcaval.c3.component.annotation.SubComponent;
 import org.capcaval.c3.component.annotation.UsedService;
-import org.capcaval.c3.componentmanager.ComponentManager;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 
 
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
 
 /**
