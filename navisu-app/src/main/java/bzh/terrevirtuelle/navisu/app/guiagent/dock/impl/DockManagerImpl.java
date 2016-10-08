@@ -254,7 +254,7 @@ public class DockManagerImpl<TrackTool>
         meteoRadialMenu = RadialMenuBuilder.create()
                 .centralImage("meteoradialmenu150.png")
                 .createNode(0, "file.png", 0, "vector.png", 0, "grib.png",
-                        (e) -> open("Grib", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc"))
+                        (e) -> open("Grib", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
                 .build();
 
         meteoRadialMenu.setLayoutX((width / 2) - 30);

@@ -1,7 +1,6 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.geoview.impl;
 
 import bzh.terrevirtuelle.navisu.app.dpagent.DpAgentEvents;
-import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoView;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.gobject.GObject;
@@ -15,13 +14,9 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayers;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.globes.ElevationModel;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.terrain.ZeroElevationModel;
 import javafx.scene.Node;
 import org.capcaval.c3.component.ComponentStateAdaptor;
 import org.capcaval.c3.component.annotation.ConsumedEvent;

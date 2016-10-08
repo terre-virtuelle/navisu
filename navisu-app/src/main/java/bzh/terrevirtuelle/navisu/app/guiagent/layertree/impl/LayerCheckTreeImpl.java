@@ -89,6 +89,8 @@ public class LayerCheckTreeImpl
         rootItems.add(tmp);
         CheckBoxTreeItem<GeoLayer> devices = createNode(rootItem0, "Navigation", null);
         rootItems.add(devices);
+        CheckBoxTreeItem<GeoLayer> meteo = createNode(rootItem0, "Meteo", null);
+        rootItems.add(meteo);
         CheckBoxTreeItem<GeoLayer> currents = createNode(rootItem0, "Currents", null);
         rootItems.add(currents);
         CheckBoxTreeItem<GeoLayer> bathymetry = createNode(rootItem0, "Bathymetry", null);
