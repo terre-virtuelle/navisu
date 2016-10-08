@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu Sep 08 20:44:02 CEST 2016:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-0157-0b1d-2502-00000e342cd8 
+Sat Oct 08 16:28:55 CEST 2016:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.3 - (1557168): instance a816c00e-0157-a4b2-5c3e-00000836feb0 
 on database directory /home/serge/.navisu/databases/NaVisuDB with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
 Loaded from file:/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-database/lib/derby.jar
 java.vendor=Oracle Corporation
@@ -8,6 +8,6 @@ java.runtime.version=1.8.0_65-b17
 user.dir=/home/serge/Data/developement/ProjetNaVisu/navisu/navisu-launcher
 os.name=Linux
 os.arch=amd64
-os.version=4.2.0-42-generic
+os.version=4.4.0-38-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
