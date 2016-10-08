@@ -51,8 +51,6 @@ import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.Bezier2DServices;
 import bzh.terrevirtuelle.navisu.geometry.curves2D.bezier.impl.Bezier2DImpl;
 import bzh.terrevirtuelle.navisu.gpx.GpxObjectServices;
 import bzh.terrevirtuelle.navisu.gpx.impl.GpxObjectImpl;
-import bzh.terrevirtuelle.navisu.netcdf.grib.GribServices;
-import bzh.terrevirtuelle.navisu.netcdf.grib.impl.GribImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.AisServices;
 import bzh.terrevirtuelle.navisu.instruments.ais.base.impl.AisImpl;
 import bzh.terrevirtuelle.navisu.instruments.ais.logger.AisLoggerServices;
@@ -138,6 +136,8 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.MeteoNetCdfServices;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.MeteoNetCdfImpl;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -145,7 +145,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServ
  * @author Jordan Mens <jordan.mens at gmail.com>
  * @author Dominique Marques <dom.marques at free.fr>
  */
-
 public class AppMain extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
@@ -159,9 +158,7 @@ public class AppMain extends Application {
     @Override
     @SuppressWarnings({"unchecked", "varargs"})
     public void start(Stage stage) throws Exception {
-        
-        
-        
+
         Translator.setLang(I18nLangEnum.FRENCH);
 
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
@@ -176,9 +173,8 @@ public class AppMain extends Application {
 
         final ComponentManager componentManager = ComponentManager.componentManager;
         /* Deploy components */
-        
-        LOGGER.info("\n"
 
+        LOGGER.info("\n"
                 + componentManager.startApplication(GuiAgentImpl.class,//in first
                         AisImpl.class,
                         AisLoggerImpl.class,
@@ -209,7 +205,7 @@ public class AppMain extends Application {
                         GpsPlotterWithRouteImpl.class,
                         GpxObjectImpl.class,
                         GraphDatabaseComponentImpl.class,
-                        GribImpl.class,
+                        //GribImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
                         KapChartImpl.class,
@@ -217,6 +213,7 @@ public class AppMain extends Application {
                         LayersManagerImpl.class,
                         MagneticImpl.class,
                         MeasureToolsImpl.class,
+                        MeteoNetCdfImpl.class,
                         NavigationServerImpl.class,
                         NavigationCmdComponentImpl.class,
                         NmeaClientImpl.class,
@@ -275,7 +272,7 @@ public class AppMain extends Application {
         GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
         GraphDatabaseComponentServices graphDatabaseComponentServices = componentManager.getComponentService(GraphDatabaseComponentServices.class);
-        GribServices gribServices = componentManager.getComponentService(GribServices.class);
+        //  GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
 
@@ -288,6 +285,7 @@ public class AppMain extends Application {
 
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         MeasureToolsServices measureToolsServices = componentManager.getComponentService(MeasureToolsServices.class);
+        MeteoNetCdfServices meteoNetCdfServices = componentManager.getComponentService(MeteoNetCdfServices.class);
 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         NavigationServerServices navigationServerServices = componentManager.getComponentService(NavigationServerServices.class);
@@ -335,9 +333,10 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver((Driver) geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
-        driverServices.registerNewDriver((Driver) gribServices.getDriver());
+       // driverServices.registerNewDriver((Driver) gribServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
+        driverServices.registerNewDriver((Driver) meteoNetCdfServices.getDriver());
         driverServices.registerNewDriver(shapefileObjectServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
@@ -392,7 +391,7 @@ public class AppMain extends Application {
         /* Test connexion GPS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-       //  dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
+        //  dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
         /* Test connexion Gpsd */
  /*
         Fulup 12 avril 2016
@@ -496,11 +495,10 @@ public class AppMain extends Application {
          }
          System.out.println(exif1);
          */
-        
-        /* Test Navigation RA Communication with external client 
-        */
+ /* Test Navigation RA Communication with external client 
+         */
         navigationServerServices.init(8787);
-        
+
         /* Stop Applicaton */
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
