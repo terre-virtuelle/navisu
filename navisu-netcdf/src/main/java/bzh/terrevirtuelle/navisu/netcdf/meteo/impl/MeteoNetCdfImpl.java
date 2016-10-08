@@ -1,18 +1,13 @@
-package bzh.terrevirtuelle.navisu.netcdf.grib.impl;
+package bzh.terrevirtuelle.navisu.netcdf.meteo.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
-import bzh.terrevirtuelle.navisu.core.view.geoview.GeoView;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.LayerManager;
-import bzh.terrevirtuelle.navisu.netcdf.grib.Grib;
-import bzh.terrevirtuelle.navisu.netcdf.grib.GribServices;
-import bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller.AnalyticSurfaceController;
-import bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller.GribController;
-import bzh.terrevirtuelle.navisu.netcdf.grib.impl.model.GribModel;
-import bzh.terrevirtuelle.navisu.netcdf.grib.impl.view.GribLayer;
-import gov.nasa.worldwind.layers.Layer;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.MeteoNetCdf;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.MeteoNetCdfServices;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.controller.MeteoNetCdfController;
+import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -22,20 +17,17 @@ import java.util.logging.Logger;
 /**
  * User: jordan Date: 23/11/2013
  */
-public class GribImpl 
-        implements Grib, GribServices, ComponentState {
+public class MeteoNetCdfImpl
+        implements MeteoNetCdf, MeteoNetCdfServices, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
-
-    protected static final Logger LOGGER = Logger.getLogger(GribImpl.class.getName());
+    @UsedService
+    LayersManagerServices layersManagerServices;
+    protected static final Logger LOGGER = Logger.getLogger(MeteoNetCdfImpl.class.getName());
 
     protected Driver driver;
-
-    protected GribController gribController;
-    protected GribModel gribModel;
-    protected AnalyticSurfaceController analyticSurfaceController;
-    protected LayerManager<Layer> layerLayerManager;
+    protected MeteoNetCdfController meteoNetCdfController;
 
     @Override
     public void componentInitiated() {
@@ -52,6 +44,7 @@ public class GribImpl
             private static final String EXTENSION_5 = ".grb.gz";
             private static final String EXTENSION_6 = ".grib2";
             private static final String EXTENSION_7 = ".nc";
+            private static final String EXTENSION_8 = ".bz2";
 
             @Override
             public boolean canOpen(String file) {
@@ -63,7 +56,8 @@ public class GribImpl
                         || file.toLowerCase().endsWith(EXTENSION_4)
                         || file.toLowerCase().endsWith(EXTENSION_5)
                         || file.toLowerCase().endsWith(EXTENSION_6)
-                        || file.toLowerCase().endsWith(EXTENSION_7)) {
+                        || file.toLowerCase().endsWith(EXTENSION_7)
+                        || file.toLowerCase().endsWith(EXTENSION_8)) {
                     canOpen = true;
                 }
                 return canOpen;
@@ -113,72 +107,42 @@ public class GribImpl
 
     @Override
     public void loadFile(String path) {
-        this.gribController = new GribController(path);
-        this.gribModel = this.gribController.getModel();
-        analyticSurfaceController
-                = new AnalyticSurfaceController(gribController.getModel().getVelocityField(),
-                        getLongitudeDimension(), getLatitudeDimension(),
-                        getMinLatitude(), getMaxLatitude(),
-                        getMinLongitude(), getMaxLongitude(),
-                        0.0, 15.0,
-                        0.6,
-                        "Wind", "Kt");
-
-        // LOGGER.info(this.gribController.getModel().toString());
-        //  LOGGER.info("######################################## CREATE LAYER #############################################");
-        //  this.layerTreeServices.addGeoLayer("Grib", GeoLayer.impl.newWorldWindGeoLayer(this.gribController.getLayer()));
-        System.out.println("loadFile");
-        this.layerLayerManager = (LayerManager<Layer>) ((GeoView) this.geoViewServices.getDisplayService()).getLayerManager();
-        this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.gribController.getLayer()));
-        this.layerLayerManager.insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(this.analyticSurfaceController.getLayer()));
-
-    }
-
-    @Override
-    public double[] getVelocityInMPSAtPoint(double latitude, double longitude) {
-        return null;
-    }
-
-    @Override
-    public double getPressionAtPoint(double latitude, double longitude) {
-        //TODO add Time
-        return 0;
+        meteoNetCdfController = new MeteoNetCdfController(layersManagerServices, path);
     }
 
     @Override
     public int getLatitudeDimension() {
-
-        return this.gribModel.getLatitudeDimension();
+        return meteoNetCdfController.getLatitudeDimension();
     }
 
     @Override
     public int getLongitudeDimension() {
-        return this.gribModel.getLongitudeDimension();
+        return meteoNetCdfController.getLongitudeDimension();
     }
 
     @Override
     public int getTimeDimension() {
-        return this.gribModel.getTimeDimension();
+        return meteoNetCdfController.getTimeDimension();
     }
 
     @Override
-    public GribLayer getGribLayer() {
-        return this.gribController.getLayer();
+    public RenderableLayer getLayer() {
+        return meteoNetCdfController.getLayer();
     }
 
     public double getMaxLatitude() {
-        return this.gribModel.getMaxLatitude();
+        return meteoNetCdfController.getMaxLatitude();
     }
 
     public double getMaxLongitude() {
-        return this.gribModel.getMaxLongitude();
+        return meteoNetCdfController.getMaxLongitude();
     }
 
     public double getMinLatitude() {
-        return this.gribModel.getMinLatitude();
+        return meteoNetCdfController.getMinLatitude();
     }
 
     public double getMinLongitude() {
-        return gribModel.getMinLongitude();
+        return meteoNetCdfController.getMinLongitude();
     }
 }

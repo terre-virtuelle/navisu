@@ -31,31 +31,30 @@ public class Arrow
     private final double YY = -0.01;
 
     List<Position> positions;
-    static final private List<Range> ranges;
+    static final private List<Range> RANGES;
     static final public int MAX = 200;
 
     static {
-        ranges = new ArrayList<>();
-        ranges.add(Range.closedOpen(0, 5));
-        ranges.add(Range.closedOpen(5, 10));
-        ranges.add(Range.closedOpen(10, 15));
-        ranges.add(Range.closedOpen(15, 20));
-        ranges.add(Range.closedOpen(20, 25));
-        ranges.add(Range.closedOpen(25, 30));
-        ranges.add(Range.closedOpen(30, 35));
-        ranges.add(Range.closedOpen(35, 40));
-        ranges.add(Range.closedOpen(40, 45));
-        ranges.add(Range.closedOpen(45, 60));
-        ranges.add(Range.closedOpen(60, 75));
-        ranges.add(Range.closed(75, MAX));
+        RANGES = new ArrayList<>();
+        RANGES.add(Range.closedOpen(0, 5));
+        RANGES.add(Range.closedOpen(5, 10));
+        RANGES.add(Range.closedOpen(10, 15));
+        RANGES.add(Range.closedOpen(15, 20));
+        RANGES.add(Range.closedOpen(20, 25));
+        RANGES.add(Range.closedOpen(25, 30));
+        RANGES.add(Range.closedOpen(30, 35));
+        RANGES.add(Range.closedOpen(35, 40));
+        RANGES.add(Range.closedOpen(40, 45));
+        RANGES.add(Range.closedOpen(45, 60));
+        RANGES.add(Range.closedOpen(60, 75));
+        RANGES.add(Range.closed(75, MAX));
     }
 
     public Arrow(double lat, double lon, double v) {
-        
-        int velocity = getSymbol(v);
-        setValue(AVKey.DISPLAY_NAME, Integer.toString((int)v)+" Kt");
+        int velocity = getSymbol(2 * v);
         switch (velocity) {
             case 0:
+                initShape_0_5(lat, lon);
             case 1:
                 initShape_5_10(lat, lon);
                 break;
@@ -91,12 +90,13 @@ public class Arrow
                 initShape_75(lat, lon);
             default:
         }
+        setRotation(90.0);
     }
 
     private int getSymbol(double data) {
         int d = (int) data;
-        for (int i = 0; i < ranges.size(); i++) {
-            if (ranges.get(i).contains(d)) {
+        for (int i = 0; i < RANGES.size(); i++) {
+            if (RANGES.get(i).contains(d)) {
                 return i;
             }
         }
@@ -109,7 +109,7 @@ public class Arrow
         pathAttrs.setOutlineWidth(2);
         pathAttrs.setDrawInterior(isDrawInterior);
         pathAttrs.setInteriorMaterial(material);
-        
+
         return pathAttrs;
     }
 
@@ -126,7 +126,21 @@ public class Arrow
     }
 
     private void initShape_0_5(double latitude, double longitude) {
+        double[] dataShape = new double[8];
+        dataShape[0] = longitude + X;
+        dataShape[1] = latitude + X;
+        
+        dataShape[2] = longitude - X;
+        dataShape[3] = latitude + X;
+        
+        dataShape[4] = longitude - X;
+        dataShape[5] = latitude - X;
+        
+        dataShape[6] = longitude + X;
+        dataShape[7] = latitude - X;
 
+        setOuterBoundary(makePositionList(dataShape));
+        setAttributes(makeAttributes(Material.BLUE, false));
     }
 
     private void initShape_5_10(double latitude, double longitude) {
@@ -149,321 +163,322 @@ public class Arrow
 
     private void initShape_10_15(double latitude, double longitude) {
 
-        double[] shipShape = new double[8];
-        shipShape[0] = longitude + X;
-        shipShape[1] = latitude;
+        double[] dataShape = new double[8];
 
-        shipShape[2] = longitude - X;
-        shipShape[3] = latitude;
+        dataShape[1] = longitude + X;
+        dataShape[0] = latitude;
 
-        shipShape[4] = longitude - X - decX;
-        shipShape[5] = latitude - Y;
+        dataShape[3] = longitude - X;
+        dataShape[2] = latitude;
 
-        shipShape[6] = longitude - X;
-        shipShape[7] = latitude;
+        dataShape[5] = longitude - X - decX;
+        dataShape[4] = latitude - Y;
 
-        setOuterBoundary(makePositionList(shipShape));
+        dataShape[6] = longitude - X;
+        dataShape[7] = latitude;
+
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.BLUE, false));
     }
 
     private void initShape_15_20(double latitude, double longitude) {
-        double[] shipShape = new double[14];
-        shipShape[0] = longitude + X;
-        shipShape[1] = latitude;
+        double[] dataShape = new double[14];
+        dataShape[0] = longitude + X;
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X;
-        shipShape[3] = latitude;
+        dataShape[2] = longitude - X;
+        dataShape[3] = latitude;
 
-        shipShape[4] = longitude - X - decX;
-        shipShape[5] = latitude - Y;
+        dataShape[4] = longitude - X - decX;
+        dataShape[5] = latitude - Y;
 
-        shipShape[6] = longitude - X;
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X;
+        dataShape[7] = latitude;
 
-        shipShape[8] = longitude - X + decX;
-        shipShape[9] = latitude;
+        dataShape[8] = longitude - X + decX;
+        dataShape[9] = latitude;
 
-        shipShape[10] = longitude - X + decX / 2;
-        shipShape[11] = latitude - YY;
+        dataShape[10] = longitude - X + decX / 2;
+        dataShape[11] = latitude - YY;
 
-        shipShape[12] = longitude - X + decX;
-        shipShape[13] = latitude;
+        dataShape[12] = longitude - X + decX;
+        dataShape[13] = latitude;
 
-        setOuterBoundary(makePositionList(shipShape));
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.BLUE, false));
 
     }
 
     private void initShape_20_25(double latitude, double longitude) {
-        double[] shipShape = new double[14];
-        shipShape[0] = longitude + X;//0
-        shipShape[1] = latitude;
+        double[] dataShape = new double[14];
+        dataShape[0] = longitude + X;//0
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X;//1
-        shipShape[3] = latitude;
+        dataShape[2] = longitude - X;//1
+        dataShape[3] = latitude;
 
-        shipShape[4] = longitude - X - decX;//2
-        shipShape[5] = latitude - Y;
+        dataShape[4] = longitude - X - decX;//2
+        dataShape[5] = latitude - Y;
 
-        shipShape[6] = longitude - X;//3
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X;//3
+        dataShape[7] = latitude;
 
-        shipShape[8] = longitude - X + decX;//4
-        shipShape[9] = latitude;
+        dataShape[8] = longitude - X + decX;//4
+        dataShape[9] = latitude;
 
-        shipShape[10] = longitude - X;//5
-        shipShape[11] = latitude - Y;
+        dataShape[10] = longitude - X;//5
+        dataShape[11] = latitude - Y;
 
-        shipShape[12] = longitude - X + decX;//6
-        shipShape[13] = latitude;
+        dataShape[12] = longitude - X + decX;//6
+        dataShape[13] = latitude;
 
-        setOuterBoundary(makePositionList(shipShape));
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.BLACK, false));
     }
 
     private void initShape_25_30(double latitude, double longitude) {
-        double[] shipShape = new double[20];
-        shipShape[0] = longitude + X; //0
-        shipShape[1] = latitude;
+        double[] dataShape = new double[20];
+        dataShape[0] = longitude + X; //0
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X; //1
-        shipShape[3] = latitude;
+        dataShape[2] = longitude - X; //1
+        dataShape[3] = latitude;
 
-        shipShape[4] = longitude - X - decX; //2
-        shipShape[5] = latitude - Y;
+        dataShape[4] = longitude - X - decX; //2
+        dataShape[5] = latitude - Y;
 
-        shipShape[6] = longitude - X; //3
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X; //3
+        dataShape[7] = latitude;
 
-        shipShape[8] = longitude - X + decX;//4
-        shipShape[9] = latitude;
+        dataShape[8] = longitude - X + decX;//4
+        dataShape[9] = latitude;
 
-        shipShape[10] = longitude - X;//5
-        shipShape[11] = latitude - Y;
+        dataShape[10] = longitude - X;//5
+        dataShape[11] = latitude - Y;
 
-        shipShape[12] = longitude - X + decX;//6
-        shipShape[13] = latitude;
+        dataShape[12] = longitude - X + decX;//6
+        dataShape[13] = latitude;
 
-        shipShape[14] = longitude - X + 2 * decX; //7
-        shipShape[15] = latitude;
+        dataShape[14] = longitude - X + 2 * decX; //7
+        dataShape[15] = latitude;
 
-        shipShape[16] = longitude - X + 1.5 * decX;  //8
-        shipShape[17] = latitude - YY;
+        dataShape[16] = longitude - X + 1.5 * decX;  //8
+        dataShape[17] = latitude - YY;
 
-        shipShape[18] = longitude - X + 2 * decX;  //9
-        shipShape[19] = latitude;
+        dataShape[18] = longitude - X + 2 * decX;  //9
+        dataShape[19] = latitude;
 
-        setOuterBoundary(makePositionList(shipShape));
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.BLACK, false));
     }
 
     private void initShape_30_35(double latitude, double longitude) {
-        double[] shipShape = new double[20];
-        shipShape[0] = longitude + X; //0
-        shipShape[1] = latitude;
+        double[] dataShape = new double[20];
+        dataShape[0] = longitude + X; //0
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X; //1
-        shipShape[3] = latitude;
+        dataShape[2] = longitude - X; //1
+        dataShape[3] = latitude;
 
-        shipShape[4] = longitude - X - decX; //2
-        shipShape[5] = latitude - Y;
+        dataShape[4] = longitude - X - decX; //2
+        dataShape[5] = latitude - Y;
 
-        shipShape[6] = longitude - X; //3
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X; //3
+        dataShape[7] = latitude;
 
-        shipShape[8] = longitude - X + decX;//4
-        shipShape[9] = latitude;
+        dataShape[8] = longitude - X + decX;//4
+        dataShape[9] = latitude;
 
-        shipShape[10] = longitude - X;//5
-        shipShape[11] = latitude - Y;
+        dataShape[10] = longitude - X;//5
+        dataShape[11] = latitude - Y;
 
-        shipShape[12] = longitude - X + decX;//6
-        shipShape[13] = latitude;
+        dataShape[12] = longitude - X + decX;//6
+        dataShape[13] = latitude;
 
-        shipShape[14] = longitude - X + 2 * decX; //7
-        shipShape[15] = latitude;
+        dataShape[14] = longitude - X + 2 * decX; //7
+        dataShape[15] = latitude;
 
-        shipShape[16] = longitude - X + decX;  //8
-        shipShape[17] = latitude - Y;
+        dataShape[16] = longitude - X + decX;  //8
+        dataShape[17] = latitude - Y;
 
-        shipShape[18] = longitude - X + 2 * decX;  //9
-        shipShape[19] = latitude;
+        dataShape[18] = longitude - X + 2 * decX;  //9
+        dataShape[19] = latitude;
 
-        setOuterBoundary(makePositionList(shipShape));
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.BLACK, false));
     }
 
     private void initShape_35_40(double latitude, double longitude) {
-        double[] shipShape = new double[26];
-        shipShape[0] = longitude + X; //0
-        shipShape[1] = latitude;
+        double[] dataShape = new double[26];
+        dataShape[0] = longitude + X; //0
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X; //1
-        shipShape[3] = latitude;
+        dataShape[2] = longitude - X; //1
+        dataShape[3] = latitude;
 
-        shipShape[4] = longitude - X - decX; //2
-        shipShape[5] = latitude - Y;
+        dataShape[4] = longitude - X - decX; //2
+        dataShape[5] = latitude - Y;
 
-        shipShape[6] = longitude - X; //3
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X; //3
+        dataShape[7] = latitude;
 
-        shipShape[8] = longitude - X + decX;//4
-        shipShape[9] = latitude;
+        dataShape[8] = longitude - X + decX;//4
+        dataShape[9] = latitude;
 
-        shipShape[10] = longitude - X;//5
-        shipShape[11] = latitude - Y;
+        dataShape[10] = longitude - X;//5
+        dataShape[11] = latitude - Y;
 
-        shipShape[12] = longitude - X + decX;//6
-        shipShape[13] = latitude;
+        dataShape[12] = longitude - X + decX;//6
+        dataShape[13] = latitude;
 
-        shipShape[14] = longitude - X + 2 * decX; //7
-        shipShape[15] = latitude;
+        dataShape[14] = longitude - X + 2 * decX; //7
+        dataShape[15] = latitude;
 
-        shipShape[16] = longitude - X + decX;  //8
-        shipShape[17] = latitude - Y;
+        dataShape[16] = longitude - X + decX;  //8
+        dataShape[17] = latitude - Y;
 
-        shipShape[18] = longitude - X + 2 * decX;  //9
-        shipShape[19] = latitude;
+        dataShape[18] = longitude - X + 2 * decX;  //9
+        dataShape[19] = latitude;
 
-        shipShape[20] = longitude - X + 3 * decX;  //10
-        shipShape[21] = latitude;
+        dataShape[20] = longitude - X + 3 * decX;  //10
+        dataShape[21] = latitude;
 
-        shipShape[22] = longitude - X + 2.5 * decX;  //11
-        shipShape[23] = latitude - YY;
+        dataShape[22] = longitude - X + 2.5 * decX;  //11
+        dataShape[23] = latitude - YY;
 
-        shipShape[24] = longitude - X + 3 * decX;  //12
-        shipShape[25] = latitude;
+        dataShape[24] = longitude - X + 3 * decX;  //12
+        dataShape[25] = latitude;
 
-        setOuterBoundary(makePositionList(shipShape));
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.BLACK, false));
     }
 
     private void initShape_40_45(double latitude, double longitude) {
-        double[] shipShape = new double[26];
-        shipShape[0] = longitude + X; //0
-        shipShape[1] = latitude;
+        double[] dataShape = new double[26];
+        dataShape[0] = longitude + X; //0
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X; //1
-        shipShape[3] = latitude;
+        dataShape[2] = longitude - X; //1
+        dataShape[3] = latitude;
 
-        shipShape[4] = longitude - X - decX; //2
-        shipShape[5] = latitude - Y;
+        dataShape[4] = longitude - X - decX; //2
+        dataShape[5] = latitude - Y;
 
-        shipShape[6] = longitude - X; //3
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X; //3
+        dataShape[7] = latitude;
 
-        shipShape[8] = longitude - X + decX;//4
-        shipShape[9] = latitude;
+        dataShape[8] = longitude - X + decX;//4
+        dataShape[9] = latitude;
 
-        shipShape[10] = longitude - X;//5
-        shipShape[11] = latitude - Y;
+        dataShape[10] = longitude - X;//5
+        dataShape[11] = latitude - Y;
 
-        shipShape[12] = longitude - X + decX;//6
-        shipShape[13] = latitude;
+        dataShape[12] = longitude - X + decX;//6
+        dataShape[13] = latitude;
 
-        shipShape[14] = longitude - X + 2 * decX; //7
-        shipShape[15] = latitude;
+        dataShape[14] = longitude - X + 2 * decX; //7
+        dataShape[15] = latitude;
 
-        shipShape[16] = longitude - X + decX;  //8
-        shipShape[17] = latitude - Y;
+        dataShape[16] = longitude - X + decX;  //8
+        dataShape[17] = latitude - Y;
 
-        shipShape[18] = longitude - X + 2 * decX;  //9
-        shipShape[19] = latitude;
+        dataShape[18] = longitude - X + 2 * decX;  //9
+        dataShape[19] = latitude;
 
-        shipShape[20] = longitude - X + 3 * decX;  //10
-        shipShape[21] = latitude;
+        dataShape[20] = longitude - X + 3 * decX;  //10
+        dataShape[21] = latitude;
 
-        shipShape[22] = longitude - X + 2 * decX;  //11
-        shipShape[23] = latitude - Y;
+        dataShape[22] = longitude - X + 2 * decX;  //11
+        dataShape[23] = latitude - Y;
 
-        shipShape[24] = longitude - X + 3 * decX;  //12
-        shipShape[25] = latitude;
+        dataShape[24] = longitude - X + 3 * decX;  //12
+        dataShape[25] = latitude;
 
-        setOuterBoundary(makePositionList(shipShape));
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.BLACK, false));
     }
 
     private void initShape_45_60(double latitude, double longitude) {
-        double[] shipShape = new double[8];
+        double[] dataShape = new double[8];
 
-        shipShape[0] = longitude - X; //1
-        shipShape[1] = latitude;
+        dataShape[0] = longitude - X; //1
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X + decX; //2
-        shipShape[3] = latitude - Y;
+        dataShape[2] = longitude - X + decX; //2
+        dataShape[3] = latitude - Y;
 
-        shipShape[4] = longitude - X + 4 * decX; //3
-        shipShape[5] = latitude;
+        dataShape[4] = longitude - X + 4 * decX; //3
+        dataShape[5] = latitude;
 
-        shipShape[6] = longitude + X; //0
-        shipShape[7] = latitude;
+        dataShape[6] = longitude + X; //0
+        dataShape[7] = latitude;
 
-        setOuterBoundary(makePositionList(shipShape));
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.RED, true));
     }
 
     private void initShape_60_75(double latitude, double longitude) {
-        double[] shipShape = new double[14];
+        double[] dataShape = new double[14];
 
-        shipShape[0] = longitude - X; //0
-        shipShape[1] = latitude;
+        dataShape[0] = longitude - X; //0
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X + decX; //1
-        shipShape[3] = latitude - Y;
+        dataShape[2] = longitude - X + decX; //1
+        dataShape[3] = latitude - Y;
 
-        shipShape[4] = longitude - X + 4 * decX; //2
-        shipShape[5] = latitude;
+        dataShape[4] = longitude - X + 4 * decX; //2
+        dataShape[5] = latitude;
 
-        shipShape[6] = longitude - X + 5 * decX;; //3
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X + 5 * decX;; //3
+        dataShape[7] = latitude;
 
-        shipShape[8] = longitude - X + 2 * decX; //4
-        shipShape[9] = latitude - Y;
+        dataShape[8] = longitude - X + 2 * decX; //4
+        dataShape[9] = latitude - Y;
 
-        shipShape[10] = longitude - X + 5 * decX; //5
-        shipShape[11] = latitude;
+        dataShape[10] = longitude - X + 5 * decX; //5
+        dataShape[11] = latitude;
 
-        shipShape[12] = longitude + X; //6
-        shipShape[13] = latitude;
-        
-        setOuterBoundary(makePositionList(shipShape));
+        dataShape[12] = longitude + X; //6
+        dataShape[13] = latitude;
+
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.RED, true));
     }
 
     private void initShape_75(double latitude, double longitude) {
-        double[] shipShape = new double[20];
+        double[] dataShape = new double[20];
 
-        shipShape[0] = longitude - X; //0
-        shipShape[1] = latitude;
+        dataShape[0] = longitude - X; //0
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X + decX; //1
-        shipShape[3] = latitude - Y;
+        dataShape[2] = longitude - X + decX; //1
+        dataShape[3] = latitude - Y;
 
-        shipShape[4] = longitude - X + 4 * decX; //2
-        shipShape[5] = latitude;
+        dataShape[4] = longitude - X + 4 * decX; //2
+        dataShape[5] = latitude;
 
-        shipShape[6] = longitude - X + 5 * decX;; //3
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X + 5 * decX;; //3
+        dataShape[7] = latitude;
 
-        shipShape[8] = longitude - X + 2 * decX; //4
-        shipShape[9] = latitude - Y;
+        dataShape[8] = longitude - X + 2 * decX; //4
+        dataShape[9] = latitude - Y;
 
-        shipShape[10] = longitude - X + 5 * decX; //5
-        shipShape[11] = latitude;
+        dataShape[10] = longitude - X + 5 * decX; //5
+        dataShape[11] = latitude;
 
-        shipShape[12] = longitude - X + 6 * decX; //5
-        shipShape[13] = latitude;
+        dataShape[12] = longitude - X + 6 * decX; //5
+        dataShape[13] = latitude;
 
-        shipShape[14] = longitude - X + 3 * decX; //4
-        shipShape[15] = latitude - Y;
+        dataShape[14] = longitude - X + 3 * decX; //4
+        dataShape[15] = latitude - Y;
 
-        shipShape[16] = longitude - X + 6 * decX; //5
-        shipShape[17] = latitude;
+        dataShape[16] = longitude - X + 6 * decX; //5
+        dataShape[17] = latitude;
 
-        shipShape[18] = longitude + X; //6
-        shipShape[19] = latitude;
-        
-        setOuterBoundary(makePositionList(shipShape));
+        dataShape[18] = longitude + X; //6
+        dataShape[19] = latitude;
+
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.RED, true));
     }
 }
