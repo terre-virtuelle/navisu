@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ucar.ma2.Array;
+import ucar.nc2.Group;
 import ucar.nc2.Variable;
 import ucar.nc2.dataset.NetcdfDataset;
 
@@ -28,7 +29,13 @@ public class Netcdf {
         try {
             netcdfDataset = NetcdfDataset.openDataset(fileName);
             if (netcdfDataset != null) {
-                variables = netcdfDataset.getReferencedFile().getVariables();
+                List<Group> groups = netcdfDataset.getRootGroup().getGroups();
+                if (groups.size() > 0) {
+                    variables = netcdfDataset.getRootGroup().getGroups().get(0).getVariables();
+                } else {
+                    variables = netcdfDataset.getVariables();
+                }
+                System.out.println("groups : "+ groups);
             }
         } catch (IOException ex) {
             Logger.getLogger(Netcdf.class.getName()).log(Level.SEVERE, null, ex);
@@ -48,7 +55,7 @@ public class Netcdf {
         try {
             value = variable.read();
         } catch (IOException ex) {
-            Logger.getLogger(Netcdf.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Netcdf.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return value;
     }
@@ -65,7 +72,6 @@ public class Netcdf {
     public Variable getVariable(String variableName) {
         Variable variable = null;
         for (Variable v : variables) {
-            //System.out.println("v.getFullName() : "+v.getShortName());
             if (v.getShortName().equals(variableName)) {
                 variable = v;
             }
@@ -83,6 +89,10 @@ public class Netcdf {
             }
         }
         return isValid;
+    }
+
+    public NetcdfDataset getNetcdfDataset() {
+        return netcdfDataset;
     }
 
 }

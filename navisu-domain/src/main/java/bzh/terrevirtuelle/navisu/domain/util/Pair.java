@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bzh.terrevirtuelle.navisu.domain.util;
 
 import java.util.Objects;
+import ucar.ma2.Array;
 
 /**
  *
  * @author Serge Morvan
- * @date 4 oct. 2014
- * NaVisu project
+ * @param <T>
+ * @param <K>
+ * @date 4 oct. 2014 NaVisu project
  */
-public class Pair<T,K>{
+public class Pair<T, K> {
 
     private T x;
 
@@ -92,5 +93,22 @@ public class Pair<T,K>{
     public String toString() {
         return "Pair{" + "x=" + x + ", y=" + y + '}';
     }
-  
+
+    public static Pair<Double, Double> minMax(Array data) {
+        double min = Double.MAX_VALUE;
+        double max = Double.MIN_VALUE;
+        double tmp;
+        int size = (int) data.getSize();
+        for (int i = 0; i < size; i++) {
+            tmp = data.getDouble(i);
+            if (min > tmp) {
+                min = tmp;
+            }
+            if (max < tmp) {
+                max = tmp;
+            }
+        }
+        return new Pair<>(min, max);
+    }
+
 }

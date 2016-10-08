@@ -13,7 +13,8 @@ import java.util.List;
  * @author serge
  * @date Sep 6, 2016
  */
-public class Meteorology extends Netcdf {
+public class Meteorology 
+        extends Netcdf {
 
     private final List<String> VARIABLE_NAME_LIST = Arrays.asList(
             "Categorical_freezing_rain_yes1_no0_surface_Mixed_intervals_Average",
@@ -58,6 +59,10 @@ public class Meteorology extends Netcdf {
     public Meteorology(String fileName) {
         super(fileName);
         variableNameList = VARIABLE_NAME_LIST;
+    }
+
+    public List<String> getVARIABLE_NAME_LIST() {
+        return VARIABLE_NAME_LIST;
     }
 
 }
