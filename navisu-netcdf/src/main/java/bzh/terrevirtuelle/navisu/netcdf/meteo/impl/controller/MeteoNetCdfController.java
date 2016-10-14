@@ -9,8 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.domain.netcdf.Netcdf;
 import bzh.terrevirtuelle.navisu.domain.netcdf.common.TimeSeriesVectorField;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.meteorology.Arrow;
-import bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller.AnalyticSurfaceController;
-import bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller.AnalyticSurfaceController_old;
+import bzh.terrevirtuelle.navisu.netcdf.common.controller.AnalyticSurfaceController;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ucar.ma2.Array;
-import ucar.nc2.NCdumpW;
 import ucar.nc2.Variable;
 
 /**
@@ -50,7 +48,7 @@ public class MeteoNetCdfController {
     protected RenderableLayer meteoLayerAnalytic;
     protected RenderableLayer meteoLayerLegend;
     private static final Logger LOGGER = Logger.getLogger(MeteoNetCdfController.class.getName());
-    protected AnalyticSurfaceController_old analyticSurfaceController;
+    protected AnalyticSurfaceController analyticSurfaceController;
 
     public MeteoNetCdfController(LayersManagerServices layersManagerServices, String fileName) {
         netcdf = new Netcdf(fileName);
@@ -132,7 +130,7 @@ public class MeteoNetCdfController {
         }
         meteoLayerVector.addRenderables(arrows);
 
-        new AnalyticSurfaceController(meteoLayerAnalytic, meteoLayerLegend,
+        analyticSurfaceController = new AnalyticSurfaceController(meteoLayerAnalytic, meteoLayerLegend,
                 values,
                 timeSeriesVectorField.getLatitudeDimension(),
                 timeSeriesVectorField.getLongitudeDimension(),

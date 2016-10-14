@@ -3,7 +3,7 @@
  * National Aeronautics and Space Administration.
  * All Rights Reserved.
  */
-package bzh.terrevirtuelle.navisu.netcdf.grib.impl.controller;
+package bzh.terrevirtuelle.navisu.netcdf.common.controller;
 
 import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurface;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurfaceAttributes;
@@ -77,9 +77,10 @@ public class AnalyticSurfaceController {
 
         BufferWrapper firstBuffer = new BufferFactory.DoubleBufferFactory().newBuffer(vectorField.length);
         firstBuffer.putDouble(0, vectorField, 0, vectorField.length);
-        //   BufferWrapper secondBuffer = randomGridValues(minValue * 2d, maxValue / 2d);
+        BufferWrapper secondBuffer = new BufferFactory.DoubleBufferFactory().newBuffer(vectorField.length);
+        secondBuffer.putDouble(0, vectorField, 0, vectorField.length);
 
-        mixValuesOverTime(2L, firstBuffer, firstBuffer, minValue, maxValue, minHue, maxHue, surface);
+        mixValuesOverTime(2L, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue, surface);
 
         AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
         attr.setDrawShadow(false);
