@@ -1,5 +1,0 @@
-\select@language {french}
-\contentsline {chapter}{\numberline {1}Pr\'eparation des routes}{9}{chapter.1}
-\contentsline {section}{\numberline {1.1}Objet}{9}{section.1.1}
-\contentsline {section}{\numberline {1.2}Choix des cartes}{9}{section.1.2}
-\contentsline {section}{\numberline {1.3}S\'electionner le menu Navigation}{10}{section.1.3}
