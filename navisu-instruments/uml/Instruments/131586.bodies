@@ -1,3 +1,0 @@
-class LoggerImpl
-!!!135810.java!!!	createPrinter() : void
-        loggerController = new LoggerController();

@@ -684,7 +684,7 @@ public class RouteEditorController
             double i = 2 * ellipseMeters / speed;
 
             i = 1 / i;
-            i *= 50000;
+            i *= 5000;
             for (double j = 0; j < ellipseMeters; j += i) {
                 globalCoordinates.add(geoCalc.calculateEndingGlobalCoordinates(reference, start, geoCurve.getAzimuth(), j));
             }

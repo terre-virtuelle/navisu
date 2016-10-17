@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.database.app;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import java.sql.Connection;
 import org.capcaval.c3.component.ComponentService;
-import org.neo4j.graphdb.GraphDatabaseService;
 
 /**
  * NaVisu

@@ -1,5 +1,0 @@
-class LoggerImpl
-!!!145410.java!!!	createPrinter() : void
-        loggerController = new LoggerController();
-!!!145538.java!!!	createPrinter(inout nmea : NMEA) : void
-        loggerController = new LoggerController(nmea);

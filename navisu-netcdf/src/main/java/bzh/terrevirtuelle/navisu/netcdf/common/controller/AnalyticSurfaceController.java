@@ -9,10 +9,13 @@ import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurface;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurfaceAttributes;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurfaceLegend;
 import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Extent;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.DrawContext;
+import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;
@@ -51,6 +54,7 @@ public class AnalyticSurfaceController {
         this.layer.setName("Gradient");
 
         createSurface(vectorField,
+                latDimension,lonDimension,
                 HUE_BLUE, HUE_RED,
                 minLat, maxLat, minLon, maxLon,
                 minValue, maxValue,
@@ -59,6 +63,7 @@ public class AnalyticSurfaceController {
     }
 
     final void createSurface(double[] vectorField,
+            int height, int width,
             double minHue, double maxHue,
             double minLat, double maxLat, double minLon, double maxLon,
             double minVal, double maxVal,
@@ -77,6 +82,22 @@ public class AnalyticSurfaceController {
 
         BufferWrapper firstBuffer = new BufferFactory.DoubleBufferFactory().newBuffer(vectorField.length);
         firstBuffer.putDouble(0, vectorField, 0, vectorField.length);
+        /*
+        int l = 0;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                //  System.out.printf("%.2f %s",values[j + l]," ");
+                PointPlacemark pp = new PointPlacemark(Position.fromDegrees(35 - (i * 0.25), -110 + (j * 0.25), 1e4));
+                String tmp = Double.toString(vectorField[j + l]);
+                pp.setValue(AVKey.DISPLAY_NAME, tmp);
+                pp.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+                pp.setEnableLabelPicking(true);
+                outLayer.addRenderable(pp);
+            }
+            l += width;
+            //  System.out.println("");
+        }
+        */
         BufferWrapper secondBuffer = new BufferFactory.DoubleBufferFactory().newBuffer(vectorField.length);
         secondBuffer.putDouble(0, vectorField, 0, vectorField.length);
 
