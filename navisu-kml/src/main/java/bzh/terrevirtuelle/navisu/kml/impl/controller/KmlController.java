@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.kml.impl.controller;
 
+import bzh.terrevirtuelle.navisu.core.util.BalloonController;
+import bzh.terrevirtuelle.navisu.core.util.HotSpotController;
 import bzh.terrevirtuelle.navisu.kml.impl.controller.wwj.KMLApplicationController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -16,8 +18,7 @@ import gov.nasa.worldwind.ogc.kml.KMLRoot;
 import gov.nasa.worldwind.ogc.kml.impl.KMLController;
 import gov.nasa.worldwind.util.WWIO;
 import gov.nasa.worldwind.util.WWUtil;
-import gov.nasa.worldwindx.examples.util.BalloonController;
-import gov.nasa.worldwindx.examples.util.HotSpotController;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

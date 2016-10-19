@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
+
 import java.util.Map;
 import java.util.Set;
 

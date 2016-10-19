@@ -5,17 +5,14 @@
  */
 package bzh.terrevirtuelle.navisu.netcdf.common.controller;
 
-import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurface;
-import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurfaceAttributes;
-import bzh.terrevirtuelle.navisu.netcdf.common.view.analytics.AnalyticSurfaceLegend;
+import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurface;
+import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceAttributes;
+import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceLegend;
 import gov.nasa.worldwind.WorldWind;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Extent;
-import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.DrawContext;
-import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;

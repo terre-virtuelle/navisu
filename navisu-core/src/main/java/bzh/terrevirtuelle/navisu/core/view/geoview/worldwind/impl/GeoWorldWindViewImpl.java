@@ -1,12 +1,16 @@
 package bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl;
 
 import bzh.terrevirtuelle.navisu.core.model.geom.point.Point;
+import bzh.terrevirtuelle.navisu.core.util.BalloonController;
 import bzh.terrevirtuelle.navisu.core.view.display.jfx.impl.JFXAbstractDisplay;
 import bzh.terrevirtuelle.navisu.core.view.geoview.Projection;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.GeoWorldWindView;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.WorldWindLayerManager;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindLayerManagerImpl;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
+import bzh.terrevirtuelle.navisu.core.util.HighlightController;
+import bzh.terrevirtuelle.navisu.core.util.HotSpotController;
+import bzh.terrevirtuelle.navisu.core.util.ToolTipController;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.view.CustomViewInputHandler;
 import bzh.terrevirtuelle.navisu.geodesy.Location;
 import gov.nasa.worldwind.BasicModel;
@@ -24,10 +28,7 @@ import gov.nasa.worldwind.globes.EarthFlat;
 import gov.nasa.worldwind.globes.ElevationModel;
 import gov.nasa.worldwind.terrain.BathymetryFilterElevationModel;
 import gov.nasa.worldwind.util.PlacemarkClutterFilter;
-import gov.nasa.worldwindx.examples.util.BalloonController;
-import gov.nasa.worldwindx.examples.util.HighlightController;
-import gov.nasa.worldwindx.examples.util.HotSpotController;
-import gov.nasa.worldwindx.examples.util.ToolTipController;
+
 import javafx.embed.swing.SwingNode;
 import javafx.scene.Node;
 

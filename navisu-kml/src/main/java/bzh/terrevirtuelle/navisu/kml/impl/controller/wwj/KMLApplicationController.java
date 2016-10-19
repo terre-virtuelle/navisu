@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.kml.impl.controller.wwj;
 
+import bzh.terrevirtuelle.navisu.core.util.BalloonController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -16,11 +17,11 @@ import gov.nasa.worldwind.ogc.kml.KMLNetworkLink;
 import gov.nasa.worldwind.ogc.kml.KMLPlacemark;
 import gov.nasa.worldwind.ogc.kml.KMLRoot;
 import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
-import gov.nasa.worldwindx.examples.util.BalloonController;
+
 
 import gov.nasa.worldwind.util.Logging;
 import gov.nasa.worldwind.util.tree.TreeNode;
-import gov.nasa.worldwindx.examples.kml.KMLViewController;
+
 import java.awt.Component;
 import java.awt.Cursor;
 import java.beans.PropertyChangeEvent;
@@ -173,7 +174,7 @@ public class KMLApplicationController
      * If neither of the above features contain a view, this ignores the event.
      * Otherwise, this causes the <code>WorldWindow</code>'s <code>View</code>
      * to fly to the feature's <code>KMLAbstractView</code> using a
-     * <code>{@link gov.nasa.worldwindx.examples.kml.KMLViewController}</code>
+     * <code>{@link KMLViewController}</code>
      *
      * @param event a property change event from the
      * <code>SceneController</code>.

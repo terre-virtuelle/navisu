@@ -16,7 +16,6 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfacePolygons;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.awt.Color;
 import java.util.Map;
 import java.util.Set;

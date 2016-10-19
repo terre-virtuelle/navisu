@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.core.util.shapefile.RandomShapeAttributes;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
@@ -30,8 +31,6 @@ import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWIO;
 import gov.nasa.worldwind.util.WWMath;
 import gov.nasa.worldwind.util.WWUtil;
-import gov.nasa.worldwindx.examples.util.RandomShapeAttributes;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -481,7 +480,7 @@ public class SBDARE_ShapefileLoader
     @SuppressWarnings({"UnusedDeclaration"})
     protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
         // System.out.println("createPointAttributes " + record.getAttributes().getEntries());
-        return randomAttrs.nextAttributes().asPointAttributes();
+        return randomAttrs.nextPointAttributes();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
@@ -489,7 +488,7 @@ public class SBDARE_ShapefileLoader
         if (record != null) {
             //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
-        return randomAttrs.nextAttributes().asShapeAttributes();
+        return randomAttrs.nextPolylineAttributes();
     }
 
     

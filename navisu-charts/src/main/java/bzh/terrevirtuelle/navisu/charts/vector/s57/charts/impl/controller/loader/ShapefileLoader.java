@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.core.util.shapefile.RandomShapeAttributes;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.*;
@@ -12,7 +13,7 @@ import gov.nasa.worldwind.geom.*;
 import gov.nasa.worldwind.layers.*;
 import gov.nasa.worldwind.render.*;
 import gov.nasa.worldwind.util.*;
-import gov.nasa.worldwindx.examples.util.RandomShapeAttributes;
+
 
 import java.util.*;
 
@@ -480,7 +481,7 @@ public class ShapefileLoader {
     @SuppressWarnings({"UnusedDeclaration"})
     protected PointPlacemarkAttributes createPointAttributes(ShapefileRecord record) {
        // System.out.println("createPointAttributes " + record.getAttributes().getEntries());
-        return randomAttrs.nextAttributes().asPointAttributes();
+        return randomAttrs.nextPointAttributes();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
@@ -488,13 +489,13 @@ public class ShapefileLoader {
         if (record != null) {
           //  System.out.println("createPolylineAttributes " + record.getAttributes().getEntries());
         }
-        return randomAttrs.nextAttributes().asShapeAttributes();
+        return randomAttrs.nextPolylineAttributes();
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
       //  System.out.println(record.getAttributes().getEntries());
-        return randomAttrs.nextAttributes().asShapeAttributes();
+        return randomAttrs.nextPolygonAttributes();
         
     }
 

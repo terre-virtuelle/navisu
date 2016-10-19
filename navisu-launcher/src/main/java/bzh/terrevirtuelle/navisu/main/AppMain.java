@@ -205,7 +205,6 @@ public class AppMain extends Application {
                         GpsPlotterWithRouteImpl.class,
                         GpxObjectImpl.class,
                         GraphDatabaseComponentImpl.class,
-                        //GribImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
                         KapChartImpl.class,

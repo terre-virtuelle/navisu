@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<fx:root stylesheets="@measuretools.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="450.0" styleClass="measuretool-panel" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" height="520.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0" />
+        <Group layoutY="10.0" styleClass="measuretool-panel">
+            <children>
+                <Button fx:id="newButton" layoutX="23.0" layoutY="45.0" prefHeight="23.0" prefWidth="65.0" text="NEW">
+                    <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="pauseButton" layoutX="86.0" layoutY="45.0" prefHeight="23.0" prefWidth="60.0" text="PAUSE">
+                    <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="endButton" layoutX="320.0" layoutY="45.0" prefHeight="23.0" prefWidth="60.0" text="END">
+                    <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="saveButton" layoutX="146.0" layoutY="45.0" prefHeight="23.0" prefWidth="60.0" text="SAVE">
+                    <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="save3DButton" layoutX="206.0" layoutY="45.0" prefHeight="23.0" prefWidth="60.0" text="SAVE-3D">
+                    <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="selectButton" layoutX="260.0" layoutY="45.0" prefHeight="23.0" prefWidth="60.0" text="SELECT">
+                    <styleClass>
+                        <String fx:value="measuretools-togglebutton" />
+                        <String fx:value="measuretoollabel" />
+                    </styleClass>
+                </Button>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" height="240.0" layoutX="15.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
+                <Button fx:id="quit" alignment="CENTER" layoutX="400.0" layoutY="-14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
+                </Button>
+                <Slider fx:id="opacitySlider" layoutX="426.0" layoutY="105.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+                </Slider>
+                <Group layoutX="-710.0" layoutY="35.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="135.0" layoutX="217.0" layoutY="75.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
+                <Text layoutX="10.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Shape :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                <Text layoutX="10.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Path type :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                <Text layoutX="11.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Units :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                  
+                <ComboBox fx:id="shapeCombo" layoutX="115.0" layoutY="85.0" prefHeight="20.0" prefWidth="80.0" promptText="shape" styleClass="measuretoolcombolabel" visibleRowCount="15">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Polygon" />
+                            <String fx:value="Circle" />
+                            <String fx:value="Ellipse" />
+                            <String fx:value="Square" />
+                            <String fx:value="Rectangle" />
+                            <String fx:value="Line" />
+                            <String fx:value="CoastalLine" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                  
+                <ComboBox fx:id="pathTypeCombo" layoutX="115.0" layoutY="115.0" prefHeight="20.0" prefWidth="80.0" promptText="path" styleClass="measuretoolcombolabel" visibleRowCount="15">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Linear" />
+                            <String fx:value="Rhumb" />
+                            <String fx:value="Great circle" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                  
+                <ComboBox fx:id="unitsCombo" layoutX="116.0" layoutY="145.0" prefHeight="20.0" prefWidth="80.0" promptText="Km/Km²" styleClass="measuretoolcombolabel" visibleRowCount="15">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="M/M²" />
+                            <String fx:value="Km/Km²" />
+                            <String fx:value="Km/Hectare" />
+                            <String fx:value="Feet/Feet²" />
+                            <String fx:value="Miles/Miles²" />
+                            <String fx:value="Nm/Miles²" />
+                            <String fx:value="Yards/Acres" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+                  
+                <ComboBox fx:id="anglesCombo" layoutX="116.0" layoutY="175.0" prefHeight="20.0" prefWidth="80.0" promptText="degrees" styleClass="measuretoolcombolabel" visibleRowCount="15">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Decimal degrees" />
+                            <String fx:value="Degrees, Minutes, Seconds" />   
+                        </FXCollections>
+                    </items>
+                </ComboBox> 
+                  
+                <Text layoutX="11.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Angle format :" textAlignment="RIGHT" wrappingWidth="100.0" />
+                <Text layoutX="230.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Length :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                <Text layoutX="230.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Area :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                <Text layoutX="230.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Width :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                <Text layoutX="230.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Height :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                <Text layoutX="230.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Heading :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                <Text layoutX="230.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoollabel" text="Center :" textAlignment="RIGHT" wrappingWidth="55.0" />
+                <CheckBox fx:id="followCheck" layoutX="28.0" layoutY="218.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Follow terrain">
+                    <font>
+                        <Font name="Footlight MT Light" size="12.0" />
+                    </font>
+                </CheckBox>
+                <CheckBox fx:id="showControlsCheck" layoutX="28.0" layoutY="278.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Control points" />
+                <CheckBox fx:id="rubberBandCheck" layoutX="28.0" layoutY="248.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Rubber band" />
+                <CheckBox fx:id="freeHandCheck" layoutX="128.0" layoutY="218.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Free Hand" />
+                <CheckBox fx:id="showAnnotationCheck" layoutX="128.0" layoutY="248.0" mnemonicParsing="false" styleClass="measuretoollabel" text="Tooltip" />
+                <Text layoutX="154.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="NAVIGATION EDITOR" />
+                <Text fx:id="lengthLabel" layoutX="290.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="lengthLabel" wrappingWidth="100.0" />
+                <Text fx:id="areaLabel" layoutX="290.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="areaLabel" wrappingWidth="100.0" />
+                <Text fx:id="widthLabel" layoutX="290.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="widthLabel" wrappingWidth="100.0" />
+                <Text fx:id="heightLabel" layoutX="290.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="heightLabel" wrappingWidth="100.0" />
+                <Text fx:id="headingLabel" layoutX="290.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="headingLabel" wrappingWidth="100.0" />
+                <Text fx:id="centerLabel" layoutX="290.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="measuretoolvalue" text="centerLabel" wrappingWidth="100.0" />
+                <Text layoutX="438.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="sliderlabel" text="Opacity" x="-23.0" />
+                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="13.0" layoutY="-9.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@logoTV64AIS.png" />
+                    </image>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </ImageView>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="99.0" layoutX="217.0" layoutY="215.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="195.0" />
+                <GridPane layoutX="222.0" layoutY="232.0" prefHeight="50.0" prefWidth="185.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="20.0" prefHeight="20.0" />
+                        <RowConstraints maxHeight="5.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Id" />
+                        <TextField fx:id="idTF" prefHeight="25.0" prefWidth="91.0" styleClass="combo-box-base" GridPane.columnIndex="1" />
+                        <Label text="Zone name" GridPane.rowIndex="2" />
+                        <TextField fx:id="zoneNameTF" prefHeight="32.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Elevation" GridPane.rowIndex="4" />
+                        <TextField fx:id="elevationTF" prefHeight="32.0" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    </children>
+                </GridPane>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="56.0" layoutX="15.0" layoutY="321.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="400.0" />
+            <GridPane layoutX="30.0" layoutY="325.0" prefHeight="56.0" prefWidth="385.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="latitudeTF" prefHeight="25.0" prefWidth="91.0" styleClass="combo-box-base" GridPane.rowIndex="2" />
+                  <TextField fx:id="longitudeTF" prefHeight="25.0" prefWidth="91.0" styleClass="combo-box-base" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label prefHeight="15.0" prefWidth="126.0" text="Latitude" />
+                  <Label prefHeight="15.0" prefWidth="127.0" text="Longitude" GridPane.columnIndex="1" />
+                  <Button fx:id="placeMarkButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="PlaceMark" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button fx:id="clearPlaceMarkButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="Clear" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+                
+            
+            </children>
+        </Group>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d0000" height="113.0" layoutX="15.0" layoutY="391.0" stroke="#00abff" strokeType="INSIDE" styleClass="measuretool-info-pane" width="400.0" />
+      <GridPane layoutX="18.0" layoutY="402.0" prefHeight="98.0" prefWidth="393.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="1.0" minHeight="-Infinity" prefHeight="1.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="19.0" minHeight="-Infinity" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.0" minHeight="10.0" prefHeight="1.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.0" minHeight="-Infinity" prefHeight="1.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.0" minHeight="10.0" prefHeight="1.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="2.0" minHeight="-Infinity" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="2.0" minHeight="-Infinity" prefHeight="15.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="latitudeCamTF" maxHeight="-Infinity" prefHeight="25.0" prefWidth="116.0" styleClass="combo-box-base" GridPane.rowIndex="2" />
+            <Label maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="15.0" prefWidth="126.0" text="Latitude" />
+            <Label prefHeight="15.0" prefWidth="127.0" text="Longitude" GridPane.columnIndex="1" />
+            <TextField fx:id="longitudeCamTF" prefHeight="25.0" prefWidth="116.0" styleClass="combo-box-base" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Heading" GridPane.rowIndex="4" />
+            <Label text="Pitch" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="headingCamTF" GridPane.rowIndex="7" text="0" />
+            <TextField fx:id="pitchCamTF" GridPane.columnIndex="1" GridPane.rowIndex="7" text="90"/>
+            <Button fx:id="gotoCamButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="GoTo" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+         </children>
+      </GridPane>
+    </children>
+</fx:root>

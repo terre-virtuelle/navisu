@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.*?>
+
+<fx:root stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="683.0" prefWidth="1024.0" styleClass="background-pane">
+         <children>
+            <ImageView fx:id="imageView" fitHeight="683.0" fitWidth="1024.0" pickOnBounds="true" preserveRatio="true" />
+         </children></Pane>
+      <Group>
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="683.0" stroke="BLACK" strokeType="INSIDE" styleClass="imageviewcontour" width="1024.0" />
+            <Button fx:id="quit" layoutX="970.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
+                  <Slider fx:id="opacitySlider" layoutX="1007.0" layoutY="150.0" max="1.0" maxHeight="200.0" maxWidth="5.0" minHeight="50.0" minWidth="-Infinity" orientation="VERTICAL" prefHeight="200.0" prefWidth="5.0" value="0.6">
+                        </Slider>
+         </children>
+      </Group>
+    </children>
+</fx:root>

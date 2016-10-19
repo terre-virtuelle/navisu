@@ -16,7 +16,6 @@ import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceText;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;

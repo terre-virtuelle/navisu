@@ -9,7 +9,6 @@ import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 
 /**
  *

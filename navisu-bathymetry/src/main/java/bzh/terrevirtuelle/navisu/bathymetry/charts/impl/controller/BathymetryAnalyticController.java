@@ -5,6 +5,8 @@
  */
 package bzh.terrevirtuelle.navisu.bathymetry.charts.impl.controller;
 
+import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurface;
+import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceAttributes;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.model.Depth;
 import bzh.terrevirtuelle.navisu.domain.bathymetry.view.SHOM_BATHYMETRY_CLUT;
 import bzh.terrevirtuelle.navisu.util.Pair;
@@ -19,8 +21,7 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwindx.examples.analytics.AnalyticSurface;
-import gov.nasa.worldwindx.examples.analytics.AnalyticSurfaceAttributes;
+
 import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Files;

@@ -10,7 +10,6 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.util.Map;
 import java.util.Set;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 
 /**
  *

@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
@@ -15,7 +14,6 @@ import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceIcon;
 import java.awt.Color;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;

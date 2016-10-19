@@ -8,11 +8,9 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.UnderwaterAwashRock;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfaceIcon;
-//import gov.nasa.worldwindx.examples.util.ShapefileLoader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
