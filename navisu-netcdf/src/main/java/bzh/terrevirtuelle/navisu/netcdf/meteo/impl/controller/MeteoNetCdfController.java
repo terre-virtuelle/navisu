@@ -52,7 +52,7 @@ public class MeteoNetCdfController {
 
     public MeteoNetCdfController(LayersManagerServices layersManagerServices, String fileName) {
         netcdf = new Netcdf(fileName);
-        /*
+
         System.out.println("GlobalAttributes");
         System.out.println(netcdf.getNetcdfDataset().getGlobalAttributes());
         System.out.println("DetailInfo");
@@ -62,7 +62,7 @@ public class MeteoNetCdfController {
         System.out.println("FileTypeDescription");
         System.out.println(netcdf.getNetcdfDataset().getFileTypeDescription());
         System.out.println("");
-         */
+
         variables = netcdf.getVariables();
 
         meteoLayerVector = layersManagerServices.getInstance(GROUP, NAME0);
@@ -102,7 +102,8 @@ public class MeteoNetCdfController {
         lonTab = timeSeriesVectorField.getLongitudes();
         values = timeSeriesVectorField.getValues(0);
         directions = timeSeriesVectorField.getDirections(0);
-
+        
+        
         //  System.out.println("variables : " + variables);
         System.out.println("u : " + u.getSize());
         System.out.println("lat : " + latitudes.getSize());
@@ -110,7 +111,10 @@ public class MeteoNetCdfController {
         System.out.println("time : " + time.getSize());
         System.out.println("values : " + values.length);
         // NCdumpW.printArray(u, "u-component_of_wind_height_above_ground", System.out, null);
-
+       // for(double l : lonTab){
+       //     System.out.println("lon : "+Double.toString(l-360));
+       // }
+/*
         List<Arrow> arrows = new ArrayList<>();
         int l = 0;
         for (int h = 0; h < latTab.length; h += 1) {
@@ -122,20 +126,25 @@ public class MeteoNetCdfController {
                 }
                 // arrow.setRotation(-Math.toDegrees(directions[l + w]) + arrow.getRotation());
                 arrow.setRotation(alpha);
-                System.out.println("alpha : " + values[l + w] + " " + alpha);
-                arrow.setValue(AVKey.DISPLAY_NAME, String.format("%.1f m/s %.1f %.1f %.1f ", values[l + w], u.getDouble(l + w), v.getDouble(l + w), Math.toDegrees(directions[l + w])));  //+" m/s");
+                //  System.out.println("alpha : " + values[l + w] + " " + alpha);
+                arrow.setValue(AVKey.DISPLAY_NAME, String.format("%.1f m/s , %.1f , %.1f , %.1f ",
+                        values[l + w], latTab[h], lonTab[w], Math.toDegrees(directions[l + w])));  //+" m/s");
                 arrows.add(arrow);
             }
             l += lonTab.length;
         }
         meteoLayerVector.addRenderables(arrows);
+         */
+        System.out.println(timeSeriesVectorField.getMinLatitude() + " " + timeSeriesVectorField.getMaxLatitude()
+                + " " + timeSeriesVectorField.getMinLongitude() + " " + timeSeriesVectorField.getMaxLongitude());
 
-        analyticSurfaceController = new AnalyticSurfaceController(meteoLayerAnalytic, meteoLayerLegend,
+        analyticSurfaceController = new AnalyticSurfaceController(
+                meteoLayerAnalytic, meteoLayerLegend,
                 values,
                 timeSeriesVectorField.getLatitudeDimension(),
                 timeSeriesVectorField.getLongitudeDimension(),
                 timeSeriesVectorField.getMinLatitude(), timeSeriesVectorField.getMaxLatitude(),
-                timeSeriesVectorField.getMinLongitude(), timeSeriesVectorField.getMaxLongitude(),
+                timeSeriesVectorField.getMinLongitude()-360, timeSeriesVectorField.getMaxLongitude()-360,
                 0.0, timeSeriesVectorField.getMaxValue(0),//min, max values in m/s
                 .8,
                 "Meteo", "Kts");
@@ -171,6 +180,7 @@ public class MeteoNetCdfController {
 
     public RenderableLayer getLayer() {
         return meteoLayerVector;
+
     }
 
     public void setCurrentTime(int currentTimeIndex) {

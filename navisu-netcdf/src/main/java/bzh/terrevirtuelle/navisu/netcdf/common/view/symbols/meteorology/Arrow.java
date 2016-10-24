@@ -6,7 +6,6 @@
 package bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.meteorology;
 
 import com.google.common.collect.Range;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
@@ -120,7 +119,7 @@ public class Arrow
         for (int i = 0; i < numCoords; i++) {
             double lonDegrees = src[2 * i];
             double latDegrees = src[2 * i + 1];
-            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 1500);
+            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 1000);
         }
         return Arrays.asList(array);
     }

@@ -17,108 +17,97 @@ import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;
 import gov.nasa.worldwind.util.WWMath;
+
 import java.awt.Point;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.Format;
 import java.util.ArrayList;
 
-/**
- * @author dcollins
- * @author Serge Morvan
- */
 public class AnalyticSurfaceController {
 
+    protected int lonDimension;
+    protected int latDimension;
+    double minLat;
+    double maxLat;
+    double minLon;
+    double maxLon;
+    protected double minValue;
+    protected double maxValue;
     protected static final double HUE_BLUE = 240d / 360d;
     protected static final double HUE_RED = 0d / 360d;
-    protected RenderableLayer layer;
-    protected double[] vectorField;
+    protected RenderableLayer analyticSurfaceLayer;
+    protected RenderableLayer legendLayer;
+    protected double[] values;
 
-    public AnalyticSurfaceController(RenderableLayer layer, RenderableLayer legendLayer,
+    public AnalyticSurfaceController(
+            RenderableLayer layer, RenderableLayer legendLayer,
             final double[] data,
             int latDimension, int lonDimension,
             double minLat, double maxLat, double minLon, double maxLon,
             double minValue, double maxValue,
             double opacity,
             String legendTitle, String units) {
-        this.layer = layer;
-        this.vectorField = data;
-        //
-        //this.vectorField = new double[latDimension * lonDimension];
-        //  System.arraycopy(data, 0, vectorField, 0, data.length);
 
-        this.layer.setPickEnabled(false);
-        this.layer.setName("Gradient");
-
-        createSurface(vectorField,
-                latDimension,lonDimension,
-                HUE_BLUE, HUE_RED,
+        this.analyticSurfaceLayer = layer;
+        this.legendLayer = legendLayer;
+        this.values = data;
+        this.lonDimension = lonDimension;
+        this.latDimension = latDimension;
+        this.minLat = minLat;
+        this.maxLat = maxLat;
+        this.minLon = minLon;
+        this.maxLon = maxLon;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
+        this.analyticSurfaceLayer.setPickEnabled(false);
+        this.analyticSurfaceLayer.setName("Gradient");
+        createSurface(HUE_BLUE, HUE_RED, this.lonDimension, this.latDimension,
                 minLat, maxLat, minLon, maxLon,
-                minValue, maxValue,
-                layer, legendLayer,
-                legendTitle, units);
+                this.analyticSurfaceLayer, this.legendLayer,
+                minValue, maxValue);
+
     }
 
-    final void createSurface(double[] vectorField,
-            int height, int width,
-            double minHue, double maxHue,
+    protected final void createSurface(double minHue, double maxHue,
+            int width, int height,
             double minLat, double maxLat, double minLon, double maxLon,
-            double minVal, double maxVal,
             RenderableLayer outLayer, RenderableLayer legendLayer,
-            String legendTitle, String units) {
-        double minValue = minVal;
-        double maxValue = maxVal;
+            double minValue, double maxValue) {
 
         AnalyticSurface surface = new AnalyticSurface();
-
-        Sector sector = Sector.fromDegrees(minLat, maxLat, minLon, maxLon);
-        surface.setSector(sector);
+        surface.setSector(Sector.fromDegrees(minLat, maxLat, minLon, maxLon));
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
+        surface.setDimensions(width, height);
         surface.setClientLayer(outLayer);
+
         outLayer.addRenderable(surface);
 
-        BufferWrapper firstBuffer = new BufferFactory.DoubleBufferFactory().newBuffer(vectorField.length);
-        firstBuffer.putDouble(0, vectorField, 0, vectorField.length);
-        /*
-        int l = 0;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                //  System.out.printf("%.2f %s",values[j + l]," ");
-                PointPlacemark pp = new PointPlacemark(Position.fromDegrees(35 - (i * 0.25), -110 + (j * 0.25), 1e4));
-                String tmp = Double.toString(vectorField[j + l]);
-                pp.setValue(AVKey.DISPLAY_NAME, tmp);
-                pp.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
-                pp.setEnableLabelPicking(true);
-                outLayer.addRenderable(pp);
-            }
-            l += width;
-            //  System.out.println("");
-        }
-        */
-        BufferWrapper secondBuffer = new BufferFactory.DoubleBufferFactory().newBuffer(vectorField.length);
-        secondBuffer.putDouble(0, vectorField, 0, vectorField.length);
-
-        mixValuesOverTime(2L, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue, surface);
+        BufferWrapper firstBuffer = createBufferValues(width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
+        BufferWrapper secondBuffer = createBufferValues(width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
+        mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, 18, minHue, maxHue, surface);
 
         AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
         attr.setDrawShadow(false);
         attr.setInteriorOpacity(0.6);
-        attr.setOutlineWidth(1);
+        attr.setDrawOutline(false);
+       // attr.setOutlineWidth(3);
         surface.setSurfaceAttributes(attr);
 
-        Format legendLabelFormat = new DecimalFormat("##.#" + units) {
+        Format legendLabelFormat = new DecimalFormat("# m/s") {
             @Override
             public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition) {
                 return super.format(number, result, fieldPosition);
             }
         };
 
-        AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, maxValue, minHue, maxHue,
-                AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, maxValue, legendLabelFormat),
-                AnalyticSurfaceLegend.createDefaultTitle(legendTitle));
+        AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, 40, minHue, maxHue,
+                AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
+                AnalyticSurfaceLegend.createDefaultTitle("Vitesse"));
         legend.setOpacity(0.8);
-        legend.setScreenLocation(new Point(950, 300));
-        legendLayer.addRenderable(createLegendRenderable(surface, 300, legend));
+        legend.setScreenLocation(new Point(900, 300));
+
+        legendLayer.addRenderable(createLegendRenderable(surface, maxValue, legend));
     }
 
     protected void mixValuesOverTime(
@@ -126,33 +115,10 @@ public class AnalyticSurfaceController {
             final BufferWrapper firstBuffer, final BufferWrapper secondBuffer,
             final double minValue, final double maxValue, final double minHue, final double maxHue,
             final AnalyticSurface surface) {
-        /*   
-        Timer timer = new Timer(20, new ActionListener()
-        {
-            protected long startTime = -1;
 
-            public void actionPerformed(ActionEvent e)
-            {
-                if (this.startTime < 0)
-                    this.startTime = System.currentTimeMillis();
+        surface.setValues(createMixedColorGradientGridValues(
+                2L, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue));
 
-                double t = (double) (e.getWhen() - this.startTime) / (double) timeToMix;
-                int ti = (int) Math.floor(t);
-
-                double a = t - ti;
-                if ((ti % 2) == 0)
-                    a = 1d - a;
-         */
-        surface.setValues(createMixedColorGradientGridValues(//a
-                0, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue));
-
-        /*
-                if (surface.getClientLayer() != null)
-                    surface.getClientLayer().firePropertyChange(AVKey.LAYER, null, surface.getClientLayer());
-            }
-        });
-        timer.start();
-         */
     }
 
     public Iterable<? extends AnalyticSurface.GridPointAttributes> createMixedColorGradientGridValues(double a,
@@ -163,25 +129,33 @@ public class AnalyticSurfaceController {
         long length = Math.min(firstBuffer.length(), secondBuffer.length());
         for (int i = 0; i < length; i++) {
             double value = WWMath.mixSmooth(a, firstBuffer.getDouble(i), secondBuffer.getDouble(i));
-            attributesList.add(AnalyticSurface.createColorGradientAttributes(value, minValue, maxValue, minHue, maxHue));
+            attributesList.add(
+                    AnalyticSurface.createColorGradientAttributes(value, minValue, maxValue, minHue, maxHue));
         }
-
         return attributesList;
     }
 
-    protected Renderable createLegendRenderable(final AnalyticSurface surface, final double surfaceMinScreenSize,
+    public BufferWrapper createBufferValues(int width, int height, double min, double max,
+            BufferFactory factory, RenderableLayer outLayer) {
+
+        BufferWrapper wrapper = factory.newBuffer(values.length);
+        wrapper.putDouble(0, values, 0, values.length);
+        return wrapper;
+    }
+
+    protected static Renderable createLegendRenderable(final AnalyticSurface surface,
+            final double surfaceMinScreenSize,
             final AnalyticSurfaceLegend legend) {
-        return new Renderable() {
-            public void render(DrawContext dc) {
-                Extent extent = surface.getExtent(dc);
-                if (!extent.intersects(dc.getView().getFrustumInModelCoordinates())) {
-                    return;
-                }
-                if (WWMath.computeSizeInWindowCoordinates(dc, extent) < surfaceMinScreenSize) {
-                    return;
-                }
-                legend.render(dc);
+        return (DrawContext dc) -> {
+            Extent extent = surface.getExtent(dc);
+            if (!extent.intersects(dc.getView().getFrustumInModelCoordinates())) {
+                return;
             }
+            if (WWMath.computeSizeInWindowCoordinates(dc, extent) < surfaceMinScreenSize) {
+                return;
+            }
+            legend.render(dc);
         };
     }
+
 }
