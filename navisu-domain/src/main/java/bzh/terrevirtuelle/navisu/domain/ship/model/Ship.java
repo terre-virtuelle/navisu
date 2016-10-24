@@ -4,7 +4,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.ship.model;
 
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Location;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import java.io.Serializable;
 import java.time.LocalDate;
