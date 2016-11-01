@@ -13,10 +13,10 @@ import java.util.List;
  * @author serge
  * @date Sep 6, 2016
  */
-public class Meteorology 
+public class Meteorology
         extends Netcdf {
 
-    private final List<String> VARIABLE_NAME_LIST = Arrays.asList(
+    private static final List<String> VARIABLE_NAME_LIST = Arrays.asList(
             "Categorical_freezing_rain_yes1_no0_surface_Mixed_intervals_Average",
             "Categorical_snow_yes1_no0_surface_Mixed_intervals_Average",
             "Convective_Available_Potential_Energy_surface",
@@ -65,4 +65,13 @@ public class Meteorology
         return VARIABLE_NAME_LIST;
     }
 
+    static public boolean isValid(String name) {
+        boolean result = false;
+        for (String s : VARIABLE_NAME_LIST) {
+            if (s.equalsIgnoreCase(name)) {
+                result = true;
+            }
+        }
+        return result;
+    }
 }

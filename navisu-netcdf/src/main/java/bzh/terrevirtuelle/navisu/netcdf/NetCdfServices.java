@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.netcdf.meteo;
+package bzh.terrevirtuelle.navisu.netcdf;
 
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -13,7 +13,7 @@ import org.capcaval.c3.component.ComponentService;
  *
  * @author serge
  */
-public interface MeteoNetCdfServices
+public interface NetCdfServices
         extends ComponentService {
 
     Driver getDriver();

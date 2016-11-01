@@ -83,4 +83,8 @@ public class SliderController
         return quit;
     }
 
+    public Slider getSlider() {
+        return slider;
+    }
+
 }

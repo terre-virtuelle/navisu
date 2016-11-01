@@ -16,7 +16,7 @@ import java.util.List;
 public class Oceanography
         extends Netcdf {
 
-    private final List<String> VARIABLE_NAME_LIST = Arrays.asList(
+    private static final List<String> VARIABLE_NAME_LIST = Arrays.asList(
             "LatLon_Projection",
             "lat",
             "lon",
@@ -31,4 +31,13 @@ public class Oceanography
         variableNameList = VARIABLE_NAME_LIST;
     }
 
+    static public boolean isValid(String name) {
+        boolean result = false;
+        for (String s : VARIABLE_NAME_LIST) {
+            if (s.equalsIgnoreCase(name)) {
+                result = true;
+            }
+        }
+        return result;
+    }
 }

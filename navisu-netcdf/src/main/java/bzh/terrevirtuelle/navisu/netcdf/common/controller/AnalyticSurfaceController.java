@@ -61,7 +61,6 @@ public class AnalyticSurfaceController {
         this.minValue = minValue;
         this.maxValue = maxValue;
         this.analyticSurfaceLayer.setPickEnabled(false);
-        this.analyticSurfaceLayer.setName("Gradient");
         createSurface(HUE_BLUE, HUE_RED, this.lonDimension, this.latDimension,
                 minLat, maxLat, minLon, maxLon,
                 this.analyticSurfaceLayer, this.legendLayer,

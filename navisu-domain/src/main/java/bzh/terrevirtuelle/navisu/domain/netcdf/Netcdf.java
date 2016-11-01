@@ -35,13 +35,12 @@ public class Netcdf {
                 } else {
                     variables = netcdfDataset.getVariables();
                 }
-                System.out.println("groups : "+ groups);
             }
         } catch (IOException ex) {
             Logger.getLogger(Netcdf.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
     public void close() {
         try {
             netcdfDataset.close();

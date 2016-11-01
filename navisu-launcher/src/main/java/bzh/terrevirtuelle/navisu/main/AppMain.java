@@ -136,8 +136,8 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.MeteoNetCdfServices;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.MeteoNetCdfImpl;
+import bzh.terrevirtuelle.navisu.netcdf.impl.NetCdfImpl;
+import bzh.terrevirtuelle.navisu.netcdf.NetCdfServices;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -212,7 +212,7 @@ public class AppMain extends Application {
                         LayersManagerImpl.class,
                         MagneticImpl.class,
                         MeasureToolsImpl.class,
-                        MeteoNetCdfImpl.class,
+                        NetCdfImpl.class,
                         NavigationServerImpl.class,
                         NavigationCmdComponentImpl.class,
                         NmeaClientImpl.class,
@@ -284,7 +284,7 @@ public class AppMain extends Application {
 
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         MeasureToolsServices measureToolsServices = componentManager.getComponentService(MeasureToolsServices.class);
-        MeteoNetCdfServices meteoNetCdfServices = componentManager.getComponentService(MeteoNetCdfServices.class);
+        NetCdfServices meteoNetCdfServices = componentManager.getComponentService(NetCdfServices.class);
 
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         NavigationServerServices navigationServerServices = componentManager.getComponentService(NavigationServerServices.class);

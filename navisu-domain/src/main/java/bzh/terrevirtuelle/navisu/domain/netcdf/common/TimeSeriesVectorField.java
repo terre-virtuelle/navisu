@@ -17,35 +17,38 @@ import ucar.ma2.Array;
  */
 public class TimeSeriesVectorField {
 
-    private final List<Pair<Double, VField>> vFields;
-    private double minValue;
-    private double maxValue;
+    private List<VectorField> vFields;
+    private final List<List<VectorField>> hVFields;
     private final int timeDimension;
+    private   int heightDimension;
     private final int latDimension;
     private final int lonDimension;
-    private final double[] latitudes;
-    private final double[] longitudes;
-    private final double height;
     private final double minLat;
     private final double maxLat;
     private final double minLon;
     private final double maxLon;
-    private final int block;
+    private final double[] latitudes;
+    private final double[] longitudes;
+    private final double[] heights;
+    private final double[] times;
     private int index;
 
-    public TimeSeriesVectorField(Array time, Array lat, Array lon, float height, Array u, Array v) {
+    public TimeSeriesVectorField(Array time, Array height, Array lat, Array lon,  Array u, Array v) {
+
         timeDimension = (int) time.getSize();
 
+        heightDimension = (int) height.getSize();
+        hVFields = new ArrayList<>(heightDimension);
+        heights = new double[heightDimension];
+        for (int i = 0; i < heightDimension; i++) {
+            heights[i] = height.getDouble(i);
+        }
+        times = new double[timeDimension];
+        for (int i = 0; i < timeDimension; i++) {
+            times[i] = time.getDouble(i);
+        }
         latDimension = (int) lat.getSize();
         lonDimension = (int) lon.getSize();
-        this.height = height;
-        Pair<Double, Double> minMax = Pair.minMax(lat);
-        minLat = minMax.getX();
-        maxLat = minMax.getY();
-        minMax = Pair.minMax(lon);
-        minLon = minMax.getX();
-        maxLon = minMax.getY();
-
         latitudes = new double[latDimension];
         longitudes = new double[lonDimension];
         for (int h = 0; h < latDimension; h++) {
@@ -54,16 +57,27 @@ public class TimeSeriesVectorField {
         for (int w = 0; w < lonDimension; w++) {
             longitudes[w] = lon.getDouble(w);
         }
+        Pair<Double, Double> minMax = Pair.minMax(lat);
+        minLat = minMax.getX();
+        maxLat = minMax.getY();
+        minMax = Pair.minMax(lon);
+        minLon = minMax.getX();
+        maxLon = minMax.getY();
 
-        block = latDimension * lonDimension;
-        vFields = new ArrayList<>(timeDimension);
+        int block = latDimension * lonDimension;
+
         index = 0;
-        VField vf = new VField(lat, lon, u, v, index);
-        for (int t = 0; t < timeDimension; t++) {
-            vFields.add(new Pair<>(time.getDouble(t), vf));
-            // System.out.println("index : " + index);
-            // vf.dumpValues();
-            index += block;
+        VectorField vf;
+        heightDimension=1;
+        for (int h = 0; h < heightDimension; h++) {
+            vFields = new ArrayList<>();
+            hVFields.add(vFields);
+            for (int t = 0; t < timeDimension; t++) {
+                vf = new VectorField(latitudes, longitudes, minLat, maxLat, minLon, maxLon,
+                        u, v, index, heights[h], times[t]);
+                vFields.add(vf);
+                index += block;
+            }
         }
     }
 
@@ -79,24 +93,20 @@ public class TimeSeriesVectorField {
         return lonDimension;
     }
 
-    public double getHeight() {
-        return height;
-    }
-
     public double getMinLatitude() {
-        return minLat;
+        return vFields.get(0).getMinLatitude();
     }
 
     public double getMaxLatitude() {
-        return maxLat;
+        return vFields.get(0).getMaxLatitude();//Tous les VFields ont le meme sector
     }
 
     public double getMinLongitude() {
-        return minLon;
+        return vFields.get(0).getMinLongitude();
     }
 
     public double getMaxLongitude() {
-        return maxLon;
+        return vFields.get(0).getMaxLongitude();
     }
 
     public double[] getLatitudes() {
@@ -107,33 +117,38 @@ public class TimeSeriesVectorField {
         return longitudes;
     }
 
-    public List<Pair<Double, VField>> getVFields() {
+    public List<VectorField> getVFields() {
         return vFields;
     }
 
-    public VField getVField(int index) {
-        return vFields.get(index).getY();
+    public VectorField getVField(int index) {
+        return vFields.get(index);
     }
 
     public double[] getValues(int index) {
-        return vFields.get(index).getY().getValues();
+        return vFields.get(index).getValues();
     }
 
     public double getMinValue(int index) {
-        return vFields.get(index).getY().getMinValue();
+        return vFields.get(index).getMinValue();
     }
 
     public double getMaxValue(int index) {
-        return vFields.get(index).getY().getMaxValue();
+        return vFields.get(index).getMaxValue();
     }
 
     public double[] getDirections(int index) {
-        return vFields.get(index).getY().getDirections();
+        return vFields.get(index).getDirections();
     }
 
     public void dump() {
         vFields.stream().forEach((v) -> {
-            v.getY().dump();
+            v.dump();
         });
     }
+
+    public List<List<VectorField>> gethVFields() {
+        return hVFields;
+    }
+    
 }

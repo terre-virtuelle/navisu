@@ -90,12 +90,12 @@ public class DockManagerImpl<TrackTool>
     private ZoneDriver zone;
 
     public final DockItem[] ICONS = new DockItem[]{
-       /* 
+        /* 
         DockItemFactory.newImageItem("tracks", ICON_PATH + "dock_icons/tracks.png",
         (e) -> {
             tracksRadialMenu.setVisible(!tracksRadialMenu.isVisible());
         }),
-     */   
+         */
         DockItemFactory.newImageItem("system I/O", ICON_PATH + "dock_icons/system.png",
         (e) -> {
             systemRadialMenu.setVisible(!systemRadialMenu.isVisible());
@@ -253,10 +253,11 @@ public class DockManagerImpl<TrackTool>
     private void createMeteoRadialWidget() {
         meteoRadialMenu = RadialMenuBuilder.create()
                 .centralImage("meteoradialmenu150.png")
-                .createNode(0, "file.png", 0, "vector.png", 0, "grib.png",
-                        (e) -> open("Grib", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
+                .createNode(0, "file.png", 0, "model.png", 0, "grib.png",
+                        (e) -> open("Meteo", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
+                .createNode(0, "file.png", 0, "model.png", 1, "dump.png",
+                        (e) -> open("NetCdfInfo", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
                 .build();
-
         meteoRadialMenu.setLayoutX((width / 2) - 30);
         meteoRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(meteoRadialMenu);
@@ -285,7 +286,9 @@ public class DockManagerImpl<TrackTool>
     private void createTidesRadialWidget() {
         tidesRadialMenu = RadialMenuBuilder.create()
                 .centralImage("tidesradialmenu150.png")
-                .createNode(0, "currents.png", 0, "catalog.png", 0, "shom.png", (e) -> open("Currents", ".shp", ".SHP"))
+                .createNode(0, "currents.png", 0, "model.png", 0, "grib.png", (e) -> open("Currents", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
+                .createNode(1, "waves.png", 0, "model.png", 0, "grib.png", (e) -> open("Waves", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
+                .createNode(2, "tide.png", 0, "model.png", 0, "grib.png", (e) -> open("Tide"))
                 .build();
 
         tidesRadialMenu.setLayoutX((width / 2) - 10);
@@ -303,8 +306,8 @@ public class DockManagerImpl<TrackTool>
                 .createNode(1, "earth.png", 0, "models.png", 1, "elevation.png", (e) -> open("Elevation"))
                 .createNode(1, "earth.png", 0, "models.png", 2, "noBathy.png", (e) -> open("noBathymetry"))
                 .createNode(1, "earth.png", 0, "models.png", 3, "bathy.png", (e) -> open("Bathymetry"))
-             //   .createNode(2, "earth.png", 0, "models.png", 4, "flatGlobe.png", (e) -> open("FlatGlobe"))
-              //  .createNode(2, "earth.png", 0, "models.png", 5, "roundGlobe.png", (e) -> open("RoundGlobe"))
+                //   .createNode(2, "earth.png", 0, "models.png", 4, "flatGlobe.png", (e) -> open("FlatGlobe"))
+                //  .createNode(2, "earth.png", 0, "models.png", 5, "roundGlobe.png", (e) -> open("RoundGlobe"))
                 .build();
         toolsRadialMenu.setLayoutX((width / 2));
         toolsRadialMenu.setLayoutY(height / 2);
@@ -320,15 +323,14 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "simu.png", 0, "files.png", 2, "nmeaOff.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp", ".SHP"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
-             //   .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
-             //   .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
+                //   .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
+                //   .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
                 .build();
         systemRadialMenu.setLayoutX((width / 2));
         systemRadialMenu.setLayoutY(height / 2);
         root.getChildren().add(systemRadialMenu);
         radialMenus.add(systemRadialMenu);
     }
-
 
     private void open() {
         System.out.println("Work in progress");

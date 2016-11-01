@@ -111,4 +111,20 @@ public class Pair<T, K> {
         return new Pair<>(min, max);
     }
 
+    public static Pair<Double, Double> minMax(double[] data) {
+        double min = Double.MAX_VALUE;
+        double max = Double.MIN_VALUE;
+        double tmp;
+        int size = (int) data.length;
+        for (int i = 0; i < size; i++) {
+            tmp = data[i];
+            if (min > tmp) {
+                min = tmp;
+            }
+            if (max < tmp) {
+                max = tmp;
+            }
+        }
+        return new Pair<>(min, max);
+    }
 }

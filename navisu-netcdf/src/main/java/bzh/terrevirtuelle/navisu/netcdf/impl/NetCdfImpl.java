@@ -1,11 +1,10 @@
-package bzh.terrevirtuelle.navisu.netcdf.meteo.impl;
+package bzh.terrevirtuelle.navisu.netcdf.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.MeteoNetCdf;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.MeteoNetCdfServices;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.controller.MeteoNetCdfController;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.logging.Level;
@@ -13,28 +12,36 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
+import bzh.terrevirtuelle.navisu.netcdf.NetCdf;
+import bzh.terrevirtuelle.navisu.netcdf.NetCdfServices;
+import bzh.terrevirtuelle.navisu.netcdf.common.controller.NetCdfInfoController;
+import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCdfController;
 
 /**
- * User: jordan Date: 23/11/2013
+ * User: serge Date: 23/11/2013
  */
-public class MeteoNetCdfImpl
-        implements MeteoNetCdf, MeteoNetCdfServices, ComponentState {
+public class NetCdfImpl
+        implements NetCdf, NetCdfServices, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
     LayersManagerServices layersManagerServices;
-    protected static final Logger LOGGER = Logger.getLogger(MeteoNetCdfImpl.class.getName());
+    @UsedService
+    GuiAgentServices guiAgentServices;
 
+    protected static final Logger LOGGER = Logger.getLogger(NetCdfImpl.class.getName());
+    protected static int LAYER_INDEX = 0;
     protected Driver driver;
-    protected MeteoNetCdfController meteoNetCdfController;
+    protected NetCdfController netCdfController;
+    protected String category;
 
     @Override
     public void componentInitiated() {
 
         this.driver = new Driver() {
 
-            private static final String NAME = "Grib";
+            private static final String NAME = "NetCdf";
 
             private static final String EXTENSION_0 = ".grb";
             private static final String EXTENSION_1 = ".grb.bz2";
@@ -44,10 +51,15 @@ public class MeteoNetCdfImpl
             private static final String EXTENSION_5 = ".grb.gz";
             private static final String EXTENSION_6 = ".grib2";
             private static final String EXTENSION_7 = ".nc";
-            private static final String EXTENSION_8 = ".bz2";
+            private static final String EXTENSION_8 = ".nc.gz";
+            private static final String EXTENSION_9 = ".bz2";
+            private static final String EXTENSION_10 = ".mnt";
+            private static final String EXTENSION_11 = ".mnt.zip";
+            private static final String EXTENSION_12 = ".dl.zip";
 
             @Override
-            public boolean canOpen(String file) {
+            public boolean canOpen(String category, String file) {
+                NetCdfImpl.this.category = category;
                 boolean canOpen = false;
                 if (file.toLowerCase().endsWith(EXTENSION_0)
                         || file.toLowerCase().endsWith(EXTENSION_1)
@@ -57,7 +69,11 @@ public class MeteoNetCdfImpl
                         || file.toLowerCase().endsWith(EXTENSION_5)
                         || file.toLowerCase().endsWith(EXTENSION_6)
                         || file.toLowerCase().endsWith(EXTENSION_7)
-                        || file.toLowerCase().endsWith(EXTENSION_8)) {
+                        || file.toLowerCase().endsWith(EXTENSION_8)
+                        || file.toLowerCase().endsWith(EXTENSION_9)
+                        || file.toLowerCase().endsWith(EXTENSION_10)
+                        || file.toLowerCase().endsWith(EXTENSION_11)
+                        || file.toLowerCase().endsWith(EXTENSION_12)) {
                     canOpen = true;
                 }
                 return canOpen;
@@ -85,8 +101,11 @@ public class MeteoNetCdfImpl
                     "*" + EXTENSION_4,
                     "*" + EXTENSION_5,
                     "*" + EXTENSION_6,
-                    "*" + EXTENSION_7
-
+                    "*" + EXTENSION_7,
+                    "*" + EXTENSION_8,
+                    "*" + EXTENSION_9,
+                    "*" + EXTENSION_10,
+                    "*" + EXTENSION_11
                 };
             }
         };
@@ -107,42 +126,67 @@ public class MeteoNetCdfImpl
 
     @Override
     public void loadFile(String path) {
-        meteoNetCdfController = new MeteoNetCdfController(layersManagerServices, path);
+        switch (NetCdfImpl.this.category) {
+            case "Meteo":
+                netCdfController = new MeteoNetCdfController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);
+                break;
+            case "NetCdfInfo":
+                netCdfController = new NetCdfInfoController(path);
+                break;
+            case "Currents":
+                netCdfController = new NetCdfInfoController(path);
+                break;
+            case "Waves":
+                netCdfController = new NetCdfInfoController(path);
+                break;
+            case "Bathy":
+                netCdfController = new NetCdfInfoController(path);
+                break;
+        }
+        LAYER_INDEX++;
     }
 
     @Override
     public int getLatitudeDimension() {
-        return meteoNetCdfController.getLatitudeDimension();
+        // return meteoNetCdfController.getLatitudeDimension();
+        return 0;
     }
 
     @Override
     public int getLongitudeDimension() {
-        return meteoNetCdfController.getLongitudeDimension();
+        // return meteoNetCdfController.getLongitudeDimension();
+        return 0;
     }
 
     @Override
     public int getTimeDimension() {
-        return meteoNetCdfController.getTimeDimension();
+        //return meteoNetCdfController.getTimeDimension();
+        return 0;
     }
 
     @Override
     public RenderableLayer getLayer() {
-        return meteoNetCdfController.getLayer();
+        // return meteoNetCdfController.getLayer();
+        return null;
     }
 
     public double getMaxLatitude() {
-        return meteoNetCdfController.getMaxLatitude();
+        //return meteoNetCdfController.getMaxLatitude();
+        return 0;
     }
 
     public double getMaxLongitude() {
-        return meteoNetCdfController.getMaxLongitude();
+        // return meteoNetCdfController.getMaxLongitude();
+        return 0;
     }
 
     public double getMinLatitude() {
-        return meteoNetCdfController.getMinLatitude();
+        // return meteoNetCdfController.getMinLatitude();
+        return 0;
     }
 
     public double getMinLongitude() {
-        return meteoNetCdfController.getMinLongitude();
+        //  return meteoNetCdfController.getMinLongitude();
+        return 0;
     }
 }

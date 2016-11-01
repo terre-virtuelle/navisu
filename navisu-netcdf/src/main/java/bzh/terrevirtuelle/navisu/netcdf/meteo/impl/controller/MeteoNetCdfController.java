@@ -5,119 +5,73 @@
  */
 package bzh.terrevirtuelle.navisu.netcdf.meteo.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.domain.netcdf.Netcdf;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.netcdf.common.TimeSeriesVectorField;
-import bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.meteorology.Arrow;
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.AnalyticSurfaceController;
-import gov.nasa.worldwind.avlist.AVKey;
+import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCdfController;
+import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
+import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ucar.ma2.Array;
-import ucar.nc2.Variable;
+import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.input.KeyEvent;
 
 /**
  *
  * @author serge
  * @date Sep 20, 2016
  */
-public class MeteoNetCdfController {
+public class MeteoNetCdfController
+        extends NetCdfController {
 
-    private Netcdf netcdf;
-    private List<Variable> variables;
-    private Array u = null;
-    private Array v = null;
-    private Array latitudes = null;
-    private Array longitudes = null;
-    private Array height = null;
-    private double[] values;
-    private double[] directions;
-    private final double[] latTab;
-    private final double[] lonTab;
-    private Array time = null;
-    private Array reftime = null;
-    private TimeSeriesVectorField timeSeriesVectorField = null;
     protected final String GROUP = "Meteo";
-    private final String NAME0 = "NetCdfVector";
-    private final String NAME1 = "NetCdfAnalytic";
-    private final String NAME2 = "NetCdfLegend";
+    private final String NAME0 = "MeteoVector";
+    private final String NAME1 = "MeteoAnalytic";
+    private final String NAME2 = "MeteoLegend";
     protected RenderableLayer meteoLayerVector;
     protected RenderableLayer meteoLayerAnalytic;
     protected RenderableLayer meteoLayerLegend;
+    protected TimeSeriesVectorField timeSeriesVectorField;
     private static final Logger LOGGER = Logger.getLogger(MeteoNetCdfController.class.getName());
-    protected AnalyticSurfaceController analyticSurfaceController;
+    private GuiAgentServices guiAgentServices;
+    private final WorldWindow wwd;
 
-    public MeteoNetCdfController(LayersManagerServices layersManagerServices, String fileName) {
-        netcdf = new Netcdf(fileName);
-
-        System.out.println("GlobalAttributes");
-        System.out.println(netcdf.getNetcdfDataset().getGlobalAttributes());
-        System.out.println("DetailInfo");
-        System.out.println(netcdf.getNetcdfDataset().getDetailInfo());
-        System.out.println("Groups");
-        System.out.println(netcdf.getNetcdfDataset().getRootGroup().getGroups());
-        System.out.println("FileTypeDescription");
-        System.out.println(netcdf.getNetcdfDataset().getFileTypeDescription());
-        System.out.println("");
-
-        variables = netcdf.getVariables();
-
-        meteoLayerVector = layersManagerServices.getInstance(GROUP, NAME0);
-        meteoLayerAnalytic = layersManagerServices.getInstance(GROUP, NAME1);
+    public MeteoNetCdfController(LayersManagerServices layersManagerServices, int layerIndex,
+            GuiAgentServices guiAgentServices,
+            String fileName) {
+        super(fileName);
+        this.guiAgentServices = guiAgentServices;
+        wwd = GeoWorldWindViewImpl.getWW();
+        meteoLayerVector = layersManagerServices.getInstance(GROUP, NAME0 + "_" + Integer.toString(layerIndex));
+        meteoLayerAnalytic = layersManagerServices.getInstance(GROUP, NAME1 + "_" + Integer.toString(layerIndex));
         meteoLayerLegend = layersManagerServices.getInstance(GROUP, NAME2);
 
-        try {
-            u = netcdf.read("u-component_of_wind_height_above_ground");
-        } catch (Exception e) {
-            try {
-                u = netcdf.read("u-component_of_wind_surface");
-            } catch (Exception e1) {
-                LOGGER.log(Level.SEVERE, "File not NetCDF compliant", e1);
-            }
-        }
-        try {
-            v = netcdf.read("v-component_of_wind_height_above_ground");
-        } catch (Exception e) {
-            try {
-                v = netcdf.read("v-component_of_wind_surface");
-            } catch (Exception e1) {
-                LOGGER.log(Level.SEVERE, "File not NetCDF compliant", e1);
-            }
-        }
-        try {
-            latitudes = netcdf.read("lat");
-            longitudes = netcdf.read("lon");
-            height = netcdf.read("height_above_ground");
-            time = netcdf.read("time");
-            reftime = netcdf.read("reftime");
-        } catch (Exception e1) {
-            LOGGER.log(Level.SEVERE, "File not NetCDF compliant", e1);
-        }
-
-        timeSeriesVectorField = new TimeSeriesVectorField(time, latitudes, longitudes, height.getFloat(0), u, v);
+        timeSeriesVectorField = new TimeSeriesVectorField(time, height, latitudes, longitudes, u, v);
         latTab = timeSeriesVectorField.getLatitudes();
         lonTab = timeSeriesVectorField.getLongitudes();
         values = timeSeriesVectorField.getValues(0);
         directions = timeSeriesVectorField.getDirections(0);
-        
-        
-        //  System.out.println("variables : " + variables);
-        System.out.println("u : " + u.getSize());
-        System.out.println("lat : " + latitudes.getSize());
-        System.out.println("lon : " + longitudes.getSize());
-        System.out.println("time : " + time.getSize());
-        System.out.println("values : " + values.length);
-        // NCdumpW.printArray(u, "u-component_of_wind_height_above_ground", System.out, null);
-       // for(double l : lonTab){
-       //     System.out.println("lon : "+Double.toString(l-360));
-       // }
-/*
+
+        SliderController sliderController = new SliderController();
+        Platform.runLater(() -> {
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, sliderController);
+            guiAgentServices.getRoot().getChildren().add(sliderController);
+            sliderController.setVisible(true);
+            sliderController.getSlider().setMin(0.0);
+            sliderController.getSlider().setMax(1.0);
+        });
+        sliderController.getSlider().valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            meteoLayerLegend.setOpacity(sliderController.getSlider().getValue());
+            wwd.redrawNow();
+        });
+        /*
         List<Arrow> arrows = new ArrayList<>();
         int l = 0;
-        for (int h = 0; h < latTab.length; h += 1) {
+        for (int h = 0; h < latTab.length; h += 50) {
             for (int w = 0; w < lonTab.length; w += 1) {
                 Arrow arrow = new Arrow(latTab[h], lonTab[w], values[l + w]);
                 double alpha = -Math.toDegrees(directions[l + w]) + arrow.getRotation();
@@ -135,16 +89,21 @@ public class MeteoNetCdfController {
         }
         meteoLayerVector.addRenderables(arrows);
          */
-        System.out.println(timeSeriesVectorField.getMinLatitude() + " " + timeSeriesVectorField.getMaxLatitude()
-                + " " + timeSeriesVectorField.getMinLongitude() + " " + timeSeriesVectorField.getMaxLongitude());
+        double lonMinRef = timeSeriesVectorField.getMinLongitude();
+        double lonMaxRef = timeSeriesVectorField.getMaxLongitude();
+        if(lonMinRef>180 || lonMaxRef>180){
+            lonMinRef-=360;
+            lonMaxRef-=360;
+        }
 
-        analyticSurfaceController = new AnalyticSurfaceController(
+        AnalyticSurfaceController analyticSurfaceController = new AnalyticSurfaceController(
                 meteoLayerAnalytic, meteoLayerLegend,
-                values,
+                timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
                 timeSeriesVectorField.getLatitudeDimension(),
                 timeSeriesVectorField.getLongitudeDimension(),
                 timeSeriesVectorField.getMinLatitude(), timeSeriesVectorField.getMaxLatitude(),
-                timeSeriesVectorField.getMinLongitude()-360, timeSeriesVectorField.getMaxLongitude()-360,
+                lonMinRef, lonMaxRef,
+               // timeSeriesVectorField.getMinLongitude(), timeSeriesVectorField.getMaxLongitude(),
                 0.0, timeSeriesVectorField.getMaxValue(0),//min, max values in m/s
                 .8,
                 "Meteo", "Kts");
@@ -188,4 +147,5 @@ public class MeteoNetCdfController {
         values = timeSeriesVectorField.getValues(currentTimeIndex);
         directions = timeSeriesVectorField.getDirections(currentTimeIndex);
     }
+
 }

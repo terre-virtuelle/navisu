@@ -217,6 +217,7 @@ public class RouteEditorController
         geoCalc = new GeodeticCalculator();
         bufferDistance = OFFSET_BUFFER_DISTANCE;
         highwayDistance = HIGHWAY_BUFFER_DISTANCE;
+
         /*
         // OK pour toutes les layers
         List<Layer> layers = wwd.getModel().getLayers();
