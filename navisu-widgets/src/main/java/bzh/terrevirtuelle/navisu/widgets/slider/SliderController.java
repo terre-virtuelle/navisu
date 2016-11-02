@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -31,28 +31,43 @@ public class SliderController
     public Slider slider;
     @FXML
     public ImageView quit;
+
+    String filename;
+    static String DEFAULT_FILE_NAME = "SliderPanel.fxml";
     private String css = System.getProperty("user.dir");
 
     public SliderController() {
+        this(DEFAULT_FILE_NAME);
+    }
+
+    public SliderController(String filename) {
         setMouseTransparent(false);
+        this.filename = filename;
         load();
     }
 
     public SliderController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
+        filename = DEFAULT_FILE_NAME;
+        setMouseTransparent(false);
+        load();
+    }
+
+    public SliderController(String filename, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+        super(keyCode, keyCombination);
+        this.filename = filename;
         setMouseTransparent(false);
         load();
     }
 
     private void load() {
 
-        
         /* ----------- Répertoire des css dans le launcher -----------------*/
         //File cssfile = new File("css/slider.css");
         //css = ("file:///" + cssfile.getAbsolutePath().replace("\\", "/"));
         //System.out.println(css);
         /*---------------------------------------*/
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SliderPanel.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(filename));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -61,18 +76,16 @@ public class SliderController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        
+
         /*---- si css non défini dans le fxml ------------*/
         //slider.getStylesheets().add(css);
-        
         /* ---- css dans les ressources des widgets -----------*/
         css = "css/slider.css";
         slider.getStylesheets().add(Widget2D.class.getResource(css).toExternalForm());
-        
-        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-        // System.out.println("..............");
-        });
 
+        slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+            // System.out.println("..............");
+        });
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);

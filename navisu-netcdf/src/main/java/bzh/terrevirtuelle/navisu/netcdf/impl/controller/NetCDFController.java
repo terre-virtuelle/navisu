@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ucar.ma2.Array;
-import ucar.ma2.ArrayDouble;
-import ucar.ma2.Index;
 import ucar.nc2.Variable;
 
 /**
@@ -19,7 +17,7 @@ import ucar.nc2.Variable;
  * @author serge
  * @date Sep 20, 2016
  */
-public class NetCdfController {
+public class NetCDFController {
 
     protected Netcdf netcdf;
 
@@ -36,9 +34,9 @@ public class NetCdfController {
     protected double[] lonTab;
     protected Array time = null;
     protected Array reftime = null;
-    private static final Logger LOGGER = Logger.getLogger(NetCdfController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(NetCDFController.class.getName());
 
-    public NetCdfController(String fileName) {
+    public NetCDFController(String fileName) {
         netcdf = new Netcdf(fileName);
         variables = netcdf.getVariables();
         try {

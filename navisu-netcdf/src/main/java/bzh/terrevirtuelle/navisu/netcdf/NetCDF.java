@@ -6,6 +6,6 @@ import org.capcaval.c3.component.Component;
  * User: jordan
  * Date: 23/11/2013
  */
-public interface NetCdf 
+public interface NetCDF 
         extends Component {
 }

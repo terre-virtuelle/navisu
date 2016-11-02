@@ -39,12 +39,15 @@ public class AnalyticSurfaceController {
     protected RenderableLayer analyticSurfaceLayer;
     protected RenderableLayer legendLayer;
     protected double[] values;
+    protected AnalyticSurfaceAttributes attr;
+    protected AnalyticSurface surface;
 
     public AnalyticSurfaceController(
             RenderableLayer layer, RenderableLayer legendLayer,
             final double[] data,
             int latDimension, int lonDimension,
-            double minLat, double maxLat, double minLon, double maxLon,
+            double minLat, double maxLat,
+            double minLon, double maxLon,
             double minValue, double maxValue,
             double opacity,
             String legendTitle, String units) {
@@ -73,24 +76,21 @@ public class AnalyticSurfaceController {
             double minLat, double maxLat, double minLon, double maxLon,
             RenderableLayer outLayer, RenderableLayer legendLayer,
             double minValue, double maxValue) {
-
-        AnalyticSurface surface = new AnalyticSurface();
+        surface = new AnalyticSurface();
         surface.setSector(Sector.fromDegrees(minLat, maxLat, minLon, maxLon));
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         surface.setDimensions(width, height);
         surface.setClientLayer(outLayer);
-
         outLayer.addRenderable(surface);
 
         BufferWrapper firstBuffer = createBufferValues(width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
         BufferWrapper secondBuffer = createBufferValues(width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
         mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, 18, minHue, maxHue, surface);
 
-        AnalyticSurfaceAttributes attr = new AnalyticSurfaceAttributes();
+        attr = new AnalyticSurfaceAttributes();
         attr.setDrawShadow(false);
-        attr.setInteriorOpacity(0.6);
+        attr.setInteriorOpacity(1.0);
         attr.setDrawOutline(false);
-       // attr.setOutlineWidth(3);
         surface.setSurfaceAttributes(attr);
 
         Format legendLabelFormat = new DecimalFormat("# m/s") {
@@ -104,6 +104,7 @@ public class AnalyticSurfaceController {
                 AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
                 AnalyticSurfaceLegend.createDefaultTitle("Vitesse"));
         legend.setOpacity(0.8);
+
         legend.setScreenLocation(new Point(900, 300));
 
         legendLayer.addRenderable(createLegendRenderable(surface, maxValue, legend));
@@ -155,6 +156,14 @@ public class AnalyticSurfaceController {
             }
             legend.render(dc);
         };
+    }
+
+    public AnalyticSurfaceAttributes getAttr() {
+        return attr;
+    }
+
+    public AnalyticSurface getSurface() {
+        return surface;
     }
 
 }

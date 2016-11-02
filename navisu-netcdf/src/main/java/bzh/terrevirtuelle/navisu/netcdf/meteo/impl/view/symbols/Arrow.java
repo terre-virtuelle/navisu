@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.meteorology;
+package bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols;
 
 import com.google.common.collect.Range;
 import gov.nasa.worldwind.geom.Position;

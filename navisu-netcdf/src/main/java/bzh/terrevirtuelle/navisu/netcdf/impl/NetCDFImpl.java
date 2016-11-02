@@ -5,23 +5,23 @@ import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.controller.MeteoNetCdfController;
+import bzh.terrevirtuelle.navisu.netcdf.NetCDF;
+import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.controller.MeteoNetCDFController;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
 import java.util.logging.Logger;
-import bzh.terrevirtuelle.navisu.netcdf.NetCdf;
-import bzh.terrevirtuelle.navisu.netcdf.NetCdfServices;
-import bzh.terrevirtuelle.navisu.netcdf.common.controller.NetCdfInfoController;
-import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCdfController;
+import bzh.terrevirtuelle.navisu.netcdf.common.controller.NetCDFInfoController;
+import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFController;
 
 /**
  * User: serge Date: 23/11/2013
  */
-public class NetCdfImpl
-        implements NetCdf, NetCdfServices, ComponentState {
+public class NetCDFImpl
+        implements NetCDF, NetCDFServices, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -30,10 +30,10 @@ public class NetCdfImpl
     @UsedService
     GuiAgentServices guiAgentServices;
 
-    protected static final Logger LOGGER = Logger.getLogger(NetCdfImpl.class.getName());
+    protected static final Logger LOGGER = Logger.getLogger(NetCDFImpl.class.getName());
     protected static int LAYER_INDEX = 0;
     protected Driver driver;
-    protected NetCdfController netCdfController;
+    protected NetCDFController netCDFController;
     protected String category;
 
     @Override
@@ -41,7 +41,7 @@ public class NetCdfImpl
 
         this.driver = new Driver() {
 
-            private static final String NAME = "NetCdf";
+            private static final String NAME = "NetCDF";
 
             private static final String EXTENSION_0 = ".grb";
             private static final String EXTENSION_1 = ".grb.bz2";
@@ -59,7 +59,7 @@ public class NetCdfImpl
 
             @Override
             public boolean canOpen(String category, String file) {
-                NetCdfImpl.this.category = category;
+                NetCDFImpl.this.category = category;
                 boolean canOpen = false;
                 if (file.toLowerCase().endsWith(EXTENSION_0)
                         || file.toLowerCase().endsWith(EXTENSION_1)
@@ -126,21 +126,21 @@ public class NetCdfImpl
 
     @Override
     public void loadFile(String path) {
-        switch (NetCdfImpl.this.category) {
+        switch (NetCDFImpl.this.category) {
             case "Meteo":
-                netCdfController = new MeteoNetCdfController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);
+                netCDFController = new MeteoNetCDFController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);
                 break;
             case "NetCdfInfo":
-                netCdfController = new NetCdfInfoController(path);
+                netCDFController = new NetCDFInfoController(path);
                 break;
             case "Currents":
-                netCdfController = new NetCdfInfoController(path);
+                netCDFController = new NetCDFInfoController(path);
                 break;
             case "Waves":
-                netCdfController = new NetCdfInfoController(path);
+                netCDFController = new NetCDFInfoController(path);
                 break;
             case "Bathy":
-                netCdfController = new NetCdfInfoController(path);
+                netCDFController = new NetCDFInfoController(path);
                 break;
         }
         LAYER_INDEX++;

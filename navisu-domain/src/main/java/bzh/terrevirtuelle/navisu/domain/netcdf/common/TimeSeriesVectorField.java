@@ -20,7 +20,7 @@ public class TimeSeriesVectorField {
     private List<VectorField> vFields;
     private final List<List<VectorField>> hVFields;
     private final int timeDimension;
-    private   int heightDimension;
+    private int heightDimension;
     private final int latDimension;
     private final int lonDimension;
     private final double minLat;
@@ -29,20 +29,22 @@ public class TimeSeriesVectorField {
     private final double maxLon;
     private final double[] latitudes;
     private final double[] longitudes;
-    private final double[] heights;
+    // private final double[] heights;
     private final double[] times;
     private int index;
 
-    public TimeSeriesVectorField(Array time, Array height, Array lat, Array lon,  Array u, Array v) {
+    public TimeSeriesVectorField(Array time, Array height, Array lat, Array lon, Array u, Array v) {
 
         timeDimension = (int) time.getSize();
 
         heightDimension = (int) height.getSize();
         hVFields = new ArrayList<>(heightDimension);
+        /*
         heights = new double[heightDimension];
         for (int i = 0; i < heightDimension; i++) {
             heights[i] = height.getDouble(i);
         }
+         */
         times = new double[timeDimension];
         for (int i = 0; i < timeDimension; i++) {
             times[i] = time.getDouble(i);
@@ -53,32 +55,35 @@ public class TimeSeriesVectorField {
         longitudes = new double[lonDimension];
         for (int h = 0; h < latDimension; h++) {
             latitudes[h] = lat.getDouble(h);
+            //System.out.println("lat : "+ latitudes[h]);
         }
         for (int w = 0; w < lonDimension; w++) {
-            longitudes[w] = lon.getDouble(w);
+            longitudes[w] = lon.getDouble(w);//-360
+           // System.out.println("lon : " + longitudes[w]);
         }
-        Pair<Double, Double> minMax = Pair.minMax(lat);
+        Pair<Double, Double> minMax = Pair.minMax(latitudes);
         minLat = minMax.getX();
         maxLat = minMax.getY();
-        minMax = Pair.minMax(lon);
+        minMax = Pair.minMax(longitudes);
         minLon = minMax.getX();
         maxLon = minMax.getY();
-
+System.out.println(minLat+" "+  maxLat+" " +minLon+" "+ maxLon);
         int block = latDimension * lonDimension;
 
         index = 0;
         VectorField vf;
-        heightDimension=1;
+        heightDimension = 1;//Pb memoire si rop de hauteurs et de temps
         for (int h = 0; h < heightDimension; h++) {
             vFields = new ArrayList<>();
             hVFields.add(vFields);
             for (int t = 0; t < timeDimension; t++) {
                 vf = new VectorField(latitudes, longitudes, minLat, maxLat, minLon, maxLon,
-                        u, v, index, heights[h], times[t]);
+                        u, v, index, height.getDouble(h), times[t]);
                 vFields.add(vf);
-                index += block;
+                index += block * (height.getSize());
             }
         }
+
     }
 
     public int getTimeDimension() {
@@ -150,5 +155,5 @@ public class TimeSeriesVectorField {
     public List<List<VectorField>> gethVFields() {
         return hVFields;
     }
-    
+
 }

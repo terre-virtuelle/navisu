@@ -52,8 +52,7 @@ public class VectorField {
             }
             l += lon.length;
         }
-        Pair<Double, Double> minMax = Pair.minMax(lat);
-        minMax = Pair.minMax(values);
+        Pair<Double, Double> minMax = Pair.minMax(values);
         minValue = minMax.getX();
         maxValue = minMax.getY();
     }

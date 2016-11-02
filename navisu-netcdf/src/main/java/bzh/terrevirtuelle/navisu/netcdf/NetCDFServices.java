@@ -13,7 +13,7 @@ import org.capcaval.c3.component.ComponentService;
  *
  * @author serge
  */
-public interface NetCdfServices
+public interface NetCDFServices
         extends ComponentService {
 
     Driver getDriver();
