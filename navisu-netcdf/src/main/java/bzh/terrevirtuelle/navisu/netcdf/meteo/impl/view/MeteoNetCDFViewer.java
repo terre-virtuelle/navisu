@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols.Arrow;
 import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,8 @@ public class MeteoNetCDFViewer {
           //  createVectors();
             wwd.redrawNow();
         });
+        
+        
     }
 
     private void createAnalyticSurface() {
@@ -156,5 +159,8 @@ public class MeteoNetCDFViewer {
             l += lonDimension;
         }
          meteoLayerVector.addRenderables(arrows);
+    }
+    private void filter(){
+        System.out.println("**********");
     }
 }

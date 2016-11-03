@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.netcdf.common.TimeSeriesVectorField;
-import bzh.terrevirtuelle.navisu.netcdf.common.controller.AnalyticSurfaceController;
 import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.MeteoNetCDFViewer;
 import gov.nasa.worldwind.WorldWindow;
@@ -34,7 +33,7 @@ public class MeteoNetCDFController
     protected RenderableLayer meteoLayerLegend;
     protected TimeSeriesVectorField timeSeriesVectorField;
     private static final Logger LOGGER = Logger.getLogger(MeteoNetCDFController.class.getName());
-    private GuiAgentServices guiAgentServices;
+    private final GuiAgentServices guiAgentServices;
     private final WorldWindow wwd;
 
     public MeteoNetCDFController(LayersManagerServices layersManagerServices, int layerIndex,
@@ -61,19 +60,6 @@ public class MeteoNetCDFController
             lonMinRef -= 360;
             lonMaxRef -= 360;
         }
-        /*
-        AnalyticSurfaceController analyticSurfaceController = new AnalyticSurfaceController(
-                meteoLayerAnalytic, meteoLayerLegend,
-                timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
-                timeSeriesVectorField.getLatitudeDimension(),
-                timeSeriesVectorField.getLongitudeDimension(),
-                timeSeriesVectorField.getMinLatitude(),
-                timeSeriesVectorField.getMaxLatitude(),
-                lonMinRef, lonMaxRef,
-                0.0, timeSeriesVectorField.getMaxValue(0),//min, max values in m/s
-                1.0,
-                "Meteo", "m/s");
-         */
         MeteoNetCDFViewer meteoNetCDFViewer
                 = new MeteoNetCDFViewer(guiAgentServices,
                         meteoLayerVector, meteoLayerAnalytic, meteoLayerLegend,
@@ -88,19 +74,6 @@ public class MeteoNetCDFController
                         timeSeriesVectorField.getMaxLatitude(),
                         lonMinRef, lonMaxRef
                 );
-
-        /*
-        MeteoNetCDFViewer meteoNetCDFViewer
-                = new MeteoNetCDFViewer(guiAgentServices,
-                        meteoLayerVector, meteoLayerAnalytic, meteoLayerLegend,
-                        name, timeSeriesVectorField.getMaxValue(0),
-                        timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
-                        timeSeriesVectorField.gethVFields().get(0).get(0).getDirections(),
-                        timeSeriesVectorField.getLatitudes(),
-                        timeSeriesVectorField.getLongitudes(),
-                        timeSeriesVectorField.getMinLatitude(), timeSeriesVectorField.getMaxLatitude(),
-                lonMinRef, lonMaxRef);
-         */
     }
 
     public int getLatitudeDimension() {

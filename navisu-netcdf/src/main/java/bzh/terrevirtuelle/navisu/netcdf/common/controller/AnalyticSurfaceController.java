@@ -8,11 +8,15 @@ package bzh.terrevirtuelle.navisu.netcdf.common.controller;
 import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurface;
 import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceAttributes;
 import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceLegend;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWind;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Extent;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.DrawContext;
+import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;
@@ -41,6 +45,7 @@ public class AnalyticSurfaceController {
     protected double[] values;
     protected AnalyticSurfaceAttributes attr;
     protected AnalyticSurface surface;
+    private final WorldWindow wwd;
 
     public AnalyticSurfaceController(
             RenderableLayer layer, RenderableLayer legendLayer,
@@ -54,6 +59,7 @@ public class AnalyticSurfaceController {
 
         this.analyticSurfaceLayer = layer;
         this.legendLayer = legendLayer;
+        this.legendLayer.setPickEnabled(true);
         this.values = data;
         this.lonDimension = lonDimension;
         this.latDimension = latDimension;
@@ -63,7 +69,18 @@ public class AnalyticSurfaceController {
         this.maxLon = maxLon;
         this.minValue = minValue;
         this.maxValue = maxValue;
-        this.analyticSurfaceLayer.setPickEnabled(false);
+        wwd = GeoWorldWindViewImpl.getWW();
+        this.analyticSurfaceLayer.setPickEnabled(true);
+        wwd.addSelectListener((SelectEvent event) -> {
+            if (event.getEventAction().equals(SelectEvent.DRAG)) {
+                Object o = event.getTopObject();
+                if (o.getClass().getName().equalsIgnoreCase("gov.nasa.worldwind.render.ScreenImage")) {
+                    ((gov.nasa.worldwind.render.ScreenImage) o).setScreenLocation(new Point(event.getMouseEvent().getX(),
+                            event.getMouseEvent().getY()));
+                    event.consume();
+                }
+            }
+        });
         createSurface(HUE_BLUE, HUE_RED, this.lonDimension, this.latDimension,
                 minLat, maxLat, minLon, maxLon,
                 this.analyticSurfaceLayer, this.legendLayer,
@@ -102,11 +119,9 @@ public class AnalyticSurfaceController {
 
         AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, 40, minHue, maxHue,
                 AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
-                AnalyticSurfaceLegend.createDefaultTitle("Vitesse"));
+                AnalyticSurfaceLegend.createDefaultTitle("Speed"));
         legend.setOpacity(0.8);
-
         legend.setScreenLocation(new Point(900, 300));
-
         legendLayer.addRenderable(createLegendRenderable(surface, maxValue, legend));
     }
 
