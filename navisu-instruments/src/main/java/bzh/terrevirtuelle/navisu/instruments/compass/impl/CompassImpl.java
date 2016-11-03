@@ -1,4 +1,4 @@
-  /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -35,7 +35,7 @@ public class CompassImpl
     GuiAgentServices guiAgentServices;
     ComponentManager cm;
     ComponentEventSubscribe<HDGEvent> hdgEvent;
-
+    boolean first = true;
     private CompassController controller;
 
     @Override
@@ -58,25 +58,30 @@ public class CompassImpl
 
     @Override
     public void on(String... files) {
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
-        guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
-        controller.setVisible(true);
-        hdgEvent.subscribe(new HDGEvent() {
-            
-            @Override
-            public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
-                HDG data = (HDG) d;
-                controller.notifyNmeaMessageChanged(data);
-            }
-        });
+        if (first == true) {
+            first = false;
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, controller);
+            guiAgentServices.getRoot().getChildren().add(controller); //Par defaut le radar n'est pas visible Ctrl-A
+            controller.setVisible(true);
+            hdgEvent.subscribe(new HDGEvent() {
+
+                @Override
+                public <T extends NMEA> void notifyNmeaMessageChanged(T d) {
+                    HDG data = (HDG) d;
+                    controller.notifyNmeaMessageChanged(data);
+                }
+            });
+        }
     }
 
     @Override
     public void off() {
-        guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
-        guiAgentServices.getRoot().getChildren().remove(controller);
-        controller.setVisible(false);
-        controller.stop();
+        if (first == false) {
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
+            guiAgentServices.getRoot().getChildren().remove(controller);
+            controller.setVisible(false);
+            controller.stop();
+        }
     }
 
     @Override
