@@ -1,0 +1,11 @@
+dependencies {
+    compile project(':navisu-domain')
+    compile project(':navisu-gpx')
+    compile project(':navisu-core')
+    compile project(':navisu-app')
+    compile project(':navisu-geometry')
+    compile project(':navisu-instruments')
+    compile project(':navisu-charts')
+    compile project(':navisu-navigation')
+    compile fileTree(dir: 'lib', include: '*.jar') 
+}

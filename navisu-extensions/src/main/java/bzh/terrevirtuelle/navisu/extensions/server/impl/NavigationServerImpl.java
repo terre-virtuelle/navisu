@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.navigation.server.impl;
+package bzh.terrevirtuelle.navisu.extensions.server.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.extensions.server.NavigationServer;
+import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
+import bzh.terrevirtuelle.navisu.extensions.server.impl.controller.NavigationServerController;
 import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.server.NavigationServer;
-import bzh.terrevirtuelle.navisu.navigation.server.NavigationServerServices;
-import bzh.terrevirtuelle.navisu.navigation.server.impl.controller.NavigationServerController;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;

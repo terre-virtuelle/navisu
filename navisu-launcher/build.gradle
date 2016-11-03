@@ -13,6 +13,7 @@ dependencies {
     compile project(':navisu-client')
     compile project(':navisu-core')
     compile project(':navisu-currents')
+    compile project(':navisu-extensions')
     compile project(':navisu-geometry')
     compile project(':navisu-gpx')
     compile project(':navisu-netcdf')
