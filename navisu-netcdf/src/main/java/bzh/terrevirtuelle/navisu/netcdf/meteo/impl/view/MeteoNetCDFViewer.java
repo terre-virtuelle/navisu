@@ -14,12 +14,20 @@ import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.AnnotationAttributes;
+import gov.nasa.worldwind.render.ScreenRelativeAnnotation;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
+import ucar.nc2.dataset.CoordinateAxis;
 
 /**
  *
@@ -27,28 +35,33 @@ import javafx.scene.input.KeyEvent;
  */
 public class MeteoNetCDFViewer {
 
-    protected GuiAgentServices guiAgentServices;
-    protected RenderableLayer meteoLayerVector;
-    protected RenderableLayer meteoLayerAnalytic;
-    protected String name;
-    protected RenderableLayer meteoLayerLegend;
-    protected double maxValue;
+    private final GuiAgentServices guiAgentServices;
+    private final RenderableLayer meteoLayerVector;
+    private final RenderableLayer meteoLayerAnalytic;
+    private AnnotationAttributes annotationAttributes;
+    private ScreenRelativeAnnotation dateInfo;
+    private String name;
+    private final String fileName;
+    private Date date = null;
+    private final RenderableLayer meteoLayerLegend;
+    private final double maxValue;
     private final WorldWindow wwd;
-    protected double[] values;
-    protected double[] directions;
-    protected double[] latTab;
-    protected double[] lonTab;
-    protected int latDimension;
-    protected int lonDimension;
-    double minLat;
-    double maxLat;
-    double minLon;
-    double maxLon;
+    private final double[] values;
+    private final double[] directions;
+    private final double[] latTab;
+    private final double[] lonTab;
+    private final int latDimension;
+    private final int lonDimension;
+    private final double minLat;
+    private final double maxLat;
+    private final double minLon;
+    private final double maxLon;
 
     public MeteoNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer meteoLayerVector, RenderableLayer meteoLayerAnalytic,
             RenderableLayer meteoLayerLegend,
-            String name, double maxValue,
+            String name, String fileName, Date date,
+            double maxValue,
             double[] values, double[] directions,
             double[] latTab, double[] lonTab,
             int latDim, int lonDim,
@@ -62,6 +75,8 @@ public class MeteoNetCDFViewer {
         this.meteoLayerAnalytic = meteoLayerAnalytic;
         this.meteoLayerLegend = meteoLayerAnalytic;
         this.name = name;
+        this.fileName = fileName;
+        this.date = date;
         this.maxValue = maxValue;
         this.values = values;
         this.directions = directions;
@@ -74,8 +89,11 @@ public class MeteoNetCDFViewer {
         this.minLon = minLon;
         this.maxLon = maxLon;
         java.awt.EventQueue.invokeLater(() -> {
+            createAnnotationAttributes();
+            displayFileInfo(fileName);
+            displayDateInfo();
             createAnalyticSurface();
-          //  createVectors();
+            //  createVectors();
             wwd.redrawNow();
         });
 
@@ -135,14 +153,12 @@ public class MeteoNetCDFViewer {
     }
 
     private void createVectors() {
-
         List<Arrow> arrows = new ArrayList<>();
         int l = 0;
         for (int h = 0; h < latDimension; h += 1) {
             for (int w = 0; w < lonDimension; w += 1) {
                 if ((!Double.isNaN(latTab[h]) && !Double.isNaN(lonTab[w])
                         && !Double.isNaN(values[l + w]) && !Double.isNaN(directions[l + w]))) {
-                  //  System.out.println(latTab[h] + " " + lonTab[w]);
                     Arrow arrow = new Arrow(latTab[h], lonTab[w], values[l + w]);
                     double alpha = -Math.toDegrees(directions[l + w]) + arrow.getRotation();
                     if (alpha < 0) {
@@ -161,7 +177,42 @@ public class MeteoNetCDFViewer {
         meteoLayerVector.addRenderables(arrows);
     }
 
-    private void filter() {
-        System.out.println("**********");
+    private void createAnnotationAttributes() {
+        annotationAttributes = new AnnotationAttributes();
+        annotationAttributes.setBackgroundColor(new Color(0f, 0f, 0f, 0f));
+        annotationAttributes.setTextColor(Color.YELLOW);
+        annotationAttributes.setLeaderGapWidth(14);
+        annotationAttributes.setCornerRadius(0);
+        annotationAttributes.setSize(new Dimension(300, 0));
+        annotationAttributes.setAdjustWidthToText(AVKey.SIZE_FIT_TEXT); // use strict dimension width - 200
+        annotationAttributes.setFont(Font.decode("Arial-BOLD-12"));
+        annotationAttributes.setBorderWidth(0);
+        annotationAttributes.setHighlightScale(1);             // No highlighting either
+        annotationAttributes.setCornerRadius(0);
     }
+
+    private void displayFileInfo(String fileName) {
+        String[] nameTab = fileName.split("\\/");
+        name = nameTab[nameTab.length - 1];
+        ScreenRelativeAnnotation fileInfo = new ScreenRelativeAnnotation(name, 0.1, 0.99);
+        fileInfo.setKeepFullyVisible(true);
+        fileInfo.setXMargin(5);
+        fileInfo.setYMargin(5);
+        fileInfo.getAttributes().setDefaults(annotationAttributes);
+        meteoLayerAnalytic.addRenderable(fileInfo);
+    }
+
+    private void displayDateInfo() {
+        if (date != null) {
+            dateInfo = new ScreenRelativeAnnotation("\n" + date.toString(), 0.1, 0.99);
+            dateInfo.setKeepFullyVisible(true);
+            dateInfo.setXMargin(5);
+            dateInfo.setYMargin(5);
+            dateInfo.getAttributes().setDefaults(annotationAttributes);
+            meteoLayerAnalytic.removeRenderable(dateInfo);
+            meteoLayerAnalytic.addRenderable(dateInfo);
+        }
+
+    }
+
 }

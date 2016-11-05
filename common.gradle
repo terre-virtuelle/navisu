@@ -38,7 +38,7 @@ String mavenArtifactId = name
 
 task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates a jar from the source files.') {
     manifest{
-        attributes 'Main-Class': "bzh.terrevirtuelle.navisu.main.AppMain"
+        attributes 'Main-Class': 'bzh.terrevirtuelle.navisu.main.AppMain'
     }
     classifier = 'sources'
     from sourceSets.main.allSource

@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.navigation.nmea;
 
-import bzh.terrevirtuelle.navisu.navigation.camera.*;
 import org.capcaval.c3.component.Component;
 
 /**

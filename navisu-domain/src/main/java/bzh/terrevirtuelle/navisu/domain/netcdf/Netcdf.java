@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ucar.ma2.Array;
+import ucar.nc2.Attribute;
 import ucar.nc2.Group;
 import ucar.nc2.Variable;
 import ucar.nc2.dataset.NetcdfDataset;
@@ -24,6 +25,7 @@ public class Netcdf {
     NetcdfDataset netcdfDataset;
     List<String> variableNameList;
     List<Variable> variables;
+    List<Attribute> attributes;
 
     public Netcdf(String fileName) {
         try {
@@ -34,13 +36,14 @@ public class Netcdf {
                     variables = netcdfDataset.getRootGroup().getGroups().get(0).getVariables();
                 } else {
                     variables = netcdfDataset.getVariables();
-                }
+                } 
             }
+            attributes= netcdfDataset.getGlobalAttributes();
         } catch (IOException ex) {
             Logger.getLogger(Netcdf.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
     public void close() {
         try {
             netcdfDataset.close();
@@ -92,6 +95,14 @@ public class Netcdf {
 
     public NetcdfDataset getNetcdfDataset() {
         return netcdfDataset;
+    }
+
+    public List<String> getVariableNameList() {
+        return variableNameList;
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
     }
 
 }

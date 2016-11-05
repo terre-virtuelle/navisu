@@ -53,12 +53,15 @@ public class TimeSeriesVectorField {
         lonDimension = (int) lon.getSize();
         latitudes = new double[latDimension];
         longitudes = new double[lonDimension];
+        
         for (int h = 0; h < latDimension; h++) {
             latitudes[h] = lat.getDouble(h);
-            //System.out.println("lat : "+ latitudes[h]);
+           // System.out.println("lat : "+ latitudes[h]);
         }
         for (int w = 0; w < lonDimension; w++) {
             longitudes[w] = lon.getDouble(w);//-360
+         //   if(longitudes[w] > 180)
+         //       longitudes[w]-=360;
            // System.out.println("lon : " + longitudes[w]);
         }
         Pair<Double, Double> minMax = Pair.minMax(latitudes);
@@ -67,7 +70,7 @@ public class TimeSeriesVectorField {
         minMax = Pair.minMax(longitudes);
         minLon = minMax.getX();
         maxLon = minMax.getY();
-System.out.println(minLat+" "+  maxLat+" " +minLon+" "+ maxLon);
+//System.out.println(minLat+" "+  maxLat+" " +minLon+" "+ maxLon);
         int block = latDimension * lonDimension;
 
         index = 0;
