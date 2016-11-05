@@ -60,6 +60,9 @@ public class MeteoNetCDFViewer {
     private final double minLon;
     private final double maxLon;
     private Scene scene;
+    private int X_OFFSET = 20;
+    private int Y_OFFSET = 60;
+    private String DATA_INFO="Speed and direction of wind 10m above ground";
 
     public MeteoNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer meteoLayerVector, RenderableLayer meteoLayerAnalytic,
@@ -94,7 +97,7 @@ public class MeteoNetCDFViewer {
         this.maxLon = maxLon;
         java.awt.EventQueue.invokeLater(() -> {
             createAnnotationAttributes();
-            displayFileInfo(fileName);
+            displayFileInfo(fileName, DATA_INFO);
             displayDateInfo();
             createAnalyticSurface();
             //  createVectors();
@@ -105,16 +108,16 @@ public class MeteoNetCDFViewer {
         scene = guiAgentServices.getScene();
         Platform.runLater(() -> {
             scene.widthProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) -> {
-                rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - 20);
-                rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
-                leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + 20);
-                leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+                rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - X_OFFSET);
+                rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
+                leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + X_OFFSET);
+                leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
             });
             scene.heightProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) -> {
-                rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - 20);
-                rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
-                leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + 20);
-                leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+                rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - X_OFFSET);
+                rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
+                leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + X_OFFSET);
+                leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
             });
         });
     }
@@ -158,15 +161,15 @@ public class MeteoNetCDFViewer {
             rightTimeButtonController.setScale(0.2);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, rightTimeButtonController);
             guiAgentServices.getRoot().getChildren().add(rightTimeButtonController);
-            rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - 20);
-            rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+            rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - X_OFFSET);
+            rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
 
             leftTimeButtonController.setScale(0.2);
             leftTimeButtonController.setRotate(180);
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, leftTimeButtonController);
             guiAgentServices.getRoot().getChildren().add(leftTimeButtonController);
-            leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + 20);
-            leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+            leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + X_OFFSET);
+            leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
         });
     }
 
@@ -209,7 +212,7 @@ public class MeteoNetCDFViewer {
         annotationAttributes.setCornerRadius(0);
     }
 
-    private void displayFileInfo(String fileName) {
+    private void displayFileInfo(String fileName, String dataInfoStr) {
         String[] nameTab = fileName.split("\\/");
         name = nameTab[nameTab.length - 1];
         ScreenRelativeAnnotation fileInfo = new ScreenRelativeAnnotation(name, 0.1, 0.99);
@@ -218,11 +221,17 @@ public class MeteoNetCDFViewer {
         fileInfo.setYMargin(5);
         fileInfo.getAttributes().setDefaults(annotationAttributes);
         meteoLayerAnalytic.addRenderable(fileInfo);
+        ScreenRelativeAnnotation dataInfo = new ScreenRelativeAnnotation("\n" + dataInfoStr, 0.1, 0.99);
+        dataInfo.setKeepFullyVisible(true);
+        dataInfo.setXMargin(5);
+        dataInfo.setYMargin(5);
+        dataInfo.getAttributes().setDefaults(annotationAttributes);
+        meteoLayerAnalytic.addRenderable(dataInfo);
     }
 
     private void displayDateInfo() {
         if (date != null) {
-            dateInfo = new ScreenRelativeAnnotation("\n" + date.toString(), 0.1, 0.99);
+            dateInfo = new ScreenRelativeAnnotation("\n\n" + date.toString(), 0.1, 0.99);
             dateInfo.setKeepFullyVisible(true);
             dateInfo.setXMargin(5);
             dateInfo.setYMargin(5);
