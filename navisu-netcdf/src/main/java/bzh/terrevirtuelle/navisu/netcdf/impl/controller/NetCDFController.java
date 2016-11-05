@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import ucar.ma2.Array;
+import ucar.nc2.Attribute;
 import ucar.nc2.Variable;
 
 /**
@@ -22,7 +23,7 @@ public class NetCDFController {
     protected Netcdf netcdf;
 
     protected List<Variable> variables;
-
+    protected List<Attribute> attributes;
     protected Array u = null;
     protected Array v = null;
     protected Array latitudes = null;
@@ -35,10 +36,12 @@ public class NetCDFController {
     protected Array time = null;
     protected Array reftime = null;
     private static final Logger LOGGER = Logger.getLogger(NetCDFController.class.getName());
+    private String name;
 
     public NetCDFController(String fileName) {
         netcdf = new Netcdf(fileName);
         variables = netcdf.getVariables();
+        attributes = netcdf.getAttributes();
         try {
             u = netcdf.read("u-component_of_wind_height_above_ground");
         } catch (Exception e) {
@@ -79,6 +82,10 @@ public class NetCDFController {
         } catch (Exception e1) {
             LOGGER.log(Level.SEVERE, "File not NetCDF compliant : reftime ", e1);
         }
-
     }
+
+    public Netcdf getNetcdf() {
+        return netcdf;
+    }
+    
 }

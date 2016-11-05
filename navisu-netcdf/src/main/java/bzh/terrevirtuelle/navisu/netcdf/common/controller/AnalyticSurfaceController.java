@@ -16,7 +16,6 @@ import gov.nasa.worldwind.geom.Extent;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.DrawContext;
-import gov.nasa.worldwind.render.Offset;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.util.BufferFactory;
 import gov.nasa.worldwind.util.BufferWrapper;
@@ -46,6 +45,7 @@ public class AnalyticSurfaceController {
     protected AnalyticSurfaceAttributes attr;
     protected AnalyticSurface surface;
     private final WorldWindow wwd;
+    private static boolean first = true;
 
     public AnalyticSurfaceController(
             RenderableLayer layer, RenderableLayer legendLayer,
@@ -109,20 +109,23 @@ public class AnalyticSurfaceController {
         attr.setInteriorOpacity(1.0);
         attr.setDrawOutline(false);
         surface.setSurfaceAttributes(attr);
+        
+        if (first == true) {
+            first = false;
+            Format legendLabelFormat = new DecimalFormat("# m/s") {
+                @Override
+                public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition) {
+                    return super.format(number, result, fieldPosition);
+                }
+            };
 
-        Format legendLabelFormat = new DecimalFormat("# m/s") {
-            @Override
-            public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition) {
-                return super.format(number, result, fieldPosition);
-            }
-        };
-
-        AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, 40, minHue, maxHue,
-                AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
-                AnalyticSurfaceLegend.createDefaultTitle("Speed"));
-        legend.setOpacity(0.8);
-        legend.setScreenLocation(new Point(900, 300));
-        legendLayer.addRenderable(createLegendRenderable(surface, maxValue, legend));
+            AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, 40, minHue, maxHue,
+                    AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
+                    AnalyticSurfaceLegend.createDefaultTitle("Speed"));
+            legend.setOpacity(0.8);
+            legend.setScreenLocation(new Point(900, 300));
+            legendLayer.addRenderable(createLegendRenderable(surface, maxValue, legend));
+        }
     }
 
     protected void mixValuesOverTime(

@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols.Arrow;
 import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +65,7 @@ public class MeteoNetCDFViewer {
         this.maxValue = maxValue;
         this.values = values;
         this.directions = directions;
-        this.latTab = lonTab;
+        this.latTab = latTab;
         this.lonTab = lonTab;
         this.latDimension = latDim;
         this.lonDimension = lonDim;
@@ -79,8 +78,7 @@ public class MeteoNetCDFViewer {
           //  createVectors();
             wwd.redrawNow();
         });
-        
-        
+
     }
 
     private void createAnalyticSurface() {
@@ -94,13 +92,13 @@ public class MeteoNetCDFViewer {
                 0.0, maxValue,//min, max values in m/s
                 1.0,//opacity
                 "Meteo", "m/s");//legends
-/*
+
         SliderController opacitySliderController = new SliderController();
         Platform.runLater(() -> {
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, opacitySliderController);
             guiAgentServices.getRoot().getChildren().add(opacitySliderController);
-            opacitySliderController.setTranslateY(-260.0);
-            opacitySliderController.setTranslateX(-440.0);
+            opacitySliderController.setTranslateY(-30.0);
+            opacitySliderController.setTranslateX(500.0);
             opacitySliderController.setRotate(-90);
             opacitySliderController.setVisible(true);
             opacitySliderController.getSlider().setMin(0.0);
@@ -116,6 +114,7 @@ public class MeteoNetCDFViewer {
             analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
             wwd.redrawNow();
         });
+        /*
         SliderController timeSliderController = new SliderController("TimeSliderPanel.fxml");
         Platform.runLater(() -> {
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, timeSliderController);
@@ -136,13 +135,14 @@ public class MeteoNetCDFViewer {
     }
 
     private void createVectors() {
+
         List<Arrow> arrows = new ArrayList<>();
         int l = 0;
-        for (int h = 0; h < latDimension; h += 10) {
+        for (int h = 0; h < latDimension; h += 1) {
             for (int w = 0; w < lonDimension; w += 1) {
                 if ((!Double.isNaN(latTab[h]) && !Double.isNaN(lonTab[w])
                         && !Double.isNaN(values[l + w]) && !Double.isNaN(directions[l + w]))) {
-
+                  //  System.out.println(latTab[h] + " " + lonTab[w]);
                     Arrow arrow = new Arrow(latTab[h], lonTab[w], values[l + w]);
                     double alpha = -Math.toDegrees(directions[l + w]) + arrow.getRotation();
                     if (alpha < 0) {
@@ -158,9 +158,10 @@ public class MeteoNetCDFViewer {
             }
             l += lonDimension;
         }
-         meteoLayerVector.addRenderables(arrows);
+        meteoLayerVector.addRenderables(arrows);
     }
-    private void filter(){
+
+    private void filter() {
         System.out.println("**********");
     }
 }
