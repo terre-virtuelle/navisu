@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceAttributes;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.AnalyticSurfaceController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols.Arrow;
+import bzh.terrevirtuelle.navisu.widgets.slider.ButtonController;
 import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -19,15 +20,15 @@ import gov.nasa.worldwind.render.ScreenRelativeAnnotation;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
-import ucar.nc2.dataset.CoordinateAxis;
 
 /**
  *
@@ -40,6 +41,8 @@ public class MeteoNetCDFViewer {
     private final RenderableLayer meteoLayerAnalytic;
     private AnnotationAttributes annotationAttributes;
     private ScreenRelativeAnnotation dateInfo;
+    private ButtonController rightTimeButtonController;
+    private ButtonController leftTimeButtonController;
     private String name;
     private final String fileName;
     private Date date = null;
@@ -56,6 +59,7 @@ public class MeteoNetCDFViewer {
     private final double maxLat;
     private final double minLon;
     private final double maxLon;
+    private Scene scene;
 
     public MeteoNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer meteoLayerVector, RenderableLayer meteoLayerAnalytic,
@@ -96,7 +100,23 @@ public class MeteoNetCDFViewer {
             //  createVectors();
             wwd.redrawNow();
         });
-
+        rightTimeButtonController = new ButtonController();
+        leftTimeButtonController = new ButtonController();
+        scene = guiAgentServices.getScene();
+        Platform.runLater(() -> {
+            scene.widthProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) -> {
+                rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - 20);
+                rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+                leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + 20);
+                leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+            });
+            scene.heightProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) -> {
+                rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - 20);
+                rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+                leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + 20);
+                leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+            });
+        });
     }
 
     private void createAnalyticSurface() {
@@ -113,10 +133,11 @@ public class MeteoNetCDFViewer {
 
         SliderController opacitySliderController = new SliderController();
         Platform.runLater(() -> {
+
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, opacitySliderController);
             guiAgentServices.getRoot().getChildren().add(opacitySliderController);
             opacitySliderController.setTranslateY(-30.0);
-            opacitySliderController.setTranslateX(500.0);
+            opacitySliderController.setTranslateX(480.0);
             opacitySliderController.setRotate(-90);
             opacitySliderController.setVisible(true);
             opacitySliderController.getSlider().setMin(0.0);
@@ -132,24 +153,21 @@ public class MeteoNetCDFViewer {
             analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
             wwd.redrawNow();
         });
-        /*
-        SliderController timeSliderController = new SliderController("TimeSliderPanel.fxml");
+
         Platform.runLater(() -> {
-            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, timeSliderController);
-            guiAgentServices.getRoot().getChildren().add(timeSliderController);
-            timeSliderController.setTranslateY(300.0);
-            timeSliderController.setVisible(true);
-            timeSliderController.getSlider().setMin(0.0);
-            timeSliderController.getSlider().setMax(1.0);
-            timeSliderController.getSlider().setValue(10.0);
-            timeSliderController.getSlider().setShowTickMarks(true);
-            timeSliderController.getSlider().setShowTickLabels(true);
-            timeSliderController.getSlider().setTooltip(new Tooltip(name + " time"));
+            rightTimeButtonController.setScale(0.2);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, rightTimeButtonController);
+            guiAgentServices.getRoot().getChildren().add(rightTimeButtonController);
+            rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - 20);
+            rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
+
+            leftTimeButtonController.setScale(0.2);
+            leftTimeButtonController.setRotate(180);
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, leftTimeButtonController);
+            guiAgentServices.getRoot().getChildren().add(leftTimeButtonController);
+            leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + 20);
+            leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - 60);
         });
-        timeSliderController.getSlider().valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-            wwd.redrawNow();
-        });
-         */
     }
 
     private void createVectors() {
