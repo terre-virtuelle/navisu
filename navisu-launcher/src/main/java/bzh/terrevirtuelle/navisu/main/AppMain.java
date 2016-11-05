@@ -123,10 +123,10 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
 import bzh.terrevirtuelle.navisu.database.graph.neo4J.impl.GraphDatabaseComponentImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.impl.GpsTrackPlotterImpl;
-import bzh.terrevirtuelle.navisu.navigation.camera.CameraComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.camera.impl.CameraComponentImpl;
-import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.controller.commands.impl.NavigationCmdComponentImpl;
+import bzh.terrevirtuelle.navisu.extensions.camera.CameraComponentServices;
+import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.extensions.commands.impl.NavigationCmdComponentImpl;
 import bzh.terrevirtuelle.navisu.sailingdirections.SailingDirectionsComponentServices;
 import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
 import java.nio.file.Files;
