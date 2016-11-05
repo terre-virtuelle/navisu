@@ -7,8 +7,8 @@ package bzh.terrevirtuelle.navisu.extensions.server.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
-import bzh.terrevirtuelle.navisu.navigation.controller.commands.ArCommand;
-import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.extensions.commands.ArCommand;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import java.io.FileInputStream;
 import java.io.IOException;

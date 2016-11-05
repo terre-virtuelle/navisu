@@ -9,7 +9,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServer;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.controller.NavigationServerController;
-import bzh.terrevirtuelle.navisu.navigation.controller.commands.NavigationCmdComponentServices;
+import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
