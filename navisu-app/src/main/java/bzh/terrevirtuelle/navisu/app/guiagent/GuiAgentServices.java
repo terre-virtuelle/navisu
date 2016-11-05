@@ -15,7 +15,8 @@ import org.capcaval.c3.component.ComponentService;
  *
  * @author tibus
  */
-public interface GuiAgentServices extends ComponentService {
+public interface GuiAgentServices
+        extends ComponentService {
 
     boolean isFullScreen();
 
@@ -31,6 +32,4 @@ public interface GuiAgentServices extends ComponentService {
 
     Stage getStage();
 
-    
-    
 }

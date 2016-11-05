@@ -97,6 +97,7 @@ public class GuiAgentImpl
         this.width = width;
         this.height = height;
         this.stage = stage;
+        stage.setResizable(true);
         this.jobsManager = JobsManager.create();
         final FXMLLoader loader = new FXMLLoader();
         try {
