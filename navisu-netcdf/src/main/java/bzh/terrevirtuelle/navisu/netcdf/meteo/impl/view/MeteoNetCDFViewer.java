@@ -9,26 +9,37 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceAttributes;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.AnalyticSurfaceController;
+import bzh.terrevirtuelle.navisu.netcdf.common.view.WwjButtonController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols.Arrow;
 import bzh.terrevirtuelle.navisu.widgets.slider.ButtonController;
 import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.AnnotationAttributes;
+import gov.nasa.worldwind.render.ScreenImage;
 import gov.nasa.worldwind.render.ScreenRelativeAnnotation;
+import gov.nasa.worldwind.render.Size;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -60,9 +71,9 @@ public class MeteoNetCDFViewer {
     private final double minLon;
     private final double maxLon;
     private Scene scene;
-    private int X_OFFSET = 20;
-    private int Y_OFFSET = 60;
-    private String DATA_INFO="Speed and direction of wind 10m above ground";
+    private int X_OFFSET = 50;
+    private int Y_OFFSET = 100;
+    private String DATA_INFO = "Speed and direction of wind 10m above ground";
 
     public MeteoNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer meteoLayerVector, RenderableLayer meteoLayerAnalytic,
@@ -106,20 +117,11 @@ public class MeteoNetCDFViewer {
         rightTimeButtonController = new ButtonController();
         leftTimeButtonController = new ButtonController();
         scene = guiAgentServices.getScene();
-        Platform.runLater(() -> {
-            scene.widthProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) -> {
-                rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - X_OFFSET);
-                rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
-                leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + X_OFFSET);
-                leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
-            });
-            scene.heightProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) -> {
-                rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - X_OFFSET);
-                rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
-                leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + X_OFFSET);
-                leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
-            });
-        });
+
+        WwjButtonController rightButtonController
+                = new WwjButtonController(guiAgentServices, meteoLayerAnalytic,"R", "images/right.png", "images/right1.png",50, 100);
+        WwjButtonController leftButtonController
+                = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", "images/left.png", "images/left1.png", 50, 100);
     }
 
     private void createAnalyticSurface() {
@@ -136,7 +138,6 @@ public class MeteoNetCDFViewer {
 
         SliderController opacitySliderController = new SliderController();
         Platform.runLater(() -> {
-
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, opacitySliderController);
             guiAgentServices.getRoot().getChildren().add(opacitySliderController);
             opacitySliderController.setTranslateY(-30.0);
@@ -155,21 +156,6 @@ public class MeteoNetCDFViewer {
             attrs.setInteriorOpacity(opacitySliderController.getSlider().getValue());
             analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
             wwd.redrawNow();
-        });
-
-        Platform.runLater(() -> {
-            rightTimeButtonController.setScale(0.2);
-            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, rightTimeButtonController);
-            guiAgentServices.getRoot().getChildren().add(rightTimeButtonController);
-            rightTimeButtonController.setTranslateX(scene.getWidth() / 2 - X_OFFSET);
-            rightTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
-
-            leftTimeButtonController.setScale(0.2);
-            leftTimeButtonController.setRotate(180);
-            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, leftTimeButtonController);
-            guiAgentServices.getRoot().getChildren().add(leftTimeButtonController);
-            leftTimeButtonController.setTranslateX(-scene.getWidth() / 2 + X_OFFSET);
-            leftTimeButtonController.setTranslateY(scene.getHeight() / 2 - Y_OFFSET);
         });
     }
 
