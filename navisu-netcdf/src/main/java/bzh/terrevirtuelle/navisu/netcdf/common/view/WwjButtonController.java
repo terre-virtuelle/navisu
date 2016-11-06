@@ -18,6 +18,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
@@ -46,7 +47,8 @@ public class WwjButtonController {
     private boolean first = true;
 
     public WwjButtonController(GuiAgentServices guiAgentServices, RenderableLayer layer,
-            String side, String filenameOn, String filenameOff, int xOffSet, int yOffSet) {
+            String side, String filenameOn, String filenameOff, 
+            int xOffSet, int yOffSet) {
         this.layer = layer;
         this.guiAgentServices = guiAgentServices;
         this.side = side;
@@ -157,7 +159,6 @@ public class WwjButtonController {
                             screenImage.setImageSource(imageOn);
                             first = true;
                         }
-
                         // ((gov.nasa.worldwind.render.ScreenImage) o).setScreenLocation(new Point(event.getMouseEvent().getX(),
                         //         event.getMouseEvent().getY()));
                         System.out.println("***************");
@@ -167,4 +168,9 @@ public class WwjButtonController {
             }
         });
     }
+    /*
+    public String print(Function<MeteoNetCDFViewer, String> f){
+        return f.apply(t);
+    }
+*/
 }

@@ -15,31 +15,21 @@ import bzh.terrevirtuelle.navisu.widgets.slider.ButtonController;
 import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.AnnotationAttributes;
-import gov.nasa.worldwind.render.ScreenImage;
 import gov.nasa.worldwind.render.ScreenRelativeAnnotation;
-import gov.nasa.worldwind.render.Size;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.function.Function;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -119,9 +109,15 @@ public class MeteoNetCDFViewer {
         scene = guiAgentServices.getScene();
 
         WwjButtonController rightButtonController
-                = new WwjButtonController(guiAgentServices, meteoLayerAnalytic,"R", "images/right.png", "images/right1.png",50, 100);
+                = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "R",
+                        "images/right.png", "images/right1.png", 50, 100);
+       // rightButtonController.print(test);
         WwjButtonController leftButtonController
-                = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", "images/left.png", "images/left1.png", 50, 100);
+                = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", 
+                        "images/left.png", "images/left1.png", 50, 100);
+      //  WwjButtonController lquitButtonController
+       //         = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", 
+      //                  "images/quit.png", "images/quit.png", 50, 600); 
     }
 
     private void createAnalyticSurface() {
@@ -227,5 +223,9 @@ public class MeteoNetCDFViewer {
         }
 
     }
+    
+    Function<MeteoNetCDFViewer, String> test = p -> {
+        return "OK";
+    };
 
 }

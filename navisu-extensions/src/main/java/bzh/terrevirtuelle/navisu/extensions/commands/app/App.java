@@ -25,7 +25,7 @@ public class App {
     public App() {
         //Emission
         NavigationData camera = new Camera();
-        ArCommand cmd = new ArCommand("cmd",camera);
+        ArCommand cmd = new ArCommand("cmd", camera);
         try {
             ImportExportXML.exports(cmd, "cmd.xml");
         } catch (JAXBException | FileNotFoundException ex) {
