@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -34,10 +34,11 @@ import org.capcaval.c3.component.annotation.UsedService;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
+import javafx.scene.control.MenuBar;
+import javafx.scene.layout.BorderPane;
 
 /**
  * NaVisu
@@ -50,7 +51,7 @@ public class GuiAgentImpl
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
-   private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
+    private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
 
     @SubComponent
     ServerOptionsComponentImpl optionsManager;
@@ -122,8 +123,8 @@ public class GuiAgentImpl
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
 
         // Initialize menu
-         // this.menuServices.setMenuComponent(ctrl.menuBar);
-         // this.initializeMenuItems(this.menuServices);
+        // this.menuServices.setMenuComponent(ctrl.menuBar);
+        // this.initializeMenuItems(this.menuServices);
         stage.setTitle(TITLE);
         /*
         stage.setOnCloseRequest(e -> {
@@ -131,11 +132,10 @@ public class GuiAgentImpl
             ComponentManager.componentManager.stopApplication();
             System.exit(0);
         });
-        */
+         */
         stage.setScene(scene);
-       // stage.setFullScreen(true);
+        // stage.setFullScreen(true);
         stage.show();
-
 
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
         stage1 = new Stage();
@@ -175,7 +175,6 @@ public class GuiAgentImpl
         scene.getStylesheets().add(getClass().getResource(NAVISU_LOOK_AND_FEEL_PATH).toExternalForm());
     }
 
-    
     @Override
     public JobsManager getJobsManager() {
         return this.jobsManager;
@@ -204,5 +203,24 @@ public class GuiAgentImpl
     @Override
     public Stage getStage() {
         return stage1;
+    }
+    @Override
+    public MenuBar getMenuBar() {
+        return ctrl.getMenuBar();
+    }
+
+    @Override
+    public BorderPane getLeftBorderPane() {
+        return ctrl.getLeftBorderPane();
+    }
+
+    @Override
+    public StackPane getCenterStackPane() {
+        return ctrl.getCenterStackPane();
+    }
+
+    @Override
+    public BorderPane getStatusBorderPane() {
+        return ctrl.getStatusBorderPane();
     }
 }

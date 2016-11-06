@@ -26,4 +26,21 @@ public class GuiAgentController {
     @FXML public BorderPane statusBorderPane;
 
     public GuiAgentController() {}
+
+    public MenuBar getMenuBar() {
+        return menuBar;
+    }
+
+    public BorderPane getLeftBorderPane() {
+        return leftBorderPane;
+    }
+
+    public StackPane getCenterStackPane() {
+        return centerStackPane;
+    }
+
+    public BorderPane getStatusBorderPane() {
+        return statusBorderPane;
+    }
+    
 }
