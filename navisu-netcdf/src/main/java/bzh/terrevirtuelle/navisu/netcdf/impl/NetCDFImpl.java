@@ -148,7 +148,7 @@ public class NetCDFImpl
 
     @Override
     public int getLatitudeDimension() {
-        // return meteoNetCdfController.getLatitudeDimension();
+       //  return netCDFController.getLatitudeDimension();
         return 0;
     }
 

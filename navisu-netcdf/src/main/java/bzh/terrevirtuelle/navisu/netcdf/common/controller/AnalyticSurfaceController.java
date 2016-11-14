@@ -46,10 +46,12 @@ public class AnalyticSurfaceController {
     protected AnalyticSurface surface;
     private final WorldWindow wwd;
     private static boolean first = true;
+    private LegendController legendController;
 
     public AnalyticSurfaceController(
-            RenderableLayer layer, RenderableLayer legendLayer,
-            final double[] data,
+            RenderableLayer layer,
+            RenderableLayer legendLayer,
+            final double[] values,
             int latDimension, int lonDimension,
             double minLat, double maxLat,
             double minLon, double maxLon,
@@ -59,8 +61,9 @@ public class AnalyticSurfaceController {
 
         this.analyticSurfaceLayer = layer;
         this.legendLayer = legendLayer;
+
         this.legendLayer.setPickEnabled(true);
-        this.values = data;
+        this.values = values;
         this.lonDimension = lonDimension;
         this.latDimension = latDimension;
         this.minLat = minLat;
@@ -81,14 +84,28 @@ public class AnalyticSurfaceController {
                 }
             }
         });
-        createSurface(HUE_BLUE, HUE_RED, this.lonDimension, this.latDimension,
+//        legendController = new LegendController(surface, minValue, legend);
+        apply(values);
+        /*
+        createSurface(values, HUE_BLUE, HUE_RED, this.lonDimension, this.latDimension,
                 minLat, maxLat, minLon, maxLon,
                 this.analyticSurfaceLayer, this.legendLayer,
                 minValue, maxValue);
-
+         */
     }
 
-    protected final void createSurface(double minHue, double maxHue,
+    public void apply(final double[] values) {
+        if (surface != null) {
+            analyticSurfaceLayer.removeRenderable(surface);
+        }
+        surface = createSurface(values, HUE_BLUE, HUE_RED, this.lonDimension, this.latDimension,
+                minLat, maxLat, minLon, maxLon,
+                this.analyticSurfaceLayer, this.legendLayer,
+                minValue, maxValue);
+        analyticSurfaceLayer.addRenderable(surface);
+    }
+
+    protected final AnalyticSurface createSurface(double[] values, double minHue, double maxHue,
             int width, int height,
             double minLat, double maxLat, double minLon, double maxLon,
             RenderableLayer outLayer, RenderableLayer legendLayer,
@@ -98,10 +115,10 @@ public class AnalyticSurfaceController {
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         surface.setDimensions(width, height);
         surface.setClientLayer(outLayer);
-        outLayer.addRenderable(surface);
+        //outLayer.addRenderable(surface);
 
-        BufferWrapper firstBuffer = createBufferValues(width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
-        BufferWrapper secondBuffer = createBufferValues(width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
+        BufferWrapper firstBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
+        BufferWrapper secondBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
         mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, 18, minHue, maxHue, surface);
 
         attr = new AnalyticSurfaceAttributes();
@@ -109,7 +126,7 @@ public class AnalyticSurfaceController {
         attr.setInteriorOpacity(1.0);
         attr.setDrawOutline(false);
         surface.setSurfaceAttributes(attr);
-        
+
         if (first == true) {
             first = false;
             Format legendLabelFormat = new DecimalFormat("# m/s") {
@@ -118,14 +135,16 @@ public class AnalyticSurfaceController {
                     return super.format(number, result, fieldPosition);
                 }
             };
-
+            /*
             AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, 40, minHue, maxHue,
                     AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
                     AnalyticSurfaceLegend.createDefaultTitle("Speed"));
             legend.setOpacity(0.8);
             legend.setScreenLocation(new Point(900, 300));
             legendLayer.addRenderable(createLegendRenderable(surface, maxValue, legend));
+             */
         }
+        return surface;
     }
 
     protected void mixValuesOverTime(
@@ -153,7 +172,7 @@ public class AnalyticSurfaceController {
         return attributesList;
     }
 
-    public BufferWrapper createBufferValues(int width, int height, double min, double max,
+    public BufferWrapper createBufferValues(double[] values, int width, int height, double min, double max,
             BufferFactory factory, RenderableLayer outLayer) {
 
         BufferWrapper wrapper = factory.newBuffer(values.length);
@@ -161,6 +180,7 @@ public class AnalyticSurfaceController {
         return wrapper;
     }
 
+    /*
     protected static Renderable createLegendRenderable(final AnalyticSurface surface,
             final double surfaceMinScreenSize,
             final AnalyticSurfaceLegend legend) {
@@ -175,7 +195,7 @@ public class AnalyticSurfaceController {
             legend.render(dc);
         };
     }
-
+     */
     public AnalyticSurfaceAttributes getAttr() {
         return attr;
     }

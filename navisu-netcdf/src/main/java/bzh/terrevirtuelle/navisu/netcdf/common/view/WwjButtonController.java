@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.netcdf.common.view;
 
+import bzh.terrevirtuelle.navisu.domain.cmd.Cmd;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.MeteoNetCDFViewer;
@@ -45,10 +46,11 @@ public class WwjButtonController {
     private BufferedImage imageOn;
     private BufferedImage imageOff;
     private boolean first = true;
+    private Cmd f;
 
     public WwjButtonController(GuiAgentServices guiAgentServices, RenderableLayer layer,
-            String side, String filenameOn, String filenameOff, 
-            int xOffSet, int yOffSet) {
+            String side, String filenameOn, String filenameOff,
+            int xOffSet, int yOffSet, Cmd f) {
         this.layer = layer;
         this.guiAgentServices = guiAgentServices;
         this.side = side;
@@ -58,6 +60,7 @@ public class WwjButtonController {
         this.filenameOff = filenameOff;
         wwd = GeoWorldWindViewImpl.getWW();
         this.layer.setPickEnabled(true);
+        this.f = f;
         scene = guiAgentServices.getScene();
         init();
         actionEvents();
@@ -149,28 +152,27 @@ public class WwjButtonController {
         wwd.addSelectListener((SelectEvent event) -> {
             if (event.getEventAction().equals(SelectEvent.LEFT_CLICK)) {
                 Object o = event.getTopObject();
-                if (o.getClass().getName().equalsIgnoreCase("gov.nasa.worldwind.render.ScreenImage")) {
-                    ScreenImage obj = (gov.nasa.worldwind.render.ScreenImage) o;
-                    if (obj.getValue("Side").equals(side)) {
-                        if (first == true) {
-                            screenImage.setImageSource(imageOff);
-                            first = false;
-                        } else {
-                            screenImage.setImageSource(imageOn);
-                            first = true;
+                if (o != null) {
+                    if (o.getClass().getName().equalsIgnoreCase("gov.nasa.worldwind.render.ScreenImage")) {
+                        ScreenImage obj = (gov.nasa.worldwind.render.ScreenImage) o;
+                        String str = (String) obj.getValue("Side");
+                        if (str != null) {
+                            if (str.equals(side)) {
+                                if (first == true) {
+                                    screenImage.setImageSource(imageOff);
+                                    first = false;
+                                } else {
+                                    screenImage.setImageSource(imageOn);
+                                    first = true;
+                                }
+                                f.doIt();
+                                event.consume();
+                            }
                         }
-                        // ((gov.nasa.worldwind.render.ScreenImage) o).setScreenLocation(new Point(event.getMouseEvent().getX(),
-                        //         event.getMouseEvent().getY()));
-                        System.out.println("***************");
-                        event.consume();
                     }
                 }
             }
-        });
+        }
+        );
     }
-    /*
-    public String print(Function<MeteoNetCDFViewer, String> f){
-        return f.apply(t);
-    }
-*/
 }

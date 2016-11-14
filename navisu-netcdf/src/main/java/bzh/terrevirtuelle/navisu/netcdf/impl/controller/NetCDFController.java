@@ -36,9 +36,10 @@ public class NetCDFController {
     protected Array time = null;
     protected Array reftime = null;
     private static final Logger LOGGER = Logger.getLogger(NetCDFController.class.getName());
-    private String name;
+    protected String fileName;
 
     public NetCDFController(String fileName) {
+        this.fileName = fileName;
         netcdf = new Netcdf(fileName);
         variables = netcdf.getVariables();
         attributes = netcdf.getAttributes();
@@ -87,5 +88,9 @@ public class NetCDFController {
     public Netcdf getNetcdf() {
         return netcdf;
     }
-    
+
+    public String getFileName() {
+        return fileName;
+    }
+
 }

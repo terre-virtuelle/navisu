@@ -6,12 +6,11 @@
 package bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurface;
 import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceAttributes;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.AnalyticSurfaceController;
-import bzh.terrevirtuelle.navisu.netcdf.common.view.WwjButtonController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols.Arrow;
-import bzh.terrevirtuelle.navisu.widgets.slider.ButtonController;
 import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -27,7 +26,6 @@ import java.util.List;
 import java.util.function.Function;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 
@@ -37,21 +35,21 @@ import javafx.scene.input.KeyEvent;
  */
 public class MeteoNetCDFViewer {
 
+    private static MeteoNetCDFViewer INSTANCE;
     private final GuiAgentServices guiAgentServices;
     private final RenderableLayer meteoLayerVector;
     private final RenderableLayer meteoLayerAnalytic;
     private AnnotationAttributes annotationAttributes;
     private ScreenRelativeAnnotation dateInfo;
-    private ButtonController rightTimeButtonController;
-    private ButtonController leftTimeButtonController;
+
     private String name;
     private final String fileName;
     private Date date = null;
     private final RenderableLayer meteoLayerLegend;
     private final double maxValue;
     private final WorldWindow wwd;
-    private final double[] values;
-    private final double[] directions;
+    private double[] values;
+    private double[] directions;
     private final double[] latTab;
     private final double[] lonTab;
     private final int latDimension;
@@ -60,17 +58,19 @@ public class MeteoNetCDFViewer {
     private final double maxLat;
     private final double minLon;
     private final double maxLon;
-    private Scene scene;
-    private int X_OFFSET = 50;
-    private int Y_OFFSET = 100;
-    private String DATA_INFO = "Speed and direction of wind 10m above ground";
+    private ScreenRelativeAnnotation fileInfo;
+    private ScreenRelativeAnnotation dataInfo;
+    private AnalyticSurfaceController analyticSurfaceController;
+    private SliderController opacitySliderController;
+    private final String DATA_INFO = "Speed and direction of wind 10m above ground";
+    boolean first = true;
 
+    
     public MeteoNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer meteoLayerVector, RenderableLayer meteoLayerAnalytic,
             RenderableLayer meteoLayerLegend,
             String name, String fileName, Date date,
             double maxValue,
-            double[] values, double[] directions,
             double[] latTab, double[] lonTab,
             int latDim, int lonDim,
             double minLat, double maxLat,
@@ -86,8 +86,6 @@ public class MeteoNetCDFViewer {
         this.fileName = fileName;
         this.date = date;
         this.maxValue = maxValue;
-        this.values = values;
-        this.directions = directions;
         this.latTab = latTab;
         this.lonTab = lonTab;
         this.latDimension = latDim;
@@ -96,44 +94,15 @@ public class MeteoNetCDFViewer {
         this.maxLat = maxLat;
         this.minLon = minLon;
         this.maxLon = maxLon;
-        java.awt.EventQueue.invokeLater(() -> {
-            createAnnotationAttributes();
-            displayFileInfo(fileName, DATA_INFO);
-            displayDateInfo();
-            createAnalyticSurface();
-            //  createVectors();
-            wwd.redrawNow();
-        });
-        rightTimeButtonController = new ButtonController();
-        leftTimeButtonController = new ButtonController();
-        scene = guiAgentServices.getScene();
 
-        WwjButtonController rightButtonController
-                = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "R",
-                        "images/right.png", "images/right1.png", 50, 100);
-       // rightButtonController.print(test);
-        WwjButtonController leftButtonController
-                = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", 
-                        "images/left.png", "images/left1.png", 50, 100);
-      //  WwjButtonController lquitButtonController
-       //         = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", 
-      //                  "images/quit.png", "images/quit.png", 50, 600); 
-    }
-
-    private void createAnalyticSurface() {
-        AnalyticSurfaceController analyticSurfaceController = new AnalyticSurfaceController(
-                meteoLayerAnalytic, meteoLayerLegend,
-                values,
-                latDimension,
-                lonDimension,
-                minLat, maxLat,
-                minLon, maxLon,
-                0.0, maxValue,//min, max values in m/s
-                1.0,//opacity
-                "Meteo", "m/s");//legends
-
-        SliderController opacitySliderController = new SliderController();
         Platform.runLater(() -> {
+            if (opacitySliderController != null) {
+                if (guiAgentServices.getRoot().getChildren().contains(opacitySliderController)) {
+                    guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, opacitySliderController);
+                    guiAgentServices.getRoot().getChildren().remove(opacitySliderController);
+                }
+            }
+            opacitySliderController = new SliderController();
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, opacitySliderController);
             guiAgentServices.getRoot().getChildren().add(opacitySliderController);
             opacitySliderController.setTranslateY(-30.0);
@@ -144,15 +113,43 @@ public class MeteoNetCDFViewer {
             opacitySliderController.getSlider().setMax(1.0);
             opacitySliderController.getSlider().setValue(1.0);
             opacitySliderController.getSlider().setTooltip(new Tooltip(name + " opacity"));
+            opacitySliderController.getSlider().valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
+                AnalyticSurfaceAttributes attrs = new AnalyticSurfaceAttributes();
+                attrs.setDrawShadow(false);
+                attrs.setDrawOutline(false);
+                attrs.setInteriorOpacity(opacitySliderController.getSlider().getValue());
+                analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
+                wwd.redrawNow();
+            });
         });
-        opacitySliderController.getSlider().valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
-            AnalyticSurfaceAttributes attrs = new AnalyticSurfaceAttributes();
-            attrs.setDrawShadow(false);
-            attrs.setDrawOutline(false);
-            attrs.setInteriorOpacity(opacitySliderController.getSlider().getValue());
-            analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
+        createAnnotationAttributes();
+     //   createAnalyticSurface();
+        displayFileInfo(fileName, DATA_INFO);
+    }
+
+    public void apply(double[] values, double[] directions) {
+        this.values = values;
+        this.directions = directions;
+        java.awt.EventQueue.invokeLater(() -> {
+            displayDateInfo();
+            createAnalyticSurface();
+            //  createVectors();
+            //analyticSurfaceController.apply(values);
             wwd.redrawNow();
         });
+    }
+
+    private void createAnalyticSurface() {
+        analyticSurfaceController = new AnalyticSurfaceController(
+                meteoLayerAnalytic, meteoLayerLegend,
+                values,
+                latDimension,
+                lonDimension,
+                minLat, maxLat,
+                minLon, maxLon,
+                0.0, maxValue,//min, max values in m/s
+                1.0,//opacity
+                "Meteo", "m/s");//legends
     }
 
     private void createVectors() {
@@ -197,13 +194,13 @@ public class MeteoNetCDFViewer {
     private void displayFileInfo(String fileName, String dataInfoStr) {
         String[] nameTab = fileName.split("\\/");
         name = nameTab[nameTab.length - 1];
-        ScreenRelativeAnnotation fileInfo = new ScreenRelativeAnnotation(name, 0.1, 0.99);
+        fileInfo = new ScreenRelativeAnnotation(name, 0.1, 0.99);
         fileInfo.setKeepFullyVisible(true);
         fileInfo.setXMargin(5);
         fileInfo.setYMargin(5);
         fileInfo.getAttributes().setDefaults(annotationAttributes);
         meteoLayerAnalytic.addRenderable(fileInfo);
-        ScreenRelativeAnnotation dataInfo = new ScreenRelativeAnnotation("\n" + dataInfoStr, 0.1, 0.99);
+        dataInfo = new ScreenRelativeAnnotation("\n" + dataInfoStr, 0.1, 0.99);
         dataInfo.setKeepFullyVisible(true);
         dataInfo.setXMargin(5);
         dataInfo.setYMargin(5);
@@ -212,20 +209,16 @@ public class MeteoNetCDFViewer {
     }
 
     private void displayDateInfo() {
+        if (dateInfo != null) {
+            meteoLayerAnalytic.removeRenderable(dateInfo);
+        }
         if (date != null) {
             dateInfo = new ScreenRelativeAnnotation("\n\n" + date.toString(), 0.1, 0.99);
             dateInfo.setKeepFullyVisible(true);
             dateInfo.setXMargin(5);
             dateInfo.setYMargin(5);
             dateInfo.getAttributes().setDefaults(annotationAttributes);
-            meteoLayerAnalytic.removeRenderable(dateInfo);
             meteoLayerAnalytic.addRenderable(dateInfo);
         }
-
     }
-    
-    Function<MeteoNetCDFViewer, String> test = p -> {
-        return "OK";
-    };
-
 }
