@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 public class AnalyticSurfaceController {
 
+    private static AnalyticSurfaceController INSTANCE;
     protected int lonDimension;
     protected int latDimension;
     double minLat;
@@ -43,10 +44,10 @@ public class AnalyticSurfaceController {
     protected RenderableLayer legendLayer;
     protected double[] values;
     protected AnalyticSurfaceAttributes attr;
-    protected AnalyticSurface surface;
+    protected AnalyticSurface surface = null;
     private final WorldWindow wwd;
     private static boolean first = true;
-    private LegendController legendController;
+  //  private LegendController legendController;
 
     public AnalyticSurfaceController(
             RenderableLayer layer,
@@ -84,20 +85,15 @@ public class AnalyticSurfaceController {
                 }
             }
         });
-//        legendController = new LegendController(surface, minValue, legend);
+        // legendController = new LegendController(surface, minValue, legend);
         apply(values);
-        /*
-        createSurface(values, HUE_BLUE, HUE_RED, this.lonDimension, this.latDimension,
-                minLat, maxLat, minLon, maxLon,
-                this.analyticSurfaceLayer, this.legendLayer,
-                minValue, maxValue);
-         */
     }
 
-    public void apply(final double[] values) {
+    public final void apply(final double[] values) {
         if (surface != null) {
             analyticSurfaceLayer.removeRenderable(surface);
         }
+
         surface = createSurface(values, HUE_BLUE, HUE_RED, this.lonDimension, this.latDimension,
                 minLat, maxLat, minLon, maxLon,
                 this.analyticSurfaceLayer, this.legendLayer,
@@ -115,12 +111,13 @@ public class AnalyticSurfaceController {
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         surface.setDimensions(width, height);
         surface.setClientLayer(outLayer);
-        //outLayer.addRenderable(surface);
 
         BufferWrapper firstBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
-        BufferWrapper secondBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
-        mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, 18, minHue, maxHue, surface);
+     //   BufferWrapper secondBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
+     //   mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, 18, minHue, maxHue, surface);
 
+        surface.setValues(createColorGradientGridValues(firstBuffer, minValue, maxValue, minHue, maxHue));
+        
         attr = new AnalyticSurfaceAttributes();
         attr.setDrawShadow(false);
         attr.setInteriorOpacity(1.0);
@@ -135,14 +132,14 @@ public class AnalyticSurfaceController {
                     return super.format(number, result, fieldPosition);
                 }
             };
-            /*
+
             AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, 40, minHue, maxHue,
                     AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
                     AnalyticSurfaceLegend.createDefaultTitle("Speed"));
             legend.setOpacity(0.8);
             legend.setScreenLocation(new Point(900, 300));
             legendLayer.addRenderable(createLegendRenderable(surface, maxValue, legend));
-             */
+
         }
         return surface;
     }
@@ -153,9 +150,8 @@ public class AnalyticSurfaceController {
             final double minValue, final double maxValue, final double minHue, final double maxHue,
             final AnalyticSurface surface) {
 
-        surface.setValues(createMixedColorGradientGridValues(
-                2L, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue));
-
+         surface.setValues(createMixedColorGradientGridValues(
+                 2L, firstBuffer, secondBuffer, minValue, maxValue, minHue, maxHue));
     }
 
     public Iterable<? extends AnalyticSurface.GridPointAttributes> createMixedColorGradientGridValues(double a,
@@ -172,6 +168,19 @@ public class AnalyticSurfaceController {
         return attributesList;
     }
 
+    public Iterable<? extends AnalyticSurface.GridPointAttributes> createColorGradientGridValues(
+            BufferWrapper firstBuffer, double minValue, double maxValue,
+            double minHue, double maxHue) {
+        ArrayList<AnalyticSurface.GridPointAttributes> attributesList = new ArrayList<>();
+
+        long length = firstBuffer.length();
+        for (int i = 0; i < length; i++) {
+            attributesList.add(
+                    AnalyticSurface.createColorGradientAttributes(firstBuffer.getDouble(i), minValue, maxValue, minHue, maxHue));
+        }
+        return attributesList;
+    }
+
     public BufferWrapper createBufferValues(double[] values, int width, int height, double min, double max,
             BufferFactory factory, RenderableLayer outLayer) {
 
@@ -180,7 +189,6 @@ public class AnalyticSurfaceController {
         return wrapper;
     }
 
-    /*
     protected static Renderable createLegendRenderable(final AnalyticSurface surface,
             final double surfaceMinScreenSize,
             final AnalyticSurfaceLegend legend) {
@@ -195,7 +203,7 @@ public class AnalyticSurfaceController {
             legend.render(dc);
         };
     }
-     */
+
     public AnalyticSurfaceAttributes getAttr() {
         return attr;
     }

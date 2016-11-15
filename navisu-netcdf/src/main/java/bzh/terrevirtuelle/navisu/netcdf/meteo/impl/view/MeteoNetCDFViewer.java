@@ -6,12 +6,12 @@
 package bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurface;
 import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceAttributes;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.AnalyticSurfaceController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols.Arrow;
 import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
+import bzh.terrevirtuelle.navisu.widgets.textlist.NewTextListController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -23,7 +23,6 @@ import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Tooltip;
@@ -35,7 +34,6 @@ import javafx.scene.input.KeyEvent;
  */
 public class MeteoNetCDFViewer {
 
-    private static MeteoNetCDFViewer INSTANCE;
     private final GuiAgentServices guiAgentServices;
     private final RenderableLayer meteoLayerVector;
     private final RenderableLayer meteoLayerAnalytic;
@@ -63,9 +61,7 @@ public class MeteoNetCDFViewer {
     private AnalyticSurfaceController analyticSurfaceController;
     private SliderController opacitySliderController;
     private final String DATA_INFO = "Speed and direction of wind 10m above ground";
-    boolean first = true;
 
-    
     public MeteoNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer meteoLayerVector, RenderableLayer meteoLayerAnalytic,
             RenderableLayer meteoLayerLegend,
@@ -121,10 +117,16 @@ public class MeteoNetCDFViewer {
                 analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
                 wwd.redrawNow();
             });
+
+            NewTextListController textListController = new NewTextListController();
+            guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, textListController);
+            guiAgentServices.getRoot().getChildren().add(textListController);
+            textListController.getListView().getItems().add("1111");
+
+            createAnnotationAttributes();
+            displayFileInfo(fileName, DATA_INFO);
+            displayDateInfo();
         });
-        createAnnotationAttributes();
-     //   createAnalyticSurface();
-        displayFileInfo(fileName, DATA_INFO);
     }
 
     public void apply(double[] values, double[] directions) {
@@ -140,16 +142,20 @@ public class MeteoNetCDFViewer {
     }
 
     private void createAnalyticSurface() {
-        analyticSurfaceController = new AnalyticSurfaceController(
-                meteoLayerAnalytic, meteoLayerLegend,
-                values,
-                latDimension,
-                lonDimension,
-                minLat, maxLat,
-                minLon, maxLon,
-                0.0, maxValue,//min, max values in m/s
-                1.0,//opacity
-                "Meteo", "m/s");//legends
+        if (analyticSurfaceController == null) {
+            analyticSurfaceController = new AnalyticSurfaceController(
+                    meteoLayerAnalytic, meteoLayerLegend,
+                    values,
+                    latDimension,
+                    lonDimension,
+                    minLat, maxLat,
+                    minLon, maxLon,
+                    0.0, maxValue,//min, max values in m/s
+                    1.0,//opacity
+                    "Meteo", "m/s");//legends
+        } else {
+            analyticSurfaceController.apply(values);
+        }
     }
 
     private void createVectors() {
@@ -217,7 +223,11 @@ public class MeteoNetCDFViewer {
             dateInfo.setKeepFullyVisible(true);
             dateInfo.setXMargin(5);
             dateInfo.setYMargin(5);
-            dateInfo.getAttributes().setDefaults(annotationAttributes);
+            if (annotationAttributes == null) {
+                createAnnotationAttributes();
+            }
+             dateInfo.setAttributes(annotationAttributes);
+            //dateInfo.getAttributes().setDefaults(annotationAttributes);
             meteoLayerAnalytic.addRenderable(dateInfo);
         }
     }
