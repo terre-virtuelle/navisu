@@ -32,7 +32,8 @@ public class CmdIncMeteoNetCDFController
 
             meteoNetCDFViewer.apply(
                     meteoNetCDFController.getTimeSeriesVectorField().gethVFields().get(0).get(currentTimeIndex).getValues(),
-                    meteoNetCDFController.getTimeSeriesVectorField().gethVFields().get(0).get(currentTimeIndex).getDirections()
+                    meteoNetCDFController.getTimeSeriesVectorField().gethVFields().get(0).get(currentTimeIndex).getDirections(),
+                    currentTimeIndex
             );
         }
         meteoNetCDFController.setCurrentTime(currentTimeIndex);

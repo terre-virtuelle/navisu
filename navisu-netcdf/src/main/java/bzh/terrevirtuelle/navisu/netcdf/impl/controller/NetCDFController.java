@@ -33,6 +33,7 @@ public class NetCDFController {
     protected double[] directions;
     protected double[] latTab;
     protected double[] lonTab;
+    protected double[] times;
     protected Array time = null;
     protected Array reftime = null;
     private static final Logger LOGGER = Logger.getLogger(NetCDFController.class.getName());

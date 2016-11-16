@@ -11,7 +11,6 @@ import gov.nasa.worldwind.geom.Extent;
 import gov.nasa.worldwind.render.DrawContext;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.util.WWMath;
-import java.awt.Point;
 
 /**
  *

@@ -11,7 +11,6 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.AnalyticSurfaceController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols.Arrow;
 import bzh.terrevirtuelle.navisu.widgets.slider.SliderController;
-import bzh.terrevirtuelle.navisu.widgets.textlist.NewTextListController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
@@ -21,7 +20,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -42,7 +42,8 @@ public class MeteoNetCDFViewer {
 
     private String name;
     private final String fileName;
-    private Date date = null;
+    private Calendar date = null;
+    private Calendar dateOrig = null;
     private final RenderableLayer meteoLayerLegend;
     private final double maxValue;
     private final WorldWindow wwd;
@@ -50,6 +51,8 @@ public class MeteoNetCDFViewer {
     private double[] directions;
     private final double[] latTab;
     private final double[] lonTab;
+    private final double[] times;
+    private int currentTimeIndex;
     private final int latDimension;
     private final int lonDimension;
     private final double minLat;
@@ -65,7 +68,8 @@ public class MeteoNetCDFViewer {
     public MeteoNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer meteoLayerVector, RenderableLayer meteoLayerAnalytic,
             RenderableLayer meteoLayerLegend,
-            String name, String fileName, Date date,
+            String name, String fileName,
+            Calendar date, double[] times, int index,
             double maxValue,
             double[] latTab, double[] lonTab,
             int latDim, int lonDim,
@@ -81,6 +85,7 @@ public class MeteoNetCDFViewer {
         this.name = name;
         this.fileName = fileName;
         this.date = date;
+        this.times = times;
         this.maxValue = maxValue;
         this.latTab = latTab;
         this.lonTab = lonTab;
@@ -90,7 +95,8 @@ public class MeteoNetCDFViewer {
         this.maxLat = maxLat;
         this.minLon = minLon;
         this.maxLon = maxLon;
-
+        this.dateOrig = new GregorianCalendar();
+        dateOrig.setTime(date.getTime());
         Platform.runLater(() -> {
             if (opacitySliderController != null) {
                 if (guiAgentServices.getRoot().getChildren().contains(opacitySliderController)) {
@@ -117,26 +123,27 @@ public class MeteoNetCDFViewer {
                 analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
                 wwd.redrawNow();
             });
-
+            /*
+            //Liste des donnes presentes dans le fic
             NewTextListController textListController = new NewTextListController();
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, textListController);
             guiAgentServices.getRoot().getChildren().add(textListController);
             textListController.getListView().getItems().add("1111");
-
+             */
             createAnnotationAttributes();
             displayFileInfo(fileName, DATA_INFO);
             displayDateInfo();
         });
     }
 
-    public void apply(double[] values, double[] directions) {
+    public void apply(double[] values, double[] directions, int index) {
         this.values = values;
         this.directions = directions;
+        this.currentTimeIndex = index;
         java.awt.EventQueue.invokeLater(() -> {
             displayDateInfo();
             createAnalyticSurface();
             //  createVectors();
-            //analyticSurfaceController.apply(values);
             wwd.redrawNow();
         });
     }
@@ -156,6 +163,7 @@ public class MeteoNetCDFViewer {
         } else {
             analyticSurfaceController.apply(values);
         }
+
     }
 
     private void createVectors() {
@@ -189,7 +197,7 @@ public class MeteoNetCDFViewer {
         annotationAttributes.setTextColor(Color.YELLOW);
         annotationAttributes.setLeaderGapWidth(14);
         annotationAttributes.setCornerRadius(0);
-        annotationAttributes.setSize(new Dimension(300, 0));
+        annotationAttributes.setSize(new Dimension(400, 0));
         annotationAttributes.setAdjustWidthToText(AVKey.SIZE_FIT_TEXT); // use strict dimension width - 200
         annotationAttributes.setFont(Font.decode("Arial-BOLD-12"));
         annotationAttributes.setBorderWidth(0);
@@ -219,16 +227,18 @@ public class MeteoNetCDFViewer {
             meteoLayerAnalytic.removeRenderable(dateInfo);
         }
         if (date != null) {
-            dateInfo = new ScreenRelativeAnnotation("\n\n" + date.toString(), 0.1, 0.99);
+            date.set(Calendar.HOUR, dateOrig.get(Calendar.HOUR) + (int) times[currentTimeIndex]);
+            dateInfo = new ScreenRelativeAnnotation("\n\n" + date.getTime().toString().trim(), 0.1, 0.99);
             dateInfo.setKeepFullyVisible(true);
             dateInfo.setXMargin(5);
             dateInfo.setYMargin(5);
             if (annotationAttributes == null) {
                 createAnnotationAttributes();
             }
-             dateInfo.setAttributes(annotationAttributes);
-            //dateInfo.getAttributes().setDefaults(annotationAttributes);
+            dateInfo.getAttributes().setDefaults(annotationAttributes);
             meteoLayerAnalytic.addRenderable(dateInfo);
+           // System.out.println("date : " + date.get(Calendar.HOUR));
+           // System.out.println("time : " + times[currentTimeIndex]);
         }
     }
 }

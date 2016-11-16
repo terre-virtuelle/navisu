@@ -115,8 +115,8 @@ public class AnalyticSurfaceController {
         BufferWrapper firstBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
      //   BufferWrapper secondBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
      //   mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, 18, minHue, maxHue, surface);
-
-        surface.setValues(createColorGradientGridValues(firstBuffer, minValue, maxValue, minHue, maxHue));
+//20.0 au lieu de maxValue pour coller au view du Shom
+        surface.setValues(createColorGradientGridValues(firstBuffer, minValue, 20.0, minHue, maxHue));
         
         attr = new AnalyticSurfaceAttributes();
         attr.setDrawShadow(false);

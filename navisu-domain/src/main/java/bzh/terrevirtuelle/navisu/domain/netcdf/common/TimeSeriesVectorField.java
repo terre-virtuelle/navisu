@@ -159,4 +159,8 @@ public class TimeSeriesVectorField {
         return hVFields;
     }
 
+    public double[] getTimes() {
+        return times;
+    }
+
 }

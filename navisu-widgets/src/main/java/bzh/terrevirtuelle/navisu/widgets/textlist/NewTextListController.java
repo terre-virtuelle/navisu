@@ -9,7 +9,6 @@ import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;

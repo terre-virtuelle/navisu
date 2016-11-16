@@ -18,7 +18,11 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.ScreenRelativeAnnotation;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 import javafx.scene.Scene;
@@ -40,6 +44,7 @@ public class MeteoNetCDFController
     private final String NAME2 = "MeteoLegend";
     private String layerName;
     private Date date;
+    private Calendar calendar;
     private ScreenRelativeAnnotation dateInfo;
     protected RenderableLayer meteoLayerVector;
     protected RenderableLayer meteoLayerAnalytic;
@@ -53,10 +58,10 @@ public class MeteoNetCDFController
     private final int Y_OFFSET = 100;
     private final ButtonController rightTimeButtonController;
     private final ButtonController leftTimeButtonController;
-    double lonMinRef;
-    double lonMaxRef;
-    int currentTimeIndex = 0;
-    MeteoNetCDFViewer meteoNetCDFViewer;
+    private double lonMinRef;
+    private double lonMaxRef;
+    private int currentTimeIndex = 0;
+    private MeteoNetCDFViewer meteoNetCDFViewer;
 
     public MeteoNetCDFController(LayersManagerServices layersManagerServices,
             int layerIndex,
@@ -77,10 +82,10 @@ public class MeteoNetCDFController
         lonTab = timeSeriesVectorField.getLongitudes();
         values = timeSeriesVectorField.getValues(0);
         directions = timeSeriesVectorField.getDirections(0);
+        times = timeSeriesVectorField.getTimes();
 
         lonMinRef = timeSeriesVectorField.getMinLongitude();
         lonMaxRef = timeSeriesVectorField.getMaxLongitude();
-
         if (lonMinRef > 180 || lonMaxRef > 180) {
             lonMinRef -= 360;
             lonMaxRef -= 360;
@@ -93,7 +98,13 @@ public class MeteoNetCDFController
             }
         }
         if (units != null) {
+          //  String[] t = units[units.length - 1].split("T");
+         //   System.out.println("units[units.length - 1] "+ units[units.length - 1]);
+         //   LocalDateTime localDateStr = LocalDateTime.parse(units[units.length - 1]);
+         //   System.out.println("localDateStr : " + localDateStr);
             date = Date.from(Instant.parse(units[units.length - 1]));
+            calendar = new GregorianCalendar();
+            calendar.setTime(date);
         }
 
         rightTimeButtonController = new ButtonController();
@@ -114,13 +125,19 @@ public class MeteoNetCDFController
         //  WwjButtonController lquitButtonController
         //         = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", 
         //                  "images/quit.png", "images/quit.png", 50, 600); 
+        /*
+        variables.stream().forEach((v) -> {
+            System.out.println(v.getNameAndDimensions());
+        });
+         */
     }
 
     @Override
-    public void doIt() {
+    public final void doIt() {
         meteoNetCDFViewer = new MeteoNetCDFViewer(guiAgentServices,
                 meteoLayerVector, meteoLayerAnalytic, meteoLayerLegend,
-                layerName, fileName, date,
+                layerName, fileName,
+                 calendar, times, currentTimeIndex,
                 timeSeriesVectorField.getMaxValue(0),
                 timeSeriesVectorField.getLatitudes(),
                 timeSeriesVectorField.getLongitudes(),
@@ -131,8 +148,8 @@ public class MeteoNetCDFController
                 lonMinRef, lonMaxRef
         );
         meteoNetCDFViewer.apply(timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
-                timeSeriesVectorField.gethVFields().get(0).get(0).getDirections());
-        currentTimeIndex++;
+                timeSeriesVectorField.gethVFields().get(0).get(0).getDirections(),
+                currentTimeIndex);
     }
 
     public int getLatitudeDimension() {
@@ -222,7 +239,6 @@ public class MeteoNetCDFController
         return currentTimeIndex;
     }
 
-    
     public MeteoNetCDFViewer getMeteoNetCDFViewer() {
         return meteoNetCDFViewer;
     }
