@@ -25,7 +25,7 @@ import javafx.scene.text.Text;
  * @date 6 mars 2015
  * @author Serge Morvan
  */
-public class NewTextListController
+public class ListController
         extends Widget2DController {
 
     @FXML
@@ -43,19 +43,19 @@ public class NewTextListController
     String DEFAULT = "meteoListView.fxml";
     String filename;
 
-    public NewTextListController() {
+    public ListController() {
         filename = DEFAULT;
         setMouseTransparent(false);
         load();
     }
 
-    public NewTextListController(String filename) {
+    public ListController(String filename) {
         this.filename = filename;
         setMouseTransparent(false);
         load();
     }
 
-    public NewTextListController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
+    public ListController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
 
         super(keyCode, keyCombination);
         filename = DEFAULT;

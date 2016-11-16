@@ -18,8 +18,6 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.ScreenRelativeAnnotation;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -111,7 +109,7 @@ public class MeteoNetCDFController
         leftTimeButtonController = new ButtonController();
 
         scene = guiAgentServices.getScene();
-
+       
         doIt();
 
         WwjButtonController rightButtonController
@@ -125,17 +123,14 @@ public class MeteoNetCDFController
         //  WwjButtonController lquitButtonController
         //         = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", 
         //                  "images/quit.png", "images/quit.png", 50, 600); 
-        /*
-        variables.stream().forEach((v) -> {
-            System.out.println(v.getNameAndDimensions());
-        });
-         */
+        
     }
 
     @Override
     public final void doIt() {
         meteoNetCDFViewer = new MeteoNetCDFViewer(guiAgentServices,
                 meteoLayerVector, meteoLayerAnalytic, meteoLayerLegend,
+                variables,
                 layerName, fileName,
                  calendar, times, currentTimeIndex,
                 timeSeriesVectorField.getMaxValue(0),
