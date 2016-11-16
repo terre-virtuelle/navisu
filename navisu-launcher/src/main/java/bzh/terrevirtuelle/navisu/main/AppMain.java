@@ -136,6 +136,8 @@ import java.nio.file.Paths;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
+import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
+import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 
@@ -210,6 +212,7 @@ public class AppMain extends Application {
                         KapChartImpl.class,
                         KmlObjectImpl.class,
                         LayersManagerImpl.class,
+                        LeapMotionComponentImpl.class,
                         MagneticImpl.class,
                         MeasureToolsImpl.class,
                         NetCDFImpl.class,
@@ -281,6 +284,7 @@ public class AppMain extends Application {
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
 
         LayersManagerServices layersManagerServices = componentManager.getComponentService(LayersManagerServices.class);
+        LeapMotionComponentServices leapMotionComponentServices = componentManager.getComponentService(LeapMotionComponentServices.class);
 
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         MeasureToolsServices measureToolsServices = componentManager.getComponentService(MeasureToolsServices.class);
@@ -332,7 +336,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver((Driver) geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
-       // driverServices.registerNewDriver((Driver) gribServices.getDriver());
+        // driverServices.registerNewDriver((Driver) gribServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver((Driver) meteoNetCdfServices.getDriver());
@@ -494,10 +498,12 @@ public class AppMain extends Application {
          }
          System.out.println(exif1);
          */
- /* Test Navigation RA Communication with external client 
-         */
+        // Test Navigation RA Communication with external client 
         navigationServerServices.init(8787);
 
+        // Start Leap Motion 
+        // leapMotionComponentServices.init();
+        
         /* Stop Applicaton */
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
