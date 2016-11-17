@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.*?>
 
-<fx:root stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@textarea.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="346.0" styleClass="background-pane">
         </Pane>

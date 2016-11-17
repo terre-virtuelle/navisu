@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Polygon?>
+
+<fx:root fx:id="rightSlider" stylesheets="@buttonslider.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+      <Pane prefHeight="300.0" prefWidth="300.0">
+         <children>
+            <Polygon id="advancebutton" fx:id="button" layoutX="227.0" layoutY="84.0" rotate="90.0" stroke="#29dd15" strokeType="INSIDE">
+              <points>
+                <Double fx:value="-50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="50.0" />
+                <Double fx:value="40.0" />
+                <Double fx:value="0.0" />
+                <Double fx:value="-60.0" />
+              </points>
+               <fill>
+                  <RadialGradient centerX="0.5222222222222223" centerY="0.9571428571428571" focusAngle="90.0" focusDistance="-0.11627906976744184" radius="0.5232558139534884">
+                     <stops>
+                        <Stop color="WHITE" />
+                        <Stop color="#29dd15" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </fill>
+               <effect>
+                  <DropShadow spread="0.3" />
+               </effect>
+            </Polygon>
+            <Polygon id="advancebutton" fx:id="button1" layoutX="64.0" layoutY="84.0" rotate="-90.0" stroke="#29dd15" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+               <fill>
+                  <RadialGradient centerX="0.4888888888888889" centerY="0.9761904761904762" focusAngle="172.0" focusDistance="-0.11627906976744184" radius="0.569767441860465">
+                     <stops>
+                        <Stop color="WHITE" />
+                        <Stop color="#29dd15" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </fill>
+               <effect>
+                  <DropShadow spread="0.3" />
+               </effect>
+            </Polygon>
+            <Polygon id="advancebutton" fx:id="button2" layoutX="64.0" layoutY="221.0" rotate="-90.0" stroke="RED" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+               <fill>
+                  <RadialGradient centerX="0.5055555555555555" centerY="0.9476190476190476" focusAngle="100.0" focusDistance="-0.11627906976744184" radius="0.41860465116279066">
+                     <stops>
+                        <Stop color="WHITE" />
+                        <Stop color="RED" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </fill>
+               <effect>
+                  <DropShadow spread="0.3" />
+               </effect>
+            </Polygon>
+            <Polygon id="advancebutton" fx:id="button21" layoutX="227.0" layoutY="221.0" rotate="90.0" stroke="RED" strokeType="INSIDE">
+               <points>
+                  <Double fx:value="-50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="50.0" />
+                  <Double fx:value="40.0" />
+                  <Double fx:value="0.0" />
+                  <Double fx:value="-60.0" />
+               </points>
+               <fill>
+                  <RadialGradient centerX="0.5055555555555555" centerY="0.9476190476190476" focusAngle="100.0" focusDistance="-0.11627906976744184" radius="0.41860465116279066">
+                     <stops>
+                        <Stop color="WHITE" />
+                        <Stop color="RED" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </fill>
+               <effect>
+                  <DropShadow spread="0.3" />
+               </effect>
+            </Polygon>
+         </children>
+      </Pane>
+    </children>
+</fx:root>

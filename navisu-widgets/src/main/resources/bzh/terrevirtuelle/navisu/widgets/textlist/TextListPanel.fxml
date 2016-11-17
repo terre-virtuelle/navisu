@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<fx:root fx:id="textListPanel" stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="textListPanel" stylesheets="@textlistpanel.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Group>
             <children>
-                <Pane prefHeight="50.0" prefWidth="405.0" opacity="0.6" styleClass="top-pane" />
-                <Pane prefHeight="250.0" prefWidth="15.0" opacity="0.6" layoutX="0" layoutY="50"  styleClass="left-pane" />
-                <Pane prefHeight="250.0" prefWidth="15.0" opacity="0.6" layoutX="390" layoutY="50"  styleClass="right-pane" />   
-                <Pane prefHeight="40.0" prefWidth="405.0" opacity="0.6" layoutY="300"  styleClass="foot-pane" />
+                <Pane opacity="0.6" prefHeight="50.0" prefWidth="405.0" styleClass="top-pane" />
+                <Pane layoutX="0" layoutY="50" opacity="0.6" prefHeight="250.0" prefWidth="15.0" styleClass="left-pane" />
+                <Pane layoutX="390" layoutY="50" opacity="0.6" prefHeight="250.0" prefWidth="15.0" styleClass="right-pane" />   
+                <Pane layoutY="300" opacity="0.6" prefHeight="40.0" prefWidth="405.0" styleClass="foot-pane" />
                 <Group layoutX="10.0">
                     <children>
                         <Text fx:id="title" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="webserverlist" text="Web Server URL List" textAlignment="CENTER" wrappingWidth="149.0">
@@ -47,7 +50,7 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="357.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" rotate="29.7">
+                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="357.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@quit.png" />
                     </image>

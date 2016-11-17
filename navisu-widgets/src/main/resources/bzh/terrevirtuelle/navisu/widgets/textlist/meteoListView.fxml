@@ -11,12 +11,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root stylesheets="@routeeditor.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@meteolistview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="306.0" styleClass="background-pane">
-        </Pane>
+         <children>
+            <ListView fx:id="listView" layoutX="40.0" layoutY="52.0" prefHeight="93.0" prefWidth="210.0" styleClass="info-text" />
+         </children></Pane>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="159.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="306.0" />
-          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="99.0" layoutX="12.0" layoutY="50.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="260.0" />
+          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="99.0" layoutX="14.0" layoutY="48.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="260.0" />
           <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
               <image>
                   <Image url="@logoTV64AIS.png" />
@@ -25,11 +27,10 @@
                   <Glow />
               </effect>
           </ImageView>
-          <Text fx:id="titleText" layoutX="99.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="      METEO" wrappingWidth="75.314453125" />
+          <Text fx:id="titleText" layoutX="115.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="METEO" textAlignment="CENTER" wrappingWidth="75.314453125" />
           <Button fx:id="quit" alignment="CENTER" layoutX="255.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
           <Slider fx:id="opacitySlider" layoutX="285.0" layoutY="47.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
-      <ListView fx:id="listView" layoutX="41.0" layoutY="53.0" prefHeight="93.0" prefWidth="210.0" styleClass="info-text" />
     </children>
 </fx:root>
