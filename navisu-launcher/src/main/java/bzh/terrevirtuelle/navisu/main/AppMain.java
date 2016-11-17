@@ -359,6 +359,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(leapMotionComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(projectionsComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeDataEditorServices.getDriver());
@@ -502,7 +503,7 @@ public class AppMain extends Application {
         navigationServerServices.init(8787);
 
         // Start Leap Motion 
-        // leapMotionComponentServices.init();
+        // leapMotionComponentServices.on();
         
         /* Stop Applicaton */
         stage.setOnCloseRequest(e -> {

@@ -13,10 +13,7 @@
 
 <fx:root stylesheets="@meteolistview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="306.0" styleClass="background-pane">
-         <children>
-            <ListView fx:id="listView" layoutX="40.0" layoutY="52.0" prefHeight="93.0" prefWidth="210.0" styleClass="info-text" />
-         </children></Pane>
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="158.0" prefWidth="306.0" styleClass="background-pane" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="159.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="306.0" />
           <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="99.0" layoutX="14.0" layoutY="48.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="260.0" />
           <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
@@ -32,5 +29,6 @@
                 </Button>
           <Slider fx:id="opacitySlider" layoutX="285.0" layoutY="47.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
+      <ListView fx:id="listView" layoutX="19.0" layoutY="52.0" prefHeight="93.0" prefWidth="250.0"  />
     </children>
 </fx:root>

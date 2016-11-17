@@ -7,16 +7,18 @@
  ******************************************************************************/
 
 
-.text-area .scroll-pane .list-view {
-    -fx-background-color: transparent;
+.text-area .scroll-pane {
+    -fx-background-color: #ffff0000;
+    -fx-background-radius: 15;
+    -fx-border-width: 0;
 }
-
-.text-area .scroll-pane .viewport .list-view{
-    -fx-background-color: transparent;
+.list-view .list-view:focused:active:filled:pressed{
+ -fx-background-color: #ffff0000;
+    -fx-background-radius: 15;
+    -fx-border-width: 0;   
 }
-
-
-.text-area .scroll-pane .content .list-view{
-    -fx-background-color: transparent;
+.list-cell .list-cell:focused .list-cell:filled:selected:odd {
+ -fx-background-color: #ffff0000;
+    -fx-background-radius: 15;
+    -fx-border-width: 0;   
 }
-
