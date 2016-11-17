@@ -78,7 +78,7 @@ public class ListController
         opacitySlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 view.setOpacity(opacitySlider.getValue());
-                listView.setOpacity(opacitySlider.getValue());
+               // listView.setOpacity(opacitySlider.getValue());
             });
         });
         listView.setOnMouseClicked((MouseEvent event) -> {

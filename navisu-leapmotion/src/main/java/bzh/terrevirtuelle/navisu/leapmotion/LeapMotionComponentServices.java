@@ -5,14 +5,23 @@
  */
 package bzh.terrevirtuelle.navisu.leapmotion;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
  *
- * @author serge
- * Nov 16, 2016
+ * @author serge Nov 16, 2016
  */
 public interface LeapMotionComponentServices
-        extends ComponentService{
-    
+        extends ComponentService {
+
+    void on(String... files);
+
+    default void off() {
+    }
+
+    boolean canOpen(String category);
+
+    InstrumentDriver getDriver();
+
 }

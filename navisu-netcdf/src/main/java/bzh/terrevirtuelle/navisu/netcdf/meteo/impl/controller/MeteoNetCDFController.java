@@ -76,8 +76,8 @@ public class MeteoNetCDFController
 
         timeSeriesVectorField = new TimeSeriesVectorField(time, height, latitudes, longitudes, u, v);
 
-        latTab = timeSeriesVectorField.getLatitudes();
-        lonTab = timeSeriesVectorField.getLongitudes();
+        // latTab = timeSeriesVectorField.getLatitudes();
+        // lonTab = timeSeriesVectorField.getLongitudes();
         values = timeSeriesVectorField.getValues(0);
         directions = timeSeriesVectorField.getDirections(0);
         times = timeSeriesVectorField.getTimes();
@@ -88,6 +88,11 @@ public class MeteoNetCDFController
             lonMinRef -= 360;
             lonMaxRef -= 360;
         }
+        System.out.println(timeSeriesVectorField.getMinLatitude() + "   " + timeSeriesVectorField.getMaxLatitude());
+        System.out.println(lonMinRef + "  " + lonMaxRef);
+
+        latTab = getLatTab(timeSeriesVectorField.getMinLatitude(), timeSeriesVectorField.getMaxLatitude(), timeSeriesVectorField.getLatitudeDimension());
+        lonTab = getLonTab(lonMinRef, lonMaxRef, timeSeriesVectorField.getLongitudeDimension());
         List<CoordinateAxis> attr = netcdf.getNetcdfDataset().getCoordinateAxes();
         String[] units = null;
         for (CoordinateAxis a : attr) {
@@ -96,10 +101,10 @@ public class MeteoNetCDFController
             }
         }
         if (units != null) {
-          //  String[] t = units[units.length - 1].split("T");
-         //   System.out.println("units[units.length - 1] "+ units[units.length - 1]);
-         //   LocalDateTime localDateStr = LocalDateTime.parse(units[units.length - 1]);
-         //   System.out.println("localDateStr : " + localDateStr);
+            //  String[] t = units[units.length - 1].split("T");
+            //   System.out.println("units[units.length - 1] "+ units[units.length - 1]);
+            //   LocalDateTime localDateStr = LocalDateTime.parse(units[units.length - 1]);
+            //   System.out.println("localDateStr : " + localDateStr);
             date = Date.from(Instant.parse(units[units.length - 1]));
             calendar = new GregorianCalendar();
             calendar.setTime(date);
@@ -109,7 +114,7 @@ public class MeteoNetCDFController
         leftTimeButtonController = new ButtonController();
 
         scene = guiAgentServices.getScene();
-       
+
         doIt();
 
         WwjButtonController rightButtonController
@@ -123,7 +128,7 @@ public class MeteoNetCDFController
         //  WwjButtonController lquitButtonController
         //         = new WwjButtonController(guiAgentServices, meteoLayerAnalytic, "L", 
         //                  "images/quit.png", "images/quit.png", 50, 600); 
-        
+
     }
 
     @Override
@@ -132,10 +137,10 @@ public class MeteoNetCDFController
                 meteoLayerVector, meteoLayerAnalytic, meteoLayerLegend,
                 variables,
                 layerName, fileName,
-                 calendar, times, currentTimeIndex,
+                calendar, times, currentTimeIndex,
                 timeSeriesVectorField.getMaxValue(0),
-                timeSeriesVectorField.getLatitudes(),
-                timeSeriesVectorField.getLongitudes(),
+                latTab,
+                lonTab,
                 timeSeriesVectorField.getLatitudeDimension(),
                 timeSeriesVectorField.getLongitudeDimension(),
                 timeSeriesVectorField.getMinLatitude(),
@@ -145,6 +150,24 @@ public class MeteoNetCDFController
         meteoNetCDFViewer.apply(timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
                 timeSeriesVectorField.gethVFields().get(0).get(0).getDirections(),
                 currentTimeIndex);
+    }
+
+    private double[] getLatTab(double latMin, double latMax, int latDim) {
+        double[] tmp = new double[latDim];
+        double inc = (latMax - latMin) / (latDim - 1);
+        for (int i = 0; i < latDim; i++) {
+            tmp[i] = latMin + i*inc;
+        }
+        return tmp;
+    }
+
+    private double[] getLonTab(double lonMin, double lonMax, int lonDim) {
+        double[] tmp = new double[lonDim];
+        double inc = (lonMax - lonMin) / (lonDim - 1);
+        for (int i = 0; i < lonDim; i++) {
+            tmp[i] = lonMin + i*inc;
+        }
+        return tmp;
     }
 
     public int getLatitudeDimension() {

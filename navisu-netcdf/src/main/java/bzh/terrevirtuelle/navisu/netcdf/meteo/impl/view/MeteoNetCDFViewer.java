@@ -103,6 +103,7 @@ public class MeteoNetCDFViewer {
         this.maxLon = maxLon;
         this.dateOrig = new GregorianCalendar();
         dateOrig.setTime(date.getTime());
+        
         Platform.runLater(() -> {
             if (opacitySliderController != null) {
                 if (guiAgentServices.getRoot().getChildren().contains(opacitySliderController)) {
@@ -129,12 +130,9 @@ public class MeteoNetCDFViewer {
                 analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
                 wwd.redrawNow();
             });
+            
+            //Liste des donnees presentes dans le fic
             /*
-            variables.stream().forEach((v) -> {
-                System.out.println("v : " + v.getFullName());
-            });
-*/
-            //Liste des donnes presentes dans le fic
             ListController textListController = new ListController();
             variables.stream().forEach((v) -> {
                 if (Meteorology.isValid(v.getFullName())) {
@@ -143,6 +141,7 @@ public class MeteoNetCDFViewer {
             });
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, textListController);
             guiAgentServices.getRoot().getChildren().add(textListController);
+*/
             createAnnotationAttributes();
             displayFileInfo(fileName, DATA_INFO);
             displayDateInfo();
@@ -156,7 +155,7 @@ public class MeteoNetCDFViewer {
         java.awt.EventQueue.invokeLater(() -> {
             displayDateInfo();
             createAnalyticSurface();
-            //  createVectors();
+            createVectors();
             wwd.redrawNow();
         });
     }
@@ -182,10 +181,10 @@ public class MeteoNetCDFViewer {
     private void createVectors() {
         List<Arrow> arrows = new ArrayList<>();
         int l = 0;
-        for (int h = 0; h < latDimension; h += 1) {
-            for (int w = 0; w < lonDimension; w += 1) {
-                if ((!Double.isNaN(latTab[h]) && !Double.isNaN(lonTab[w])
-                        && !Double.isNaN(values[l + w]) && !Double.isNaN(directions[l + w]))) {
+        for (int h = 0; h < latDimension; h += 10) {
+            for (int w = 0; w < lonDimension; w += 10) {
+                System.out.print("  "+latTab[h]+","+ lonTab[w]);  
+                if ((!Double.isNaN(values[l + w]) && !Double.isNaN(directions[l + w]))) {
                     Arrow arrow = new Arrow(latTab[h], lonTab[w], values[l + w]);
                     double alpha = -Math.toDegrees(directions[l + w]) + arrow.getRotation();
                     if (alpha < 0) {
@@ -200,6 +199,7 @@ public class MeteoNetCDFViewer {
                 }
             }
             l += lonDimension;
+            
         }
         meteoLayerVector.addRenderables(arrows);
     }
