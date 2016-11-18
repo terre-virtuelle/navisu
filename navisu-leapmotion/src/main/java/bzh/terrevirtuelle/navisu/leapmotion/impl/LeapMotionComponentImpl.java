@@ -8,6 +8,8 @@ package bzh.terrevirtuelle.navisu.leapmotion.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponent;
 import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
+import bzh.terrevirtuelle.navisu.leapmotion.impl.listener.LeapMotionComponentListener;
+import com.leapmotion.leap.Controller;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -20,17 +22,24 @@ public class LeapMotionComponentImpl
         InstrumentDriver, ComponentState {
 
     private final String NAME = "LeapMotion";
+    private final LeapMotionComponentListener listener = new LeapMotionComponentListener();
+    private Controller controller = null;
 
     @Override
     public void componentInitiated() {
+        if(controller == null)
+            controller = new Controller();
     }
 
     @Override
     public void componentStarted() {
+        // Here or in componentInitiated()?
+        controller.addListener(listener);
     }
 
     @Override
     public void componentStopped() {
+        controller.removeListener(listener);
     }
 
     @Override
