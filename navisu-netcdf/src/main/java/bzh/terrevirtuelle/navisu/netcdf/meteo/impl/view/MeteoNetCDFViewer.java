@@ -132,7 +132,7 @@ public class MeteoNetCDFViewer {
             });
             
             //Liste des donnees presentes dans le fic
-            /*
+            //****/
             ListController textListController = new ListController();
             variables.stream().forEach((v) -> {
                 if (Meteorology.isValid(v.getFullName())) {
@@ -145,7 +145,7 @@ public class MeteoNetCDFViewer {
             createAnnotationAttributes();
             displayFileInfo(fileName, DATA_INFO);
             displayDateInfo();
-            */
+            //*/
         });
     }
             
