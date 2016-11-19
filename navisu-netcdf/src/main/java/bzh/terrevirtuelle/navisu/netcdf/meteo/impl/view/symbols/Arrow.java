@@ -51,21 +51,27 @@ public class Arrow
 
     public Arrow(double lat, double lon, double v) {
         int velocity = getSymbol(2 * v);
+        //initShape_5_10(lat, lon);
+       
         switch (velocity) {
             case 0:
                 initShape_0_5(lat, lon);
             case 1:
                 initShape_5_10(lat, lon);
                 break;
+                /*
             case 2:
                 initShape_10_15(lat, lon);
                 break;
+             */
             case 3:
                 initShape_15_20(lat, lon);
                 break;
+               
             case 4:
                 initShape_20_25(lat, lon);
                 break;
+               
             case 5:
                 initShape_25_30(lat, lon);
                 break;
@@ -75,6 +81,7 @@ public class Arrow
             case 7:
                 initShape_10_15(lat, lon);
                 break;
+                
             case 8:
                 initShape_35_40(lat, lon);
                 break;
@@ -88,7 +95,9 @@ public class Arrow
             case 12:
                 initShape_75(lat, lon);
             default:
+                initShape_0_5(lat, lon);
         }
+
         setRotation(90.0);
     }
 
