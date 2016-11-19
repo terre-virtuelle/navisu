@@ -8,8 +8,7 @@ package bzh.terrevirtuelle.navisu.leapmotion.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponent;
 import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
-import bzh.terrevirtuelle.navisu.leapmotion.impl.listener.LeapMotionComponentListener;
-import com.leapmotion.leap.Controller;
+import bzh.terrevirtuelle.navisu.leapmotion.impl.controller.LeapMotionController;
 import org.capcaval.c3.component.ComponentState;
 
 /**
@@ -18,38 +17,33 @@ import org.capcaval.c3.component.ComponentState;
  * @date Nov 16, 2016
  */
 public class LeapMotionComponentImpl
-        implements LeapMotionComponent, LeapMotionComponentServices,
+        implements LeapMotionComponent, 
+        LeapMotionComponentServices,
         InstrumentDriver, ComponentState {
 
     private final String NAME = "LeapMotion";
-    private final LeapMotionComponentListener listener = new LeapMotionComponentListener();
-    private Controller controller = null;
+    private LeapMotionController leapMotionController;
 
     @Override
     public void componentInitiated() {
-        if(controller == null)
-            controller = new Controller();
     }
 
     @Override
     public void componentStarted() {
-        // Here or in componentInitiated()?
-        controller.addListener(listener);
     }
 
     @Override
     public void componentStopped() {
-        controller.removeListener(listener);
     }
 
     @Override
     public void on(String... files) {
-        System.out.println("leapMotion ON");
+        leapMotionController = LeapMotionController.getInstance();
     }
 
     @Override
     public void off() {
-        System.out.println("leapMotion OFF");
+        leapMotionController = null;
     }
 
     @Override

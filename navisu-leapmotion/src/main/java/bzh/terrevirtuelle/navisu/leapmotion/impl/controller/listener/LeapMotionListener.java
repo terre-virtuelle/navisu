@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package bzh.terrevirtuelle.navisu.leapmotion.impl.listener;
+package bzh.terrevirtuelle.navisu.leapmotion.impl.controller.listener;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Listener;
@@ -14,29 +13,29 @@ import com.leapmotion.leap.Listener;
  * @author serge
  * @date Nov 16, 2016
  */
-public class LeapMotionComponentListener extends Listener{
-    
+public class LeapMotionListener
+        extends Listener {
+  
+
     /**
      * Called remotely when the Leap Motion controller is successfully connected
-     * 
+     *
      * @param controller
      */
     @Override
-    public void onConnect(Controller controller){
-        
+    public void onConnect(Controller controller) {
+
         //TODO
-        
     }
-    
+
     /**
      * Called remotely at each frame that the controller receives
      *
      * @param controller
      */
     @Override
-    public void onFrame(Controller controller){
-        
+    public void onFrame(Controller controller) {
+
         //TODO
-        
     }
 }
