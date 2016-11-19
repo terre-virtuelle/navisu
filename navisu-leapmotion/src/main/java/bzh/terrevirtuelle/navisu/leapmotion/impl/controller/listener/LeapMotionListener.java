@@ -16,6 +16,7 @@ import com.leapmotion.leap.Listener;
 public class LeapMotionListener
         extends Listener {
   
+    
 
     /**
      * Called remotely when the Leap Motion controller is successfully connected
