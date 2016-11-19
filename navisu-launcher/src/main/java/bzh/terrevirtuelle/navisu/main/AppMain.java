@@ -134,6 +134,7 @@ import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
@@ -520,7 +521,15 @@ public class AppMain extends Application {
 
     public static void main(String[] args) throws Exception {
         String userDirPath = System.getProperty("user.dir");
-        addLibraryPath(userDirPath + "/lib-external/natives");
+        String dir = "";
+        if (OS.isWindows()) {
+            dir = "/lib-external/natives/win/x64";
+        } else if (OS.isLinux()) {
+            dir = "/lib-external/natives/linux/x64";
+        } else {
+            System.out.println("OS not supported");
+        }
+        addLibraryPath(userDirPath + dir);
         Application.launch();
     }
 
@@ -533,8 +542,6 @@ public class AppMain extends Application {
     public static void addLibraryPath(String pathToAdd) throws Exception {
         final Field usrPathsField = ClassLoader.class.getDeclaredField("usr_paths");
         usrPathsField.setAccessible(true);
-
-        //get array of paths
         String[] paths = (String[]) usrPathsField.get(null);
         //check if the path to add is already present
         for (String path : paths) {
