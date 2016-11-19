@@ -140,6 +140,8 @@ import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
 import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
+import java.lang.reflect.Field;
+import java.util.Arrays;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -504,7 +506,6 @@ public class AppMain extends Application {
 
         // Start Leap Motion 
         // leapMotionComponentServices.on();
-        
         /* Stop Applicaton */
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
@@ -518,6 +519,32 @@ public class AppMain extends Application {
     }
 
     public static void main(String[] args) throws Exception {
+        String userDirPath = System.getProperty("user.dir");
+        addLibraryPath(userDirPath + "/lib-external/natives");
         Application.launch();
+    }
+
+    /**
+     * Adds the specified path to the java library path
+     *
+     * @param pathToAdd the path to add
+     * @throws Exception
+     */
+    public static void addLibraryPath(String pathToAdd) throws Exception {
+        final Field usrPathsField = ClassLoader.class.getDeclaredField("usr_paths");
+        usrPathsField.setAccessible(true);
+
+        //get array of paths
+        String[] paths = (String[]) usrPathsField.get(null);
+        //check if the path to add is already present
+        for (String path : paths) {
+            if (path.equals(pathToAdd)) {
+                return;
+            }
+        }
+        //add the new path
+        final String[] newPaths = Arrays.copyOf(paths, paths.length + 1);
+        newPaths[newPaths.length - 1] = pathToAdd;
+        usrPathsField.set(null, newPaths);
     }
 }
