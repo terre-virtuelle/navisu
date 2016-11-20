@@ -58,20 +58,17 @@ public class Arrow
                 initShape_0_5(lat, lon);
             case 1:
                 initShape_5_10(lat, lon);
-                break;
-                /*
+                break;  
             case 2:
                 initShape_10_15(lat, lon);
                 break;
-             */
             case 3:
                 initShape_15_20(lat, lon);
-                break;
-               
+                break;   
             case 4:
                 initShape_20_25(lat, lon);
                 break;
-               
+              
             case 5:
                 initShape_25_30(lat, lon);
                 break;
@@ -79,23 +76,19 @@ public class Arrow
                 initShape_30_35(lat, lon);
                 break;
             case 7:
-                initShape_10_15(lat, lon);
-                break;
-                
-            case 8:
                 initShape_35_40(lat, lon);
                 break;
-            case 9:
+            case 8:
                 initShape_40_45(lat, lon);
-            case 10:
+            case 9:
                 initShape_45_60(lat, lon);
-            case 11:
+            case 10:
                 initShape_60_75(lat, lon);
                 break;
-            case 12:
+            case 11:
                 initShape_75(lat, lon);
             default:
-                initShape_0_5(lat, lon);
+                //initShape_0_5(lat, lon);
         }
 
         setRotation(90.0);
@@ -206,7 +199,7 @@ public class Arrow
         dataShape[8] = longitude - X + decX;
         dataShape[9] = latitude;
 
-        dataShape[10] = longitude - X + decX / 2;
+        dataShape[10] = longitude - X - decX / 2;
         dataShape[11] = latitude - YY;
 
         dataShape[12] = longitude - X + decX;
