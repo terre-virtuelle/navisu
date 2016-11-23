@@ -21,6 +21,7 @@ import gov.nasa.worldwind.render.ScreenRelativeAnnotation;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -45,8 +46,8 @@ public class MeteoNetCDFViewer {
 
     private String name;
     private final String fileName;
-    private Calendar date = null;
-    private Calendar dateOrig = null;
+    private LocalDateTime date = null;
+    private LocalDateTime dateOrig = null;
     private final RenderableLayer meteoLayerLegend;
     private final double maxValue;
     private final WorldWindow wwd;
@@ -74,7 +75,7 @@ public class MeteoNetCDFViewer {
             RenderableLayer meteoLayerLegend,
             List<Variable> variables,
             String name, String fileName,
-            Calendar date, double[] times, int index,
+            LocalDateTime date, double[] times, int index,
             double maxValue,
             double[] latTab, double[] lonTab,
             int latDim, int lonDim,
@@ -101,9 +102,8 @@ public class MeteoNetCDFViewer {
         this.maxLat = maxLat;
         this.minLon = minLon;
         this.maxLon = maxLon;
-        this.dateOrig = new GregorianCalendar();
-        dateOrig.setTime(date.getTime());
-        
+        this.dateOrig = LocalDateTime.now();
+        this.date = date;
         Platform.runLater(() -> {
             if (opacitySliderController != null) {
                 if (guiAgentServices.getRoot().getChildren().contains(opacitySliderController)) {
@@ -130,9 +130,9 @@ public class MeteoNetCDFViewer {
                 analyticSurfaceController.getSurface().setSurfaceAttributes(attrs);
                 wwd.redrawNow();
             });
-            
+
             //Liste des donnees presentes dans le fic
-            //****/
+            /*
             ListController textListController = new ListController();
             variables.stream().forEach((v) -> {
                 if (Meteorology.isValid(v.getFullName())) {
@@ -141,14 +141,14 @@ public class MeteoNetCDFViewer {
             });
             guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, textListController);
             guiAgentServices.getRoot().getChildren().add(textListController);
-
+             */
             createAnnotationAttributes();
             displayFileInfo(fileName, DATA_INFO);
             displayDateInfo();
-            //*/
+
         });
     }
-            
+
     public void apply(double[] values, double[] directions, int index) {
         this.values = values;
         this.directions = directions;
@@ -156,7 +156,7 @@ public class MeteoNetCDFViewer {
         java.awt.EventQueue.invokeLater(() -> {
             displayDateInfo();
             createAnalyticSurface();
-            createVectors();
+          //  createVectors();
             wwd.redrawNow();
         });
     }
@@ -176,31 +176,30 @@ public class MeteoNetCDFViewer {
         } else {
             analyticSurfaceController.apply(values);
         }
-
+        
     }
 
     private void createVectors() {
         List<Arrow> arrows = new ArrayList<>();
         int l = 0;
-        for (int h = 0; h < latDimension; h += 10) {
-            for (int w = 0; w < lonDimension; w += 10) {
-                System.out.print("  "+latTab[h]+","+ lonTab[w]);  
-                if ((!Double.isNaN(values[l + w]) && !Double.isNaN(directions[l + w]))) {
-                    Arrow arrow = new Arrow(latTab[h], lonTab[w], values[l + w]);
-                    double alpha = -Math.toDegrees(directions[l + w]) + arrow.getRotation();
+        for (int h = 0; h < latDimension; h += 5) {
+            for (int w = 0; w < lonDimension; w += 5) {
+                if ((!Double.isNaN(values[h + l + w]))) {
+                    Arrow arrow = new Arrow(latTab[h], lonTab[w], values[l + h + w]);
+                    double alpha = -Math.toDegrees(directions[l + h + w]) + arrow.getRotation();
                     if (alpha < 0) {
                         alpha = 360 + alpha;
                     }
                     if (!Double.isNaN(alpha)) {
                         arrow.setRotation(alpha);
                         arrow.setValue(AVKey.DISPLAY_NAME, String.format("%.1f m/s , %.1f , %.1f , %.1f ",
-                                values[l + w], latTab[h], lonTab[w], Math.toDegrees(directions[l + w])));  //+" m/s");
+                                values[l + h + w], latTab[h], lonTab[w], Math.toDegrees(directions[l + h + w])));  //+" m/s");
                         arrows.add(arrow);
                     }
                 }
             }
             l += lonDimension;
-            
+
         }
         meteoLayerVector.addRenderables(arrows);
     }
@@ -228,6 +227,7 @@ public class MeteoNetCDFViewer {
         fileInfo.setYMargin(5);
         fileInfo.getAttributes().setDefaults(annotationAttributes);
         meteoLayerAnalytic.addRenderable(fileInfo);
+
         dataInfo = new ScreenRelativeAnnotation("\n" + dataInfoStr, 0.1, 0.99);
         dataInfo.setKeepFullyVisible(true);
         dataInfo.setXMargin(5);
@@ -241,8 +241,8 @@ public class MeteoNetCDFViewer {
             meteoLayerAnalytic.removeRenderable(dateInfo);
         }
         if (date != null) {
-            date.set(Calendar.HOUR, dateOrig.get(Calendar.HOUR) + (int) times[currentTimeIndex]);
-            dateInfo = new ScreenRelativeAnnotation("\n\n" + date.getTime().toString().trim(), 0.1, 0.99);
+            LocalDateTime after = date.plusHours((long) times[currentTimeIndex]);
+            dateInfo = new ScreenRelativeAnnotation("\n\n" + after, 0.1, 0.99);
             dateInfo.setKeepFullyVisible(true);
             dateInfo.setXMargin(5);
             dateInfo.setYMargin(5);
@@ -251,8 +251,6 @@ public class MeteoNetCDFViewer {
             }
             dateInfo.getAttributes().setDefaults(annotationAttributes);
             meteoLayerAnalytic.addRenderable(dateInfo);
-            // System.out.println("date : " + date.get(Calendar.HOUR));
-            // System.out.println("time : " + times[currentTimeIndex]);
         }
     }
 }

@@ -50,21 +50,21 @@ public class Arrow
     }
 
     public Arrow(double lat, double lon, double v) {
-        int velocity = getSymbol(2 * v);
-        //initShape_5_10(lat, lon);
-       
+        int velocity = getSymbol( v);
         switch (velocity) {
             case 0:
                 initShape_0_5(lat, lon);
             case 1:
                 initShape_5_10(lat, lon);
-                break;  
+                break;     
             case 2:
                 initShape_10_15(lat, lon);
                 break;
+
             case 3:
                 initShape_15_20(lat, lon);
-                break;   
+                break; 
+
             case 4:
                 initShape_20_25(lat, lon);
                 break;
@@ -88,7 +88,7 @@ public class Arrow
             case 11:
                 initShape_75(lat, lon);
             default:
-                //initShape_0_5(lat, lon);
+                initShape_0_5(lat, lon);
         }
 
         setRotation(90.0);
@@ -121,7 +121,7 @@ public class Arrow
         for (int i = 0; i < numCoords; i++) {
             double lonDegrees = src[2 * i];
             double latDegrees = src[2 * i + 1];
-            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 1000);
+            array[i] = Position.fromDegrees(latDegrees, lonDegrees, 2000);
         }
         return Arrays.asList(array);
     }
@@ -145,20 +145,20 @@ public class Arrow
     }
 
     private void initShape_5_10(double latitude, double longitude) {
-        double[] shipShape = new double[8];
-        shipShape[0] = longitude + X;
-        shipShape[1] = latitude;
+        double[] dataShape = new double[8];
+        dataShape[0] = longitude + X;
+        dataShape[1] = latitude;
 
-        shipShape[2] = longitude - X;
-        shipShape[3] = latitude;
+        dataShape[2] = longitude - X;
+        dataShape[3] = latitude;
 
-        shipShape[4] = longitude - X - decX;
-        shipShape[5] = latitude - YY;
+        dataShape[4] = longitude - X - decX;
+        dataShape[5] = latitude - YY;
 
-        shipShape[6] = longitude - X;
-        shipShape[7] = latitude;
+        dataShape[6] = longitude - X;
+        dataShape[7] = latitude;
 
-        setOuterBoundary(makePositionList(shipShape));
+        setOuterBoundary(makePositionList(dataShape));
         setAttributes(makeAttributes(Material.BLUE, false));
     }
 
@@ -166,20 +166,20 @@ public class Arrow
 
         double[] dataShape = new double[8];
 
-        dataShape[1] = longitude + X;
-        dataShape[0] = latitude;
+        dataShape[0] = longitude + X;
+        dataShape[1] = latitude;
 
-        dataShape[3] = longitude - X;
-        dataShape[2] = latitude;
+        dataShape[2] = longitude - X;
+        dataShape[3] = latitude;
 
-        dataShape[5] = longitude - X - decX;
-        dataShape[4] = latitude - Y;
+        dataShape[4] = longitude - X - decX;
+        dataShape[5] = latitude - Y;
 
         dataShape[6] = longitude - X;
         dataShape[7] = latitude;
 
         setOuterBoundary(makePositionList(dataShape));
-        setAttributes(makeAttributes(Material.BLUE, false));
+        setAttributes(makeAttributes(Material.YELLOW, false));
     }
 
     private void initShape_15_20(double latitude, double longitude) {
@@ -206,7 +206,7 @@ public class Arrow
         dataShape[13] = latitude;
 
         setOuterBoundary(makePositionList(dataShape));
-        setAttributes(makeAttributes(Material.BLUE, false));
+        setAttributes(makeAttributes(Material.GREEN, false));
 
     }
 
@@ -234,7 +234,7 @@ public class Arrow
         dataShape[13] = latitude;
 
         setOuterBoundary(makePositionList(dataShape));
-        setAttributes(makeAttributes(Material.BLACK, false));
+        setAttributes(makeAttributes(Material.GREEN, false));
     }
 
     private void initShape_25_30(double latitude, double longitude) {
@@ -270,7 +270,7 @@ public class Arrow
         dataShape[19] = latitude;
 
         setOuterBoundary(makePositionList(dataShape));
-        setAttributes(makeAttributes(Material.BLACK, false));
+        setAttributes(makeAttributes(Material.YELLOW, false));
     }
 
     private void initShape_30_35(double latitude, double longitude) {
@@ -306,7 +306,7 @@ public class Arrow
         dataShape[19] = latitude;
 
         setOuterBoundary(makePositionList(dataShape));
-        setAttributes(makeAttributes(Material.BLACK, false));
+        setAttributes(makeAttributes(Material.YELLOW, false));
     }
 
     private void initShape_35_40(double latitude, double longitude) {
@@ -351,7 +351,7 @@ public class Arrow
         dataShape[25] = latitude;
 
         setOuterBoundary(makePositionList(dataShape));
-        setAttributes(makeAttributes(Material.BLACK, false));
+        setAttributes(makeAttributes(Material.RED, false));
     }
 
     private void initShape_40_45(double latitude, double longitude) {
@@ -396,7 +396,7 @@ public class Arrow
         dataShape[25] = latitude;
 
         setOuterBoundary(makePositionList(dataShape));
-        setAttributes(makeAttributes(Material.BLACK, false));
+        setAttributes(makeAttributes(Material.RED, false));
     }
 
     private void initShape_45_60(double latitude, double longitude) {

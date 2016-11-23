@@ -26,11 +26,17 @@ public class NetCDFInfoController
     public NetCDFInfoController(String fileName) {
         super(fileName);
         System.out.println("****************");
+        System.out.println("DetailInfo");
+        System.out.println("****************");
+        System.out.println(netcdf.getNetcdfDataset().getDetailInfo());
+        System.out.println("****************");
         System.out.println("Variables");
         System.out.println("****************");
         variables.stream().forEach((v) -> {
             System.out.println(v.getNameAndDimensions());
         });
+        
+        
         netcdf.getNetcdfDataset().getDetailInfo();
         System.out.println("****************");
         System.out.println("GlobalAttributes");

@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.netcdf.common.view;
 import bzh.terrevirtuelle.navisu.domain.cmd.Cmd;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.MeteoNetCDFViewer;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
@@ -19,7 +18,6 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ObservableValue;
@@ -103,6 +101,7 @@ public class WwjButtonController {
 
     private void positionEvents() {
         StackPane centerStackPane = guiAgentServices.getCenterStackPane();
+     //  BorderPane centerStackPane= guiAgentServices.getStatusBorderPane();
         //U B non traite encore
         centerStackPane.widthProperty().addListener((ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) -> {
             switch (side) {
