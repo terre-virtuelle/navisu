@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.tst.gui.approximation;
 
-
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Contour;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Delaunay_Triangulation;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Point_dt;
@@ -34,6 +33,7 @@ public class FittingEdges_Frame {
         final ArrayList<Contour> contours = DT.contours(dt, 5);
 
         class MyPanel extends JPanel {
+
             @Override
             protected void paintComponent(Graphics g) {
                 g.drawString("Contours: " + contours.size(), 20, 20);
@@ -53,6 +53,7 @@ public class FittingEdges_Frame {
                         g.drawLine((int) a.x, (int) a.y, (int) b.x, (int) b.y);
                         g.fillOval((int) a.x, (int) a.y, 4, 4);
                         g.fillOval((int) b.x, (int) b.y, 4, 4);
+                        g.drawString("222", (int) a.x, (int) a.y);
                         a = b;
                     }
                 }
@@ -64,17 +65,12 @@ public class FittingEdges_Frame {
         JPanel viewer = new MyPanel();
 
         frame.getContentPane().
-
                 add(viewer);
 
         frame.setDefaultCloseOperation(3);
-        frame.setSize(new
-
-                        Dimension(900, 780)
-
+        frame.setSize(new Dimension(900, 780)
         );
         frame.setVisible(true);
     }
-
 
 }
