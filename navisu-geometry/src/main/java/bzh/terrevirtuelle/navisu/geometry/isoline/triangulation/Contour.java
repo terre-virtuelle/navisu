@@ -19,10 +19,10 @@ public class Contour {
     public boolean right;
 
     //points ordered way
-    public LinkedList<Point_dt> points = new LinkedList<Point_dt>();
+    public LinkedList<Point_dt> points = new LinkedList<>();
 
     //contours lied inside
-    public ArrayList<Contour> holes = new ArrayList<Contour>();
+    public ArrayList<Contour> holes = new ArrayList<>();
 
     //for comparison, sort
     private double area = INIT_AREA;
