@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.netcdf.meteo.impl.view.symbols;
+package bzh.terrevirtuelle.navisu.netcdf.meteo.view.symbols;
 
+import bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.Arrow;
 import com.google.common.collect.Range;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
-import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,8 +21,8 @@ import java.util.List;
  * @date 29 mai 2015
  * @author Serge Morvan
  */
-public class Arrow
-        extends Polygon {
+public class WindArrow
+        extends Arrow {
 
     private final double Y = -0.02;
     private final double X = 0.05;
@@ -49,26 +49,26 @@ public class Arrow
         RANGES.add(Range.closed(75, MAX));
     }
 
-    public Arrow(double lat, double lon, double v) {
-        int velocity = getSymbol( v);
+    public WindArrow(double lat, double lon, double v) {
+        int velocity = getSymbol(v);
         switch (velocity) {
             case 0:
                 initShape_0_5(lat, lon);
             case 1:
                 initShape_5_10(lat, lon);
-                break;     
+                break;
             case 2:
                 initShape_10_15(lat, lon);
                 break;
 
             case 3:
                 initShape_15_20(lat, lon);
-                break; 
+                break;
 
             case 4:
                 initShape_20_25(lat, lon);
                 break;
-              
+
             case 5:
                 initShape_25_30(lat, lon);
                 break;
@@ -130,13 +130,13 @@ public class Arrow
         double[] dataShape = new double[8];
         dataShape[0] = longitude + X;
         dataShape[1] = latitude + X;
-        
+
         dataShape[2] = longitude - X;
         dataShape[3] = latitude + X;
-        
+
         dataShape[4] = longitude - X;
         dataShape[5] = latitude - X;
-        
+
         dataShape[6] = longitude + X;
         dataShape[7] = latitude - X;
 

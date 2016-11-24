@@ -38,6 +38,8 @@ public class AnalyticSurfaceController {
     double maxLon;
     protected double minValue;
     protected double maxValue;
+    String legendTitle; 
+    String units;
     protected static final double HUE_BLUE = 240d / 360d;
     protected static final double HUE_RED = 0d / 360d;
     protected RenderableLayer analyticSurfaceLayer;
@@ -62,7 +64,6 @@ public class AnalyticSurfaceController {
 
         this.analyticSurfaceLayer = layer;
         this.legendLayer = legendLayer;
-
         this.legendLayer.setPickEnabled(true);
         this.values = values;
         this.lonDimension = lonDimension;
@@ -73,6 +74,8 @@ public class AnalyticSurfaceController {
         this.maxLon = maxLon;
         this.minValue = minValue;
         this.maxValue = maxValue;
+        this.legendTitle=legendTitle;
+        this.units=units;
         wwd = GeoWorldWindViewImpl.getWW();
         this.analyticSurfaceLayer.setPickEnabled(true);
         wwd.addSelectListener((SelectEvent event) -> {
@@ -126,7 +129,7 @@ public class AnalyticSurfaceController {
 
         if (first == true) {
             first = false;
-            Format legendLabelFormat = new DecimalFormat("# m/s") {
+            Format legendLabelFormat = new DecimalFormat("# "+units) {
                 @Override
                 public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition) {
                     return super.format(number, result, fieldPosition);
@@ -135,7 +138,7 @@ public class AnalyticSurfaceController {
 
             AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, 40, minHue, maxHue,
                     AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
-                    AnalyticSurfaceLegend.createDefaultTitle("Speed"));
+                    AnalyticSurfaceLegend.createDefaultTitle(legendTitle));
             legend.setOpacity(0.8);
             legend.setScreenLocation(new Point(900, 300));
             legendLayer.addRenderable(createLegendRenderable(surface, maxValue, legend));

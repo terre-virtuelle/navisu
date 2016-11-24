@@ -6,7 +6,8 @@
 package bzh.terrevirtuelle.navisu.netcdf.common.controller;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
-import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFController;
+import bzh.terrevirtuelle.navisu.netcdf.common.view.NetCDFViewer;
+import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFVectorFieldController;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ import ucar.nc2.dataset.CoordinateAxis;
  * @author serge
  */
 public class NetCDFInfoController
-        extends NetCDFController {
+        extends NetCDFVectorFieldController {
 
     private static final Logger LOGGER = Logger.getLogger(NetCDFInfoController.class.getName());
 
@@ -104,6 +105,24 @@ public class NetCDFInfoController
         System.out.println("Name " + name1Tab[0]);
         System.out.println("****************");
 
+    }
+
+    @Override
+    public void doIt() {
+    }
+
+    @Override
+    public int getCurrentTimeIndex() {
+        return 0;
+    }
+
+    @Override
+    public NetCDFViewer getNetCDFViewer() {
+        return null;
+    }
+
+    @Override
+    public void setCurrentTimeIndex(int i) {
     }
 
 }
