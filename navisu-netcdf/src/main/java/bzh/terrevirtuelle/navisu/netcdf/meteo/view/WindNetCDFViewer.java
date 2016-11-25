@@ -22,9 +22,9 @@ import ucar.nc2.Variable;
  * @author serge
  * @date Nov 24, 2016
  */
-public class MeteoNetCDFViewer extends NetCDFViewer {
+public class WindNetCDFViewer extends NetCDFViewer {
 
-    public MeteoNetCDFViewer(GuiAgentServices guiAgentServices,
+    public WindNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer vectorLayer,
             RenderableLayer analyticLayer,
             RenderableLayer legendLayer,

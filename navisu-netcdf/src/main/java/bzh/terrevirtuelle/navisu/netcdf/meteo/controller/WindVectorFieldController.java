@@ -11,7 +11,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.Util;
 import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFVectorFieldController;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.view.MeteoNetCDFViewer;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.view.WindNetCDFViewer;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.NetCDFViewer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import javafx.application.Platform;
@@ -26,13 +26,13 @@ import javafx.scene.layout.GridPane;
  * @author serge
  * @date Sep 20, 2016
  */
-public class MeteoVectorFieldController
+public class WindVectorFieldController
         extends NetCDFVectorFieldController {
 
     protected final String GROUP = "Meteo";
-    private final String NAME0 = "MeteoVector";
-    private final String NAME1 = "MeteoAnalytic";
-    private final String NAME2 = "MeteoLegend";
+    private final String NAME0 = "WindVector";
+    private final String NAME1 = "WindAnalytic";
+    private final String NAME2 = "WindLegend";
     private static final String U_COMPONENT = "u-component_of_wind_height_above_ground";
     private static final String U_COMPONENT_2 = "u-component_of_wind_surface";
     private static final String V_COMPONENT = "v-component_of_wind_height_above_ground";
@@ -41,14 +41,14 @@ public class MeteoVectorFieldController
     private static final String ICON_R = "arrow-right-green.png";
     private static final String ICON_L = "arrow-left-green.png";
     private String layerName;
-    protected RenderableLayer meteoLayerVector;
-    protected RenderableLayer meteoLayerAnalytic;
-    protected RenderableLayer meteoLayerLegend;
+    protected RenderableLayer vectorLayer;
+    protected RenderableLayer analyticLayer;
+    protected RenderableLayer legendLayer;
     private final GuiAgentServices guiAgentServices;
     private int currentTimeIndex = 0;
-    private NetCDFViewer meteoNetCDFViewer;
+    private NetCDFViewer windNetCDFViewer;
 
-    public MeteoVectorFieldController(
+    public WindVectorFieldController(
             LayersManagerServices layersManagerServices,
             int layerIndex,
             GuiAgentServices guiAgentServices,
@@ -56,10 +56,10 @@ public class MeteoVectorFieldController
         super(fileName, U_COMPONENT, U_COMPONENT_2, V_COMPONENT, V_COMPONENT_2);
         this.guiAgentServices = guiAgentServices;
         layerName = NAME0 + "_" + Integer.toString(layerIndex);
-        meteoLayerVector = layersManagerServices.getInstance(GROUP, layerName);
+        vectorLayer = layersManagerServices.getInstance(GROUP, layerName);
         layerName = NAME1 + "_" + Integer.toString(layerIndex);
-        meteoLayerAnalytic = layersManagerServices.getInstance(GROUP, layerName);
-        meteoLayerLegend = layersManagerServices.getInstance(GROUP, NAME2);
+        analyticLayer = layersManagerServices.getInstance(GROUP, layerName);
+        legendLayer = layersManagerServices.getInstance(GROUP, NAME2);
 
         Button buttonR = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_R))));
@@ -85,15 +85,15 @@ public class MeteoVectorFieldController
 
     @Override
     public final void doIt() {
-        meteoNetCDFViewer = new MeteoNetCDFViewer(guiAgentServices,
-                meteoLayerVector, meteoLayerAnalytic, meteoLayerLegend,
+        windNetCDFViewer = new WindNetCDFViewer(guiAgentServices,
+                vectorLayer, analyticLayer, legendLayer,
                 netcdf,
                 TITLE,
                 variables,
                 layerName, fileName,
                 timeSeriesVectorField
         );
-        meteoNetCDFViewer.apply(timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
+        windNetCDFViewer.apply(timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
                 timeSeriesVectorField.gethVFields().get(0).get(0).getDirections(),
                 currentTimeIndex);
     }
@@ -105,7 +105,7 @@ public class MeteoVectorFieldController
 
     @Override
     public NetCDFViewer getNetCDFViewer() {
-        return meteoNetCDFViewer;
+        return windNetCDFViewer;
     }
 
     @Override

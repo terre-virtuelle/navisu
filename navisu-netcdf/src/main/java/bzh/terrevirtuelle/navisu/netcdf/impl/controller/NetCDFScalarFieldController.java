@@ -5,7 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.netcdf.impl.controller;
 
+import bzh.terrevirtuelle.navisu.domain.cmd.Cmd;
 import bzh.terrevirtuelle.navisu.domain.netcdf.Netcdf;
+import bzh.terrevirtuelle.navisu.domain.netcdf.common.TimeSeriesVectorField;
+import bzh.terrevirtuelle.navisu.netcdf.common.view.NetCDFViewer;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,14 +21,17 @@ import ucar.nc2.Variable;
  * @author serge
  * @date Sep 20, 2016
  */
-public class NetCDFScalarFieldController 
-        implements NetCDFController{
-private static final Logger LOGGER = Logger.getLogger(NetCDFScalarFieldController.class.getName());
- 
+public abstract class NetCDFScalarFieldController
+        implements NetCDFController, Cmd {
+
+    private static final Logger LOGGER = Logger.getLogger(NetCDFScalarFieldController.class.getName());
+
     protected Netcdf netcdf;
     protected String fileName;
     protected List<Variable> variables;
     protected List<Attribute> attributes;
+    protected String variableName;
+    protected Array u = null;
     protected Array latitudes = null;
     protected Array longitudes = null;
     protected Array height = null;
@@ -35,12 +41,24 @@ private static final Logger LOGGER = Logger.getLogger(NetCDFScalarFieldControlle
     protected double[] latTab;
     protected double[] lonTab;
     protected double[] timeTab;
-    
-    public NetCDFScalarFieldController(String fileName, String variableName) {
+    protected TimeSeriesVectorField timeSeriesVectorField;
+
+    public NetCDFScalarFieldController(String fileName,
+            String variableName, String variableName2) {
         this.fileName = fileName;
         netcdf = new Netcdf(fileName);
         variables = netcdf.getVariables();
         attributes = netcdf.getAttributes();
+        try {
+            u = netcdf.read(variableName);
+        } catch (Exception e) {
+            try {
+                u = netcdf.read(variableName2);
+            } catch (Exception e1) {
+                String error = "File not NetCDF complian " + variableName;
+                LOGGER.log(Level.SEVERE, error, e1);
+            }
+        }
         try {
             latitudes = netcdf.read("lat");
             longitudes = netcdf.read("lon");
@@ -67,6 +85,8 @@ private static final Logger LOGGER = Logger.getLogger(NetCDFScalarFieldControlle
         } catch (Exception e1) {
             LOGGER.log(Level.SEVERE, "File not NetCDF compliant : " + variableName, e1);
         }
+        timeSeriesVectorField
+                = new TimeSeriesVectorField(time, height, latitudes, longitudes, u, null);
     }
 
     public Netcdf getNetcdf() {
@@ -77,4 +97,15 @@ private static final Logger LOGGER = Logger.getLogger(NetCDFScalarFieldControlle
         return fileName;
     }
 
+    @Override
+    public abstract void doIt();
+
+    @Override
+    public abstract int getCurrentTimeIndex();
+
+    @Override
+    public abstract NetCDFViewer getNetCDFViewer();
+
+    @Override
+    public abstract void setCurrentTimeIndex(int i);
 }

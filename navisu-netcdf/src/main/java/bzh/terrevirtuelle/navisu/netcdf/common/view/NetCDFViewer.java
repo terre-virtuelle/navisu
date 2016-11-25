@@ -46,6 +46,7 @@ public abstract class NetCDFViewer {
     protected String name;
     protected LocalDateTime date = null;
     protected final double maxValue;
+    protected final double minValue;
     protected final WorldWindow wwd;
     protected double[] values;
     protected double[] directions;
@@ -90,6 +91,7 @@ public abstract class NetCDFViewer {
         latDimension = timeSeriesVectorField.getLatitudeDimension();
         lonDimension = timeSeriesVectorField.getLongitudeDimension();
         values = timeSeriesVectorField.getValues(0);
+        minValue = timeSeriesVectorField.getMinValue(0);
         maxValue = timeSeriesVectorField.getMaxValue(0);
         directions = timeSeriesVectorField.getDirections(0);
         timeTab = timeSeriesVectorField.getTimes();
@@ -145,7 +147,7 @@ public abstract class NetCDFViewer {
                     lonDimension,
                     minLat, maxLat,
                     minLon, maxLon,
-                    0.0, maxValue,//min, max values in m/s
+                    minValue, maxValue,//min, max values in m/s
                     1.0,//opacity
                     "Speed", "Knt");//legends
         } else {

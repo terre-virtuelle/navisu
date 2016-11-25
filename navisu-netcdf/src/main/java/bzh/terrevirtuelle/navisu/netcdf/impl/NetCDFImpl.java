@@ -7,7 +7,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDF;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.controller.MeteoVectorFieldController;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.controller.WindVectorFieldController;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.logging.Level;
 import org.capcaval.c3.component.ComponentState;
@@ -16,7 +16,7 @@ import org.capcaval.c3.component.annotation.UsedService;
 import java.util.logging.Logger;
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.NetCDFInfoController;
 import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFController;
-import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFScalarFieldController;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.controller.PressureScalarFieldController;
 
 /**
  * User: serge Date: 23/11/2013
@@ -128,11 +128,11 @@ public class NetCDFImpl
     @Override
     public void loadFile(String path) {
         switch (NetCDFImpl.this.category) {
-            case "Meteo":
-                netCDFController = new MeteoVectorFieldController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);
+            case "Wind":
+                netCDFController = new WindVectorFieldController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);
                 break;
             case "Pressure":
-                netCDFController = new NetCDFScalarFieldController(path, "Pressure_surface");
+                netCDFController = new PressureScalarFieldController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);
                 break;
             case "NetCdfInfo":
                 netCDFController = new NetCDFInfoController(path);

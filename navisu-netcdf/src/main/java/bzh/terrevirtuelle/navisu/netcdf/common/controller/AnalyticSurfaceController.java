@@ -29,7 +29,6 @@ import java.util.ArrayList;
 
 public class AnalyticSurfaceController {
 
-    private static AnalyticSurfaceController INSTANCE;
     protected int lonDimension;
     protected int latDimension;
     double minLat;
@@ -38,8 +37,8 @@ public class AnalyticSurfaceController {
     double maxLon;
     protected double minValue;
     protected double maxValue;
-    String legendTitle; 
-    String units;
+    protected String legendTitle; 
+    protected String units;
     protected static final double HUE_BLUE = 240d / 360d;
     protected static final double HUE_RED = 0d / 360d;
     protected RenderableLayer analyticSurfaceLayer;
@@ -114,13 +113,15 @@ public class AnalyticSurfaceController {
         surface.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         surface.setDimensions(width, height);
         surface.setClientLayer(outLayer);
-
+        
+        System.out.println("minValue : " + minValue);
+        System.out.println("maxValue : " + maxValue);
         BufferWrapper firstBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
      //   BufferWrapper secondBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
      //   mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, 18, minHue, maxHue, surface);
 //20.0 au lieu de maxValue pour coller au view du Shom
-        surface.setValues(createColorGradientGridValues(firstBuffer, minValue, 20.0, minHue, maxHue));
-        
+
+        surface.setValues(createColorGradientGridValues(firstBuffer, minValue, maxValue, minHue, maxHue));   
         attr = new AnalyticSurfaceAttributes();
         attr.setDrawShadow(false);
         attr.setInteriorOpacity(1.0);
@@ -135,7 +136,7 @@ public class AnalyticSurfaceController {
                     return super.format(number, result, fieldPosition);
                 }
             };
-
+//40
             AnalyticSurfaceLegend legend = AnalyticSurfaceLegend.fromColorGradient(minValue, 40, minHue, maxHue,
                     AnalyticSurfaceLegend.createDefaultColorGradientLabels(minValue, 40, legendLabelFormat),
                     AnalyticSurfaceLegend.createDefaultTitle(legendTitle));

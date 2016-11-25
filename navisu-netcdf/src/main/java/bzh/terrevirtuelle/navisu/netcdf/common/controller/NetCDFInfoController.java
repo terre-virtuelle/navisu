@@ -29,6 +29,7 @@ public class NetCDFInfoController
         System.out.println("****************");
         System.out.println("DetailInfo");
         System.out.println("****************");
+        System.out.println("netcdf : "+ netcdf);
         System.out.println(netcdf.getNetcdfDataset().getDetailInfo());
         System.out.println("****************");
         System.out.println("Variables");
