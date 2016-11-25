@@ -43,14 +43,25 @@ public class VectorField {
         this.time = time;
 
         values = new double[lat.length * lon.length];
-        directions = new double[lat.length * lon.length];
+
         int l = 0;
-        for (int h = 0; h < lat.length; h++) {
-            for (int w = 0; w < lon.length; w++) {
-                values[l + w] = module(u.getDouble(index + l + w), v.getDouble(index + l + w));
-                directions[l + w] = angle(u.getDouble(index + l + w), v.getDouble(index + l + w));
+        if (v != null) {
+            directions = new double[lat.length * lon.length];
+            for (int h = 0; h < lat.length; h++) {
+                for (int w = 0; w < lon.length; w++) {
+                    values[l + w] = module(u.getDouble(index + l + w), v.getDouble(index + l + w));
+                    directions[l + w] = angle(u.getDouble(index + l + w), v.getDouble(index + l + w));
+                }
+                l += lon.length;
             }
-            l += lon.length;
+        } else {
+            directions = null;
+            for (int h = 0; h < lat.length; h++) {
+                for (int w = 0; w < lon.length; w++) {
+                    values[l + w] = u.getDouble(index + l + w);
+                }
+                l += lon.length;
+            }
         }
         Pair<Double, Double> minMax = Pair.minMax(values);
         minValue = minMax.getX();
@@ -99,8 +110,6 @@ public class VectorField {
     public double getMaxValue() {
         return maxValue;
     }
-
-    
 
     public int getLatDimension() {
         return lat.length;
