@@ -134,6 +134,7 @@ public abstract class NetCDFViewer {
             displayDateInfo();
             createAnalyticSurface();
             //  createVectors();
+            createIsolines();
             wwd.redrawNow();
         });
     }
@@ -156,7 +157,7 @@ public abstract class NetCDFViewer {
 
     }
 
-    protected abstract void createVectors();
+    
 
     protected void createAnnotationAttributes() {
         annotationAttributes = new AnnotationAttributes();
@@ -235,4 +236,6 @@ public abstract class NetCDFViewer {
             analyticLayer.addRenderable(dateInfo);
         }
     }
+    protected abstract void createVectors();
+    protected abstract void createIsolines();
 }

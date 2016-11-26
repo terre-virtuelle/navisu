@@ -133,9 +133,12 @@ public abstract class NetCDFVectorFieldController
         return timeSeriesVectorField;
     }
 
+    @Override
     public abstract int getCurrentTimeIndex();
 
+    @Override
     public abstract NetCDFViewer getNetCDFViewer();
 
+    @Override
     public abstract void setCurrentTimeIndex(int i);
 }

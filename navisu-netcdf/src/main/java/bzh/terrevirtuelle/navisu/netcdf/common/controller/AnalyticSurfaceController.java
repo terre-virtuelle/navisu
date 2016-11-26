@@ -114,8 +114,8 @@ public class AnalyticSurfaceController {
         surface.setDimensions(width, height);
         surface.setClientLayer(outLayer);
         
-        System.out.println("minValue : " + minValue);
-        System.out.println("maxValue : " + maxValue);
+      //  System.out.println("minValue : " + minValue);
+       // System.out.println("maxValue : " + maxValue);
         BufferWrapper firstBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
      //   BufferWrapper secondBuffer = createBufferValues(values, width, height, minValue, maxValue, new BufferFactory.DoubleBufferFactory(), outLayer);
      //   mixValuesOverTime(2000L, firstBuffer, secondBuffer, minValue, 18, minHue, maxHue, surface);

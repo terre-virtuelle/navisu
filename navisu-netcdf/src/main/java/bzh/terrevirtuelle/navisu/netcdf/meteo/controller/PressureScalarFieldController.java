@@ -7,9 +7,9 @@ package bzh.terrevirtuelle.navisu.netcdf.meteo.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.netcdf.meteo.view.WindNetCDFViewer;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.NetCDFViewer;
 import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFScalarFieldController;
+import bzh.terrevirtuelle.navisu.netcdf.meteo.view.PressureNetCDFViewer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 
 /**
@@ -35,7 +35,7 @@ public class PressureScalarFieldController
     protected RenderableLayer layerLegend;
     private final GuiAgentServices guiAgentServices;
     private int currentTimeIndex = 0;
-    private NetCDFViewer meteoNetCDFViewer;
+    private NetCDFViewer netCDFViewer;
 
     public PressureScalarFieldController(
             LayersManagerServices layersManagerServices,
@@ -74,7 +74,7 @@ public class PressureScalarFieldController
 
     @Override
     public final void doIt() {
-        meteoNetCDFViewer = new WindNetCDFViewer(guiAgentServices,
+        netCDFViewer = new PressureNetCDFViewer(guiAgentServices,
                 layerVector, layerAnalytic, layerLegend,
                 netcdf,
                 TITLE,
@@ -82,7 +82,7 @@ public class PressureScalarFieldController
                 layerName, fileName,
                 timeSeriesVectorField
         );
-        meteoNetCDFViewer.apply(timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
+        netCDFViewer.apply(timeSeriesVectorField.gethVFields().get(0).get(0).getValues(),
                 timeSeriesVectorField.gethVFields().get(0).get(0).getDirections(),
                 currentTimeIndex);
     }
@@ -94,7 +94,7 @@ public class PressureScalarFieldController
 
     @Override
     public NetCDFViewer getNetCDFViewer() {
-        return meteoNetCDFViewer;
+        return netCDFViewer;
     }
 
     @Override

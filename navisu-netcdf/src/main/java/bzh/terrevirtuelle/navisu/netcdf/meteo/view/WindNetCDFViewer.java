@@ -65,4 +65,9 @@ public class WindNetCDFViewer extends NetCDFViewer {
         }
         vectorLayer.addRenderables(arrows);
     }
+    
+    @Override
+    protected  void createIsolines(){
+        
+    }
 }

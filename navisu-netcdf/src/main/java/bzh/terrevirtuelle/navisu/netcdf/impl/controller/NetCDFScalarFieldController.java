@@ -55,7 +55,7 @@ public abstract class NetCDFScalarFieldController
             try {
                 u = netcdf.read(variableName2);
             } catch (Exception e1) {
-                String error = "File not NetCDF complian " + variableName;
+                String error = "File not NetCDF compliant " + variableName;
                 LOGGER.log(Level.SEVERE, error, e1);
             }
         }
