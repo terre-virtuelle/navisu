@@ -33,6 +33,8 @@ public class ClosedContourLight_Frame {
             @Override
             protected void paintComponent(Graphics g) {
                 for (Contour c : contours) {
+                    //Color
+                   
                     int gg = rnd.nextInt(250);
                     int r = rnd.nextInt(250);
                     int B = rnd.nextInt(250);
@@ -44,6 +46,7 @@ public class ClosedContourLight_Frame {
                     while (a != null && itr.hasNext()) {
                         Point_dt b = itr.next();
                         g.drawLine((int) a.x, (int) a.y, (int) b.x, (int) b.y);
+                        g.drawString("1", (int) a.x, (int) a.y);
                       //  g.fillOval((int) a.x, (int) a.y, 4, 4);
                       //  g.fillOval((int) b.x, (int) b.y, 4, 4);
                         a = b;

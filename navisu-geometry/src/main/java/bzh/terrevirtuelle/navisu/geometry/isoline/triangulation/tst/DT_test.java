@@ -1,6 +1,5 @@
 package bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.tst;
 
-
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Contour;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Delaunay_Triangulation;
 import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.Izoline;
@@ -11,11 +10,36 @@ import bzh.terrevirtuelle.navisu.geometry.isoline.triangulation.util.UtPoint;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * difference between LineString, LinearRing, Polygon, and hand made method intersection results
+ * difference between LineString, LinearRing, Polygon, and hand made method
+ * intersection results
  */
 public class DT_test {
+
+    public static void main(String[] args) {
+        new DT_test();
+    }
+
+    public DT_test() {
+        t1();
+        t3();
+        t4();
+        t5();
+        try {
+            test6();
+        } catch (Exception ex) {
+            Logger.getLogger(DT_test.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            test7();
+        } catch (Exception ex) {
+            Logger.getLogger(DT_test.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Test
     public void t1() {
         Point_dt p0 = new Point_dt(20.0, 30, 6);
@@ -38,13 +62,13 @@ public class DT_test {
         Set<Izoline> izolines = DT.getIzolines(t, 2);
 
         for (Izoline l : izolines) {
-            if (l.A.pointLineTest(t.A, t.B) != Point_dt.ONSEGMENT && l.A.pointLineTest(t.B, t.C) != Point_dt.ONSEGMENT &&
-                    l.A.pointLineTest(t.C, t.A) != Point_dt.ONSEGMENT) {
+            if (l.A.pointLineTest(t.A, t.B) != Point_dt.ONSEGMENT && l.A.pointLineTest(t.B, t.C) != Point_dt.ONSEGMENT
+                    && l.A.pointLineTest(t.C, t.A) != Point_dt.ONSEGMENT) {
                 System.out.println("error " + l.A);
 
             }
-            if (l.B.pointLineTest(t.A, t.B) != Point_dt.ONSEGMENT && l.B.pointLineTest(t.B, t.C) != Point_dt.ONSEGMENT &&
-                    l.B.pointLineTest(t.C, t.A) != Point_dt.ONSEGMENT) {
+            if (l.B.pointLineTest(t.A, t.B) != Point_dt.ONSEGMENT && l.B.pointLineTest(t.B, t.C) != Point_dt.ONSEGMENT
+                    && l.B.pointLineTest(t.C, t.A) != Point_dt.ONSEGMENT) {
                 System.out.println("error " + l.B);
             }
         }
@@ -101,10 +125,13 @@ public class DT_test {
             dt.insertPoint(point_dt);
         }
 
-
         double avgEdgeLength = dt.avgEdgeLength();
         dt.divideTillEpsilon(avgEdgeLength);
         ArrayList<Contour> contours = DT.connectedLines(dt, 5);
+        System.out.println("triangles : " + dt.toString());
+        for(Triangle_dt t : dt.get_triangles()){
+            System.out.println("t : "+ t.A +" "+t.B+" "+t.C);
+        }
         System.out.println("contours size = " + contours.size());
         System.out.println("took: " + (System.currentTimeMillis() - l));
     }
