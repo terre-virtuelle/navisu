@@ -1,9 +1,11 @@
 
+@import "meteo.css";
 /*******************************************************************************
  *                                                                             *
  * colors definitions                                                                 *
  *                                                                             *
  ******************************************************************************/
+
 * {
     -fx-base: black;
     -fx-light-gradient: #fff5;
@@ -23,6 +25,7 @@
     -fx-inner-border: -fx-hover-base;
 
 }
+
 /*******************************************************************************
  *                                                                             *
  * Tree view                                                                   *
@@ -36,9 +39,13 @@
     -fx-text-fill: white;
     -fx-background-color: transparent;
 }
-
+.table-view,
+.tree-table-view {
+    
+    -fx-table-cell-border-color: #ffff00;
+}
 #statusBorderPane {
-    -fx-border-color: transparent #1d1d1d transparent #1d1d1d;
+    -fx-border-color: transparent #ff00ff transparent #ff00ff;
 }
 /*******************************************************************************
  *                                                                             *
@@ -167,3 +174,4 @@
     -fx-background-color: -fx-background;
     -fx-border-color: null;
 }
+
