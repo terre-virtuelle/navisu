@@ -45,6 +45,8 @@ public class WindVectorFieldController
     private static final String ICON_L = "arrow-left-green.png";
     private static final String ICON_RR = "arrow-read-green.png";
     private static final String ICON_RS = "arrow-stop-green.png";
+    private static final String BUTTON_NAME_STYLE_CLASS = "meteo-button";
+    private static final String GRID_PANE_STYLE_CLASS = "grid-pane";
     private String layerName;
     protected RenderableLayer vectorLayer;
     protected RenderableLayer analyticLayer;
@@ -66,47 +68,44 @@ public class WindVectorFieldController
         layerName = NAME1 + "_" + Integer.toString(layerIndex);
         analyticLayer = layersManagerServices.getInstance(GROUP, layerName);
         legendLayer = layersManagerServices.getInstance(GROUP, NAME2);
-/************************/
-        
+
+        createGUI();
+        doIt();
+    }
+
+    private void createGUI() {
         Button buttonR = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_R))));
-        buttonR.getStyleClass().add("meteo-button");
+        buttonR.getStyleClass().add(BUTTON_NAME_STYLE_CLASS);
         buttonR.setOnAction((ActionEvent event) -> {
             new CmdIncTimeNetCDFController(this).doIt();
         });
         Button buttonRead = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_RR))));
-        buttonRead.getStyleClass().add("meteo-button");
+        buttonRead.getStyleClass().add(BUTTON_NAME_STYLE_CLASS);
         Button buttonStop = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_RS))));
-        buttonStop.getStyleClass().add("meteo-button");
+        buttonStop.getStyleClass().add(BUTTON_NAME_STYLE_CLASS);
         Button buttonL = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_L))));
-        buttonL.getStyleClass().add("meteo-button");
+        buttonL.getStyleClass().add(BUTTON_NAME_STYLE_CLASS);
         buttonL.setOnAction((ActionEvent event) -> {
             new CmdDecTimeNetCDFController(this).doIt();
         });
-        
-        /************************/
-        
+
         Pane meteoReaderPane = new Pane();
         GridPane gridPane = Util.createGridPane(1, 4);
         Platform.runLater(() -> {
             guiAgentServices.getStatusBorderPane().setLeft(meteoReaderPane);
             meteoReaderPane.getChildren().add(gridPane);
-                gridPane.setLayoutY(-60.0);
-                gridPane.setLayoutX(50.0);
-                gridPane.getStyleClass().add("grid-pane");      
-                gridPane.setMaxWidth(500.0);
-                gridPane.add(buttonL, 0, 0);
-                gridPane.add(buttonStop, 1, 0);
-                gridPane.add(buttonRead, 2, 0);
-                gridPane.add(buttonR, 3, 0);
+            gridPane.getStyleClass().add(GRID_PANE_STYLE_CLASS);
+            gridPane.setMaxWidth(500.0);
+            gridPane.add(buttonL, 0, 0);
+            gridPane.add(buttonStop, 1, 0);
+            gridPane.add(buttonRead, 2, 0);
+            gridPane.add(buttonR, 3, 0);
         });
 
-        doIt();
-        
-        /************************/
     }
 
     @Override
