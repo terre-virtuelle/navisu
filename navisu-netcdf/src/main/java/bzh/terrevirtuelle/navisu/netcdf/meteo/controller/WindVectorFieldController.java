@@ -9,10 +9,10 @@ import bzh.terrevirtuelle.navisu.netcdf.common.controller.CmdIncTimeNetCDFContro
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.CmdDecTimeNetCDFController;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.netcdf.common.view.Util;
 import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFVectorFieldController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.view.WindNetCDFViewer;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.NetCDFViewer;
+import bzh.terrevirtuelle.navisu.netcdf.common.view.Util;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -40,6 +41,8 @@ public class WindVectorFieldController
     private static final String TITLE = "Speed and direction of wind 10m above ground";
     private static final String ICON_R = "arrow-right-green.png";
     private static final String ICON_L = "arrow-left-green.png";
+    private static final String ICON_RR = "arrow-read-green.png";
+    private static final String ICON_RS = "arrow-stop-green.png";
     private String layerName;
     protected RenderableLayer vectorLayer;
     protected RenderableLayer analyticLayer;
@@ -60,27 +63,47 @@ public class WindVectorFieldController
         layerName = NAME1 + "_" + Integer.toString(layerIndex);
         analyticLayer = layersManagerServices.getInstance(GROUP, layerName);
         legendLayer = layersManagerServices.getInstance(GROUP, NAME2);
-
+/************************/
+        
         Button buttonR = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_R))));
+        buttonR.getStyleClass().add("meteo-button");
         buttonR.setOnAction((ActionEvent event) -> {
             new CmdIncTimeNetCDFController(this).doIt();
         });
-
+        Button buttonRead = new Button("", new ImageView(
+                new Image(getClass().getResourceAsStream(ICON_RR))));
+        buttonRead.getStyleClass().add("meteo-button");
+        Button buttonStop = new Button("", new ImageView(
+                new Image(getClass().getResourceAsStream(ICON_RS))));
+        buttonStop.getStyleClass().add("meteo-button");
         Button buttonL = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_L))));
+        buttonL.getStyleClass().add("meteo-button");
         buttonL.setOnAction((ActionEvent event) -> {
             new CmdDecTimeNetCDFController(this).doIt();
         });
-
-        GridPane gridPane = Util.createGridPane(1, 6);
+        
+        /************************/
+        
+        Pane meteoReaderPane = new Pane();
+        GridPane gridPane = Util.createGridPane(1, 4);
         Platform.runLater(() -> {
-            guiAgentServices.getStatusBorderPane().setLeft(gridPane);
-            gridPane.add(buttonL, 0, 0);
-            gridPane.add(buttonR, 5, 0);
+            guiAgentServices.getStatusBorderPane().setLeft(meteoReaderPane);
+            meteoReaderPane.getChildren().add(gridPane);
+                gridPane.setLayoutY(-60.0);
+                gridPane.setLayoutX(50.0);
+                gridPane.getStyleClass().add("grid-pane");      
+                gridPane.setMaxWidth(500.0);
+                gridPane.add(buttonL, 0, 0);
+                gridPane.add(buttonStop, 1, 0);
+                gridPane.add(buttonRead, 2, 0);
+                gridPane.add(buttonR, 3, 0);
         });
 
         doIt();
+        
+        /************************/
     }
 
     @Override
