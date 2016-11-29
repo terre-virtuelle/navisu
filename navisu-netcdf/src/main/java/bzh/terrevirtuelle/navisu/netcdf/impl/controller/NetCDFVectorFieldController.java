@@ -40,11 +40,14 @@ public abstract class NetCDFVectorFieldController
 
     public NetCDFVectorFieldController(String fileName) {
         this.fileName = fileName;
+        netcdf = new Netcdf(fileName);
+        variables = netcdf.getVariables();
+        attributes = netcdf.getAttributes();
     }
 
     public NetCDFVectorFieldController(String fileName,
-            String uComponent, String uComponent2,
-            String vComponent, String vComponent2) {
+            String uComponent, String uComponent2, String uComponent3,
+            String vComponent, String vComponent2, String vComponent3) {
         this.fileName = fileName;
         netcdf = new Netcdf(fileName);
         variables = netcdf.getVariables();
@@ -54,8 +57,12 @@ public abstract class NetCDFVectorFieldController
         } catch (Exception e) {
             try {
                 u = netcdf.read(uComponent2);
-            } catch (Exception e1) {
-                LOGGER.log(Level.SEVERE, "File not NetCDF compliant u ", e1);
+            } catch (Exception e2) {
+                try {
+                    u = netcdf.read(uComponent3);
+                } catch (Exception e3) {
+                    LOGGER.log(Level.SEVERE, "File not NetCDF compliant u ", e3);
+                }
             }
         }
         try {
@@ -63,8 +70,12 @@ public abstract class NetCDFVectorFieldController
         } catch (Exception e) {
             try {
                 v = netcdf.read(vComponent2);
-            } catch (Exception e1) {
-                LOGGER.log(Level.SEVERE, "File not NetCDF compliant v ", e1);
+            } catch (Exception e2) {
+                try {
+                    u = netcdf.read(vComponent3);
+                } catch (Exception e3) {
+                    LOGGER.log(Level.SEVERE, "File not NetCDF compliant u ", e3);
+                }
             }
         }
         try {

@@ -13,6 +13,9 @@ import bzh.terrevirtuelle.navisu.netcdf.common.view.symbols.Arrow;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.view.symbols.WindArrow;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.layers.RenderableLayer;
+import java.io.BufferedWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import ucar.nc2.Variable;
@@ -65,9 +68,9 @@ public class WindNetCDFViewer extends NetCDFViewer {
         }
         vectorLayer.addRenderables(arrows);
     }
-    
+
     @Override
-    protected  void createIsolines(){
-        
+    protected void createIsolines() {
+
     }
 }

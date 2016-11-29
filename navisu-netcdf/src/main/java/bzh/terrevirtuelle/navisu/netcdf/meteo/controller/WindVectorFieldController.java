@@ -36,8 +36,10 @@ public class WindVectorFieldController
     private final String NAME2 = "WindLegend";
     private static final String U_COMPONENT = "u-component_of_wind_height_above_ground";
     private static final String U_COMPONENT_2 = "u-component_of_wind_surface";
+    private static final String U_COMPONENT_3 = "u-component_of_wind_msl";
     private static final String V_COMPONENT = "v-component_of_wind_height_above_ground";
     private static final String V_COMPONENT_2 = "v-component_of_wind_surface";
+    private static final String V_COMPONENT_3 = "v-component_of_wind_msl";
     private static final String TITLE = "Speed and direction of wind 10m above ground";
     private static final String ICON_R = "arrow-right-green.png";
     private static final String ICON_L = "arrow-left-green.png";
@@ -56,7 +58,8 @@ public class WindVectorFieldController
             int layerIndex,
             GuiAgentServices guiAgentServices,
             String fileName) {
-        super(fileName, U_COMPONENT, U_COMPONENT_2, V_COMPONENT, V_COMPONENT_2);
+        super(fileName, U_COMPONENT, U_COMPONENT_2, U_COMPONENT_3,
+                V_COMPONENT, V_COMPONENT_2, V_COMPONENT_3);
         this.guiAgentServices = guiAgentServices;
         layerName = NAME0 + "_" + Integer.toString(layerIndex);
         vectorLayer = layersManagerServices.getInstance(GROUP, layerName);
