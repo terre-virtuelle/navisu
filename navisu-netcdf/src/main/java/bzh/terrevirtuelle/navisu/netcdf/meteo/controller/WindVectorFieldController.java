@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.netcdf.common.controller.CmdIncTimeNetCDFContro
 import bzh.terrevirtuelle.navisu.netcdf.common.controller.CmdDecTimeNetCDFController;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.netcdf.impl.controller.NetCDFVectorFieldController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.view.WindNetCDFViewer;
 import bzh.terrevirtuelle.navisu.netcdf.common.view.NetCDFViewer;
@@ -45,6 +46,7 @@ public class WindVectorFieldController
     private static final String ICON_L = "arrow-left-green.png";
     private static final String ICON_RR = "arrow-read-green.png";
     private static final String ICON_RS = "arrow-stop-green.png";
+    private static final String ICON_Q = "quit.png";
     private static final String BUTTON_NAME_STYLE_CLASS = "meteo-button";
     private static final String GRID_PANE_STYLE_CLASS = "grid-pane";
     private String layerName;
@@ -54,6 +56,7 @@ public class WindVectorFieldController
     private final GuiAgentServices guiAgentServices;
     private int currentTimeIndex = 0;
     private NetCDFViewer windNetCDFViewer;
+    private Pane meteoReaderPane;
 
     public WindVectorFieldController(
             LayersManagerServices layersManagerServices,
@@ -68,7 +71,6 @@ public class WindVectorFieldController
         layerName = NAME1 + "_" + Integer.toString(layerIndex);
         analyticLayer = layersManagerServices.getInstance(GROUP, layerName);
         legendLayer = layersManagerServices.getInstance(GROUP, NAME2);
-
         createGUI();
         doIt();
     }
@@ -92,20 +94,34 @@ public class WindVectorFieldController
         buttonL.setOnAction((ActionEvent event) -> {
             new CmdDecTimeNetCDFController(this).doIt();
         });
-
-        Pane meteoReaderPane = new Pane();
-        GridPane gridPane = Util.createGridPane(1, 4);
+        Button buttonQ = new Button("", new ImageView(
+                new Image(getClass().getResourceAsStream(ICON_Q))));
+        buttonQ.getStyleClass().add(BUTTON_NAME_STYLE_CLASS);
+        buttonQ.setOnAction((ActionEvent event) -> {
+            vectorLayer.removeAllRenderables();
+            vectorLayer.dispose();
+            analyticLayer.removeAllRenderables();
+            analyticLayer.dispose();
+            legendLayer.removeAllRenderables();
+            legendLayer.dispose();
+            guiAgentServices.getStatusBorderPane().getChildren().remove(meteoReaderPane);
+            GeoWorldWindViewImpl.getWW().redrawNow();
+        });
+        meteoReaderPane = new Pane();
+        GridPane gridPane = Util.createGridPane(1, 5);
         Platform.runLater(() -> {
             guiAgentServices.getStatusBorderPane().setLeft(meteoReaderPane);
             meteoReaderPane.getChildren().add(gridPane);
+            gridPane.setLayoutX(0.0);
+            gridPane.setLayoutY(-100.0);
             gridPane.getStyleClass().add(GRID_PANE_STYLE_CLASS);
             gridPane.setMaxWidth(500.0);
             gridPane.add(buttonL, 0, 0);
             gridPane.add(buttonStop, 1, 0);
             gridPane.add(buttonRead, 2, 0);
             gridPane.add(buttonR, 3, 0);
+            gridPane.add(buttonQ, 4, 0);
         });
-
     }
 
     @Override

@@ -151,7 +151,7 @@ import java.util.Arrays;
  * @author Dominique Marques <dom.marques at free.fr>
  */
 public class AppMain extends Application {
-
+    
     private static final Logger LOGGER = Logger.getLogger(AppMain.class.getName());
     private final String DATA_S57_CATALOG_1 = "data/charts/vector/s57/catalog/ENC_NP1.kmz";
     private final String DATA_S57_CATALOG_2 = "data/charts/vector/s57/catalog/ENC_NP2.kmz";
@@ -159,15 +159,15 @@ public class AppMain extends Application {
     private final String DATA_S57_CATALOG_4 = "data/charts/vector/s57/catalog/ENC_NP4.kmz";
     private final String DATA_S57_CATALOG_5 = "data/charts/vector/s57/catalog/ENC_NP5.kmz";
     private final String DATA_S57_CATALOG_6 = "data/charts/vector/s57/catalog/ENC_NP6.kmz";
-
+    
     @Override
     @SuppressWarnings({"unchecked", "varargs"})
     public void start(Stage stage) throws Exception {
-
+        
         Translator.setLang(I18nLangEnum.FRENCH);
-
+        
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
-
+        
         String navisuHome = System.getProperty("user.home") + "/.navisu";
         Path navisuHomePath = Paths.get(navisuHome);
         if (!Files.exists(navisuHomePath, LinkOption.NOFOLLOW_LINKS)) {
@@ -175,10 +175,9 @@ public class AppMain extends Application {
             Files.createDirectory(Paths.get(navisuHome + "/databases/"));
             Files.createDirectory(Paths.get(navisuHome + "/properties/"));
         }
-
         final ComponentManager componentManager = ComponentManager.componentManager;
         /* Deploy components */
-
+        
         LOGGER.info("\n"
                 + componentManager.startApplication(GuiAgentImpl.class,//in first
                         AisImpl.class,
@@ -249,26 +248,26 @@ public class AppMain extends Application {
         AisLoggerServices aisLoggerServices = componentManager.getComponentService(AisLoggerServices.class);
         AisPlotterServices aisPlotterServices = componentManager.getComponentService(AisPlotterServices.class);
         AisRadarServices aisRadarServices = componentManager.getComponentService(AisRadarServices.class);
-
+        
         BathymetryServices bathymetryServices = componentManager.getComponentService(BathymetryServices.class);
         BathymetryLocalCatalogServices bathymetryLocalCatalogServices = componentManager.getComponentService(BathymetryLocalCatalogServices.class);
         BathymetryDBServices bathymetryDBServices = componentManager.getComponentService(BathymetryDBServices.class);
         BathymetryEventProducerServices bathymetryEventProducerServices = componentManager.getComponentService(BathymetryEventProducerServices.class);
         Bezier2DServices bezier2DServices = componentManager.getComponentService(Bezier2DServices.class);
-
+        
         CameraComponentServices cameraComponentServices = componentManager.getComponentService(CameraComponentServices.class);
         ClocksServices clocksServices = componentManager.getComponentService(ClocksServices.class);
-
+        
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
-
+        
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
         DataServerServices dataServerServices = componentManager.getComponentService(DataServerServices.class);
-
+        
         ExifComponentServices exifComponentServices = componentManager.getComponentService(ExifComponentServices.class);
-
+        
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
-
+        
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
@@ -280,32 +279,32 @@ public class AppMain extends Application {
         //  GribServices gribServices = componentManager.getComponentService(GribServices.class);
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
-
+        
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
-
+        
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
         KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
-
+        
         LayersManagerServices layersManagerServices = componentManager.getComponentService(LayersManagerServices.class);
         LeapMotionComponentServices leapMotionComponentServices = componentManager.getComponentService(LeapMotionComponentServices.class);
-
+        
         MagneticServices magneticServices = componentManager.getComponentService(MagneticServices.class);
         MeasureToolsServices measureToolsServices = componentManager.getComponentService(MeasureToolsServices.class);
         NetCDFServices meteoNetCdfServices = componentManager.getComponentService(NetCDFServices.class);
-
+        
         NmeaClientServices nmeaClientServices = componentManager.getComponentService(NmeaClientServices.class);
         NavigationServerServices navigationServerServices = componentManager.getComponentService(NavigationServerServices.class);
         NavigationCmdComponentServices navigationCmdComponentServices = componentManager.getComponentService(NavigationCmdComponentServices.class);
         navigationCmdComponentServices.init();
-
+        
         ServerOptionsComponentServices serverOptionsComponentServices = componentManager.getComponentService(ServerOptionsComponentServices.class);
-
+        
         ProjectionsComponentServices projectionsComponentServices = componentManager.getComponentService(ProjectionsComponentServices.class);
         RouteEditorServices routeEditorServices = componentManager.getComponentService(RouteEditorServices.class);
         RouteDataEditorServices routeDataEditorServices = componentManager.getComponentService(RouteDataEditorServices.class);
         RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
         RoutePhotoViewerServices routePhotoViewerServices = componentManager.getComponentService(RoutePhotoViewerServices.class);
-
+        
         SailingDirectionsComponentServices sailingDirectionsServices = componentManager.getComponentService(SailingDirectionsComponentServices.class);
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
@@ -315,10 +314,10 @@ public class AppMain extends Application {
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
         S57ChartComponentServices chartS57Services = componentManager.getComponentService(S57ChartComponentServices.class);
-
+        
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
         TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);
-
+        
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
         WebViewServices webViewServices = componentManager.getComponentService(WebViewServices.class);
@@ -347,7 +346,7 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
         driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
         driverServices.registerNewDriver(filesServices.getDriver());
-
+        
         InstrumentDriverManagerServices instrumentDriverManagerServices = componentManager.getComponentService(InstrumentDriverManagerServices.class);
         instrumentDriverManagerServices.init();
         instrumentDriverManagerServices.registerNewDriver(aisLoggerServices.getDriver());
@@ -373,7 +372,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());
-
+        
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         //  webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
         webDriverServices.init("http://www.ifremer.fr/services/photos_anciennes?");
@@ -518,7 +517,7 @@ public class AppMain extends Application {
             System.exit(0);
         });
     }
-
+    
     public static void main(String[] args) throws Exception {
         String userDirPath = System.getProperty("user.dir");
         String dir = "";

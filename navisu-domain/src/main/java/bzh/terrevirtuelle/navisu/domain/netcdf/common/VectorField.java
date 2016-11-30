@@ -6,6 +6,9 @@
 package bzh.terrevirtuelle.navisu.domain.netcdf.common;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
+import java.io.BufferedWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import ucar.ma2.Array;
 
 /**
@@ -45,7 +48,27 @@ public class VectorField {
         values = new double[lat.length * lon.length];
 
         int l = 0;
+        String file = "data.txt";
+        double average = 0;
         if (v != null) {
+
+            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file))) {
+                for (int h = 0; h < lat.length; h++) {
+                    writer.write(String.valueOf(lat[h]) + " ");
+                }
+                writer.write("\n");
+                for (int w = 0; w < lon.length; w++) {
+                    for (int h = 0; h < lat.length; h++) {
+                        writer.write(String.valueOf(u.getDouble(index + l + w)) + " ");
+                    }
+                    writer.write("\n");
+                    l += lat.length;
+                    average = 0;
+                }
+            } catch (Exception e) {
+
+            }
+l=0;
             directions = new double[lat.length * lon.length];
             for (int h = 0; h < lat.length; h++) {
                 for (int w = 0; w < lon.length; w++) {
