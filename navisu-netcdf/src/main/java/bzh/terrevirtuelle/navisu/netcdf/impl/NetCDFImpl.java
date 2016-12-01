@@ -5,6 +5,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDF;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.controller.WindVectorFieldController;
@@ -28,6 +29,8 @@ public class NetCDFImpl
     GeoViewServices geoViewServices;
     @UsedService
     LayersManagerServices layersManagerServices;
+    @UsedService
+    LayerTreeServices layerTreeServices;
     @UsedService
     GuiAgentServices guiAgentServices;
 
@@ -129,7 +132,10 @@ public class NetCDFImpl
     public void loadFile(String path) {
         switch (NetCDFImpl.this.category) {
             case "Wind":
-                netCDFController = new WindVectorFieldController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);
+                netCDFController = new WindVectorFieldController(
+                        layersManagerServices, 
+                        layerTreeServices,
+                        LAYER_INDEX, guiAgentServices, path);
                 break;
             case "Pressure":
                 netCDFController = new PressureScalarFieldController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);

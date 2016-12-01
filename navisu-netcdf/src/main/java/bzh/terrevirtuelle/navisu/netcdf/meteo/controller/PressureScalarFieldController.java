@@ -45,10 +45,10 @@ public class PressureScalarFieldController
         super(fileName, V_COMPONENT, V_COMPONENT_2);
         this.guiAgentServices = guiAgentServices;
         layerName = NAME0 + "_" + Integer.toString(layerIndex);
-        layerVector = layersManagerServices.getInstance(GROUP, layerName);
+        layerVector = layersManagerServices.getLayer(GROUP, layerName);
         layerName = NAME1 + "_" + Integer.toString(layerIndex);
-        layerAnalytic = layersManagerServices.getInstance(GROUP, layerName);
-        layerLegend = layersManagerServices.getInstance(GROUP, NAME2);
+        layerAnalytic = layersManagerServices.getLayer(GROUP, layerName);
+        layerLegend = layersManagerServices.getLayer(GROUP, NAME2);
 /*
         Button buttonR = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_R))));

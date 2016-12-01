@@ -237,5 +237,7 @@ public abstract class NetCDFViewer {
         }
     }
     protected abstract void createVectors();
-    protected abstract void createIsolines();
+    protected  void createIsolines(){
+        
+    }
 }

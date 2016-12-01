@@ -22,7 +22,8 @@ import ucar.nc2.Variable;
  * @author serge
  * @date Nov 24, 2016
  */
-public class WindNetCDFViewer extends NetCDFViewer {
+public class WindNetCDFViewer 
+        extends NetCDFViewer {
 
     public WindNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer vectorLayer,
@@ -66,8 +67,4 @@ public class WindNetCDFViewer extends NetCDFViewer {
         vectorLayer.addRenderables(arrows);
     }
 
-    @Override
-    protected void createIsolines() {
-
-    }
 }
