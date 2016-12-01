@@ -2,6 +2,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.layertree;
 
 import bzh.terrevirtuelle.navisu.core.view.display.Display;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import gov.nasa.worldwind.layers.Layer;
 import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBoxTreeItem;
@@ -13,7 +14,8 @@ import org.capcaval.c3.component.ComponentService;
  * @author tibus
  * @date 08/11/2013 23:17
  */
-public interface LayerTreeServices extends ComponentService {
+public interface LayerTreeServices
+        extends ComponentService {
 
     void createGroup(String groupName, GeoLayer<?>... layers);
 
@@ -27,7 +29,11 @@ public interface LayerTreeServices extends ComponentService {
 
     CheckBoxTreeItem<GeoLayer> search(String name);
 
+    CheckBoxTreeItem<GeoLayer> search(GeoLayer layer);
+
     GeoLayer getLayer(String name);
 
     List<String> getGroupNames();
+
+    void removeLayer(String ...name);
 }

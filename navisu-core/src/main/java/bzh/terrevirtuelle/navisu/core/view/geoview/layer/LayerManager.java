@@ -4,6 +4,7 @@
  */
 package bzh.terrevirtuelle.navisu.core.view.geoview.layer;
 
+import gov.nasa.worldwind.layers.Layer;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +27,11 @@ public interface LayerManager<T> {
 
     void insertGeoLayer(GeoLayer<T>... layers);
 
-	void insertGeoLayer(String groupName, GeoLayer<T>... layers);
+    void insertGeoLayer(String groupName, GeoLayer<T>... layers);
 
     void insertGeoLayerBeforeLayerName(GeoLayer<T> layer, String layerName);
 
     void insertGeoLayerBeforeLayerName(String groupName, GeoLayer<T> layer, String layerName);
+
+    void removelayer(GeoLayer<Layer> layer);
 }

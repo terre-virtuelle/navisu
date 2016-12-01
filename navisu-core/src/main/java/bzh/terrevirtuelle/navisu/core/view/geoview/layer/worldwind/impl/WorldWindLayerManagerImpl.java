@@ -18,8 +18,10 @@ import java.util.Map;
  *
  * @author Thibault Pensec <thibault.pensec at gmail.com>
  * @author Jordan Mens <jordan.mens at gmail.com>
+ * @author Serge Morvan <sergemorvan29 at gmail.com>
  */
-public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
+public class WorldWindLayerManagerImpl
+        implements WorldWindLayerManager {
 
     protected final Model model;
     protected final Map<String, List<GeoLayer<Layer>>> groupMap;
@@ -207,6 +209,14 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
         }
         layers.add(targetPosition, layer);
     }
+
+    @Override
+    public void removelayer(GeoLayer<Layer> layer) {
+        if (this.model.getLayers() == null || this.model == null) {
+        } else {
+            this.model.getLayers().remove(layer);
+        }
+    }
     //
     //----------------------------------------------------------------------------------------------------------------//
 
@@ -214,4 +224,5 @@ public class WorldWindLayerManagerImpl implements WorldWindLayerManager {
     public Model getModel() {
         return this.model;
     }
+
 }

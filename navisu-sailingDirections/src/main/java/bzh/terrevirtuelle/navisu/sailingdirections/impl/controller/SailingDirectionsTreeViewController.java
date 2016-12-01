@@ -198,7 +198,7 @@ public class SailingDirectionsTreeViewController
             throw new RuntimeException(exception);
         }
         wwd = GeoWorldWindViewImpl.getWW();
-        sailingDirectionsPgonLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_1);
+        sailingDirectionsPgonLayer = layersManagerServices.getLayer(GROUP_NAME, LAYER_NAME_1);
         sailingDirectionsPgonLayer.setPickEnabled(true);
 
     }

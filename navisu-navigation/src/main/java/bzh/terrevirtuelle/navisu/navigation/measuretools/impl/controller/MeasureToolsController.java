@@ -730,7 +730,7 @@ public class MeasureToolsController
     }
 
     private void coastalLinePathDisplay(List<Position> data) {
-        coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
+        coastalLinesLayer = layersManagerServices.getLayer(GROUP, NAME);
         // coastalLinesLayer.setPickEnabled(false);
         Path path = new Path(data);
         coastalLinesLayer.addRenderable(path);
@@ -738,7 +738,7 @@ public class MeasureToolsController
     }
 
     private void coastalLinePolygonDisplay(List<Position> data) {
-        coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
+        coastalLinesLayer = layersManagerServices.getLayer(GROUP, NAME);
         // coastalLinesLayer.setPickEnabled(false);
         Polygon polygon = new Polygon(data);
         coastalLinesLayer.addRenderable(polygon);
@@ -746,7 +746,7 @@ public class MeasureToolsController
     }
 
     private void coastalLinePosDisplay(List<Position> data) {
-        coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
+        coastalLinesLayer = layersManagerServices.getLayer(GROUP, NAME);
         // coastalLinesLayer.setPickEnabled(false);
         for (Position p : data) {
             PointPlacemark placemark = new PointPlacemark(p);
@@ -761,7 +761,7 @@ public class MeasureToolsController
             System.out.println("sp : "+sp);
         }
          */
-        coastalLinesLayer = layersManagerServices.getInstance(GROUP, NAME);
+        coastalLinesLayer = layersManagerServices.getLayer(GROUP, NAME);
         // coastalLinesLayer.setPickEnabled(false);
         if (data != null) {
             coastalLinesLayer.addRenderables(data);

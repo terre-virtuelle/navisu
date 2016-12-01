@@ -131,9 +131,9 @@ public class SailingDirectionsViewerComponentController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        sailingDirectionsPgonLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_1);
+        sailingDirectionsPgonLayer = layersManagerServices.getLayer(GROUP_NAME, LAYER_NAME_1);
         sailingDirectionsPgonLayer.setPickEnabled(false);
-        sailingDirectionsIconsLayer = layersManagerServices.getInstance(GROUP_NAME, LAYER_NAME_0);
+        sailingDirectionsIconsLayer = layersManagerServices.getLayer(GROUP_NAME, LAYER_NAME_0);
         sailingDirectionsIconsLayer.setPickEnabled(true);
         addListeners();
     }

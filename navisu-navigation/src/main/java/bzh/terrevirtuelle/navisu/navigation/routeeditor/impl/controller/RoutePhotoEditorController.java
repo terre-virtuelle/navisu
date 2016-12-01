@@ -242,7 +242,7 @@ public class RoutePhotoEditorController
         });
         routeChoiceButton.setOnMouseClicked((MouseEvent event) -> {
             fillHighway();
-            layer = layersManagerServices.getInstance(groupName, layerName);
+            layer = layersManagerServices.getLayer(groupName, layerName);
             layer.addRenderable(highway);
         });
         photoChoiceButton.setOnMouseClicked((MouseEvent event) -> {

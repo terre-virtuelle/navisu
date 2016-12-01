@@ -17,7 +17,9 @@ import org.capcaval.c3.component.ComponentService;
 public interface LayersManagerServices
         extends ComponentService {
 
-    RenderableLayer getInstance(String groupName, String layerName);
+    RenderableLayer getLayer(String groupName, String layerName);
 
-    RenderableLayer getInstance(String groupName, String layerName, String onLayerName);
+    RenderableLayer getlayer(String groupName, String layerName, String onLayerName);
+    
+    boolean removeLayer(RenderableLayer... layer);
 }

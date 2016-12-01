@@ -212,6 +212,17 @@ public class LayerCheckTreeImpl
     }
 
     @Override
+    public CheckBoxTreeItem<GeoLayer> search(GeoLayer layer) {
+        CheckBoxTreeItem<GeoLayer> result = null;
+        for (CheckBoxTreeItem<GeoLayer> cb : rootItems) {
+            if (cb.getValue() == layer) {
+                result = cb;
+            }
+        }
+        return result;
+    }
+
+    @Override
     public List<CheckBoxTreeItem<GeoLayer>> getCheckBoxTreeItems() {
         return rootItems;
     }
@@ -232,6 +243,24 @@ public class LayerCheckTreeImpl
     @Override
     public List<String> getGroupNames() {
         return groupNames;
+    }
+
+    @Override
+    public void removeLayer(String... names) {
+        List<TreeItem<GeoLayer>> l= new ArrayList<>();
+        for (String name : names) {
+            rootItems.stream().map((cTI) -> cTI.getChildren()).forEachOrdered((childrens) -> {
+                childrens.stream().forEach((t) -> {
+                    if (t.getValue().getName().trim().equals(name)) {
+                        layer = t.getValue();
+                        l.add(t);
+                        t.setExpanded(false);
+                    }
+                });
+                childrens.removeAll(l);
+            });
+        }
+       
     }
 
 }

@@ -114,10 +114,10 @@ public class GpsPlotterWithRouteController
         this.s57ChartComponentServices = s57ChartComponentServices;
         this.s57GlobalCatalogServices = s57GlobalCatalogServices;
         this.transponderServices = transponderServices;
-        navigationPgonLayer = layersManagerServices.getInstance(GROUP, NAME2);
+        navigationPgonLayer = layersManagerServices.getLayer(GROUP, NAME2);
         navigationPgonLayer.setPickEnabled(false);
-        navigationIconsLayer = layersManagerServices.getInstance(GROUP, NAME4);
-        transponderZoneLayer = layersManagerServices.getInstance(GROUP, NAME3);
+        navigationIconsLayer = layersManagerServices.getLayer(GROUP, NAME4);
+        transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
     }
 
     @Override

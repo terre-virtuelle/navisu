@@ -44,7 +44,7 @@ public class LayersManagerImpl
     }
 
     @Override
-    public RenderableLayer getInstance(String groupName, String layerName) {
+    public RenderableLayer getLayer(String groupName, String layerName) {
         List<String> groups = layerTreeServices.getGroupNames();
         if (!groups.contains(groupName)) {
             layerTreeServices.createGroup(groupName);
@@ -53,7 +53,7 @@ public class LayersManagerImpl
         boolean layerExist = false;
         RenderableLayer layer = null;
         List<GeoLayer<Layer>> layers = geoViewServices.getLayerManager().getGroup(groupName);
-        
+
         for (GeoLayer<Layer> g : layers) {
             if (g.getName().contains(layerName)) {
                 layer = (RenderableLayer) g.getDisplayLayer();
@@ -70,7 +70,7 @@ public class LayersManagerImpl
     }
 
     @Override
-    public RenderableLayer getInstance(String groupName, String layerName, String onLayerName) {
+    public RenderableLayer getlayer(String groupName, String layerName, String onLayerName) {
         List<String> groups = layerTreeServices.getGroupNames();
         if (!groups.contains(groupName)) {
             layerTreeServices.createGroup(groupName);
@@ -92,5 +92,14 @@ public class LayersManagerImpl
             layerTreeServices.addGeoLayer(groupName, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
         return layer;
+    }
+
+    @Override
+    public boolean removeLayer(RenderableLayer... layers) {
+        for (RenderableLayer layer : layers) {
+            geoViewServices.getLayerManager().removelayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
+            layerTreeServices.removeLayer(layer.getName());
+        }
+        return true;
     }
 }
