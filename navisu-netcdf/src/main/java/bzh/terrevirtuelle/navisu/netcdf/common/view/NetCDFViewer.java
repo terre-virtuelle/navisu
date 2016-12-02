@@ -68,7 +68,7 @@ public abstract class NetCDFViewer {
     protected SliderController opacitySliderController;
     protected final String DATA_INFO = "Speed and direction of wind 10m above ground";
     protected TimeSeriesVectorField timeSeriesVectorField;
-    GuiAgentServices guiAgentServices;
+    protected GuiAgentServices guiAgentServices;
 
     public NetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer vectorLayer,
@@ -248,6 +248,10 @@ public abstract class NetCDFViewer {
     protected abstract void createVectors();
 
     protected void createIsolines() {
-
     }
+
+    public SliderController getOpacitySliderController() {
+        return opacitySliderController;
+    }
+    
 }

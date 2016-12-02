@@ -28,6 +28,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
 
@@ -139,6 +140,10 @@ public class WindVectorFieldController
             legendLayer.dispose();
             guiAgentServices.getCenterStackPane().getChildren().remove(titlegridPane);
             layersManagerServices.removeLayer(vectorLayer, analyticLayer, legendLayer);
+            if (guiAgentServices.getRoot().getChildren().contains(windNetCDFViewer.getOpacitySliderController())) {
+                guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, windNetCDFViewer.getOpacitySliderController());
+                guiAgentServices.getRoot().getChildren().remove(windNetCDFViewer.getOpacitySliderController());
+            }
             windNetCDFViewer = null;
             GeoWorldWindViewImpl.getWW().redrawNow();
         });
