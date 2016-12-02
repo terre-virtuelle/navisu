@@ -6,6 +6,7 @@
 package bzh.terrevirtuelle.navisu.netcdf.common.view;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.analytics.AnalyticSurfaceAttributes;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.netcdf.Netcdf;
@@ -157,8 +158,6 @@ public abstract class NetCDFViewer {
 
     }
 
-    
-
     protected void createAnnotationAttributes() {
         annotationAttributes = new AnnotationAttributes();
         annotationAttributes.setBackgroundColor(new Color(0f, 0f, 0f, 0f));
@@ -202,8 +201,17 @@ public abstract class NetCDFViewer {
     }
 
     protected void displayFileInfo(String fileName, String dataInfoStr) {
-        String[] nameTab = fileName.split("\\/");
-        name = nameTab[nameTab.length - 1];
+        String[] nameTab = null;
+        if (OS.isWindows()) {
+            nameTab = fileName.split("\\\\");
+        } else if (OS.isLinux()) {
+            nameTab = fileName.split("\\/");
+        }
+        if (nameTab != null) {
+            name = nameTab[nameTab.length - 1];
+        } else {
+            name = fileName;
+        }
         fileInfo = new ScreenRelativeAnnotation(name, 0.1, 0.99);
         fileInfo.setKeepFullyVisible(true);
         fileInfo.setXMargin(5);
@@ -236,8 +244,10 @@ public abstract class NetCDFViewer {
             analyticLayer.addRenderable(dateInfo);
         }
     }
+
     protected abstract void createVectors();
-    protected  void createIsolines(){
-        
+
+    protected void createIsolines() {
+
     }
 }

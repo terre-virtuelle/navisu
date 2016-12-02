@@ -8,6 +8,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDF;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
+import bzh.terrevirtuelle.navisu.netcdf.bathymetry.controller.BathymetryScalarFieldController;
 import bzh.terrevirtuelle.navisu.netcdf.meteo.controller.WindVectorFieldController;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.util.logging.Level;
@@ -150,7 +151,7 @@ public class NetCDFImpl
                 netCDFController = new NetCDFInfoController(path);
                 break;
             case "Bathy":
-                netCDFController = new NetCDFInfoController(path);
+                netCDFController = new BathymetryScalarFieldController(layersManagerServices, LAYER_INDEX, guiAgentServices, path);
                 break;
         }
         LAYER_INDEX++;

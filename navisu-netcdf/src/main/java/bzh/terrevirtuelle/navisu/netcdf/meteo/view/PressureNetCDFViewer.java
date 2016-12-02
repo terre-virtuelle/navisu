@@ -33,7 +33,8 @@ import ucar.nc2.Variable;
  * @author serge
  * @date Nov 24, 2016
  */
-public class PressureNetCDFViewer extends NetCDFViewer {
+public class PressureNetCDFViewer 
+        extends NetCDFViewer {
 
     public PressureNetCDFViewer(GuiAgentServices guiAgentServices,
             RenderableLayer vectorLayer,

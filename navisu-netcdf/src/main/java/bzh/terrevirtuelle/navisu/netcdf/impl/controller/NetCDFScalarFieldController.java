@@ -73,17 +73,17 @@ public abstract class NetCDFScalarFieldController
         try {
             time = netcdf.read("time");
         } catch (Exception e1) {
-            LOGGER.log(Level.SEVERE, "File not NetCDF compliant : time ", e1);
+            time=null;
         }
         try {
             reftime = netcdf.read("reftime");
         } catch (Exception e1) {
-            LOGGER.log(Level.SEVERE, "File not NetCDF compliant : reftime ", e1);
+            reftime=null;
         }
         try {
             reftime = netcdf.read(variableName);
         } catch (Exception e1) {
-            LOGGER.log(Level.SEVERE, "File not NetCDF compliant : " + variableName, e1);
+            reftime=null;
         }
         timeSeriesVectorField
                 = new TimeSeriesVectorField(time, height, latitudes, longitudes, u, null);
