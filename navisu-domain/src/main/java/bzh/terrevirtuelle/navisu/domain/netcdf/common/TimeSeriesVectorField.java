@@ -35,14 +35,20 @@ public class TimeSeriesVectorField {
     public TimeSeriesVectorField(Array time, Array height,
             Array lat, Array lon,
             Array u, Array v) {
-
-        timeDimension = (int) time.getSize();
         heightDimension = (int) height.getSize();
         hVFields = new ArrayList<>(heightDimension);
-        times = new double[timeDimension];
-        for (int i = 0; i < timeDimension; i++) {
-            times[i] = time.getDouble(i);
+        if (time != null) {
+            timeDimension = (int) time.getSize();
+            times = new double[timeDimension];
+            for (int i = 0; i < timeDimension; i++) {
+                times[i] = time.getDouble(i);
+            }
+        }else{
+            timeDimension=1;
+            times = new double[timeDimension];
+            times[0]=1;
         }
+
         latDimension = (int) lat.getSize();
         lonDimension = (int) lon.getSize();
         latitudes = new double[latDimension];

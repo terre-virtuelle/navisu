@@ -81,7 +81,8 @@ l=0;
             directions = null;
             for (int h = 0; h < lat.length; h++) {
                 for (int w = 0; w < lon.length; w++) {
-                    values[l + w] = u.getDouble(index + l + w);
+                    values[l + w] = u.getDouble(index + l + w)/10.0;
+                   // System.out.println("values[l + w] : "+ values[l + w]);
                 }
                 l += lon.length;
             }
