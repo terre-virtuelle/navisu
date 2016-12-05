@@ -58,6 +58,7 @@ public class WindVectorFieldController
     private static final String ICON_RS = "arrow-stop-green.png";
     private static final String ICON_Q = "quit.png";
     private static final String BUTTON_NAME_STYLE_CLASS = "meteo-button";
+    private static final String BUTTON_QUIT_STYLE_CLASS = "quit-button";
     private static final String GRID_PANE_STYLE_CLASS = "grid-pane";
     private static final String TITLE_PANE_STYLE_CLASS = "title-grid";
     private String layerName;
@@ -98,8 +99,8 @@ public class WindVectorFieldController
     private void createGUI(String fileName) {
         //   Label readerTitle = new Label(TITLE_SHORT);
         Label readerTitle = new Label(createTitle(fileName));
-        readerTitle.setTextAlignment(TextAlignment.CENTER);
-        readerTitle.setMinWidth(155);
+        readerTitle.setTextAlignment(TextAlignment.LEFT);
+        readerTitle.setMaxWidth(155);
         Button buttonR = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_R))));
         buttonR.getStyleClass().add(BUTTON_NAME_STYLE_CLASS);
@@ -128,7 +129,7 @@ public class WindVectorFieldController
         });
         Button buttonQ = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_Q))));
-        buttonQ.getStyleClass().add(BUTTON_NAME_STYLE_CLASS);
+        buttonQ.getStyleClass().add(BUTTON_QUIT_STYLE_CLASS);
         buttonQ.setOnAction((ActionEvent event) -> {
             forever = false;
             layerCount--;
@@ -155,9 +156,10 @@ public class WindVectorFieldController
             guiAgentServices.getCenterStackPane().getChildren().addAll(titlegridPane);
             titlegridPane.setMaxSize(80.0, 40.0);
             titlegridPane.setTranslateX(10.0);
-            titlegridPane.setTranslateY(-75.0 - (55 * (layerCount - 1)));
+            titlegridPane.setTranslateY(-75.0 - (42 * (layerCount - 1)));/* old value 55 */
             titlegridPane.getStyleClass().add(TITLE_PANE_STYLE_CLASS);
-            GridPane.setHalignment(readerTitle, HPos.CENTER);
+            //titlegridPane.setHalignment(readerTitle, HPos.CENTER);
+           
             titlegridPane.add(readerTitle, 0, 0);
             titlegridPane.add(gridPane, 0, 1);
 
