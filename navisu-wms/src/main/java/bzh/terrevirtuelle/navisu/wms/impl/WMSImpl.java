@@ -13,7 +13,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
 import bzh.terrevirtuelle.navisu.widgets.textlist.TextListController;
 import bzh.terrevirtuelle.navisu.wms.WMS;
 import bzh.terrevirtuelle.navisu.wms.WMSServices;
@@ -66,7 +65,8 @@ public class WMSImpl
     GuiAgentServices guiAgentServices;
 
     protected static final String GROUP = "WMS";
-    protected static final String NAME = "WMS";
+    protected static final String NAME_0 = "WMS";
+    protected static final String NAME_1 = "WMS_CATALOG";
     protected WorldWindow wwd = null;
     protected URI serverURI = null;
     protected WMSCapabilities caps;
@@ -74,7 +74,7 @@ public class WMSImpl
     protected String server;
     protected TextListController textListController;
     protected int i = 0;
-    GridPane gridPane;
+    protected GridPane gridPane;
     protected final TreeSet<WMSImpl.LayerInfo> layerInfos = new TreeSet<>((WMSImpl.LayerInfo infoA, WMSImpl.LayerInfo infoB) -> {
         String nameA = infoA.getName();
         String nameB = infoB.getName();
@@ -119,18 +119,17 @@ public class WMSImpl
                 if (namedLayerCaps == null) {
                     return;
                 }
-                for (WMSLayerCapabilities lc : namedLayerCaps) {
+                namedLayerCaps.forEach((lc) -> {
                     Set<WMSLayerStyle> styles = lc.getStyles();
                     if (styles == null || styles.isEmpty()) {
                         WMSImpl.LayerInfo layerInfo = createLayerInfo(caps, lc, null);
                         WMSImpl.this.layerInfos.add(layerInfo);
                     } else {
-                        for (WMSLayerStyle style : styles) {
-                            WMSImpl.LayerInfo layerInfo = createLayerInfo(caps, lc, style);
+                        styles.stream().map((style) -> createLayerInfo(caps, lc, style)).forEachOrdered((layerInfo) -> {
                             WMSImpl.this.layerInfos.add(layerInfo);
-                        }
+                        });
                     }
-                }
+                });
                 Platform.runLater(() -> {
                     layerInfos.stream().forEach((layerInfo) -> {
                         addLayerInfoPanel(layerInfo);
@@ -147,18 +146,15 @@ public class WMSImpl
         final CheckBox checkBox = new CheckBox(linfo.getAbstract());
 
         checkBox.setTooltip(new Tooltip(linfo.getAbstract()));
+        checkBox.setText(linfo.getTitle());
         gridPane.addRow(i++, checkBox);
         WMSImpl.LayerInfoAction action = new WMSImpl.LayerInfoAction(linfo, wwd);
         checkBox.setUserData(action);
-        checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> obs, Boolean wasSelected, Boolean isSelected) {
-
-                if (isSelected) {
-                    ((WMSImpl.LayerInfoAction) checkBox.getUserData()).create();
-                } else {
-                    ((WMSImpl.LayerInfoAction) checkBox.getUserData()).update();
-                }
+        checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> obs, Boolean wasSelected, Boolean isSelected) -> {
+            if (isSelected) {
+                ((WMSImpl.LayerInfoAction) checkBox.getUserData()).create();
+            } else {
+                ((WMSImpl.LayerInfoAction) checkBox.getUserData()).update();
             }
         });
     }
