@@ -8,11 +8,9 @@ package bzh.terrevirtuelle.navisu.app.drivers.webdriver.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriver;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
-import bzh.terrevirtuelle.navisu.widgets.textfield.TextFieldController;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.impl.controller.WMSCatalogController;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
-import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.core.util.Checker;
 import gov.nasa.worldwind.ogc.wms.WMSCapabilities;
 import java.net.URI;
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -41,52 +38,46 @@ public class WebDriverManagerImpl
     protected URI serverURI;
     protected WMSCapabilities caps;
     protected static final Logger LOGGER = Logger.getLogger(WebDriverManagerImpl.class.getName());
-    protected final String NAME = "WMS";
-    protected final String DEFAULT_URL = "http://ows.emodnet-bathymetry.eu/wms";
+    protected final String NAME_0 = "WMS";
+    protected final String NAME_1 = "WMS_CATALOG";
+    protected WebDriver driver;
+    protected WMSCatalogController wmsCatalogController;
+    protected String urlCatalog;
 
     @Override
     public void init(String server) {
-       // System.out.println("init : " + server);
-       /*
-        root = guiAgentServices.getRoot();
-        TextFieldController textFieldController = new TextFieldController();
-        MenuItem menuItem = new MenuItem(tr("menu.url.load"));
-        menuBarServices.addMenuItem(DefaultMenuEnum.URL, menuItem);
-        menuItem.setOnAction((e) -> {
-            textFieldController.setServer(server);
-            root.getChildren().add(textFieldController);
-            textFieldController.getTextField().setOnAction((event) -> {
-                handleOpenFiles(textFieldController.getTextField().getText());
-                root.getChildren().remove(textFieldController);
-            });
-        });
-*/
     }
 
     @Override
-    public void handleOpenFiles(String url) {
-
-        WebDriver driver = this.findDriverForUrl(NAME);
-        if (driver != null) {
-            guiAgentServices.getJobsManager().newJob(url, (progressHandle) -> {
-                driver.open(progressHandle, url);
-            });
-        } else {
-            LOGGER.log(Level.WARNING, "Unable to find a driver for url \"{0}\"", url);
+    public void handleOpenFiles(String name, String url) {
+        if (name.equals(NAME_0) || name.equals(NAME_1)) {
+            driver = this.findDriverForUrl(NAME_0);
+            if (driver != null) {
+                if (!url.equals("")) {
+                    guiAgentServices.getJobsManager().newJob(url, (progressHandle) -> {
+                        driver.open(progressHandle, url);
+                    });
+                } else {
+                    wmsCatalogController = new WMSCatalogController(guiAgentServices, driver);
+                }
+            } else {
+                LOGGER.log(Level.WARNING, "Unable to find a driver for url \"{0}\"", url);
+            }
         }
     }
 
     @Override
-    public void registerNewDriver(WebDriver driver) {
+    public void registerNewDriver(WebDriver driver
+    ) {
         Checker.notNull(driver, "Driver must not be null.");
         this.availableDriverList.add(driver);
     }
 
     protected WebDriver findDriverForUrl(String ws) {
         WebDriver compatibleDriver = null;
-        for (WebDriver driver : this.availableDriverList) {
-            if (driver.canOpen(ws)) {
-                compatibleDriver = driver;
+        for (WebDriver d : this.availableDriverList) {
+            if (d.canOpen(ws)) {
+                compatibleDriver = d;
                 break;
             }
         }

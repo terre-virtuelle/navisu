@@ -151,7 +151,7 @@ public class GuiAgentImpl
             pos = wwd.getView().getCurrentEyePosition();
             Platform.runLater(() -> {
                 double a = pos.getAltitude();
-                String aText = "";
+                String aText;
                 if (a <= 1000) {
                     aText = (int) (pos.getAltitude()) + " m";
                 } else {
