@@ -35,7 +35,8 @@ public class TextListController
     ScrollPane scrollPane;
     @FXML
     Text title;
-
+    String FXML = "TextListPanel.fxml";
+    //String FXML ="catalogListView.fxml";
     public TextListController() {
         setMouseTransparent(false);
         load();
@@ -49,7 +50,7 @@ public class TextListController
     }
 
     private void load() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TextListPanel.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

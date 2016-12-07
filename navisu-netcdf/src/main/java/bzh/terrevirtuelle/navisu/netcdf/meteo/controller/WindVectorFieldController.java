@@ -22,10 +22,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -51,7 +51,6 @@ public class WindVectorFieldController
     private static final String V_COMPONENT_2 = "v-component_of_wind_surface";
     private static final String V_COMPONENT_3 = "v-component_of_wind_msl";
     private static final String TITLE = "Speed and direction of wind 10m above ground";
-    private static final String TITLE_SHORT = "Speed and direction of wind";
     private static final String ICON_R = "arrow-right-green.png";
     private static final String ICON_L = "arrow-left-green.png";
     private static final String ICON_RR = "arrow-read-green.png";
@@ -97,7 +96,6 @@ public class WindVectorFieldController
     }
 
     private void createGUI(String fileName) {
-        //   Label readerTitle = new Label(TITLE_SHORT);
         Label readerTitle = new Label(createTitle(fileName));
         readerTitle.setTextAlignment(TextAlignment.LEFT);
         readerTitle.setMaxWidth(155);
@@ -130,6 +128,7 @@ public class WindVectorFieldController
         Button buttonQ = new Button("", new ImageView(
                 new Image(getClass().getResourceAsStream(ICON_Q))));
         buttonQ.getStyleClass().add(BUTTON_QUIT_STYLE_CLASS);
+        buttonQ.setTooltip(new Tooltip("Delete this layer"));
         buttonQ.setOnAction((ActionEvent event) -> {
             forever = false;
             layerCount--;

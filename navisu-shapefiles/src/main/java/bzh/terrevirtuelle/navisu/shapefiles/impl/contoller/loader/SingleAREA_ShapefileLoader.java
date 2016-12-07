@@ -37,6 +37,7 @@ public class SingleAREA_ShapefileLoader
     private double opacity;
     private String objname;
     private SurfacePolygons shape;
+    String label = "";
 
     public SingleAREA_ShapefileLoader() {
 
@@ -47,15 +48,18 @@ public class SingleAREA_ShapefileLoader
         RenderableLayer layer = new RenderableLayer();
         layers.add(layer);
         int recordNumber = 0;
+
         while (shp.hasNext()) {
             try {
-                ShapefileRecord record = shp.nextRecord();
+                record = shp.nextRecord();
                 entries = record.getAttributes().getEntries();
                 for (Entry e : entries) {
+                    label = e.toString();
                     if (e.getKey().equals("TYPEVALE")) {
                         color = NFD_COLOUR.ATT.get(((String) e.getValue()).trim());
                     }
                 }
+
                 recordNumber = record.getRecordNumber();
 
                 if (!Shapefile.isPolygonType(record.getShapeType())) {
@@ -97,8 +101,8 @@ public class SingleAREA_ShapefileLoader
         highlightAttributes.setInteriorOpacity(.5);
         highlightAttributes.setEnableLighting(true);
         shape.setHighlightAttributes(highlightAttributes);
-        shape.setValue(AVKey.DISPLAY_NAME, color.toString());
-       // shape.setHighlightAttributes(null);
+        shape.setValue(AVKey.DISPLAY_NAME, label);
+        // shape.setHighlightAttributes(null);
 
         createValues(shape);
         //  ChartS57Controller.getInstance().getSurveyZoneController().add(new SurveyZone(shape, record));

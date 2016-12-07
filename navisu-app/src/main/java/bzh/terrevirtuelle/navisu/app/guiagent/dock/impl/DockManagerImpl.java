@@ -67,10 +67,17 @@ public class DockManagerImpl<TrackTool>
     private final String USER_NAME = "Serge";
     private final String PASSWD = "lithops";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
-    protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
+   // protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
+    //   protected final String EMODNET = "http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&VERSION=2.0.2";
+    //protected final String EMODNET = "http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2";
     //  protected final String IFREMER = "http://www.ifremer.fr/services/photos_anciennes?SERVICE=WMS&REQUEST=GetCapabilities";
-    protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
-    protected RadialMenu booksRadialMenu;
+   protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
+  // protected final String EMODNET = "http://www.ifremer.fr/ifremerWS/WS/wms/MNT?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities";
+  // protected final String EMODNET = "http://www.ifremer.fr/services/wms/biologie?SERVICE=WMS&REQUEST=GetCapabilities";
+  // protected final String EMODNET = "http://www.ifremer.fr/services/wms/geosciences?SERVICE=WMS&REQUEST=GetCapabilities";
+  protected final String EMODNET = "http://neowms.sci.gsfc.nasa.gov/wms/wms?SERVICE=WMS";
+
+   protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;
     protected RadialMenu meteoRadialMenu;
     protected RadialMenu tidesRadialMenu;
@@ -328,6 +335,7 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "simu.png", 0, "files.png", 2, "nmeaOff.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp", ".SHP"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
+                .createNode(1, "data.png", 0, "files.png", 2, "wms.png", (e) -> openWMS("WMS_CATALOG", ""))
                 //   .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
                 //   .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
                 .build();
@@ -367,7 +375,7 @@ public class DockManagerImpl<TrackTool>
     }
 
     private void openWMS(String description, String url) {
-        webDriverManagerServices.handleOpenFiles(url);
+        webDriverManagerServices.handleOpenFiles(description, url);
         clear();
     }
 
