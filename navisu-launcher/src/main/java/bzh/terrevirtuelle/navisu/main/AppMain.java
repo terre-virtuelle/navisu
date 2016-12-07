@@ -375,7 +375,8 @@ public class AppMain extends Application {
         
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         //  webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
-        webDriverServices.init("http://www.ifremer.fr/services/photos_anciennes?");
+        //webDriverServices.init("http://www.ifremer.fr/services/photos_anciennes?");
+        webDriverServices.init("http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2");
         // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
         // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
         webDriverServices.registerNewDriver(wmsServices.getDriver());
