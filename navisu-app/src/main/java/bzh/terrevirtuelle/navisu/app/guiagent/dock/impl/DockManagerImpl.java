@@ -67,10 +67,14 @@ public class DockManagerImpl<TrackTool>
     private final String USER_NAME = "Serge";
     private final String PASSWD = "lithops";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
-    protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
+    //protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";
+    //protected final String EMODNET = "http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2";
     //  protected final String IFREMER = "http://www.ifremer.fr/services/photos_anciennes?SERVICE=WMS&REQUEST=GetCapabilities";
-    protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
-    protected RadialMenu booksRadialMenu;
+   protected final String GEBCO = "http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?";
+  // protected final String EMODNET = "http://www.ifremer.fr/ifremerWS/WS/wms/MNT?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetCapabilities";
+  // protected final String EMODNET = "http://www.ifremer.fr/services/wms/biologie?SERVICE=WMS&REQUEST=GetCapabilities";
+   protected final String EMODNET = "http://www.ifremer.fr/services/wms/geosciences?SERVICE=WMS&REQUEST=GetCapabilities";
+   protected RadialMenu booksRadialMenu;
     protected RadialMenu instrumentsRadialMenu;
     protected RadialMenu meteoRadialMenu;
     protected RadialMenu tidesRadialMenu;

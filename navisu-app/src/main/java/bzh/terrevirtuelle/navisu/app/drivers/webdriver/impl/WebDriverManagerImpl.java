@@ -46,6 +46,8 @@ public class WebDriverManagerImpl
 
     @Override
     public void init(String server) {
+       // System.out.println("init : " + server);
+       /*
         root = guiAgentServices.getRoot();
         TextFieldController textFieldController = new TextFieldController();
         MenuItem menuItem = new MenuItem(tr("menu.url.load"));
@@ -58,6 +60,7 @@ public class WebDriverManagerImpl
                 root.getChildren().remove(textFieldController);
             });
         });
+*/
     }
 
     @Override

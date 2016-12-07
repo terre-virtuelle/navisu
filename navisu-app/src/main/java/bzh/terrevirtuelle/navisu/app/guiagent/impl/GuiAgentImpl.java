@@ -37,8 +37,17 @@ import java.util.logging.Logger;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
+import gov.nasa.worldwind.View;
+import gov.nasa.worldwind.WorldWindow;
+import gov.nasa.worldwind.event.PositionEvent;
+import gov.nasa.worldwind.geom.Angle;
+import gov.nasa.worldwind.geom.Position;
+import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 /**
  * NaVisu
@@ -52,6 +61,8 @@ public class GuiAgentImpl
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
     private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
+    private final View viewWW;
+    private final WorldWindow wwd;
 
     @SubComponent
     ServerOptionsComponentImpl optionsManager;
@@ -92,6 +103,13 @@ public class GuiAgentImpl
     protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";
     protected boolean first = true;
     protected InstrumentDriver driver = null;//Utilise par le MOB
+    protected Position pos;
+    protected Text label;
+
+    public GuiAgentImpl() {
+        this.wwd = GeoWorldWindViewImpl.getWW();
+        this.viewWW = wwd.getView();
+    }
 
     @Override
     public void showGui(Stage stage, int width, int height) {
@@ -99,6 +117,9 @@ public class GuiAgentImpl
         this.height = height;
         this.stage = stage;
         stage.setResizable(true);
+        label = new Text();
+        label.setFill(Color.LIGHTGREEN);
+        label.setLayoutY(18);
         this.jobsManager = JobsManager.create();
         final FXMLLoader loader = new FXMLLoader();
         try {
@@ -117,26 +138,31 @@ public class GuiAgentImpl
 
         createMOBWidget(scene);
 
-        // Place scene components
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
         ctrl.centerStackPane.getChildren().add(geoViewServices.getDisplayService().getDisplayable());
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
-
-        // Initialize menu
-        // this.menuServices.setMenuComponent(ctrl.menuBar);
-        // this.initializeMenuItems(this.menuServices);
+        ctrl.statusBorderPane.getChildren().add(label);
+        
         stage.setTitle(TITLE);
-        /*
-        stage.setOnCloseRequest(e -> {
-            LOGGER.info("Stop Application");
-            ComponentManager.componentManager.stopApplication();
-            System.exit(0);
-        });
-         */
         stage.setScene(scene);
-        // stage.setFullScreen(true);
         stage.show();
 
+        wwd.addPositionListener((PositionEvent event) -> {
+            pos = wwd.getView().getCurrentEyePosition();
+            Platform.runLater(() -> {
+                double a = pos.getAltitude();
+                String aText = "";
+                if (a <= 1000) {
+                    aText = (int) (pos.getAltitude()) + " m";
+                } else {
+                    aText = (int) (pos.getAltitude() / 1000) + " Km";
+                }
+                label.setText(
+                        "        Altitude : " + aText
+                        + "        Latitude : " + pos.getLatitude().toFormattedDMSString()
+                        + "        Longitude : " + pos.getLongitude().toFormattedDMSString());
+            });
+        });
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
         stage1 = new Stage();
         stage1.setOpacity(.0);
@@ -145,10 +171,6 @@ public class GuiAgentImpl
         stage1.setX(600);
         stage1.setY(200);
         stage1.initStyle(StageStyle.UNDECORATED);
-
-// test Slider pour layers
-        //   SliderController sliderController = new SliderController();
-        //   root.getChildren().add(sliderController);
     }
 
     /**
@@ -204,6 +226,7 @@ public class GuiAgentImpl
     public Stage getStage() {
         return stage1;
     }
+
     @Override
     public MenuBar getMenuBar() {
         return ctrl.getMenuBar();
