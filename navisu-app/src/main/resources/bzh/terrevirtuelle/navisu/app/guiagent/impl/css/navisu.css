@@ -19,7 +19,7 @@
     -fx-pressed-base: derive(-fx-hover-base, -15%);
     -fx-box-border: -fx-hover-base;
     -fx-text-box-border: -fx-hover-base;
-    -fx-text-base-color: whitesmoke;
+    -fx-text-base-color: whitesmoke;    
     -fx-shadow-highlight-color: -fx-base;
     -fx-outer-border: -fx-hover-base;
     -fx-inner-border: -fx-hover-base;
@@ -174,4 +174,3 @@
     -fx-background-color: -fx-background;
     -fx-border-color: null;
 }
-
