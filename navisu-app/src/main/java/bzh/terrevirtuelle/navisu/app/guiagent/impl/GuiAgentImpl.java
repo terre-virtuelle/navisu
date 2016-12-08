@@ -100,7 +100,7 @@ public class GuiAgentImpl
     protected static final String TITLE = "NaVisu";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-    protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";
+    protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";    
     protected boolean first = true;
     protected InstrumentDriver driver = null;//Utilise par le MOB
     protected Position pos;
@@ -118,7 +118,7 @@ public class GuiAgentImpl
         this.stage = stage;
         stage.setResizable(true);
         label = new Text();
-        label.setFill(Color.LIGHTGREEN);
+        label.setFill(Color.WHITESMOKE);        
         label.setLayoutY(18);
         this.jobsManager = JobsManager.create();
         final FXMLLoader loader = new FXMLLoader();
