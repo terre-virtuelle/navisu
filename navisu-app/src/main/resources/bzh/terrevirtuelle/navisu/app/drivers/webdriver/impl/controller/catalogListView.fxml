@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,11 +14,11 @@
 
 <fx:root stylesheets="@cataloglistview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="257.0" prefWidth="535.0" styleClass="background-pane">
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="397.0" prefWidth="608.0" styleClass="background-pane">
         
         </Pane>  
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="258.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="536.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="205.0" layoutX="14.0" layoutY="48.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="485.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="396.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="608.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="287.0" layoutX="14.0" layoutY="48.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="560.0" />
         <ImageView fitHeight="42.0" fitWidth="44.0" layoutX="1.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
               <image>
                   <Image url="@logoTV64AIS.png" />
@@ -26,10 +27,13 @@
                   <Glow />
               </effect>
         </ImageView>
-       <Button fx:id="quit" layoutX="470.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
+       <Button fx:id="quit" layoutX="542.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
         <Text fx:id="titleText" layoutX="115.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="WMS Sites" textAlignment="CENTER" wrappingWidth="289.314453125" />
-        <Slider fx:id="opacitySlider" layoutX="506.0" layoutY="43.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+        <Slider fx:id="opacitySlider" layoutX="577.0" layoutY="42.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
-        <ListView fx:id="listView" layoutX="15.0" layoutY="51.0" prefHeight="201.0" prefWidth="482.0" style="-fx-background-color: #00000000; -fx-background-radius: 15;" styleClass=".list-view" />        
+        <ListView fx:id="listView" layoutX="16.0" layoutY="54.0" prefHeight="276.0" prefWidth="550.0" style="-fx-background-color: #00000000; -fx-background-radius: 15;" styleClass=".list-view" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="35.0" layoutX="18.0" layoutY="341.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="501.0" />
+      <TextField fx:id="urlTextField" layoutX="33.0" layoutY="346.0" prefHeight="25.0" prefWidth="477.0" styleClass="list-view" />
+      <Button fx:id="gotoButton" layoutX="523.0" layoutY="346.0" mnemonicParsing="false" text="GoTo" />        
     </children>
 </fx:root>

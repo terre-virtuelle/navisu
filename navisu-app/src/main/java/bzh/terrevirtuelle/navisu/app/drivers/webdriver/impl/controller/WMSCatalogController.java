@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -44,6 +45,11 @@ public class WMSCatalogController
     public Slider opacitySlider;
     @FXML
     public ListView listView;
+    @FXML
+    public TextField urlTextField;
+    @FXML
+    public Button gotoButton;
+    
     private final GuiAgentServices guiAgentServices;
     private WebDriver driver;
     List<String> values = Arrays.asList(
@@ -87,6 +93,13 @@ public class WMSCatalogController
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
             setVisible(false);
+        });
+        gotoButton.setOnMouseClicked((MouseEvent event) -> {
+            guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+                driver.open(progressHandle, urlTextField.getText());
+            });
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
+            guiAgentServices.getRoot().getChildren().remove(this);
         });
         guiAgentServices.getRoot().getChildren().add(this);
     }
