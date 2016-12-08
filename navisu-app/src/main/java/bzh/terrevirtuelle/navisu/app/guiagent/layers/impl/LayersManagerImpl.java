@@ -43,6 +43,7 @@ public class LayersManagerImpl
     public void componentStopped() {
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public RenderableLayer getLayer(String groupName, String layerName) {
         List<String> groups = layerTreeServices.getGroupNames();
@@ -69,6 +70,7 @@ public class LayersManagerImpl
         return layer;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public RenderableLayer getlayer(String groupName, String layerName, String onLayerName) {
         List<String> groups = layerTreeServices.getGroupNames();

@@ -67,13 +67,14 @@ public class ShapefileObjectImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         ShapefileController shapefileController = ShapefileController.getInstance();
         layers = shapefileController.init(fileName);
         layers.stream().filter((l) -> (l != null)).map((l) -> {
             String name = l.getName();
-                    /*;
+            /*;
             if (name.contains(NAME)) {
                 l.setPickEnabled(true);
             } else {
@@ -133,8 +134,10 @@ public class ShapefileObjectImpl
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
+        /* Nothing to do here */ }
 }

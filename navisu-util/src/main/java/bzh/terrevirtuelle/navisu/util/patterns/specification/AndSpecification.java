@@ -15,7 +15,7 @@ public class AndSpecification<T> extends AbstractCompositeSpecification<T> {
         }
         return result;
     }
-    
+    @SuppressWarnings("unchecked")
     public AndSpecification(Specification<T>... specifications) {
         super(specifications);
     }

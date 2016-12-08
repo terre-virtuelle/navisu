@@ -63,7 +63,7 @@ public class SHOM_CURRENTS_CLUT {
             put(20, new Color(0, 0, 0, 0));
         }
     });
-
+@SuppressWarnings("unchecked")
     public static Color getColor(double speed) {
         for (int i = 0; i < ranges.size(); i++) {
             if (ranges.get(i).contains(speed)) {

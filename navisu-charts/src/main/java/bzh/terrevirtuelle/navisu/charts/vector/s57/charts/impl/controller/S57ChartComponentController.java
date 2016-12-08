@@ -103,7 +103,7 @@ public class S57ChartComponentController {
     private File file;
     private Map<String, String> acronyms;
     private Map<String, Map<Long, S57Object>> geos;
-    private static final List<Layer> LAYERS = Collections.synchronizedList(new ArrayList());
+    private static final List<Layer> LAYERS = Collections.synchronizedList(new ArrayList<>());
     private final List<RenderableLayer> airspaceLayers = new ArrayList<>();
     private RenderableLayer airspaceTmpLayer;
     private LIGHTS_ShapefileLoader loader;
@@ -139,7 +139,7 @@ public class S57ChartComponentController {
         coastalSurfacePolylinesList = new ArrayList<>();
         System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
-       // addImageListeners();//Test recuparation d'une image sur clic
+        // addImageListeners();//Test recuparation d'une image sur clic
     }
 
     public void subscribe() {
@@ -362,6 +362,7 @@ public class S57ChartComponentController {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void loadLights() {
         loader = new LIGHTS_ShapefileLoader();
         loader.createLayersFromSource(new File(path + "/LIGHTS.shp"));

@@ -92,7 +92,7 @@ public class S57LocalCatalogImpl
         environment.put("OGR_S57_OPTIONS", options);
         options = System.getProperty("user.dir") + "/gdal/data";
         environment.put("GDAL_DATA", options);
-        layersSet = new HashSet();
+        layersSet = new HashSet<>();
         File f = new File("test");
         root = f.getAbsolutePath().replace("test", "");
     }
@@ -146,6 +146,7 @@ public class S57LocalCatalogImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void parse() {
         s57CatalogController = S57LocalCatalogController.getInstance();

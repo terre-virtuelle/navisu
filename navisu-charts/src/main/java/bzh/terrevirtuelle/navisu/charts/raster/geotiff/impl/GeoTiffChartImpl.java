@@ -46,7 +46,7 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
 
         boolean canOpen = false;
 
-       if (file.toLowerCase().endsWith(EXTENSION_0)
+        if (file.toLowerCase().endsWith(EXTENSION_0)
                 || file.toLowerCase().endsWith(EXTENSION_1)) {
             canOpen = true;
         }
@@ -61,6 +61,7 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String file) {
 
         LOGGER.log(Level.INFO, "Opening {0} ...", file);
@@ -85,7 +86,7 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
         return "GeoTiff";
     }
 
-   @Override
+    @Override
     public String[] getExtensions() {
         return new String[]{"*" + EXTENSION_0,
             "*" + EXTENSION_1
@@ -103,8 +104,10 @@ public class GeoTiffChartImpl implements GeoTiffChart, GeoTiffChartServices, Dri
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
+        /* Nothing to do here */ }
 }

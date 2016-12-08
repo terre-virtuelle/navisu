@@ -89,6 +89,7 @@ public class BUOYAGE_ShapefileLoader
         return normalAttributes;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Renderable createPoint(ShapefileRecord record,
             double latDegrees, double lonDegrees,
@@ -167,8 +168,8 @@ public class BUOYAGE_ShapefileLoader
             }
         });
 
-        buoyageController = new S57BuoyageController(new S57BasicBehavior(),object, LIMIT);
-       
+        buoyageController = new S57BuoyageController(new S57BasicBehavior(), object, LIMIT);
+
         s57Controllers.add(buoyageController);
 
         PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));

@@ -21,6 +21,7 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
 
     protected ModelEvents.ModelEventsSubscribe<T> eventsSubscribe;
 
+    @SuppressWarnings("unchecked")
     public ModelImpl() {
         this.dataMap = new TreeMap<>();
         this.observerList = new ArrayList<>();
@@ -58,23 +59,25 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
         return this.eventsSubscribe;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void create(int id, T data) {
-            checkId(id);
-            if (data == null) {
-                throw new NullPointerException("data is null");
-            }
-            if (this.dataMap.containsKey(id)) {
-                throw new RuntimeException("id " + id + " already added to the tObjectModel");
-            }
-            final ICloneable clone = (ICloneable) data.getClone();
-            this.dataMap.put(id, (T) clone);//pb
+        checkId(id);
+        if (data == null) {
+            throw new NullPointerException("data is null");
+        }
+        if (this.dataMap.containsKey(id)) {
+            throw new RuntimeException("id " + id + " already added to the tObjectModel");
+        }
+        final ICloneable clone = (ICloneable) data.getClone();
+        this.dataMap.put(id, (T) clone);//pb
 
-            for (ModelEvents<T> observer : this.observerList) {
-                observer.notifyDataCreated(id, (T) data.getClone());
-            }
+        for (ModelEvents<T> observer : this.observerList) {
+            observer.notifyDataCreated(id, (T) data.getClone());
+        }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void update(int id, T data) {
 
@@ -90,11 +93,12 @@ public class ModelImpl<T extends ICloneable> implements Model<T>, WriteDataServi
         final ICloneable clone = (ICloneable) data.getClone();
         this.dataMap.put(id, (T) clone);
 
-        for (ModelEvents<T> observer : this.observerList) {
+        this.observerList.forEach((observer) -> {
             observer.notifyDataUpdated(id, (T) data.getClone());
-        }
+        });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public T delete(int id) {
 

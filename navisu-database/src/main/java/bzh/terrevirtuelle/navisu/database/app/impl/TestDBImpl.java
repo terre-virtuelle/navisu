@@ -264,7 +264,7 @@ public class TestDBImpl
         });
         em.getTransaction().commit();
     }
-
+@SuppressWarnings("unchecked")
     public Collection<Ship> findAllShips() {
         query = em.createQuery("SELECT s FROM Ship s");
         return (Collection<Ship>) query.getResultList();

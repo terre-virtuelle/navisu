@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.navigation.util;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
-import com.vividsolutions.jts.algorithm.CentroidArea;
+import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
@@ -130,6 +130,7 @@ public class WWJ_JTS {
         return geometry;
     }
 
+    @SuppressWarnings("unchecked")
     public static Pair<Double, Double> getCentroid(String wkt) {
         WKTReader wktReader = new WKTReader();
         Geometry geometry = null;
@@ -140,9 +141,9 @@ public class WWJ_JTS {
             } catch (com.vividsolutions.jts.io.ParseException ex) {
                 Logger.getLogger(WWJ_JTS.class.getName()).log(Level.SEVERE, null, ex);
             }
-            CentroidArea centroid = new CentroidArea();
+            Centroid centroid;
             if (geometry != null) {
-                centroid.add(geometry);
+                centroid = new Centroid(geometry);
                 Coordinate coord = centroid.getCentroid();
                 location = new Pair(coord.y, coord.x);
             }

@@ -26,6 +26,7 @@ public class DpAgentImpl extends ComponentStateAdaptor implements DpAgent, DpAge
 
     protected Model<TObject> model;
 
+    @SuppressWarnings("unchecked")
     @Override
     public void componentInitiated() {
 

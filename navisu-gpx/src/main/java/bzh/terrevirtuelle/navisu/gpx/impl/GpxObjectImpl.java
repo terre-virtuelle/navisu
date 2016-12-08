@@ -81,6 +81,7 @@ public class GpxObjectImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
 
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);

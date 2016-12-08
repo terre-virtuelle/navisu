@@ -5,8 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.util;
 
-import java.util.StringTokenizer;
-
 /**
  *
  * @author serge
@@ -15,12 +13,13 @@ import java.util.StringTokenizer;
  */
 public class Degrees {
 
-    public static Pair<Double, Double> degTodecimal(String str) throws Exception{
+    @SuppressWarnings("unchecked")
+    public static Pair<Double, Double> degTodecimal(String str) throws Exception {
         //In format 43° 08' N — 5° 46' E or 43° 02,2' N — 6° 07,7' E
         //Out Pair(lat, lon)
         int sign;
         double min;
-        double lat=0.0;
+        double lat = 0.0;
         double lon = 0.0;
         str = str.replace(",", ".");
         String[] tab0 = str.split("—");
@@ -32,7 +31,7 @@ public class Degrees {
         } else {
             sign = -1;
         }
-       
+
         lat = Double.valueOf(tab1[0]);
         min = Double.valueOf(tab1[1]);
         min /= 60.0;
@@ -49,7 +48,7 @@ public class Degrees {
         min = Double.valueOf(tab2[1]);
         min /= 60.0;
         lon = sign * (lon + min);
-        
+
         return new Pair(lat, lon);
     }
 }

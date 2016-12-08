@@ -55,7 +55,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @author Serge Morvan
  */
 public class WMSImpl
-        implements WMS, WMSServices, WebDriver, ComponentState  {
+        implements WMS, WMSServices, WebDriver, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -220,6 +220,7 @@ public class WMSImpl
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     protected void updateComponent(Object component, boolean enable, boolean first) {
         if (component instanceof Layer) {
             Layer layer = (Layer) component;
@@ -344,5 +345,5 @@ public class WMSImpl
             return title;
         }
     }
-    
+
 }

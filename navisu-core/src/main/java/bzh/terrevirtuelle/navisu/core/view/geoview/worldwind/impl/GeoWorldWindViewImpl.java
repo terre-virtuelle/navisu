@@ -26,6 +26,7 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.globes.EarthFlat;
 import gov.nasa.worldwind.globes.ElevationModel;
+import gov.nasa.worldwind.globes.GeographicProjection;
 import gov.nasa.worldwind.terrain.BathymetryFilterElevationModel;
 import gov.nasa.worldwind.util.PlacemarkClutterFilter;
 
@@ -61,8 +62,7 @@ public class GeoWorldWindViewImpl
         // this.wwd = new WorldWindowGLJPanel();
         // Create the Globe
         this.globe = new EarthFlat();
-        this.globe.setProjection(this.projectionToWorldWindProjection(this.currentProjection));
-
+    //    this.globe.setProjection(this.projectionToWorldWindProjection(this.currentProjection));
         // Create a new empty Model
         final Model model = new BasicModel(this.globe, null);
 
@@ -160,7 +160,8 @@ public class GeoWorldWindViewImpl
 
         String wwProjection = this.projectionToWorldWindProjection(this.currentProjection);
 
-        this.globe.setProjection(wwProjection);
+      //  this.globe.setProjection(wwProjection);
+
     }
 
     protected String projectionToWorldWindProjection(Projection projection) {

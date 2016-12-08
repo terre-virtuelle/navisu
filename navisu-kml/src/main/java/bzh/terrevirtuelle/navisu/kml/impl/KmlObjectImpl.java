@@ -91,16 +91,17 @@ public class KmlObjectImpl
     @Override
     public ColladaRoot openColladaFile(RenderableLayer layer, String filename) {
         File file = new File(filename);
-            try {
-                colladaRoot = ColladaRoot.createAndParse(file);
-                ColladaController colladaController = new ColladaController(colladaRoot);
-                layer.addRenderable(colladaController);
-            } catch (IOException | XMLStreamException ex) {
-                Logger.getLogger(KmlObjectImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            colladaRoot = ColladaRoot.createAndParse(file);
+            ColladaController colladaController = new ColladaController(colladaRoot);
+            layer.addRenderable(colladaController);
+        } catch (IOException | XMLStreamException ex) {
+            Logger.getLogger(KmlObjectImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return colladaRoot;
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ***", fileName);
         KmlController kmlController = KmlController.getInstance();
@@ -150,9 +151,11 @@ public class KmlObjectImpl
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
+        /* Nothing to do here */ }
 
 }

@@ -203,6 +203,7 @@ public class DatabaseImpl
         return connection != null;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public EntityManager getEntityManager() {
 

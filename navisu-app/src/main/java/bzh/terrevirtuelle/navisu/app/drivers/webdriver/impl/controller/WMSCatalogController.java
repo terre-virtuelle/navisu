@@ -7,7 +7,6 @@ package bzh.terrevirtuelle.navisu.app.drivers.webdriver.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import static bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum.URL;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,7 +15,6 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -57,7 +55,10 @@ public class WMSCatalogController
             "http://www.ifremer.fr/services/photos_anciennes",
             "http://www.ifremer.fr/services/wms/granulats_marins",
             "http://www.ifremer.fr/services/wms/sih_referentiels",
-            "http://neowms.sci.gsfc.nasa.gov/wms/wms"
+            "http://neowms.sci.gsfc.nasa.gov/wms/wms",
+            "http://sedac.ciesin.columbia.edu/geoserver/wcs",
+            "http://csw.geopole.org/?SERVICE=wcs",
+            "http://neowms.sci.gsfc.nasa.gov/wms/wms?SERVICE=WMS"
     );
 
     public WMSCatalogController(GuiAgentServices guiAgentServices, WebDriver driver) {
@@ -90,6 +91,7 @@ public class WMSCatalogController
         guiAgentServices.getRoot().getChildren().add(this);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initialize(java.net.URL location, ResourceBundle resources) {
         listView.setItems(FXCollections.observableList(values));

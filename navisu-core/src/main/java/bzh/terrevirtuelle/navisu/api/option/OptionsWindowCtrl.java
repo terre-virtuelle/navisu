@@ -47,7 +47,7 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
 
         this.tmpDir = Paths.get(System.getProperty("user.dir"), "tmp");
 
-        if(Files.notExists(this.tmpDir)) {
+        if (Files.notExists(this.tmpDir)) {
             try {
                 Files.createDirectory(this.tmpDir);
             } catch (IOException e) {
@@ -59,12 +59,11 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     @Override
     public void setVisible(boolean visible) {
 
-        if(visible) {
+        if (visible) {
             this.loadControllers();
-        }
-        else {
+        } else {
             boolean isValid = this.storeControllers();
-            if(!isValid) {
+            if (!isValid) {
                 LOG.severe("ERROR");
                 return;
             }
@@ -78,6 +77,7 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
         return this.optionsWindow.getDisplayable();
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends OptionsPanelCtrl> T newOptionsPanelCtrl(Class<T> clz) {
 
         try {
@@ -117,7 +117,7 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     protected void handleOnOk() {
 
         boolean isValid = this.storeControllers();
-        if(!isValid) {
+        if (!isValid) {
             return;
         }
 
@@ -131,7 +131,7 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
      */
     protected void initModelFromDefaultValues(Object model) {
 
-        for(Field field : model.getClass().getDeclaredFields()) {
+        for (Field field : model.getClass().getDeclaredFields()) {
             try {
                 OptionsAnnotationUtils.initField(model, field);
             } catch (Exception e) {
@@ -146,19 +146,20 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     protected void loadControllers() {
         LOG.entering(OptionsWindowCtrl.class.getName(), "loadControllers");
 
-        for(OptionsPanelCtrl ctrl : this.ctrlList) {
+        for (OptionsPanelCtrl ctrl : this.ctrlList) {
             this.loadController(ctrl);
         }
 
         LOG.exiting(OptionsWindowCtrl.class.getName(), "loadControllers");
     }
 
+    @SuppressWarnings("unchecked")
     protected void loadController(final OptionsPanelCtrl ctrl) {
 
         final Path pFile = this.pFileForCtrlMap.get(ctrl);
         Object model = this.modelsForCtrlMap.get(ctrl);
 
-        if(Files.exists(pFile)) {
+        if (Files.exists(pFile)) {
             model = this.loadModelFromPersistenceFile(pFile, model);
             this.modelsForCtrlMap.put(ctrl, model); // maybe not necessary
         }
@@ -193,8 +194,8 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     protected boolean storeControllers() {
         LOG.entering(OptionsWindowCtrl.class.getName(), "storeControllers");
 
-        for(OptionsPanelCtrl ctrl : this.ctrlList) {
-            if(!this.storeController(ctrl)) {
+        for (OptionsPanelCtrl ctrl : this.ctrlList) {
+            if (!this.storeController(ctrl)) {
                 return false;
             }
         }
@@ -204,22 +205,23 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     protected boolean storeController(OptionsPanelCtrl ctrl) {
 
         final Path pFile = this.pFileForCtrlMap.get(ctrl);
         final Object model = this.modelsForCtrlMap.get(ctrl);
         final OptionsPanel view = this.viewsForCtrlMap.get(ctrl);
 
-        if(ctrl.valid(view)) {
+        if (ctrl.valid(view)) {
             ctrl.store(view, model);
         } else {
-           return false;
+            return false;
         }
 
         this.storeModelToPersistenceFile(pFile, model);
 
         final ModelChangedEvents modelChangedListener = ctrl.getModelChangedListener();
-        if(modelChangedListener != null) {
+        if (modelChangedListener != null) {
             modelChangedListener.onModelChanged(model);
         }
 
@@ -243,7 +245,6 @@ public class OptionsWindowCtrl extends JFXAbstractDisplay {
     }
     //
     //------------------------------------------------------------------------------------------------------------------
-
 
     public void setOnCloseListener(Runnable onCloseListener) {
         this.onCloseListener = onCloseListener;

@@ -47,7 +47,7 @@ public class S57Model {
      * Objet contenant des informations sur la carte trait�e
      */
     private static DataSetGeographicReference _dataSet;
-
+@SuppressWarnings("unchecked")
     public void init() {
         BufferedReader bR;
         String[] tmp;

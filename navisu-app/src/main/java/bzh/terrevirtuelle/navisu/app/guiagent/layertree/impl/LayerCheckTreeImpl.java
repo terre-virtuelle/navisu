@@ -163,6 +163,7 @@ public class LayerCheckTreeImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public CheckBoxTreeItem<GeoLayer> createNode(CheckBoxTreeItem<GeoLayer> root, String nodeName, String iconName) {
         GeoLayer geoLayer = new WorldWindGeoLayer(new RenderableLayer());
@@ -227,6 +228,7 @@ public class LayerCheckTreeImpl
         return rootItems;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public GeoLayer getLayer(String name) {
 
@@ -247,7 +249,7 @@ public class LayerCheckTreeImpl
 
     @Override
     public void removeLayer(String... names) {
-        List<TreeItem<GeoLayer>> l= new ArrayList<>();
+        List<TreeItem<GeoLayer>> l = new ArrayList<>();
         for (String name : names) {
             rootItems.stream().map((cTI) -> cTI.getChildren()).forEachOrdered((childrens) -> {
                 childrens.stream().forEach((t) -> {
@@ -260,7 +262,7 @@ public class LayerCheckTreeImpl
                 childrens.removeAll(l);
             });
         }
-       
+
     }
 
 }

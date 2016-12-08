@@ -181,6 +181,7 @@ public class Area
         this.latitude = latitude;
     }
 
+    @SuppressWarnings("unchecked")
     public Pair<Double, Double> getCentroid() {
         return new Pair(getLatitude(), getLongitude());
     }

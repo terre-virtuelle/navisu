@@ -138,6 +138,7 @@ public class SailingDirectionsViewerComponentController
         addListeners();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Map<String, String> sdShomCatalogMap = new HashMap<>();

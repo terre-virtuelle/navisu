@@ -14,7 +14,7 @@ public class OrSpecification<T> extends AbstractCompositeSpecification<T> {
         }
         return result;
     }
-    
+    @SuppressWarnings("unchecked")
     public OrSpecification(Specification<T>... specifications) {
         super(specifications);
     }

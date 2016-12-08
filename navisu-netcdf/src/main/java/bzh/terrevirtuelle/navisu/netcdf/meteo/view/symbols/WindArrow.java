@@ -94,6 +94,7 @@ public class WindArrow
         setRotation(90.0);
     }
 
+    @SuppressWarnings("unchecked")
     private int getSymbol(double data) {
         int d = (int) data;
         for (int i = 0; i < RANGES.size(); i++) {

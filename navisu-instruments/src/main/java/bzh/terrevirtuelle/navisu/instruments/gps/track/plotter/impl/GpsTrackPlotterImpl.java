@@ -81,6 +81,7 @@ public class GpsTrackPlotterImpl implements GpsTrackPlotter,
     protected boolean on = false;
     private final String NAME = "GpsTrackPlotter";
 
+    @SuppressWarnings("unchecked")
     @Override
     public void componentInitiated() {
 

@@ -29,6 +29,7 @@ public class Bezier2DModel {
 
     }
 
+    @SuppressWarnings("unchecked")
     public Bezier2DModel(List<Pair<Double, Double>> si) {
         coeffs = new ArrayList();
         this.n = si.size() - 1;
@@ -38,7 +39,7 @@ public class Bezier2DModel {
             coeffs.add(Utils.cni(n, i));
         }
     }
-
+@SuppressWarnings("unchecked")
     public List<Pair<Double, Double>> compute(double inc) {
         double x = 0;
         double y = 0;
@@ -54,6 +55,7 @@ public class Bezier2DModel {
         return result;
     }
 
+    @SuppressWarnings("unchecked")
     public List<Pair<Double, Double>> tangent(List<Pair<Double, Double>> si) {
         List<Pair<Double, Double>> tmp = new ArrayList<>();
         for (int i = 0; i < si.size() - 1; i++) {
@@ -63,6 +65,7 @@ public class Bezier2DModel {
         return tmp;
     }
 
+    @SuppressWarnings("unchecked")
     public List<Pair<Double, Double>> leastSquare(List<Pair<Double, Double>> data, int degree) {
 
         double[][] ta = new double[degree + 1][degree + 1];

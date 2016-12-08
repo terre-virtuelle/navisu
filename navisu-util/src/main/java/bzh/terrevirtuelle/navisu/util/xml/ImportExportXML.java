@@ -58,6 +58,7 @@ public class ImportExportXML<T> {
         return data;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T imports(T data, File file) throws FileNotFoundException, JAXBException {
         if (file != null) {
             FileInputStream inputFile = new FileInputStream(new File(file.getPath()));
@@ -70,6 +71,7 @@ public class ImportExportXML<T> {
         return data;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> T imports(T data, String filename) throws FileNotFoundException, JAXBException {
         File file = new File(filename);
         FileInputStream inputFile = new FileInputStream(new File(file.getPath()));
@@ -80,7 +82,7 @@ public class ImportExportXML<T> {
         data = (T) unmarshaller.unmarshal(inputFile);
         return data;
     }
-
+@SuppressWarnings("unchecked")
     public static <T> T imports(T data, StringReader xmlString) throws JAXBException {
         Unmarshaller unmarshaller;
         JAXBContext jAXBContext;

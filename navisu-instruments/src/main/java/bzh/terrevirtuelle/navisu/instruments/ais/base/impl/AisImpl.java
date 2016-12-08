@@ -369,11 +369,13 @@ public class AisImpl
         return on;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public HashMap<Integer, Ship> getShips() {
         return (HashMap) ships.clone();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Map<Integer, BaseStation> getStations() {
         return (HashMap) stations.clone();
@@ -431,6 +433,7 @@ public class AisImpl
         };
     }
 
+    @SuppressWarnings("unchecked")
     public Collection<Ship> findAllShips() {
 
         query = entityManager.createQuery("SELECT s FROM Ship s");

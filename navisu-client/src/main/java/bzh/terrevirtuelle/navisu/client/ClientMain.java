@@ -27,9 +27,10 @@ public class ClientMain extends Application {
 
     private static final Logger LOGGER = Logger.getLogger(ClientMain.class.getName());
 
+    @SuppressWarnings("unchecked")
     @Override
     public void start(Stage stage) throws Exception {
-       
+
         final ComponentManager componentManager = ComponentManager.componentManager;
 
         // deploy components
@@ -54,7 +55,7 @@ public class ClientMain extends Application {
         stage.setTitle("ClientMain test");
         stage.setScene(scene);
         stage.show();
-        
+
     }
 
     public static void main(String[] args) throws Exception {

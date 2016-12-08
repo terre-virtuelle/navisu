@@ -36,6 +36,7 @@ public class WorldWindLayerManagerImpl
         this.groupMap.put(DEFAULT_GROUP, new LinkedList<>());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void createGroup(String groupName, GeoLayer<Layer>... layers) {
         Checker.notNull(groupName, "Group titleText is null.");
@@ -92,6 +93,7 @@ public class WorldWindLayerManagerImpl
         });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void insertGeoLayer(String groupName, GeoLayer<Layer>... layers) {
 
@@ -134,6 +136,7 @@ public class WorldWindLayerManagerImpl
         this.insertBeforeLayerName(layer.getDisplayLayer(), layerName);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void insertGeoLayerBeforeCompass(GeoLayer<Layer>... layers) {
 
@@ -146,6 +149,7 @@ public class WorldWindLayerManagerImpl
         });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void insertGeoLayerBeforeCompass(String groupName, GeoLayer<Layer>... layers) {
 

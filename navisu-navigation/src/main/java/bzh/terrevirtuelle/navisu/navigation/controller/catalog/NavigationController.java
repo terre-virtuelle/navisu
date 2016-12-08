@@ -11,8 +11,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.naviga
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.widgets.textArea.TextAreaController;
-import com.vividsolutions.jts.algorithm.CentroidArea;
-import com.vividsolutions.jts.algorithm.CentroidPoint;
+import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
@@ -92,8 +91,7 @@ public abstract class NavigationController
                 for (Coordinate coordinate : coordinates) {
                     createPointPlacemark(coordinate);
                 }
-                CentroidPoint centroid = new CentroidPoint();
-                centroid.add(geometry);
+                Centroid centroid = new Centroid(geometry);
                 Coordinate coord = centroid.getCentroid();
                 setLat(coord.y);
                 setLon(coord.x);
@@ -114,8 +112,7 @@ public abstract class NavigationController
             pgon.setValue(AVKey.DISPLAY_NAME, displayName);
 
             //TODO desarmer sur le layer tree
-            CentroidArea centroid = new CentroidArea();
-            centroid.add(geometry);
+            Centroid centroid = new Centroid(geometry);
             Coordinate coord = centroid.getCentroid();
             createPointPlacemark(coord);
         }

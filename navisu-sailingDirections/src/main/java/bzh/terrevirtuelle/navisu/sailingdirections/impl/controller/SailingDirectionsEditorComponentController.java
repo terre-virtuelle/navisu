@@ -167,14 +167,15 @@ public class SailingDirectionsEditorComponentController
                         sailingDirectionsTreeViewController
                                 = SailingDirectionsTreeViewController.getInstance(KeyCode.S, KeyCombination.CONTROL_DOWN,
                                         guiAgentServices, layersManagerServices, graphDatabaseComponentServices);
-                       // graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(GRAPH_KB_IN);
-                        
+                        // graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(GRAPH_KB_IN);
+
                     });
                 }
             }
         });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Map<String, String> sdShomCatalogMap = new HashMap<>();
