@@ -51,6 +51,7 @@ public class AisPlotterController {
     protected Map<Integer, Calendar> timestamps;
     protected Map<Integer, String> midMap;
 
+    @SuppressWarnings("unchecked")
     public AisPlotterController(GeoViewServices geoViewServices,
             LayerTreeServices layerTreeServices,
             GuiAgentServices guiAgentServices,

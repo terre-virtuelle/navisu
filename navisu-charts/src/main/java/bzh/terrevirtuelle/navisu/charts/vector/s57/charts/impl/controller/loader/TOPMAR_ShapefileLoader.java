@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -26,9 +26,9 @@ public class TOPMAR_ShapefileLoader
 
     private PointPlacemarkAttributes attrs;
     private Set<Entry<String, Object>> entries;
-    private final Map<Pair<Double,Double>, String> topMarks;
+    private final Map<Pair<Double, Double>, String> topMarks;
 
-    public TOPMAR_ShapefileLoader(Map<Pair<Double,Double>, String> topMarks) {
+    public TOPMAR_ShapefileLoader(Map<Pair<Double, Double>, String> topMarks) {
         this.topMarks = topMarks;
     }
 
@@ -46,6 +46,7 @@ public class TOPMAR_ShapefileLoader
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected Renderable createPoint(ShapefileRecord record, double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {

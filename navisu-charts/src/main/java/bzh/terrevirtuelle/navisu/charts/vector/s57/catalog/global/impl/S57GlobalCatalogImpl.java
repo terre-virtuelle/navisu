@@ -74,6 +74,7 @@ public class S57GlobalCatalogImpl
     protected Set<String> clipConditionsKeySet;
     protected S57GlobalCatalogController s57GlobalCatalogController;
 
+    @SuppressWarnings("unchecked")
     @Override
     public void componentInitiated() {
         enabledLayers = new ArrayList<>();
@@ -152,6 +153,7 @@ public class S57GlobalCatalogImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         s57GlobalCatalogController = S57GlobalCatalogController.getInstance();
@@ -188,6 +190,7 @@ public class S57GlobalCatalogImpl
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void filter() {
         enabledLayers.clear();
         CheckBoxTreeItem<GeoLayer> i = (CheckBoxTreeItem) layerTreeServices.search("S57 catalog");

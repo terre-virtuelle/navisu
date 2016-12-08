@@ -28,7 +28,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @author Serge Morvan
  * @date 10 nov. 2014 NaVisu project
  */
- public class MagneticImpl
+public class MagneticImpl
         implements Magnetic, MagneticServices, Driver, ComponentState {
 
     @UsedService
@@ -66,6 +66,7 @@ import org.capcaval.c3.component.annotation.UsedService;
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         MagneticShapefileController shapefileController = MagneticShapefileController.getInstance();
@@ -130,8 +131,10 @@ import org.capcaval.c3.component.annotation.UsedService;
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
+        /* Nothing to do here */ }
 }

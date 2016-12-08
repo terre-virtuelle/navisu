@@ -62,7 +62,7 @@ public class SHOM_BATHYMETRY_CLUT_JAVA_FX {
               put(11, Color.rgb(0, 0,0));
         }
     });
-
+@SuppressWarnings("unchecked")
     public static Color getColor(double data, boolean large) {
         if (large == true) {
             for (int i = 0; i < largeRanges.size(); i++) {

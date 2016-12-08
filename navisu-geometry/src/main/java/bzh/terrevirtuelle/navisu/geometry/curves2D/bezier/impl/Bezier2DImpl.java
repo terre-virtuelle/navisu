@@ -75,6 +75,7 @@ public class Bezier2DImpl
      * @param headings
      * @return a list of tangent vectors
      */
+    @SuppressWarnings("unchecked")
     @Override
     public List<Pair<Pair<Double, Double>, Pair<Double, Double>>>
             vectorTangentCompute(List<Pair<Double, Double>> si, double inc, double scale,

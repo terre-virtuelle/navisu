@@ -220,11 +220,12 @@ public class SailingDirectionsTreeViewController
             createVolumeTree(result);
             Result result1 = graphDb.execute(REQUEST_3);
             displayPolygons(result1);
-           // Result result2 = graphDb.execute(REQUEST_4);
+            // Result result2 = graphDb.execute(REQUEST_4);
             // System.out.println(result2.resultAsString());
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void createVolumeTree(Result result) {
         String res = result.resultAsString();
         Platform.runLater(new Runnable() {
@@ -379,6 +380,7 @@ public class SailingDirectionsTreeViewController
         shape.setHighlightAttributes(highlightAttributes);
     }
 
+    @SuppressWarnings("unchecked")
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
 
         private TextField textField;

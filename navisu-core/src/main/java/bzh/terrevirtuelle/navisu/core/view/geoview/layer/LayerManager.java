@@ -17,6 +17,7 @@ public interface LayerManager<T> {
 
     public static final String DEFAULT_GROUP = LayerManager.class.getName() + ".DEFAULT_GROUP";
 
+    @SuppressWarnings("unchecked")
     void createGroup(String groupName, GeoLayer<T>... layers);
 
     List<GeoLayer<T>> getGroup(String key);
@@ -25,8 +26,10 @@ public interface LayerManager<T> {
 
     Map<String, List<GeoLayer<T>>> getGroups();
 
+    @SuppressWarnings("unchecked")
     void insertGeoLayer(GeoLayer<T>... layers);
 
+    @SuppressWarnings("unchecked")
     void insertGeoLayer(String groupName, GeoLayer<T>... layers);
 
     void insertGeoLayerBeforeLayerName(GeoLayer<T> layer, String layerName);

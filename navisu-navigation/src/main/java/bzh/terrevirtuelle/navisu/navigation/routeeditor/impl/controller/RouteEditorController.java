@@ -254,6 +254,7 @@ public class RouteEditorController
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void initPanel() {
         speed = Float.parseFloat(speedText.getText());
 
@@ -361,18 +362,27 @@ public class RouteEditorController
         });
         unitsCombo.setOnAction((event) -> {
             String item = (String) unitsCombo.getSelectionModel().getSelectedItem();
-            if (item.trim().equals("M")) {
-                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.METERS);
-            } else if (item.trim().equals("Km")) {
-                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.KILOMETERS);
-            } else if (item.trim().equals("Feet")) {
-                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.FEET);
-            } else if (item.trim().equals("Miles")) {
-                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.MILES);
-            } else if (item.trim().equals("Nm")) {
-                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.NAUTICAL_MILES);
-            } else if (item.trim().equals("Yards")) {
-                measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.YARDS);
+            switch (item.trim()) {
+                case "M":
+                    measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.METERS);
+                    break;
+                case "Km":
+                    measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.KILOMETERS);
+                    break;
+                case "Feet":
+                    measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.FEET);
+                    break;
+                case "Miles":
+                    measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.MILES);
+                    break;
+                case "Nm":
+                    measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.NAUTICAL_MILES);
+                    break;
+                case "Yards":
+                    measureTool.getUnitsFormat().setLengthUnits(UnitsFormat.YARDS);
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -423,6 +433,7 @@ public class RouteEditorController
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void newAction() {
         routeName = routeNameText.getText();
         version = versionText.getText();
@@ -615,6 +626,7 @@ public class RouteEditorController
         return offsetBuffer;
     }
 
+    @SuppressWarnings("unchecked")
     private void fillMesureTool() {
         positions = new CopyOnWriteArrayList();
         Position pos;

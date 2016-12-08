@@ -167,6 +167,7 @@ public class S57NavigationLineController {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void highlight(Path path) {
         navigationLine = (NavigationLine) path.getValue("NAVLNE");
         // ogr ne semble pas bien gérer les accents, seulle la version anglaise est affichée

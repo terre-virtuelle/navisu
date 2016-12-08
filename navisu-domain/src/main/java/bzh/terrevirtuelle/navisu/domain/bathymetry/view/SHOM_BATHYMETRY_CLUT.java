@@ -26,7 +26,7 @@ public class SHOM_BATHYMETRY_CLUT {
         ranges.add(Range.closedOpen(119.62, 139.55));
         ranges.add(Range.closedOpen(139.55, 159.49));
         ranges.add(Range.closedOpen(159.49, 179.42));
-        ranges.add(Range.closedOpen(179.42, 10000.0));  
+        ranges.add(Range.closedOpen(179.42, 10000.0));
         ranges.add(Range.closed(MAX, MAX));
     }
     private static final Map<Integer, Color> ATT = Collections.unmodifiableMap(new HashMap<Integer, Color>() {
@@ -46,6 +46,7 @@ public class SHOM_BATHYMETRY_CLUT {
         }
     });
 
+    @SuppressWarnings("unchecked")
     public static Color getColor(double data) {
         for (int i = 0; i < ranges.size(); i++) {
             if (ranges.get(i).contains(data)) {
@@ -54,7 +55,7 @@ public class SHOM_BATHYMETRY_CLUT {
         }
         return null;
     }
-
+@SuppressWarnings("unchecked")
     @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();

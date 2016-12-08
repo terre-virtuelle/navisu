@@ -34,6 +34,7 @@ public class Utils {
         return cni(n, i) * ui * un;
     }
 
+    @SuppressWarnings("unchecked")
     public static List<Pair<Double, Double>> computeBernstein(int n, int i, double inc) {
         List<Pair<Double, Double>> data = new ArrayList<>();
         for (double u = 0; u <= 1; u += inc) {
@@ -132,6 +133,7 @@ public class Utils {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static List<Pair<Double, Double>> readCsv(String path, String filename) {
         List<String> lines = null;
         List<Pair<Double, Double>> data = new ArrayList<>();

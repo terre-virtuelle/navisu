@@ -88,13 +88,13 @@ public class RouteDataEditorController
         this.guiAgentServices = guiAgentServices;
         this.s57ChartServices = s57ChartServices;
         navigationDataSet = new NavigationDataSet();
-        if(sailingDirectionsList==null){
-            sailingDirectionsList=new ArrayList<>();
+        if (sailingDirectionsList == null) {
+            sailingDirectionsList = new ArrayList<>();
         }
-        if(avurnavList==null){
-            avurnavList=new ArrayList<>();
+        if (avurnavList == null) {
+            avurnavList = new ArrayList<>();
         }
-        
+
         load(FXML);
         create();
         setTranslateX(-220.0);
@@ -140,7 +140,7 @@ public class RouteDataEditorController
                     ImportExportXML.exports(navigationDataSet, file);
                 } catch (JAXBException | FileNotFoundException ex) {
                     Logger.getLogger(RouteDataEditorController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-                   // System.out.println("RouteDataEditorController " + ex);
+                    // System.out.println("RouteDataEditorController " + ex);
                 }
             }
         });
@@ -150,6 +150,7 @@ public class RouteDataEditorController
         });
     }
 
+    @SuppressWarnings("unchecked")
     final void create() {
         dataTreeView.setEditable(true);
         dataTreeView.setCellFactory(CheckBoxTreeCell.forTreeView());
@@ -247,7 +248,7 @@ public class RouteDataEditorController
                 System.out.println("The selected item is " + tide.valueProperty().get());
             }
         });
-        
+
         listOfLights.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
             if (newValue) {
                 System.out.println("The selected item is " + listOfLights.valueProperty().get());
@@ -292,9 +293,9 @@ public class RouteDataEditorController
                 tmp = new String[4];
                 tmp[0] = Translator.tr("navigation.sailingDirections.sailingDirections") + " "
                         + Translator.tr("navigation.sailingDirections.id").toLowerCase() + " : " + a.getId() + "\n";
-             //   tmp[1] = Translator.tr("navigation.sailingDirections.zoneName") + " : " + a.getZoneName()+ "\n";
+                //   tmp[1] = Translator.tr("navigation.sailingDirections.zoneName") + " : " + a.getZoneName()+ "\n";
                 tmp[2] = Translator.tr("navigation.sailingDirections.book") + " : " + a.getBook() + "\n";
-              //  tmp[3] = Translator.tr("navigation.sailingDirections.description") + " : " + a.getDescription() + "\n\n";
+                //  tmp[3] = Translator.tr("navigation.sailingDirections.description") + " : " + a.getDescription() + "\n\n";
                 tmp[3] = tmp[3].replace("\t", "");
                 str += tmp[0] + tmp[1] + tmp[2] + tmp[3];
             }
@@ -305,5 +306,5 @@ public class RouteDataEditorController
     public void setNavigationDataSet(NavigationDataSet navigationDataSet) {
         this.navigationDataSet = navigationDataSet;
     }
-    
+
 }

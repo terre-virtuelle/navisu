@@ -6,8 +6,7 @@
 package bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo;
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.Geo;
-import com.vividsolutions.jts.algorithm.CentroidArea;
-import com.vividsolutions.jts.algorithm.CentroidPoint;
+import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
@@ -19,7 +18,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -119,8 +117,7 @@ public class Location
                 latitude = coordinates[0].y;
                 longitude = coordinates[0].x;//Simple Point
             } else {
-                CentroidPoint centroid = new CentroidPoint(); //Multi point
-                centroid.add(geometryJTS);
+                Centroid centroid = new Centroid(geometryJTS); //Multi point
                 Coordinate coord = centroid.getCentroid();
                 latitude = coord.y;
                 longitude = coord.x;
@@ -129,8 +126,7 @@ public class Location
     }
 
     private void createCentroidArea(Geometry geometryJTS) {
-        CentroidArea centroid = new CentroidArea();
-        centroid.add(geometryJTS);
+        Centroid centroid = new Centroid(geometryJTS);
         Coordinate coord = centroid.getCentroid();
         latitude = coord.y;
         longitude = coord.x;

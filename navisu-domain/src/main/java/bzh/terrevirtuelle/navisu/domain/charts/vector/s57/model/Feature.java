@@ -221,6 +221,7 @@ public class Feature
      * @param fieldValue Le tableau d'octets contenus dans le champ
      * @return le nouvel objet
      */
+    @SuppressWarnings("unchecked")
     protected Feature decodFRID(byte[] fieldValue) {
         long id0 = 0;
         id0 = fieldValue[0];

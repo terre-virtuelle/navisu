@@ -34,13 +34,18 @@ import javax.xml.bind.annotation.XmlType;
 public class NavigationViewSet {
 
     @XmlElements({
-        @XmlElement(name = "buoyageView", type = BuoyageView.class),
-        @XmlElement(name = "shipView", type = ShipView.class),
-        @XmlElement(name = "gpxView", type = GpxView.class),
-        @XmlElement(name = "highwayView", type = HighwayView.class),
-        @XmlElement(name = "sailingDirectionsViewOld", type = SailingDirectionsViewOld.class),
+        @XmlElement(name = "buoyageView", type = BuoyageView.class)
+        ,
+        @XmlElement(name = "shipView", type = ShipView.class)
+        ,
+        @XmlElement(name = "gpxView", type = GpxView.class)
+        ,
+        @XmlElement(name = "highwayView", type = HighwayView.class)
+        ,
+        @XmlElement(name = "sailingDirectionsViewOld", type = SailingDirectionsViewOld.class)
+        ,
         @XmlElement(name = "avurnavView", type = AvurnavView.class)
-        
+
     })
     private ConcurrentLinkedQueue<NavigationView> navigationViewQueue;
 
@@ -64,10 +69,12 @@ public class NavigationViewSet {
         return navigationViewQueue.isEmpty();
     }
 
+    @SuppressWarnings("unchecked")
     public void setNavigationViewQueue(ConcurrentLinkedQueue<NavigationView> navigationViewQueue) {
         this.navigationViewQueue = navigationViewQueue;
     }
 
+    @SuppressWarnings("unchecked")
     public List<NavigationView> getNNavigationViewList() {
         return new ArrayList(navigationViewQueue);
     }
@@ -80,10 +87,12 @@ public class NavigationViewSet {
         return navigationViewQueue.size();
     }
 
+    @SuppressWarnings("unchecked")
     public void clear() {
         navigationViewQueue.clear();
     }
 
+    @SuppressWarnings("unchecked")
     public <T extends NavigationView> List<T> get(Class<T> t) {
         List<T> tmp = new ArrayList<>();
         navigationViewQueue.stream().forEach((data) -> {

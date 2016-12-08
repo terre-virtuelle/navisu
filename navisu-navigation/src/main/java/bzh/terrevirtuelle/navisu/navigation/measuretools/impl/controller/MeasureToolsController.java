@@ -301,6 +301,7 @@ public class MeasureToolsController
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    @SuppressWarnings("unchecked")
     private void makePanel() {
         shapeCombo.setOnAction((event) -> {
             shape = shapeCombo.getSelectionModel().getSelectedItem().toString();
@@ -646,7 +647,7 @@ public class MeasureToolsController
         if (angle != null) {
             double o = measureTool.getOrientation().degrees;
             if (measureTool.getOrientation().degrees < 0) {
-                o += 360 ;
+                o += 360;
             }
             s = String.format("%,6.2f\u00B0", o);
         } else {

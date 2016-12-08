@@ -195,6 +195,7 @@ public class GeoViewImpl
         return processor;
     }
 
+    @SuppressWarnings("unchecked")
     protected void initDefaultLayers(final LayerManager<Layer> layerManager) {
 
         layerManager.createGroup("On-earth layers",
@@ -230,5 +231,4 @@ public class GeoViewImpl
         return this.layerManager;
     }
 
-   
 }

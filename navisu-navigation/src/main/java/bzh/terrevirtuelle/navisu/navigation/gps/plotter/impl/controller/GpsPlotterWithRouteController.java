@@ -187,6 +187,7 @@ public class GpsPlotterWithRouteController
         activateNavigationControllers();
     }
 
+    @SuppressWarnings("unchecked")
     private void activateS57Controllers() {
         List<NavigationData> s57NavigationDataList = new ArrayList<>();
         S57_CONTROLLER_TYPE_LIST.stream().forEach((claz) -> {
@@ -208,7 +209,7 @@ public class GpsPlotterWithRouteController
             Position orgPos = new Position(
                     Angle.fromDegrees(a.getLatitude()),
                     Angle.fromDegrees(a.getLongitude()), 0.0);
-           
+
             String displayName = a.getNumber();
             String description = a.getDescription();
             S57ChartController sc = new S57ChartController(new S57BasicBehavior(),
@@ -231,7 +232,7 @@ public class GpsPlotterWithRouteController
             sc.setIconsLayer(navigationIconsLayer);
             sc.activate();
         });
-/*
+        /*
         List<SailingDirections> sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
         sailingDirectionsList.stream().forEach((SailingDirections a) -> {
             String displayName = "SailingDirections N°" + Long.toString(a.getId());
@@ -243,7 +244,7 @@ public class GpsPlotterWithRouteController
             sc.setIconsLayer(navigationIconsLayer);
             sc.activate();
         });
-*/
+         */
         List<Gpx> gpxList = navigationDataSet.get(Gpx.class);
         gpxList.stream().forEach((Gpx a) -> {
             Highway highway = a.getHighway();

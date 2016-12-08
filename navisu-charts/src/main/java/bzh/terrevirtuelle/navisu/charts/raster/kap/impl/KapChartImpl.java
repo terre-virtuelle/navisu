@@ -69,6 +69,7 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String file) {
         LOGGER.log(Level.INFO, "Opening {0} ...", file);
 
@@ -154,8 +155,10 @@ public class KapChartImpl implements KapChart, KapChartServices, Driver, Compone
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
+        /* Nothing to do here */ }
 }

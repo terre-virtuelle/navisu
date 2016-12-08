@@ -70,6 +70,7 @@ public class BathymetryImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         BathymetryAnalyticController bathymetryController = BathymetryAnalyticController.getInstance();
@@ -78,7 +79,7 @@ public class BathymetryImpl
             String name = l.getName();
             //  if (name.contains(NAME)) {
             l.setPickEnabled(true);
-           // } else {
+            // } else {
             //     l.setPickEnabled(false);
             //}
             //  System.out.println("l : "+l);

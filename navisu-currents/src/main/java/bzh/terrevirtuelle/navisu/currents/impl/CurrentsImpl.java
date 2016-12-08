@@ -69,12 +69,13 @@ public class CurrentsImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         CurrentsShapefileController shapefileController = CurrentsShapefileController.getInstance();
         layers = shapefileController.create(fileName);
         layers.stream().filter((l) -> (l != null)).map((l) -> {
-            l.setPickEnabled(true);  
+            l.setPickEnabled(true);
             geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(l));
             return l;
         }).forEach((l) -> {
@@ -132,8 +133,10 @@ public class CurrentsImpl
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
+        /* Nothing to do here */ }
 }

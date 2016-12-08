@@ -96,11 +96,11 @@ public class S57ChartComponentImpl
     protected List<String> groupNames = new ArrayList<>();
     protected boolean chartsOpen = false;
 
+    @SuppressWarnings("unchecked")
     @Override
     public void componentInitiated() {
         enabledLayers = new ArrayList<>();
         clipConditions = new HashMap<>();
-        // clipConditions.put("BUOYAGE", new Pair(0, 240000));
         clipConditions.put("BUILDING", new Pair(0, 240000));
         clipConditions.put("BATHYMETRY", new Pair(0, 240000));
         clipConditionsKeySet = clipConditions.keySet();
@@ -115,6 +115,7 @@ public class S57ChartComponentImpl
         transponderActivateEvent = cm.getComponentEventSubscribe(TransponderActivateEvent.class);
     }
 
+    @SuppressWarnings("unchecked")
     private void filter() {
         enabledLayers.clear();
         CheckBoxTreeItem<GeoLayer> i = (CheckBoxTreeItem) layerTreeServices.search("S57 charts");
@@ -164,6 +165,7 @@ public class S57ChartComponentImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         try {
             s57ChartComponentController = S57ChartComponentController.getInstance();
@@ -374,7 +376,8 @@ public class S57ChartComponentImpl
     public List<SurfacePolylines> getCoastalLines() {
         if (s57ChartComponentController != null) {
             return s57ChartComponentController.getCoastalSurfacePolylinesList();
-        }else
+        } else {
             return null;
+        }
     }
 }

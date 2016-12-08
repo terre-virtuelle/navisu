@@ -109,7 +109,7 @@ public class ServerOptionsComponentController
      * @param keyCombination
      * @param guiAgentServices
      */
-    @SuppressWarnings("LeakingThisInConstructor")
+    @SuppressWarnings("unchecked")
     private ServerOptionsComponentController(ServerOptionsComponentImpl component,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
@@ -132,7 +132,6 @@ public class ServerOptionsComponentController
         Platform.runLater(() -> {
             if (serialPortNames != null) {
                 for (String pn : serialPortNames) {
-                //    System.out.println("pn ");
                     portNameCB.setValue(pn);
                 }
             }
@@ -151,6 +150,7 @@ public class ServerOptionsComponentController
         return INSTANCE;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

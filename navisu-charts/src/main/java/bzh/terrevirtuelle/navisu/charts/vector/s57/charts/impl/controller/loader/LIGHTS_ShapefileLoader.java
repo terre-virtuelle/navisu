@@ -20,10 +20,9 @@ import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.Globe;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Path;
 import gov.nasa.worldwind.render.PointPlacemarkAttributes;
-import gov.nasa.worldwind.render.Polyline;
 import gov.nasa.worldwind.render.Renderable;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +43,7 @@ public class LIGHTS_ShapefileLoader
     protected WorldWindow wwd;
     protected Globe globe;
     private double elevation;
-    private S57ChartComponentController chartS57Controller;
+    private final S57ChartComponentController chartS57Controller;
 
     public LIGHTS_ShapefileLoader() {
         lightList = new ArrayList<>();
@@ -128,8 +127,7 @@ public class LIGHTS_ShapefileLoader
                     Angle.fromDegrees(new Double(data.getSectorLimitOne()) - 180),
                     Angle.fromDegrees(.0015 * range));
             pathPositions.add(new Position(latLon.getLatitude(), latLon.getLongitude(), elevation ));//+35.0
-            Polyline line = new Polyline(pathPositions);
-            line.setColor(Color.BLACK);
+            Path line = new Path(pathPositions);
             layer.addRenderable(line);
 
             pathPositions.clear();
@@ -138,8 +136,7 @@ public class LIGHTS_ShapefileLoader
                     Angle.fromDegrees(new Double(data.getSectorLimitTwo()) - 180),
                     Angle.fromDegrees(.0015 * range));
             pathPositions.add(new Position(latLon.getLatitude(), latLon.getLongitude(), elevation));// + 35.0
-            line = new Polyline(pathPositions);
-            line.setColor(Color.BLACK);
+            line = new Path(pathPositions);
             layer.addRenderable(line);
 
             lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
@@ -157,10 +154,10 @@ public class LIGHTS_ShapefileLoader
             lightView.getAttributes().setDrawOutline(true);
             // Si la couleur est blanche, la vue est jaune
             if (data.getColour().contains("1")) {
-                lightView.getAttributes().setMaterial(new Material(COLOR.ATT.get("6")));
+                lightView.getAttributes().setInteriorMaterial(new Material(COLOR.ATT.get("6")));
                 lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get("6")));
             } else {
-                lightView.getAttributes().setMaterial(new Material(COLOR.ATT.get(data.getColour())));
+                lightView.getAttributes().setInteriorMaterial(new Material(COLOR.ATT.get(data.getColour())));
                 lightView.getAttributes().setOutlineMaterial(new Material(COLOR.ATT.get(data.getColour())));
             }
 

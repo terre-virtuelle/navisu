@@ -66,6 +66,7 @@ public class BathymetryLocalCatalogImpl
         }
     }
 
+    @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         BathymetryLocalCatalogController bathymetryLocalCatalogController = BathymetryLocalCatalogController.getInstance();
@@ -92,7 +93,7 @@ public class BathymetryLocalCatalogImpl
     public void componentInitiated() {
         layerTreeServices.createGroup(GROUP);
         wwd = GeoWorldWindViewImpl.getWW();
-       
+
     }
 
     private void clip() {
@@ -117,8 +118,10 @@ public class BathymetryLocalCatalogImpl
     }
 
     @Override
-    public void componentStarted() { /* Nothing to do here */ }
+    public void componentStarted() {
+        /* Nothing to do here */ }
 
     @Override
-    public void componentStopped() { /* Nothing to do here */ }
+    public void componentStopped() {
+        /* Nothing to do here */ }
 }

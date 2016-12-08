@@ -80,6 +80,7 @@ public class BathymetryDBImpl
     int i = 0;
     BathymetryDBController bathymetryDBController;
 
+    @SuppressWarnings("unchecked")
     @Override
     public void componentInitiated() {
 
@@ -131,8 +132,8 @@ public class BathymetryDBImpl
                     .map(line -> line.trim())
                     .map(line -> line.split(" "))
                     .map(tab -> new Point3Df(Float.parseFloat(tab[1]),
-                                    Float.parseFloat(tab[0]),
-                                    Float.parseFloat(tab[2])))
+                    Float.parseFloat(tab[0]),
+                    Float.parseFloat(tab[2])))
                     .collect(Collectors.toList());
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
@@ -241,7 +242,7 @@ public class BathymetryDBImpl
 
         return placemark;
     }
-  
+
     public Connection getConnection() {
         return connection;
     }
