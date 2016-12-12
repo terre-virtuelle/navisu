@@ -35,7 +35,7 @@ public class JobsManagerImpl implements JobsManager {
     protected HBox container;
     protected Text text;
     protected ProgressIndicator progress;
-
+    protected static final String TSTYLE = "-fx-fill: whitesmoke;";
     protected Stage jobsDialog;
     protected VBox jobsContainer;
     protected int jobViewWidth = DEFAULT_JOB_VIEW_WIDTH, jobViewHeight = DEFAULT_JOB_VIEW_HEIGHT;
@@ -43,7 +43,8 @@ public class JobsManagerImpl implements JobsManager {
     public JobsManagerImpl() {
         this.ctrls = new ArrayList<>();
 
-        this.text = new Text("0 job processes...");
+        this.text = new Text("");
+        text.setStyle(TSTYLE);
         this.text.setOnMousePressed(e -> {
             if (this.ctrls.size() > 0) {
                 jobsDialog.show();
@@ -52,6 +53,7 @@ public class JobsManagerImpl implements JobsManager {
         this.text.setOnMouseReleased(e -> jobsDialog.hide());
         this.progress = new ProgressIndicator(-1d);
         this.progress.setPrefSize(16, 16);
+        this.progress.setTranslateX(-5.0);
 
         this.container = new HBox(this.text, this.progress);
         this.container.setSpacing(5);
@@ -127,7 +129,8 @@ public class JobsManagerImpl implements JobsManager {
         final int nbJobs = this.ctrls.size();
 
         Platform.runLater(() -> {
-            this.text.setText(nbJobs + " job" + (nbJobs > 1 ? "s" : "") + " processes...");
+            //this.text.setText(nbJobs + " job" + (nbJobs > 1 ? "s" : "") + " processes...");
+            this.text.setText((nbJobs > 0 ? "Loading... " : ""));
             this.progress.setVisible(nbJobs > 0);
         });
     }
