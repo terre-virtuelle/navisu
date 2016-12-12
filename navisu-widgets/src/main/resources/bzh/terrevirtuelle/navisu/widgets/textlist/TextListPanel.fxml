@@ -16,20 +16,17 @@
     <children>
         <Group>
             <children>
-                <Pane opacity="0.6" prefHeight="50.0" prefWidth="405.0" styleClass="top-pane" />
-                <Pane layoutX="0" layoutY="50" opacity="0.6" prefHeight="250.0" prefWidth="15.0" styleClass="left-pane" />
-                <Pane layoutX="390" layoutY="50" opacity="0.6" prefHeight="250.0" prefWidth="15.0" styleClass="right-pane" />   
-                <Pane layoutY="300" opacity="0.6" prefHeight="40.0" prefWidth="405.0" styleClass="foot-pane" />
+            <Pane prefHeight="340.0" prefWidth="406.0" styleClass="background-pane" />
                 <Group layoutX="10.0">
                     <children>
-                        <Text fx:id="title" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="webserverlist" text="Web Server URL List" textAlignment="CENTER" wrappingWidth="149.0">
+                        <Text fx:id="title" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Web Server URL List" textAlignment="CENTER" wrappingWidth="149.0">
                         <font>
                         <Font name="augie" size="20.0" />
                      </font>
                         </Text>
-                      <ScrollPane fx:id="scrollPane" layoutX="5.0" layoutY="50.0" opacity="0.6" prefHeight="250.0" prefWidth="375.0" styleClass="scrolling-pane">
+                      <ScrollPane fx:id="scrollPane" layoutX="10.0" layoutY="50.0" opacity="0.6" prefHeight="270.0" prefWidth="375.0" styleClass="scrolling-pane">
                           <content>
-                              <GridPane fx:id="gridPane" opacity="1" prefHeight="252.0" prefWidth="380.0">
+                              <GridPane fx:id="gridPane" opacity="1" prefHeight="265.0" prefWidth="380.0">
                                   <columnConstraints>
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="600.0" />
                                   </columnConstraints>
@@ -50,7 +47,7 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ImageView fx:id="quit" fitHeight="22.0" fitWidth="43.0" layoutX="357.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="quit" fitHeight="25.0" fitWidth="25.0" layoutX="370.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@quit.png" />
                     </image>

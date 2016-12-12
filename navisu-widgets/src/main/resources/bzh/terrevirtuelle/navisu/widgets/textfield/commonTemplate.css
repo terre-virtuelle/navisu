@@ -181,7 +181,7 @@
 
 /*--------- ScrollPane ---------*/
 .scrolling-pane > .viewport {
-    -fx-background-color: -fx-base-trans;
+    -fx-background-color: -fx-base-trans95;
     -fx-background-radius: 0.5em;
 }
 .scrolling-pane > .scroll-bar:horizontal {
@@ -196,7 +196,6 @@
 .scrolling-pane > .scroll-bar:vertical > .increment-button,
 .scrolling-pane > .scroll-bar:vertical > .decrement-button {
     -fx-padding: 0.25em 0.25em 0.25em 0.166667em; /* 3 3 3 2 */
-    -fx-background-radius: 0.5em;
 }
 .scrolling-pane > .scroll-bar:vertical {
     -fx-background-insets: 1 1 1 0, 1;
