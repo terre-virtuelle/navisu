@@ -122,6 +122,10 @@ public class SingleAREA_ShapefileLoader
 
     protected void createValues(SurfacePolygons shape) {
         entries = record.getAttributes().getEntries();
+        entries.stream().forEach((e) -> {
+            System.out.println("e : "+ e.getKey());  
+        });
+        System.out.println("\n");
         /*
          entries.stream().forEach((e) -> {
          String label = AREA.ATT.get(acronym) + "\n";
