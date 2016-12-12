@@ -5,7 +5,13 @@
  * meteoListView - specific data                             *
  *                                                                             *
  ******************************************************************************/
-
+.quitbuttoncatalog
+{
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 10;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
 /* ====   BOX LIKE THINGS   ================================================= */
 
 .scroll-pane,
@@ -79,6 +85,6 @@
 .combo-box > .list-cell {
     -fx-background: transparent;
     -fx-background-color: transparent;
-    -fx-text-fill: -fx-text-base-color;
+    /*-fx-text-fill: -fx-text-base-color;*/
     -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em; /* 4 8 4 8 */
 }

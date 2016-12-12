@@ -73,6 +73,7 @@
     -fx-text-fill: -fx-color-typo;
     -fx-content-display: CENTER;
 }
+
 .quitbutton:focused {
     -fx-background-color: #bb000000;
     -fx-background-radius: 20;

@@ -100,7 +100,9 @@ public class GuiAgentImpl
     protected static final String TITLE = "NaVisu";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
-    protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";    
+    protected static final String GUI_AGENT_FXML = "GuiAgent.fxml"; 
+    protected static final String STATUS_INFO = "status-text";
+    protected static final String SBPSTYLE = "-fx-background-color: #999999;";
     protected boolean first = true;
     protected InstrumentDriver driver = null;//Utilise par le MOB
     protected Position pos;
@@ -118,9 +120,12 @@ public class GuiAgentImpl
         this.stage = stage;
         stage.setResizable(true);
         label = new Text();
-        label.setFill(Color.WHITESMOKE);        
-        label.setLayoutY(18);
+        label.getStyleClass().add(STATUS_INFO);
+        //label.setFill(Color.WHITESMOKE);        
+        label.setLayoutY(16);
+        
         this.jobsManager = JobsManager.create();
+        
         final FXMLLoader loader = new FXMLLoader();
         try {
             root = loader.load(GuiAgentImpl.class.getResourceAsStream(GUI_AGENT_FXML));
@@ -141,6 +146,7 @@ public class GuiAgentImpl
         ctrl.leftBorderPane.setCenter(layerTreeServices.getDisplayService().getDisplayable());
         ctrl.centerStackPane.getChildren().add(geoViewServices.getDisplayService().getDisplayable());
         ctrl.statusBorderPane.setRight(jobsManager.getDisplay().getDisplayable());
+        //ctrl.statusBorderPane.setStyle(SBPSTYLE);
         ctrl.statusBorderPane.getChildren().add(label);
         
         stage.setTitle(TITLE);
@@ -188,7 +194,7 @@ public class GuiAgentImpl
                 first = true;
             }
         });
-        mob.setTranslateX(400.0);
+        mob.setTranslateX(375);
         mob.setTranslateY(-10.0);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);
     }

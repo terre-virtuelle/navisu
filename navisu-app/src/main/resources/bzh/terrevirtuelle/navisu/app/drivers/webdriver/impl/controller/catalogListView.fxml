@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
@@ -12,14 +13,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<fx:root stylesheets="@cataloglistview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@cataloglistview.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="397.0" prefWidth="608.0" styleClass="background-pane">
         
         </Pane>  
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="396.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="608.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="287.0" layoutX="14.0" layoutY="48.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="560.0" />
-        <ImageView fitHeight="42.0" fitWidth="44.0" layoutX="1.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="42.0" fitWidth="44.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
               <image>
                   <Image url="@logoTV64AIS.png" />
               </image>
@@ -27,9 +28,19 @@
                   <Glow />
               </effect>
         </ImageView>
-       <Button fx:id="quit" layoutX="542.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" />
+       <Button fx:id="quit" layoutX="557.0" layoutY="-10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbuttoncatalog">
+         <graphic>
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@quit.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </graphic></Button>
         <Text fx:id="titleText" layoutX="115.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="WMS Sites" textAlignment="CENTER" wrappingWidth="289.314453125" />
-        <Slider fx:id="opacitySlider" layoutX="577.0" layoutY="42.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+        <Slider fx:id="opacitySlider" layoutX="582.0" layoutY="49.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
         <ListView fx:id="listView" layoutX="16.0" layoutY="54.0" prefHeight="276.0" prefWidth="550.0" style="-fx-background-color: #00000000; -fx-background-radius: 15;" styleClass=".list-view" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="35.0" layoutX="18.0" layoutY="341.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="501.0" />
