@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -17,16 +18,17 @@
         <Group>
             <children>
             <Pane prefHeight="340.0" prefWidth="406.0" styleClass="background-pane" />
+			<Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="340.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="406.0" />
                 <Group layoutX="10.0">
                     <children>
-                        <Text fx:id="title" fill="#c2f8c4" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Web Server URL List" textAlignment="CENTER" wrappingWidth="149.0">
+                        <Text fx:id="title" layoutX="119.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Web Server URL List" textAlignment="CENTER" wrappingWidth="149.0">
                         <font>
                         <Font name="augie" size="20.0" />
                      </font>
                         </Text>
-                      <ScrollPane fx:id="scrollPane" layoutX="10.0" layoutY="50.0" opacity="0.6" prefHeight="270.0" prefWidth="375.0" styleClass="scrolling-pane">
+                      <ScrollPane fx:id="scrollPane" layoutX="10.0" layoutY="50.0" prefHeight="270.0" prefWidth="375.0" styleClass="scrolling-pane">
                           <content>
-                              <GridPane fx:id="gridPane" opacity="1" prefHeight="265.0" prefWidth="380.0">
+                              <GridPane fx:id="gridPane" prefHeight="265.0" prefWidth="380.0">
                                   <columnConstraints>
                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="600.0" />
                                   </columnConstraints>
