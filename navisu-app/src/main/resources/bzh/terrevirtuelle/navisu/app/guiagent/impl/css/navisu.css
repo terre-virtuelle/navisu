@@ -20,7 +20,7 @@
     -fx-pressed-base: derive(-fx-hover-base, -15%);
     -fx-box-border: -fx-hover-base;
     -fx-text-box-border: -fx-hover-base;
-    -fx-text-base-color: whitesmoke;
+    -fx-text-base-color: whitesmoke; 
     -fx-text-status-color: lightgreen;    
     -fx-shadow-highlight-color: -fx-base;
     -fx-outer-border: -fx-hover-base;
