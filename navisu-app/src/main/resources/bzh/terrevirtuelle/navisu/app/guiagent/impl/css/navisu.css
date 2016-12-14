@@ -20,7 +20,8 @@
     -fx-pressed-base: derive(-fx-hover-base, -15%);
     -fx-box-border: -fx-hover-base;
     -fx-text-box-border: -fx-hover-base;
-    -fx-text-base-color: whitesmoke;    
+    -fx-text-base-color: whitesmoke;
+    -fx-text-status-color: lightgreen;    
     -fx-shadow-highlight-color: -fx-base;
     -fx-outer-border: -fx-hover-base;
     -fx-inner-border: -fx-hover-base;
@@ -30,7 +31,7 @@
  * Text statusborderpane                                                                 *
  ******************************************************************************/
 .status-text{
-    -fx-fill: -fx-text-base-color;
+    -fx-fill: -fx-text-status-color;
 }
 /*******************************************************************************
  *                                                                             *
@@ -86,16 +87,7 @@
     -fx-background-repeat: no-repeat;
     -fx-padding: 0 13 0 13;
 }
-/* horizontal the two nodes are placed to the left/right of each other. 
-.split-pane:horizontal > .split-pane-divider {
-   -fx-background-color: -fx-box-border, -fx-inner-border-horizontal;
-   -fx-background-insets: 0, 0 1 0 1;
-}*/
-/* vertical the two nodes are placed on top of each other. 
-.split-pane:vertical > .split-pane-divider {
-   -fx-background-color: -fx-box-border, -fx-inner-border;
-   -fx-background-insets: 0, 1 0 1 0;
-}*/
+
 
 /*******************************************************************************
  *                                                                             *
@@ -147,7 +139,9 @@
     -fx-padding: 0.25em 0.25em 0.25em 0.166667em; /* 3 3 3 2 */
 }
 .scroll-pane > .scroll-bar:vertical {
-    -fx-background-insets: 1 1 1 0, 1;
+    /*-fx-background-insets: 1 1 1 0, 1;
+    -fx-padding: 1 0 1 0;*/
+    -fx-background-insets: 0;
     -fx-padding: 1 0 1 0;
 }
 .scroll-pane > .corner {

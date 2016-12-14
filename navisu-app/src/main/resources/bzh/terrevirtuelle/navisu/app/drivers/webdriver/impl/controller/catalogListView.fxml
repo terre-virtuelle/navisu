@@ -42,7 +42,7 @@
         <Text fx:id="titleText" layoutX="115.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="WMS Sites" textAlignment="CENTER" wrappingWidth="289.314453125" />
         <Slider fx:id="opacitySlider" layoutX="582.0" layoutY="49.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
-        <ListView fx:id="listView" layoutX="16.0" layoutY="54.0" prefHeight="276.0" prefWidth="550.0" style="-fx-background-color: #00000000; -fx-background-radius: 15;" styleClass=".list-view" />
+        <ListView fx:id="listView" layoutX="16.0" layoutY="54.0" prefHeight="276.0" prefWidth="550.0" style="-fx-background-color: #00000000; -fx-background-radius: 15;" styleClass="list-view" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="35.0" layoutX="18.0" layoutY="341.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="501.0" />
       <TextField fx:id="urlTextField" layoutX="33.0" layoutY="346.0" prefHeight="25.0" prefWidth="477.0" styleClass="list-view" />
       <Button fx:id="gotoButton" layoutX="523.0" layoutY="346.0" mnemonicParsing="false" text="GoTo" />        

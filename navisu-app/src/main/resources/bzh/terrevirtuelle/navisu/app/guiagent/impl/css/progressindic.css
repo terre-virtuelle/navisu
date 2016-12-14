@@ -10,7 +10,7 @@
 }
 
 .progress-indicator:indeterminate .segment {
-    -fx-background-color: #33ddff;
+    -fx-background-color: -fx-text-status-color;
 }
 .progress-indicator:indeterminate .segment0 {
     -fx-shape:"M41.98 14.74 a3.5,3.5 0 1,1 0,1 Z";
