@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.shapefiles.impl.contoller;
+package bzh.terrevirtuelle.navisu.shapefiles.impl.controller;
 
-import bzh.terrevirtuelle.navisu.shapefiles.impl.contoller.loader.SingleAREA_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.shapefiles.impl.controller.loader.SingleAREA_ShapefileLoader;
 import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -21,9 +22,8 @@ public class ShapefileController {
 
     private static final ShapefileController INSTANCE;
     protected String path;
-
     private List<Layer> layers;
-
+    
     static {
         INSTANCE = new ShapefileController();
     }
@@ -38,10 +38,19 @@ public class ShapefileController {
 
     public final List<Layer> init(String path) {
         this.path = path;
-
         RenderableLayer layer = new RenderableLayer();
         layer.setName("SHP");
         SingleAREA_ShapefileLoader shapefileLoader = new SingleAREA_ShapefileLoader();
+        layers = shapefileLoader.createLayersFromSource(new File(path));
+        return layers;
+    }
+
+    public final List<Layer> init(String path, Map<String, Integer> keys, List<List<String>> dbList) {
+
+        this.path = path;
+        RenderableLayer layer = new RenderableLayer();
+        layer.setName("SHP");
+        SingleAREA_ShapefileLoader shapefileLoader = new SingleAREA_ShapefileLoader(dbList, keys);
         layers = shapefileLoader.createLayersFromSource(new File(path));
         return layers;
     }

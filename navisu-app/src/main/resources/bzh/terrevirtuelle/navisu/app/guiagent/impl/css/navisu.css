@@ -20,7 +20,8 @@
     -fx-pressed-base: derive(-fx-hover-base, -15%);
     -fx-box-border: -fx-hover-base;
     -fx-text-box-border: -fx-hover-base;
-    -fx-text-base-color: whitesmoke;    
+    -fx-text-base-color: whitesmoke; 
+    -fx-text-status-color: lightgreen;    
     -fx-shadow-highlight-color: -fx-base;
     -fx-outer-border: -fx-hover-base;
     -fx-inner-border: -fx-hover-base;
@@ -30,7 +31,7 @@
  * Text statusborderpane                                                                 *
  ******************************************************************************/
 .status-text{
-    -fx-fill: -fx-text-base-color;
+    -fx-fill: -fx-text-status-color;
 }
 /*******************************************************************************
  *                                                                             *

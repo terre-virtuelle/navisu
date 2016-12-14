@@ -3,7 +3,7 @@
  * National Aeronautics and Space Administration.
  * All Rights Reserved.
  */
-package bzh.terrevirtuelle.navisu.shapefiles.impl.contoller.loader;
+package bzh.terrevirtuelle.navisu.shapefiles.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.core.util.shapefile.RandomShapeAttributes;
 import gov.nasa.worldwind.WorldWind;

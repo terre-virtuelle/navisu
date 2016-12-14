@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.dbase;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -15,5 +14,10 @@ import org.capcaval.c3.component.ComponentService;
 public interface DBaseComponentServices
         extends ComponentService {
 
+    public void init(String filename);
+
+    public int getFieldCount();
+
+    public Object[] getRowObjects();
 
 }

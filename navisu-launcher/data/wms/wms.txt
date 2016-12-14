@@ -1,0 +1,14 @@
+http://portail.indigeo.fr/geoserver/LETG-BREST/ows?SERVICE=WMS
+http://www.ifremer.fr/services/wms/oceanographie_physique
+http://www.ifremer.fr/services/wms/biologie
+http://www.ifremer.fr/services/wms/geosciences
+http://www.ifremer.fr/ifremerWS/WS/wms/MNT?SERVICE=WMS&VERSION=1.1.1
+http://www.ifremer.fr/services/wms/surveillance_littorale
+http://www.ifremer.fr/services/photos_anciennes
+http://www.ifremer.fr/services/wms/granulats_marins
+http://www.ifremer.fr/services/wms/sih_referentiels
+http://neowms.sci.gsfc.nasa.gov/wms/wms
+http://sedac.ciesin.columbia.edu/geoserver/wcs
+http://csw.geopole.org/?SERVICE=wcs
+http://neowms.sci.gsfc.nasa.gov/wms/wms?SERVICE=WMS
+http://portail.indigeo.fr/geoserver/LETG-NANTES/wms

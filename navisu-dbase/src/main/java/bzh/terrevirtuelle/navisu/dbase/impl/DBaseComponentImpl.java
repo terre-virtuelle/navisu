@@ -5,14 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.dbase.impl;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
-import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.dbase.DBaseComponent;
 import bzh.terrevirtuelle.navisu.dbase.DBaseComponentServices;
-import static bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.impl.NMEALexer.NAME;
-import gov.nasa.worldwind.event.PositionEvent;
 import org.capcaval.c3.component.ComponentState;
-import static org.eclipse.persistence.internal.jpa.parsing.jpql.antlr.JPQLParser.GROUP;
 
 /**
  *
@@ -34,5 +29,20 @@ public class DBaseComponentImpl
     @Override
     public void componentStopped() {
         /* Nothing to do here */ }
+
+    @Override
+    public void init(String filename) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getFieldCount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Object[] getRowObjects() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

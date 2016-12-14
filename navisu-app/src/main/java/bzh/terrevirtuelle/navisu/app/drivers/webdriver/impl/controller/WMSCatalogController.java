@@ -9,9 +9,15 @@ import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
-import java.util.Arrays;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -37,6 +43,7 @@ public class WMSCatalogController
         implements Initializable {
 
     private final String FXML = "catalogListView.fxml";
+    private final String SITES = "data/wms/wms.txt";
     @FXML
     public Pane view;
     @FXML
@@ -49,27 +56,21 @@ public class WMSCatalogController
     public TextField urlTextField;
     @FXML
     public Button gotoButton;
-    
+
     private final GuiAgentServices guiAgentServices;
     private WebDriver driver;
-    List<String> values = Arrays.asList(
-            "http://www.ifremer.fr/services/wms/oceanographie_physique",
-            "http://www.ifremer.fr/services/wms/biologie",
-            "http://www.ifremer.fr/services/wms/geosciences",
-            "http://www.ifremer.fr/ifremerWS/WS/wms/MNT?SERVICE=WMS&VERSION=1.1.1",
-            "http://www.ifremer.fr/services/wms/surveillance_littorale",
-            "http://www.ifremer.fr/services/photos_anciennes",
-            "http://www.ifremer.fr/services/wms/granulats_marins",
-            "http://www.ifremer.fr/services/wms/sih_referentiels",
-            "http://neowms.sci.gsfc.nasa.gov/wms/wms",
-            "http://sedac.ciesin.columbia.edu/geoserver/wcs",
-            "http://csw.geopole.org/?SERVICE=wcs",
-            "http://neowms.sci.gsfc.nasa.gov/wms/wms?SERVICE=WMS"
-    );
+    private List<String> values;
 
     public WMSCatalogController(GuiAgentServices guiAgentServices, WebDriver driver) {
         this.guiAgentServices = guiAgentServices;
         this.driver = driver;
+        values =new ArrayList<>();
+        Path path = Paths.get(SITES);
+        try (Stream<String> lines = Files.lines(path)) {
+            lines.forEach(s -> values.add(s));
+        } catch (IOException ex) {
+            Logger.getLogger(WMSCatalogController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
         load(FXML);
     }
 

@@ -35,7 +35,7 @@ public class JobsManagerImpl implements JobsManager {
     protected HBox container;
     protected Text text;
     protected ProgressIndicator progress;
-    protected static final String TSTYLE = "-fx-fill: whitesmoke;";
+    protected static final String TSTYLE = "-fx-fill: -fx-text-status-color;";
     protected Stage jobsDialog;
     protected VBox jobsContainer;
     protected int jobViewWidth = DEFAULT_JOB_VIEW_WIDTH, jobViewHeight = DEFAULT_JOB_VIEW_HEIGHT;
