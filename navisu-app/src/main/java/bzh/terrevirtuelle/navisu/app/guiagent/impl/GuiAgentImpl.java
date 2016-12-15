@@ -102,6 +102,7 @@ public class GuiAgentImpl
     protected int height;
     protected static final String TITLE = "NaVisu";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
+    protected static final String ALARM_SOUND = "/data/sounds/alarm10.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected static final String GUI_AGENT_FXML = "GuiAgent.fxml";
     protected static final String STATUS_INFO = "status-text";
@@ -190,17 +191,17 @@ public class GuiAgentImpl
         root.getChildren().add(mob);
         mob.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             if (first == true) {
-                driver = instrumentDriverManagerServices.open(DATA_PATH + "/data/sounds/alarm10.wav", "true", "100");
+                driver = instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "100");
                 first = false;
             } else {
                 driver.off();
                 first = true;
             }
         });
-        mob.setTranslateX(1080);
+        
+        mob.setTranslateX(1130);
         mob.setTranslateY(30.0);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);
-
         Group groupDock = dockManager.getGroupDock();
         groupDock.getChildren().add(mob);
         groupDock.setTranslateX(30);
