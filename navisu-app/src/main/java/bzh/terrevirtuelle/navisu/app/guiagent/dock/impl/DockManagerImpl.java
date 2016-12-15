@@ -87,6 +87,7 @@ public class DockManagerImpl<TrackTool>
     private Map<String, InstrumentDriver> instrumentDrivers;
     private InstrumentDriver instrumentDriver;
     private ZoneDriver zone;
+    private Group groupDock;
 
     public final DockItem[] ICONS = new DockItem[]{
         /* 
@@ -159,7 +160,7 @@ public class DockManagerImpl<TrackTool>
 
     private void createDockWidget(Scene scene) {
 
-        Group groupDock = new Group();
+        groupDock = new Group();
         groupDock.getChildren().add(dock);
         root.getChildren().add(groupDock);
         dock.setLayoutX(475.0);
@@ -169,10 +170,10 @@ public class DockManagerImpl<TrackTool>
         Animation downAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 300, true);
         Animation upAnimation = AnimationFactory.newTranslateAnimation(groupDock, 200, 0, true);
         scene.setOnKeyPressed((KeyEvent ke) -> {
-            if (ke.getCode() == KeyCode.DOWN) {
+            if (ke.getCode() == KeyCode.D) {
                 downAnimation.play();
             }
-            if (ke.getCode() == KeyCode.UP) {
+            if (ke.getCode() == KeyCode.U) {
                 upAnimation.play();
             }
         });
@@ -388,6 +389,11 @@ public class DockManagerImpl<TrackTool>
         });
     }
 
+    public Group getGroupDock() {
+        return groupDock;
+    }
+
+    
     @Override
     public void componentStarted() {
     }
