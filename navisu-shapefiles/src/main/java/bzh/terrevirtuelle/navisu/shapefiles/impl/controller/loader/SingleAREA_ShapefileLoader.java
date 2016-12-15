@@ -58,32 +58,32 @@ public class SingleAREA_ShapefileLoader
     protected void addRenderablesForPolygons(Shapefile shp, List<Layer> layers) {
         RenderableLayer layer = new RenderableLayer();
         layers.add(layer);
-        int recordNumber = 0;
         while (shp.hasNext()) {
             try {
                 record = shp.nextRecord();
-                entries = record.getAttributes().getEntries();
-                for (Entry e : entries) {
+                if (record != null) {
+                    entries = record.getAttributes().getEntries();
+                    entries.stream().filter((e) -> (e != null)).forEachOrdered((e) -> {
+                        if (e.getKey().equals("TYPEVALE")) {
+                            color = NFD_COLOUR.ATT.get(((String) e.getValue()).trim());
+                        } else {
+                            color = new Color((int) (Math.random() * 255),
+                                    (int) (Math.random() * 255), (int) (Math.random() * 255));
+                        }
+                    });
 
-                    if (e.getKey().equals("TYPEVALE")) {
-                        color = NFD_COLOUR.ATT.get(((String) e.getValue()).trim());
-                    } else {
-                        color = new Color((int) (Math.random() * 255),
-                                (int) (Math.random() * 255), (int) (Math.random() * 255));
+                    if (!Shapefile.isPolygonType(record.getShapeType())) {
+                        continue;
                     }
+                    ShapeAttributes attrs = this.createPolygonAttributes(color);
+                    this.createPolygon(record, attrs, layer);
+                    if (layer.getNumRenderables() > this.numPolygonsPerLayer) {
+                        layer = new RenderableLayer();
+                        layer.setEnabled(false);
+                        layers.add(layer);
+                    }
+                    label = "";
                 }
-                recordNumber = record.getRecordNumber();
-                if (!Shapefile.isPolygonType(record.getShapeType())) {
-                    continue;
-                }
-                ShapeAttributes attrs = this.createPolygonAttributes(color);
-                this.createPolygon(record, attrs, layer);
-                if (layer.getNumRenderables() > this.numPolygonsPerLayer) {
-                    layer = new RenderableLayer();
-                    layer.setEnabled(false);
-                    layers.add(layer);
-                }
-                label = "";
             } catch (Exception ex) {
                 Logger.getLogger(SingleAREA_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
@@ -109,15 +109,17 @@ public class SingleAREA_ShapefileLoader
         highlightAttributes.setEnableLighting(true);
 
         shape.setHighlightAttributes(highlightAttributes);
-        List<String> tmp = dbList.get(i);
-        tmp.forEach((s) -> {
-            label += s;
-        });
+        if (dbList != null) {
+            List<String> tmp = dbList.get(i);
+            tmp.forEach((s) -> {
+                label += s;
+            });
+        }
         shape.setValue(AVKey.DISPLAY_NAME, label);
         createValues(shape);
         layer.addRenderable(shape);
-     //   GlobeAnnotation globeAnnotation = new GlobeAnnotation(label,
-      //          shape.getReferencePosition());
+        //   GlobeAnnotation globeAnnotation = new GlobeAnnotation(label,
+        //          shape.getReferencePosition());
         // layer.addRenderable(globeAnnotation);
         i++;
     }
