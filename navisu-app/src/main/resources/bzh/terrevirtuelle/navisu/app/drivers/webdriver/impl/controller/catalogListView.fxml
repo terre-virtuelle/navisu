@@ -19,7 +19,7 @@
         
         </Pane>  
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="396.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="608.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="287.0" layoutX="14.0" layoutY="48.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="560.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="287.0" layoutX="14.0" layoutY="48.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="551.0" />
         <ImageView fitHeight="42.0" fitWidth="44.0" layoutX="2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
               <image>
                   <Image url="@logoTV64AIS.png" />
@@ -28,7 +28,7 @@
                   <Glow />
               </effect>
         </ImageView>
-       <Button fx:id="quit" layoutX="557.0" layoutY="-10.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbuttoncatalog">
+       <Button fx:id="quit" layoutX="554.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbuttoncatalog">
          <graphic>
             <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -40,11 +40,11 @@
             </ImageView>
          </graphic></Button>
         <Text fx:id="titleText" layoutX="115.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="WMS Sites" textAlignment="CENTER" wrappingWidth="289.314453125" />
-        <Slider fx:id="opacitySlider" layoutX="582.0" layoutY="49.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
+        <Slider fx:id="opacitySlider" layoutX="578.0" layoutY="49.0" max="1.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
                 </Slider>
-        <ListView fx:id="listView" layoutX="16.0" layoutY="54.0" prefHeight="276.0" prefWidth="550.0" style="-fx-background-color: #00000000; -fx-background-radius: 15;" styleClass="list-view" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="35.0" layoutX="18.0" layoutY="341.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="501.0" />
+        <ListView fx:id="listView" layoutX="16.0" layoutY="54.0" prefHeight="276.0" prefWidth="547.0" styleClass="list-view" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0d000000" height="40.0" layoutX="14.0" layoutY="341.0" stroke="#00abff" strokeType="INSIDE" styleClass="instrumentcadres" width="501.0" />
       <TextField fx:id="urlTextField" layoutX="33.0" layoutY="346.0" prefHeight="25.0" prefWidth="477.0" styleClass="list-view" />
-      <Button fx:id="gotoButton" layoutX="523.0" layoutY="346.0" mnemonicParsing="false" text="GoTo" />        
+      <Button fx:id="gotoButton" layoutX="525.0" layoutY="350.0" mnemonicParsing="false" text="GoTo" />        
     </children>
 </fx:root>
