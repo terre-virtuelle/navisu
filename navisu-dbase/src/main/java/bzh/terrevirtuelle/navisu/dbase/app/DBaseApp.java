@@ -33,7 +33,7 @@ public class DBaseApp {
         keys = new HashMap<>();
         try {
             //
-            InputStream inputStream = new FileInputStream("data/out.dbf"); 
+            InputStream inputStream = new FileInputStream("data/DEPARE.dbf");
             reader = new DBFReader(inputStream);
 
             int numberOfFields = reader.getFieldCount();
@@ -45,12 +45,16 @@ public class DBaseApp {
             }
             // Now, lets us start reading the rows
             Object[] rowObjects;
-            while ((rowObjects = reader.nextRecord()) != null) {
-                List<String> tmp = new ArrayList<>();
-                for (Object rowObject : rowObjects) {
-                    tmp.add(rowObject.toString());
+            try {
+                while ((rowObjects = reader.nextRecord()) != null) {
+                    List<String> tmp = new ArrayList<>();
+                    for (Object rowObject : rowObjects) {
+                        tmp.add(rowObject.toString());
+                    }
+                    dbList.add(tmp);
                 }
-                dbList.add(tmp);
+            } catch (Exception e) {
+
             }
             int index = keys.get("auteurs");
             dbList.forEach((l) -> {

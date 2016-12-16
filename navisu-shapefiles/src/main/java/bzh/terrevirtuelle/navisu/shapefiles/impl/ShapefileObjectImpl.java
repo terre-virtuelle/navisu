@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
-import bzh.terrevirtuelle.navisu.dbase.app.DBaseApp;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObject;
 import bzh.terrevirtuelle.navisu.shapefiles.ShapefileObjectServices;
 import com.linuxense.javadbf.DBFException;
@@ -24,16 +23,12 @@ import gov.nasa.worldwind.layers.Layer;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
 
@@ -91,6 +86,7 @@ public class ShapefileObjectImpl
         String[] tab = fileName.split("\\.");
         String dbFileName = tab[0];
         dbFileName += ".dbf";
+        
         try {
             InputStream inputStream = new FileInputStream(dbFileName);
             reader = new DBFReader(inputStream);
@@ -99,7 +95,9 @@ public class ShapefileObjectImpl
                 DBFField field = reader.getField(i);
                 keys.put(field.getName().trim(), i);
             }
+            
             Object[] rowObjects;
+            
             while ((rowObjects = reader.nextRecord()) != null) {
                 List<String> tmp = new ArrayList<>();
                 for (Object rowObject : rowObjects) {
@@ -107,17 +105,17 @@ public class ShapefileObjectImpl
                 }
                 dbList.add(tmp);
             }
-            /*
+            
             // lecture des element repondant a une cle
-            int index = keys.get("auteurs");
-            dbList.forEach((l) -> {
-                System.out.println(l.get(index));
-            });
-             */
+           // int index = keys.get("auteurs");
+           // dbList.forEach((l) -> {
+            //    System.out.println(l.get(index));
+           // });
+             
         } catch (DBFException | FileNotFoundException ex) {
             Logger.getLogger(ShapefileObjectImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+      
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
         ShapefileController shapefileController = ShapefileController.getInstance();
         if (!dbList.isEmpty()) {
