@@ -30,7 +30,7 @@
         </ImageView>
        <Button fx:id="quit" layoutX="554.0" layoutY="-4.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbuttoncatalog">
          <graphic>
-            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" scaleX="0.9" scaleY="0.9">
                <image>
                   <Image url="@quit.png" />
                </image>
