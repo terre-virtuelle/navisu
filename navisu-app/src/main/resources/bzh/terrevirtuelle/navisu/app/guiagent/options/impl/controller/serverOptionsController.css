@@ -143,30 +143,22 @@
  * TabPane                                                                     *
  *                                                                             *
  ******************************************************************************/
-/*.tab-pane > .tab-header-area > .headers-region > .tab:selected {
-    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-background;
-    -fx-background-insets: 0 1 1 0, 1 2 0 1, 2 3 0 2;
-}
-.tab-pane > .tab-header-area > .headers-region > .tab:disabled:hover {
-    -fx-color: -fx-base;
-}
-.tab-pane > .tab-header-area > .tab-header-background {
-    
-    -fx-background-color:  
-        -fx-outer-border,
-        -fx-text-box-border, 
-        linear-gradient(from 0px 0px to 0px 5px, -fx-text-box-border, derive(-fx-text-box-border, 30%));
-}
-*/
+
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
     -fx-background-color: -fx-focus-color;
-    -fx-effect: dropshadow( two-pass-box , lightgreen ,10,0.2,0,0 );
+    -fx-effect: dropshadow( two-pass-box , lightgreen ,20,0.2,5,5 );
     
 }
 .tab-pane > .tab-header-area > .headers-region > .tab:disabled:hover {
-    -fx-color: -fx-base-trans;
+    -fx-color: derive(-fx-color,60%);
 }
 .tab-pane > .tab-header-area > .tab-header-background {
     
-    -fx-background-color: -fx-base-trans; 
+    -fx-background-color:-fx-base-trans; 
+}
+.tab-conteneur{
+    -fx-background-color:-fx-base-trans;
+    -fx-border-color: -fx-line-base;
+    -fx-border-width: 1;
+    -fx-border-radius:0 0 10 10;
 }
