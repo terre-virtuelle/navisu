@@ -40,11 +40,11 @@
                             <content>
                                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="185.0" prefWidth="511.0">
                                     <children>
-                                        <GridPane layoutX="5.0" prefHeight="156.0" prefWidth="351.0" styleClass="tab-conteneur">
+                                        <GridPane layoutX="5.0" prefHeight="156.0" prefWidth="271.0" styleClass="tab-conteneur">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="95.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="4.0" prefWidth="30.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="245.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="88.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="0.0" prefWidth="8.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="174.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -59,9 +59,11 @@
                                                 <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="99.0" text="Data bits" GridPane.rowIndex="2" />
                                                 <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="103.0" text="Stop bits" GridPane.rowIndex="3" />
                                                 <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="102.0" text="Parity" GridPane.rowIndex="4" />
-                                                <ChoiceBox fx:id="portNameCB" prefWidth="150.0" GridPane.columnIndex="2">
-                                                </ChoiceBox>
-                                                <ChoiceBox fx:id="baudRateCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <ChoiceBox fx:id="portNameCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                                       <GridPane.margin>
+                                          <Insets right="10.0" />
+                                       </GridPane.margin></ChoiceBox>
+                                                <ChoiceBox fx:id="baudRateCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                                                     <items>
                                                         <FXCollections fx:factory="observableArrayList">
                                                             <String fx:value="BAUDRATE_4800" />
@@ -69,8 +71,11 @@
                                                             <String fx:value="BAUDRATE_38400" />
                                                         </FXCollections>
                                                     </items>
+                                       <GridPane.margin>
+                                          <Insets right="10.0" />
+                                       </GridPane.margin>
                                                 </ChoiceBox>
-                                                <ChoiceBox fx:id="databitsCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <ChoiceBox fx:id="databitsCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                                     <items>
                                                         <FXCollections fx:factory="observableArrayList">
                                                             <String fx:value="DATABITS_5" />
@@ -79,8 +84,11 @@
                                                             <String fx:value="DATABITS_8" />
                                                         </FXCollections>
                                                     </items>
+                                       <GridPane.margin>
+                                          <Insets right="10.0" />
+                                       </GridPane.margin>
                                                 </ChoiceBox>
-                                                <ChoiceBox fx:id="stopBitsCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                <ChoiceBox fx:id="stopBitsCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                                                     <items>
                                                         <FXCollections fx:factory="observableArrayList">
                                                             <String fx:value="STOPBITS_1" />
@@ -88,8 +96,11 @@
                                                             <String fx:value="STOPBITS_2" />
                                                         </FXCollections>
                                                     </items>
+                                       <GridPane.margin>
+                                          <Insets right="10.0" />
+                                       </GridPane.margin>
                                                 </ChoiceBox>
-                                                <ChoiceBox fx:id="parityCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                <ChoiceBox fx:id="parityCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                                                     <items>
                                                         <FXCollections fx:factory="observableArrayList">
                                                            <String fx:value="PARITY_EVEN" />
@@ -97,6 +108,9 @@
                                                             <String fx:value="PARITY_ODD" />
                                                         </FXCollections>
                                                     </items>
+                                       <GridPane.margin>
+                                          <Insets right="10.0" />
+                                       </GridPane.margin>
                                                 </ChoiceBox>
                                             </children>
                                         </GridPane>
@@ -108,11 +122,11 @@
                             <content>
                                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="150.0" prefWidth="512.0">
                                     <children>
-                                        <GridPane layoutX="44.0" prefHeight="105.0" prefWidth="465.0" styleClass="tab-conteneur">
+                                        <GridPane layoutX="44.0" prefHeight="105.0" prefWidth="432.0" styleClass="tab-conteneur">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="1.0" prefWidth="2.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="349.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="57.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="1.0" prefWidth="10.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.0" minWidth="10.0" prefWidth="367.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -177,10 +191,10 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <Slider fx:id="opacitySlider" layoutX="539.0" layoutY="46.0" max="1.0" orientation="VERTICAL" prefHeight="153.0" prefWidth="5.0" value="0.4">
+                <Slider fx:id="opacitySlider" layoutX="541.0" layoutY="46.0" max="1.0" orientation="VERTICAL" prefHeight="153.0" prefWidth="5.0" value="0.4">
                 </Slider>
                 <Text layoutX="121.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="SERVER CONNECTIONS OPTIONS" />
-                <Button fx:id="quit" alignment="CENTER" layoutX="506.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
+                <Button fx:id="quit" alignment="CENTER" layoutX="507.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
                 <StackPane layoutX="14.0" layoutY="51.0" prefHeight="143.0" prefWidth="511.0" styleClass="instrumentcontour">
                     <children>
@@ -197,7 +211,7 @@
             </children>
         </Group>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="510.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="560.0" />
-      <Rectangle id="tabcontener" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="250.0" layoutX="10.0" layoutY="250.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" visible="false" width="530.0" />
+      <Rectangle id="tabcontener" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="250.0" layoutX="10.0" layoutY="250.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" width="526.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="10.0" layoutY="45.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" width="526.0" />
     </children>
 </fx:root>
