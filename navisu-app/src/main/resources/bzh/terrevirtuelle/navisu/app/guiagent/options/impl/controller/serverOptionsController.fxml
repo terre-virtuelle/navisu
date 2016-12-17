@@ -28,17 +28,18 @@
 
 <fx:root stylesheets="@serverOptionsController.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="560.0" styleClass="background-pane">
-            <children>
-                <Button fx:id="addConnectionB" layoutX="22.0" layoutY="208.0" minWidth="75.0" mnemonicParsing="false" prefWidth="75.0" text="Add " />
-                <Button fx:id="removeConnectionB" layoutX="97.0" layoutY="208.0" mnemonicParsing="false" prefWidth="75.0" text="Remove " />
-                <TabPane fx:id="parameterTP" layoutX="14.0" layoutY="246.0" prefHeight="246.0" prefWidth="511.0" tabClosingPolicy="UNAVAILABLE">
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="560.0" styleClass="background-pane" />
+      <Group layoutX="20.0" layoutY="215.0">
+         <children>
+                <Button fx:id="addConnectionB" layoutX="8.0" minWidth="75.0" mnemonicParsing="false" prefWidth="75.0" text="Add " />
+                <Button fx:id="removeConnectionB" layoutX="83.0" mnemonicParsing="false" prefWidth="75.0" text="Remove " />
+                <TabPane fx:id="parameterTP" layoutY="38.0" prefHeight="246.0" prefWidth="511.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                         <Tab fx:id="serialT" text="Serial">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="185.0" prefWidth="511.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="185.0" prefWidth="511.0" style="-fx-background-color: #ff00ff00;">
                                     <children>
-                                        <GridPane layoutY="14.0" prefHeight="156.0" prefWidth="253.0">
+                                        <GridPane layoutX="20.0" layoutY="15.0" prefHeight="156.0" prefWidth="253.0">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="103.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="27.0" />
@@ -106,7 +107,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="172.0" prefWidth="511.0">
                                     <children>
-                                        <GridPane prefHeight="90.0" prefWidth="412.0">
+                                        <GridPane layoutX="20.0" layoutY="15.0" prefHeight="90.0" prefWidth="412.0">
                                             <columnConstraints>
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="103.0" minWidth="10.0" prefWidth="103.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="27.0" minWidth="10.0" prefWidth="27.0" />
@@ -150,10 +151,10 @@
                         </Tab>
                     </tabs>
                 </TabPane>
-            <Button fx:id="openConnectionB" layoutX="375.0" layoutY="208.0" mnemonicParsing="false" prefWidth="75.0" text="Open" />
-            <Button fx:id="closeConnectionB" layoutX="450.0" layoutY="208.0" mnemonicParsing="false" prefWidth="75.0" text="Close" />
-            </children>
-        </Pane>
+            <Button fx:id="openConnectionB" layoutX="361.0" mnemonicParsing="false" prefWidth="75.0" text="Open" />
+            <Button fx:id="closeConnectionB" layoutX="436.0" mnemonicParsing="false" prefWidth="75.0" text="Close" />
+         </children>
+      </Group>
         <Group styleClass="routeeditor-panel">
             <children>
                 <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="1.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
@@ -164,14 +165,14 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <Slider fx:id="opacitySlider" layoutX="535.0" layoutY="46.0" max="1.0" orientation="VERTICAL" prefHeight="153.0" prefWidth="5.0" value="0.4">
+                <Slider fx:id="opacitySlider" layoutX="539.0" layoutY="46.0" max="1.0" orientation="VERTICAL" prefHeight="153.0" prefWidth="5.0" value="0.4">
                 </Slider>
                 <Text layoutX="121.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="info-text" text="SERVER CONNECTIONS OPTIONS" />
-                <Button fx:id="quit" alignment="CENTER" layoutX="502.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
+                <Button fx:id="quit" alignment="CENTER" layoutX="506.0" layoutY="-4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">    
                 </Button>
                 <StackPane layoutX="14.0" layoutY="51.0" prefHeight="143.0" prefWidth="511.0" styleClass="instrumentcontour">
                     <children>
-                        <TableView fx:id="connectionsTV" prefHeight="143.0" prefWidth="496.0">
+                        <TableView fx:id="connectionsTV" prefHeight="143.0" prefWidth="496.0" style="-fx-background-color: #ff000000;">
                             <columns>
                                 <TableColumn fx:id="typeTC" prefWidth="75.0" text="Type" />
                                 <TableColumn fx:id="dataPortTC" prefWidth="121.0" text="Data port" />
@@ -184,5 +185,7 @@
             </children>
         </Group>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="510.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="560.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="250.0" layoutX="10.0" layoutY="250.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" width="530.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="10.0" layoutY="45.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 10; -fx-arc-width: 10;" styleClass="instrumentcontour" width="526.0" />
     </children>
 </fx:root>
