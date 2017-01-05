@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package bzh.terrevirtuelle.navisu.gazeteer.app;
+package bzh.terrevirtuelle.navisu.gazeteer.impl.lucene;
 
 import java.util.Comparator;
 

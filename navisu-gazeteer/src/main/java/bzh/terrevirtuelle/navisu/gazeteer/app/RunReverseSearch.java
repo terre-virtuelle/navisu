@@ -16,6 +16,7 @@
  */
 package bzh.terrevirtuelle.navisu.gazeteer.app;
 
+import bzh.terrevirtuelle.navisu.gazeteer.impl.lucene.GeoNameResolver;
 import edu.usc.ir.geo.gazetteer.domain.Location;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class RunReverseSearch {
         String indexPath;
         indexPath = "/home/serge/Data/allCountries/geoIndex";
         try (GeoNameResolver resolver = new GeoNameResolver()) {
-          //  resolver.buildIndex("/home/serge/Data/allCountries/allCountries.txt", indexPath, false);
+           resolver.buildIndex("/home/serge/Data/allCountries/allCountries.txt", indexPath, true);
             System.out.println("Places Near Brest");
             System.out.println(resolver.searchNearby(-4.48483, 48.39146, 5.0, indexPath, 10));
             List<String> locationNames = new ArrayList<>();

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package bzh.terrevirtuelle.navisu.gazeteer.impl.api;
+package bzh.terrevirtuelle.navisu.gazeteer.impl.lucene.api;
 
 import edu.usc.ir.geo.gazetteer.GeoNameResolver;
 import edu.usc.ir.geo.gazetteer.domain.Location;
