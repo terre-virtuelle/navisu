@@ -38,12 +38,13 @@ public class SoundImpl implements Sound, SoundServices,
 
                 media = new Media("file:///" + config[0]);
                 mediaPlayer = new MediaPlayer(media);
-
-                if (config.length > 0) {
-                    mediaPlayer.setAutoPlay(Boolean.valueOf(config[1]));
-                }
-                if (config.length > 1) {
-                    mediaPlayer.setCycleCount(Integer.parseInt(config[2]));
+                if (mediaPlayer != null) {
+                    if (config.length > 0) {
+                        mediaPlayer.setAutoPlay(Boolean.valueOf(config[1]));
+                    }
+                    if (config.length > 1) {
+                        mediaPlayer.setCycleCount(Integer.parseInt(config[2]));
+                    }
                 }
             });
         }
@@ -82,7 +83,9 @@ public class SoundImpl implements Sound, SoundServices,
 
     @Override
     public void off() {
-        mediaPlayer.dispose();
+        if (mediaPlayer != null) {
+            mediaPlayer.dispose();
+        }
     }
 
     @Override

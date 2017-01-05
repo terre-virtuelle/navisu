@@ -31,7 +31,6 @@ import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.Na
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
 import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
-import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.navigation.controller.catalog.AvurnavController;
 import bzh.terrevirtuelle.navisu.navigation.controller.catalog.HighwayController;
 import bzh.terrevirtuelle.navisu.navigation.controller.catalog.S57ChartController;
@@ -57,6 +56,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javax.xml.bind.JAXBException;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 
 /**
  * NaVisu
@@ -101,7 +101,7 @@ public class GpsPlotterWithRouteController
     public GpsPlotterWithRouteController(GpsPlotterWithRouteImpl component,
             LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
-            KmlObjectServices kmlObjectServices,
+            KmlComponentServices kmlObjectServices,
             S57ChartComponentServices s57ChartComponentServices,
             S57GlobalCatalogServices s57GlobalCatalogServices,
             TransponderServices transponderServices,

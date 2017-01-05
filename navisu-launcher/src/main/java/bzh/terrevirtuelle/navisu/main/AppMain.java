@@ -79,8 +79,7 @@ import bzh.terrevirtuelle.navisu.navigation.routeeditor.RouteEditorServices;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.RouteEditorImpl;
 import bzh.terrevirtuelle.navisu.instruments.webview.WebViewServices;
 import bzh.terrevirtuelle.navisu.instruments.webview.impl.WebViewImpl;
-import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
-import bzh.terrevirtuelle.navisu.kml.impl.KmlObjectImpl;
+import bzh.terrevirtuelle.navisu.kml.impl.KmlComponentImpl;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.server.impl.vertx.DataServerImpl;
 import bzh.terrevirtuelle.navisu.magnetic.MagneticServices;
@@ -120,15 +119,11 @@ import javafx.stage.Stage;
 
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
-import bzh.terrevirtuelle.navisu.database.graph.neo4J.impl.GraphDatabaseComponentImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.impl.GpsTrackPlotterImpl;
 import bzh.terrevirtuelle.navisu.extensions.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.commands.impl.NavigationCmdComponentImpl;
-import bzh.terrevirtuelle.navisu.sailingdirections.SailingDirectionsComponentServices;
-import bzh.terrevirtuelle.navisu.sailingdirections.impl.SailingDirectionsComponentImpl;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -143,6 +138,9 @@ import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
+import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -208,11 +206,10 @@ public class AppMain extends Application {
                         GpsPlotterImpl.class,
                         GpsPlotterWithRouteImpl.class,
                         GpxObjectImpl.class,
-                        GraphDatabaseComponentImpl.class,
                         InstrumentDriverManagerImpl.class,
                         InstrumentTemplateImpl.class,
                         KapChartImpl.class,
-                        KmlObjectImpl.class,
+                        KmlComponentImpl.class,
                         LayersManagerImpl.class,
                         LeapMotionComponentImpl.class,
                         MagneticImpl.class,
@@ -227,7 +224,6 @@ public class AppMain extends Application {
                         RouteEditorImpl.class,
                         RoutePhotoEditorImpl.class,
                         RoutePhotoViewerImpl.class,
-                        SailingDirectionsComponentImpl.class,
                         SedimentologyImpl.class,
                         ServerOptionsComponentImpl.class,
                         ShapefileObjectImpl.class,
@@ -238,6 +234,7 @@ public class AppMain extends Application {
                         S57GlobalCatalogImpl.class,
                         TestDBImpl.class,
                         TransponderImpl.class,
+                        WeatherComponentImpl.class,
                         WebDriverManagerImpl.class,
                         WMSImpl.class,
                         WebViewImpl.class
@@ -275,15 +272,14 @@ public class AppMain extends Application {
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
-        GraphDatabaseComponentServices graphDatabaseComponentServices = componentManager.getComponentService(GraphDatabaseComponentServices.class);
-        //  GribServices gribServices = componentManager.getComponentService(GribServices.class);
+       
         GuiAgentServices guiAgentServices = componentManager.getComponentService(GuiAgentServices.class);
         guiAgentServices.showGui(stage, 1080, 700);
         
         InstrumentTemplateServices instrumentTemplateServices = componentManager.getComponentService(InstrumentTemplateServices.class);
         
         KapChartServices chartsServices = componentManager.getComponentService(KapChartServices.class);
-        KmlObjectServices kmlObjectServices = componentManager.getComponentService(KmlObjectServices.class);
+        KmlComponentServices kmlObjectServices = componentManager.getComponentService(KmlComponentServices.class);
         
         LayersManagerServices layersManagerServices = componentManager.getComponentService(LayersManagerServices.class);
         LeapMotionComponentServices leapMotionComponentServices = componentManager.getComponentService(LeapMotionComponentServices.class);
@@ -305,7 +301,6 @@ public class AppMain extends Application {
         RoutePhotoEditorServices routePhotoEditorServices = componentManager.getComponentService(RoutePhotoEditorServices.class);
         RoutePhotoViewerServices routePhotoViewerServices = componentManager.getComponentService(RoutePhotoViewerServices.class);
         
-        SailingDirectionsComponentServices sailingDirectionsServices = componentManager.getComponentService(SailingDirectionsComponentServices.class);
         SedimentologyServices sedimentologyServices = componentManager.getComponentService(SedimentologyServices.class);
         ShapefileObjectServices shapefileObjectServices = componentManager.getComponentService(ShapefileObjectServices.class);
         SonarServices sonarServices = componentManager.getComponentService(SonarServices.class);
@@ -318,6 +313,7 @@ public class AppMain extends Application {
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
         TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);
         
+        WeatherComponentServices weatherComponentServices = componentManager.getComponentService(WeatherComponentServices.class);
         WMSServices wmsServices = componentManager.getComponentService(WMSServices.class);
         wmsServices.init();
         WebViewServices webViewServices = componentManager.getComponentService(WebViewServices.class);
@@ -367,11 +363,11 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(routeDataEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(sailingDirectionsServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(serverOptionsComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(weatherComponentServices.getDriver());
         
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
         //  webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");

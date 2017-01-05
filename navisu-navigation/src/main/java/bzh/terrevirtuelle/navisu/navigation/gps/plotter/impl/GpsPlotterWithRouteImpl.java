@@ -15,7 +15,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
-import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.GpsPlotterWithRoute;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.GpsPlotterWithRouteServices;
 import bzh.terrevirtuelle.navisu.navigation.gps.plotter.impl.controller.GpsPlotterWithRouteController;
@@ -25,6 +24,7 @@ import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.ProducedEvent;
 import org.capcaval.c3.component.annotation.UsedService;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 
 /**
  * NaVisu
@@ -44,7 +44,7 @@ public class GpsPlotterWithRouteImpl
     @UsedService
     LayersManagerServices layersManagerServices;
     @UsedService
-    KmlObjectServices kmlObjectServices;
+    KmlComponentServices kmlObjectServices;
     @UsedService
     S57GlobalCatalogServices s57GlobalCatalogServices;
     @UsedService

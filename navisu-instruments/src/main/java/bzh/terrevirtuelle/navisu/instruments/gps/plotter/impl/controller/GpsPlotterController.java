@@ -16,7 +16,6 @@ import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRad
 import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.ShipController;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
-import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
@@ -34,6 +33,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 
 /**
  * NaVisu
@@ -46,7 +46,7 @@ public class GpsPlotterController
 
     protected final String GROUP = "Navigation";
     protected GuiAgentServices guiAgentServices;
-    protected KmlObjectServices kmlObjectServices;
+    protected KmlComponentServices kmlObjectServices;
     protected LayersManagerServices layersManagerServices;
     protected String name;
     protected WorldWindow wwd;
@@ -63,7 +63,7 @@ public class GpsPlotterController
 
     public GpsPlotterController(LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
-            KmlObjectServices kmlObjectServices,
+            KmlComponentServices kmlObjectServices,
             String name) {
         this(layersManagerServices, guiAgentServices, name);
         this.kmlObjectServices = kmlObjectServices;

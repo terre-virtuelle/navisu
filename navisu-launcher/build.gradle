@@ -25,12 +25,12 @@ dependencies {
     compile project(':navisu-navigation')
     compile project(':navisu-photos')
     compile project(':navisu-shapefiles')
-    compile project(':navisu-sailingDirections')
     compile project(':navisu-sedimentology')
     compile project(':navisu-speech')
     compile project(':navisu-system')
     compile project(':navisu-server')
     compile project(':navisu-util')
+    compile project(':navisu-weather')
     compile project(':navisu-wms')
     compile fileTree(dir: 'lib', include: '*.jar')
 }

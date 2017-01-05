@@ -61,6 +61,7 @@ public class NetCDFImpl
             private static final String EXTENSION_10 = ".mnt";
             private static final String EXTENSION_11 = ".mnt.zip";
             private static final String EXTENSION_12 = ".dl.zip";
+            private static final String EXTENSION_13 = ".grb2";
 
             @Override
             public boolean canOpen(String category, String file) {
@@ -78,7 +79,8 @@ public class NetCDFImpl
                         || file.toLowerCase().endsWith(EXTENSION_9)
                         || file.toLowerCase().endsWith(EXTENSION_10)
                         || file.toLowerCase().endsWith(EXTENSION_11)
-                        || file.toLowerCase().endsWith(EXTENSION_12)) {
+                        || file.toLowerCase().endsWith(EXTENSION_12)
+                        || file.toLowerCase().endsWith(EXTENSION_13)) {
                     canOpen = true;
                 }
                 return canOpen;

@@ -13,9 +13,9 @@ import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotter;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrackServices;
-import bzh.terrevirtuelle.navisu.kml.KmlObjectServices;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
+import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 
 /**
  * NaVisu
@@ -31,7 +31,7 @@ public class GpsPlotterImpl
     @UsedService
     LayersManagerServices layersManagerServices;
     @UsedService
-    KmlObjectServices kmlObjectServices;
+    KmlComponentServices kmlObjectServices;
     @UsedService
     GpsTrackServices gpsTrackServices;
 
