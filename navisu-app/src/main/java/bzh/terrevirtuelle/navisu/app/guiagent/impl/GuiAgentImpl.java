@@ -199,8 +199,9 @@ public class GuiAgentImpl
             }
         });
         
-        mob.setTranslateX(1130);
-        mob.setTranslateY(30.0);
+        mob.setTranslateX(1075);
+        mob.setTranslateY(40.0);
+        mob.setScale(.75);
         StackPane.setAlignment(mob, Pos.BOTTOM_CENTER);
         Group groupDock = dockManager.getGroupDock();
         groupDock.getChildren().add(mob);

@@ -254,12 +254,13 @@ public class DockManagerImpl<TrackTool>
     private void createMeteoRadialWidget() {
         meteoRadialMenu = RadialMenuBuilder.create()
                 .centralImage("meteoradialmenu150.png")
-                .createNode(0, "file.png", 0, "grib.png", 0, "wind.png",
+                .createNode(0, "files.png", 0, "grib.png", 0, "wind.png",
                         (e) -> open("Wind", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
-                .createNode(0, "file.png", 0, "grib.png", 0, "pressure.png",
+                .createNode(0, "files.png", 0, "grib.png", 0, "pressure.png",
                         (e) -> open("Pressure", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
-                .createNode(0, "file.png", 1, "model.png", 0, "dump.png",
-                        (e) -> open("NetCdfInfo", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2"))
+                .createNode(0, "files.png", 1, "model.png", 0, "dump.png",
+                        (e) -> open("NetCdfInfo", ".grb", ".Z", ".zip", ".gzip", "gz", ".bz2", ".nc", ".grib2", ".grb2"))
+                .createNode(1, "sites.png", 0, "local.png", 0, "darkSky.png", (e) -> open("DarkSky"))
                 .build();
         meteoRadialMenu.setLayoutX((width / 2) - 30);
         meteoRadialMenu.setLayoutY(height / 2);
@@ -328,7 +329,8 @@ public class DockManagerImpl<TrackTool>
                 .createNode(0, "simu.png", 0, "files.png", 2, "nmeaOff.png", (e) -> open())
                 .createNode(1, "data.png", 0, "files.png", 0, "shapefile.png", (e) -> open("SHP", ".shp", ".SHP"))
                 .createNode(1, "data.png", 0, "files.png", 1, "kml.png", (e) -> open("KML", ".kml", ".kmz", ".KMZ"))
-                .createNode(1, "data.png", 0, "files.png", 2, "wms.png", (e) -> openWMS("WMS_CATALOG", ""))
+                .createNode(1, "data.png", 0, "files.png", 2, "collada.png", (e) -> open("DAE", ".dae",".DAE"))
+                .createNode(1, "data.png", 0, "files.png", 3, "wms.png", (e) -> openWMS("WMS_CATALOG", ""))
                 //   .createNode(0, "system.png", 1, "camera.png", 1, "cameraOff.png", (e) -> close("Camera"))
                 //   .createNode(0, "system.png", 1, "camera.png", 2, "cameraOn.png", (e) -> open("Camera"))
                 .build();

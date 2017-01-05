@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.logging.Level;
 
@@ -105,7 +106,9 @@ public class DriverManagerImpl
         }
         System.out.println("userInitialDirectory " + userInitialDirectory);
         this.fileChooserDock.getExtensionFilters().clear();
-        this.fileChooserDock.getExtensionFilters().add(new FileChooser.ExtensionFilter(category, ext));
+        this.fileChooserDock.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
+  
         try {
             File selectedFile = this.fileChooserDock.showOpenDialog(null);
             if (selectedFile != null) {
