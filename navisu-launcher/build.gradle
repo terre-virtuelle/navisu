@@ -14,6 +14,7 @@ dependencies {
     compile project(':navisu-core')
     compile project(':navisu-currents')
     compile project(':navisu-extensions')
+    compile project(':navisu-gazeteer')
     compile project(':navisu-geometry')
     compile project(':navisu-gpx')
     compile project(':navisu-netcdf')
