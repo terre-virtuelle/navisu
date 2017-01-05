@@ -10,7 +10,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.database.relational.DatabaseServices;
 import bzh.terrevirtuelle.navisu.database.app.TestDB;
 import bzh.terrevirtuelle.navisu.database.app.TestDBServices;
-import bzh.terrevirtuelle.navisu.database.graph.neo4J.GraphDatabaseComponentServices;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,12 +32,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.RelationshipType;
-import org.neo4j.graphdb.Transaction;
 
 /**
  * NaVisu
@@ -51,8 +44,6 @@ public class TestDBImpl
 
     @UsedService
     DatabaseServices databaseServices;
-    @UsedService
-    GraphDatabaseComponentServices graphDatabaseComponentServices;
     @UsedService
     GuiAgentServices guiAgentServices;
 
@@ -264,96 +255,11 @@ public class TestDBImpl
         });
         em.getTransaction().commit();
     }
-@SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     public Collection<Ship> findAllShips() {
         query = em.createQuery("SELECT s FROM Ship s");
         return (Collection<Ship>) query.getResultList();
-    }
-
-    /*
-     *
-     Neo4J Section 
-     *
-     */
-    private static enum RelTypes
-            implements RelationshipType {
-        KNOWS
-    }
-    GraphDatabaseService graphDb;
-    Node firstNode;
-    Node secondNode;
-    Node ownerShipNode;
-    Node shipNode;
-    Ship ownerShip;
-    Relationship relationship;
-    List<Relationship> relationshipList;
-
-    @Override
-    public Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd) {
-        connection = databaseServices.connect(hostName, protocol, port, driverName, userName, passwd);
-        return connection;
-    }
-
-    @Override
-    public void runEmbeddedNeo4J(String dbName) {
-        graphDb = graphDatabaseComponentServices.newEmbeddedDatabase(dbName);
-
-        ownerShip = new Ship();
-        ownerShip.setName("Lithops");
-        relationshipList = new ArrayList<>();
-        ships = readAllShips();
-        try (Transaction tx = graphDb.beginTx()) {
-
-            firstNode = graphDb.createNode();
-            firstNode.setProperty("message", "Hello, ");
-
-            secondNode = graphDb.createNode();
-            secondNode.setProperty("message", "World!");
-
-            relationship = firstNode.createRelationshipTo(secondNode, RelTypes.KNOWS);
-            relationship.setProperty("message", "brave Neo4j ");
-
-            System.out.print(firstNode.getProperty("message"));
-            System.out.print(relationship.getProperty("message"));
-            System.out.println(secondNode.getProperty("message"));
-
-            // let's remove the data
-            firstNode.getSingleRelationship(RelTypes.KNOWS, Direction.OUTGOING).delete();
-            firstNode.delete();
-            secondNode.delete();
-
-            ownerShipNode = graphDb.createNode();
-            ownerShipNode.setProperty("name", ownerShip.getName());
-            System.out.println(ownerShipNode.getProperty("name"));
-
-            ships.stream().filter((s) -> (s.getShipName() != null)).map((s) -> {
-                shipNode = graphDb.createNode();
-                return s;
-            }).map((s) -> {
-                shipNode.setProperty("name", s.getName());
-                return s;
-            }).forEach((_item) -> {
-                ownerShipNode.createRelationshipTo(shipNode, RelTypes.KNOWS);
-            });
-            tx.success();
-            /*
-            String rows = null;
-            
-            try (Transaction ignored = graphDb.beginTx();
-                    
-                    Result result = graphDb.execute("match (n {name: 'shipNode'}) return n, n.name")) {
-                while (result.hasNext()) {
-                    Map<String, Object> row = result.next();
-                    for (Entry<String, Object> column : row.entrySet()) {
-                        rows += column.getKey() + ": " + column.getValue() + "; ";
-                    }
-                    rows += "\n";
-                }
-                System.out.println(rows);
-                ignored.success();
-            }
-             */
-        }
     }
 
     @Override
@@ -378,4 +284,5 @@ public class TestDBImpl
     public DatabaseDriver getDriver() {
         return this;
     }
+
 }

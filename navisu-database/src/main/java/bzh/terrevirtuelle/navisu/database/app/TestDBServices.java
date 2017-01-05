@@ -22,7 +22,7 @@ public interface TestDBServices
 
     Connection connect(String dbName, String hostName, String protocol, String port, String driverName, String userName, String passwd);
 
-    Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd);
+  //  Connection connect(String hostName, String protocol, String port, String driverName, String userName, String passwd);
 
     void close();
 
@@ -34,6 +34,5 @@ public interface TestDBServices
 
     void runJPA();
 
-    void runEmbeddedNeo4J(String dbName);
 
 }
