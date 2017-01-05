@@ -1,8 +1,6 @@
-package bzh.terrevirtuelle.navisu.gazeteer.impl;
+package bzh.terrevirtuelle.navisu.gazetteer.impl;
 
-import bzh.terrevirtuelle.navisu.gazeteer.GazeteerComponent;
-import bzh.terrevirtuelle.navisu.gazeteer.GazeteerComponentServices;
-import bzh.terrevirtuelle.navisu.gazeteer.impl.lucene.GeoNameResolver;
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.GeoNameResolver;
 import static bzh.terrevirtuelle.navisu.util.iso.CountryCodeISO_2.COUNTRY_CODE;
 import edu.usc.ir.geo.gazetteer.domain.Location;
 import java.io.FileInputStream;
@@ -15,12 +13,14 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
+import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponent;
+import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 
 /**
  * User: serge Date: 23/11/2013
  */
-public class GazeteerComponentImpl
-        implements GazeteerComponent, GazeteerComponentServices,
+public class GazetteerComponentImpl
+        implements GazetteerComponent, GazetteerComponentServices,
         ComponentState {
 
     private GeoNameResolver resolver;
@@ -42,7 +42,7 @@ public class GazeteerComponentImpl
             indexerPath = properties.getProperty(INDEXER_PATH).trim();
             gazetteerPath = properties.getProperty(GAZETEER_PATH).trim();
         } catch (IOException ex) {
-            Logger.getLogger(GazeteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -61,7 +61,7 @@ public class GazeteerComponentImpl
         try {
             resolver.buildIndex(gazetteerPath, indexerPath, reverseGeocodingEnabled);
         } catch (IOException ex) {
-            Logger.getLogger(GazeteerComponentImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -70,7 +70,7 @@ public class GazeteerComponentImpl
         try {
             resolver.buildIndex(gazetteerPath, indexerPath, true);
         } catch (IOException ex) {
-            Logger.getLogger(GazeteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -79,7 +79,7 @@ public class GazeteerComponentImpl
         try {
             return resolver.searchNearby(latitude, longitude, distanceInMiles, indexerPath, count);
         } catch (IOException ex) {
-            Logger.getLogger(GazeteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return null;
     }
@@ -89,7 +89,7 @@ public class GazeteerComponentImpl
         try {
             return resolver.searchGeoName(indexerPath, locationNameEntities, count);
         } catch (IOException ex) {
-            Logger.getLogger(GazeteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return null;
     }
@@ -99,7 +99,7 @@ public class GazeteerComponentImpl
         try {
             return resolver.searchGeoName(this.indexerPath, locationNameEntities, count);
         } catch (IOException ex) {
-            Logger.getLogger(GazeteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         return null;
     }

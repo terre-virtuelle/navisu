@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package bzh.terrevirtuelle.navisu.gazeteer.app;
+package bzh.terrevirtuelle.navisu.gazetteer.app;
 
-import bzh.terrevirtuelle.navisu.gazeteer.impl.lucene.GeoNameResolver;
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.GeoNameResolver;
 import edu.usc.ir.geo.gazetteer.domain.Location;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
- package bzh.terrevirtuelle.navisu.gazeteer.impl.lucene.domain;
+ package bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain;
 
 public class Location {
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.gazeteer;
+package bzh.terrevirtuelle.navisu.gazetteer;
 
 import edu.usc.ir.geo.gazetteer.domain.Location;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ import org.capcaval.c3.component.ComponentService;
  *
  * @author serge
  */
-public interface GazeteerComponentServices
+public interface GazetteerComponentServices
         extends ComponentService {
 
     void buildIndex(String gazetteerPath, String indexerPath, boolean reverseGeocodingEnabled);

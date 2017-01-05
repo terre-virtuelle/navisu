@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package bzh.terrevirtuelle.navisu.gazeteer.impl.lucene.api;
+package bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
