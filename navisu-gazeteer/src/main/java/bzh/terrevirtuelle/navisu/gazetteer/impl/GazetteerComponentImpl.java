@@ -1,8 +1,6 @@
 package bzh.terrevirtuelle.navisu.gazetteer.impl;
 
 import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.GeoNameResolver;
-import static bzh.terrevirtuelle.navisu.util.iso.CountryCodeISO_2.COUNTRY_CODE;
-import edu.usc.ir.geo.gazetteer.domain.Location;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +13,7 @@ import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponent;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 
 /**
  * User: serge Date: 23/11/2013

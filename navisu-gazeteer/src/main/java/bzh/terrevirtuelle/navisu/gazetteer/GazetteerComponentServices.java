@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.gazetteer;
 
-import edu.usc.ir.geo.gazetteer.domain.Location;
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 import java.util.HashMap;
 import java.util.List;
 import org.capcaval.c3.component.ComponentService;

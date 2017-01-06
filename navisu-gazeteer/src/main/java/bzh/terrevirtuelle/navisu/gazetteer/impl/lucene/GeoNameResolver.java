@@ -17,6 +17,7 @@
 
 package bzh.terrevirtuelle.navisu.gazetteer.impl.lucene;
 
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -80,9 +81,9 @@ import com.google.gson.Gson;
 import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
 import com.spatial4j.core.shape.Point;
-
-import edu.usc.ir.geo.gazetteer.domain.Location;
 import edu.usc.ir.geo.gazetteer.service.Launcher;
+
+
 
 public class GeoNameResolver implements Closeable {
 	//UPPER BOUND FOR SEARCHING AN AREA IN MILES

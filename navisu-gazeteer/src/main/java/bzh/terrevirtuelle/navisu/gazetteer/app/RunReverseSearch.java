@@ -17,7 +17,8 @@
 package bzh.terrevirtuelle.navisu.gazetteer.app;
 
 import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.GeoNameResolver;
-import edu.usc.ir.geo.gazetteer.domain.Location;
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

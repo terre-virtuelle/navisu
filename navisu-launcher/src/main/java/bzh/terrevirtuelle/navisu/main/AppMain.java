@@ -132,8 +132,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServ
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
-import bzh.terrevirtuelle.navisu.gazeteer.GazeteerComponentServices;
-import bzh.terrevirtuelle.navisu.gazeteer.impl.GazeteerComponentImpl;
+import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
+import bzh.terrevirtuelle.navisu.gazetteer.impl.GazetteerComponentImpl;
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
 import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
@@ -143,11 +144,7 @@ import java.util.Arrays;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
-import edu.usc.ir.geo.gazetteer.domain.Location;
 import gov.nasa.worldwind.WorldWindow;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -208,7 +205,7 @@ public class AppMain extends Application {
                         DriverManagerImpl.class,
                         ExifComponentImpl.class,
                         FilesImpl.class,
-                        GazeteerComponentImpl.class,
+                        GazetteerComponentImpl.class,
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
                         GpsTrackImpl.class,
@@ -275,7 +272,7 @@ public class AppMain extends Application {
 
         FilesServices filesServices = componentManager.getComponentService(FilesServices.class);
 
-        GazeteerComponentServices gazeteerComponentServices = componentManager.getComponentService(GazeteerComponentServices.class);
+        GazetteerComponentServices gazetteerComponentServices = componentManager.getComponentService(GazetteerComponentServices.class);
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
@@ -519,7 +516,7 @@ public class AppMain extends Application {
         //String indexPath = "/home/serge/Data/allCountries/geoIndex";
         // String gazetteerPath = "/home/serge/Data/allCountries/geoIndex";
         // gazeteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
-        Location location = gazeteerComponentServices.searchGeoName("TOULOUSE", "FR");
+        Location location = gazetteerComponentServices.searchGeoName("TOULOUSE", "FR");
         System.out.println(location.getName() + " " + location.getLatitude() + " " + location.getLongitude());
         wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
 

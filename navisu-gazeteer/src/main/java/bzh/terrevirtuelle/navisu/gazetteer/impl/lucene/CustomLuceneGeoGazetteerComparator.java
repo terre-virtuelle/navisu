@@ -17,12 +17,12 @@
 
 package bzh.terrevirtuelle.navisu.gazetteer.impl.lucene;
 
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 import java.util.Comparator;
 
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import edu.usc.ir.geo.gazetteer.domain.Location;
 
 /**
  * Custom FieldComparatorSource for indexed GeoNames data set
