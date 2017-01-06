@@ -517,6 +517,7 @@ public class AppMain extends Application {
         //   String gazetteerPath = "/home/serge/Data/allCountries";
         //  gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
         Location location = gazetteerComponentServices.searchGeoName("BREST", "FR");
+        
         if (location != null) {
             wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
         }
