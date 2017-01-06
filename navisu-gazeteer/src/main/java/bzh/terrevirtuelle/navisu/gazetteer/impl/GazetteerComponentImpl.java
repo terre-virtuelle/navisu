@@ -105,19 +105,23 @@ public class GazetteerComponentImpl
 
     @Override
     public Location searchGeoName(String town, String countryCode) {
-        HashMap<String, List<Location>> locationMap;
-        List<String> locationNameEntities = new ArrayList<>();
-        locationNameEntities.add(town);
-        if (resolver != null) {
-            locationMap = searchGeoName(this.indexerPath, locationNameEntities, DEFAULT_COUNT);
-            for (Map.Entry<String, List<Location>> s : locationMap.entrySet()) {
-                List<Location> locations = s.getValue();
-                for (Location l : locations) {
-                    if (l.getCountryCode().equals(countryCode)) {
-                        return l;
+        try {
+            HashMap<String, List<Location>> locationMap;
+            List<String> locationNameEntities = new ArrayList<>();
+            locationNameEntities.add(town);
+            if (resolver != null) {
+                locationMap = searchGeoName(this.indexerPath, locationNameEntities, DEFAULT_COUNT);
+                for (Map.Entry<String, List<Location>> s : locationMap.entrySet()) {
+                    List<Location> locations = s.getValue();
+                    for (Location l : locations) {
+                        if (l.getCountryCode().equals(countryCode)) {
+                            return l;
+                        }
                     }
                 }
             }
+        } catch (Exception ex) {
+            
         }
         return null;
     }
