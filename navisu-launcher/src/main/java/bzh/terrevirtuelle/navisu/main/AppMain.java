@@ -513,13 +513,13 @@ public class AppMain extends Application {
         // leapMotionComponentServices.on();
         // Test Gazeteer services
         // Decommenter si l'indexation n'a pas été faite. (1 fois)
-        //String indexPath = "/home/serge/Data/allCountries/geoIndex";
-        // String gazetteerPath = "/home/serge/Data/allCountries/geoIndex";
-        // gazeteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
-        Location location = gazetteerComponentServices.searchGeoName("TOULOUSE", "FR");
-        System.out.println(location.getName() + " " + location.getLatitude() + " " + location.getLongitude());
-        wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
-
+        // String indexPath = "/home/serge/Data/allCountries/geoIndex";
+        //   String gazetteerPath = "/home/serge/Data/allCountries";
+        //  gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
+        Location location = gazetteerComponentServices.searchGeoName("BREST", "FR");
+        if (location != null) {
+            wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
+        }
 
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
