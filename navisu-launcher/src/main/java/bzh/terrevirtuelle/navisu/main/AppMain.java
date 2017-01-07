@@ -440,7 +440,7 @@ public class AppMain extends Application {
         //gpsPlotterServices.on();
 
         /* Test Bezier, approxiamtion trajectoire */
- /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
+        /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
          bezier2DServices.toKML("path.kml", data);
 
          List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
@@ -511,17 +511,23 @@ public class AppMain extends Application {
 
         // Start Leap Motion 
         // leapMotionComponentServices.on();
-        // Test Gazeteer services
-        // Decommenter si l'indexation n'a pas été faite. (1 fois)
-        // String indexPath = "/home/serge/Data/allCountries/geoIndex";
-        //   String gazetteerPath = "/home/serge/Data/allCountries";
-        //  gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
-        Location location = gazetteerComponentServices.searchGeoName("BREST", "FR");
         
+        // Test Gazeteer services
+        
+        // Decommenter si l'indexation n'a pas été faite. (1 fois)
+        /* String indexPath = "/home/serge/Data/allCountries/geoIndex";
+           String gazetteerPath = "/home/serge/Data/allCountries";
+          gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
+        */
+        // Si un index est creee 
+        /*
+         Location location = gazetteerComponentServices.searchGeoName("BREST", "FR");
         if (location != null) {
             wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
         }
-
+        */
+        
+        
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");
