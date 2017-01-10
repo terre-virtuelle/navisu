@@ -84,7 +84,8 @@ public class GazetteerComponentImpl
     }
 
     @Override
-    public HashMap<String, List<Location>> searchGeoName(String indexerPath, List<String> locationNameEntities, int count) {
+    public HashMap<String, List<Location>> searchGeoName(String indexerPath, 
+            List<String> locationNameEntities, int count) {
         try {
             return resolver.searchGeoName(indexerPath, locationNameEntities, count);
         } catch (IOException ex) {
