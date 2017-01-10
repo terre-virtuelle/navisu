@@ -173,6 +173,7 @@ public class GuiAgentImpl
                         + "        Longitude : " + pos.getLongitude().toFormattedDMSString());
             });
         });
+
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
         stage1 = new Stage();
         stage1.setOpacity(.0);
@@ -198,7 +199,7 @@ public class GuiAgentImpl
                 first = true;
             }
         });
-        
+
         mob.setTranslateX(1075);
         mob.setTranslateY(40.0);
         mob.setScale(.75);

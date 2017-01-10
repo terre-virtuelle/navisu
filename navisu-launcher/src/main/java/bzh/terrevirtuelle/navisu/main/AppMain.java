@@ -514,8 +514,12 @@ public class AppMain extends Application {
         
         // Test Gazeteer services
         
-        // Decommenter si l'indexation n'a pas été faite. (1 fois)
-        /* String indexPath = "/home/serge/Data/allCountries/geoIndex";
+        /* Decommenter si l'indexation n'a pas été faite. (1 fois)
+         Telecharger les donnees . 
+         http://download.geonames.org/export/dump/allCountries.zip
+        */
+        /*
+         String indexPath = "/home/serge/Data/allCountries/geoIndex";
            String gazetteerPath = "/home/serge/Data/allCountries";
           gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
         */
