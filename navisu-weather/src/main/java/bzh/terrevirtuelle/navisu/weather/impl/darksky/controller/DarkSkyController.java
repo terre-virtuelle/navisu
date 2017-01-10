@@ -5,8 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
 
+import bzh.terrevirtuelle.navisu.domain.country.CountryCode;
+import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
+import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
-import com.sun.javafx.collections.ObservableListWrapper;
 import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import java.io.IOException;
@@ -18,7 +20,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,11 +31,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -55,11 +56,9 @@ public class DarkSkyController
     @FXML
     Text title;
     @FXML
-    Button okButton;
+    Label latitudeLabel;
     @FXML
-    TextField latitudeTF;
-    @FXML
-    TextField longitudeTF;
+    Label longitudeLabel;
     @FXML
     TextField townTF;
     @FXML
@@ -67,29 +66,42 @@ public class DarkSkyController
     @FXML
     MenuButton unitMB;
     @FXML
+    MenuButton countryMB;
+    @FXML
     public DatePicker datePicker;
+    @FXML
+    public Button requestButton;
 
     String FXML = "weatherPanel.fxml";
-    List<String> languagelist;
-    List<String> unitlist;
+    List<String> languageList;
+    String language;
+    List<String> unitList;
+    String unit;
+    List<String> countryList;
     private ObservableList observableList = FXCollections.observableArrayList();
     private DateCell iniCell = null;
     private DateCell endCell = null;
-
     private LocalDate iniDate;
     private LocalDate endDate;
+    private double latitude;
+    private double longitude;
+    private String town;
+    private String country;
+    private String countryCode;
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.uuuu", Locale.ENGLISH);
-   
+    private DarkSkyComponentController darkSkyComponentController;
+    protected GazetteerComponentServices gazetteerComponentServices;
 
-    public DarkSkyController(List<String> languagelist, List<String> unitList) {
-        this.languagelist = languagelist;
-        this.unitlist = unitList;
-        setMouseTransparent(false);
-        load();
-    }
-
-    public DarkSkyController(KeyCode keyCode, KeyCombination.Modifier keyCombination) {
-        super(keyCode, keyCombination);
+    public DarkSkyController(DarkSkyComponentController darkSkyComponentController,
+            GazetteerComponentServices gazetteerComponentServices,
+            List<String> languageList,
+            List<String> unitList,
+            List<String> countryList) {
+        this.darkSkyComponentController = darkSkyComponentController;
+        this.gazetteerComponentServices = gazetteerComponentServices;
+        this.languageList = languageList;
+        this.unitList = unitList;
+        this.countryList = countryList;
         setMouseTransparent(false);
         load();
     }
@@ -113,36 +125,52 @@ public class DarkSkyController
     private void initGui() {
 
         observableList = FXCollections.observableArrayList();
-        languagelist.forEach((s) -> {
+        languageList.forEach((s) -> {
             observableList.add(new CheckMenuItem(s));
         });
         languageMB.getItems().clear();
-        languageMB.getItems().addAll(observableList);
-        
+        languageMB.getItems().addAll(observableList);;
+        List<MenuItem> items = languageMB.getItems();
+        items.forEach((item) -> {
+            item.setOnAction(a -> {
+                language = item.getText();
+                languageMB.setText(language.trim());
+            });
+        });
+
         observableList = FXCollections.observableArrayList();
-        unitlist.forEach((s) -> {
+        unitList.forEach((s) -> {
             observableList.add(new CheckMenuItem(s));
         });
         unitMB.getItems().clear();
         unitMB.getItems().addAll(observableList);
-        
-
-        latitudeTF.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
-            System.out.println("********" + oldValue + "  " + newValue);
-            if (!latitudeTF.getText().equals("") && latitudeTF.getText() != null) {
-
-               // latitudeTF.setText(Double.toString(oldLat));
-
-            }
+        items = unitMB.getItems();
+        items.forEach((item) -> {
+            item.setOnAction(a -> {
+                unit = item.getText();
+                unitMB.setText(unit);
+            });
         });
-        longitudeTF.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
-            System.out.println("ooooooooooooo" + oldValue + "  " + newValue);
-            if (!longitudeTF.getText().equals("") && longitudeTF.getText() != null) {
+        observableList = FXCollections.observableArrayList();
+        countryList.forEach((s) -> {
+            observableList.add(new CheckMenuItem(s));
+        });
 
-            }
+        countryMB.getItems().clear();
+        countryMB.getItems().addAll(observableList);
+        items = countryMB.getItems();
+        items.forEach((item) -> {
+            item.setOnAction(a -> {
+                country = item.getText().trim();
+                countryCode = CountryCode.CODE.get(country);
+                countryMB.setText(country.trim() + "   " + "\"" + countryCode + "\"");
+            });
+        });
+
+        townTF.setOnAction(a -> {
+            town = townTF.getText().trim();
         });
         datePicker.setValue(LocalDate.now());
-
         datePicker.setConverter(new StringConverter<LocalDate>() {
 
             @Override
@@ -168,20 +196,15 @@ public class DarkSkyController
             }
         });
         final Callback<DatePicker, DateCell> dayCellFactory
-                = new Callback<DatePicker, DateCell>() {
+                = (final DatePicker datePicker1) -> new DateCell() {
             @Override
-            public DateCell call(final DatePicker datePicker) {
-                return new DateCell() {
-                    @Override
-                    public void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item.isAfter(LocalDate.now().plusDays(6))
-                                || item.isBefore(LocalDate.now())) {
-                            setDisable(true);
-                            setStyle("-fx-background-color: #ffc0cb;");
-                        }
-                    }
-                };
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item.isAfter(LocalDate.now().plusDays(6))
+                        || item.isBefore(LocalDate.now())) {
+                    setDisable(true);
+                    setStyle("-fx-background-color: #ffc0cb;");
+                }
             }
         };
         datePicker.setDayCellFactory(dayCellFactory);
@@ -260,6 +283,29 @@ public class DarkSkyController
                 });
             }
         });
+        requestButton.setOnAction(a -> {
+            if (town == null) {
+                town = townTF.getText();
+            }
+            Location location = gazetteerComponentServices.searchGeoName(town, countryCode);
+            latitudeLabel.setText(Double.toString(location.getLatitude()));
+            longitudeLabel.setText(Double.toString(location.getLongitude()));
+            darkSkyComponentController.init(unit, language, location.getLatitude(), location.getLongitude());
+            darkSkyComponentController.update();
+            List<DataPoint> datapoints = darkSkyComponentController.getForecast();
+            datapoints.forEach((d) -> {
+                System.out.println("Time : " + d.getTime() + " "
+                        + "Temperature : " + d.getTemperatureMax() + " "
+                        + "Humidity : " + d.getHumidity() + " "
+                        + "Visibility : " + d.getVisibility() + " "
+                        + "Pressure : " + d.getPressure() + " "
+                        + "WindSpeed : " + d.getWindSpeed() + " "
+                        + "WindBearing " + d.getWindBearing());
+            }); //  Alert alert = new Alert(AlertType.INFORMATION);
+            //  alert.setTitle("Example");
+            // alert.setContentText("You clicked " + cb.getItems().get((Integer)newValue));
+            //  alert.showAndWait();
+        });
     }
 
     public void setTitle(Text title) {
@@ -268,26 +314,6 @@ public class DarkSkyController
 
     public Text getTitle() {
         return title;
-    }
-
-    public Button getOkButton() {
-        return okButton;
-    }
-
-    public TextField getLatitudeTF() {
-        return latitudeTF;
-    }
-
-    public TextField getLongitudeTF() {
-        return longitudeTF;
-    }
-
-    public void setLatitudeTF(String latitude) {
-        this.latitudeTF.setText(latitude);
-    }
-
-    public void setLongitudeTF(String longitude) {
-        this.longitudeTF.setText(longitude);
     }
 
     @Override

@@ -6,6 +6,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
+import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponent;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyComponentController;
@@ -32,7 +33,9 @@ public class WeatherComponentImpl
     LayerTreeServices layerTreeServices;
     @UsedService
     GuiAgentServices guiAgentServices;
-
+    @UsedService
+    GazetteerComponentServices gazetteerComponentServices;
+    
     protected static final Logger LOGGER = Logger.getLogger(WeatherComponentImpl.class.getName());
     protected static int LAYER_INDEX = 0;
     protected Driver driver;
@@ -41,8 +44,6 @@ public class WeatherComponentImpl
     private static final String NAME = "Weather";
     private static final String TYPE_0 = "DarkSky";
     private List<DataPoint> dataPoints;
-    String DARK_SKY_API_KEY = "3a9c0c39c2e2463c8a36c7ef6ed58dd5";
-
     @Override
     public void componentInitiated() {
 
@@ -77,7 +78,7 @@ public class WeatherComponentImpl
 
     @Override
     public void on(String... category) {
-        weatherController = new DarkSkyComponentController();
+        weatherController = new DarkSkyComponentController(gazetteerComponentServices);
         //   if (weatherController.update() == true) {
         //      dataPoints = weatherController.getForecast();
         //  }

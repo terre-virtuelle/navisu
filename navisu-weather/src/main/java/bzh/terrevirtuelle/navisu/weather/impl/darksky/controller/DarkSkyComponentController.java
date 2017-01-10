@@ -1,5 +1,7 @@
 package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
 
+import bzh.terrevirtuelle.navisu.domain.country.CountryCode;
+import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -175,8 +177,9 @@ public class DarkSkyComponentController
     protected Properties properties;
     protected String PROPERTIES_FILE_NAME = "properties/user.properties";
     protected DarkSkyController darkSkyController;
+    protected GazetteerComponentServices gazetteerComponentServices;
 
-    public DarkSkyComponentController() {
+    public DarkSkyComponentController(GazetteerComponentServices gazetteerComponentServices) {
         List<String> languagelist = new ArrayList<>();
         for (Language l : Language.values()) {
             languagelist.add(l.name());
@@ -185,7 +188,13 @@ public class DarkSkyComponentController
         for (Unit l : Unit.values()) {
             unitList.add(l.name());
         }
-        darkSkyController = new DarkSkyController(languagelist, unitList);
+        List<String> countryList = new ArrayList<>();
+        CountryCode.CODE.keySet().forEach((c) -> {
+            countryList.add(c);
+        });
+        countryList.sort(String::compareToIgnoreCase);
+        darkSkyController = new DarkSkyController(this, gazetteerComponentServices,
+                languagelist, unitList, countryList);
         properties = new Properties();
         try {
             properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
@@ -193,29 +202,6 @@ public class DarkSkyComponentController
             Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         apiKey = properties.getProperty("darkSkyApiKey").trim();
-        init(apiKey, unit, language, latitude, longitude);
-    }
-
-    public DarkSkyComponentController(Unit unit,
-            Language language,
-            double latitude, final double longitude) {
-        List<String> languagelist = new ArrayList<>();
-        for (Language l : Language.values()) {
-            languagelist.add(l.name());
-        }
-        List<String> unitList = new ArrayList<>();
-        for (Unit l : Unit.values()) {
-            unitList.add(l.name());
-        }
-        darkSkyController = new DarkSkyController(languagelist, unitList);
-        properties = new Properties();
-        try {
-            properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
-        } catch (IOException ex) {
-            Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-        apiKey = properties.getProperty("darkSkyApiKey").trim();
-        init(apiKey, unit, language, latitude, longitude);
     }
 
     // ******************** Constructors **************************************
@@ -233,7 +219,15 @@ public class DarkSkyComponentController
         init(API_KEY, UNIT, LANGUAGE, LATITUDE, LONGITUDE);
     }
 
-    private void init(final String API_KEY, final Unit UNIT,
+    public void init(String unit,
+            String language,
+            double latitude, double longitude) {
+        init(apiKey, Unit.valueOf(unit), 
+                Language.valueOf(language), latitude, longitude);
+
+    }
+
+    public void init(final String API_KEY, final Unit UNIT,
             final Language LANGUAGE,
             final double LATITUDE, final double LONGITUDE) {
         if (null == API_KEY || API_KEY.isEmpty()) {
@@ -506,5 +500,5 @@ public class DarkSkyComponentController
     public DarkSkyController getDarkSkyController() {
         return darkSkyController;
     }
-    
+
 }
