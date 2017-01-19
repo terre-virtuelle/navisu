@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.extensions.server.impl.controller;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
+import bzh.terrevirtuelle.navisu.extensions.client.Client;
 import bzh.terrevirtuelle.navisu.extensions.commands.ArCommand;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
@@ -136,6 +137,21 @@ public class NavigationServerController {
         } catch (JAXBException ex) {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
+        LOGGER.log(Level.INFO, data);
+        
+        /**
+         * If a ArCommand with cmd=IPInfo is send, it will connect to the Server
+         * provided in arg
+         */
+        if(navCmd.getCmd().equals("IPInfo") && navCmd.getArg() != null){
+            try {
+                Client.setInstance(navCmd.getArg());
+                Client.connectToServer();
+            } catch (IOException ex) {
+                Logger.getLogger(NavigationServerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         return navCmd;
     }
 
@@ -147,6 +163,9 @@ public class NavigationServerController {
             System.out.println("ex "+ ex);
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
+        
+        //TODO
+        
         return xmlString.toString();
     }
 
