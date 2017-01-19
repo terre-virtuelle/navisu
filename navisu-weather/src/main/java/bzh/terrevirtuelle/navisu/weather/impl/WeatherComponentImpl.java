@@ -35,7 +35,7 @@ public class WeatherComponentImpl
     GuiAgentServices guiAgentServices;
     @UsedService
     GazetteerComponentServices gazetteerComponentServices;
-    
+
     protected static final Logger LOGGER = Logger.getLogger(WeatherComponentImpl.class.getName());
     protected static int LAYER_INDEX = 0;
     protected Driver driver;
@@ -44,6 +44,7 @@ public class WeatherComponentImpl
     private static final String NAME = "Weather";
     private static final String TYPE_0 = "DarkSky";
     private List<DataPoint> dataPoints;
+
     @Override
     public void componentInitiated() {
 
@@ -78,7 +79,7 @@ public class WeatherComponentImpl
 
     @Override
     public void on(String... category) {
-        weatherController = new DarkSkyComponentController(gazetteerComponentServices);
+        weatherController = new DarkSkyComponentController(gazetteerComponentServices, guiAgentServices);
         //   if (weatherController.update() == true) {
         //      dataPoints = weatherController.getForecast();
         //  }

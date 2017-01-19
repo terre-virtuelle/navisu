@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.ShipController;
@@ -60,6 +61,10 @@ public class GpsPlotterController
     protected CircularFifoQueue<RMC> sentenceQueue;
     protected double latitude = 0.0;
     protected double longitude = 0.0;
+    protected CircularFifoQueue<Double> latQueue;
+    protected CircularFifoQueue<Double> lonQueue;
+    protected boolean first = true;
+    int i = 0;
 
     public GpsPlotterController(LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
@@ -139,12 +144,14 @@ public class GpsPlotterController
     }
 
     private void updateTarget(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        ownerShip.setLatitude(latitude);
-        ownerShip.setLongitude(longitude);
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-        ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
+
+            this.latitude = latitude;
+            this.longitude = longitude;
+            ownerShip.setLatitude(latitude);
+            ownerShip.setLongitude(longitude);
+            ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+            ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
+            wwd.redrawNow();
     }
 
     @Override

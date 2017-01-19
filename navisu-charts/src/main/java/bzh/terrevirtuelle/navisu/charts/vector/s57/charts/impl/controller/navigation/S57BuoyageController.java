@@ -40,6 +40,7 @@ public class S57BuoyageController
             first = false;
         }
         subscribe();
+        System.out.println("S57BuoyageController activate");
     }
 
     @Override

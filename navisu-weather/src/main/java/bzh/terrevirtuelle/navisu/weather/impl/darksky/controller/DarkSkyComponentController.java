@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.country.CountryCode;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import org.json.simple.JSONArray;
@@ -178,8 +179,11 @@ public class DarkSkyComponentController
     protected String PROPERTIES_FILE_NAME = "properties/user.properties";
     protected DarkSkyController darkSkyController;
     protected GazetteerComponentServices gazetteerComponentServices;
+    protected GuiAgentServices guiAgentServices;
 
-    public DarkSkyComponentController(GazetteerComponentServices gazetteerComponentServices) {
+    public DarkSkyComponentController(GazetteerComponentServices gazetteerComponentServices,
+            GuiAgentServices guiAgentServices) {
+        this.guiAgentServices = guiAgentServices;
         List<String> languagelist = new ArrayList<>();
         for (Language l : Language.values()) {
             languagelist.add(l.name());
@@ -193,7 +197,8 @@ public class DarkSkyComponentController
             countryList.add(c);
         });
         countryList.sort(String::compareToIgnoreCase);
-        darkSkyController = new DarkSkyController(this, gazetteerComponentServices,
+        darkSkyController = new DarkSkyController(this,
+                gazetteerComponentServices, guiAgentServices,
                 languagelist, unitList, countryList);
         properties = new Properties();
         try {
@@ -222,7 +227,7 @@ public class DarkSkyComponentController
     public void init(String unit,
             String language,
             double latitude, double longitude) {
-        init(apiKey, Unit.valueOf(unit), 
+        init(apiKey, Unit.valueOf(unit),
                 Language.valueOf(language), latitude, longitude);
 
     }
@@ -335,6 +340,7 @@ public class DarkSkyComponentController
      *
      * @param JSON_DATA
      */
+    @SuppressWarnings("unchecked")
     public void updateWithCustomJsonString(final String JSON_DATA) {
         Object obj = JSONValue.parse(JSON_DATA);
         JSONObject jsonObj = (JSONObject) obj;
@@ -369,6 +375,7 @@ public class DarkSkyComponentController
         parseDarkSkyJsonData(JSON_DATA);
     }
 
+    @SuppressWarnings("unchecked")
     private void parseDarkSkyJsonData(final String JSON_DATA) {
         Object obj = JSONValue.parse(JSON_DATA);
         JSONObject jsonObj = (JSONObject) obj;
@@ -400,6 +407,7 @@ public class DarkSkyComponentController
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void setDataPoint(final DataPoint DATA_POINT, final JSONObject JSON_OBJ, final TimeZone TIME_ZONE) {
         DATA_POINT.setTime(epochStringToLocalDateTime(JSON_OBJ.getOrDefault("time", 0).toString(), TIME_ZONE));
         DATA_POINT.setSummary(JSON_OBJ.getOrDefault("summary", "").toString());
@@ -463,7 +471,7 @@ public class DarkSkyComponentController
         final String URL_STRING = String.join("", darkSkyUrl, PARAMETERS.toString());
         return URL_STRING;
     }
-
+ @SuppressWarnings("unchecked")
     public JSONObject toJsonObject() {
         // Location
         JSONObject locationJson = new JSONObject();

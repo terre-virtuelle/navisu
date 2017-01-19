@@ -5,9 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.country.CountryCode;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.view.DarkSkyViewController;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
@@ -91,14 +93,18 @@ public class DarkSkyController
     final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.uuuu", Locale.ENGLISH);
     private DarkSkyComponentController darkSkyComponentController;
     protected GazetteerComponentServices gazetteerComponentServices;
+    protected GuiAgentServices guiAgentServices;
+    private String navisuWeatherCache;
 
     public DarkSkyController(DarkSkyComponentController darkSkyComponentController,
             GazetteerComponentServices gazetteerComponentServices,
+            GuiAgentServices guiAgentServices,
             List<String> languageList,
             List<String> unitList,
             List<String> countryList) {
         this.darkSkyComponentController = darkSkyComponentController;
         this.gazetteerComponentServices = gazetteerComponentServices;
+        this.guiAgentServices = guiAgentServices;
         this.languageList = languageList;
         this.unitList = unitList;
         this.countryList = countryList;
@@ -122,6 +128,7 @@ public class DarkSkyController
         initGui();
     }
 
+    @SuppressWarnings("unchecked")
     private void initGui() {
 
         observableList = FXCollections.observableArrayList();
@@ -284,6 +291,7 @@ public class DarkSkyController
             }
         });
         requestButton.setOnAction(a -> {
+            DarkSkyViewController darkSkyViewController = new DarkSkyViewController();
             if (town == null) {
                 town = townTF.getText();
             }
@@ -294,17 +302,22 @@ public class DarkSkyController
             darkSkyComponentController.update();
             List<DataPoint> datapoints = darkSkyComponentController.getForecast();
             datapoints.forEach((d) -> {
-                System.out.println("Time : " + d.getTime() + " "
-                        + "Temperature : " + d.getTemperatureMax() + " "
-                        + "Humidity : " + d.getHumidity() + " "
-                        + "Visibility : " + d.getVisibility() + " "
-                        + "Pressure : " + d.getPressure() + " "
-                        + "WindSpeed : " + d.getWindSpeed() + " "
-                        + "WindBearing " + d.getWindBearing());
+                darkSkyViewController.setTemperature(Double.toString(d.getTemperatureMax()));
+                darkSkyViewController.setHumidity(Double.toString(d.getHumidity()));
+                darkSkyViewController.setVisibility(Double.toString(d.getVisibility()));
+                darkSkyViewController.setPressure(Double.toString(d.getPressure()));
+                darkSkyViewController.setWindSpeed(Double.toString(d.getWindSpeed()));
+                darkSkyViewController.setWindBearing(Double.toString(d.getWindBearing()));
+                darkSkyViewController.setSummary(d.getSummary());
+                // System.out.println(d.toJsonString());
             }); //  Alert alert = new Alert(AlertType.INFORMATION);
             //  alert.setTitle("Example");
             // alert.setContentText("You clicked " + cb.getItems().get((Integer)newValue));
             //  alert.showAndWait();
+
+            guiAgentServices.getRoot().getChildren().add(darkSkyViewController); //Par defaut le widget n'est pas visible Ctrl-A
+            darkSkyViewController.setVisible(true);
+            System.out.println(System.getProperty("user.home"));
         });
     }
 
@@ -318,6 +331,7 @@ public class DarkSkyController
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        
+        
     }
-
 }

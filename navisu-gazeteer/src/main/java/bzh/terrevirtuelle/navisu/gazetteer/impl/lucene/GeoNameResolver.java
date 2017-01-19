@@ -551,6 +551,7 @@ public class GeoNameResolver implements Closeable {
     public static void writeResult(Map<String, List<Location>> resolvedEntities,
             PrintStream out) {
         out.println("[");
+        @SuppressWarnings("unchecked")
         List<String> keys = (List<String>) (List<?>) Arrays.asList(resolvedEntities.keySet().toArray());
         //TODO: use org.json.JSONArray and remove this custom formatting code
         for (int j = 0; j < keys.size(); j++) {

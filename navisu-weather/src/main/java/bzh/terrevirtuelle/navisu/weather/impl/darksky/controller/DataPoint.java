@@ -184,7 +184,7 @@ public class DataPoint {
 
     public double getVisibility() { return visibility; }
     public void setVisibility(final double VISIBILITY) { visibility = VISIBILITY; }
-
+ @SuppressWarnings("unchecked")
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("date", DTF.format(ZonedDateTime.of(time, timeZone.toZoneId())));

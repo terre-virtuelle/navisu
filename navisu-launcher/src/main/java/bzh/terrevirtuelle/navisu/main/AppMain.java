@@ -144,7 +144,12 @@ import java.util.Arrays;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyController;
 import gov.nasa.worldwind.WorldWindow;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -178,6 +183,21 @@ public class AppMain extends Application {
             Files.createDirectory(navisuHomePath);
             Files.createDirectory(Paths.get(navisuHome + "/databases/"));
             Files.createDirectory(Paths.get(navisuHome + "/properties/"));
+        }
+        if (!Files.exists(Paths.get(navisuHome + "/caches"), LinkOption.NOFOLLOW_LINKS)) {
+            Files.createDirectory(Paths.get(navisuHome + "/caches/"));
+        }
+
+        String navisuWeatherCache = navisuHome + "/caches/weather.properties";
+        if (!Files.exists(Paths.get(navisuWeatherCache), LinkOption.NOFOLLOW_LINKS)) {
+            try {
+                Files.createFile(Paths.get(navisuWeatherCache));
+                List<String> keys = new ArrayList<>(Arrays.asList("town=",
+                        "language=", "unit=", "country="));
+                Files.write(Paths.get(navisuWeatherCache), keys);
+            } catch (IOException ex) {
+                Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
         }
         final ComponentManager componentManager = ComponentManager.componentManager;
         /* Deploy components */
@@ -413,7 +433,7 @@ public class AppMain extends Application {
         - tcp://sinagot.net:5003 Simulateur AIS
         - gpsd://sinagot.net:2947 AIS zone Bretagne 
          */
-        //dataServerServices.openGpsd("sinagot.net", 2947);//Bretagne AIS Fulup
+      //  dataServerServices.openGpsd("sinagot.net", 5947);//Bretagne AIS Fulup 2947?
         // dataServerServices.openGpsd("sinagot.net", 5003);
         // dataServerServices.openGpsd("sinagot.net", 5121);
         //dataServerServices.openGpsd("hd-sf.com", 9009);
@@ -440,7 +460,7 @@ public class AppMain extends Application {
         //gpsPlotterServices.on();
 
         /* Test Bezier, approxiamtion trajectoire */
-        /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
+ /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
          bezier2DServices.toKML("path.kml", data);
 
          List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
@@ -511,27 +531,23 @@ public class AppMain extends Application {
 
         // Start Leap Motion 
         // leapMotionComponentServices.on();
-        
         // Test Gazeteer services
-        
         /* Decommenter si l'indexation n'a pas été faite. (1 fois)
          Telecharger les donnees . 
          http://download.geonames.org/export/dump/allCountries.zip
         */
         /*
+         String gazetteerPath = "/home/serge/Data/allCountries/allCountries.txt";
          String indexPath = "/home/serge/Data/allCountries/geoIndex";
-           String gazetteerPath = "/home/serge/Data/allCountries";
-          gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
-        */
+         gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
+       */
         // Si un index est creee 
         /*
-         Location location = gazetteerComponentServices.searchGeoName("BREST", "FR");
+         Location location = gazetteerComponentServices.searchGeoName("TOULOUSE", "FR");
         if (location != null) {
             wwd.getView().setEyePosition(Position.fromDegrees(location.getLatitude(), location.getLongitude(), 15000));
         }
-        */
-        
-        
+         */
 // Stop Applicaton 
         stage.setOnCloseRequest(e -> {
             LOGGER.info("Stop Application.........");

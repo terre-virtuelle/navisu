@@ -54,7 +54,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javax.xml.bind.JAXBException;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 
@@ -70,7 +69,7 @@ public class GpsPlotterWithRouteController
     private final String NAME2 = "Nautical documents";
     private final String NAME3 = "S57 Buoyage behavior";
     private final String NAME4 = "Nautical documents icons";
-    private final List<String> NAVIGATION_OBJECTS = Arrays.asList("Avurnav", "SailingDirections");
+   // private final List<String> NAVIGATION_OBJECTS = Arrays.asList("Avurnav", "SailingDirections");
     private final List<Class> S57_CONTROLLER_TYPE_LIST = Arrays.asList(
             BeaconIsolatedDanger.class,
             BeaconLateral.class,
@@ -149,6 +148,7 @@ public class GpsPlotterWithRouteController
                     PointPlacemark placemark = (PointPlacemark) po.getObject();
                     if (placemark.getValue("TYPE") != null) {
                         String type = (String) placemark.getValue("TYPE");
+                        /*
                         if (NAVIGATION_OBJECTS.contains(type)) {
                             Platform.runLater(() -> {
                                 textAreaController = new TextAreaController();
@@ -160,6 +160,7 @@ public class GpsPlotterWithRouteController
                             });
                             event.consume();
                         }
+                        */
                         if (type.equals("S57Chart")) {
                             Path path = s57GlobalCatalogServices.getChartPath((String) placemark.getValue(AVKey.DISPLAY_NAME));
                             s57ChartComponentServices.openChart(path.toString());
@@ -193,12 +194,10 @@ public class GpsPlotterWithRouteController
         S57_CONTROLLER_TYPE_LIST.stream().forEach((claz) -> {
             s57NavigationDataList.addAll(navigationDataSet.get(claz));
         });
-
         s57ControllerIdList = new ArrayList<>();
         s57NavigationDataList.stream().forEach((s) -> {
             s57ControllerIdList.add(Long.toString(s.getId()));
         });
-
         component.notifyTransponderActivateEvent(transponderZoneLayer, s57NavigationDataList);
     }
 
@@ -232,6 +231,7 @@ public class GpsPlotterWithRouteController
             sc.setIconsLayer(navigationIconsLayer);
             sc.activate();
         });
+        
         /*
         List<SailingDirections> sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
         sailingDirectionsList.stream().forEach((SailingDirections a) -> {

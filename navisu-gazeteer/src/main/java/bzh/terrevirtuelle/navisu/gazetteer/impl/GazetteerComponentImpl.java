@@ -60,7 +60,7 @@ public class GazetteerComponentImpl
         try {
             resolver.buildIndex(gazetteerPath, indexerPath, reverseGeocodingEnabled);
         } catch (IOException ex) {
-            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 

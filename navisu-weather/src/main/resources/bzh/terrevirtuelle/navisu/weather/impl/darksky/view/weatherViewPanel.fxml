@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Group?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,58 +19,48 @@
     <children>
         <Group>
             <children>
-            <Pane prefHeight="340.0" prefWidth="394.0" styleClass="background-pane" />
-			<Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="339.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="392.0" />
+            <Pane prefHeight="281.0" prefWidth="614.0" styleClass="background-pane" />
+			<Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="280.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="614.0" />
                 <Group layoutX="10.0">
                     <children>
-                      <ScrollPane fx:id="scrollPane" layoutX="15.0" layoutY="53.0" prefHeight="240.0" prefWidth="355.0" styleClass="scrolling-pane">
+                      <ScrollPane fx:id="scrollPane" layoutX="15.0" layoutY="53.0" prefHeight="129.0" prefWidth="577.0" styleClass="scrolling-pane">
                      <content>
-                        <GridPane prefHeight="221.0" prefWidth="346.0">
+                        <GridPane prefHeight="108.0" prefWidth="558.0">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="92.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="13.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="90.0" />
                           </columnConstraints>
                           <rowConstraints>
-                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="5.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="10.0" minHeight="0.0" prefHeight="10.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="      Units" GridPane.rowIndex="3" />
-                              <Label text="      Language" GridPane.rowIndex="4" />
-                              <Label text="      Town" GridPane.rowIndex="1" />
-                              <TextField fx:id="townTF" minWidth="26.0" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <MenuButton fx:id="unitMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" text="                                       " GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
-                              <MenuButton fx:id="languageMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" text="                            " GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
-                              <Label text="      Date(s)" GridPane.rowIndex="5" />
-                              <DatePicker fx:id="datePicker" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                              <Label text="      Country" GridPane.rowIndex="2" />
-                              <MenuButton fx:id="countryMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
+                              <Label fx:id="windSpeedValueLabel" prefHeight="16.0" prefWidth="80.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label fx:id="windBearingValueLabel" prefHeight="16.0" prefWidth="79.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <Label fx:id="windSpeedLabel" prefHeight="16.0" prefWidth="79.0" text=" " GridPane.rowIndex="1" />
+                              <Label fx:id="windBearingLabel" prefHeight="16.0" prefWidth="79.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <Label fx:id="humidityLabel" prefHeight="16.0" prefWidth="92.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                              <Label fx:id="humidityValueLabel" prefHeight="16.0" prefWidth="79.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                              <Label fx:id="visibilityLabel" prefHeight="16.0" prefWidth="93.0" GridPane.rowIndex="3" />
+                              <Label fx:id="visibilityValueLabel" prefHeight="16.0" prefWidth="92.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <Label fx:id="pressureLabel" prefHeight="16.0" prefWidth="93.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                              <Label fx:id="pressureValueLabel" prefHeight="16.0" prefWidth="93.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                              <Label fx:id="temperatureLabel" prefHeight="16.0" prefWidth="94.0" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+                              <Label fx:id="temperatureValueLabel" prefHeight="16.0" prefWidth="95.0" GridPane.columnIndex="6" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </content>
                       </ScrollPane>
-                        <Text fx:id="title" layoutX="10.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="     Weather requests" textAlignment="CENTER" wrappingWidth="285.0">
+                        <Text fx:id="title" layoutX="150.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="     Weather results" textAlignment="CENTER" wrappingWidth="285.0">
                         <font>
                         <Font name="augie" size="20.0" />
                      </font>
@@ -89,27 +75,25 @@
                         <Glow />
                     </effect>
                 </ImageView>
-                <ImageView fx:id="quit" fitHeight="25.0" fitWidth="25.0" layoutX="356.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="quit" fitHeight="25.0" fitWidth="25.0" layoutX="576.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@quit.png" />
                     </image>
                 </ImageView>
-            <Button fx:id="requestButton" layoutX="307.0" layoutY="302.0" mnemonicParsing="false" text="Request" />
-            <GridPane layoutX="28.0" layoutY="302.0" prefHeight="30.0" prefWidth="264.0">
+            <GridPane layoutX="25.0" layoutY="182.0" prefHeight="90.0" prefWidth="579.0" styleClass="scrolling-pane">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="34.0" prefWidth="34.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="150.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="34.0" prefWidth="34.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="82.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="507.0" minWidth="10.0" prefWidth="497.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="5.0" minHeight="5.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="5.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="5.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Lat :" />
-                  <Label fx:id="latitudeLabel" prefHeight="16.0" prefWidth="97.0" GridPane.columnIndex="1" />
-                  <Label text="Lon :" GridPane.columnIndex="2" />
-                  <Label fx:id="longitudeLabel" prefHeight="16.0" prefWidth="92.0" GridPane.columnIndex="3" />
+                  <Label fx:id="summaryLabel" prefHeight="16.0" prefWidth="80.0" GridPane.rowIndex="2" />
+                  <TextArea fx:id="summaryTA" maxHeight="42.0" prefHeight="42.0" prefWidth="486.0" styleClass="scrolling-pane" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             </children>
