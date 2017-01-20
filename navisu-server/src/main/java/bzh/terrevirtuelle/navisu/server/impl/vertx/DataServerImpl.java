@@ -92,16 +92,24 @@ public class DataServerImpl
     }
 
     private void initVertx() {
+
         vertx = VertxFactory.newVertx();
         vertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
             if (ws.path().equals("/nmea")) {
                 ws.dataHandler((Buffer data) -> {
                     // Analyse lexicale de la phrase et envoi en xml
                     if (!readers.isEmpty()) {
-                        if (readers.get(currentReaderIndex).getClass().getSimpleName().equals("FileReaderImpl")) {
-                            readers.get(currentReaderIndex).read();
+                        Reader r = readers.get(currentReaderIndex);
+                        if (r.getClass().getSimpleName().equals("FileReaderImpl")) {
+                            String[] tab = r.readBuffer();
+                            if (tab != null) {
+                                response = response(tab);
+                            }else{
+                               readers.remove(r);
+                            }
+                        } else {
+                            response = response(currentReaderIndex);
                         }
-                        response = response(currentReaderIndex);
                         // System.out.println(response);
                         if (response != null) {
                             ws.writeTextFrame(response.toString());
@@ -130,11 +138,12 @@ public class DataServerImpl
 
     @Override
     public StringWriter response(int currentReader) {
+
         if (!sentenceQueues.isEmpty()) {
             sentences.clear();
             try {
                 sentenceQueues.get(currentReader).stream().forEach((s) -> {
-                    //LOGGER.info(s);
+                    //LOGGER.info(s);pb dans l'ordre de lecture d'un file
                     //  System.out.println(s);
                     parser.parse(s.trim());//parser load sentences
                 });
@@ -149,6 +158,22 @@ public class DataServerImpl
             }
         }
         // System.out.println("DataServerImpl " + stringWriter);
+        return stringWriter;
+    }
+
+    public StringWriter response(String[] tab) {
+        sentences.clear();
+        for (String s : tab) {
+            parser.parse(s.trim());
+        }
+        stringWriter = new StringWriter();
+        if (!sentences.isEmpty()) {
+            try {
+                marshaller.marshal(sentences, stringWriter);
+            } catch (JAXBException ex) {
+                Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
         return stringWriter;
     }
 

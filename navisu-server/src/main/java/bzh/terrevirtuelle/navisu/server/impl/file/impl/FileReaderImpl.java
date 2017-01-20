@@ -46,16 +46,36 @@ public class FileReaderImpl
     @Override
     public void read() {
         for (int i = dataIndex; i < dataIndex + size; i++) {
-            if (i < buffer.length-2) {
-                vertx.eventBus().send("comm-address" + index, buffer[i]);
+            if (i < buffer.length - 2) {
+                vertx.eventBus().send("comm-address" + index, buffer[i]);//OK
             }
         }
         dataIndex += size;
     }
 
     @Override
+    public String[] readBuffer() {
+        String[] tab = new String[size];
+        int j = 0;
+        for (int i = dataIndex; i < dataIndex + size; i++) {
+            if (i < buffer.length - 2) {
+                tab[j] = buffer[i];
+                j++;
+            } else {
+                tab = null;
+            }
+        }
+        dataIndex += size;
+        return tab;
+    }
+
+    @Override
     public String getData() {
         return null;
+    }
+
+    public String[] getBuffer() {
+        return buffer;
     }
 
 }

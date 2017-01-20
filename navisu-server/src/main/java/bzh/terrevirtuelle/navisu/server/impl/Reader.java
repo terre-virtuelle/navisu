@@ -13,6 +13,14 @@ public interface Reader {
 
     public void read();
 
+    public default String[] readBuffer() {
+        return null;
+    }
+
     public String getData();
+
+    public default int getLength() {
+        return 0;
+    }
 
 }
