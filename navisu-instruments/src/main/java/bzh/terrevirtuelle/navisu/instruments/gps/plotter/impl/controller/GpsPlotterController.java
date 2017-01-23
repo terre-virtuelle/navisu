@@ -12,7 +12,6 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.ShipController;
@@ -35,6 +34,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * NaVisu
@@ -65,6 +66,7 @@ public class GpsPlotterController
     protected CircularFifoQueue<Double> lonQueue;
     protected boolean first = true;
     int i = 0;
+    protected List<GpsEventsController> listeners;
 
     public GpsPlotterController(LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
@@ -80,6 +82,7 @@ public class GpsPlotterController
         this.layersManagerServices = layersManagerServices;
         this.guiAgentServices = guiAgentServices;
         this.name = name;
+        listeners = new ArrayList<>();
     }
 
     public void init(boolean subscribe) {
@@ -143,15 +146,16 @@ public class GpsPlotterController
         ownerShipView.setField("Ship", ownerShip);
     }
 
-    private void updateTarget(double latitude, double longitude) {
+    public void updateTarget(double latitude, double longitude) {
 
-            this.latitude = latitude;
-            this.longitude = longitude;
-            ownerShip.setLatitude(latitude);
-            ownerShip.setLongitude(longitude);
-            ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-            ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-            wwd.redrawNow();
+        this.latitude = latitude;
+        this.longitude = longitude;
+        ownerShip.setLatitude(latitude);
+        ownerShip.setLongitude(longitude);
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
+        updateTarget(ownerShip);
+        wwd.redrawNow();
     }
 
     @Override
@@ -183,6 +187,14 @@ public class GpsPlotterController
 
     public Ship getOwnerShip() {
         return ownerShip;
+    }
+
+    @Override
+    public void updateTarget(Ship ship) {
+        listeners.forEach((gpc) -> {
+            System.out.println("GpsPlotterController updateTarget" + gpc);
+            gpc.updateTarget(ownerShip);
+        });
     }
 
 }

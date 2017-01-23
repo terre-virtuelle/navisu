@@ -9,6 +9,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -64,6 +67,21 @@ public class HighwayController
         polygonHighlightAttributes.setDrawInterior(true);
         polygonHighlightAttributes.setInteriorMaterial(new Material(Color.YELLOW));
         polygonHighlightAttributes.setInteriorOpacity(1.0);
+    }
+
+    @Override
+    protected void notifyNmeaMessage(GGA data) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void notifyNmeaMessage(VTG data) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void notifyNmeaMessage(RMC data) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

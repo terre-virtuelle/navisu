@@ -10,6 +10,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageController;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
@@ -29,6 +30,7 @@ import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
+import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
 import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
 import bzh.terrevirtuelle.navisu.navigation.controller.catalog.AvurnavController;
@@ -69,7 +71,7 @@ public class GpsPlotterWithRouteController
     private final String NAME2 = "Nautical documents";
     private final String NAME3 = "S57 Buoyage behavior";
     private final String NAME4 = "Nautical documents icons";
-   // private final List<String> NAVIGATION_OBJECTS = Arrays.asList("Avurnav", "SailingDirections");
+    // private final List<String> NAVIGATION_OBJECTS = Arrays.asList("Avurnav", "SailingDirections");
     private final List<Class> S57_CONTROLLER_TYPE_LIST = Arrays.asList(
             BeaconIsolatedDanger.class,
             BeaconLateral.class,
@@ -160,7 +162,7 @@ public class GpsPlotterWithRouteController
                             });
                             event.consume();
                         }
-                        */
+                         */
                         if (type.equals("S57Chart")) {
                             Path path = s57GlobalCatalogServices.getChartPath((String) placemark.getValue(AVKey.DISPLAY_NAME));
                             s57ChartComponentServices.openChart(path.toString());
@@ -184,6 +186,7 @@ public class GpsPlotterWithRouteController
             System.out.println("ex " + ex);
             Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         activateS57Controllers();
         activateNavigationControllers();
     }
@@ -197,8 +200,29 @@ public class GpsPlotterWithRouteController
         s57ControllerIdList = new ArrayList<>();
         s57NavigationDataList.stream().forEach((s) -> {
             s57ControllerIdList.add(Long.toString(s.getId()));
+            S57BasicBehavior s57BasicBehavior = new S57BasicBehavior();
+            S57BuoyageController s57BuoyageController = new S57BuoyageController(s57BasicBehavior, s, 1);
+            System.out.println("GpsPlotterWithRouteController s57BuoyageController"+ s57BuoyageController);
+            s57BasicBehavior.setS57Controller(s57BuoyageController);
+            listeners.add(s57BuoyageController);
+          //  for(GpsEventsController sb : listeners){
+           //     System.out.println("sb " + sb.getClass().getSimpleName());
+           // }
         });
+        /*
+         S57Controller dummy = new S57BuoyageController(new S57Behavior() {
+                    @Override
+                    public void doIt(double distance, double azimuth) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+                }, data, 0);
+                for (S57Controller s57c : s57Controllers) {
+                    if (s57c.equals(dummy) && s57c.getClass().getSimpleName().equals("S57BuoyageController")) {
+                        System.out.println(((Buoyage) s57c.getNavigationData()).getObjectName());
+                    }
+                }
         component.notifyTransponderActivateEvent(transponderZoneLayer, s57NavigationDataList);
+         */
     }
 
     private void activateNavigationControllers() {
@@ -231,7 +255,7 @@ public class GpsPlotterWithRouteController
             sc.setIconsLayer(navigationIconsLayer);
             sc.activate();
         });
-        
+
         /*
         List<SailingDirections> sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
         sailingDirectionsList.stream().forEach((SailingDirections a) -> {

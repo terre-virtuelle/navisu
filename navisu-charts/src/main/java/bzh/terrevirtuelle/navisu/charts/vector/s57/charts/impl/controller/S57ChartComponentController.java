@@ -76,7 +76,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
+import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.TransponderActivateEvent;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfacePolylines;

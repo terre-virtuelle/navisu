@@ -23,7 +23,12 @@ public abstract class S57Behavior {
         wwd = GeoWorldWindViewImpl.getWW();
     }
 
+    public S57Behavior(S57Controller s57Controller) {
+        this.s57Controller = s57Controller;
+    }
+
     public void setS57Controller(S57Controller s57Controller) {
+        System.out.println("S57Behavior setS57Controller " + s57Controller);
         this.s57Controller = s57Controller;
     }
 

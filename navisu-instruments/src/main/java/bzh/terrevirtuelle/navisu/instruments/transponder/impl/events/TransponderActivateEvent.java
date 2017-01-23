@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events;
+package bzh.terrevirtuelle.navisu.instruments.transponder.impl.events;
 
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import gov.nasa.worldwind.layers.RenderableLayer;

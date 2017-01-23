@@ -30,6 +30,11 @@ public class S57BasicBehavior
         init();
     }
 
+    public S57BasicBehavior(S57Controller s57Controller) {
+        super(s57Controller);
+        init();
+    }
+
     public final void init() {
         highlightAttributes = new BasicShapeAttributes();
         highlightAttributes.setInteriorMaterial(Material.GRAY);
@@ -55,6 +60,9 @@ public class S57BasicBehavior
 
     @Override
     public void doIt(double distance, double azimuth) {
+        System.out.println("S57BasicBehavior s57Controller " + s57Controller);
+        System.out.println("S57BasicBehavior surveyZone " + s57Controller.getSurveyZone());
+        System.out.println("S57BasicBehavior pointPlacemark " + s57Controller.getPointPlacemark());
         SurfaceShape surveyZone = s57Controller.getSurveyZone();
         PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
         double range = s57Controller.getRange();
@@ -80,5 +88,6 @@ public class S57BasicBehavior
             pointPlacemark.getAttributes().setScale(1.5);
             wwd.redrawNow();
         }
+        System.out.println("S57BasicBehavior doIt ");
     }
 }

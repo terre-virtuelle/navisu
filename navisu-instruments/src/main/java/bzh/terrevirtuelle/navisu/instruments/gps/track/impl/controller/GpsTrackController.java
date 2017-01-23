@@ -7,17 +7,12 @@ package bzh.terrevirtuelle.navisu.instruments.gps.track.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
-import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
@@ -81,7 +76,8 @@ public class GpsTrackController extends GpsPlotterController {
         wwd.redrawNow();
     }
 
-    private void updateTarget(double latitude, double longitude) {
+    @Override
+    public void updateTarget(double latitude, double longitude) {
      //   ownerShip.setLatitude(latitude);
       //  ownerShip.setLongitude(longitude);
         pathPositions.add(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), 10));

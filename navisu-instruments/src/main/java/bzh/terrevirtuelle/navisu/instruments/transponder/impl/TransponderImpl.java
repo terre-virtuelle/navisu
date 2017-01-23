@@ -63,7 +63,7 @@ public class TransponderImpl
     @Override
     public void on() {
         if (on == false) {
-          //  subscribe();
+            subscribe();
         }
         on = true;
     }
@@ -162,6 +162,7 @@ public class TransponderImpl
 
     @Override
     public void transponderUpdateTargetEvent(Ship ship) {
+        //OK ca passe ici
         transponderUpdateTargetEvent.notifyTransponderMessageChanged(ship);
     }
 
