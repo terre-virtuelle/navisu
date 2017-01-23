@@ -151,6 +151,18 @@ public class NavigationServerController {
                 Logger.getLogger(NavigationServerController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        /**
+         * If a ArCommand with cmd=ServerClosing is send, it will close its connection
+         */
+        if(navCmd.getCmd().equals("ServerClosing")){
+            try {
+                Client.disconnectFromServer();
+                LOGGER.log(Level.INFO, "Disconnected from Server");
+            } catch (IOException ex) {
+                Logger.getLogger(NavigationServerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         return navCmd;
     }

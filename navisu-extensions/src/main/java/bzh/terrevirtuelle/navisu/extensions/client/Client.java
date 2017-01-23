@@ -41,7 +41,6 @@ public class Client {
 
     private static int num=0;
     
-    private static String data = "Essai";
     private static final int PORT = 8899;
     private static String HOST = "localhost";
 
@@ -78,10 +77,9 @@ public class Client {
     }
 
     public static void actionPerformed() {
-        String message = data+num;
-        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+message);
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+num);
         num++;
-        out.println(message);
+        out.println(num);
         String response;
         try {
             response = in.readLine();
@@ -104,6 +102,15 @@ public class Client {
         
         //Simulate an Display Command Send to RA
         actionPerformed();
+    }
+    
+    public static void disconnectFromServer() throws IOException{
+        in.close();
+        in = null;
+        out.close();
+        out = null;
+        HOST = "localhost";
+        INSTANCE = null;
     }
 
     /**
