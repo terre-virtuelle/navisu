@@ -39,11 +39,13 @@ public class LeapMotionComponentImpl
     @Override
     public void on(String... files) {
         leapMotionController = LeapMotionController.getInstance();
+        System.out.println( "Leap Motion ON " );
     }
 
     @Override
     public void off() {
-        leapMotionController = null;
+        leapMotionController = LeapMotionController.closeInstance();
+        System.out.println( "Leap Motion OFF " );
     }
 
     @Override
