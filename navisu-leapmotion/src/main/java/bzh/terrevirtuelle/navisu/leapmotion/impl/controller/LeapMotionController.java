@@ -29,6 +29,7 @@ public class LeapMotionController {
     }
     
     public static LeapMotionController closeInstance() {
+        //controller.removeListener(listener);
         System.out.println( "Fermeture instance" );
         INSTANCE = null;
         return INSTANCE;
@@ -38,7 +39,7 @@ public class LeapMotionController {
         controller = new Controller();
         listener = new LeapMotionListener();
         controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
-        controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
+        //controller.enableGesture(Gesture.Type.TYPE_KEY_TAP);
         controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
         controller.enableGesture(Gesture.Type.TYPE_SWIPE);
         controller.addListener(listener);
