@@ -69,19 +69,6 @@ public class HighwayController
         polygonHighlightAttributes.setInteriorOpacity(1.0);
     }
 
-    @Override
-    protected void notifyNmeaMessage(GGA data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void notifyNmeaMessage(VTG data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected void notifyNmeaMessage(RMC data) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
 }

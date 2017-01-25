@@ -60,34 +60,40 @@ public class S57BasicBehavior
 
     @Override
     public void doIt(double distance, double azimuth) {
-        System.out.println("S57BasicBehavior s57Controller " + s57Controller);
-        System.out.println("S57BasicBehavior surveyZone " + s57Controller.getSurveyZone());
-        System.out.println("S57BasicBehavior pointPlacemark " + s57Controller.getPointPlacemark());
+     //   System.out.println(getS57Controller().getNavigationData().getId());
         SurfaceShape surveyZone = s57Controller.getSurveyZone();
+     //   System.out.println("S57BasicBehavior surveyZone " + surveyZone);
         PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
+    //    System.out.println("S57BasicBehavior pointPlacemark : " + pointPlacemark);
         double range = s57Controller.getRange();
+       // System.out.println("range : " +range +" +distance : " + distance);
         distance *= 1000;
         surveyZone.setHighlightAttributes(highlightAttributes);
         if (distance > range) {
             surveyZone.getAttributes().setDrawInterior(false);
-            pointPlacemark.getAttributes().setScale(0.65);
+         //   pointPlacemark.getAttributes().setScale(0.65);
+          //  System.out.println("distance > range ");
             wwd.redrawNow();
         } else if (distance <= range && distance > range / 2.0) {
             surveyZone.setAttributes(farAttributes);
             surveyZone.getAttributes().setDrawInterior(true);
-            pointPlacemark.getAttributes().setScale(0.7);
+          //  System.out.println("distance <= range && distance > range / 2.0");
+          //  pointPlacemark.getAttributes().setScale(0.7);
             wwd.redrawNow();
         } else if (distance <= range / 2.0 && distance > range / 4.0) {
+          //  System.out.println("distance <= range / 2.0 && distance > range / 4.0 ");
             surveyZone.setAttributes(middleAttributes);
             surveyZone.getAttributes().setDrawInterior(true);
-            pointPlacemark.getAttributes().setScale(0.9);
+         //   pointPlacemark.getAttributes().setScale(0.9);
             wwd.redrawNow();
         } else if (distance <= range / 4.0) {
+          //  System.out.println("distance <= range / 4.0 ");
             surveyZone.setAttributes(nearAttributes);
             surveyZone.getAttributes().setDrawInterior(true);
-            pointPlacemark.getAttributes().setScale(1.5);
+           // pointPlacemark.getAttributes().setScale(1.5);
             wwd.redrawNow();
         }
-        System.out.println("S57BasicBehavior doIt ");
+
+      //  System.out.println("S57BasicBehavior 2 doIt ");
     }
 }

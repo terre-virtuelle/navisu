@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.instruments.ais.aisradar.impl.controller.AisRadarController;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
+import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsListener;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.ShipController;
 import bzh.terrevirtuelle.navisu.instruments.common.view.panel.TargetPanel;
 import gov.nasa.worldwind.WorldWindow;
@@ -66,7 +67,7 @@ public class GpsPlotterController
     protected CircularFifoQueue<Double> lonQueue;
     protected boolean first = true;
     int i = 0;
-    protected List<GpsEventsController> listeners;
+    protected List<GpsEventsListener> listeners;
 
     public GpsPlotterController(LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
@@ -147,13 +148,13 @@ public class GpsPlotterController
     }
 
     public void updateTarget(double latitude, double longitude) {
-
         this.latitude = latitude;
         this.longitude = longitude;
         ownerShip.setLatitude(latitude);
         ownerShip.setLongitude(longitude);
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
+       
         updateTarget(ownerShip);
         wwd.redrawNow();
     }
@@ -192,9 +193,9 @@ public class GpsPlotterController
     @Override
     public void updateTarget(Ship ship) {
         listeners.forEach((gpc) -> {
-            System.out.println("GpsPlotterController updateTarget" + gpc);
             gpc.updateTarget(ownerShip);
         });
+       // System.out.println("GpsPlotterController : ***************");
     }
 
 }

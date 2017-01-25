@@ -7,9 +7,6 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navig
 
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Buoyage;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import gov.nasa.worldwind.avlist.AVKey;
 
@@ -21,21 +18,25 @@ import gov.nasa.worldwind.avlist.AVKey;
  */
 public class S57BuoyageController
         extends S57Controller {
+
     public S57BuoyageController(S57Behavior s57Behavior, NavigationData buoyage, double range) {
         super(s57Behavior, buoyage, range);
     }
 
     @Override
     public void updateTarget(Ship ship) {
-        
+// System.out.println("S57BuoyageController updateTarget " + ship + " " + s57Behavior);
+ 
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
 
         s57Behavior.doIt(distance, azimuth);
+       // System.out.println("S57BuoyageController surveyZone : " + surveyZone);
+        
         surveyZone.setValue(AVKey.DISPLAY_NAME, ((Buoyage) navigationData).getObjectName() + "\n distance :  "
                 + String.format("%.2f", distance) + " Nm"
                 + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
-       // System.out.println("S57BuoyageController updateTarget " + ship);/OK, pb sur s57Behavior
+        
     }
 
     @Override
@@ -44,7 +45,7 @@ public class S57BuoyageController
             layer.addRenderable(surveyZone);
             first = false;
         }
-        subscribe();
+      //  subscribe();
     }
 
     @Override
@@ -52,34 +53,20 @@ public class S57BuoyageController
         if (layer != null) {
             layer.removeAllRenderables();
         }
-        unsubscribe();
+       // unsubscribe();
     }
 
-    @Override
-    protected void notifyNmeaMessage(GGA data) {
-        System.out.println("notifyNmeaMessage RMC");
-        //   updateTarget(data.getLatitude(), data.getLongitude());
-    }
-
-    @Override
-    protected void notifyNmeaMessage(VTG data) {
-        System.out.println("notifyNmeaMessage RMC");
-        //   ownerShip.setCog(data.getCog());
-        //   ownerShip.setSog(data.getSog());
-        //   ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
-    }
-
-    @Override
-    protected void notifyNmeaMessage(RMC data) {
-        System.out.println("notifyNmeaMessage RMC");
-        //   ownerShip.setCog(data.getCog());
-        //   ownerShip.setSog(data.getSog());
-        //   updateTarget(data.getLatitude(), data.getLongitude());
-    }
-
+  
+/*
     @Override
     public String toString() {
         return ((Buoyage) navigationData).getLabel();
     }
+*/
 
+    @Override
+    public String toString() {
+        return "S57BuoyageController{" + super.toString() + '}';
+    }
+    
 }

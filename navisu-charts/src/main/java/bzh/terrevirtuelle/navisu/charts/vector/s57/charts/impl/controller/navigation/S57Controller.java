@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navig
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
+import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsListener;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
@@ -29,8 +29,7 @@ import org.gavaghan.geodesy.GlobalCoordinates;
  * @author Serge Morvan
  */
 public abstract class S57Controller
-        // extends TransponderEventsController {
-        extends GpsEventsController {
+        implements GpsEventsListener {
 
     protected final Ellipsoid REFERENCE = Ellipsoid.WGS84;
     protected final double KM_TO_NAUTICAL = 0.53879310;
@@ -54,14 +53,16 @@ public abstract class S57Controller
     protected double azimuth;
 
     public S57Controller(S57Behavior s57Behavior, NavigationData navigationData, double range) {
+        
+        
         this.s57Behavior = s57Behavior;
-     //  s57Behavior.setS57Controller(this);
-     //   System.out.println("this : " + this);
         this.navigationData = navigationData;
+        
         this.id = navigationData.getId();
         this.lat = navigationData.getLatitude();
         this.lon = navigationData.getLongitude();
         this.range = range;
+       
         wwd = GeoWorldWindViewImpl.getWW();
 
         surveyZoneNormalAttributes = new BasicShapeAttributes();
@@ -215,7 +216,7 @@ public abstract class S57Controller
         this.range = range;
     }
 
-   // @Override
+    @Override
     public abstract void updateTarget(Ship ship);
 
     public abstract void activate();
@@ -249,6 +250,11 @@ public abstract class S57Controller
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "S57Controller{" + "s57Behavior=" + s57Behavior + ", navigationData=" + navigationData.getId() + ", range=" + range + ", id=" + id + '}';
     }
 
 }

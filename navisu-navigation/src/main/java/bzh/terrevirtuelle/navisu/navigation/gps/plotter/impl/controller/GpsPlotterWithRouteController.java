@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatal
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
@@ -30,7 +31,7 @@ import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
-import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsController;
+import bzh.terrevirtuelle.navisu.instruments.common.controller.GpsEventsListener;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.GpsPlotterController;
 import bzh.terrevirtuelle.navisu.instruments.transponder.TransponderServices;
 import bzh.terrevirtuelle.navisu.navigation.controller.catalog.AvurnavController;
@@ -166,7 +167,7 @@ public class GpsPlotterWithRouteController
                         if (type.equals("S57Chart")) {
                             Path path = s57GlobalCatalogServices.getChartPath((String) placemark.getValue(AVKey.DISPLAY_NAME));
                             s57ChartComponentServices.openChart(path.toString());
-                            activateS57Controllers();
+                            //  activateS57Controllers();
                             event.consume();
                         }
                     }
@@ -198,17 +199,26 @@ public class GpsPlotterWithRouteController
             s57NavigationDataList.addAll(navigationDataSet.get(claz));
         });
         s57ControllerIdList = new ArrayList<>();
+        listeners.clear();
         s57NavigationDataList.stream().forEach((s) -> {
             s57ControllerIdList.add(Long.toString(s.getId()));
+          //  System.out.println("s " + s.getClass().getSimpleName());
             S57BasicBehavior s57BasicBehavior = new S57BasicBehavior();
-            S57BuoyageController s57BuoyageController = new S57BuoyageController(s57BasicBehavior, s, 1);
-            System.out.println("GpsPlotterWithRouteController s57BuoyageController"+ s57BuoyageController);
+          //  System.out.println("s57BasicBehavior : " + s57BasicBehavior);
+            S57Controller s57BuoyageController = new S57BuoyageController(s57BasicBehavior, s, 1000);
+          //  System.out.println("GpsPlotterWithRouteController s57BuoyageController " + s57BuoyageController);
             s57BasicBehavior.setS57Controller(s57BuoyageController);
+           
             listeners.add(s57BuoyageController);
-          //  for(GpsEventsController sb : listeners){
-           //     System.out.println("sb " + sb.getClass().getSimpleName());
-           // }
+            s57BuoyageController.setLayer(transponderZoneLayer);
+             s57BuoyageController.activate();
         });
+        /*
+        listeners.forEach((sb) -> {
+            System.out.println("sb " + sb);
+        });
+        System.out.println("GpsPlotterWithRouteController listeners size " + listeners.size());
+        */
         /*
          S57Controller dummy = new S57BuoyageController(new S57Behavior() {
                     @Override

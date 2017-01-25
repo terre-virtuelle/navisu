@@ -28,7 +28,6 @@ public abstract class S57Behavior {
     }
 
     public void setS57Controller(S57Controller s57Controller) {
-        System.out.println("S57Behavior setS57Controller " + s57Controller);
         this.s57Controller = s57Controller;
     }
 
