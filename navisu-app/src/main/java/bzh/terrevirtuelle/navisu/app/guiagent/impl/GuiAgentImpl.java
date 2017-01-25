@@ -37,18 +37,14 @@ import java.util.logging.Logger;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.tools.AnimationFactory;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.geom.Position;
-import javafx.animation.Animation;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.MenuBar;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
@@ -159,14 +155,14 @@ public class GuiAgentImpl
 
         wwd.addPositionListener((PositionEvent event) -> {
             pos = wwd.getView().getCurrentEyePosition();
+            double a = pos.getAltitude();
+            String aText;
+            if (a <= 1000) {
+                aText = (int) (pos.getAltitude()) + " m";
+            } else {
+                aText = (int) (pos.getAltitude() / 1000) + " Km";
+            }
             Platform.runLater(() -> {
-                double a = pos.getAltitude();
-                String aText;
-                if (a <= 1000) {
-                    aText = (int) (pos.getAltitude()) + " m";
-                } else {
-                    aText = (int) (pos.getAltitude() / 1000) + " Km";
-                }
                 label.setText(
                         "        Altitude : " + aText
                         + "        Latitude : " + pos.getLatitude().toFormattedDMSString()
