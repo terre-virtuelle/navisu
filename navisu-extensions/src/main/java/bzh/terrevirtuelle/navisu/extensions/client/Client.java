@@ -44,21 +44,10 @@ public class Client {
     private static final int PORT = 8899;
     private static String HOST = "localhost";
 
-    private Client() {
+    public Client() {
     }
     
     public static Client getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new Client();
-        }
-        return INSTANCE;
-    }
-    
-    public static Client getInstance(String ip) {
-        if (INSTANCE == null) {
-            INSTANCE = new Client();
-        }
-        HOST=ip;
         return INSTANCE;
     }
     
@@ -91,7 +80,46 @@ public class Client {
         }
         Logger.getLogger(Client.class.getName()).log(Level.INFO, "Received: "+response);
     }
-
+    
+    public static void openMenu() {
+        if(INSTANCE == null)
+            return;
+        String cmd = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>openMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+cmd);
+        out.println(cmd);
+    }
+    
+    public static void closeMenu() {
+        if(INSTANCE == null)
+            return;
+        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>closeMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+menu);
+        out.println(menu);
+    }
+    
+    public static void selectMenu() {
+        if(INSTANCE == null)
+            return;
+        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>selectMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+menu);
+        out.println(menu);
+    }    
+    
+    public static void leftMenu() {
+        if(INSTANCE == null)
+            return;
+        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>leftMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+menu);
+        out.println(menu);
+    }
+    
+    public static void rightMenu() {
+        if(INSTANCE == null)
+            return;
+        String menu = String.format("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><arCommand><cmd>rightMenu</cmd><arg></arg></arCommand>");
+        Logger.getLogger(Client.class.getName()).log(Level.INFO, "Sending: "+menu);
+        out.println(menu);
+    }    
     
     public static void connectToServer() throws IOException {
         Logger.getLogger(Client.class.getName()).log(Level.INFO, "Creating Socket");
@@ -101,7 +129,7 @@ public class Client {
         Logger.getLogger(Client.class.getName()).log(Level.INFO, "Connected");
         
         //Simulate an Display Command Send to RA
-        actionPerformed();
+        //actionPerformed();
     }
     
     public static void disconnectFromServer() throws IOException{
