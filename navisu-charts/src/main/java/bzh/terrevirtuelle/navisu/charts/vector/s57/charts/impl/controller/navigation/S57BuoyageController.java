@@ -19,20 +19,18 @@ import gov.nasa.worldwind.avlist.AVKey;
 public class S57BuoyageController
         extends S57Controller {
 
-    public S57BuoyageController(S57Behavior s57Behavior, NavigationData buoyage, double range) {
-        super(s57Behavior, buoyage, range);
+    public S57BuoyageController(S57Behavior s57Behavior, boolean create, NavigationData buoyage, double range) {
+        super(s57Behavior, create, buoyage, range);
     }
 
     @Override
     public void updateTarget(Ship ship) {
-// System.out.println("S57BuoyageController updateTarget " + ship + " " + s57Behavior);
- 
+
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
 
         s57Behavior.doIt(distance, azimuth);
-       // System.out.println("S57BuoyageController surveyZone : " + surveyZone);
-        
+       
         surveyZone.setValue(AVKey.DISPLAY_NAME, ((Buoyage) navigationData).getObjectName() + "\n distance :  "
                 + String.format("%.2f", distance) + " Nm"
                 + "\nazimuth :  " + String.format("%d", (int) azimuth) + " °  ");
@@ -44,7 +42,9 @@ public class S57BuoyageController
         if (layer != null && first == true) {
             layer.addRenderable(surveyZone);
             first = false;
+         //   System.out.println("S57BuoyageController activate " + layer.getName()+"  "+this.getClass().getSimpleName());
         }
+        
       //  subscribe();
     }
 

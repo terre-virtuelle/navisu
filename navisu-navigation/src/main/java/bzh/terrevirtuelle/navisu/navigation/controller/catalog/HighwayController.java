@@ -9,9 +9,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
-import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
 import gov.nasa.worldwind.avlist.AVKey;
@@ -30,9 +27,9 @@ public class HighwayController
 
     public HighwayController(S57Behavior s57Behavior,
             GuiAgentServices guiAgentServices,
-            NavigationData navigationData, double range,
+            NavigationData navigationData, boolean create, double range,
             String displayName, String description) {
-        super(s57Behavior, guiAgentServices, navigationData, range, displayName, description);
+        super(s57Behavior, guiAgentServices, navigationData, create, range, displayName, description);
     }
 
     @Override

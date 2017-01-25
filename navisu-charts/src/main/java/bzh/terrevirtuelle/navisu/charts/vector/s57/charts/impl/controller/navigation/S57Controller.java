@@ -46,31 +46,33 @@ public abstract class S57Controller
     protected double lat;
     protected double lon;
     protected boolean first = true;
+    protected boolean firstSurveyZone = true;
     protected GeodeticCalculator geoCalc = new GeodeticCalculator();
     protected GlobalCoordinates waypointA;
     protected GlobalCoordinates waypointB;
     protected double distance;
     protected double azimuth;
+    private static int i = 0;
 
-    public S57Controller(S57Behavior s57Behavior, NavigationData navigationData, double range) {
-        
-        
+    public S57Controller(S57Behavior s57Behavior, boolean create, NavigationData navigationData, double range) {
+
         this.s57Behavior = s57Behavior;
         this.navigationData = navigationData;
-        
+
         this.id = navigationData.getId();
         this.lat = navigationData.getLatitude();
         this.lon = navigationData.getLongitude();
         this.range = range;
-       
+
         wwd = GeoWorldWindViewImpl.getWW();
 
         surveyZoneNormalAttributes = new BasicShapeAttributes();
         surveyZoneNormalAttributes.setDrawInterior(false);
         surveyZoneNormalAttributes.setDrawOutline(false);
-
-        surveyZone = new SurfaceCircle(LatLon.fromDegrees(lat, lon), range);
-        surveyZone.setAttributes(surveyZoneNormalAttributes);
+        if (create == true) {
+            surveyZone = new SurfaceCircle(LatLon.fromDegrees(lat, lon), range);
+            surveyZone.setAttributes(surveyZoneNormalAttributes);
+        }
     }
 
     public double getDistanceNm(Position posA, Position posB) {

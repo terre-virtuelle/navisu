@@ -27,9 +27,9 @@ public class S57ChartController
 
     public S57ChartController(S57Behavior s57Behavior,
             GuiAgentServices guiAgentServices,
-            NavigationData navigationData, double range,
+            NavigationData navigationData, boolean create,double range,
             String displayName, String description) {
-        super(s57Behavior, guiAgentServices, navigationData, range, displayName, description);
+        super(s57Behavior, guiAgentServices, navigationData, create, range, displayName, description);
     }
 
     @Override

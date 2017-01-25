@@ -478,19 +478,19 @@ public class S57ChartComponentController {
                 lightView.setAltitude(elevation + 35);
                 lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
                         Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
-
+/*
                 S57Controller dummy = new S57BuoyageController(new S57Behavior() {
                     @Override
                     public void doIt(double distance, double azimuth) {
                         throw new UnsupportedOperationException("Not supported yet.");
                     }
-                }, data, 0);
+                }, false, data, 0);
                 for (S57Controller s57c : s57Controllers) {
                     if (s57c.equals(dummy) && s57c.getClass().getSimpleName().equals("S57BuoyageController")) {
                         System.out.println(((Buoyage) s57c.getNavigationData()).getObjectName());
                     }
                 }
-
+*/
                 String label = "Light \n"
                         + "Lat : " + Double.toString(lat) + "\n"
                         + "Lon : " + Double.toString(lon) + "\n"

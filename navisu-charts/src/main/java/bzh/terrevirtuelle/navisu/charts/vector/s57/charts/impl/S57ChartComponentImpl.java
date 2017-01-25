@@ -309,8 +309,7 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public void openChart(String file
-    ) {
+    public void openChart(String file) {
         this.open(null, file);
     }
 

@@ -54,9 +54,9 @@ public abstract class NavigationController
     protected RenderableLayer iconsLayer;
 
     public NavigationController(S57Behavior s57Behavior, GuiAgentServices guiAgentServices,
-            NavigationData navigationData, double range,
+            NavigationData navigationData, boolean create, double range,
             String displayName, String description) {
-        super(s57Behavior, navigationData, range);
+        super(s57Behavior, create, navigationData, range);
         this.displayName = displayName;
         this.description = description;
         this.guiAgentServices = guiAgentServices;
@@ -135,7 +135,8 @@ public abstract class NavigationController
     }
 
     @Override
-    public void activate() {System.out.println("NavigationController activate : " + layer);
+    public void activate() {
+     //   System.out.println("NavigationController activate : " + layer);
         if (layer != null && first == true) {
             layer.addRenderable(surveyZone);
             System.out.println("NavigationController activate : " + layer.getName());
