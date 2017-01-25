@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.leapmotion.impl.controller;
 
+import bzh.terrevirtuelle.navisu.extensions.client.Client;
 import bzh.terrevirtuelle.navisu.leapmotion.impl.controller.listener.LeapMotionListener;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Gesture;
@@ -30,6 +31,7 @@ public class LeapMotionController {
     
     public static LeapMotionController closeInstance() {
         //controller.removeListener(listener);
+        LeapMotionController.getInstance().controller.removeListener(LeapMotionController.getInstance().listener);
         System.out.println( "Fermeture instance" );
         INSTANCE = null;
         return INSTANCE;
