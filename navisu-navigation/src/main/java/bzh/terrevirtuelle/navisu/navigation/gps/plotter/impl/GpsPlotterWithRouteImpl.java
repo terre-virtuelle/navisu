@@ -23,7 +23,7 @@ import java.util.List;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.ProducedEvent;
 import org.capcaval.c3.component.annotation.UsedService;
-import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller.events.TransponderActivateEvent;
+import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.TransponderActivateEvent;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 
 /**

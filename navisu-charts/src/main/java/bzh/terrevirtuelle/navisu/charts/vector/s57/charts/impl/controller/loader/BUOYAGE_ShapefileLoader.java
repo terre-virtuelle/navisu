@@ -168,7 +168,7 @@ public class BUOYAGE_ShapefileLoader
             }
         });
 
-        buoyageController = new S57BuoyageController(new S57BasicBehavior(), object, LIMIT);
+        buoyageController = new S57BuoyageController(new S57BasicBehavior(), false, object, LIMIT);
 
         s57Controllers.add(buoyageController);
 

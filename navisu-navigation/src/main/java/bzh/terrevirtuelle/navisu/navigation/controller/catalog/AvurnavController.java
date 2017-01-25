@@ -29,9 +29,9 @@ public class AvurnavController
         extends NavigationController {
 
     public AvurnavController(S57Behavior s57Behavior, GuiAgentServices guiAgentServices,
-            NavigationData avurnav, double range,
+            NavigationData avurnav, boolean create,double range,
             String displayName, String description) {
-        super(s57Behavior, guiAgentServices, avurnav, range, displayName, description);
+        super(s57Behavior, guiAgentServices, avurnav, create, range, displayName, description);
     }
 
     @Override
@@ -76,4 +76,6 @@ public class AvurnavController
         tmp = tmp.replace("\t", "");
         return tmp;
     }
+
+    
 }

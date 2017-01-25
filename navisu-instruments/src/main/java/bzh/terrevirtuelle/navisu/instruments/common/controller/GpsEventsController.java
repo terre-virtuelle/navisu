@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.NMEA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.VTG;
+import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -83,4 +84,8 @@ public abstract class GpsEventsController {
     protected abstract void notifyNmeaMessage(VTG data);
 
     protected abstract void notifyNmeaMessage(RMC data);
+
+    public void updateTarget(Ship ship) {
+
+    }
 }

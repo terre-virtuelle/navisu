@@ -2,6 +2,8 @@ import org.gradle.api.artifacts.*
 
 apply plugin: 'base' // To add "clean" task to the root project.
 apply plugin: 'application'
+mainClassName = 'bzh.terrevirtuelle.navisu.main.AppMain'
+
 subprojects {
     apply from: rootProject.file('common.gradle')
 }

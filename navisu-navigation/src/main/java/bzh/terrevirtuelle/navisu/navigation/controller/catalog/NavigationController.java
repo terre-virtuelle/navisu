@@ -54,16 +54,16 @@ public abstract class NavigationController
     protected RenderableLayer iconsLayer;
 
     public NavigationController(S57Behavior s57Behavior, GuiAgentServices guiAgentServices,
-            NavigationData navigationData, double range,
+            NavigationData navigationData, boolean create, double range,
             String displayName, String description) {
-        super(s57Behavior, navigationData, range);
+        super(s57Behavior, create, navigationData, range);
         this.displayName = displayName;
         this.description = description;
         this.guiAgentServices = guiAgentServices;
         navClassNameT = navigationData.getClass().getName().split("\\.");
         navClassName = navClassNameT[navClassNameT.length - 1];
         createAttributes();
-       // createPointPlacemark(navigationData.getLocation().getLat(), navigationData.getLocation().getLon());
+        createPointPlacemark(navigationData.getLatitude(), navigationData.getLongitude());
 
         wkt = navigationData.getGeometry();
         wktReader = new WKTReader();
@@ -119,7 +119,7 @@ public abstract class NavigationController
     }
 
     protected abstract void createAttributes();
-   
+
     private void createPointPlacemark(Coordinate coordinate) {
         pointPlacemark = new PointPlacemark(Position.fromDegrees(coordinate.y, coordinate.x, 0));
         pointPlacemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
@@ -130,17 +130,23 @@ public abstract class NavigationController
         pointPlacemark.setAttributes(placemarkNormalAttributes);
     }
 
+    private void createPointPlacemark(double lat, double lon) {
+        createPointPlacemark(new Coordinate(lat, lon));
+    }
+
     @Override
     public void activate() {
+     //   System.out.println("NavigationController activate : " + layer);
         if (layer != null && first == true) {
             layer.addRenderable(surveyZone);
+            System.out.println("NavigationController activate : " + layer.getName());
             iconsLayer.addRenderable(pointPlacemark);
             if (pgon != null) {
                 layer.addRenderable(pgon);
             }
             first = false;
         }
-        subscribe();
+        // subscribe();
     }
 
     @Override
@@ -151,7 +157,7 @@ public abstract class NavigationController
         if (iconsLayer != null) {
             iconsLayer.removeAllRenderables();
         }
-        unsubscribe();
+        //  unsubscribe();
     }
 
     @Override

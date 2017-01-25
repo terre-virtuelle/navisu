@@ -27,9 +27,9 @@ public class HighwayController
 
     public HighwayController(S57Behavior s57Behavior,
             GuiAgentServices guiAgentServices,
-            NavigationData navigationData, double range,
+            NavigationData navigationData, boolean create, double range,
             String displayName, String description) {
-        super(s57Behavior, guiAgentServices, navigationData, range, displayName, description);
+        super(s57Behavior, guiAgentServices, navigationData, create, range, displayName, description);
     }
 
     @Override
@@ -65,5 +65,7 @@ public class HighwayController
         polygonHighlightAttributes.setInteriorMaterial(new Material(Color.YELLOW));
         polygonHighlightAttributes.setInteriorOpacity(1.0);
     }
+
+    
 
 }

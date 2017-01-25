@@ -27,13 +27,14 @@ public class S57ChartController
 
     public S57ChartController(S57Behavior s57Behavior,
             GuiAgentServices guiAgentServices,
-            NavigationData navigationData, double range,
+            NavigationData navigationData, boolean create,double range,
             String displayName, String description) {
-        super(s57Behavior, guiAgentServices, navigationData, range, displayName, description);
+        super(s57Behavior, guiAgentServices, navigationData, create, range, displayName, description);
     }
 
     @Override
     public void updateTarget(Ship ship) {
+        System.out.println("S57ChartController updateTarget " + ship);
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
         surveyZone.setValue(AVKey.DISPLAY_NAME, ((S57Chart) navigationData).getDescription() + "\n distance :  "
@@ -64,5 +65,7 @@ public class S57ChartController
         polygonHighlightAttributes.setInteriorMaterial(new Material(Color.ORANGE));
         polygonHighlightAttributes.setInteriorOpacity(0.2);
     }
+
+    
 
 }

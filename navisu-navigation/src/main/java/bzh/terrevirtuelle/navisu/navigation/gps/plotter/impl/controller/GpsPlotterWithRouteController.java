@@ -10,6 +10,8 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BasicBehavior;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57BuoyageController;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.S57Chart;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconIsolatedDanger;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.BeaconLateral;
@@ -56,6 +58,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import gov.nasa.worldwind.render.Renderable;
 
 /**
  * NaVisu
@@ -69,7 +72,7 @@ public class GpsPlotterWithRouteController
     private final String NAME2 = "Nautical documents";
     private final String NAME3 = "S57 Buoyage behavior";
     private final String NAME4 = "Nautical documents icons";
-   // private final List<String> NAVIGATION_OBJECTS = Arrays.asList("Avurnav", "SailingDirections");
+    // private final List<String> NAVIGATION_OBJECTS = Arrays.asList("Avurnav", "SailingDirections");
     private final List<Class> S57_CONTROLLER_TYPE_LIST = Arrays.asList(
             BeaconIsolatedDanger.class,
             BeaconLateral.class,
@@ -116,7 +119,7 @@ public class GpsPlotterWithRouteController
         navigationPgonLayer = layersManagerServices.getLayer(GROUP, NAME2);
         navigationPgonLayer.setPickEnabled(false);
         navigationIconsLayer = layersManagerServices.getLayer(GROUP, NAME4);
-        transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
+       // transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
     }
 
     @Override
@@ -160,12 +163,13 @@ public class GpsPlotterWithRouteController
                             });
                             event.consume();
                         }
-                        */
+                         */
                         if (type.equals("S57Chart")) {
                             Path path = s57GlobalCatalogServices.getChartPath((String) placemark.getValue(AVKey.DISPLAY_NAME));
                             s57ChartComponentServices.openChart(path.toString());
                             activateS57Controllers();
                             event.consume();
+                           // transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
                         }
                     }
                 }
@@ -184,21 +188,55 @@ public class GpsPlotterWithRouteController
             System.out.println("ex " + ex);
             Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        activateS57Controllers();
+
+      //  activateS57Controllers();
         activateNavigationControllers();
     }
 
     @SuppressWarnings("unchecked")
     private void activateS57Controllers() {
+transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
         List<NavigationData> s57NavigationDataList = new ArrayList<>();
         S57_CONTROLLER_TYPE_LIST.stream().forEach((claz) -> {
             s57NavigationDataList.addAll(navigationDataSet.get(claz));
         });
         s57ControllerIdList = new ArrayList<>();
+        listeners.clear();
         s57NavigationDataList.stream().forEach((s) -> {
             s57ControllerIdList.add(Long.toString(s.getId()));
+            //  System.out.println("s " + s.getClass().getSimpleName());
+            S57BasicBehavior s57BasicBehavior = new S57BasicBehavior();
+            //  System.out.println("s57BasicBehavior : " + s57BasicBehavior);
+            S57Controller s57BuoyageController = new S57BuoyageController(s57BasicBehavior, true, s, 1000);
+            //  System.out.println("GpsPlotterWithRouteController s57BuoyageController " + s57BuoyageController);
+            s57BasicBehavior.setS57Controller(s57BuoyageController);
+
+            listeners.add(s57BuoyageController);
+            s57BuoyageController.setLayer(transponderZoneLayer);
+            s57BuoyageController.activate();
+
         });
+
+        /*
+        listeners.forEach((sb) -> {
+            System.out.println("sb " + sb);
+        });
+        System.out.println("GpsPlotterWithRouteController listeners size " + listeners.size());
+         */
+ /*
+         S57Controller dummy = new S57BuoyageController(new S57Behavior() {
+                    @Override
+                    public void doIt(double distance, double azimuth) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+                }, data, 0);
+                for (S57Controller s57c : s57Controllers) {
+                    if (s57c.equals(dummy) && s57c.getClass().getSimpleName().equals("S57BuoyageController")) {
+                        System.out.println(((Buoyage) s57c.getNavigationData()).getObjectName());
+                    }
+                }
         component.notifyTransponderActivateEvent(transponderZoneLayer, s57NavigationDataList);
+         */
     }
 
     private void activateNavigationControllers() {
@@ -213,7 +251,7 @@ public class GpsPlotterWithRouteController
             String description = a.getDescription();
             S57ChartController sc = new S57ChartController(new S57BasicBehavior(),
                     guiAgentServices,
-                    a,
+                    a, true,
                     926, displayName, description);
             sc.setLayer(navigationPgonLayer);
             sc.setIconsLayer(navigationIconsLayer);
@@ -225,13 +263,13 @@ public class GpsPlotterWithRouteController
             String displayName = "Avurnav N°" + Long.toString(a.getId());
             String description = a.getDescription();
             AvurnavController sc = new AvurnavController(new S57BasicBehavior(),
-                    guiAgentServices, a,
+                    guiAgentServices, a, true,
                     926, displayName, description);
             sc.setLayer(navigationPgonLayer);
             sc.setIconsLayer(navigationIconsLayer);
             sc.activate();
         });
-        
+
         /*
         List<SailingDirections> sailingDirectionsList = navigationDataSet.get(SailingDirections.class);
         sailingDirectionsList.stream().forEach((SailingDirections a) -> {
@@ -251,7 +289,7 @@ public class GpsPlotterWithRouteController
             String displayName = "Highway N°" + Long.toString(a.getId()) + "\n"
                     + highway.getDescription();
             HighwayController sc = new HighwayController(new S57BasicBehavior(),
-                    guiAgentServices, highway,
+                    guiAgentServices, highway, true,
                     926, displayName, highway.getDescription());
             sc.setLayer(navigationPgonLayer);
             sc.setIconsLayer(navigationIconsLayer);

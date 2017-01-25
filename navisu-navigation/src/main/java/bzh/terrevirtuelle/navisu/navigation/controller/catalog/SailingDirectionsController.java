@@ -8,10 +8,8 @@ package bzh.terrevirtuelle.navisu.navigation.controller.catalog;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Behavior;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import bzh.terrevirtuelle.navisu.navigation.view.NavigationIcons;
-import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Offset;
@@ -31,15 +29,14 @@ public class SailingDirectionsController
 
     public SailingDirectionsController(S57Behavior s57Behavior,
             GuiAgentServices guiAgentServices,
-            NavigationData navigationData, double range,
+            NavigationData navigationData, boolean create, double range,
             String displayName, String description) {
-        super(s57Behavior, guiAgentServices, navigationData, range, displayName, description);
+        super(s57Behavior, guiAgentServices, navigationData, create, range, displayName, description);
          
     }
 
     @Override
     public void updateTarget(Ship ship) {
-
         distance = getDistanceNm(lat, lon, ship.getLatitude(), ship.getLongitude());
         azimuth = getAzimuth(ship.getLatitude(), ship.getLongitude(), lat, lon);
         //surveyZone.setValue(AVKey.DISPLAY_NAME, ((SailingDirections) navigationData).getDescription() + "\n distance :  "
@@ -70,5 +67,6 @@ public class SailingDirectionsController
         polygonHighlightAttributes.setInteriorMaterial(new Material(Color.GREEN));
         polygonHighlightAttributes.setInteriorOpacity(0.2);
     }
+
     
 }

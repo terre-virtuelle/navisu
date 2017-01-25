@@ -5,16 +5,18 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation;
 
+import bzh.terrevirtuelle.navisu.core.util.BalloonController;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.PointPlacemark;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.render.SurfaceShape;
+import javax.swing.SwingUtilities;
 
 /**
- * NaVisu
- * Simple behavior for object whith a single point and for representation a
- * Placemark
+ * NaVisu Simple behavior for object whith a single point and for representation
+ * a Placemark
+ *
  * @date 13 oct. 2015
  * @author Serge Morvan
  */
@@ -30,11 +32,16 @@ public class S57BasicBehavior
         init();
     }
 
+    public S57BasicBehavior(S57Controller s57Controller) {
+        super(s57Controller);
+        init();
+    }
+
     public final void init() {
         highlightAttributes = new BasicShapeAttributes();
         highlightAttributes.setInteriorMaterial(Material.GRAY);
         highlightAttributes.setDrawInterior(true);
-        highlightAttributes.setDrawOutline(false);
+        highlightAttributes.setDrawOutline(true);
         highlightAttributes.setInteriorOpacity(0.4);
 
         farAttributes = new BasicShapeAttributes();
@@ -49,6 +56,7 @@ public class S57BasicBehavior
 
         nearAttributes = new BasicShapeAttributes();
         nearAttributes.setInteriorMaterial(Material.RED);
+       // nearAttributes.setDrawInterior(true);
         nearAttributes.setDrawOutline(false);
         nearAttributes.setInteriorOpacity(0.5);
     }
@@ -56,28 +64,30 @@ public class S57BasicBehavior
     @Override
     public void doIt(double distance, double azimuth) {
         SurfaceShape surveyZone = s57Controller.getSurveyZone();
-        PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
+       // PointPlacemark pointPlacemark = s57Controller.getPointPlacemark();
         double range = s57Controller.getRange();
         distance *= 1000;
+       // surveyZone.setAttributes(nearAttributes);
         surveyZone.setHighlightAttributes(highlightAttributes);
         if (distance > range) {
             surveyZone.getAttributes().setDrawInterior(false);
-            pointPlacemark.getAttributes().setScale(0.65);
+            //   pointPlacemark.getAttributes().setScale(0.65);
             wwd.redrawNow();
         } else if (distance <= range && distance > range / 2.0) {
             surveyZone.setAttributes(farAttributes);
             surveyZone.getAttributes().setDrawInterior(true);
-            pointPlacemark.getAttributes().setScale(0.7);
+            //  pointPlacemark.getAttributes().setScale(0.7);
             wwd.redrawNow();
+
         } else if (distance <= range / 2.0 && distance > range / 4.0) {
             surveyZone.setAttributes(middleAttributes);
             surveyZone.getAttributes().setDrawInterior(true);
-            pointPlacemark.getAttributes().setScale(0.9);
+            //   pointPlacemark.getAttributes().setScale(0.9);
             wwd.redrawNow();
         } else if (distance <= range / 4.0) {
             surveyZone.setAttributes(nearAttributes);
             surveyZone.getAttributes().setDrawInterior(true);
-            pointPlacemark.getAttributes().setScale(1.5);
+            // pointPlacemark.getAttributes().setScale(1.5);
             wwd.redrawNow();
         }
     }
