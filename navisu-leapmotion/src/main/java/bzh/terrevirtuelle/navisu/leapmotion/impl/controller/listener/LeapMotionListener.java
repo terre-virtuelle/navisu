@@ -52,13 +52,9 @@ public class LeapMotionListener
                     case TYPE_CIRCLE:
                         //Handle circle gestures
                         comptCircle ++;
-                        //System.out.println("Circle");
                         if (comptCircle == 70)
                         {
-                            comptSwipe =0;
-                            comptCircle =0;
-                            comptKeyTap =0;
-                            comptScreenTap =0;
+                            resetCompt();
                             System.out.println("circle");
                             if (menuOpened)
                             {
@@ -72,43 +68,36 @@ public class LeapMotionListener
                             }
                         }
                         break;
+                        
                     case TYPE_KEY_TAP:
                         //Handle key tap gestures
                         comptKeyTap ++;
                         if (comptKeyTap == 2)
                         {
-                            comptSwipe =0;
-                            comptCircle =0;
-                            comptKeyTap =0;
-                            comptScreenTap =0;
+                            resetCompt();
                             System.out.println("key tap");
                             Client.actionPerformed();
                         }
                         break;
+                        
                     case TYPE_SCREEN_TAP:
                         //Handle screen tap gestures
                         comptScreenTap ++;
                         if (comptScreenTap == 2)
                         {
-                            comptSwipe =0;
-                            comptCircle =0;
-                            comptKeyTap =0;
-                            comptScreenTap =0;
+                            resetCompt();
                             System.out.println("screen tap");
                             Client.selectMenu();
                         }
                         break;
+                        
                     case TYPE_SWIPE:
                         //Handle swipe gestures
                         comptSwipe ++;
-                        //System.out.println("Swipe");
                         if (comptSwipe == 130)
                         {
                             //System.out.println("Translation sur X : " + gesture.hands().get(0).translation(controller.frame(1)).getX());
-                            comptSwipe =0;
-                            comptCircle =0;
-                            comptKeyTap =0;
-                            comptScreenTap =0;
+                            resetCompt();
                             if (gesture.hands().get(0).translation(controller.frame(1)).getX() <0)
                             {
                                 System.out.println("swipe left");
@@ -121,6 +110,7 @@ public class LeapMotionListener
                             }
                         }
                         break;
+                        
                     default:
                         //Handle unrecognized gestures
                         System.out.println("Geste non reconnu");
@@ -128,7 +118,12 @@ public class LeapMotionListener
                 }
             }
         }
-               
-
-        }
+    }
+    
+    private void resetCompt(){
+        comptSwipe =0;
+        comptCircle =0;
+        comptKeyTap =0;
+        comptScreenTap =0;
+    }
 }
