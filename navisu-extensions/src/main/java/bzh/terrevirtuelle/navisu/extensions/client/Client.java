@@ -122,14 +122,34 @@ public class Client {
     }    
     
     public static void connectToServer() throws IOException {
+
         Logger.getLogger(Client.class.getName()).log(Level.INFO, "Creating Socket");
         Socket socket = new Socket(HOST, PORT);
         in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
         Logger.getLogger(Client.class.getName()).log(Level.INFO, "Connected");
+          
         
-        //Simulate an Display Command Send to RA
-        //actionPerformed();
+        //To Comment when using LeapMotion.
+        try {
+            //Simulate an Display Command Send to RA
+            Client.openMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.leftMenu();
+            Thread.sleep(1000);
+            Client.rightMenu();
+            Thread.sleep(1000);
+            Client.selectMenu();
+            Thread.sleep(1000);
+            Client.closeMenu();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     public static void disconnectFromServer() throws IOException{
