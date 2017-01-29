@@ -1,0 +1,6 @@
+dependencies {
+   
+}
+jar {
+   destinationDir project.file('../dest')
+}
