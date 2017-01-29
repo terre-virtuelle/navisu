@@ -14,6 +14,10 @@ import org.capcaval.c3.component.ComponentState;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponent;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.media.AudioClip;
+import javafx.scene.text.Text;
 
 /**
  * User: serge Date: 23/11/2013
@@ -42,6 +46,29 @@ public class GazetteerComponentImpl
             gazetteerPath = properties.getProperty(GAZETEER_PATH).trim();
         } catch (IOException ex) {
             Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        if (indexerPath == null) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Gazetteer");
+            alert.setHeaderText("Attention");
+            Text s = new Text("  Le chemin de l'index géographique est  incorrect."
+                    + "\n  Vous devez compléter le fichier user.properties");
+            s.setWrappingWidth(350);
+            alert.getDialogPane().setContent(s);
+            alert.show();
+            AudioClip plonkSound = new AudioClip(this.getClass().getResource("sounds/warning.mp3").toExternalForm());
+            plonkSound.play();
+
+        }
+        if (gazetteerPath == null) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Gazetteer");
+            alert.setHeaderText("Attention");
+            Text s = new Text("  Le chemin des données de l'index géographique \n est incorrect."
+                    + "\n  Vous devez compléter le fichier user.properties");
+            s.setWrappingWidth(350);
+            alert.getDialogPane().setContent(s);
+            alert.show();
         }
     }
 
@@ -84,7 +111,7 @@ public class GazetteerComponentImpl
     }
 
     @Override
-    public HashMap<String, List<Location>> searchGeoName(String indexerPath, 
+    public HashMap<String, List<Location>> searchGeoName(String indexerPath,
             List<String> locationNameEntities, int count) {
         try {
             return resolver.searchGeoName(indexerPath, locationNameEntities, count);
@@ -122,7 +149,7 @@ public class GazetteerComponentImpl
                 }
             }
         } catch (Exception ex) {
-            
+
         }
         return null;
     }
