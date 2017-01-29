@@ -134,7 +134,6 @@ import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.gazetteer.impl.GazetteerComponentImpl;
-import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
 import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
