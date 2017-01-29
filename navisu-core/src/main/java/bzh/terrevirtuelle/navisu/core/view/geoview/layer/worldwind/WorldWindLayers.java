@@ -17,7 +17,6 @@ public enum WorldWindLayers {
 
     Stars(StarsLayer.class),
     SkyGradient(SkyGradientLayer.class),
-
     BlueMarbleImage(BMNGOneImage.class, true, 3e6),
     BlueMarbleWMS(BMNGWMSLayer.class),
     Fog(FogLayer.class),
@@ -25,12 +24,10 @@ public enum WorldWindLayers {
     BingImagery(BingImageryLayer.class),
     EarthAtNight(EarthAtNightLayer.class, false),
     OpenStreetMap(OSMMapnikLayer.class, false),
-
+   // OSMBuildings(OSMBuildingsLayer.class, false),
     CountryBoundaries(CountryBoundariesLayer.class, false),
     PlaceName(NASAWFSPlaceNameLayer.class),
-
     LatLonGraticule(LatLonGraticuleLayer.class, false),
-
     WorldMap(WorldMapLayer.class),
     ScaleBar(ScalebarLayer.class),
     Compass(CompassLayer.class);
@@ -61,7 +58,8 @@ public enum WorldWindLayers {
             layer = type.newInstance();
             layer.setEnabled(enabled);
             layer.setMinActiveAltitude(minActiveAltitude);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         return GeoLayer.factory.newWorldWindGeoLayer(layer);
     }
