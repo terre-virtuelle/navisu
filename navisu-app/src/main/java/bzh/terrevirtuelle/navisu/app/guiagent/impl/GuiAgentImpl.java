@@ -41,6 +41,7 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
+import gov.nasa.worldwind.event.PositionListener;
 import gov.nasa.worldwind.geom.Position;
 import javafx.application.Platform;
 import javafx.scene.Group;
@@ -152,7 +153,9 @@ public class GuiAgentImpl
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
+        
 
+        
         wwd.addPositionListener((PositionEvent event) -> {
             pos = wwd.getView().getCurrentEyePosition();
             double a = pos.getAltitude();
@@ -168,6 +171,7 @@ public class GuiAgentImpl
                         + "        Latitude : " + pos.getLatitude().toFormattedDMSString()
                         + "        Longitude : " + pos.getLongitude().toFormattedDMSString());
             });
+            wwd.redrawNow();
         });
 
 // Deuxieme stage pour le sonar, pour qu'il reste au dessus, bug sur l'api ?
