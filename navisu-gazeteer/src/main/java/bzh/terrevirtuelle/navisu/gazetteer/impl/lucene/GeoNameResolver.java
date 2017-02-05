@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
+//import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
@@ -81,6 +81,8 @@ import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
 import com.spatial4j.core.shape.Point;
 import edu.usc.ir.geo.gazetteer.service.Launcher;
+import org.apache.commons.cli.BasicParser;
+//import org.apache.commons.cli.DefaultParser;
 
 public class GeoNameResolver implements Closeable {
     //UPPER BOUND FOR SEARCHING AN AREA IN MILES
@@ -575,7 +577,7 @@ public class GeoNameResolver implements Closeable {
         }
         out.println("]");
     }
-
+/*
     public static void main(String[] args) throws Exception {
         Option buildOpt = OptionBuilder.withArgName("gazetteer file").hasArg().withLongOpt("build")
                 .withDescription("The Path to the Geonames allCountries.txt")
@@ -634,7 +636,8 @@ public class GeoNameResolver implements Closeable {
         options.addOption(searchReverseOpt);
 
         // create the parser
-        CommandLineParser parser = new DefaultParser();
+        //    CommandLineParser parser =  new DefaultParser();
+        CommandLineParser parser = new BasicParser();
         GeoNameResolver resolver = new GeoNameResolver();
 
         try {
@@ -711,5 +714,5 @@ public class GeoNameResolver implements Closeable {
             System.err.println("Parsing failed.  Reason: " + exp.getMessage());
         }
     }
-
+*/
 }
