@@ -43,7 +43,6 @@ public class WeatherComponentImpl
     protected String category;
     private static final String NAME = "Weather";
     private static final String TYPE_0 = "DarkSky";
-    private List<DataPoint> dataPoints;
 
     @Override
     public void componentInitiated() {
@@ -80,29 +79,26 @@ public class WeatherComponentImpl
     @Override
     public void on(String... category) {
         weatherController = new DarkSkyComponentController(gazetteerComponentServices, guiAgentServices);
-        //   if (weatherController.update() == true) {
-        //      dataPoints = weatherController.getForecast();
-        //  }
-
+        
         guiAgentServices.getRoot().getChildren().add(weatherController.getDarkSkyController()); //Par defaut le widget n'est pas visible Ctrl-A
         weatherController.getDarkSkyController().setVisible(true);
     }
 
     @Override
     public boolean update() {
-        if (weatherController != null) {
-            return weatherController.update();
-        } else {
+       // if (weatherController != null) {
+           // return weatherController.update();
+       // } else {
             return false;
-        }
+       // }
     }
 
     @Override
     public List<DataPoint> getForecast() {
-        if (weatherController != null) {
-            return weatherController.getForecast();
-        } else {
+      //  if (weatherController != null) {
+           // return weatherController.getForecast();
+       // } else {
             return null;
-        }
+       // }
     }
 }
