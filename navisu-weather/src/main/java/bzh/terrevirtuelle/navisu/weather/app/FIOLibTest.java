@@ -12,7 +12,7 @@ import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.ForecastIO;
 
 public class FIOLibTest {
 
-	private static final String API_KEY = "3a9c0c39c2e2463c8a36c7ef6ed58dd5";
+	private static final String API_KEY = "";
 
 	public static void main(String[] args) {
 
