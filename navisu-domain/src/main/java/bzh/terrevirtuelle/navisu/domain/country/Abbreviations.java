@@ -14,7 +14,7 @@ import java.util.Map;
  * @author serge
  * @date Jan 9, 2017
  */
-public class CountryCode {
+public class Abbreviations {
 
     public static final Map<String, String> CODE = Collections.unmodifiableMap(new HashMap<String, String>() {
         {
@@ -266,4 +266,114 @@ public class CountryCode {
             put("Zimbabwe", "ZW");
         }
     });
+    public static final Map<String, String> LANG = Collections.unmodifiableMap(new HashMap<String, String>() {
+        {
+            put("ARABIC", "ar");
+            put("AZERBAIJANI", "az");
+            put("BELRUSIAN", "be");
+            put("BOSNIAN", "bs");
+            put("CZECH", "cs");
+            put("GERMAN", "de");
+            put("GREEK", "el");
+            put("ENGLISH", "en");
+            put("SPANISH", "es");
+            put("FRENCH", "fr");
+            put("CROATIAN", "hr");
+            put("HUNGARIAN", "hu");
+            put("ITALIAN", "it");
+            put("ICELANDIC", "is");
+            put("CORNISH", "kw");
+            put("NORWEGIAN", "nb");
+            put("DUTCH", "nl");
+            put("POLISH", "pl");
+            put("PORTUGUESE", "pt");
+            put("RUSSIAN", "ru");
+            put("SLOVAK", "sk");
+            put("SERBIAN", "sr");
+            put("SWEDISH", "sv");
+            put("TETUM", "tet");
+            put("TURKISH", "tr");
+            put("UKRAINIAN", "uk");
+            put("IKPAY_ATINLAY", "x-pig-latin");
+            put("SIMPLIFIED_CHINESE", "zh");
+            put("TRADITIONAL_CHINESE", "zw-tw");
+        }
+    });
+
+    public static final Map<String, String> UNIT = Collections.unmodifiableMap(new HashMap<String, String>() {
+        {
+            put("US", "us");
+            put("SI", "si");
+            put("CA", "ca");
+            put("UK", "uk");
+            put("UK2", "uk2");
+            put("AUTO", "auto");
+        }
+    });
+
+    public enum ConditionAndIcon {
+        // WeatherConditions with Icons
+        NONE("none", "unknown", 0.305085, 0.576271),
+        CLEAR_DAY("clear-day", "sun", 0.881356, 0.881356),
+        CLEAR_NIGHT("clear-night", "sun", 0.881356, 0.881356),
+        RAIN("rain", "rain", 0.89831, 0.79661),
+        SNOW("snow", "snow", 0.898305, 0.728814),
+        SLEET("sleet", "sleet", 0.898305, 0.677966),
+        WIND("wind", "wind", 0.813559, 0.474576),
+        FOG("fog", "fog", 0.949153, 0.661017),
+        CLOUDY("cloudy", "cloud", 0.898305, 0.559322),
+        PARTLY_CLOUDY_DAY("partly-cloudy-day", "sun-and-cloud", 0.983051, 0.745763),
+        PARTLY_CLOUDY_NIGHT("partly-cloudy-night", "sun-and-cloud", 0.983051, 0.745763),
+        HAIL("hail", "sleet", 0.898305, 0.677966),
+        THUNDERSTORM("thunderstorm", "thunderstorm", 0.898305, 0.728814),
+        // Unit-Icons
+        INSIDE_TEMP("inside-temp", "inside-temp", 0.67307692, 0.92307692),
+        OUTSIDE_TEMP("outside-temp", "outside-temp", 0.38461538, 0.92307692),
+        PRESSURE("pressure", "pressure", 0.610169, 0.610169),
+        HUMIDITY("humidity", "humidity", 0.644068, 0.728814),
+        WIND_SPEED("windSpeed", "wind", 0.813559, 0.474576),
+        SUNRISE("sunrise", "sun-rise", 1.0, 0.69230769),
+        SUNSET("sunset", "sun-set", 1.0, 0.73076923);
+
+        public String value;
+        public String styleClass;
+        public double widthFactor;
+        public double heightFactor;
+
+        ConditionAndIcon(final String VALUE, final String STYLE_CLASS, final double WIDTH_FACTOR, final double HEIGHT_FACTOR) {
+            value = VALUE;
+            styleClass = STYLE_CLASS;
+            widthFactor = WIDTH_FACTOR;
+            heightFactor = HEIGHT_FACTOR;
+        }
+    }
+
+    public enum PrecipType {
+        NONE("none"),
+        RAIN("rain"),
+        SNOW("snow"),
+        SLEET("sleet");
+
+        public String value;
+
+        PrecipType(final String VALUE) {
+            value = VALUE;
+        }
+    }
+
+    public enum Exclude {
+        CURRENTLY("currently"),
+        MINUTELY("minutely"),
+        HOURLY("hourly"),
+        DAILY("daily"),
+        ALERTS("alerts"),
+        FLAGS("flags");
+
+        public String value;
+
+        Exclude(final String VALUE) {
+            value = VALUE;
+        }
+    }
+
 }

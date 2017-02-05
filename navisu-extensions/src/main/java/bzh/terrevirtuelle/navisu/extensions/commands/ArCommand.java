@@ -22,8 +22,6 @@ import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.Landmark;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo.MooringWarpingFacility;
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Gpx;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
-import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
-import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
 import bzh.terrevirtuelle.navisu.domain.ship.model.Ship;
 import javax.xml.bind.annotation.XmlAccessType;
