@@ -70,7 +70,6 @@ import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.GpsTrackPlotterServices;
-//import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.impl.GpsTrackPlotterImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.impl.GpsTrackImpl;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.MeasureToolsServices;
@@ -143,11 +142,14 @@ import java.util.Arrays;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyComponentController;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyController;
 import gov.nasa.worldwind.WorldWindow;
 import java.io.IOException;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 
 /**
@@ -189,15 +191,26 @@ public class AppMain extends Application {
 
         String navisuWeatherCache = navisuHome + "/caches/weather.properties";
         if (!Files.exists(Paths.get(navisuWeatherCache), LinkOption.NOFOLLOW_LINKS)) {
+            Files.createFile(Paths.get(navisuWeatherCache));
+            writeProperties(navisuWeatherCache);
+        } else {
+            Properties properties = new Properties();
             try {
-                Files.createFile(Paths.get(navisuWeatherCache));
-                List<String> keys = new ArrayList<>(Arrays.asList("town=",
-                        "language=", "unit=", "country="));
-                Files.write(Paths.get(navisuWeatherCache), keys);
+                properties.load(new FileInputStream(navisuWeatherCache));
+                String town = properties.getProperty("town");
+                String language = properties.getProperty("language");
+                String unit = properties.getProperty("unit");
+                String country = properties.getProperty("country");
+                String countryCode = properties.getProperty("countryCode");
+
+                if (town == null || language == null || unit == null || country == null || countryCode == null) {
+                    writeProperties(navisuWeatherCache);
+                }
             } catch (IOException ex) {
-                Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
+
         final ComponentManager componentManager = ComponentManager.componentManager;
         /* Deploy components */
 
@@ -432,7 +445,7 @@ public class AppMain extends Application {
         - tcp://sinagot.net:5003 Simulateur AIS
         - gpsd://sinagot.net:2947 AIS zone Bretagne 
          */
-      //  dataServerServices.openGpsd("sinagot.net", 5947);//Bretagne AIS Fulup 2947?
+        //  dataServerServices.openGpsd("sinagot.net", 5947);//Bretagne AIS Fulup 2947?
         // dataServerServices.openGpsd("sinagot.net", 5003);
         // dataServerServices.openGpsd("sinagot.net", 5121);
         //dataServerServices.openGpsd("hd-sf.com", 9009);
@@ -478,7 +491,7 @@ public class AppMain extends Application {
  /* Test CPA zone et reconnaissance de trajectoire */
         // dataServerServices.openFile("data/ais/ais.txt");  //AIS
         /* Test cibles AIS en direct */
-       // dataServerServices.openGpsd("sinagot.net", 5947);
+        // dataServerServices.openGpsd("sinagot.net", 5947);
         //dataServerServices.openGpsd("fridu.net", 2947);
 
         /* Test DB */
@@ -534,12 +547,12 @@ public class AppMain extends Application {
         /* Decommenter si l'indexation n'a pas été faite. (1 fois)
          Telecharger les donnees . 
          http://download.geonames.org/export/dump/allCountries.zip
-        */
-        /*
+         */
+ /*
          String gazetteerPath = "/home/serge/Data/allCountries/allCountries.txt";
          String indexPath = "/home/serge/Data/allCountries/geoIndex";
          gazetteerComponentServices.buildIndex(gazetteerPath, indexPath, true);
-       */
+         */
         // Si un index est creee 
         /*
          Location location = gazetteerComponentServices.searchGeoName("TOULOUSE", "FR");
@@ -593,5 +606,16 @@ public class AppMain extends Application {
         final String[] newPaths = Arrays.copyOf(paths, paths.length + 1);
         newPaths[newPaths.length - 1] = pathToAdd;
         usrPathsField.set(null, newPaths);
+    }
+
+    private void writeProperties(String navisuWeatherCache) {
+        try {
+
+            List<String> keys = new ArrayList<>(Arrays.asList("town=",
+                    "language=", "unit=", "country=", "countryCode="));
+            Files.write(Paths.get(navisuWeatherCache), keys, StandardOpenOption.WRITE);
+        } catch (IOException ex) {
+            Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 }

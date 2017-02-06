@@ -89,9 +89,9 @@ public class DarkSkyViewController
     @FXML
     Label timeLabel;
     @FXML
-    TextArea summaryTa;
+    Label summaryData;
     @FXML
-    TextArea timeTa;
+    Label timeData;
 
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
@@ -110,7 +110,7 @@ public class DarkSkyViewController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        
+
     }
 
     public void setTitle(Text title) {
@@ -140,75 +140,26 @@ public class DarkSkyViewController
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
-        
+
     }
 
     public void showData(ForecastIO fio) {
         this.fio = fio;
         FIOCurrently currently = new FIOCurrently(fio);
-
-        System.out.println("\nCurrently\n");
-        String[] f = currently.get().getFieldsArray();
-        for (int i = 0; i < f.length; i++) {
-            System.out.println(f[i] + ": " + currently.get().getByKey(f[i]));
-         //   currently.get().precipProbability()
-        }
-        System.out.println("\n");
+        this.windSpeedData.setText(Double.toString(currently.get().windSpeed()));
+        this.windBearingData.setText(Double.toString(currently.get().windBearing()));
+        this.visibilityData.setText(Double.toString(currently.get().visibility()));
+        this.humidityData.setText(Double.toString(currently.get().humidity()));
+        this.temperatureData.setText(Double.toString(currently.get().temperature()));
+        this.apparentTemperatureData.setText(Double.toString(currently.get().apparentTemperature()));
+        this.pressureData.setText(Double.toString(currently.get().pressure()));
+        this.dewPointData.setText(Double.toString(currently.get().dewPoint()));
+        this.precipProbabilityData.setText(Double.toString(currently.get().precipProbability()));
+        this.precipTypeData.setText(currently.get().precipType());
+        this.precipIntensityData.setText(Double.toString(currently.get().precipIntensity()));
+        this.cloudCoverData.setText(Double.toString(currently.get().cloudCover()));
+        this.summaryData.setText(currently.get().summary());
+        this.timeData.setText(currently.get().time());  
     }
 
-    public void setWindSpeed(String data) {
-        this.windSpeedData.setText(data);
-    }
-
-    public void setWindBearing(String data) {
-        this.windBearingData.setText(data);
-    }
-
-    public void setVisibility(String data) {
-        this.visibilityData.setText(data);
-    }
-
-    public void setHumidity(String data) {
-        this.humidityData.setText(data);
-    }
-
-    public void setTemperature(String data) {
-        this.temperatureData.setText(data);
-    }
-
-    public void setApparentTemperature(String data) {
-        this.apparentTemperatureData.setText(data);
-    }
-
-    public void setPressure(String data) {
-        this.pressureData.setText(data);
-    }
-
-    public void setDewPoint(String data) {
-        this.dewPointData.setText(data);
-    }
-
-    public void setPrecipProbability(String data) {
-        this.precipProbabilityData.setText(data);
-    }
-
-    public void setPrecipType(String data) {
-        this.precipTypeData.setText(data);
-    }
-
-    public void setPrecipIntensity(String data) {
-        this.precipIntensityData.setText(data);
-    }
-
-    public void setCloudCover(String data) {
-        this.cloudCoverData.setText(data);
-    }
-
-    public void setSummary(String data) {
-        this.summaryTa.setText(data);
-    }
-
-    public void setTime(String data) {
-        this.timeTa.setText(data);
-    }
 }

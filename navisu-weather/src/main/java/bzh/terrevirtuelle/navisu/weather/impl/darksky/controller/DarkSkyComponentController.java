@@ -8,7 +8,9 @@ package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.country.Abbreviations;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,11 @@ public class DarkSkyComponentController {
     private final String DARK_SKY_URL = "https://api.darksky.net/forecast/";
     protected Properties properties;
     protected String PROPERTIES_FILE_NAME = "properties/user.properties";
+    protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/weather.properties";
+    protected String town;
+    protected String language;
+    protected String unit;
+    protected String country;
     protected DarkSkyController darkSkyController;
     protected GazetteerComponentServices gazetteerComponentServices;
     protected GuiAgentServices guiAgentServices;
@@ -49,6 +56,7 @@ public class DarkSkyComponentController {
             countryList.add(c);
         });
         countryList.sort(String::compareToIgnoreCase);
+
         properties = new Properties();
         try {
             properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
@@ -56,7 +64,20 @@ public class DarkSkyComponentController {
             Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         apiKey = properties.getProperty("darkSkyApiKey").trim();
-        
+
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream(CACHE_FILE_NAME));
+            town = properties.getProperty("town");
+            language = properties.getProperty("language");
+            unit = properties.getProperty("unit");
+            country = properties.getProperty("country");
+            if (town == null && language == null && unit == null && country == null) {
+                System.out.println("properties null");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
         darkSkyController = new DarkSkyController(this,
                 gazetteerComponentServices, guiAgentServices,
                 languagelist, unitList, countryList);
@@ -72,6 +93,34 @@ public class DarkSkyComponentController {
 
     public String getDarkSkyUrl() {
         return DARK_SKY_URL;
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCountryCode() {
+        return country;
+    }
+
+    public String getCACHE_FILE_NAME() {
+        return CACHE_FILE_NAME;
     }
 
 }

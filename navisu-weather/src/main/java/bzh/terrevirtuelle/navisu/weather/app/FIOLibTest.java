@@ -12,18 +12,15 @@ import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.ForecastIO;
 
 public class FIOLibTest {
 
-	private static final String API_KEY = "";
+	private static final String API_KEY = "3a9c0c39c2e2463c8a36c7ef6ed58dd5";
 
 	public static void main(String[] args) {
 
 		
 		ForecastIO fio = new ForecastIO(API_KEY,
-                Abbreviations.UNIT.get("SI"), Abbreviations.LANG.get("ENGLISH"),
+                Abbreviations.UNIT.get("UK"), Abbreviations.LANG.get("ENGLISH"),
                 "38.7252993" , "-9.1500364");
-		//fio.setUnits(Abbreviations.UNIT.get("SI"));
-		//fio.setLang(Abbreviations.LANG.get("ENGLISH"));
-		//fio.getForecast("38.7252993" , "-9.1500364");
-
+		
 		//Response Headers info
 		System.out.println("Response Headers:");
 		System.out.println("Cache-Control: "+fio.getHeaderCache_Control());

@@ -11,13 +11,18 @@ import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.view.DarkSkyViewController;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,7 +32,6 @@ import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
@@ -75,6 +79,7 @@ public class DarkSkyController
     List<String> unitList;
     String unit;
     String unitCode;
+    protected Properties properties;
     List<String> countryList;
     private ObservableList observableList = FXCollections.observableArrayList();
     private LocalDate iniDate;
@@ -105,9 +110,15 @@ public class DarkSkyController
         this.languageList = languageList;
         this.unitList = unitList;
         this.countryList = countryList;
+
         apiKey = darkSkyComponentController.getApiKey();
         darkSkyUrl = darkSkyComponentController.getDarkSkyUrl();
-        
+        town = darkSkyComponentController.getTown();
+        language = darkSkyComponentController.getLanguage();
+        unit = darkSkyComponentController.getUnit();
+        country = darkSkyComponentController.getCountry();
+        properties = darkSkyComponentController.getProperties();
+
         setMouseTransparent(false);
         load();
     }
@@ -129,6 +140,7 @@ public class DarkSkyController
 
     @SuppressWarnings("unchecked")
     private void initGui() {
+        townTF.setText(town);
         townTF.setOnAction(a -> {
             town = townTF.getText().trim();
         });
@@ -148,6 +160,7 @@ public class DarkSkyController
                 languageMB.setText(language.trim());
             });
         });
+        languageMB.setText(language);
         languageMB.setOnAction(a -> {
             language = languageMB.getText().trim();
         });
@@ -168,6 +181,7 @@ public class DarkSkyController
 
             });
         });
+        unitMB.setText(unit);
         unitMB.setOnAction(a -> {
             unit = unitMB.getText().trim();
         });
@@ -184,9 +198,10 @@ public class DarkSkyController
             item.setOnAction(a -> {
                 country = item.getText().trim();
                 countryCode = Abbreviations.CODE.get(country);
-                countryMB.setText(country.trim() + "   " + "\"" + countryCode + "\"");
+                countryMB.setText(country.trim());
             });
         });
+        countryMB.setText(country);
         countryMB.setOnAction(a -> {
             country = countryMB.getText().trim();
         });
@@ -194,23 +209,38 @@ public class DarkSkyController
         /* Request forecast */
         requestButton.setOnAction(a -> {
             DarkSkyViewController darkSkyViewController = new DarkSkyViewController();
-            if (town == null) {
-                town = townTF.getText();
+            
+            town = townTF.getText().trim();
+            country = countryMB.getText().trim();
+            unit = unitMB.getText().trim();
+            language = languageMB.getText().trim();
+            countryCode = Abbreviations.CODE.get(country);
+            
+            try (OutputStream output = new FileOutputStream(darkSkyComponentController.getCACHE_FILE_NAME())) {
+                properties.setProperty("town", town);
+                properties.setProperty("language", language);
+                properties.setProperty("unit", unit);
+                properties.setProperty("country", country);
+                properties.setProperty("countryCode", countryCode);
+                properties.store(output, null);
+            } catch (IOException ex) {
+                Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
-            Location location = gazetteerComponentServices.searchGeoName(town, countryCode);
 
+            Location location = gazetteerComponentServices.searchGeoName(town, countryCode);
+            
             if (location != null) {
                 latitudeLabel.setText(Double.toString(location.getLatitude()));
                 longitudeLabel.setText(Double.toString(location.getLongitude()));
-
+                languageCode = Abbreviations.LANG.get(language);
+                unitCode = Abbreviations.UNIT.get(unit);
                 fio = new ForecastIO(apiKey, unitCode, languageCode,
-                Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
+                        Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
                 if (fio.getForecast(Double.toString(location.getLatitude()),
                         Double.toString(location.getLongitude())) == true) {
-                   // print(fio);
-                   darkSkyViewController.showData(fio);
+                    darkSkyViewController.showData(fio);
+                    print(fio);
                 }
-
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Gazetteer");
