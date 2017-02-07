@@ -178,6 +178,7 @@ public class AppMain extends Application {
 
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
 
+        /* management properties and caches */
         String navisuHome = System.getProperty("user.home") + "/.navisu";
         Path navisuHomePath = Paths.get(navisuHome);
         if (!Files.exists(navisuHomePath, LinkOption.NOFOLLOW_LINKS)) {
