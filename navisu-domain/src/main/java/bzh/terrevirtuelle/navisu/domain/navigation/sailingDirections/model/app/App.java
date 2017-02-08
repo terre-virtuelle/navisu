@@ -43,6 +43,8 @@ public class App {
         System.out.println(document.getBook().getChapters());
 
         System.out.println(sailingDirections.getPoiMap());
+        
+        
         SdShomCatalog sdShomCatalog = new SdShomCatalog();
         
         try {
