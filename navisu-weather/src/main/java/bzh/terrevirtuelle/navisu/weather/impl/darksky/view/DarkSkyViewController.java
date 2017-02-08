@@ -116,6 +116,12 @@ public class DarkSkyViewController
     @FXML
     Button loadPressureData;
     @FXML
+    Button loadWindData1;
+    @FXML
+    Button loadTemperatureData1;
+    @FXML
+    Button loadPressureData1;
+    @FXML
     LineChart<String, Double> hoursLineChart;
     @FXML
     LineChart<String, Double> daysLineChart;
@@ -181,6 +187,15 @@ public class DarkSkyViewController
         loadPressureData.setOnMouseClicked((MouseEvent event) -> {
             showHoursPressureData(fio);
         });
+        loadWindData1.setOnMouseClicked((MouseEvent event) -> {
+            showDaysWindData(fio);
+        });
+        loadTemperatureData1.setOnMouseClicked((MouseEvent event) -> {
+            showDaysTemperatureData(fio);
+        });
+        loadPressureData1.setOnMouseClicked((MouseEvent event) -> {
+            showDaysPressureData(fio);
+        });
         iconId.setBackground(new Background(new BackgroundFill(
                 Color.AQUAMARINE,
                 CornerRadii.EMPTY,
@@ -206,9 +221,10 @@ public class DarkSkyViewController
         this.cloudCoverData.setText(Double.toString(currently.get().cloudCover()));
         this.summaryData.setText(currently.get().summary());
         this.timeData.setText(currently.get().time());
-      //  print(fio);
-      //  printIcon(fio);
+        //  print(fio);
+        //  printIcon(fio);
         showHoursWindData(fio);
+        showDaysWindData(fio);
     }
 
     @SuppressWarnings("unchecked")
@@ -230,9 +246,10 @@ public class DarkSkyViewController
                 dataSeries1.getData().add(data);
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
-                    final Tooltip tooltip = new Tooltip(data.getYValue().toString() + " Kn" + '\n'
-                            + windBearing + " °" + "\n"
-                            + data.getXValue());
+                    final Tooltip tooltip = new Tooltip(
+                            data.getXValue()+ '\n'
+                            + "S : " + data.getYValue().toString() + " Kn" + '\n'
+                            + "B : " + windBearing + " °");
                     Tooltip.install(node, tooltip);
                 });
             }
@@ -259,9 +276,10 @@ public class DarkSkyViewController
                 dataSeries1.getData().add(data);
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
-                    final Tooltip tooltip = new Tooltip(data.getYValue().toString() + " °" + '\n'
-                            + appTemp + " °" + "\n"
-                            + data.getXValue());
+                    final Tooltip tooltip = new Tooltip(
+                            data.getXValue()+ '\n'
+                            + "T : " + data.getYValue().toString() + " °" + '\n'
+                            + "A : " + appTemp + " °");
                     Tooltip.install(node, tooltip);
                 });
             }
@@ -275,9 +293,9 @@ public class DarkSkyViewController
             hoursLineChart.getData().clear();
         }
         hyAxis.setAutoRanging(false);
-        hyAxis.setLowerBound(800);
+        hyAxis.setLowerBound(900);
         hyAxis.setUpperBound(1050);
-        
+
         FIOHourly hourly = new FIOHourly(fio);
         XYChart.Series<String, Double> dataSeries1 = new XYChart.Series<>();
         dataSeries1.setName("Pressure");
@@ -288,18 +306,113 @@ public class DarkSkyViewController
                 dataSeries1.getData().add(data);
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
-                    final Tooltip tooltip = new Tooltip(data.getYValue().toString() + " mb" + '\n'
-                            + data.getXValue());
+                    final Tooltip tooltip = new Tooltip(
+                            data.getXValue()+ '\n'
+                            + "P : " + data.getYValue().toString() + " hPa");
                     Tooltip.install(node, tooltip);
                 });
             }
         }
         hoursLineChart.getData().addAll(dataSeries1);
     }
-public void printIcon(ForecastIO fio) {
-    FIOCurrently currently = new FIOCurrently(fio);
-    System.out.println(currently.get().icon());
-}
+
+    @SuppressWarnings("unchecked")
+    public void showDaysWindData(ForecastIO fio) {
+        if (daysLineChart.getData() != null) {
+            daysLineChart.getData().clear();
+        }
+        dyAxis.setAutoRanging(false);
+        dyAxis.setLowerBound(0);
+        dyAxis.setUpperBound(50);
+        FIODaily daily = new FIODaily(fio);
+        XYChart.Series<String, Double> dataSeries1 = new XYChart.Series<>();
+        dataSeries1.setName("WindSpeed");
+        if (daily.days() > 0) {
+            for (int i = 0; i < daily.days(); i++) {
+                XYChart.Data<String, Double> data
+                        = new XYChart.Data<>("D+" + Integer.toString(i), daily.getDay(i).windSpeed());
+                String windBearing = daily.getDay(i).windBearing().toString();
+                String summary = daily.getDay(i).summary();
+                dataSeries1.getData().add(data);
+                data.nodeProperty().addListener(observable -> {
+                    final Node node = data.getNode();
+                    final Tooltip tooltip = new Tooltip(
+                            data.getXValue() + "\n"
+                            + "S : " + data.getYValue().toString() + " Kn" + '\n'
+                            + "B : " + windBearing + " °" + "\n"
+                            + summary);
+                    Tooltip.install(node, tooltip);
+                });
+            }
+        }
+        daysLineChart.getData().addAll(dataSeries1);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void showDaysTemperatureData(ForecastIO fio) {
+        if (daysLineChart.getData() != null) {
+            daysLineChart.getData().clear();
+        }
+        dyAxis.setAutoRanging(false);
+        dyAxis.setLowerBound(-30);
+        dyAxis.setUpperBound(60);
+        FIODaily daily = new FIODaily(fio);
+        XYChart.Series<String, Double> dataSeries1 = new XYChart.Series<>();
+        dataSeries1.setName("Temperature");
+        if (daily.days() > 0) {
+            for (int i = 0; i < daily.days(); i++) {
+                XYChart.Data<String, Double> data
+                        = new XYChart.Data<>("D+" + Integer.toString(i), daily.getDay(i).temperatureMax());
+                String tempMin = daily.getDay(i).temperatureMin().toString();
+                dataSeries1.getData().add(data);
+                data.nodeProperty().addListener(observable -> {
+                    final Node node = data.getNode();
+                    final Tooltip tooltip = new Tooltip(
+                            data.getXValue()+ '\n'
+                            + "Max : " +data.getYValue().toString() + " °" + '\n'
+                            + "Min : " + tempMin + " °");
+                    Tooltip.install(node, tooltip);
+                });
+            }
+        }
+        daysLineChart.getData().addAll(dataSeries1);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void showDaysPressureData(ForecastIO fio) {
+        if (daysLineChart.getData() != null) {
+            daysLineChart.getData().clear();
+        }
+        dyAxis.setAutoRanging(false);
+        dyAxis.setLowerBound(900);
+        dyAxis.setUpperBound(1050);
+
+        FIODaily daily = new FIODaily(fio);
+        XYChart.Series<String, Double> dataSeries1 = new XYChart.Series<>();
+        dataSeries1.setName("Pressure");
+        if (daily.days() > 0) {
+            for (int i = 0; i < daily.days(); i++) {
+                XYChart.Data<String, Double> data
+                        = new XYChart.Data<>("D+" + Integer.toString(i), daily.getDay(i).pressure());
+                dataSeries1.getData().add(data);
+                data.nodeProperty().addListener(observable -> {
+                    final Node node = data.getNode();
+                    final Tooltip tooltip = new Tooltip(
+                            data.getXValue()+ '\n'
+                            + "P : " + data.getYValue().toString() + " hPa"
+                    );
+                    Tooltip.install(node, tooltip);
+                });
+            }
+        }
+        daysLineChart.getData().addAll(dataSeries1);
+    }
+
+    public void printIcon(ForecastIO fio) {
+        FIOCurrently currently = new FIOCurrently(fio);
+        System.out.println(currently.get().icon());
+    }
+
     public void print(ForecastIO fio) {
         //Response Headers info
         System.out.println("Response Headers:");
