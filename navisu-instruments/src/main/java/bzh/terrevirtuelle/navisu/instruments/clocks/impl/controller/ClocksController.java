@@ -7,18 +7,19 @@ package bzh.terrevirtuelle.navisu.instruments.clocks.impl.controller;
 
 import bzh.terrevirtuelle.navisu.instruments.clocks.impl.ClocksImpl;
 import bzh.terrevirtuelle.navisu.instruments.common.controller.InstrumentController;
-import java.net.URL;
+import java.nio.file.Paths;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
@@ -32,10 +33,10 @@ import javafx.util.Duration;
  * @author Serge Morvan
  */
 public class ClocksController
-        extends InstrumentController{
+        extends InstrumentController {
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "\\css\\").toUri().toString();
     private static ClocksController INSTANCE;
-
     private final DateTimeFormatter utcdateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     private final DateTimeFormatter utctimeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");
     private final DateTimeFormatter onboarddateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
@@ -44,6 +45,8 @@ public class ClocksController
     private final DateTimeFormatter localtimeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");
     private final String FXML = "clocks.fxml";
 
+    @FXML
+    public Group clocksgroup;
     @FXML
     public Text utcdaydate;
     @FXML
@@ -56,9 +59,13 @@ public class ClocksController
     public Text localdaydate;
     @FXML
     public Text localhours;
-
+    @FXML
+    public Button hourup;
+    @FXML
+    public Button hourdown;
+    public static Clock Boardclock;
     public ZoneId zoneid = ZoneId.systemDefault();
-
+    protected String viewgroupstyle = "clocks.css";
     protected ClocksImpl instrument;
     protected Timeline timeline;
 
@@ -73,13 +80,14 @@ public class ClocksController
         super(keyCode, keyCombination);
         this.instrument = instrument;
         load(FXML);
-
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        clocksgroup.getStylesheets().add(uri);
         timeline = new Timeline(
                 new KeyFrame(Duration.seconds(0), (ActionEvent actionEvent) -> {
                     utcdaydate.setText(LocalDate.now(Clock.systemUTC()).format(utcdateFormatter));
                     utchours.setText(LocalTime.now(Clock.systemUTC()).format(utctimeFormatter));
-                    onboarddaydate.setText(LocalDate.now(Clock.systemDefaultZone()).format(onboarddateFormatter));
-                    onboardhours.setText(LocalTime.now(Clock.systemDefaultZone()).format(onboardtimeFormatter));
+                    onboarddaydate.setText(LocalDate.now(Boardclock.systemDefaultZone()).format(onboarddateFormatter));
+                    onboardhours.setText(LocalTime.now(Boardclock.systemDefaultZone()).format(onboardtimeFormatter));
                     localdaydate.setText(LocalDate.now(Clock.system(zoneid)).format(localdateFormatter));
                     localhours.setText(LocalTime.now(Clock.system(zoneid)).format(localtimeFormatter));
 
@@ -88,7 +96,14 @@ public class ClocksController
         );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-
+        
+        hourup.setOnMouseClicked((MouseEvent event) -> {
+            
+        });
+         
+        hourdown.setOnMouseClicked((MouseEvent event) -> {
+            instrument.off();
+        });
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });

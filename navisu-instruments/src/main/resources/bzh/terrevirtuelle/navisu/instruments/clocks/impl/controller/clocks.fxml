@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.collections.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<fx:root fx:id="view" stylesheets="@clocks.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="clocksgroup" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="viewpane" prefHeight="170.0" prefWidth="450.0" styleClass="background-pane" />
         <Rectangle arcHeight="30.0" arcWidth="30.0" height="170.0" strokeType="INSIDE" styleClass="instrumentcontour" width="450.0">
@@ -56,7 +60,7 @@
                                                 </RadialGradient>
                                             </stroke>
                                         </Rectangle>
-                                        <Button fx:id="hourup" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="houradjustbutton" text="+1" textAlignment="CENTER">
+                                        <Button fx:id="hourup" graphicTextGap="0.0" layoutY="-1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="houradjustbutton" text="+1" textAlignment="CENTER">
                                             <font>
                                                 <Font size="10.0" />
                                             </font>
@@ -131,16 +135,9 @@
         <Slider fx:id="opacitySlider" layoutX="433.0" layoutY="53.0" max="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="100.0" prefWidth="5.0" value="0.6">
         </Slider>
         <Text layoutX="123.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="CLOCKS" textAlignment="CENTER" wrappingWidth="200.0" />
-        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="4.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@logoTV64AIS.png" />
-            </image>
-            <effect>
-                <Glow />
-            </effect>
-        </ImageView>
-          
-        <Button fx:id="quit" alignment="CENTER" layoutX="394.0" layoutY="-6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0" scaleX="0.6" scaleY="0.6" styleClass="quitbutton" textOverrun="CLIP">
+                
+        <Pane fx:id="logo" styleClass="logo" layoutX="4.0" layoutY="3.0" prefHeight="50.0" prefWidth="50.0" /> 
+        <Button fx:id="quit" alignment="CENTER" layoutX="403.0" layoutY="11.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="30.0" styleClass="quitbutton" textOverrun="CLIP">
                
         </Button>
     </children>

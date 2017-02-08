@@ -43,6 +43,7 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.event.PositionListener;
 import gov.nasa.worldwind.geom.Position;
+import java.nio.file.Paths;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.MenuBar;
@@ -60,7 +61,8 @@ public class GuiAgentImpl
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
-    private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
+private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "\\css\\").toUri().toString();
+    //private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
     private final View viewWW;
     private final WorldWindow wwd;
 
@@ -108,6 +110,7 @@ public class GuiAgentImpl
     protected InstrumentDriver driver = null;//Utilise par le MOB
     protected Position pos;
     protected Text label;
+protected String modstyle;
 
     public GuiAgentImpl() {
         this.wwd = GeoWorldWindViewImpl.getWW();
@@ -130,6 +133,7 @@ public class GuiAgentImpl
         final FXMLLoader loader = new FXMLLoader();
         try {
             root = loader.load(GuiAgentImpl.class.getResourceAsStream(GUI_AGENT_FXML));
+
             ctrl = loader.getController();
         } catch (IOException e) {
             LOGGER.severe("Cannot load " + GUI_AGENT_FXML + " !");
@@ -210,7 +214,11 @@ public class GuiAgentImpl
     }
 
     private void loadCss(Scene scene) {
-        scene.getStylesheets().add(getClass().getResource(NAVISU_LOOK_AND_FEEL_PATH).toExternalForm());
+    //scene.getStylesheets().add(getClass().getResource(CSS_STYLE_PATH).toExternalForm());
+        //String uri = Paths.get(System.getProperty("user.dir") + "\\css\\navisu.css").toUri().toString();
+        modstyle ="navisu.css";
+        String uri = CSS_STYLE_PATH + modstyle;
+        scene.getStylesheets().add(uri);
     }
 
     @Override

@@ -63,13 +63,23 @@
     -fx-background-insets: 0, 1, 2, 4, 4;
     -fx-background-radius: 3, 2, 1, 4, 1;
 }
+/*---------- LOGO -----------*/
+.logo{
+    -fx-background-image: url(cssImages/logo50.png) ;
+    -fx-background-repeat:no-repeat;
+    -fx-background-color: #bb000000;
+    -fx-content-display: CENTER;
+    -fx-background-size: cover;
+
+}
 /*---------- QUIT -----------*/ 
 .quitbutton
 {
-    -fx-background-image: url(quit.png) ;
+    -fx-background-image: url(cssImages/quitrouge64.png) ;
     -fx-background-repeat:no-repeat;
     -fx-background-color: #bb000000;
     -fx-background-radius: 10;
+    -fx-background-size: cover;
     -fx-text-fill: -fx-color-typo;
     -fx-content-display: CENTER;
 }
@@ -100,7 +110,21 @@
     -fx-arc-height:30;	 
     -fx-arc-width: 30;
 }
+.viewcadres{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
+    -fx-fill:-fx-color-backround-value;
+    -fx-arc-height:30;	 
+    -fx-arc-width: 30;
+}
 .instrumentcontour{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1;
+    -fx-fill : -fx-color-backround-value;
+    -fx-arc-height: 40;	 
+    -fx-arc-width: 40;
+}
+.viewcontour{
     -fx-stroke: -fx-line-base;
     -fx-stroke-width: 1;
     -fx-fill : -fx-color-backround-value;
@@ -114,7 +138,7 @@
     -fx-arc-height: 0;	 
     -fx-arc-width: 0;
 }
-/*--------- background instruments ----------------*/
+/*--------- background instruments - view ----------------*/
 .foot-pane {
     -fx-border-radius: 0 0 20 20;
     -fx-background-radius: 0 0 20 20;

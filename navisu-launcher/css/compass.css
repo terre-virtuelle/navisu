@@ -1,6 +1,6 @@
 /* CSS Document */
 
-@import "commonTemplate.css";
+@import "common.css";
 
 /*******************************************************************************
  *                                                                             *
@@ -20,4 +20,13 @@
 .instrumentvalue{
     -fx-font: 20px "Roboto Cn";
     -fx-fill: -fx-color-typo; 
+}
+.compass-couronne{
+    -fx-background-image: url(cssImages/couronne.png) ;
+    -fx-background-size: cover;
+    -fx-background-repeat:no-repeat;  
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 10;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
 }

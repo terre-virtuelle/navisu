@@ -10,19 +10,21 @@ import bzh.terrevirtuelle.navisu.instruments.compass.impl.CompassImpl;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import org.capcaval.c3.componentmanager.ComponentManager;
 
@@ -36,7 +38,10 @@ public class CompassController
         extends Widget2DController
         implements Initializable {
 
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "\\css\\").toUri().toString();
     private final String FXML = "Compass.fxml";
+    @FXML
+    public Group viewgroup;
     @FXML
     public Pane view;
     @FXML
@@ -52,16 +57,18 @@ public class CompassController
     @FXML
     public Text headingVariation;
     @FXML
-    public ImageView couronne;
+    public Pane couronne;
 
     protected CompassImpl instrument;
     protected ComponentManager cm = ComponentManager.componentManager;
+    protected String viewgroupstyle = "compass.css";
+
     double org = 0;
+
     /*
      Events subscribe zone
     
      */
-
     public CompassController(CompassImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         super(keyCode, keyCombination);
         this.instrument = instrument;
@@ -75,7 +82,10 @@ public class CompassController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        viewgroup.getStylesheets().add(uri);
         view.setOpacity(0.8);
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
         });
@@ -96,7 +106,7 @@ public class CompassController
             headingValue.setText(Integer.toString((int) hdg.getHeading()));
             headingDeviation.setText(Float.toString(hdg.getMagneticDeviation()));
             headingVariation.setText(Float.toString(hdg.getMagneticVariation()));
-          //  RotateTransition rt = new RotateTransition(Duration.millis(10), couronne);
+            //  RotateTransition rt = new RotateTransition(Duration.millis(10), couronne);
             // rt.setByAngle((hdg.getHeading() - org));
             //  rt.play();
             couronne.setRotate(360 - hdg.getHeading());
