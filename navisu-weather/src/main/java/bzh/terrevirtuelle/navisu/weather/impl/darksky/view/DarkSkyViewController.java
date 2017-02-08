@@ -232,6 +232,7 @@ public class DarkSkyViewController
         if (hoursLineChart.getData() != null) {
             hoursLineChart.getData().clear();
         }
+        
         hyAxis.setAutoRanging(false);
         hyAxis.setLowerBound(0);
         hyAxis.setUpperBound(50);
