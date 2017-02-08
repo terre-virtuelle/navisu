@@ -26,15 +26,12 @@ import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIOFlags;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIOHourly;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIOMinutely;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.ForecastIO;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -113,20 +110,26 @@ public class DarkSkyViewController
     @FXML
     Label timeData;
     @FXML
-    LineChart hoursLineChart;
+    Button loadWindData;
     @FXML
-    LineChart daysLineChart;
+    Button loadTemperatureData;
+    @FXML
+    Button loadPressureData;
+    @FXML
+    LineChart<String, Double> hoursLineChart;
+    @FXML
+    LineChart<String, Double> daysLineChart;
+    @FXML
+    NumberAxis hyAxis;
+    @FXML
+    NumberAxis dyAxis;
     @FXML
     StackPane iconId;
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
-    private Map<String, List<Double>> hoursDataMap;
 
     public DarkSkyViewController() {
         setMouseTransparent(false);
-        hoursDataMap = new HashMap<>();
-        hoursDataMap.put("WindSpeed", new ArrayList<>());
-        hoursDataMap.put("WindBearing", new ArrayList<>());
         load();
     }
 
@@ -139,7 +142,7 @@ public class DarkSkyViewController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
+        setOpacity(1.0);
     }
 
     public void setTitle(Label title) {
@@ -169,12 +172,15 @@ public class DarkSkyViewController
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
-        NumberAxis xAxis = new NumberAxis();
-        xAxis.setLabel("Hours");
-
-        NumberAxis yAxis = new NumberAxis();
-        yAxis.setLabel("Data");
-        
+        loadWindData.setOnMouseClicked((MouseEvent event) -> {
+            showHoursWindData(fio);
+        });
+        loadTemperatureData.setOnMouseClicked((MouseEvent event) -> {
+            showHoursTemperatureData(fio);
+        });
+        loadPressureData.setOnMouseClicked((MouseEvent event) -> {
+            showHoursPressureData(fio);
+        });
         iconId.setBackground(new Background(new BackgroundFill(
                 Color.AQUAMARINE,
                 CornerRadii.EMPTY,
@@ -200,31 +206,100 @@ public class DarkSkyViewController
         this.cloudCoverData.setText(Double.toString(currently.get().cloudCover()));
         this.summaryData.setText(currently.get().summary());
         this.timeData.setText(currently.get().time());
-        // print(fio);
-        showHoursData(fio);
+      //  print(fio);
+      //  printIcon(fio);
+        showHoursWindData(fio);
     }
 
-    public void showHoursData(ForecastIO fio) {
+    @SuppressWarnings("unchecked")
+    public void showHoursWindData(ForecastIO fio) {
+        if (hoursLineChart.getData() != null) {
+            hoursLineChart.getData().clear();
+        }
+        hyAxis.setAutoRanging(false);
+        hyAxis.setLowerBound(0);
+        hyAxis.setUpperBound(50);
         FIOHourly hourly = new FIOHourly(fio);
-        XYChart.Series<Integer, Double> dataSeries1 = new XYChart.Series<>();
+        XYChart.Series<String, Double> dataSeries1 = new XYChart.Series<>();
         dataSeries1.setName("WindSpeed");
         if (hourly.hours() > 0) {
             for (int i = 0; i < hourly.hours(); i++) {
-                XYChart.Data<Integer, Double> data 
-                        = new XYChart.Data<>(i, hourly.getHour(i).windSpeed());
+                XYChart.Data<String, Double> data
+                        = new XYChart.Data<>("H+" + Integer.toString(i), hourly.getHour(i).windSpeed());
+                String windBearing = hourly.getHour(i).windBearing().toString();
                 dataSeries1.getData().add(data);
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
-                    final Tooltip tooltip = new Tooltip(data.getYValue().toString()+" Kn" + '\n' 
-                            +data.getXValue().toString() + " h");
+                    final Tooltip tooltip = new Tooltip(data.getYValue().toString() + " Kn" + '\n'
+                            + windBearing + " °" + "\n"
+                            + data.getXValue());
                     Tooltip.install(node, tooltip);
                 });
             }
         }
-      //  hoursLineChart.getXAxis().setTi
         hoursLineChart.getData().addAll(dataSeries1);
     }
 
+    @SuppressWarnings("unchecked")
+    public void showHoursTemperatureData(ForecastIO fio) {
+        if (hoursLineChart.getData() != null) {
+            hoursLineChart.getData().clear();
+        }
+        hyAxis.setAutoRanging(false);
+        hyAxis.setLowerBound(-30);
+        hyAxis.setUpperBound(60);
+        FIOHourly hourly = new FIOHourly(fio);
+        XYChart.Series<String, Double> dataSeries1 = new XYChart.Series<>();
+        dataSeries1.setName("Temperature");
+        if (hourly.hours() > 0) {
+            for (int i = 0; i < hourly.hours(); i++) {
+                XYChart.Data<String, Double> data
+                        = new XYChart.Data<>("H+" + Integer.toString(i), hourly.getHour(i).temperature());
+                String appTemp = hourly.getHour(i).apparentTemperature().toString();
+                dataSeries1.getData().add(data);
+                data.nodeProperty().addListener(observable -> {
+                    final Node node = data.getNode();
+                    final Tooltip tooltip = new Tooltip(data.getYValue().toString() + " °" + '\n'
+                            + appTemp + " °" + "\n"
+                            + data.getXValue());
+                    Tooltip.install(node, tooltip);
+                });
+            }
+        }
+        hoursLineChart.getData().addAll(dataSeries1);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void showHoursPressureData(ForecastIO fio) {
+        if (hoursLineChart.getData() != null) {
+            hoursLineChart.getData().clear();
+        }
+        hyAxis.setAutoRanging(false);
+        hyAxis.setLowerBound(800);
+        hyAxis.setUpperBound(1050);
+        
+        FIOHourly hourly = new FIOHourly(fio);
+        XYChart.Series<String, Double> dataSeries1 = new XYChart.Series<>();
+        dataSeries1.setName("Pressure");
+        if (hourly.hours() > 0) {
+            for (int i = 0; i < hourly.hours(); i++) {
+                XYChart.Data<String, Double> data
+                        = new XYChart.Data<>("H+" + Integer.toString(i), hourly.getHour(i).pressure());
+                dataSeries1.getData().add(data);
+                data.nodeProperty().addListener(observable -> {
+                    final Node node = data.getNode();
+                    final Tooltip tooltip = new Tooltip(data.getYValue().toString() + " mb" + '\n'
+                            + data.getXValue());
+                    Tooltip.install(node, tooltip);
+                });
+            }
+        }
+        hoursLineChart.getData().addAll(dataSeries1);
+    }
+public void printIcon(ForecastIO fio) {
+    FIOCurrently currently = new FIOCurrently(fio);
+    System.out.println(currently.get().icon());
+}
     public void print(ForecastIO fio) {
         //Response Headers info
         System.out.println("Response Headers:");
