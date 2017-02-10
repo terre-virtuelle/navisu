@@ -5,7 +5,12 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.server.impl;
 
+import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServer;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.controller.NavigationServerController;
@@ -23,6 +28,16 @@ public class NavigationServerImpl
 
     @UsedService
     NavigationCmdComponentServices navigationCmdComponentServices;
+    @UsedService
+    GuiAgentServices guiAgentServices;
+    @UsedService
+    DriverManagerServices driverManagerServices;
+    @UsedService
+    WebDriverManagerServices webDriverManagerServices;
+    @UsedService
+    InstrumentDriverManagerServices instrumentDriverManagerServices;
+    @UsedService
+    DatabaseDriverManagerServices databaseDriverManagerServices;
 
     private final String KEY_NAME = "NavigationServer";
     private NavigationServerController navigationServerController;
@@ -35,15 +50,23 @@ public class NavigationServerImpl
 
     @Override
     public void init() {
-        navigationServerController = NavigationServerController.getInstance();
-        navigationServerController.setNavigationCmdComponentServices(navigationCmdComponentServices);
+        navigationServerController = NavigationServerController.getInstance(guiAgentServices,
+                driverManagerServices,
+                webDriverManagerServices,
+                instrumentDriverManagerServices,
+                databaseDriverManagerServices,
+                navigationCmdComponentServices);
         navigationServerController.init();
     }
 
     @Override
     public void init(int port) {
-        navigationServerController = NavigationServerController.getInstance();
-        navigationServerController.setNavigationCmdComponentServices(navigationCmdComponentServices);
+        navigationServerController = NavigationServerController.getInstance(guiAgentServices,
+                driverManagerServices,
+                webDriverManagerServices,
+                instrumentDriverManagerServices,
+                databaseDriverManagerServices,
+                navigationCmdComponentServices);
         navigationServerController.init(port);
     }
 
