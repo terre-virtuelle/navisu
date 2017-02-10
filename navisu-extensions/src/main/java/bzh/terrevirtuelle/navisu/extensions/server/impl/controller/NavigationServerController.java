@@ -5,6 +5,11 @@
  */
 package bzh.terrevirtuelle.navisu.extensions.server.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.drivers.webdriver.WebDriverManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationDataSet;
 import bzh.terrevirtuelle.navisu.domain.navigation.view.NavigationViewSet;
 import bzh.terrevirtuelle.navisu.extensions.client.Client;
@@ -19,6 +24,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBException;
+import org.capcaval.c3.component.annotation.UsedService;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.VertxFactory;
 import org.vertx.java.core.buffer.Buffer;
@@ -36,6 +42,11 @@ public class NavigationServerController {
     protected static final Logger LOGGER = Logger.getLogger(NavigationServerController.class.getName());
     private static NavigationServerController INSTANCE;
 
+    private GuiAgentServices guiAgentServices;
+    private DriverManagerServices driverManagerServices;
+    private WebDriverManagerServices webDriverManagerServices;
+    private InstrumentDriverManagerServices instrumentDriverManagerServices;
+    private DatabaseDriverManagerServices databaseDriverManagerServices;
     private NavigationCmdComponentServices navigationCmdComponentServices;
     private NavigationDataSet navigationDataSet;
     private NavigationViewSet navigationViewSet;
@@ -52,13 +63,34 @@ public class NavigationServerController {
     private int port;
     private ArCommand arCommand;
 
-    private NavigationServerController() {
+    private NavigationServerController(GuiAgentServices guiAgentServices,
+            DriverManagerServices driverManagerServices,
+            WebDriverManagerServices webDriverManagerServices,
+            InstrumentDriverManagerServices instrumentDriverManagerServices,
+            DatabaseDriverManagerServices databaseDriverManagerServices,
+            NavigationCmdComponentServices navigationCmdComponentServices) {
+        this.guiAgentServices = guiAgentServices;
+        this.driverManagerServices = driverManagerServices;
+        this.webDriverManagerServices = webDriverManagerServices;
+        this.instrumentDriverManagerServices = instrumentDriverManagerServices;
+        this.databaseDriverManagerServices = databaseDriverManagerServices;
+        this.navigationCmdComponentServices = navigationCmdComponentServices;
         initProperties();
     }
 
-    public static NavigationServerController getInstance() {
+    public static NavigationServerController getInstance(GuiAgentServices guiAgentServices,
+            DriverManagerServices driverManagerServices,
+            WebDriverManagerServices webDriverManagerServices,
+            InstrumentDriverManagerServices instrumentDriverManagerServices,
+            DatabaseDriverManagerServices databaseDriverManagerServices,
+            NavigationCmdComponentServices navigationCmdComponentServices) {
         if (INSTANCE == null) {
-            INSTANCE = new NavigationServerController();
+            INSTANCE = new NavigationServerController(guiAgentServices,
+                    driverManagerServices,
+                    webDriverManagerServices,
+                    instrumentDriverManagerServices,
+                    databaseDriverManagerServices,
+                    navigationCmdComponentServices);
         }
         return INSTANCE;
     }
@@ -90,7 +122,7 @@ public class NavigationServerController {
                     ws.dataHandler((Buffer data) -> {
                         arCommand = command(data.toString());
                         if (arCommand != null) {
-                            if (arCommand.getNavigationData()!= null) {
+                            if (arCommand.getNavigationData() != null) {
                                 navigationDataSet = navigationCmdComponentServices.doIt(arCommand.getCmd(), arCommand.getNavigationData());
                                 if (navigationDataSet != null) {
                                     if (navigationDataSet.size() > 0) {
@@ -138,12 +170,12 @@ public class NavigationServerController {
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
         LOGGER.log(Level.INFO, data);
-        
+
         /**
          * If a ArCommand with cmd=IPInfo is send, it will connect to the Server
          * provided in arg
          */
-        if(navCmd.getCmd().equals("IPInfo") && navCmd.getArg() != null){
+        if (navCmd.getCmd().equals("IPInfo") && navCmd.getArg() != null) {
             try {
                 Client.setInstance(navCmd.getArg());
                 Client.connectToServer();
@@ -151,11 +183,12 @@ public class NavigationServerController {
                 Logger.getLogger(NavigationServerController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         /**
-         * If a ArCommand with cmd=ServerClosing is send, it will close its connection
+         * If a ArCommand with cmd=ServerClosing is send, it will close its
+         * connection
          */
-        if(navCmd.getCmd().equals("ServerClosing")){
+        if (navCmd.getCmd().equals("ServerClosing")) {
             try {
                 Client.disconnectFromServer();
                 LOGGER.log(Level.INFO, "Disconnected from Server");
@@ -172,12 +205,11 @@ public class NavigationServerController {
         try {
             ImportExportXML.exports(response, xmlString);
         } catch (JAXBException ex) {
-            System.out.println("ex "+ ex);
+            System.out.println("ex " + ex);
             LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
-        
+
         //TODO
-        
         return xmlString.toString();
     }
 
