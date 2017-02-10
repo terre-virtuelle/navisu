@@ -61,7 +61,7 @@ public class GuiAgentImpl
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
-private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "\\css\\").toUri().toString();
+private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     //private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
     private final View viewWW;
     private final WorldWindow wwd;
