@@ -35,7 +35,7 @@ import javafx.util.Duration;
 public class ClocksController
         extends InstrumentController {
 
-    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "\\css\\").toUri().toString();
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static ClocksController INSTANCE;
     private final DateTimeFormatter utcdateFormatter = DateTimeFormatter.ofPattern("dd/MM/yy");
     private final DateTimeFormatter utctimeFormatter = DateTimeFormatter.ofPattern("KK:mm:ss a");

@@ -38,7 +38,7 @@ public class CompassController
         extends Widget2DController
         implements Initializable {
 
-    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "\\css\\").toUri().toString();
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private final String FXML = "Compass.fxml";
     @FXML
     public Group viewgroup;
