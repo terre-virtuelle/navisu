@@ -193,7 +193,7 @@ public class AppMain extends Application {
         String navisuWeatherCache = navisuHome + "/caches/weather.properties";
         if (!Files.exists(Paths.get(navisuWeatherCache), LinkOption.NOFOLLOW_LINKS)) {
             Files.createFile(Paths.get(navisuWeatherCache));
-            writeProperties(navisuWeatherCache);
+            writeDefaultWeatherCache(navisuWeatherCache);
         } else {
             Properties properties = new Properties();
             try {
@@ -205,13 +205,35 @@ public class AppMain extends Application {
                 String countryCode = properties.getProperty("countryCode");
 
                 if (town == null || language == null || unit == null || country == null || countryCode == null) {
-                    writeProperties(navisuWeatherCache);
+                    writeDefaultWeatherCache(navisuWeatherCache);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
+        
+        String userProperties = navisuHome + "/properties/user.properties";
+        if (!Files.exists(Paths.get(userProperties), LinkOption.NOFOLLOW_LINKS)) {
+            Files.createFile(Paths.get(userProperties));
+            writeDefaultUserProperties(userProperties);
+        } else {
+            Properties properties = new Properties();
+            try {
+                properties.load(new FileInputStream(userProperties));
+                String s57ChartsDir = properties.getProperty("s57ChartsDir");
+                String darkSkyApiKey = properties.getProperty("darkSkyApiKey");
+                String allCountriesPath = properties.getProperty("allCountriesPath");
+                String luceneAllCountriesIndexPath = properties.getProperty("luceneAllCountriesIndexPath");
 
+                if (s57ChartsDir == null || darkSkyApiKey == null
+                        || allCountriesPath == null || luceneAllCountriesIndexPath == null) {
+                    writeDefaultUserProperties(navisuWeatherCache);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+        
         final ComponentManager componentManager = ComponentManager.componentManager;
         /* Deploy components */
 
@@ -609,12 +631,21 @@ public class AppMain extends Application {
         usrPathsField.set(null, newPaths);
     }
 
-    private void writeProperties(String navisuWeatherCache) {
+    private void writeDefaultWeatherCache(String navisuWeatherCache) {
         try {
-
             List<String> keys = new ArrayList<>(Arrays.asList("town=",
                     "language=", "unit=", "country=", "countryCode="));
             Files.write(Paths.get(navisuWeatherCache), keys, StandardOpenOption.WRITE);
+        } catch (IOException ex) {
+            Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    private void writeDefaultUserProperties(String userProperties) {
+        try {
+            List<String> keys = new ArrayList<>(Arrays.asList("s57ChartsDir=",
+                    "darkSkyApiKey=", "allCountriesPath=", "luceneAllCountriesIndexPath="));
+            Files.write(Paths.get(userProperties), keys, StandardOpenOption.WRITE);
         } catch (IOException ex) {
             Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
