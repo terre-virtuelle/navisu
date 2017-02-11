@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.options;
+package bzh.terrevirtuelle.navisu.app.guiagent.options.server;
 
 import org.capcaval.c3.component.Component;
 

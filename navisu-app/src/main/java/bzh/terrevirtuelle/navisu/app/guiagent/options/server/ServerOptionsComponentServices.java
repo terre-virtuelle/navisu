@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.options;
+package bzh.terrevirtuelle.navisu.app.guiagent.options.server;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;

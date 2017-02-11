@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller;
+package bzh.terrevirtuelle.navisu.app.guiagent.options.server.impl.controller;
 
 import javafx.beans.property.SimpleStringProperty;
 

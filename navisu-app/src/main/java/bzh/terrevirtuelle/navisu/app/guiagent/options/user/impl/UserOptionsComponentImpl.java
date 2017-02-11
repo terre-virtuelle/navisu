@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.options.impl;
+package bzh.terrevirtuelle.navisu.app.guiagent.options.user.impl;
 
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
@@ -7,11 +7,12 @@ import org.capcaval.c3.component.ComponentState;
 import java.util.logging.Logger;
 import javafx.scene.input.KeyEvent;
 import org.capcaval.c3.component.annotation.UsedService;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller.ServerOptionsComponentController;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.server.impl.controller.ServerOptionsComponentController;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponent;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponent;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.user.impl.controller.UserOptionsComponentController;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
 
 /**
@@ -20,7 +21,7 @@ import bzh.terrevirtuelle.navisu.server.DataServerServices;
  * @date May 21, 2016
  *
  */
-public class ServerOptionsComponentImpl
+public class UserOptionsComponentImpl
         implements ServerOptionsComponent, ServerOptionsComponentServices,
         ComponentState, InstrumentDriver {
 
@@ -30,9 +31,9 @@ public class ServerOptionsComponentImpl
     DataServerServices dataServerServices;
     
     private final String COMPONENT_KEY_NAME_0 = "ServerOptions";
-    private ServerOptionsComponentController controller0;
+    private UserOptionsComponentController controller0;
 
-    private final static Logger LOGGER = Logger.getLogger(ServerOptionsComponentImpl.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(UserOptionsComponentImpl.class.getName());
 
     @Override
     public void componentInitiated() {
@@ -55,7 +56,7 @@ public class ServerOptionsComponentImpl
         String[] cmd = files;
         if (cmd != null) {
             if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
-                controller0 = ServerOptionsComponentController.getInstance(this, KeyCode.O, KeyCombination.CONTROL_DOWN,
+                controller0 = UserOptionsComponentController.getInstance(this, KeyCode.O, KeyCombination.CONTROL_DOWN,
                         guiAgentServices, dataServerServices);
                 controller0.setVisible(true);
             }

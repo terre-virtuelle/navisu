@@ -17,7 +17,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.impl.LayerCheckTreeImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.impl.MenuManagerImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ServerOptionsComponentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.server.impl.ServerOptionsComponentImpl;
 import bzh.terrevirtuelle.navisu.widgets.alarms.Alarm;
 import bzh.terrevirtuelle.navisu.widgets.alarms.Mob;
 import gov.nasa.worldwind.util.StatusBar;
@@ -36,7 +36,7 @@ import java.util.logging.Logger;
 
 import javafx.scene.input.MouseEvent;
 import javafx.stage.StageStyle;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;

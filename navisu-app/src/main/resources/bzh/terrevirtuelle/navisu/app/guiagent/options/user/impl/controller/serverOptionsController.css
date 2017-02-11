@@ -1,0 +1,164 @@
+/* CSS Document */
+
+@import "commonTemplate.css";
+
+/*******************************************************************************
+ *                                                                             *
+ * Route editor - aspect Treeview / TextArea                                   *
+ *                                                                             *
+ ******************************************************************************/
+.datatreeview, .datatextarea {
+    -fx-background-color: #99000000;
+}
+.text-area {
+    -fx-background-color:#99000000;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Infos et valeurs AIS / routeeditor                                         *
+ *                                                                             *
+ ******************************************************************************/
+.metriclabel{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-line-base;
+}
+.routeeditorvalue{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : #fff900;
+}
+.routeeditorlabel{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.routeeditorcombolabel{
+    -fx-font: 10px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.routeeditorname{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : #fff900;
+    -fx-underline : true;
+}
+.info-text{
+    -fx-font: 18px "Roboto Cn";
+    -fx-fill : #fff900;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Measure tools                                                               *
+ *                                                                             *
+ ******************************************************************************/
+.clockcadres, .routeeditor-panel, .routeeditor-info-pane{
+    -fx-stroke: -fx-line-base;
+    -fx-background-radius: 20 20 20 20;
+    -fx-stroke-width: 2;
+    -fx-fill:-fx-color-backround-value; 
+}
+/*
+.routeeditor-panel{
+    -fx-border-radius: 20 20 20 20;
+    -fx-background-radius: 20 20 20 20;
+    -fx-background-color: -fx-base;
+    -fx-stroke: -fx-line-base;
+}
+*/
+.routeeditor-circle, .routeeditor-line{
+    -fx-stroke: -fx-line-base;
+    -fx-fill: -fx-base-trans10;  
+}
+.routeeditor-line, .routeeditor-ticks {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 2;
+}
+.routeeditor-ticks10{
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 3;
+}
+.routeeditor-degrees{
+    -fx-font: 20pt "Roboto";
+    -fx-fill:-fx-line-base;
+}
+.routeeditor-screen {
+    /*
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 4px;
+    */
+    -fx-arc-height:30;
+    -fx-arc-width:30;
+    -fx-fill: #143b28;    
+}
+/*
+.routeeditor-info-pane {
+    -fx-stroke: -fx-line-base;
+    -fx-arc-height:20;
+    -fx-arc-width:20;
+    -fx-fill: -fx-base-trans20;
+}
+*/
+.routeeditor-buttonlabel{
+    -fx-font: 14px "Roboto";
+    -fx-fill : whitesmoke;
+}
+.routeeditor-buttonlabel-nlines{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : whitesmoke;
+}
+.infosd{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 2;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
+.infosd:focused{
+    -fx-font: 12px "Roboto Cn";
+    -fx-fill : -fx-color-title;
+    -fx-background-color: #bb000000;
+    -fx-background-radius: 2;
+    -fx-text-fill: -fx-color-typo;
+    -fx-content-display: CENTER;
+}
+.infosd:hover{
+    -fx-background-color: #bb000088;
+    -fx-background-insets: 0;
+}
+/*******************************************************************************
+ *                                                                             *
+ * TabPane                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: -fx-focus-color;
+    -fx-effect: dropshadow( two-pass-box , lightgreen ,20,0.2,5,5 );
+    
+}
+.tab-pane > .tab-header-area > .headers-region > .tab:disabled:hover {
+    -fx-color: derive(-fx-color,60%);
+}
+.tab-pane > .tab-header-area > .tab-header-background {
+    
+    -fx-background-color:-fx-base-trans; 
+}
+.tab-conteneur{
+    -fx-background-color:-fx-base-trans;
+    -fx-border-color: -fx-line-base;
+    -fx-border-width: 1;
+    -fx-border-radius:0 0 10 10;
+}
