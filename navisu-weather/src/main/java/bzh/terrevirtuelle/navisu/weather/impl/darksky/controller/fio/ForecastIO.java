@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
+package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio;
 
 import bzh.terrevirtuelle.navisu.domain.country.Abbreviations;
 import java.io.BufferedReader;

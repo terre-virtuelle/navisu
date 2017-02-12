@@ -1,13 +1,13 @@
 package bzh.terrevirtuelle.navisu.weather.app;
 
 import bzh.terrevirtuelle.navisu.domain.country.Abbreviations;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIOAlerts;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIOCurrently;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIODaily;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIOFlags;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIOHourly;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.FIOMinutely;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.ForecastIO;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOAlerts;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOCurrently;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIODaily;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOFlags;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOHourly;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOMinutely;
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.ForecastIO;
 
 
 public class FIOLibTest {

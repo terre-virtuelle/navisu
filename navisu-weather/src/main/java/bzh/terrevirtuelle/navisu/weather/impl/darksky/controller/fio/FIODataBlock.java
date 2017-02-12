@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
+package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;

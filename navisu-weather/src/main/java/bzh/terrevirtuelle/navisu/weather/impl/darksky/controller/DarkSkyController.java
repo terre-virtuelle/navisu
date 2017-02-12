@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
 
+import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.ForecastIO;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.domain.country.Abbreviations;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
@@ -209,13 +210,13 @@ public class DarkSkyController
         /* Request forecast */
         requestButton.setOnAction(a -> {
             DarkSkyViewController darkSkyViewController = new DarkSkyViewController();
-            
+
             town = townTF.getText().trim();
             country = countryMB.getText().trim();
             unit = unitMB.getText().trim();
             language = languageMB.getText().trim();
             countryCode = Abbreviations.CODE.get(country);
-            
+
             try (OutputStream output = new FileOutputStream(darkSkyComponentController.getCACHE_FILE_NAME())) {
                 properties.setProperty("town", town);
                 properties.setProperty("language", language);
@@ -228,37 +229,37 @@ public class DarkSkyController
             }
 
             Location location = gazetteerComponentServices.searchGeoName(town, countryCode);
-            
+
             if (location != null) {
                 latitudeLabel.setText(Double.toString(location.getLatitude()));
                 longitudeLabel.setText(Double.toString(location.getLongitude()));
+                
                 languageCode = Abbreviations.LANG.get(language);
                 unitCode = Abbreviations.UNIT.get(unit);
+                
                 fio = new ForecastIO(apiKey, unitCode, languageCode,
                         Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
                 if (fio.getForecast(Double.toString(location.getLatitude()),
                         Double.toString(location.getLongitude())) == true) {
                     darkSkyViewController.showData(fio);
-                  //  print(fio);
                 }
+                
+                guiAgentServices.getRoot().getChildren().add(darkSkyViewController);
+                darkSkyViewController.setMouseTransparent(false);
+                darkSkyViewController.setVisible(true);
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Gazetteer");
-                alert.setHeaderText("Attention");
-                Text s = new Text(" Vous devez remplir tous les champs !");
+                alert.setHeaderText("Attention localisation impossible");
+                Text s = new Text("  Vérifiez le contenu des champs Town et Country !");
                 s.setWrappingWidth(350);
                 alert.getDialogPane().setContent(s);
                 alert.show();
             }
-
-            guiAgentServices.getRoot().getChildren().add(darkSkyViewController);
-            darkSkyViewController.setMouseTransparent(false);
-            darkSkyViewController.setVisible(true);
         });
 
     }
 
-    
     public void setTitle(Text title) {
         this.title = title;
     }

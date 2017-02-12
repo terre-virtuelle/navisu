@@ -1,4 +1,4 @@
-package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller;
+package bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
