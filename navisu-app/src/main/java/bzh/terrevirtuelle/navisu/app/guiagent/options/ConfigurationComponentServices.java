@@ -1,7 +1,7 @@
-package bzh.terrevirtuelle.navisu.app.guiagent.options.user;
+package bzh.terrevirtuelle.navisu.app.guiagent.options;
 
-import bzh.terrevirtuelle.navisu.app.guiagent.options.server.*;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.CommonOptions;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -10,8 +10,8 @@ import org.capcaval.c3.component.ComponentService;
  * @date 21 mai 2016
  * @author Serge Morvan
  */
-public interface UserOptionsComponentServices 
-        extends ComponentService {
+public interface ConfigurationComponentServices 
+        extends ComponentService, CommonOptions {
 
     void on(String... files);
 
