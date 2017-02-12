@@ -15,7 +15,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.impl.GuiAgentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.impl.LayersManagerImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ServerOptionsComponentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.ConfigurationComponentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.server.impl.ServerOptionsComponentImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.I18nLangEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.bathymetry.catalog.local.BathymetryLocalCatalogServices;
@@ -127,7 +129,7 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.ServerOptionsComponentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
 import bzh.terrevirtuelle.navisu.extensions.server.impl.NavigationServerImpl;
@@ -211,7 +213,7 @@ public class AppMain extends Application {
                 Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        
+
         String userProperties = navisuHome + "/properties/user.properties";
         if (!Files.exists(Paths.get(userProperties), LinkOption.NOFOLLOW_LINKS)) {
             Files.createFile(Paths.get(userProperties));
@@ -233,7 +235,7 @@ public class AppMain extends Application {
                 Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-        
+
         final ComponentManager componentManager = ComponentManager.componentManager;
         /* Deploy components */
 
@@ -251,6 +253,7 @@ public class AppMain extends Application {
                         CameraComponentImpl.class,
                         ClocksImpl.class,
                         CompassImpl.class,
+                        ConfigurationComponentImpl.class,
                         CurrentsImpl.class,
                         DataServerImpl.class,
                         DatabaseImpl.class,
@@ -318,6 +321,7 @@ public class AppMain extends Application {
         ClocksServices clocksServices = componentManager.getComponentService(ClocksServices.class);
 
         CompassServices compassServices = componentManager.getComponentService(CompassServices.class);
+        ConfigurationComponentServices configurationComponentServices = componentManager.getComponentService(ConfigurationComponentServices.class);
         CurrentsServices currentsServices = componentManager.getComponentService(CurrentsServices.class);
 
         DatabaseServices databaseServices = componentManager.getComponentService(DatabaseServices.class);
@@ -413,6 +417,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(aisRadarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(cameraComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(compassServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(configurationComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(clocksServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsLoggerServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
