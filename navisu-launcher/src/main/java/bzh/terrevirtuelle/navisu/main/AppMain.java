@@ -4,6 +4,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.impl.DirectoryDrive
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.impl.DatabaseDriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
@@ -125,10 +126,6 @@ import bzh.terrevirtuelle.navisu.extensions.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.commands.impl.NavigationCmdComponentImpl;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsComponentServices;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.extensions.server.NavigationServerServices;
@@ -139,20 +136,10 @@ import bzh.terrevirtuelle.navisu.leapmotion.LeapMotionComponentServices;
 import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
-import java.lang.reflect.Field;
-import java.util.Arrays;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyComponentController;
-import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyController;
 import gov.nasa.worldwind.WorldWindow;
-import java.io.IOException;
-import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
 
 /**
  * @author Serge Morvan <morvan at enib.fr>
@@ -180,65 +167,11 @@ public class AppMain extends Application {
 
         LogManager.getLogManager().readConfiguration(new FileInputStream("conf/logging.properties"));
 
-        /* management properties and caches */
-        String navisuHome = System.getProperty("user.home") + "/.navisu";
-        Path navisuHomePath = Paths.get(navisuHome);
-        if (!Files.exists(navisuHomePath, LinkOption.NOFOLLOW_LINKS)) {
-            Files.createDirectory(navisuHomePath);
-            Files.createDirectory(Paths.get(navisuHome + "/databases/"));
-            Files.createDirectory(Paths.get(navisuHome + "/properties/"));
-        }
-        if (!Files.exists(Paths.get(navisuHome + "/caches"), LinkOption.NOFOLLOW_LINKS)) {
-            Files.createDirectory(Paths.get(navisuHome + "/caches/"));
-        }
-
-        String navisuWeatherCache = navisuHome + "/caches/weather.properties";
-        if (!Files.exists(Paths.get(navisuWeatherCache), LinkOption.NOFOLLOW_LINKS)) {
-            Files.createFile(Paths.get(navisuWeatherCache));
-            writeDefaultWeatherCache(navisuWeatherCache);
-        } else {
-            Properties properties = new Properties();
-            try {
-                properties.load(new FileInputStream(navisuWeatherCache));
-                String town = properties.getProperty("town");
-                String language = properties.getProperty("language");
-                String unit = properties.getProperty("unit");
-                String country = properties.getProperty("country");
-                String countryCode = properties.getProperty("countryCode");
-
-                if (town == null || language == null || unit == null || country == null || countryCode == null) {
-                    writeDefaultWeatherCache(navisuWeatherCache);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-        }
-
-        String userProperties = navisuHome + "/properties/user.properties";
-        if (!Files.exists(Paths.get(userProperties), LinkOption.NOFOLLOW_LINKS)) {
-            Files.createFile(Paths.get(userProperties));
-            writeDefaultUserProperties(userProperties);
-        } else {
-            Properties properties = new Properties();
-            try {
-                properties.load(new FileInputStream(userProperties));
-                String s57ChartsDir = properties.getProperty("s57ChartsDir");
-                String darkSkyApiKey = properties.getProperty("darkSkyApiKey");
-                String allCountriesPath = properties.getProperty("allCountriesPath");
-                String luceneAllCountriesIndexPath = properties.getProperty("luceneAllCountriesIndexPath");
-
-                if (s57ChartsDir == null || darkSkyApiKey == null
-                        || allCountriesPath == null || luceneAllCountriesIndexPath == null) {
-                    writeDefaultUserProperties(navisuWeatherCache);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-        }
+        Configuration.init();
 
         final ComponentManager componentManager = ComponentManager.componentManager;
-        /* Deploy components */
 
+        /* Deploy components */
         LOGGER.info("\n"
                 + componentManager.startApplication(GuiAgentImpl.class,//in first
                         AisImpl.class,
@@ -283,7 +216,6 @@ public class AppMain extends Application {
                         NavigationServerImpl.class,
                         NavigationCmdComponentImpl.class,
                         NmeaClientImpl.class,
-                        ServerOptionsComponentImpl.class,
                         ProjectionsComponentImpl.class,
                         RouteDataEditorImpl.class,
                         RouteEditorImpl.class,
@@ -385,13 +317,11 @@ public class AppMain extends Application {
         wmsServices.init();
         WebViewServices webViewServices = componentManager.getComponentService(WebViewServices.class);
 
-        // Manager services
         DatabaseDriverManagerServices databaseDriverManagerServices = componentManager.getComponentService(DatabaseDriverManagerServices.class);
         databaseDriverManagerServices.registerNewDriver(bathymetryDBServices.getDriver());
-
-        // DirectoryDriverManagerServices ddriverServices = componentManager.getComponentService(DirectoryDriverManagerServices.class);
-        //    ddriverServices.init();
-        //    ddriverServices.registerNewDriver(catalogS57Services.getDriver());
+        //  DirectoryDriverManagerServices ddriverServices = componentManager.getComponentService(DirectoryDriverManagerServices.class);
+        //     ddriverServices.init();
+        //     ddriverServices.registerNewDriver(catalogS57Services.getDriver());
         DriverManagerServices driverServices = componentManager.getComponentService(DriverManagerServices.class);
         driverServices.init();
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
@@ -401,7 +331,6 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver((Driver) geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
-        // driverServices.registerNewDriver((Driver) gribServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver((Driver) meteoNetCdfServices.getDriver());
@@ -438,11 +367,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(weatherComponentServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
-        //  webDriverServices.init("http://ows.emodnet-bathymetry.eu/wms");
-        //webDriverServices.init("http://www.ifremer.fr/services/photos_anciennes?");
-        webDriverServices.init("http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2");
-        // webDriverServices.init("http://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?");
-        // webDriverServices.init("http://maps.ngdc.noaa.gov/arcgis/services/etopo1/MapServer/WmsServer?");
+     //   webDriverServices.init("http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2");
         webDriverServices.registerNewDriver(wmsServices.getDriver());
 
         //Loading S57 catalog
@@ -610,49 +535,8 @@ public class AppMain extends Application {
         } else {
             System.out.println("OS not supported");
         }
-        addLibraryPath(userDirPath + dir);
+        Configuration.addLibraryPath(userDirPath + dir);
         Application.launch();
     }
 
-    /**
-     * Adds the specified path to the java library path
-     *
-     * @param pathToAdd the path to add
-     * @throws Exception
-     */
-    public static void addLibraryPath(String pathToAdd) throws Exception {
-        final Field usrPathsField = ClassLoader.class.getDeclaredField("usr_paths");
-        usrPathsField.setAccessible(true);
-        String[] paths = (String[]) usrPathsField.get(null);
-        //check if the path to add is already present
-        for (String path : paths) {
-            if (path.equals(pathToAdd)) {
-                return;
-            }
-        }
-        //add the new path
-        final String[] newPaths = Arrays.copyOf(paths, paths.length + 1);
-        newPaths[newPaths.length - 1] = pathToAdd;
-        usrPathsField.set(null, newPaths);
-    }
-
-    private void writeDefaultWeatherCache(String navisuWeatherCache) {
-        try {
-            List<String> keys = new ArrayList<>(Arrays.asList("town=",
-                    "language=", "unit=", "country=", "countryCode="));
-            Files.write(Paths.get(navisuWeatherCache), keys, StandardOpenOption.WRITE);
-        } catch (IOException ex) {
-            Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-    }
-
-    private void writeDefaultUserProperties(String userProperties) {
-        try {
-            List<String> keys = new ArrayList<>(Arrays.asList("s57ChartsDir=",
-                    "darkSkyApiKey=", "allCountriesPath=", "luceneAllCountriesIndexPath="));
-            Files.write(Paths.get(userProperties), keys, StandardOpenOption.WRITE);
-        } catch (IOException ex) {
-            Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
-    }
 }
