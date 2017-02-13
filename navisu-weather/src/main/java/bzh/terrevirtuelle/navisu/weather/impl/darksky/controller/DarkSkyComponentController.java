@@ -27,7 +27,7 @@ public class DarkSkyComponentController {
     private String darkSkyUrl = null;
     private final String DARK_SKY_URL = "https://api.darksky.net/forecast/";
     protected Properties properties;
-    protected String PROPERTIES_FILE_NAME = "properties/user.properties";
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") +"/.navisu/config/config.properties";
     protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/weather.properties";
     protected String town;
     protected String language;
@@ -57,7 +57,7 @@ public class DarkSkyComponentController {
 
         properties = new Properties();
         try {
-            properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
             Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }

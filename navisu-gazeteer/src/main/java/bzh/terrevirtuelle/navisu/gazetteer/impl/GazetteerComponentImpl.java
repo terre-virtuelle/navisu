@@ -32,7 +32,7 @@ public class GazetteerComponentImpl
     private String indexerPath;
     private String gazetteerPath;
     private Properties properties;
-    private final String PROPERTIES_FILE_NAME = "properties/user.properties";
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     private final String INDEXER_PATH = "luceneAllCountriesIndexPath";
     private final String GAZETEER_PATH = "allCountriesPath";
 
@@ -41,7 +41,7 @@ public class GazetteerComponentImpl
         resolver = new GeoNameResolver();
         properties = new Properties();
         try {
-            properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
             indexerPath = properties.getProperty(INDEXER_PATH).trim();
             gazetteerPath = properties.getProperty(GAZETEER_PATH).trim();
         } catch (IOException ex) {
@@ -52,7 +52,8 @@ public class GazetteerComponentImpl
             alert.setTitle("Gazetteer");
             alert.setHeaderText("Attention");
             Text s = new Text("  Le chemin de l'index géographique est  incorrect."
-                    + "\n  Vous devez compléter le fichier user.properties");
+                    + "\n  Vous devez compléter le fichier config.properties"
+                    + "\n Menu : TOOLS/Config/App/Options");
             s.setWrappingWidth(350);
             alert.getDialogPane().setContent(s);
             alert.show();
@@ -65,7 +66,8 @@ public class GazetteerComponentImpl
             alert.setTitle("Gazetteer");
             alert.setHeaderText("Attention");
             Text s = new Text("  Le chemin des données de l'index géographique \n est incorrect."
-                    + "\n  Vous devez compléter le fichier user.properties");
+                    + "\n  Vous devez compléter le fichier config.properties"
+                    + "\n Menu : TOOLS/Config/App/Options");
             s.setWrappingWidth(350);
             alert.getDialogPane().setContent(s);
             alert.show();

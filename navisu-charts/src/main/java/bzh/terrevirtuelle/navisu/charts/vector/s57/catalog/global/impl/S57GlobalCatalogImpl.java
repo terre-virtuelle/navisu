@@ -60,6 +60,7 @@ public class S57GlobalCatalogImpl
     private static final String EXTENSION_0 = ".kmz";
     private static final String EXTENSION_1 = ".kml";
     private static final String CHART_EXT = ".000";
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     private static final String SEP = Pattern.quote(System.getProperty("file.separator"));
     protected static final String GROUP = "S57 catalog";
     protected Map<String, Path> files;
@@ -93,7 +94,7 @@ public class S57GlobalCatalogImpl
         });
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("properties/user.properties"));
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
             Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, "Erreur lecture : properties/user.properties", ex);
         }
