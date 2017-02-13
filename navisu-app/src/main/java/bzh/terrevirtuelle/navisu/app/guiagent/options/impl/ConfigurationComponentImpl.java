@@ -10,7 +10,6 @@ import org.capcaval.c3.component.annotation.UsedService;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller.ConfigurationComponentController;
-import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ConfigurationComponent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ConfigurationComponentServices;
 
@@ -28,7 +27,7 @@ public class ConfigurationComponentImpl
     GuiAgentServices guiAgentServices;
     
     private final String COMPONENT_KEY_NAME_0 = "Configuration";
-    private ConfigurationComponentController controller0;
+    private ConfigurationComponentController controller;
 
     private final static Logger LOGGER = Logger.getLogger(ConfigurationComponentImpl.class.getName());
 
@@ -53,9 +52,9 @@ public class ConfigurationComponentImpl
         String[] cmd = files;
         if (cmd != null) {
             if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
-                controller0 = ConfigurationComponentController.getInstance(this, KeyCode.O, KeyCombination.CONTROL_DOWN,
+                controller = ConfigurationComponentController.getInstance(this, KeyCode.O, KeyCombination.CONTROL_DOWN,
                         guiAgentServices);
-                controller0.setVisible(true);
+                controller.setVisible(true);
             }
         }
     }
@@ -77,10 +76,10 @@ public class ConfigurationComponentImpl
 
     @Override
     public void off() {
-        if (controller0 != null) {
-            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller0);
-            guiAgentServices.getRoot().getChildren().remove(controller0);
-            controller0.setVisible(false);
+        if (controller != null) {
+            guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, controller);
+            guiAgentServices.getRoot().getChildren().remove(controller);
+            controller.setVisible(false);
         }
     }
 
