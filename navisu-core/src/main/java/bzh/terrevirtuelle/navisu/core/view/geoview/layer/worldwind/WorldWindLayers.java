@@ -24,7 +24,7 @@ public enum WorldWindLayers {
     BingImagery(BingImageryLayer.class),
     EarthAtNight(EarthAtNightLayer.class, false),
     OpenStreetMap(OSMMapnikLayer.class, false),
-   // OSMBuildings(OSMBuildingsLayer.class, false),
+  //  OSMBuildings(OSMBuildingsLayer.class, false),
     CountryBoundaries(CountryBoundariesLayer.class, false),
     PlaceName(NASAWFSPlaceNameLayer.class),
     LatLonGraticule(LatLonGraticuleLayer.class, false),
@@ -58,7 +58,7 @@ public enum WorldWindLayers {
             layer = type.newInstance();
             layer.setEnabled(enabled);
             layer.setMinActiveAltitude(minActiveAltitude);
-        } catch (Exception e) {
+        } catch (IllegalAccessException | InstantiationException e) {
         }
 
         return GeoLayer.factory.newWorldWindGeoLayer(layer);
