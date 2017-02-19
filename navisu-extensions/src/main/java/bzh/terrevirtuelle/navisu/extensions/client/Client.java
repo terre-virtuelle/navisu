@@ -131,52 +131,52 @@ public class Client {
           
         
         //To Comment when using LeapMotion.
-        try {
-            //Simulate an Display Command Send to RA
-            Client.openMenu();
-            Thread.sleep(1000);
-            Client.rightMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.selectMenu();
-            Thread.sleep(1000);
-            Client.rightMenu();
-            Thread.sleep(1000);
-            Client.leftMenu();
-            Thread.sleep(1000);
-            Client.rightMenu();
-            Thread.sleep(1000);
-            Client.rightMenu();
-            Thread.sleep(1000);
-            Client.selectMenu();
-            Thread.sleep(1000);
-            Client.selectMenu();
-            Thread.sleep(1000);
-            Client.selectMenu();
-            Thread.sleep(1000);
-            Client.closeMenu();
-            Thread.sleep(1000);
-            Client.openMenu();
-            Thread.sleep(1000);
-            Client.closeMenu();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            //Simulate an Display Command Send to RA
+//            Client.openMenu();
+//            Thread.sleep(1000);
+//            Client.rightMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.selectMenu();
+//            Thread.sleep(1000);
+//            Client.rightMenu();
+//            Thread.sleep(1000);
+//            Client.leftMenu();
+//            Thread.sleep(1000);
+//            Client.rightMenu();
+//            Thread.sleep(1000);
+//            Client.rightMenu();
+//            Thread.sleep(1000);
+//            Client.selectMenu();
+//            Thread.sleep(1000);
+//            Client.selectMenu();
+//            Thread.sleep(1000);
+//            Client.selectMenu();
+//            Thread.sleep(1000);
+//            Client.closeMenu();
+//            Thread.sleep(1000);
+//            Client.openMenu();
+//            Thread.sleep(1000);
+//            Client.closeMenu();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
     }
     
