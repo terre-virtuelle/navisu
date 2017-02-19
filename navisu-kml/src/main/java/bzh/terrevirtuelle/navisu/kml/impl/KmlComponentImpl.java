@@ -76,7 +76,7 @@ public class KmlComponentImpl
                 //  unClip();
             }
         });
-        
+
     }
 
     @Override
@@ -101,16 +101,16 @@ public class KmlComponentImpl
 
     @Override
     public ColladaRoot openColladaFile(RenderableLayer layer, String filename) {
-        if(layer != null){
+        if (layer != null) {
             layer.removeAllRenderables();
-        }
-        File file = new File(filename);
-        try {
-            colladaRoot = ColladaRoot.createAndParse(file);
-            ColladaController colladaController = new ColladaController(colladaRoot);
-            layer.addRenderable(colladaController);
-        } catch (IOException | XMLStreamException ex) {
-            Logger.getLogger(KmlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            File file = new File(filename);
+            try {
+                colladaRoot = ColladaRoot.createAndParse(file);
+                ColladaController colladaController = new ColladaController(colladaRoot);
+                layer.addRenderable(colladaController);
+            } catch (XMLStreamException | IOException ex) {
+                Logger.getLogger(KmlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
         }
         return colladaRoot;
     }
@@ -130,8 +130,8 @@ public class KmlComponentImpl
                 });
                 break;
             case "DAE":
-                ColladaComponentController colladaComponentController =
-                      new  ColladaComponentController(layersManagerServices, this, fileName, guiAgentServices.getRoot());
+                ColladaComponentController colladaComponentController
+                        = new ColladaComponentController(layersManagerServices, this, fileName, guiAgentServices.getRoot());
                 break;
         }
     }
