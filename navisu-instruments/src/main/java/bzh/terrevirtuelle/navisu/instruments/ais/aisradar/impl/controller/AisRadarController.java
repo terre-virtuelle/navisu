@@ -150,7 +150,7 @@ public class AisRadarController
     public MenuButton targetalarm;
     @FXML
     public MenuButton targettype;
-
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected AisServices aisServices;
     protected boolean first = true;
     protected final Rotate rotationTransform = new Rotate(0, 0, 0);
@@ -214,7 +214,7 @@ public class AisRadarController
         guiAgentServices.getScene().getStylesheets().setAll(
                 getClass().getResource("aisradar.css").toExternalForm()
         );
-*/
+         */
         aisinfopanel.setVisible(false);
         aisbuttonpanel.setVisible(true);
         Platform.runLater(() -> {
@@ -241,7 +241,7 @@ public class AisRadarController
                 radar.setScaleY(((dimensionSlider.getValue())/100));
             });
         });
-        */
+         */
         rangeSlider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
             Platform.runLater(() -> {
                 radarScale = rangeSlider.getValue();
@@ -342,7 +342,7 @@ public class AisRadarController
     private void createOwnerShip() {
         Properties properties = new Properties();
         try {
-            properties.load(new FileInputStream("properties/domain.properties"));
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
             Logger.getLogger(AisRadarController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -354,7 +354,7 @@ public class AisRadarController
                 .longitude(new Float(properties.getProperty("longitude")))
                 .cog(new Float(properties.getProperty("cog")))
                 .sog(new Float(properties.getProperty("sog")))
-                .heading(new Float(properties.getProperty("heading")))
+                //.heading(new Float(properties.getProperty("heading")))
                 .country(properties.getProperty("country"))
                 .width(new Float(properties.getProperty("width")))
                 .length(new Float(properties.getProperty("length")))

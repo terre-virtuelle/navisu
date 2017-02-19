@@ -58,7 +58,7 @@ public class GpsPlotterController
     protected Ship ownerShip;
     protected double initRotation;
     protected Properties properties;
-    protected String PROPERTIES_FILE_NAME = "properties/domain.properties";
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
     protected ColladaRoot ownerShipView;
     protected CircularFifoQueue<RMC> sentenceQueue;
     protected double latitude = 0.0;
@@ -92,7 +92,7 @@ public class GpsPlotterController
         gpsLayer = layersManagerServices.getLayer(GROUP, name);
         properties = new Properties();
         try {
-            properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
             Logger.getLogger(AisRadarController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -139,11 +139,9 @@ public class GpsPlotterController
     protected void createTarget() {
         this.latitude = ownerShip.getLatitude();
         this.longitude = ownerShip.getLongitude();
-        initRotation = new Double(properties.getProperty("initRotation").trim());
-        ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("dae").trim());
-        ownerShipView.setModelScale(new Vec4(new Double(properties.getProperty("scale").trim())));
+        ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("daeModelPath").trim());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
         ownerShipView.setField("Ship", ownerShip);
     }
 
@@ -152,7 +150,7 @@ public class GpsPlotterController
         this.longitude = longitude;
         ownerShip.setLatitude(latitude);
         ownerShip.setLongitude(longitude);
-        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog() + initRotation));
+        ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
        
         updateTarget(ownerShip);

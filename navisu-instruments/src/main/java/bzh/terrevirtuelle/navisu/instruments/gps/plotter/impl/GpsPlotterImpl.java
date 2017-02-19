@@ -50,11 +50,11 @@ public class GpsPlotterImpl
 
     @Override
     public void on(String... files) {
-        if (on == false) {
-            on = true;
+     //   if (on == false) {
+      //      on = true;
             gpsPlotterController = new GpsPlotterController(layersManagerServices, guiAgentServices, kmlObjectServices, NAME);
             gpsPlotterController.init(true);
-        }
+     //   }
     }
 
     @Override
