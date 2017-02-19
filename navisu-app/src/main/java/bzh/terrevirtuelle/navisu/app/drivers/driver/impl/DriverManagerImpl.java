@@ -93,7 +93,6 @@ public class DriverManagerImpl
 
     @Override
     public void open(String category, String[] ext) {
-
         String userInitialDirectory = properties.getProperty(category);
         if (userInitialDirectory != null) {
             if (userInitialDirectory.equals("")) {
@@ -108,7 +107,6 @@ public class DriverManagerImpl
         this.fileChooserDock.getExtensionFilters().clear();
         this.fileChooserDock.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
-  
         try {
             File selectedFile = this.fileChooserDock.showOpenDialog(null);
             if (selectedFile != null) {
