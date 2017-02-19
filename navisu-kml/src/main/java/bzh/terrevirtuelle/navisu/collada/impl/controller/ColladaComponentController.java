@@ -11,7 +11,6 @@ import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.widgets.locator.LocatorController;
-import gov.nasa.worldwind.avlist.AVList;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec4;
@@ -21,7 +20,6 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -38,7 +36,9 @@ public class ColladaComponentController {
     protected final String GROUP = "Navigation";
     private final String NAME_0 = "Mobiles";
     protected Properties properties;
-    protected String PROPERTIES_FILE_NAME = "properties/navigation.properties";
+       protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+ 
+   // protected String PROPERTIES_FILE_NAME = "properties/navigation.properties";
     protected RenderableLayer mobilesLayer;
     protected String filename;
     protected StackPane root;
@@ -63,7 +63,7 @@ public class ColladaComponentController {
         this.mobilesLayer = layersManagerServices.getLayer(GROUP, NAME_0);
         properties = new Properties();
         try {
-            properties.load(new FileInputStream(PROPERTIES_FILE_NAME));
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
         } catch (IOException ex) {
             Logger.getLogger(ColladaComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -101,6 +101,9 @@ public class KmlComponentImpl
 
     @Override
     public ColladaRoot openColladaFile(RenderableLayer layer, String filename) {
+        if(layer != null){
+            layer.removeAllRenderables();
+        }
         File file = new File(filename);
         try {
             colladaRoot = ColladaRoot.createAndParse(file);
