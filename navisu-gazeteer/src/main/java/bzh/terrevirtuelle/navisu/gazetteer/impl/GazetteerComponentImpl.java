@@ -28,7 +28,7 @@ public class GazetteerComponentImpl
 
     private GeoNameResolver resolver;
     private final int DEFAULT_COUNT = 10;
-    private final boolean DEFAULT_RESERVE_GEOCODING_ENABLED = true;
+ //   private final boolean DEFAULT_RESERVE_GEOCODING_ENABLED = true;
     private String indexerPath;
     private String gazetteerPath;
     private Properties properties;
@@ -38,6 +38,7 @@ public class GazetteerComponentImpl
 
     @Override
     public void componentInitiated() {
+        /*
         resolver = new GeoNameResolver();
         properties = new Properties();
         try {
@@ -72,6 +73,7 @@ public class GazetteerComponentImpl
             alert.getDialogPane().setContent(s);
             alert.show();
         }
+*/
     }
 
     @Override
@@ -135,12 +137,13 @@ public class GazetteerComponentImpl
 
     @Override
     public Location searchGeoName(String town, String countryCode) {
+        resolver = new GeoNameResolver();
         try {
             HashMap<String, List<Location>> locationMap;
             List<String> locationNameEntities = new ArrayList<>();
             locationNameEntities.add(town);
             if (resolver != null) {
-                locationMap = searchGeoName(this.indexerPath, locationNameEntities, DEFAULT_COUNT);
+                locationMap = searchGeoName(resolver.getIndexerPath(), locationNameEntities, DEFAULT_COUNT);
                 for (Map.Entry<String, List<Location>> s : locationMap.entrySet()) {
                     List<Location> locations = s.getValue();
                     for (Location l : locations) {

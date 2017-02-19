@@ -16,6 +16,7 @@
  */
 package bzh.terrevirtuelle.navisu.gazetteer.impl.lucene;
 
+import bzh.terrevirtuelle.navisu.gazetteer.impl.GazetteerComponentImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.impl.lucene.domain.Location;
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -81,6 +82,10 @@ import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
 import com.spatial4j.core.shape.Point;
 import edu.usc.ir.geo.gazetteer.service.Launcher;
+import java.util.Properties;
+import javafx.scene.control.Alert;
+import javafx.scene.media.AudioClip;
+import javafx.scene.text.Text;
 import org.apache.commons.cli.BasicParser;
 //import org.apache.commons.cli.DefaultParser;
 
@@ -130,7 +135,47 @@ public class GeoNameResolver implements Closeable {
     private SpatialPrefixTree grid = new GeohashPrefixTree(ctx, 11);
     private SpatialStrategy strategy = new RecursivePrefixTreeStrategy(grid, "location");
 
+    private String indexerPath;
+    private String gazetteerPath;
+    private Properties properties;
+    protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+    private final String INDEXER_PATH = "luceneAllCountriesIndexPath";
+    private final String GAZETEER_PATH = "allCountriesPath";
+    
     public GeoNameResolver() {
+        properties = new Properties();
+        try {
+            properties.load(new FileInputStream(CONFIG_FILE_NAME));
+            indexerPath = properties.getProperty(INDEXER_PATH).trim();
+            gazetteerPath = properties.getProperty(GAZETEER_PATH).trim();
+        } catch (IOException ex) {
+            Logger.getLogger(GazetteerComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        if (indexerPath == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Gazetteer");
+            alert.setHeaderText("Attention");
+            Text s = new Text("  Le chemin de l'index géographique est  incorrect."
+                    + "\n  Vous devez compléter le fichier config.properties"
+                    + "\n Menu : TOOLS/Config/App/Options");
+            s.setWrappingWidth(350);
+            alert.getDialogPane().setContent(s);
+            alert.show();
+            AudioClip plonkSound = new AudioClip(this.getClass().getResource("sounds/warning.mp3").toExternalForm());
+            plonkSound.play();
+
+        }
+        if (gazetteerPath == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Gazetteer");
+            alert.setHeaderText("Attention");
+            Text s = new Text("  Le chemin des données de l'index géographique \n est incorrect."
+                    + "\n  Vous devez compléter le fichier config.properties"
+                    + "\n Menu : TOOLS/Config/App/Options");
+            s.setWrappingWidth(350);
+            alert.getDialogPane().setContent(s);
+            alert.show();
+        }
     }
 
     /**
@@ -577,142 +622,9 @@ public class GeoNameResolver implements Closeable {
         }
         out.println("]");
     }
-/*
-    public static void main(String[] args) throws Exception {
-        Option buildOpt = OptionBuilder.withArgName("gazetteer file").hasArg().withLongOpt("build")
-                .withDescription("The Path to the Geonames allCountries.txt")
-                .create('b');
 
-        Option searchOpt = OptionBuilder.withArgName("set of location names").withLongOpt("search").hasArgs()
-                .withDescription("Location names to search the Gazetteer for")
-                .create('s');
-
-        Option indexOpt = OptionBuilder
-                .withArgName("directoryPath")
-                .withLongOpt("index")
-                .hasArgs()
-                .withDescription(
-                        "The path to the Lucene index directory to either create or read")
-                .create('i');
-
-        Option helpOpt = OptionBuilder.withLongOpt("help")
-                .withDescription("Print this message.").create('h');
-
-        Option resultCountOpt = OptionBuilder.withArgName("number of results").withLongOpt("count").hasArgs()
-                .withDescription("Number of best results to be returned for one location").withType(Integer.class)
-                .create('c');
-
-        Option serverOption = OptionBuilder.withArgName("Launch Server")
-                .withLongOpt("server")
-                .withDescription("Launches Geo Gazetteer Service")
-                .create("server");
-
-        Option jsonOption = OptionBuilder.withArgName("outputs json")
-                .withLongOpt(JSON_OPT)
-                .withDescription("Formats output in well defined json structure")
-                .create(JSON_OPT);
-
-        Option reverseOption = OptionBuilder.withArgName("true / false ").hasArg()
-                .withLongOpt(REVERSE_LONG_OPT)
-                .withDescription("Add on indexing option for reverse geocoding. Defaults to false")
-                .create(REVERSE_OPT);
-
-        Option searchReverseOpt = OptionBuilder.withArgName("latitude , longitude").hasArgs()
-                .withLongOpt(SEARCH_REVERSE_LONG_OPT)
-                .withDescription("Search locations near this coordinate")
-                .create(SEARCH_REVERSE_OPT);
-
-        String indexPath = null;
-        String gazetteerPath = null;
-        Options options = new Options();
-        options.addOption(buildOpt);
-        options.addOption(searchOpt);
-        options.addOption(indexOpt);
-        options.addOption(helpOpt);
-        options.addOption(resultCountOpt);
-        options.addOption(serverOption);
-        options.addOption(jsonOption);
-        options.addOption(reverseOption);
-        options.addOption(searchReverseOpt);
-
-        // create the parser
-        //    CommandLineParser parser =  new DefaultParser();
-        CommandLineParser parser = new BasicParser();
-        GeoNameResolver resolver = new GeoNameResolver();
-
-        try {
-            // parse the command line arguments
-            CommandLine line = parser.parse(options, args);
-
-            if (line.hasOption("index")) {
-                indexPath = line.getOptionValue("index");
-            }
-
-            if (line.hasOption("build")) {
-                gazetteerPath = line.getOptionValue("build");
-            }
-
-            if (line.hasOption("help")) {
-                HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp("lucene-geo-gazetteer", options);
-                System.exit(1);
-            }
-
-            if (indexPath != null && gazetteerPath != null) {
-                LOG.info("Building Lucene index at path: [" + indexPath
-                        + "] with geoNames.org file: [" + gazetteerPath + "]");
-                boolean reverseEnabled = Boolean.valueOf(line.getOptionValue(REVERSE_LONG_OPT, "false"));
-
-                resolver.buildIndex(gazetteerPath, indexPath, reverseEnabled);
-            }
-            if (line.hasOption(SEARCH_REVERSE_LONG_OPT)) {
-                String[] latLong = line.getOptionValues(SEARCH_REVERSE_LONG_OPT);
-                int count = Integer.parseInt(line.getOptionValue("count", "1"));
-
-                List<Location> resolved = resolver
-                        .searchNearby(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1]), REVERSE_DISTANCE_LIMIT, indexPath, count);
-
-                System.out.println(new Gson().toJson(resolved));
-            }
-
-            if (line.hasOption("search")) {
-                List<String> geoTerms = new ArrayList<String>(Arrays.asList(line
-                        .getOptionValues("search")));
-                String countStr = line.getOptionValue("count", "1");
-                int count = 1;
-                if (countStr.matches("\\d+")) {
-                    count = Integer.parseInt(countStr);
-                }
-
-                Map<String, List<Location>> resolved = resolver
-                        .searchGeoName(indexPath, geoTerms, count);
-                if (line.hasOption(JSON_OPT)) {
-                    writeResultJson(resolved, System.out);
-                } else {
-                    writeResult(resolved, System.out);
-                }
-            } else if (line.hasOption("server")) {
-                if (indexPath == null) {
-                    System.err.println("Index path is required");
-                    System.exit(-2);
-                }
-
-                //TODO: get port from CLI args
-                int port = 8765;
-                Launcher.launchService(port, indexPath);
-            } else if (!line.hasOption("server")
-                    && !line.hasOption("search")
-                    && !line.hasOption("build")
-                    && !line.hasOption("index")
-                    && !line.hasOption("help")) {
-                System.err.println("Sub command not recognised");
-                System.exit(-1);
-            }
-
-        } catch (ParseException exp) {
-            // oops, something went wrong
-            System.err.println("Parsing failed.  Reason: " + exp.getMessage());
-        }
+    public String getIndexerPath() {
+        return indexerPath;
     }
-*/
+
 }
