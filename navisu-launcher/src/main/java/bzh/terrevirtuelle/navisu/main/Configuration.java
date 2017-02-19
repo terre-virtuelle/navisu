@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.main;
 
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyComponentController;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyController;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.stage.FileChooser;
 
 /**
  *
@@ -87,18 +89,18 @@ public class Configuration {
             }
         }
 
-        String userProperties = navisuHome + "/config/config.properties";
-        if (!Files.exists(Paths.get(userProperties), LinkOption.NOFOLLOW_LINKS)) {
+        String configProperties = navisuHome + "/config/config.properties";
+        if (!Files.exists(Paths.get(configProperties), LinkOption.NOFOLLOW_LINKS)) {
             try {
-                Files.createFile(Paths.get(userProperties));
+                Files.createFile(Paths.get(configProperties));
             } catch (IOException ex) {
-                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
-            writeDefaultUserProperties(userProperties);
+            writeDefaultConfigProperties(configProperties);
         } else {
             Properties properties = new Properties();
             try {
-                properties.load(new FileInputStream(userProperties));
+                properties.load(new FileInputStream(configProperties));
                 String s57ChartsDir = properties.getProperty("s57ChartsDir");
                 String darkSkyApiKey = properties.getProperty("darkSkyApiKey");
                 String allCountriesPath = properties.getProperty("allCountriesPath");
@@ -106,7 +108,7 @@ public class Configuration {
 
                 if (s57ChartsDir == null || darkSkyApiKey == null
                         || allCountriesPath == null || luceneAllCountriesIndexPath == null) {
-                    writeDefaultUserProperties(navisuWeatherCache);
+                    writeDefaultConfigProperties(navisuWeatherCache);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
@@ -125,15 +127,20 @@ public class Configuration {
         }
     }
 
-    private static void writeDefaultUserProperties(String userProperties) {
+    private static void writeDefaultConfigProperties(String configProperties) {
+        System.out.println("writeDefaultConfigProperties");
         try {
-            List<String> keys = new ArrayList<>(Arrays.asList("s57ChartsDir=",
-                    "darkSkyApiKey=", "allCountriesPath=", "luceneAllCountriesIndexPath="));
-            Files.write(Paths.get(userProperties), keys, StandardOpenOption.WRITE);
+            List<String> keys = new ArrayList<>(Arrays.asList(
+                    "s57ChartsDir=","darkSkyApiKey=", "allCountriesPath=", "luceneAllCountriesIndexPath=",
+                    "name","mmsi","country","length","width","draught","shipType","navigationalStatus",
+                    "callSign","latitude","longitude","cog","sog","daeModelPath"
+                    ));
+            Files.write(Paths.get(configProperties), keys, StandardOpenOption.WRITE);
         } catch (IOException ex) {
             Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
+    
     /**
      * Adds the specified path to the java library path
      *
@@ -155,4 +162,6 @@ public class Configuration {
         newPaths[newPaths.length - 1] = pathToAdd;
         usrPathsField.set(null, newPaths);
     }
+    
+    
 }
