@@ -36,7 +36,7 @@ public class DriverManagerImpl
         implements DriverManager, DriverManagerServices, ComponentState {
 
     protected static final Logger LOGGER = Logger.getLogger(DriverManagerImpl.class.getName());
-
+    protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/caches.properties";
     @UsedService
     MenuManagerServices menuBarServices;
     @UsedService
@@ -59,7 +59,7 @@ public class DriverManagerImpl
 
         properties = new Properties();
         try {
-            properties.load(new FileInputStream("properties/caches.properties"));
+            properties.load(new FileInputStream(CACHE_FILE_NAME));
         } catch (IOException ex) {
             Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,7 +103,7 @@ public class DriverManagerImpl
                 this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             }
         }
-        System.out.println("userInitialDirectory " + userInitialDirectory);
+      //  System.out.println("userInitialDirectory " + userInitialDirectory);
         this.fileChooserDock.getExtensionFilters().clear();
         this.fileChooserDock.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
@@ -128,7 +128,7 @@ public class DriverManagerImpl
             LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
         }
         properties.setProperty(category, file.getParent());
-        File f = new File("properties/caches.properties");
+        File f = new File(CACHE_FILE_NAME);
         OutputStream out;
         try {
             out = new FileOutputStream(f);
