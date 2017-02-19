@@ -361,7 +361,6 @@ public class AisRadarController
                 .draught(new Float(properties.getProperty("draught")))
                 .shipType(new Integer(properties.getProperty("shipType")))
                 .navigationalStatus(new Integer(properties.getProperty("navigationalStatus")))
-                .electronicPositionDevice(new Integer(properties.getProperty("electronicPositionDevice")))
                 .callSign(properties.getProperty("callSign"))
                 .target(true).build();
         latOwner = new Float(properties.getProperty("latitude"));
