@@ -21,7 +21,7 @@
 }
 .houradjustbutton{
     -fx-background-color: #bb000000;
-    -fx-background-radius: 2;
+    -fx-background-radius: 15;
     -fx-text-fill: -fx-color-typo;
     -fx-content-display: CENTER;
 }
@@ -30,19 +30,19 @@
     -fx-background-radius: 15;
     -fx-background-insets: 5;
 }
-.hourzonebutton{
-    -fx-background-color: #bb000000;
-    -fx-background-radius: 2;
-    -fx-text-fill: -fx-color-typo;
-    -fx-content-display: CENTER;
+
+.houradjustbutton:pressed{
+    -fx-background-color: #ff0000;
+    -fx-background-radius: 15;
+    -fx-background-insets: 5;
 }
-.hourzonebutton:hover{
+.houradjustbutton:armed{
+    -fx-background-color: #bb00ff;
+    -fx-background-radius: 15;
+    -fx-background-insets: 5;
+}
+.houradjustbutton:focused{
     -fx-background-color: #bb000088;
-    -fx-background-insets: 2;
-}
-.hourzonebutton:focused{
-    -fx-background-color: #bb000000;
-    -fx-background-radius: 2;
-    -fx-text-fill: -fx-color-typo;
-    -fx-content-display: CENTER;
+    -fx-background-radius: 15;
+    -fx-background-insets: 5;
 }

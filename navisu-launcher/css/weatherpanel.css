@@ -1,0 +1,74 @@
+/* CSS Document */
+@import "common.css";
+
+/*******************************************************************************
+ *                                                                             *
+ * LineChart                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
+.chart-line-symbol {
+    -fx-background-color: -fx-line-base, -fx-line-base;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 2px;
+    -fx-padding: 2px;
+}
+.chart-series-line {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1px;
+    
+}
+
+.default-color0.chart-line-symbol { -fx-background-color: -fx-line-base, -fx-line-base; }
+.default-color1.chart-line-symbol { -fx-background-color: CHART_COLOR_2, white; }
+.default-color2.chart-line-symbol { -fx-background-color: CHART_COLOR_3, white; }
+.default-color3.chart-line-symbol { -fx-background-color: CHART_COLOR_4, white; }
+.default-color4.chart-line-symbol { -fx-background-color: CHART_COLOR_5, white; }
+.default-color5.chart-line-symbol { -fx-background-color: CHART_COLOR_6, white; }
+.default-color6.chart-line-symbol { -fx-background-color: CHART_COLOR_7, white; }
+.default-color7.chart-line-symbol { -fx-background-color: CHART_COLOR_8, white; }
+.default-color0.chart-series-line { -fx-stroke: -fx-line-base; }
+.default-color1.chart-series-line { -fx-stroke: CHART_COLOR_2; }
+.default-color2.chart-series-line { -fx-stroke: CHART_COLOR_3; }
+.default-color3.chart-series-line { -fx-stroke: CHART_COLOR_4; }
+.default-color4.chart-series-line { -fx-stroke: CHART_COLOR_5; }
+.default-color5.chart-series-line { -fx-stroke: CHART_COLOR_6; }
+.default-color6.chart-series-line { -fx-stroke: CHART_COLOR_7; }
+.default-color7.chart-series-line { -fx-stroke: CHART_COLOR_8; }
+/*----------------*/
+.chart {
+    -fx-padding: 10px;
+}
+.chart-content {
+    -fx-padding: 30px;
+}
+.chart-plot-background {
+    -fx-background-color:derive(-fx-color,10%);
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: derive(-fx-color,80%);
+    /*-fx-stroke-dash-array: 1, 1;*/
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: derive(-fx-color,80%);
+    /*-fx-stroke-dash-array: 1, 1;*/
+}
+/*.chart-alternative-row-fill {
+    -fx-fill: derive(-fx-color,40%);
+    -fx-stroke: transparent;
+    -fx-stroke-width: 0;
+}*/
+.chart-legend {
+   -fx-padding: 5px;
+}
+.axis {
+    -fx-tick-length: 3;
+    -fx-minor-tick-length: 1;
+}
+.axis-tick-mark {
+    -fx-stroke: -fx-line-base;
+    -fx-stroke-width: 1; 
+}
+.axis-minor-tick-mark {
+    -fx-stroke: -fx-line-base;
+}

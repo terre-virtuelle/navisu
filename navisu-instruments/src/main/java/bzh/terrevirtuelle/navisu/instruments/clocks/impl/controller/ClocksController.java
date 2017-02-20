@@ -17,6 +17,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -68,6 +69,7 @@ public class ClocksController
     protected String viewgroupstyle = "clocks.css";
     protected ClocksImpl instrument;
     protected Timeline timeline;
+    int adjust;
 
     public static ClocksController getInstance(ClocksImpl instrument, KeyCode keyCode, KeyCombination.Modifier keyCombination) {
         if (INSTANCE == null) {
@@ -83,26 +85,28 @@ public class ClocksController
         String uri = CSS_STYLE_PATH + viewgroupstyle;
         clocksgroup.getStylesheets().add(uri);
         timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), (ActionEvent actionEvent) -> {
-                    utcdaydate.setText(LocalDate.now(Clock.systemUTC()).format(utcdateFormatter));
-                    utchours.setText(LocalTime.now(Clock.systemUTC()).format(utctimeFormatter));
-                    onboarddaydate.setText(LocalDate.now(Boardclock.systemDefaultZone()).format(onboarddateFormatter));
-                    onboardhours.setText(LocalTime.now(Boardclock.systemDefaultZone()).format(onboardtimeFormatter));
-                    localdaydate.setText(LocalDate.now(Clock.system(zoneid)).format(localdateFormatter));
-                    localhours.setText(LocalTime.now(Clock.system(zoneid)).format(localtimeFormatter));
-
+                new KeyFrame(Duration.seconds(0), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        utcdaydate.setText(LocalDate.now(Clock.systemUTC()).format(utcdateFormatter));
+                        utchours.setText(LocalTime.now(Clock.systemUTC()).format(utctimeFormatter));
+                        onboarddaydate.setText(LocalDate.now(Boardclock.systemDefaultZone()).format(onboarddateFormatter));
+                        onboardhours.setText(LocalTime.now(Boardclock.systemDefaultZone()).plusHours(adjust).format(onboardtimeFormatter));
+                        localdaydate.setText(LocalDate.now(Clock.system(zoneid)).format(localdateFormatter));
+                        localhours.setText(LocalTime.now(Clock.system(zoneid)).format(localtimeFormatter));
+                    }
                 }),
                 new KeyFrame(Duration.seconds(1))
         );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
-        
+
         hourup.setOnMouseClicked((MouseEvent event) -> {
-            
+            adjust = adjust + 1;
         });
-         
+
         hourdown.setOnMouseClicked((MouseEvent event) -> {
-            instrument.off();
+            adjust = adjust - 1;
         });
         quit.setOnMouseClicked((MouseEvent event) -> {
             instrument.off();
