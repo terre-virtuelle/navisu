@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -33,6 +34,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 /**
@@ -107,7 +109,12 @@ public class ConfigurationComponentController
     public Tab userTab;
     @FXML
     public Tab ownerShipTab;
-
+    @FXML
+    public Button s57Button;
+    @FXML
+    public Button allCPathButton;
+    @FXML
+    public Button luceneButton;
     String s57Path;
     String darkSkyKey;
     String allCountriesPath;
@@ -242,7 +249,7 @@ public class ConfigurationComponentController
             component.off();
         });
         browseButton.setOnMouseClicked((MouseEvent event) -> {
-            open();
+            openFile(daeModelPathTF);
         });
         okButton.setOnMouseClicked((MouseEvent event) -> {
             if (userTab.isSelected()) {
@@ -375,16 +382,25 @@ public class ConfigurationComponentController
                     + "    AllCountriesPath : chemin vers le fichier allCountries.txt \n"
                     + "    A télécharger sur le site : http://download.geonames.org/export/dump/ "
                     + "    (318 M) \n"
-                    +"\n"
-                    +"     LuceneAllCountriesIndexPath : Après avoir téléchargé le fichier précédent \n"
-                    +"     Il faut l'indexer puis indiqué le répertoire où se trouve l'index.\n"
-                    +"\n"
-                    +"     Ces deux dernières propriétés permettent la recherche des coordonnées géographiques \n"
-                    +"     d'une ville. La météo à l'aide du site dark Sky en a besoin."
+                    + "\n"
+                    + "     LuceneAllCountriesIndexPath : Après avoir téléchargé le fichier précédent \n"
+                    + "     Il faut l'indexer puis indiqué le répertoire où se trouve l'index.\n"
+                    + "\n"
+                    + "     Ces deux dernières propriétés permettent la recherche des coordonnées géographiques \n"
+                    + "     d'une ville. La météo à l'aide du site dark Sky en a besoin."
             );
             s.setWrappingWidth(650);
             alert.getDialogPane().setContent(s);
             alert.show();
+        });
+        s57Button.setOnMouseClicked((MouseEvent event) -> {
+            openDir(s57TF);
+        });
+        allCPathButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(allCountriesTF);
+        });
+        luceneButton.setOnMouseClicked((MouseEvent event) -> {
+            openDir(allCountriesIndexTF);
         });
     }
 
@@ -426,14 +442,30 @@ public class ConfigurationComponentController
         }
     }
 
-    public void open() {
+    public void openFile(TextField tf) {
         this.fileChooser = new FileChooser();
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
         String userInitialDirectory = System.getProperty("user.home");
         this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
         File selectedFile = this.fileChooser.showOpenDialog(null);
-        if (selectedFile != null) {
-            daeModelPathTF.setText(selectedFile.getAbsolutePath());
+        if (selectedFile == null) {
+            tf.setText("No file selected");
+        } else {
+            tf.setText(selectedFile.getAbsolutePath());
+        }
+    }
+
+    public void openDir(TextField tf) {
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle(tr("popup.fileChooser.open"));
+        String userInitialDirectory = System.getProperty("user.home");
+        directoryChooser.setInitialDirectory(new File(userInitialDirectory));
+        File selectedDirectory = directoryChooser.showDialog(null);
+        if (selectedDirectory == null) {
+            tf.setText("No Directory selected");
+        } else {
+            tf.setText(selectedDirectory.getAbsolutePath());
         }
     }
 }

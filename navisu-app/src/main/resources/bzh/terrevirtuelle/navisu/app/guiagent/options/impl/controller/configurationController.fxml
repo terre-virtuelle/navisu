@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.shape.Rectangle?>
 
 <fx:root stylesheets="@configurationController.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -42,8 +41,9 @@
                                                 <GridPane layoutX="1.0" prefHeight="178.0" prefWidth="531.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="150.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="1.0" prefWidth="10.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="260.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="80.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                     </columnConstraints>
                                                     <rowConstraints>
@@ -64,6 +64,9 @@
                                                         <TextField fx:id="darkSkyTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                         <TextField fx:id="allCountriesTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                         <TextField fx:id="allCountriesIndexTF" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                          <Button fx:id="s57Button" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" />
+                                          <Button fx:id="allCPathButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <Button fx:id="luceneButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                                     </children>
                                                 </GridPane>
                                             </children>
@@ -161,7 +164,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="okButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="OK" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Button fx:id="okButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Button fx:id="defaultButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Default" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                 <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                                 <Button fx:id="cancelButton" maxWidth="70.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancel" GridPane.columnIndex="2" GridPane.rowIndex="1" />
@@ -171,7 +174,6 @@
                 </GridPane>
             </children>
         </Pane>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="333.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="560.0" />
         <Label layoutX="244.0" layoutY="17.0" prefHeight="50.0" prefWidth="79.0" styleClass="info-text" text="Options" />
         <ImageView fitHeight="65.0" fitWidth="76.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
             <image>
