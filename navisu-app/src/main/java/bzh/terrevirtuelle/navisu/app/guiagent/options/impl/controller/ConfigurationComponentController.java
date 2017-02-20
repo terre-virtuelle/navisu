@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
@@ -16,7 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.Arrays;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,6 +23,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -48,10 +48,15 @@ public class ConfigurationComponentController
     GuiAgentServices guiAgentServices;
     private final String FXML = "configurationController.fxml";
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
+    
     protected Properties properties;
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static ConfigurationComponentController INSTANCE;
     private final ConfigurationComponentImpl component;
-
+    protected String viewgroupstyle = "configuration.css";
+    
+    @FXML
+    public Group configgroup;
     @FXML
     public Pane view;
     @FXML
@@ -171,6 +176,8 @@ public class ConfigurationComponentController
         } catch (IOException ex) {
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        configgroup.getStylesheets().add(uri);
         this.component = component;
         this.guiAgentServices = guiAgentServices;
     }
@@ -298,7 +305,7 @@ public class ConfigurationComponentController
                 cogTF.setText(cogOld);
                 sogTF.setText(sogOld);
                 daeModelPathTF.setText(daeModelPathOld);
-                
+
                 name = nameTF.getText();
                 mmsi = mmsiTF.getText();
                 country = countryTF.getText();

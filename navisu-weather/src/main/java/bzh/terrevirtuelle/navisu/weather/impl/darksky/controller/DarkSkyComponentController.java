@@ -29,6 +29,7 @@ public class DarkSkyComponentController {
     protected Properties properties;
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") +"/.navisu/config/config.properties";
     protected String CACHE_FILE_NAME = System.getProperty("user.home") + "/.navisu/caches/caches.properties";
+    
     protected String town;
     protected String language;
     protected String unit;

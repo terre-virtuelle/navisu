@@ -7,107 +7,100 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root fx:id="weatherPanel" stylesheets="@weatherpanel.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="weatherPanel" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Group>
             <children>
-            <Pane prefHeight="340.0" prefWidth="394.0" styleClass="background-pane" />
-			<Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="339.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="392.0" />
+                <Pane prefHeight="340.0" prefWidth="395.0" styleClass="background-pane" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0"  height="340.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="395.0" />
                 <Group layoutX="10.0">
                     <children>
-                      <ScrollPane fx:id="scrollPane" layoutX="15.0" layoutY="53.0" prefHeight="240.0" prefWidth="355.0" styleClass="scrolling-pane">
-                     <content>
-                        <GridPane prefHeight="221.0" prefWidth="346.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="92.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="13.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label text="      Units" GridPane.rowIndex="3" />
-                              <Label text="      Language" GridPane.rowIndex="4" />
-                              <Label text="      Town" GridPane.rowIndex="1" />
-                              <TextField fx:id="townTF" minWidth="26.0" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <MenuButton fx:id="unitMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" text="                                       " GridPane.columnIndex="2" GridPane.rowIndex="3">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
-                              <MenuButton fx:id="languageMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" text="                            " GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
-                              <Label text="      Country" GridPane.rowIndex="2" />
-                              <MenuButton fx:id="countryMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                                <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
-                                </items>
-                              </MenuButton>
-                           </children>
-                        </GridPane>
-                     </content>
-                      </ScrollPane>
-                        <Text fx:id="title" layoutX="10.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="     Weather requests" textAlignment="CENTER" wrappingWidth="285.0">
-                        <font>
-                        <Font name="augie" size="20.0" />
-                     </font>
+                        <ScrollPane fx:id="scrollPane" layoutX="15.0" layoutY="53.0" prefHeight="240.0" prefWidth="355.0" styleClass="scrolling-pane">
+                            <content>
+                                <GridPane prefHeight="221.0" prefWidth="346.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="137.0" minWidth="10.0" prefWidth="92.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="152.0" minWidth="10.0" prefWidth="13.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="      Units" GridPane.rowIndex="3" />
+                                        <Label text="      Language" GridPane.rowIndex="4" />
+                                        <Label text="      Town" GridPane.rowIndex="1" />
+                                        <TextField fx:id="townTF" minWidth="26.0" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <MenuButton fx:id="unitMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" text="                                       " GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="Action 1" />
+                                                <MenuItem mnemonicParsing="false" text="Action 2" />
+                                            </items>
+                                        </MenuButton>
+                                        <MenuButton fx:id="languageMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" text="                            " GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="Action 1" />
+                                                <MenuItem mnemonicParsing="false" text="Action 2" />
+                                            </items>
+                                        </MenuButton>
+                                        <Label text="      Country" GridPane.rowIndex="2" />
+                                        <MenuButton fx:id="countryMB" mnemonicParsing="false" prefHeight="26.0" prefWidth="199.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                            <items>
+                                                <MenuItem mnemonicParsing="false" text="Action 1" />
+                                                <MenuItem mnemonicParsing="false" text="Action 2" />
+                                            </items>
+                                        </MenuButton>
+                                    </children>
+                                </GridPane>
+                            </content>
+                        </ScrollPane>
+                        <Text fx:id="title" layoutX="10.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="infotittle" text="Weather requests" textAlignment="CENTER" wrappingWidth="366.0">
+                            <font>
+                                <Font name="augie" size="20.0" />
+                            </font>
                         </Text>
                     </children>
                 </Group>
-                <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="3.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@logoTV64AIS.png" />
-                    </image>
-                    <effect>
-                        <Glow />
-                    </effect>
-                </ImageView>
+                <StackPane layoutX="10.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
                 <ImageView fx:id="quit" fitHeight="25.0" fitWidth="25.0" layoutX="356.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@quit.png" />
                     </image>
                 </ImageView>
-            <Button fx:id="requestButton" layoutX="307.0" layoutY="302.0" mnemonicParsing="false" text="Request" />
-            <GridPane layoutX="28.0" layoutY="302.0" prefHeight="30.0" prefWidth="264.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="34.0" prefWidth="34.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="150.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="34.0" prefWidth="34.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="150.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label text="Lat :" />
-                  <Label fx:id="latitudeLabel" prefHeight="16.0" prefWidth="97.0" GridPane.columnIndex="1" />
-                  <Label text="Lon :" GridPane.columnIndex="2" />
-                  <Label fx:id="longitudeLabel" prefHeight="16.0" prefWidth="92.0" GridPane.columnIndex="3" />
-               </children>
-            </GridPane>
+                <Button fx:id="requestButton" layoutX="307.0" layoutY="302.0" mnemonicParsing="false" text="Request" />
+                <GridPane layoutX="28.0" layoutY="302.0" prefHeight="30.0" prefWidth="264.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="34.0" prefWidth="34.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="34.0" prefWidth="34.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="150.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Lat :" />
+                        <Label fx:id="latitudeLabel" prefHeight="16.0" prefWidth="97.0" GridPane.columnIndex="1" />
+                        <Label text="Lon :" GridPane.columnIndex="2" />
+                        <Label fx:id="longitudeLabel" prefHeight="16.0" prefWidth="92.0" GridPane.columnIndex="3" />
+                    </children>
+                </GridPane>
             </children>
         </Group>
     </children>

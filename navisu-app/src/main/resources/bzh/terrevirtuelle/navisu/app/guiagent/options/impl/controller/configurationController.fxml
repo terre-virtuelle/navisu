@@ -15,8 +15,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
 
-<fx:root stylesheets="@configurationController.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="configgroup" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="334.0" prefWidth="560.0" styleClass="background-pane">
             <children>
@@ -172,7 +173,6 @@
             </children>
         </Pane>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="333.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="560.0" />
-        <Label layoutX="244.0" layoutY="17.0" prefHeight="50.0" prefWidth="79.0" styleClass="info-text" text="Options" />
         <ImageView fitHeight="65.0" fitWidth="76.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@logoTV64AIS.png" />
@@ -183,5 +183,6 @@
                 <Image url="@quit.png" />
             </image>
         </ImageView>
+      <Text layoutX="259.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="groupviewtittle" text="Options" textAlignment="CENTER" />
     </children>
 </fx:root>

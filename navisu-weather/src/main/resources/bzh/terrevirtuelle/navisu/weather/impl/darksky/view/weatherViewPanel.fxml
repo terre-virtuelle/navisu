@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -8,239 +9,315 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<fx:root fx:id="weatherViewPanel" depthTest="ENABLE" pickOnBounds="true" styleClass="background-pane" stylesheets="@weatherpanel.css" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="weatherViewPanel" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <StackPane prefHeight="456.0" prefWidth="632.0" styleClass="background-pane">
-         <children>
-			<Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="454.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="632.0" />
-            <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="380.0" minHeight="10.0" prefHeight="380.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="80.0" minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <GridPane maxHeight="80.0" prefHeight="53.0" prefWidth="632.0">
+        <StackPane prefHeight="456.0" prefWidth="632.0" styleClass="background-pane">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="454.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="632.0" />
+                <GridPane alignment="CENTER">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="50.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="436.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="92.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="380.0" minHeight="10.0" prefHeight="380.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="80.0" minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <children>
-                        <Label fx:id="title" alignment="CENTER" prefHeight="16.0" prefWidth="438.0" text="Results request forecast" wrapText="true" GridPane.columnIndex="1" />
-                        <ImageView fitHeight="45.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@logoTV64AIS.png" />
-                           </image></ImageView>
-                        <ImageView fx:id="quit" fitHeight="29.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
-                           <image>
-                              <Image url="@quit.png" />
-                           </image></ImageView>
-                     </children>
-                  </GridPane>
-                  <TabPane maxHeight="371.0" prefHeight="371.0" prefWidth="612.0" tabClosingPolicy="UNAVAILABLE" GridPane.rowIndex="1">
-                    <tabs>
-                      <Tab text="Currently">
-                        <content>
-                          <AnchorPane maxHeight="256.0" minHeight="0.0" minWidth="0.0" prefHeight="256.0" prefWidth="632.0">
-                                 <children>
-                                    <GridPane layoutX="14.0" layoutY="14.0" prefHeight="252.0" prefWidth="608.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <Label fx:id="windSpeedLabel" prefHeight="16.0" prefWidth="152.0" text="WindSpeed" />
-                                          <Label fx:id="windSpeedData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" />
-                                          <Label fx:id="windBearingLabel" prefHeight="16.0" prefWidth="152.0" text="WindBearing" GridPane.columnIndex="2" />
-                                          <Label fx:id="windBearingData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" />
-                                          <Label fx:id="visibilityLabel" prefHeight="16.0" prefWidth="152.0" text="Visibility" GridPane.rowIndex="1" />
-                                          <Label fx:id="visibilityData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label fx:id="humidityLabel" prefHeight="16.0" prefWidth="152.0" text="Humidity" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                          <Label fx:id="humidityData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                          <Label fx:id="temperatureLabel" prefHeight="16.0" prefWidth="152.0" text="Temperature" GridPane.rowIndex="2" />
-                                          <Label fx:id="temperatureData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label fx:id="apparentTemperatureLabel" prefHeight="16.0" prefWidth="152.0" text="ApparentTemperature" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                          <Label fx:id="apparentTemperatureData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <Label fx:id="pressureLabel" prefHeight="16.0" prefWidth="152.0" text="Pressure" GridPane.rowIndex="3" />
-                                          <Label fx:id="pressureData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Label fx:id="dewPointLabel" prefHeight="97.0" prefWidth="152.0" text="Dewpoint" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <Label fx:id="dewPointData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                          <Label fx:id="precipProbabilityLabel" prefHeight="16.0" prefWidth="152.0" text="PrecipProbability" GridPane.rowIndex="4" />
-                                          <Label fx:id="precipProbabilityData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                          <Label fx:id="precipTypeLabel" prefHeight="16.0" prefWidth="152.0" text="PrecipType" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                          <Label fx:id="precipTypeData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                          <Label fx:id="precipIntensityLabel" prefHeight="16.0" prefWidth="152.0" text="PrecipIntensity" GridPane.rowIndex="5" />
-                                          <Label fx:id="precipIntensityData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                          <Label fx:id="cloudCoverLabel" prefHeight="16.0" prefWidth="152.0" text="CloudCover" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                          <Label fx:id="cloudCoverData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Hours graph">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="279.0" prefWidth="632.0">
-                                 <children>
-                                    <GridPane layoutX="3.0" layoutY="-12.0" prefHeight="355.0" prefWidth="632.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="0.0" prefWidth="10.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="595.0" minWidth="10.0" prefWidth="593.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="9.0" prefWidth="10.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="320.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="18.0" minHeight="0.0" prefHeight="18.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <LineChart fx:id="hoursLineChart" maxHeight="280.0" prefHeight="280.0" prefWidth="595.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                            <xAxis>
-                                              <CategoryAxis prefHeight="5.0" prefWidth="534.0" side="BOTTOM" />
-                                            </xAxis>
-                                            <yAxis>
-                                              <NumberAxis fx:id="hyAxis" side="LEFT" />
-                                            </yAxis>
-                                          </LineChart>
-                                          <GridPane maxHeight="50.0" prefHeight="42.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <children>
+                        <GridPane maxHeight="80.0" prefHeight="53.0" prefWidth="632.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="50.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="436.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="92.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Label fx:id="title" alignment="CENTER" prefHeight="16.0" prefWidth="438.0" text="Results request forecast" wrapText="true" GridPane.columnIndex="1" />
+                                <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="40.0" styleClass="logo">
+                                    <GridPane.margin>
+                                        <Insets left="10.0" />
+                                    </GridPane.margin>
+                                </StackPane>
+                                <Pane fx:id="quit" layoutX="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="quitbutton" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <GridPane.margin>
+                                <Insets />
+                            </GridPane.margin>
+                            <padding>
+                                <Insets right="10.0" top="5.0" />
+                            </padding>
+                        </GridPane>
+                        <TabPane maxHeight="371.0" maxWidth="-Infinity" prefHeight="371.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                            <tabs>
+                                <Tab text="Currently">
+                                    <content>
+                                        <AnchorPane maxHeight="252.0" minHeight="0.0" minWidth="0.0" prefHeight="252.0" prefWidth="610.0">
+                                            <children>
+                                                <GridPane gridLinesVisible="true" layoutX="8.0" layoutY="14.0" prefHeight="162.0" prefWidth="588.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <Label fx:id="windSpeedLabel" prefHeight="16.0" prefWidth="152.0" text="WindSpeed" wrapText="true">
+                                                            <opaqueInsets>
+                                                                <Insets />
+                                                            </opaqueInsets>
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding>
+                                                        </Label>
+                                                        <Label fx:id="windSpeedData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="windBearingLabel" prefHeight="16.0" prefWidth="152.0" text="WindBearing" GridPane.columnIndex="2">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="windBearingData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="visibilityLabel" prefHeight="16.0" prefWidth="152.0" text="Visibility" GridPane.rowIndex="1">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="visibilityData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="humidityLabel" prefHeight="16.0" prefWidth="152.0" text="Humidity" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="humidityData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="temperatureLabel" prefHeight="16.0" prefWidth="152.0" text="Temperature" GridPane.rowIndex="2">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="temperatureData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="apparentTemperatureLabel" prefHeight="16.0" prefWidth="152.0" text="ApparentTemperature" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="apparentTemperatureData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="pressureLabel" prefHeight="16.0" prefWidth="152.0" text="Pressure" GridPane.rowIndex="3">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="pressureData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="dewPointLabel" prefHeight="97.0" prefWidth="152.0" text="Dewpoint" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="dewPointData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="precipProbabilityLabel" prefHeight="16.0" prefWidth="152.0" text="PrecipProbability" GridPane.rowIndex="4">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="precipProbabilityData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="precipTypeLabel" prefHeight="16.0" prefWidth="152.0" text="PrecipType" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="precipTypeData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="precipIntensityLabel" prefHeight="16.0" prefWidth="152.0" text="PrecipIntensity" GridPane.rowIndex="5">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="precipIntensityData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="cloudCoverLabel" prefHeight="16.0" prefWidth="152.0" text="CloudCover" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                        <Label fx:id="cloudCoverData" prefHeight="16.0" prefWidth="152.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                             <padding>
+                                                <Insets left="5.0" />
+                                             </padding></Label>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </Tab>
+                                <Tab text="Hours graph">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="279.0" prefWidth="632.0">
+                                            <children>
+                                                <GridPane layoutX="-16.0" layoutY="-12.0" prefHeight="340.0" prefWidth="632.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="595.0" minWidth="10.0" prefWidth="593.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="320.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <LineChart fx:id="hoursLineChart" maxHeight="280.0" maxWidth="-Infinity" prefHeight="280.0" prefWidth="639.0">
+                                                            <xAxis>
+                                                                <CategoryAxis prefHeight="5.0" prefWidth="534.0" side="BOTTOM" />
+                                                            </xAxis>
+                                                            <yAxis>
+                                                                <NumberAxis fx:id="hyAxis" side="LEFT" />
+                                                            </yAxis>
+                                                        </LineChart>
+                                                        <GridPane maxHeight="50.0" prefHeight="42.0" prefWidth="593.0" GridPane.rowIndex="1">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="16.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="2.0" prefWidth="120.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="215.0" />
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <Button fx:id="loadWindData" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Load wind data" GridPane.columnIndex="1" />
+                                                                <Button fx:id="loadTemperatureData" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Load temperature " GridPane.columnIndex="2" />
+                                                                <Button fx:id="loadPressureData" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Load pressure" GridPane.columnIndex="3" />
+                                                            </children>
+                                                        </GridPane>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </Tab>
+                                <Tab text="Days graph">
+                                    <content>
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="279.0" prefWidth="632.0">
+                                            <children>
+                                                <GridPane layoutX="-16.0" layoutY="-12.0" prefHeight="340.0" prefWidth="632.0">
+                                                    <columnConstraints>
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="595.0" minWidth="10.0" prefWidth="593.0" />
+                                                    </columnConstraints>
+                                                    <rowConstraints>
+                                                        <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="320.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                                    </rowConstraints>
+                                                    <children>
+                                                        <LineChart fx:id="daysLineChart" alternativeColumnFillVisible="true" maxHeight="280.0" prefHeight="280.0" prefWidth="640.0">
+                                                            <xAxis>
+                                                                <CategoryAxis prefHeight="5.0" prefWidth="534.0" side="BOTTOM" />
+                                                            </xAxis>
+                                                            <yAxis>
+                                                                <NumberAxis fx:id="dyAxis" side="LEFT" />
+                                                            </yAxis>
+                                                        </LineChart>
+                                                        <GridPane maxHeight="50.0" prefHeight="21.0" prefWidth="595.0" GridPane.rowIndex="1">
+                                                            <columnConstraints>
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="16.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="2.0" prefWidth="120.0" />
+                                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="215.0" />
+                                                            </columnConstraints>
+                                                            <rowConstraints>
+                                                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            </rowConstraints>
+                                                            <children>
+                                                                <Button fx:id="loadWindData1" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Load wind data" GridPane.columnIndex="1" />
+                                                                <Button fx:id="loadTemperatureData1" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Load temperature " GridPane.columnIndex="2" />
+                                                                <Button fx:id="loadPressureData1" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Load pressure" GridPane.columnIndex="3" />
+                                                            </children>
+                                                        </GridPane>
+                                                    </children>
+                                                </GridPane>
+                                            </children>
+                                        </AnchorPane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+                        <StackPane prefHeight="31.0" prefWidth="632.0" GridPane.rowIndex="2">
+                            <children>
+                                <GridPane prefHeight="40.0" prefWidth="632.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="0.0" prefWidth="20.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="153.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="69.0" minWidth="10.0" prefWidth="69.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.3333282470703" minWidth="10.0" prefWidth="141.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.3333282470703" minWidth="10.0" prefWidth="82.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.3333282470703" minWidth="10.0" prefWidth="212.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label fx:id="summaryLabel" prefHeight="16.0" prefWidth="148.0" text="Summary" GridPane.columnIndex="2" />
+                                        <Label fx:id="timeLabel" prefHeight="16.0" prefWidth="148.0" text="Time" GridPane.columnIndex="4" />
+                                        <Label fx:id="summaryData" prefHeight="16.0" prefWidth="421.0" GridPane.columnIndex="3" />
+                                        <Label fx:id="timeData" prefHeight="16.0" prefWidth="433.0" GridPane.columnIndex="5" />
+                                        <GridPane GridPane.columnIndex="1">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="16.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="2.0" prefWidth="120.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="215.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="10.0" prefWidth="60.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="40.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
-                                             <children>
-                                                <Button fx:id="loadWindData" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Load wind data" GridPane.columnIndex="1" />
-                                                <Button fx:id="loadTemperatureData" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Load temperature " GridPane.columnIndex="2" />
-                                                <Button fx:id="loadPressureData" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Load pressure" GridPane.columnIndex="3" />
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </GridPane>
-                                 </children></AnchorPane>
-                        </content>
-                      </Tab>
-                        <Tab text="Days graph">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="279.0" prefWidth="632.0">
-                                 <children>
-                                    <GridPane layoutX="3.0" layoutY="-12.0" prefHeight="355.0" prefWidth="632.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="0.0" prefWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="595.0" minWidth="10.0" prefWidth="593.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="9.0" prefWidth="10.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="320.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="18.0" minHeight="0.0" prefHeight="18.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <LineChart fx:id="daysLineChart" maxHeight="280.0" prefHeight="280.0" prefWidth="595.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <xAxis>
-                                                <CategoryAxis prefHeight="5.0" prefWidth="534.0" side="BOTTOM" />
-                                             </xAxis>
-                                             <yAxis>
-                                                <NumberAxis fx:id="dyAxis" side="LEFT" />
-                                             </yAxis>
-                                          </LineChart>
-                                          <GridPane maxHeight="50.0" prefHeight="42.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="16.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="2.0" prefWidth="120.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="215.0" />
-                                             </columnConstraints>
-                                             <rowConstraints>
-                                                <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                             </rowConstraints>
-                                             <children>
-                                                <Button fx:id="loadWindData1" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="Load wind data" GridPane.columnIndex="1" />
-                                                <Button fx:id="loadTemperatureData1" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="119.0" text="Load temperature " GridPane.columnIndex="2" />
-                                                <Button fx:id="loadPressureData1" maxHeight="30.0" maxWidth="120.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Load pressure" GridPane.columnIndex="3" />
-                                             </children>
-                                          </GridPane>
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </Tab>
-                    </tabs>
-                  </TabPane>
-                  <StackPane prefHeight="31.0" prefWidth="632.0" GridPane.rowIndex="2">
-                     <children>
-                        <GridPane prefHeight="40.0" prefWidth="632.0">
-                          <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="0.0" prefWidth="20.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="153.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="69.0" minWidth="10.0" prefWidth="69.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.3333282470703" minWidth="10.0" prefWidth="141.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.3333282470703" minWidth="10.0" prefWidth="82.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.3333282470703" minWidth="10.0" prefWidth="212.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label fx:id="summaryLabel" prefHeight="16.0" prefWidth="148.0" text="Summary" GridPane.columnIndex="2" />
-                              <Label fx:id="timeLabel" prefHeight="16.0" prefWidth="148.0" text="Time" GridPane.columnIndex="4" />
-                              <Label fx:id="summaryData" prefHeight="16.0" prefWidth="421.0" GridPane.columnIndex="3" />
-                              <Label fx:id="timeData" prefHeight="16.0" prefWidth="433.0" GridPane.columnIndex="5" />
-                              <GridPane GridPane.columnIndex="1">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="40.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="10.0" prefWidth="60.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="40.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <StackPane fx:id="iconId" prefHeight="30.0" prefWidth="84.0" GridPane.columnIndex="1" />
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </GridPane>
-                     </children>
-                  </StackPane>
-               </children>
-            </GridPane>
-         </children></StackPane>
+                                            <children>
+                                                <StackPane fx:id="iconId" prefHeight="30.0" prefWidth="84.0" GridPane.columnIndex="1" />
+                                            </children>
+                                        </GridPane>
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </StackPane>
+                    </children>
+                </GridPane>
+            </children>
+        </StackPane>
     </children>
 </fx:root>

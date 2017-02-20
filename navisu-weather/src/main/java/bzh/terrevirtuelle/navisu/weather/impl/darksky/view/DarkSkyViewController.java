@@ -16,7 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOAlerts;
@@ -26,6 +25,8 @@ import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOFlags;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOHourly;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOMinutely;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.ForecastIO;
+import java.nio.file.Paths;
+
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
@@ -36,6 +37,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
@@ -47,10 +49,12 @@ public class DarkSkyViewController
         extends Widget2DController
         implements Initializable {
 
+    public String viewgroupstyle = "weatherpanel.css";
+    
     @FXML
     public Group weatherViewPanel;
     @FXML
-    public ImageView quit;
+    public Pane quit;
     @FXML
     Label title;
     @FXML
@@ -133,6 +137,7 @@ public class DarkSkyViewController
     StackPane iconId;
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
 
     public DarkSkyViewController() {
         setMouseTransparent(false);
@@ -149,6 +154,9 @@ public class DarkSkyViewController
             throw new RuntimeException(exception);
         }
         setOpacity(1.0);
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        weatherViewPanel.getStylesheets().add(uri);
+
     }
 
     public void setTitle(Label title) {
@@ -232,7 +240,7 @@ public class DarkSkyViewController
         if (hoursLineChart.getData() != null) {
             hoursLineChart.getData().clear();
         }
-        
+
         hyAxis.setAutoRanging(false);
         hyAxis.setLowerBound(0);
         hyAxis.setUpperBound(50);
@@ -248,7 +256,7 @@ public class DarkSkyViewController
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
                     final Tooltip tooltip = new Tooltip(
-                            data.getXValue()+ '\n'
+                            data.getXValue() + '\n'
                             + "S : " + data.getYValue().toString() + " Kn" + '\n'
                             + "B : " + windBearing + " °");
                     Tooltip.install(node, tooltip);
@@ -278,7 +286,7 @@ public class DarkSkyViewController
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
                     final Tooltip tooltip = new Tooltip(
-                            data.getXValue()+ '\n'
+                            data.getXValue() + '\n'
                             + "T : " + data.getYValue().toString() + " °" + '\n'
                             + "A : " + appTemp + " °");
                     Tooltip.install(node, tooltip);
@@ -308,7 +316,7 @@ public class DarkSkyViewController
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
                     final Tooltip tooltip = new Tooltip(
-                            data.getXValue()+ '\n'
+                            data.getXValue() + '\n'
                             + "P : " + data.getYValue().toString() + " hPa");
                     Tooltip.install(node, tooltip);
                 });
@@ -369,8 +377,8 @@ public class DarkSkyViewController
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
                     final Tooltip tooltip = new Tooltip(
-                            data.getXValue()+ '\n'
-                            + "Max : " +data.getYValue().toString() + " °" + '\n'
+                            data.getXValue() + '\n'
+                            + "Max : " + data.getYValue().toString() + " °" + '\n'
                             + "Min : " + tempMin + " °");
                     Tooltip.install(node, tooltip);
                 });
@@ -399,7 +407,7 @@ public class DarkSkyViewController
                 data.nodeProperty().addListener(observable -> {
                     final Node node = data.getNode();
                     final Tooltip tooltip = new Tooltip(
-                            data.getXValue()+ '\n'
+                            data.getXValue() + '\n'
                             + "P : " + data.getYValue().toString() + " hPa"
                     );
                     Tooltip.install(node, tooltip);

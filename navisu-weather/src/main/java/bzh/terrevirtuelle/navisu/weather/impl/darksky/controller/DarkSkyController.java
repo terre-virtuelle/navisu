@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -98,6 +99,8 @@ public class DarkSkyController
     protected GazetteerComponentServices gazetteerComponentServices;
     protected GuiAgentServices guiAgentServices;
     private String navisuWeatherCache;
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    public String viewgroupstyle = "weatherpanel.css";
 
     public DarkSkyController(DarkSkyComponentController darkSkyComponentController,
             GazetteerComponentServices gazetteerComponentServices,
@@ -133,6 +136,8 @@ public class DarkSkyController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        String uri = CSS_STYLE_PATH + viewgroupstyle;
+        weatherPanel.getStylesheets().add(uri);
         quit.setOnMouseClicked((MouseEvent event) -> {
             setVisible(false);
         });
@@ -233,17 +238,17 @@ public class DarkSkyController
             if (location != null) {
                 latitudeLabel.setText(Double.toString(location.getLatitude()));
                 longitudeLabel.setText(Double.toString(location.getLongitude()));
-                
+
                 languageCode = Abbreviations.LANG.get(language);
                 unitCode = Abbreviations.UNIT.get(unit);
-                
+
                 fio = new ForecastIO(apiKey, unitCode, languageCode,
                         Double.toString(location.getLatitude()), Double.toString(location.getLongitude()));
                 if (fio.getForecast(Double.toString(location.getLatitude()),
                         Double.toString(location.getLongitude())) == true) {
                     darkSkyViewController.showData(fio);
                 }
-                
+
                 guiAgentServices.getRoot().getChildren().add(darkSkyViewController);
                 darkSkyViewController.setMouseTransparent(false);
                 darkSkyViewController.setVisible(true);
