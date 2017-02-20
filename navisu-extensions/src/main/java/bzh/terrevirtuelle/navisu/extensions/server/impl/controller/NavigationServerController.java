@@ -23,6 +23,7 @@ import java.io.StringWriter;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javax.xml.bind.JAXBException;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.VertxFactory;
@@ -196,6 +197,16 @@ public class NavigationServerController {
             }
         }
 
+                /**
+         * If a ArCommand with cmd=ActionMenu is send, it will execute the action
+         * provided in arg
+         */
+        if (navCmd.getCmd().equals("ActionMenu") && navCmd.getArg() != null) {
+            String instrumentDriver = navCmd.getArg();
+            Platform.runLater(() -> {
+            instrumentDriverManagerServices.open(instrumentDriver);
+            });
+        }
         return navCmd;
     }
 
