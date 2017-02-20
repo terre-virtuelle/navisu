@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
@@ -16,7 +15,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,6 +22,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
@@ -33,6 +32,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 /**
@@ -298,7 +298,7 @@ public class ConfigurationComponentController
                 cogTF.setText(cogOld);
                 sogTF.setText(sogOld);
                 daeModelPathTF.setText(daeModelPathOld);
-                
+
                 name = nameTF.getText();
                 mmsi = mmsiTF.getText();
                 country = countryTF.getText();
@@ -364,7 +364,27 @@ public class ConfigurationComponentController
 
         });
         helpButton.setOnMouseClicked((MouseEvent event) -> {
-
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Options");
+            alert.setHeaderText("Données utilisateur");
+            Text s = new Text("    S57ChartsDir : chemin de la racine des cartes S57 \n"
+                    + "\n"
+                    + "    DarkSkyApiKey : clé pour l'accès aux données météo de DarkSky  \n"
+                    + "    A prendre sur le site : https://darksky.net/dev/ \n"
+                    + " \n"
+                    + "    AllCountriesPath : chemin vers le fichier allCountries.txt \n"
+                    + "    A télécharger sur le site : http://download.geonames.org/export/dump/ "
+                    + "    (318 M) \n"
+                    +"\n"
+                    +"     LuceneAllCountriesIndexPath : Après avoir téléchargé le fichier précédent \n"
+                    +"     Il faut l'indexer puis indiqué le répertoire où se trouve l'index.\n"
+                    +"\n"
+                    +"     Ces deux dernières propriétés permettent la recherche des coordonnées géographiques \n"
+                    +"     d'une ville. La météo à l'aide du site dark Sky en a besoin."
+            );
+            s.setWrappingWidth(650);
+            alert.getDialogPane().setContent(s);
+            alert.show();
         });
     }
 
