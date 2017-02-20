@@ -153,7 +153,7 @@ public class S57GlobalCatalogController
 
     private String filepathToNumber(String filepath) {
         String result = null;
-        System.out.println("Map path :" + filepath);
+        //System.out.println("Map path :" + filepath);
         //String[] tab = filepath.split("\\");
         String[] tab = filepath.split(Pattern.quote("\\"));
         if (tab.length != 0) {
@@ -162,23 +162,14 @@ public class S57GlobalCatalogController
         return result;
     }
 
-    /*
     private long numberToId(String number) {
-        String[] tab = number.split("\\.");
-        if (tab.length == 2) {
-            tab[0] = tab[0].substring(2);
-        }
-        return Long.parseLong(tab[0]);
-    }
-     */
-    private long numberToId(String number) {
-        System.out.println("S57GlobalCatalogController number : " + number);
+        //System.out.println("S57GlobalCatalogController number : " + number);
         //String[] tab = number.split("\\.");
         String[] tab = number.split(Pattern.quote("."));
         if (tab.length == 2) {
             tab[0] = tab[0].substring(2);
         }
-        System.out.println("S57GlobalCatalogController tab[0] : " + tab[0]);
+        //System.out.println("S57GlobalCatalogController tab[0] : " + tab[0]);
         return Long.parseLong(tab[0]);
     }
 
