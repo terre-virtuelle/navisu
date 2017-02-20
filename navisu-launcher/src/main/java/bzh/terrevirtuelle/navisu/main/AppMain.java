@@ -398,7 +398,8 @@ public class AppMain extends Application {
         - tcp://sinagot.net:5003 Simulateur AIS
         - gpsd://sinagot.net:2947 AIS zone Bretagne 
          */
-        //  dataServerServices.openGpsd("sinagot.net", 5947);//Bretagne AIS Fulup 2947?
+        // dataServerServices.openGpsd("sinagot.net", 5947);
+       //  dataServerServices.openGpsd("sinagot.net", 2947);//OK
         // dataServerServices.openGpsd("sinagot.net", 5003);
         // dataServerServices.openGpsd("sinagot.net", 5121);
         //dataServerServices.openGpsd("hd-sf.com", 9009);
