@@ -210,11 +210,6 @@ public class AisRadarController
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        /*
-        guiAgentServices.getScene().getStylesheets().setAll(
-                getClass().getResource("aisradar.css").toExternalForm()
-        );
-         */
         aisinfopanel.setVisible(false);
         aisbuttonpanel.setVisible(true);
         Platform.runLater(() -> {
@@ -402,8 +397,6 @@ public class AisRadarController
 
     private void schedule() {
         fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(DURATION), (ActionEvent event) -> {
-            //faisceau.setPivotX(50.0);
-            //faisceau.setPivotY(50.0);
             faisceau.setRotate(route);
             route++;
             route %= 360;
@@ -531,24 +524,22 @@ public class AisRadarController
     private void maj(Ship target) {
         List<Node> nodes = radar.getChildren();
         String mmsi = Integer.toString(target.getMMSI());
-        for (Node n : nodes) {
-            if (n.getId() != null && n.getId().equals(mmsi)) {
-                int cX = (int) (CENTER_X - (lonOwner - target.getLongitude()) * radarScale);
-                int cY = (int) (CENTER_Y + (latOwner - target.getLatitude()) * radarScale);
-                if (cX <= MAX && cX >= MIN && cY <= MAX && cY >= MIN) {
-                    Platform.runLater(() -> {
-
-                        if (outOfRangeShips.containsKey(target.getMMSI())) {//Ships In range
-                            GRShipImpl grship = (GRShipImpl) outOfRangeShips.get(target.getMMSI());
-                            radar.getChildren().add(grship);
-                            outOfRangeShips.remove(mmsi, grship);
-                        }
-                        ((Circle) n).setCenterX(cX);
-                        ((Circle) n).setCenterY(cY);
-                    });
-                }
+        nodes.stream().filter((n) -> (n.getId() != null && n.getId().equals(mmsi))).forEachOrdered((n) -> {
+            int cX = (int) (CENTER_X - (lonOwner - target.getLongitude()) * radarScale);
+            int cY = (int) (CENTER_Y + (latOwner - target.getLatitude()) * radarScale);
+            if (cX <= MAX && cX >= MIN && cY <= MAX && cY >= MIN) {
+                Platform.runLater(() -> {
+                    
+                    if (outOfRangeShips.containsKey(target.getMMSI())) {//Ships In range
+                        GRShipImpl grship = (GRShipImpl) outOfRangeShips.get(target.getMMSI());
+                        radar.getChildren().add(grship);
+                        outOfRangeShips.remove(mmsi, grship);
+                    }
+                    ((Circle) n).setCenterX(cX);
+                    ((Circle) n).setCenterY(cY);
+                });
             }
-        }
+        });
     }
 
     public void setTarget(BaseStation transceiver) {
