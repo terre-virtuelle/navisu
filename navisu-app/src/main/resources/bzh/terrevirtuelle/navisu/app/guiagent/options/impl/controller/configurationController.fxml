@@ -45,7 +45,7 @@
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="1.0" prefWidth="260.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="80.0" />
+                                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="80.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                     </columnConstraints>
                                                     <rowConstraints>
@@ -66,9 +66,9 @@
                                                         <TextField fx:id="darkSkyTF" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                         <TextField fx:id="allCountriesTF" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                         <TextField fx:id="allCountriesIndexTF" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                          <Button fx:id="s57Button" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" />
-                                          <Button fx:id="allCPathButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <Button fx:id="luceneButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                                        <Button fx:id="s57Button" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" />
+                                                        <Button fx:id="allCPathButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                                        <Button fx:id="luceneButton" mnemonicParsing="false" prefHeight="0.0" prefWidth="80.0" text="Browse" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                                                     </children>
                                                 </GridPane>
                                             </children>
@@ -133,7 +133,7 @@
                                                         <TextField fx:id="cogTF" maxHeight="25.0" prefHeight="25.0" prefWidth="0.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
                                                         <TextField fx:id="sogTF" maxHeight="25.0" prefHeight="25.0" prefWidth="0.0" GridPane.columnIndex="5" GridPane.rowIndex="6" />
                                                         <TextField fx:id="daeModelPathTF" maxHeight="25.0" prefHeight="25.0" prefWidth="0.0" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-                                          <Button fx:id="browseButton" maxWidth="170.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Browse" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+                                                        <Button fx:id="browseButton" maxWidth="170.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="170.0" text="Browse" GridPane.columnIndex="5" GridPane.rowIndex="8" />
                                                     </children>
                                                 </GridPane>
                                             </children>
@@ -187,6 +187,6 @@
                 <Image url="@quit.png" />
             </image>
         </ImageView>
-      <Text layoutX="259.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="groupviewtittle" text="Options" textAlignment="CENTER" />
+        <Text layoutX="259.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="groupviewtittle" text="Options" textAlignment="CENTER" />
     </children>
 </fx:root>

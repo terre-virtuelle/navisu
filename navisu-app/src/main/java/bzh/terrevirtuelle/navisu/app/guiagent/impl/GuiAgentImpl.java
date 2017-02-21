@@ -41,7 +41,6 @@ import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindVi
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.PositionEvent;
-import gov.nasa.worldwind.event.PositionListener;
 import gov.nasa.worldwind.geom.Position;
 import java.nio.file.Paths;
 import javafx.application.Platform;

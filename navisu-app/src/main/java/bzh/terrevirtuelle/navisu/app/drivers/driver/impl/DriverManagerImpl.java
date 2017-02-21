@@ -64,22 +64,13 @@ public class DriverManagerImpl
             Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         String userInitialDirectory = properties.getProperty("dataDir");
-        if (userInitialDirectory.equals("")) {
+        if (userInitialDirectory==null) {
             this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
             this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
         } else {
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
             this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
         }
-        MenuItem menuItem = new MenuItem(tr("menu.file.open"));
-        menuBarServices.addMenuItem(DefaultMenuEnum.FILE, menuItem);
-        menuItem.setOnAction((e) -> {
-            File selectedFile = this.fileChooser.showOpenDialog(null);
-            if (selectedFile != null) {
-                this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
-                System.out.println(selectedFile.getAbsolutePath());
-            }
-        });
     }
 
     @Override
@@ -128,6 +119,8 @@ public class DriverManagerImpl
             LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
         }
         properties.setProperty(category, file.getParent());
+        System.out.println("category : " + category);
+        System.out.println("file.getParent() : " + file.getParent());
         File f = new File(CACHE_FILE_NAME);
         OutputStream out;
         try {
@@ -135,8 +128,6 @@ public class DriverManagerImpl
             properties.store(out, "Last directory choosed by user");
             out.close();
         } catch (IOException ex) {
-            // Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Le répertoire choisit n'apparait pas de le cache");
         }
     }
 
