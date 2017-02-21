@@ -68,45 +68,8 @@ public class Configuration {
             } catch (IOException ex) {
                 Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
             }
-            writeDefaultCache(navisuCache);
-        } else {
-            Properties properties = new Properties();
-            try {
-                properties.load(new FileInputStream(navisuCache));
-                String town = properties.getProperty("town");
-                String language = properties.getProperty("language");
-                String unit = properties.getProperty("unit");
-                String country = properties.getProperty("country");
-                String countryCode = properties.getProperty("countryCode");
-
-                String kml = properties.getProperty("KML");
-                String meteo = properties.getProperty("Meteo");
-                String s57 = properties.getProperty("S57");
-                String gpx = properties.getProperty("Gpx");
-                String meteoDump = properties.getProperty("MeteoDump");
-                String bsbKap = properties.getProperty("BSB/KAP");
-                String wind = properties.getProperty("Wind");
-                String nmea = properties.getProperty("NMEA");
-                String waves = properties.getProperty("Waves");
-                String magnetic = properties.getProperty("Magnetic");
-                String bathy = properties.getProperty("Bathy");
-                String netCdfInfo = properties.getProperty("netCdfInfo");
-                String geoTiff = properties.getProperty("GeoTiff");
-                String currents = properties.getProperty("Currents");
-                String dataDir = properties.getProperty("dataDir");
-
-                if (town == null || language == null || unit == null || country == null || countryCode == null
-                        || kml == null || meteo == null || s57 == null || gpx == null || meteoDump == null
-                        || bsbKap == null || wind == null || nmea == null
-                        || waves == null || magnetic == null || bathy == null || netCdfInfo == null || geoTiff == null
-                        || currents == null || dataDir == null) {
-                    writeDefaultCache(navisuCache);
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-        }
-
+        } 
+        
         String configProperties = navisuHome + "/config/config.properties";
         if (!Files.exists(Paths.get(configProperties), LinkOption.NOFOLLOW_LINKS)) {
             try {
@@ -133,20 +96,6 @@ public class Configuration {
             }
         }
 
-    }
-
-    private static void writeDefaultCache(String navisuWeatherCache) {
-        try {
-            List<String> keys = new ArrayList<>(Arrays.asList("town=",
-                    "language=", "unit=", "country=", "countryCode=",
-                    "KML=", "Meteo=", "S57", "Gpx=", "MeteoDump=", "BSB/KAP=",
-                    "Wind=", "NMEA=", "Waves=", "Magnetic=", "Bathy=", "NetCdfInfo=",
-                    "GeoTiff=", "Currents=", "dataDir="
-            ));
-            Files.write(Paths.get(navisuWeatherCache), keys, StandardOpenOption.WRITE);
-        } catch (IOException ex) {
-            Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
     }
 
     private static void writeDefaultConfigProperties(String configProperties) {
@@ -184,5 +133,4 @@ public class Configuration {
         newPaths[newPaths.length - 1] = pathToAdd;
         usrPathsField.set(null, newPaths);
     }
-
 }
