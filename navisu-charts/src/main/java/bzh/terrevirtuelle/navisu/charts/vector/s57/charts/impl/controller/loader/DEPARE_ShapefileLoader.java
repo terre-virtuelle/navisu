@@ -10,6 +10,15 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import java.awt.Color;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 /**
  *
@@ -20,6 +29,7 @@ public class DEPARE_ShapefileLoader
         extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
+    static int nb = 0;
     ShapefileRecord record;
 
     public DEPARE_ShapefileLoader() {
@@ -27,6 +37,18 @@ public class DEPARE_ShapefileLoader
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
+/*
+        OutputStream stream = null;
+        XMLOutputFactory xof = XMLOutputFactory.newFactory();
+        XMLStreamWriter xsw;
+        try {
+            stream = new FileOutputStream("out" + nb++ + ".kml");
+            xsw = xof.createXMLStreamWriter(stream);
+            record.exportAsKML(xsw);//ou XML
+        } catch (IOException | XMLStreamException ex) {
+            Logger.getLogger(DEPARE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+*/
         this.record = record;
         Float val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());
         Float val2 = new Float(record.getAttributes().getValue("DRVAL2").toString());
@@ -101,8 +123,9 @@ public class DEPARE_ShapefileLoader
     @Override
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
         this.record = record;
+
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
-      //  normalAttributes.setDrawInterior(true);
+        //  normalAttributes.setDrawInterior(true);
         //  normalAttributes.setInteriorMaterial(Material.WHITE);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setOutlineMaterial(Material.BLACK);
