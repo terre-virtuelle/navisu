@@ -87,40 +87,40 @@ import javafx.scene.input.KeyEvent;
  */
 public class S57ChartComponentController {
 
-    ComponentManager cm;
-    ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
+    protected ComponentManager cm;
+    protected ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
 
-    private LayersManagerServices layersManagerServices;
-    private GeoViewServices geoViewServices;
-    private GuiAgentServices guiAgentServices;
+    protected LayersManagerServices layersManagerServices;
+    protected GeoViewServices geoViewServices;
+    protected GuiAgentServices guiAgentServices;
 
-    private final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
-    private static S57ChartComponentController INSTANCE = null;
+    protected final String BUOYAGE_PATH = "bzh.terrevirtuelle.navisu.domain.charts.vector.s57.model.geo";
+    protected static S57ChartComponentController INSTANCE = null;
     protected String path;
-    private File file;
-    private Map<String, String> acronyms;
-    private Map<String, Map<Long, S57Object>> geos;
-    private static final List<Layer> LAYERS = Collections.synchronizedList(new ArrayList<>());
-    private final List<RenderableLayer> airspaceLayers = new ArrayList<>();
-    private RenderableLayer airspaceTmpLayer;
-    private LIGHTS_ShapefileLoader loader;
-    private final List<Light> lightList;
-    private final List<Light> lightDisplayedList;
-    private final List<SurfacePolylines> coastalSurfacePolylinesList;
+    protected File file;
+    protected Map<String, String> acronyms;
+    protected Map<String, Map<Long, S57Object>> geos;
+    protected static final List<Layer> LAYERS = Collections.synchronizedList(new ArrayList<>());
+    protected final List<RenderableLayer> airspaceLayers = new ArrayList<>();
+    protected RenderableLayer airspaceTmpLayer;
+    protected LIGHTS_ShapefileLoader loader;
+    protected final List<Light> lightList;
+    protected final List<Light> lightDisplayedList;
+    protected final List<SurfacePolylines> coastalSurfacePolylinesList;
     protected Scene scene;
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     protected Globe globe = GeoWorldWindViewImpl.getWW().getModel().getGlobe();
-    private boolean isDisplay = false;
-    private final Map<Pair<Double, Double>, String> topMarks;
-    private String marsys;
-    private SurveyZoneController surveyZoneController;
-    private RenderableLayer transponderZoneLayer;
-    private final String NAME = "Transponder";
+    protected boolean isDisplay = false;
+    protected final Map<Pair<Double, Double>, String> topMarks;
+    protected String marsys;
+    protected SurveyZoneController surveyZoneController;
+    protected RenderableLayer transponderZoneLayer;
+    protected final String NAME = "Transponder";
     protected final String GROUP = "Navigation";
-    private final boolean DEV = false;
+    protected final boolean DEV = false;
     //private final boolean DEV = true;
-    private final Set<S57Controller> s57Controllers = new HashSet<>();
-    boolean first = true;
+    protected final Set<S57Controller> s57Controllers = new HashSet<>();
+    protected boolean first = true;
 
     public static S57ChartComponentController getInstance() {
         if (INSTANCE == null) {
@@ -129,7 +129,7 @@ public class S57ChartComponentController {
         return INSTANCE;
     }
 
-    private S57ChartComponentController() {
+    protected S57ChartComponentController() {
         topMarks = new HashMap<>();
         lightList = new ArrayList<>();
         lightDisplayedList = new ArrayList<>();
@@ -192,7 +192,7 @@ public class S57ChartComponentController {
         return LAYERS;
     }
 
-    private void initGeosMap() {
+    protected void initGeosMap() {
         geos = new HashMap<>();
         File[] listOfFiles;
         File tmp;
@@ -358,7 +358,7 @@ public class S57ChartComponentController {
     }
 
     @SuppressWarnings("unchecked")
-    private void loadLights() {
+    protected void loadLights() {
         loader = new LIGHTS_ShapefileLoader();
         loader.createLayersFromSource(new File(path + "/LIGHTS.shp"));
         RenderableLayer la = ((LIGHTS_ShapefileLoader) loader).getAirspaceLayer();
@@ -373,7 +373,7 @@ public class S57ChartComponentController {
 
     }
 
-    private void load(LayerShapefileLoader loader, String group, String acronym, String sep) {
+    protected void load(LayerShapefileLoader loader, String group, String acronym, String sep) {
         RenderableLayer l = getLayer(group);
         if (l == null) {
             l = new RenderableLayer();
@@ -388,7 +388,7 @@ public class S57ChartComponentController {
         loader.createLayerFromSource(new File(path + sep + acronym + ".shp"));
     }
 
-    private void load(LayerShapefileLoader loader, String acronym, String sep) {
+    protected void load(LayerShapefileLoader loader, String acronym, String sep) {
         RenderableLayer l = new RenderableLayer();
         loader.setLayer(l);
         loader.createLayerFromSource(new File(path + sep + acronym + ".shp"));

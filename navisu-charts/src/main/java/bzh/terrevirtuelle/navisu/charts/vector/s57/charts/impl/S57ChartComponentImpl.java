@@ -147,7 +147,6 @@ public class S57ChartComponentImpl
     @Override
     public boolean canOpen(String category, String file) {
         boolean canOpen = false;
-
         if (category.equals(NAME) && 
                 (file.toLowerCase().endsWith(EXTENSION_0)
                 || file.toLowerCase().endsWith(EXTENSION_1)
@@ -160,7 +159,6 @@ public class S57ChartComponentImpl
 
     @Override
     public void open(ProgressHandle pHandle, String... files) {
-        System.out.println("S57ChartComponentImpl open");
         for (String file : files) {
             this.handleOpenFile(pHandle, file);
         }
