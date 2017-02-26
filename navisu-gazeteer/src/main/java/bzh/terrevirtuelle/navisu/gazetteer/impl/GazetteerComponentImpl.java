@@ -87,6 +87,7 @@ public class GazetteerComponentImpl
 
     @Override
     public void buildIndex(String gazetteerPath, String indexerPath, boolean reverseGeocodingEnabled) {
+         resolver = new GeoNameResolver();
         this.indexerPath = indexerPath;
         try {
             resolver.buildIndex(gazetteerPath, indexerPath, reverseGeocodingEnabled);
