@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
+import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,15 +50,17 @@ public class ConfigurationComponentController
         implements Initializable {
 
     GuiAgentServices guiAgentServices;
+    GazetteerComponentServices gazetteerComponentServices;
+
     private final String FXML = "configurationController.fxml";
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
-    
+
     protected Properties properties;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     private static ConfigurationComponentController INSTANCE;
     private final ConfigurationComponentImpl component;
     protected String viewgroupstyle = "configuration.css";
-    
+
     @FXML
     public Group configgroup;
     @FXML
@@ -121,6 +124,8 @@ public class ConfigurationComponentController
     public Button allCPathButton;
     @FXML
     public Button luceneButton;
+    @FXML
+    public Button buildIndexButton;
     String s57Path;
     String darkSkyKey;
     String allCountriesPath;
@@ -174,7 +179,8 @@ public class ConfigurationComponentController
     @SuppressWarnings("unchecked")
     private ConfigurationComponentController(ConfigurationComponentImpl component,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
-            GuiAgentServices guiAgentServices) {
+            GuiAgentServices guiAgentServices,
+            GazetteerComponentServices gazetteerComponentServices) {
         super(keyCode, keyCombination);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
@@ -188,14 +194,16 @@ public class ConfigurationComponentController
         configgroup.getStylesheets().add(uri);
         this.component = component;
         this.guiAgentServices = guiAgentServices;
+        this.gazetteerComponentServices = gazetteerComponentServices;
     }
 
     public static ConfigurationComponentController getInstance(ConfigurationComponentImpl component,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
-            GuiAgentServices guiAgentServices) {
+            GuiAgentServices guiAgentServices,
+            GazetteerComponentServices gazetteerComponentServices) {
         if (INSTANCE == null) {
             INSTANCE = new ConfigurationComponentController(component, keyCode, keyCombination,
-                    guiAgentServices);
+                    guiAgentServices, gazetteerComponentServices);
         }
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, INSTANCE);
         guiAgentServices.getRoot().getChildren().add(INSTANCE);
@@ -409,6 +417,11 @@ public class ConfigurationComponentController
         });
         luceneButton.setOnMouseClicked((MouseEvent event) -> {
             openDir(allCountriesIndexTF);
+        });
+        buildIndexButton.setOnMouseClicked((MouseEvent event) -> {
+            if (!"".equals(allCountriesTF.getText()) && !"".equals(allCountriesIndexTF.getText())) {
+                gazetteerComponentServices.buildIndex(allCountriesTF.getText(), allCountriesIndexTF.getText(), true);
+            }
         });
     }
 

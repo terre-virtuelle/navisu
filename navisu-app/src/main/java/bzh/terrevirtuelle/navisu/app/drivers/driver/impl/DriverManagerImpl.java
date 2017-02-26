@@ -4,9 +4,7 @@ import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManager;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.menu.DefaultMenuEnum;
 import bzh.terrevirtuelle.navisu.app.guiagent.menu.MenuManagerServices;
-import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import org.capcaval.c3.component.ComponentState;
 import org.capcaval.c3.component.annotation.UsedService;
@@ -75,6 +73,7 @@ public class DriverManagerImpl
 
     @Override
     public void open(FileChooser.ExtensionFilter ext) {
+        
         File selectedFile = this.fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
@@ -119,8 +118,6 @@ public class DriverManagerImpl
             LOGGER.log(Level.WARNING, "Unable to find a driver for file \"{0}\"", file.getName());
         }
         properties.setProperty(category, file.getParent());
-        System.out.println("category : " + category);
-        System.out.println("file.getParent() : " + file.getParent());
         File f = new File(CACHE_FILE_NAME);
         OutputStream out;
         try {
@@ -132,7 +129,6 @@ public class DriverManagerImpl
     }
 
     protected Driver findDriverForFile(String category, String file) {
-
         Driver compatibleDriver = null;
 
         for (Driver driver : this.availableDriverList) {

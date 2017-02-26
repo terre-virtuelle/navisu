@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCombination;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller.ConfigurationComponentController;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ConfigurationComponent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ConfigurationComponentServices;
+import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 
 /**
  *
@@ -25,7 +26,9 @@ public class ConfigurationComponentImpl
 
     @UsedService
     GuiAgentServices guiAgentServices;
-    
+    @UsedService
+    GazetteerComponentServices gazetteerComponentServices;
+
     private final String COMPONENT_KEY_NAME_0 = "Configuration";
     private ConfigurationComponentController controller;
 
@@ -33,12 +36,12 @@ public class ConfigurationComponentImpl
 
     @Override
     public void componentInitiated() {
-       // LOGGER.info("Options Component Initiated");
+        // LOGGER.info("Options Component Initiated");
     }
 
     @Override
     public void componentStarted() {
-      //  LOGGER.info("Options Component Started");
+        //  LOGGER.info("Options Component Started");
     }
 
     @Override
@@ -53,7 +56,7 @@ public class ConfigurationComponentImpl
         if (cmd != null) {
             if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
                 controller = ConfigurationComponentController.getInstance(this, KeyCode.O, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices);
+                        guiAgentServices, gazetteerComponentServices);
                 controller.setVisible(true);
             }
         }
