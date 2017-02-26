@@ -10,13 +10,10 @@ import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.ExtrudedPolygon;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWMath;
-import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,104 +28,23 @@ import java.util.logging.Logger;
 /**
  *
  * @author Serge Morvan
- * @date 4 juin 2014 NaVisu project
+ * @date 26 fev 2017 NaVisu project
  */
 public class DEPARE_Stl_ShapefileLoader
-        extends DEPARE_ShapefileLoader
-        {
+        extends DEPARE_ShapefileLoader {
 
-    static int nb = 0;
-    static float depth = 0;
-    static boolean created = false;
-    ShapefileRecord record;
+    protected String WRL_FILE = "out.wrl";
+    protected static int nb = 0;
+    protected static float depth = 0;
+    protected static boolean created = false;
 
     public DEPARE_Stl_ShapefileLoader() {
     }
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-        /*
-        OutputStream stream = null;
-        XMLOutputFactory xof = XMLOutputFactory.newFactory();
-        XMLStreamWriter xsw;
-        try {
-            stream = new FileOutputStream("out" + nb++ + ".vrml");
-            xsw = xof.createXMLStreamWriter(stream);
-            record.exportAsXML(xsw);//ou XML
-        } catch (IOException | XMLStreamException ex) {
-            Logger.getLogger(DEPARE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         */
-        this.record = record;
-        Float val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());
-        Float val2 = new Float(record.getAttributes().getValue("DRVAL2").toString());
-
-        Color color = new Color(159, 215, 247);
-
-        if (val1 == -9.0 && val2 <= 0.0) {
-            color = new Color(151, 199, 0);
-        }
-        if (val1 >= -14.0 && val2 <= 0.0) {
-            // color = new Color(151, 199, 0);
-            color = new Color(87, 137, 108);
-        }
-        if (val1 >= 0.0 && val2 <= 12.0) {
-            color = new Color(91, 175, 247);
-        }
-        if (val1 >= 0.0 && val2 <= 8.0) {
-            //color = new Color(31, 175, 247);
-            color = new Color(115, 182, 239);
-        }
-
-        if (val1 >= 0.0 && val2 <= 3.0) {
-            // color = new Color(33, 255, 242);
-            // color = new Color(115, 182, 239);
-            color = new Color(31, 175, 247);
-        }
-
-        if (val1 == 5.0 && val2 <= 10.0) {
-            color = new Color(159, 215, 247);
-        }
-        if (val1 >= 5.0 && val2 <= 25.0) {//20.0
-            color = new Color(159, 215, 247);
-        }
-        if (val1 == 10.0 && val2 <= 20.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 == 10.0 && val2 <= 30.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 == 20.0 && val2 <= 30.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 >= 15.0 && val2 <= 50.0) {
-            color = new Color(129, 195, 226);
-        }
-        if (val1 == 30.0 && val2 <= 50.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 == 50.0 && val2 <= 5000.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val1 >= 20.0 && val2 <= 5000.0) {
-            color = new Color(247, 247, 247);
-        }
-        if (val2 >= 100.0) {
-            color = new Color(247, 247, 247);
-        }
-        // pour une mer bleue, en mode nav
-        /* 
-         if (val1 >= -20.0 && val2 <= 5000.0) {
-         color = new Color(10, 38, 51);
-         }
-         */
-
-        ShapeAttributes normalAttributes = new BasicShapeAttributes();
-        normalAttributes.setInteriorMaterial(new Material(color));
-        normalAttributes.setDrawOutline(false);
-        //  normalAttributes.setImageSource(getClass().getResourceAsStream("img/mer.jpg"));
+        normalAttributes = super.createPolygonAttributes(record);
         nb++;
-        
         val1 = 51 - val1;
         List<LatLon> pts = addRenderablesForExtrudedPolygons(record.getShapeFile(), val1, val2);
 
@@ -160,38 +76,20 @@ public class DEPARE_Stl_ShapefileLoader
             txt += "\n] "
                     + "spine ["
                     + "0 0 0, 0 " + val1 * 10 + " 0]"
-                    //  + "0 0 0, 0 1 0]"
                     + "} \n"
                     + "        }\n";
             try {
                 if (created == false) {
-                    Files.write(Paths.get("out.wrl"), txt.getBytes(), CREATE);
+                    Files.write(Paths.get(WRL_FILE), txt.getBytes(), CREATE);
                     created = true;
                 } else {
-                    Files.write(Paths.get("out.wrl"), txt.getBytes(), APPEND);
+                    Files.write(Paths.get(WRL_FILE), txt.getBytes(), APPEND);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
         return normalAttributes;
-    }
-
-    @Override
-    protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
-        this.record = record;
-
-        ShapeAttributes normalAttributes = new BasicShapeAttributes();
-        normalAttributes.setDrawOutline(true);
-        normalAttributes.setOutlineMaterial(Material.BLACK);
-        normalAttributes.setOutlineWidth(2.0);
-        return normalAttributes;
-    }
-
-    @Override
-    public ShapefileRecord getRecord() {
-        return record;
     }
 
     protected List<LatLon> addRenderablesForExtrudedPolygons(Shapefile shp, float val1, float val2) {
