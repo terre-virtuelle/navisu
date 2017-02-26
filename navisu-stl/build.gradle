@@ -1,0 +1,7 @@
+dependencies {
+    compile project(':navisu-charts')
+    compile fileTree(dir: 'lib', include: '*.jar') 
+}
+jar {
+   destinationDir project.file('../dest')
+}
