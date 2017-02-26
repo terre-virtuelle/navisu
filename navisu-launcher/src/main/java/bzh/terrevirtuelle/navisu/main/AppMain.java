@@ -4,7 +4,6 @@ import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.impl.DirectoryDrive
 import bzh.terrevirtuelle.navisu.app.dpagent.impl.DpAgentImpl;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.impl.DatabaseDriverManagerImpl;
-import bzh.terrevirtuelle.navisu.app.drivers.directorydriver.DirectoryDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.DriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
@@ -137,6 +136,8 @@ import bzh.terrevirtuelle.navisu.leapmotion.impl.LeapMotionComponentImpl;
 import bzh.terrevirtuelle.navisu.netcdf.NetCDFServices;
 import bzh.terrevirtuelle.navisu.netcdf.impl.NetCDFImpl;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.S57StlComponentImpl;
 import bzh.terrevirtuelle.navisu.weather.WeatherComponentServices;
 import bzh.terrevirtuelle.navisu.weather.impl.WeatherComponentImpl;
 import gov.nasa.worldwind.WorldWindow;
@@ -227,6 +228,7 @@ public class AppMain extends Application {
                         SonarImpl.class,
                         SoundImpl.class,
                         SpeakerImpl.class,
+                        S57StlComponentImpl.class,
                         S57ChartComponentImpl.class,
                         S57GlobalCatalogImpl.class,
                         TestDBImpl.class,
@@ -307,7 +309,8 @@ public class AppMain extends Application {
         SpeakerServices speakerServices = componentManager.getComponentService(SpeakerServices.class);
         S57LocalCatalogServices catalogS57Services = componentManager.getComponentService(S57LocalCatalogServices.class);
         S57GlobalCatalogServices s57GlobalCatalogServices = componentManager.getComponentService(S57GlobalCatalogServices.class);
-        S57ChartComponentServices chartS57Services = componentManager.getComponentService(S57ChartComponentServices.class);
+        S57ChartComponentServices chartS57ComponentServices = componentManager.getComponentService(S57ChartComponentServices.class);
+        S57StlComponentServices s57StlComponentServices = componentManager.getComponentService(S57StlComponentServices.class);
 
         TestDBServices testDBServices = componentManager.getComponentService(TestDBServices.class);
         TransponderServices transponderServices = componentManager.getComponentService(TransponderServices.class);
@@ -327,15 +330,17 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
         driverServices.registerNewDriver(bathymetryServices.getDriver());
         driverServices.registerNewDriver((Driver) chartsServices.getDriver());
-        driverServices.registerNewDriver(chartS57Services.getDriver());
+        driverServices.registerNewDriver(s57StlComponentServices.getDriver());
+        driverServices.registerNewDriver(chartS57ComponentServices.getDriver());
         driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver((Driver) geoTiffChartServices.getDriver());
         driverServices.registerNewDriver(gpxObjectServices.getDriver());
         driverServices.registerNewDriver(kmlObjectServices.getDriver());
         driverServices.registerNewDriver(magneticServices.getDriver());
         driverServices.registerNewDriver((Driver) meteoNetCdfServices.getDriver());
-        driverServices.registerNewDriver(shapefileObjectServices.getDriver());
         driverServices.registerNewDriver(sedimentologyServices.getDriver());
+        driverServices.registerNewDriver(shapefileObjectServices.getDriver());
+        
         driverServices.registerNewDriver(s57GlobalCatalogServices.getDriver());
         driverServices.registerNewDriver(filesServices.getDriver());
 
@@ -367,7 +372,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(weatherComponentServices.getDriver());
 
         WebDriverManagerServices webDriverServices = componentManager.getComponentService(WebDriverManagerServices.class);
-     //   webDriverServices.init("http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2");
+        //   webDriverServices.init("http://sextant.ifremer.fr/geonetwork/srv/fre/csw?SERVICE=CSW&REQUEST=GetCapabilities&VERSION=2.0.2");
         webDriverServices.registerNewDriver(wmsServices.getDriver());
 
         //Loading S57 catalog
@@ -399,7 +404,7 @@ public class AppMain extends Application {
         - gpsd://sinagot.net:2947 AIS zone Bretagne 
          */
         // dataServerServices.openGpsd("sinagot.net", 5947);
-       //  dataServerServices.openGpsd("sinagot.net", 2947);//OK
+        //  dataServerServices.openGpsd("sinagot.net", 2947);//OK
         // dataServerServices.openGpsd("sinagot.net", 5003);
         // dataServerServices.openGpsd("sinagot.net", 5121);
         //dataServerServices.openGpsd("hd-sf.com", 9009);
