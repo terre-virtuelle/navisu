@@ -389,16 +389,13 @@ public class ShapefileLoader {
                 Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
                 record.getCompoundPointBuffer());
         shape.setAttributes(attrs);
-
         return shape;
     }
 
     protected Renderable createPolyline(Shapefile shp, ShapeAttributes attrs) {
-
         SurfacePolylines shape = new SurfacePolylines(Sector.fromDegrees(shp.getBoundingRectangle()),
                 shp.getPointBuffer());
         shape.setAttributes(attrs);
-
         return shape;
     }
 

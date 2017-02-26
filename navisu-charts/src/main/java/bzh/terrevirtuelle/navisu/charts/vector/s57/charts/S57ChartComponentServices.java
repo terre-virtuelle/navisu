@@ -1,6 +1,8 @@
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts;
 
+import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.navigation.model.NavigationData;
 import gov.nasa.worldwind.render.SurfacePolylines;
@@ -19,6 +21,12 @@ public interface S57ChartComponentServices
 
     Driver getDriver();
 
+    boolean canOpen(String category, String file);
+
+    void open(ProgressHandle pHandle, String... files);
+
+    String[] getExtensions();
+
     void openChart(String file);
 
     boolean isChartsOpen();
@@ -28,4 +36,6 @@ public interface S57ChartComponentServices
     Set<NavigationData> getS57Charts();
 
     List<SurfacePolylines> getCoastalLines();
+    
+    S57ChartComponentController getS57ChartComponentController();
 }

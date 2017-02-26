@@ -32,7 +32,7 @@ public class COALNE_ShapefileLoader
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setDrawInterior(false);
         normalAttributes.setDrawOutline(true);
-        normalAttributes.setOutlineMaterial(Material.BLACK);
+        normalAttributes.setOutlineMaterial(Material.RED);
         return normalAttributes;
     }
 
@@ -45,6 +45,7 @@ public class COALNE_ShapefileLoader
             }
             ShapeAttributes attrs = this.createPolylineAttributes(record);
             layer.addRenderable(this.createPolyline(record, attrs));
+            
         }
        // shp.setValue(AVKey.DISPLAY_NAME,"000");
     }

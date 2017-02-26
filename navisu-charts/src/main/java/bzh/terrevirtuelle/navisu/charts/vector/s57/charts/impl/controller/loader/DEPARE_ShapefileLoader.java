@@ -5,20 +5,27 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
+import gov.nasa.worldwind.avlist.AVKey;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.util.VecBuffer;
+import gov.nasa.worldwind.util.WWMath;
 import java.awt.Color;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 
 /**
  *
@@ -30,6 +37,8 @@ public class DEPARE_ShapefileLoader
         implements S57ShapeFileLoader {
 
     static int nb = 0;
+    static float depth = 0;
+    static boolean created = false;
     ShapefileRecord record;
 
     public DEPARE_ShapefileLoader() {
@@ -37,18 +46,18 @@ public class DEPARE_ShapefileLoader
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-/*
+        /*
         OutputStream stream = null;
         XMLOutputFactory xof = XMLOutputFactory.newFactory();
         XMLStreamWriter xsw;
         try {
-            stream = new FileOutputStream("out" + nb++ + ".kml");
+            stream = new FileOutputStream("out" + nb++ + ".vrml");
             xsw = xof.createXMLStreamWriter(stream);
-            record.exportAsKML(xsw);//ou XML
+            record.exportAsXML(xsw);//ou XML
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(DEPARE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-*/
+         */
         this.record = record;
         Float val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());
         Float val2 = new Float(record.getAttributes().getValue("DRVAL2").toString());
@@ -107,16 +116,64 @@ public class DEPARE_ShapefileLoader
             color = new Color(247, 247, 247);
         }
         // pour une mer bleue, en mode nav
-        /*
+        /* 
          if (val1 >= -20.0 && val2 <= 5000.0) {
-         color = new Color(35, 66, 87);
+         color = new Color(10, 38, 51);
          }
          */
-        // System.out.println("val1 : " + val1 + " val2 : " + val2);
+
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
         normalAttributes.setDrawOutline(false);
-        normalAttributes.setImageSource(getClass().getResourceAsStream("img/mer.jpg"));
+        //  normalAttributes.setImageSource(getClass().getResourceAsStream("img/mer.jpg"));
+        nb++;
+        
+        val1 = 51 - val1;
+        List<LatLon> pts = addRenderablesForExtrudedPolygons(record.getShapeFile(), val1, val2);
+
+        if (!pts.isEmpty() && val1 != 0) {
+            String txt = "#VRML V2.0 utf8\n"
+                    + "#- Exemple 1 -\n"
+                    + "\n"
+                    + "NavigationInfo {\n"
+                    + "\n"
+                    + "    type \"EXAMINE\"\n"
+                    + "\n"
+                    + "}"
+                    + "Shape {\n"
+                    + "      appearance Appearance {\n"
+                    + "    material Material {\n"
+                    + "      diffuseColor"
+                    + " " + color.getRed() / 2.56
+                    + " " + color.getGreen() / 2.56
+                    + " " + color.getBlue() / 2.56
+                    + "\n"
+                    + "    } \n"
+                    + "  }\n"
+                    + "        geometry Extrusion {\n"
+                    + "            solid TRUE\n"
+                    + "            endCap TRUE\n"
+                    + "            crossSection [\n";
+            txt = pts.stream().map((ll) -> ll.getLatitude().getDegrees() * 111120 + " "
+                    + ll.getLongitude().getDegrees() * 111120 + ", ").reduce(txt, String::concat);
+            txt += "\n] "
+                    + "spine ["
+                    + "0 0 0, 0 " + val1 * 10 + " 0]"
+                    //  + "0 0 0, 0 1 0]"
+                    + "} \n"
+                    + "        }\n";
+            try {
+                if (created == false) {
+                    Files.write(Paths.get("out.wrl"), txt.getBytes(), CREATE);
+                    created = true;
+                } else {
+                    Files.write(Paths.get("out.wrl"), txt.getBytes(), APPEND);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(DEPARE_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         return normalAttributes;
     }
 
@@ -125,8 +182,6 @@ public class DEPARE_ShapefileLoader
         this.record = record;
 
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
-        //  normalAttributes.setDrawInterior(true);
-        //  normalAttributes.setInteriorMaterial(Material.WHITE);
         normalAttributes.setDrawOutline(true);
         normalAttributes.setOutlineMaterial(Material.BLACK);
         normalAttributes.setOutlineWidth(2.0);
@@ -138,4 +193,30 @@ public class DEPARE_ShapefileLoader
         return record;
     }
 
+    protected List<LatLon> addRenderablesForExtrudedPolygons(Shapefile shp, float val1, float val2) {
+        ExtrudedPolygon ep = new ExtrudedPolygon();
+        List<LatLon> pts = new ArrayList<>();
+        for (int i = 0; i < record.getNumberOfParts(); i++) {
+            VecBuffer buffer = record.getCompoundPointBuffer().subBuffer(i);
+            if (WWMath.computeWindingOrderOfLocations(buffer.getLocations()).equals(AVKey.CLOCKWISE)) {
+                if (!ep.getOuterBoundary().iterator().hasNext()) // has no outer boundary yet
+                {
+                    if (val1 >= 0 && val2 >= 0) {
+                        ep.setOuterBoundary(buffer.getLocations());
+                        Iterator<? extends LatLon> iterator = ep.getOuterBoundary().iterator();
+                        while (iterator.hasNext()) {
+                            pts.add(iterator.next());
+                        }
+                        ep.setHeight(val1);
+                        //   layer.addRenderable(ep);
+                    }
+                } else {
+                    ep.setOuterBoundary(record.getCompoundPointBuffer().getLocations());
+                }
+            } else {
+                ep.addInnerBoundary(buffer.getLocations());
+            }
+        }
+        return pts;
+    }
 }

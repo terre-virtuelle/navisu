@@ -145,13 +145,14 @@ public class S57ChartComponentImpl
     }
 
     @Override
-    public boolean canOpen(String file) {
-
+    public boolean canOpen(String category, String file) {
         boolean canOpen = false;
-        if (file.toLowerCase().endsWith(EXTENSION_0)
+
+        if (category.equals(NAME) && 
+                (file.toLowerCase().endsWith(EXTENSION_0)
                 || file.toLowerCase().endsWith(EXTENSION_1)
                 || file.toLowerCase().endsWith(EXTENSION_2)
-                || file.toLowerCase().endsWith(EXTENSION_3)) {
+                || file.toLowerCase().endsWith(EXTENSION_3))) {
             canOpen = true;
         }
         return canOpen;
@@ -159,7 +160,7 @@ public class S57ChartComponentImpl
 
     @Override
     public void open(ProgressHandle pHandle, String... files) {
-
+        System.out.println("S57ChartComponentImpl open");
         for (String file : files) {
             this.handleOpenFile(pHandle, file);
         }
@@ -379,4 +380,11 @@ public class S57ChartComponentImpl
             return null;
         }
     }
+
+    @Override
+    public S57ChartComponentController getS57ChartComponentController() {
+        return s57ChartComponentController;
+    }
+
+
 }
