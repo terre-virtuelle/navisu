@@ -13,7 +13,14 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.DEPARE_Stl_ShapefileLoader;
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,12 +31,35 @@ public class S57StlComponentController
         extends S57ChartComponentController {
 
     private static S57StlComponentController INSTANCE = null;
+    protected String WRL_FILE = "out.wrl";
+    protected static boolean created = false;
+
+    protected S57StlComponentController() {
+        initWrlFile(WRL_FILE);
+    }
 
     public static S57StlComponentController getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new S57StlComponentController();
         }
         return INSTANCE;
+    }
+
+    private void initWrlFile(String filename) {
+        String txt = "#VRML V2.0 utf8\n"
+                + "#- Author " + System.getProperty("user.name") + "-\n"
+                 + "#- Created by Navisu -\n"
+                + "\n"
+                + "NavigationInfo {\n"
+                + "\n"
+                + "    type \"EXAMINE\"\n"
+                + "\n"
+                + "}";
+        try {
+            Files.write(Paths.get(WRL_FILE), txt.getBytes(), CREATE);
+        } catch (IOException ex) {
+            Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -63,7 +93,7 @@ public class S57StlComponentController
                     default:
                 }
             }
-            
+
             for (File f : listOfFiles) {
                 String s = f.getName();
                 switch (s) {
@@ -196,9 +226,9 @@ public class S57StlComponentController
             } catch (Exception e) {
                 System.out.println("eee : " + e);
             }
-*/
+             */
         }
-        
+
     }
-       
+
 }

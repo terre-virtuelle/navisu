@@ -49,15 +49,7 @@ public class DEPARE_Stl_ShapefileLoader
         List<LatLon> pts = addRenderablesForExtrudedPolygons(record.getShapeFile(), val1, val2);
 
         if (!pts.isEmpty() && val1 != 0) {
-            String txt = "#VRML V2.0 utf8\n"
-                    + "#- Exemple 1 -\n"
-                    + "\n"
-                    + "NavigationInfo {\n"
-                    + "\n"
-                    + "    type \"EXAMINE\"\n"
-                    + "\n"
-                    + "}"
-                    + "Shape {\n"
+            String txt = "Shape {\n"
                     + "      appearance Appearance {\n"
                     + "    material Material {\n"
                     + "      diffuseColor"
@@ -79,12 +71,7 @@ public class DEPARE_Stl_ShapefileLoader
                     + "} \n"
                     + "        }\n";
             try {
-                if (created == false) {
-                    Files.write(Paths.get(WRL_FILE), txt.getBytes(), CREATE);
-                    created = true;
-                } else {
-                    Files.write(Paths.get(WRL_FILE), txt.getBytes(), APPEND);
-                }
+                Files.write(Paths.get(WRL_FILE), txt.getBytes(), APPEND);
             } catch (IOException ex) {
                 Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
             }
