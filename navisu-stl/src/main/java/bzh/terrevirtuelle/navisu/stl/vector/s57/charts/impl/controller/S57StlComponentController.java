@@ -16,8 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +55,8 @@ public class S57StlComponentController
                 + "\n"
                 + "}";
         try {
-            Files.write(Paths.get(WRL_FILE), txt.getBytes(), CREATE);
+            Files.write(Paths.get(WRL_FILE), txt.getBytes(), StandardOpenOption.CREATE,
+         StandardOpenOption.TRUNCATE_EXISTING );
         } catch (IOException ex) {
             Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
