@@ -62,7 +62,7 @@ public class DriverManagerImpl
             Logger.getLogger(DriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         String userInitialDirectory = properties.getProperty("dataDir");
-        if (userInitialDirectory==null) {
+        if (userInitialDirectory == null) {
             this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
             this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
         } else {
@@ -73,7 +73,7 @@ public class DriverManagerImpl
 
     @Override
     public void open(FileChooser.ExtensionFilter ext) {
-        
+
         File selectedFile = this.fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
@@ -84,6 +84,7 @@ public class DriverManagerImpl
     @Override
     public void open(String category, String[] ext) {
         String userInitialDirectory = properties.getProperty(category);
+
         if (userInitialDirectory != null) {
             if (userInitialDirectory.equals("")) {
                 this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
@@ -92,11 +93,18 @@ public class DriverManagerImpl
                 this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
                 this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             }
+        } else {
+            userInitialDirectory = System.getProperty("user.dir") + "/data/";
+            this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
+            this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
         }
+     //   System.out.println("DriverManagerImpl");
       //  System.out.println("userInitialDirectory " + userInitialDirectory);
+
         this.fileChooserDock.getExtensionFilters().clear();
         this.fileChooserDock.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
+      //  System.out.println("ext " + category +" "+Arrays.asList(ext));
         try {
             File selectedFile = this.fileChooserDock.showOpenDialog(null);
             if (selectedFile != null) {
