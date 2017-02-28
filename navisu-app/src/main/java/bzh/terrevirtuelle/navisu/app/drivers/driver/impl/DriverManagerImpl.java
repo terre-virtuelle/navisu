@@ -41,7 +41,7 @@ public class DriverManagerImpl
     GuiAgentServices guiAgentServices;
 
     protected FileChooser fileChooser;
-    protected FileChooser fileChooserDock;
+  //  protected FileChooser fileChooserDock;
     Properties properties;
     protected List<Driver> availableDriverList = new ArrayList<>();
 
@@ -52,7 +52,7 @@ public class DriverManagerImpl
     @Override
     public void init() {
         this.fileChooser = new FileChooser();
-        this.fileChooserDock = new FileChooser();
+     //   this.fileChooserDock = new FileChooser();
         this.fileChooser.setTitle(tr("popup.fileChooser.open"));
 
         properties = new Properties();
@@ -64,10 +64,10 @@ public class DriverManagerImpl
         String userInitialDirectory = properties.getProperty("dataDir");
         if (userInitialDirectory == null) {
             this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
-            this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
+         //   this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
         } else {
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-            this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+          //  this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
         }
     }
 
@@ -87,28 +87,33 @@ public class DriverManagerImpl
 
         if (userInitialDirectory != null) {
             if (userInitialDirectory.equals("")) {
-                this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
-                this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data/"));
-            } else {
+                userInitialDirectory = System.getProperty("user.dir") + "/data/";
                 this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-                this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+               // this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+            } else {
+                userInitialDirectory = System.getProperty("user.dir") + "/data/";
+                this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
+              //  this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             }
         } else {
             userInitialDirectory = System.getProperty("user.dir") + "/data/";
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-            this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+         //   this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
         }
-     //   System.out.println("DriverManagerImpl");
-      //  System.out.println("userInitialDirectory " + userInitialDirectory);
+        System.out.println("DriverManagerImpl");
+        System.out.println("userInitialDirectory " + userInitialDirectory);
 
-        this.fileChooserDock.getExtensionFilters().clear();
-        this.fileChooserDock.getExtensionFilters().add(
+       // this.fileChooserDock.getExtensionFilters().clear();
+       // this.fileChooserDock.getExtensionFilters().add(
+       //         new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
+        this.fileChooser.getExtensionFilters().clear();
+        this.fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter(category, Arrays.asList(ext)));
-      //  System.out.println("ext " + category +" "+Arrays.asList(ext));
+        //  System.out.println("ext " + category +" "+Arrays.asList(ext));
         try {
-            File selectedFile = this.fileChooserDock.showOpenDialog(null);
+            File selectedFile = this.fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
-                this.handleOpenFiles(fileChooserDock.getSelectedExtensionFilter().getDescription(), selectedFile);
+                this.handleOpenFiles(fileChooser.getSelectedExtensionFilter().getDescription(), selectedFile);
                 System.out.println("Load : " + selectedFile.getAbsolutePath());
             }
         } catch (Exception e) {
