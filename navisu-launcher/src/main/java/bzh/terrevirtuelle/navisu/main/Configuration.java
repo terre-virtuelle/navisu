@@ -7,8 +7,11 @@ package bzh.terrevirtuelle.navisu.main;
 
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyComponentController;
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.DarkSkyController;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -65,11 +68,23 @@ public class Configuration {
         if (!Files.exists(Paths.get(navisuCache), LinkOption.NOFOLLOW_LINKS)) {
             try {
                 Files.createFile(Paths.get(navisuCache));
+                writeDefaultCacheProperties(navisuCache);
             } catch (IOException ex) {
                 Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } 
-        
+        }else {
+            Properties properties = new Properties();
+            try {
+                properties.load(new FileInputStream(navisuCache));
+                String dataDir = properties.getProperty("dataDir");
+                if (dataDir == null) {
+                    writeDefaultCacheProperties(navisuCache);
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        }
+
         String configProperties = navisuHome + "/config/config.properties";
         if (!Files.exists(Paths.get(configProperties), LinkOption.NOFOLLOW_LINKS)) {
             try {
@@ -102,13 +117,44 @@ public class Configuration {
         System.out.println("writeDefaultConfigProperties");
         try {
             List<String> keys = new ArrayList<>(Arrays.asList(
-                    "s57ChartsDir=", "darkSkyApiKey=", "allCountriesPath=", "luceneAllCountriesIndexPath=",
+                    "s57ChartsDir", "darkSkyApiKey", "allCountriesPath", "luceneAllCountriesIndexPath",
                     "name", "mmsi", "country", "length", "width", "draught", "shipType", "navigationalStatus",
                     "callSign", "latitude", "longitude", "cog", "sog", "daeModelPath"
             ));
             Files.write(Paths.get(configProperties), keys, StandardOpenOption.WRITE);
         } catch (IOException ex) {
             Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    private static void writeDefaultCacheProperties(String cacheProperties) {
+       
+        /*System.out.println("writeDefaultCacheProperties");
+        try {
+            List<String> keys = new ArrayList<>(Arrays.asList(
+                    "dataDir=","S57Stl="
+            ));
+            Files.write(Paths.get(cacheProperties), keys, StandardOpenOption.WRITE);
+        } catch (IOException ex) {
+            Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        */
+        Properties properties = new Properties();
+            try {
+                properties.load(new FileInputStream(cacheProperties));
+            } catch (IOException ex) {
+                Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+        properties.setProperty("dataDir", "");
+        properties.setProperty("S57Stl", "");
+        properties.setProperty("KML", "");
+        File f = new File(cacheProperties);
+        OutputStream out;
+        try {
+            out = new FileOutputStream(f);
+            properties.store(out, "Last directory choosed by user");
+            out.close();
+        } catch (IOException ex) {
         }
     }
 
