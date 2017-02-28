@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,7 +32,7 @@ import java.util.logging.Logger;
 public class DEPARE_Stl_ShapefileLoader
         extends DEPARE_ShapefileLoader {
 
-    protected String WRL_FILE = "out.wrl";
+    protected String WRL_FILE = "out.x3d";
     protected static int nb = 0;
     protected static float depth = 0;
     protected static boolean created = false;
@@ -47,33 +46,24 @@ public class DEPARE_Stl_ShapefileLoader
         nb++;
         val1 = 51 - val1;
         List<LatLon> pts = addRenderablesForExtrudedPolygons(record.getShapeFile(), val1, val2);
-
         if (!pts.isEmpty() && val1 != 0) {
-            String txt = "Shape {\n"
-                    + "      appearance Appearance {\n"
-                    + "    material Material {\n"
-                    + "      diffuseColor"
-                    + " " + color.getRed() / 2.56
-                    + " " + color.getGreen() / 2.56
-                    + " " + color.getBlue() / 2.56
-                    + "\n"
-                    + "    } \n"
-                    + "  }\n"
-                    + "        geometry Extrusion {\n"
-                    + "            solid TRUE\n"
-                    + "            endCap TRUE\n"
-                    + "            crossSection [\n";
+            String txt = " <Shape>\n"
+                    + "<Appearance>\n"
+                    + " <Material diffuseColor='1.0 0.3 0'/> \n"
+                    + "</Appearance>\n"
+                    + "<Extrusion convex='false' \n"
+                    + " crossSection='";
             txt = pts.stream().map((ll) -> ll.getLatitude().getDegrees() * 111120 + " "
                     + ll.getLongitude().getDegrees() * 111120 + ", ").reduce(txt, String::concat);
-            txt += "\n] "
-                    + "spine ["
-                    + "0 0 0, 0 " + val1 * 10 + " 0]"
-                    + "} \n"
-                    + "        }\n";
+            txt += "'\n "
+                    + "solid='true' \n"
+                    + "spine='0 0 0 0 "
+                    + val1 * 10 + " 0'/>\n"
+                    + "</Shape>\n";
             try {
                 Files.write(Paths.get(WRL_FILE), txt.getBytes(), APPEND);
             } catch (IOException ex) {
-                Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
         return normalAttributes;

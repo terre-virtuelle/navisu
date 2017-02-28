@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,7 +31,7 @@ public class S57StlComponentController
         extends S57ChartComponentController {
 
     private static S57StlComponentController INSTANCE = null;
-    protected String WRL_FILE = "out.wrl";
+    protected String WRL_FILE = "out.x3d";
     protected static boolean created = false;
 
     protected S57StlComponentController() {
@@ -45,18 +46,34 @@ public class S57StlComponentController
     }
 
     private void initWrlFile(String filename) {
-        String txt = "#VRML V2.0 utf8\n"
-                + "#- Author " + System.getProperty("user.name") + "-\n"
-                 + "#- Created by Navisu -\n"
-                + "\n"
-                + "NavigationInfo {\n"
-                + "\n"
-                + "    type \"EXAMINE\"\n"
-                + "\n"
-                + "}";
+
+        String txt = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
+                + "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D 3.0//EN\" "
+                + "\"http://www.web3d.org/specifications/x3d-3.0.dtd\">\n"
+                + "<X3D profile='Immersive' version='3.0'  "
+                + "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'"
+                + " xsd:noNamespaceSchemaLocation =' "
+                + "http://www.web3d.org/specifications/x3d-3.0.xsd '> \n"
+                + "<head>\n"
+                + " <meta name='title' content='Figure15.10ExtrudedRoom.x3d'\n/>"
+                + "<meta name='translator' content='" + System.getProperty("user.name") + "'\n/>"
+                + "<meta name='created' content='" + new Date() + "'\n/>"
+                + "<meta name='generator' content='NaVisu'\n/>"
+                + "<meta name='license' content=' ../../license.html'\n/>"
+                + "</head>\n"
+                + "<Scene>\n";
+        /*
+<meta name='title' content='Figure15.10ExtrudedRoom.x3d'/>
+<meta name='translator' content='Don Brutzman'/>
+<meta name='created' content='20 August 2000'/>
+<meta name='modified' content='14 January 2010'/>
+<meta name='generator' content='X3D-Edit 3.3, https://savage.nps.edu/X3D-Edit'/>
+<meta name='license' content=' ../../license.html'/>
+</head> 
+         */
         try {
             Files.write(Paths.get(WRL_FILE), txt.getBytes(), StandardOpenOption.CREATE,
-         StandardOpenOption.TRUNCATE_EXISTING );
+                    StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException ex) {
             Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -227,8 +244,18 @@ public class S57StlComponentController
                 System.out.println("eee : " + e);
             }
              */
+            endWrlFile(WRL_FILE);
         }
 
     }
 
+    private void endWrlFile(String filename) {
+        String txt = " </Scene>\n"
+                + "</X3D> ";
+        try {
+            Files.write(Paths.get(WRL_FILE), txt.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
