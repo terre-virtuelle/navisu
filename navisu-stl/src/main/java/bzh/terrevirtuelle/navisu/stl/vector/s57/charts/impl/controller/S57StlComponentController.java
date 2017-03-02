@@ -48,7 +48,7 @@ public class S57StlComponentController
     private void initWrlFile(String filename) {
 
         String txt = null;
-        try {
+      //  try {
             txt = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
                     + "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D 3.0//EN\" "
                     + "\"http://www.web3d.org/specifications/x3d-3.0.dtd\">\n"
@@ -63,11 +63,11 @@ public class S57StlComponentController
                     + "<meta name='generator' content='NaVisu'\n/>"
                     + "<meta name='license' content=' ../../license.html'\n/>"
                     + "</head>\n"
-                    + "<Scene>\n"
-                    + new String(Files.readAllBytes(Paths.get("bouee.x3d")));
-        } catch (IOException ex) {
-            Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                    + "<Scene>\n";
+                  //  + new String(Files.readAllBytes(Paths.get("bouee.x3d")));
+       // } catch (IOException ex) {
+       //     Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
+       // }
 
         //   + " <Transform scale='10000.0 10000.0 10000.0'>\n"
         //  + "<Inline url='\"bouee.x3d\"' \n />"

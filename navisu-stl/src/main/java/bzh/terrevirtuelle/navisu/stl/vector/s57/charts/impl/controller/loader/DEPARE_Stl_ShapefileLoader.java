@@ -66,7 +66,8 @@ public class DEPARE_Stl_ShapefileLoader
             txt += "'\n "
                     + "solid='true' \n"
                     + "spine='0 0 0 0 "
-                    + val1 * 10 + " 0'/>\n"
+                    //+ val1 * 10 + " 0'/>\n"
+                   + 1 + " 0'/>\n"
                     + "</Shape>\n";
             try {
                 Files.write(Paths.get(WRL_FILE), txt.getBytes(), APPEND);
