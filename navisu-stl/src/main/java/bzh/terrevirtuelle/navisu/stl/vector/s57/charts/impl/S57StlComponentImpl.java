@@ -206,7 +206,6 @@ public class S57StlComponentImpl
      */
     @Override
     public void openChart(String fileName) {
-        System.out.println("S57StlComponentImpl fileName : " + fileName);
         guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
             handleOpenFile(progressHandle, fileName);
         });
@@ -243,7 +242,6 @@ public class S57StlComponentImpl
 
     @Override
     public void on(String... files) {
-        System.out.println("S57StlComponentImpl " + files.length);
         String[] tab = files;
         openChart(tab[0]);
     }
