@@ -3,6 +3,8 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl;
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
 import bzh.terrevirtuelle.navisu.app.drivers.driver.impl.DriverManagerImpl;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
@@ -46,8 +48,8 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
  * @date 11/05/2014 12:49
  */
 public class S57GlobalCatalogImpl
-        implements S57GlobalCatalog, S57GlobalCatalogServices, Driver, ComponentState {
-
+        implements S57GlobalCatalog, S57GlobalCatalogServices, InstrumentDriver, Driver, ComponentState {
+    
     @UsedService
     GeoViewServices geoViewServices;
     @UsedService
@@ -56,6 +58,9 @@ public class S57GlobalCatalogImpl
     S57ChartComponentServices s57ChartServices;
     @UsedService
     GuiAgentServices guiAgentServices;
+    @UsedService
+    InstrumentDriverManagerServices instrumentDriverManagerServices;
+    
     private static final String NAME = "S57 catalog";
     private static final String EXTENSION_0 = ".kmz";
     private static final String EXTENSION_1 = ".kml";
@@ -74,7 +79,7 @@ public class S57GlobalCatalogImpl
     protected Map<String, Pair<Integer, Integer>> clipConditions;
     protected Set<String> clipConditionsKeySet;
     protected S57GlobalCatalogController s57GlobalCatalogController;
-
+    
     @SuppressWarnings("unchecked")
     @Override
     public void componentInitiated() {
@@ -113,7 +118,7 @@ public class S57GlobalCatalogImpl
             }
         }
     }
-
+    
     Map<String, Path> listSourceFiles(Path dir) throws IOException {
         Map<String, Path> result = new HashMap<>();
         Files.walkFileTree(dir, new SimpleFileVisitor<Path>() {
@@ -133,7 +138,7 @@ public class S57GlobalCatalogImpl
         });
         return result;
     }
-
+    
     @Override
     public boolean canOpen(String category, String file) {
         boolean canOpen = false;
@@ -144,7 +149,7 @@ public class S57GlobalCatalogImpl
         }
         return canOpen;
     }
-
+    
     @Override
     public void open(ProgressHandle pHandle, String... files) {
         if (files != null) {
@@ -153,14 +158,14 @@ public class S57GlobalCatalogImpl
             }
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     public void handleOpenFile(ProgressHandle pHandle, String fileName) {
         LOGGER.log(Level.INFO, "Opening {0} ...", fileName);
-        s57GlobalCatalogController = S57GlobalCatalogController.getInstance();
+        s57GlobalCatalogController = S57GlobalCatalogController.getInstance(guiAgentServices);
         s57GlobalCatalogController.setS57GlobalCatalogImpl(this);
         layers = s57GlobalCatalogController.init(fileName);
-
+        
         if (!layers.isEmpty()) {
             layer = layers.get(layers.size() - 1);
             layer.setEnabled(false);
@@ -171,7 +176,7 @@ public class S57GlobalCatalogImpl
                     .addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
         }
     }
-
+    
     @Override
     public void loadFile(String filename) {
         File file = new File(filename);
@@ -179,10 +184,17 @@ public class S57GlobalCatalogImpl
             s57ChartServices.getDriver().open(progressHandle, file.getAbsolutePath());
         });
     }
-
+    
+  //  @Override
+    public void openFile(String category, String fileName) {
+      //  guiAgentServices.getJobsManager().newJob(category, (progressHandle) -> {
+            instrumentDriverManagerServices.openFile(category, fileName);
+     //   });
+    }
+    
     @Override
     public void load(String... filenames) {
-
+        
         guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
             for (String f : filenames) {
                 File file = new File(f);
@@ -190,13 +202,13 @@ public class S57GlobalCatalogImpl
             }
         });
     }
-
+    
     @SuppressWarnings("unchecked")
     private void filter() {
         enabledLayers.clear();
         CheckBoxTreeItem<GeoLayer> i = (CheckBoxTreeItem) layerTreeServices.search("S57 catalog");
         List<TreeItem<GeoLayer>> childrens = i.getChildren();
-
+        
         childrens.stream().forEach((t) -> {
             String value = t.getValue().getName().trim();
             if (clipConditionsKeySet.contains(value)) {
@@ -211,7 +223,7 @@ public class S57GlobalCatalogImpl
             clip(l, clipConditions.get(l.getName()));
         });
     }
-
+    
     private void clip(Layer layer, Pair<Integer, Integer> minMax) {
         if (altitude < minMax.getX() || altitude > minMax.getY()) {
             layer.setEnabled(false);
@@ -219,39 +231,35 @@ public class S57GlobalCatalogImpl
             layer.setEnabled(true);
         }
     }
-
+    
     @Override
     public String getName() {
         return NAME;
     }
-
+    
     @Override
     public String[] getExtensions() {
         return new String[]{"*" + EXTENSION_0, "*" + EXTENSION_1};
     }
-
-    @Override
-    public void openFile(String file) {
-        this.open(null, file);
-    }
-
+    
+    
     public Map<String, Path> getFiles() {
         return files;
     }
-
+    
     @Override
     public Driver getDriver() {
         return this;
     }
-
+    
     @Override
     public void componentStarted() {
         /* Nothing to do here */ }
-
+    
     @Override
     public void componentStopped() {
         /* Nothing to do here */ }
-
+    
     @Override
     public Set<NavigationData> getS57Charts() {
         if (s57GlobalCatalogController != null) {
@@ -260,10 +268,23 @@ public class S57GlobalCatalogImpl
             return null;
         }
     }
-
+    
     @Override
     public Path getChartPath(String number) {
         return files.get(number);
     }
 
+    @Override
+    public void openFile(String file) {
+       guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+            instrumentDriverManagerServices.open(file);
+        }); 
+    }
+
+    @Override
+    public boolean canOpen(String category) {
+        return InstrumentDriver.super.canOpen(category); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 }

@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.S57GlobalCatalogImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
@@ -33,6 +34,8 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.LatLon;
 import java.util.HashSet;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * @author Serge Morvan
@@ -42,7 +45,7 @@ public class S57GlobalCatalogController
         implements SelectListener {
 
     protected WorldWindow wwd;
-    private static final S57GlobalCatalogController INSTANCE;
+    private static S57GlobalCatalogController INSTANCE = null;
     private static final String SEP = Pattern.quote(System.getProperty("file.separator"));
     protected String path;
     protected String fileName;
@@ -53,20 +56,25 @@ public class S57GlobalCatalogController
     protected Set<NavigationData> s57ChartSet;
     protected WKTReader wktReader;
     protected Geometry geometry = null;
+    protected GuiAgentServices guiAgentServices;
+    protected KeyCode keyCode;
 
-    static {
-        INSTANCE = new S57GlobalCatalogController();
-    }
-
-    private S57GlobalCatalogController() {
+    private S57GlobalCatalogController(GuiAgentServices guiAgentServices) {
+        this.guiAgentServices = guiAgentServices;
         layers = new ArrayList<>();
         wwd = GeoWorldWindViewImpl.getWW();
         this.wwd.addSelectListener(this);
         s57ChartSet = new HashSet<>();
         wktReader = new WKTReader();
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            keyCode = event.getCode();
+        });
     }
 
-    public static S57GlobalCatalogController getInstance() {
+    public static S57GlobalCatalogController getInstance(GuiAgentServices guiAgentServices) {
+        if (INSTANCE == null) {
+            INSTANCE = new S57GlobalCatalogController(guiAgentServices);
+        }
         return INSTANCE;
     }
 
@@ -104,7 +112,12 @@ public class S57GlobalCatalogController
                             if (component.getFiles() != null) {
                                 Path filepath = component.getFiles().get(filename);
                                 if (filepath != null) {
-                                    component.loadFile(filepath.toString());
+                                    if (keyCode == KeyCode.F1) {
+                                        component.openFile("S57Stl", filepath.toString());
+                                        keyCode=null;
+                                    } else {
+                                        component.loadFile(filepath.toString());
+                                    }
                                     s57Chart = new S57Chart();
                                     String number = filepathToNumber(filepath.toString());
                                     s57Chart.setNumber(number);
@@ -179,4 +192,5 @@ public class S57GlobalCatalogController
     public Set<NavigationData> getS57Charts() {
         return s57ChartSet;
     }
+
 }
