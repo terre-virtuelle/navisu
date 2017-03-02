@@ -16,7 +16,10 @@ public interface InstrumentDriverManagerServices extends ComponentService {
 
     InstrumentDriver findDriver(String category);
 
-    InstrumentDriver open(String ... category);
+    InstrumentDriver open(String ... file);
+    
+    default void openFile(String category, String file){    
+    }
 
     default void off() {
 

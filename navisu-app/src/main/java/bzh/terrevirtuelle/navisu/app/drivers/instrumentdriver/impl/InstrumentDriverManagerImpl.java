@@ -76,4 +76,17 @@ public class InstrumentDriverManagerImpl
         }
         return driver;
     }
+
+    @Override
+    public void openFile(String category, String file) {
+        
+     //   System.out.println("InstrumentDriverManagerImpl : " +category +" " + file);
+        InstrumentDriver driver = findDriver(category);
+        if (driver != null) {
+            driver.openFile(category, file);
+        } else {
+            System.out.println("Unrecognized instrument");
+        }
+
+    }
 }

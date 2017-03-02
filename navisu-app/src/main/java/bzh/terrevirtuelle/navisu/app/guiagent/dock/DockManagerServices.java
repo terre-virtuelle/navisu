@@ -15,4 +15,6 @@ public interface DockManagerServices extends ComponentService {
     void init(StackPane root, Scene scene, int height, int width);
 
     void makeDock();
+    
+    void open(String description, String... des);
 }

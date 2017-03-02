@@ -15,7 +15,9 @@ public interface InstrumentDriver {
     default void on(String ... files){
         
     }
-
+    default void openFile(String category, String file){
+        
+    }
     default void off(){
         
     }

@@ -60,7 +60,7 @@ public class GuiAgentImpl
 
     private static final Logger LOGGER = Logger.getLogger(GuiAgentImpl.class.getName());
 
-private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
     //private static final String NAVISU_LOOK_AND_FEEL_PATH = "css/navisu.css";
     private final View viewWW;
     private final WorldWindow wwd;
@@ -109,7 +109,7 @@ private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.
     protected InstrumentDriver driver = null;//Utilise par le MOB
     protected Position pos;
     protected Text label;
-protected String modstyle;
+    protected String modstyle;
 
     public GuiAgentImpl() {
         this.wwd = GeoWorldWindViewImpl.getWW();
@@ -141,7 +141,6 @@ protected String modstyle;
 
         scene = new Scene(root, this.width, this.height, Color.ALICEBLUE);
         this.loadCss(scene);
-
         dockManager.init(root, scene, height, width);
         dockManager.makeDock();
 
@@ -156,9 +155,7 @@ protected String modstyle;
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
-        
 
-        
         wwd.addPositionListener((PositionEvent event) -> {
             pos = wwd.getView().getCurrentEyePosition();
             double a = pos.getAltitude();
@@ -213,9 +210,9 @@ protected String modstyle;
     }
 
     private void loadCss(Scene scene) {
-    //scene.getStylesheets().add(getClass().getResource(CSS_STYLE_PATH).toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource(CSS_STYLE_PATH).toExternalForm());
         //String uri = Paths.get(System.getProperty("user.dir") + "\\css\\navisu.css").toUri().toString();
-        modstyle ="navisu.css";
+        modstyle = "navisu.css";
         String uri = CSS_STYLE_PATH + modstyle;
         scene.getStylesheets().add(uri);
     }
