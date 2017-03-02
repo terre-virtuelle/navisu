@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 public class DEPARE_Stl_ShapefileLoader
         extends DEPARE_ShapefileLoader {
 
-    protected String WRL_FILE = "out.x3d";
+    protected String outFilename;
     protected static int nb = 0;
     protected static float depth = 0;
     protected static boolean created = false;
@@ -40,7 +40,8 @@ public class DEPARE_Stl_ShapefileLoader
     protected double lonOrg;
     protected boolean first = true;
 
-    public DEPARE_Stl_ShapefileLoader() {
+    public DEPARE_Stl_ShapefileLoader(String filename) {
+        this.outFilename = filename;
     }
 
     @Override
@@ -67,10 +68,10 @@ public class DEPARE_Stl_ShapefileLoader
                     + "solid='true' \n"
                     + "spine='0 0 0 0 "
                     //+ val1 * 10 + " 0'/>\n"
-                   + 1 + " 0'/>\n"
+                    + 1 + " 0'/>\n"
                     + "</Shape>\n";
             try {
-                Files.write(Paths.get(WRL_FILE), txt.getBytes(), APPEND);
+                Files.write(Paths.get(outFilename), txt.getBytes(), APPEND);
             } catch (IOException ex) {
                 Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }

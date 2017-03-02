@@ -31,11 +31,11 @@ public class S57StlComponentController
         extends S57ChartComponentController {
 
     private static S57StlComponentController INSTANCE = null;
-    protected String WRL_FILE = "out.x3d";
+    protected String OUT_FILE = "privateData/x3d/out.x3d";
     protected static boolean created = false;
 
     protected S57StlComponentController() {
-        initWrlFile(WRL_FILE);
+        initOutFile(OUT_FILE);
     }
 
     public static S57StlComponentController getInstance() {
@@ -45,7 +45,7 @@ public class S57StlComponentController
         return INSTANCE;
     }
 
-    private void initWrlFile(String filename) {
+    private void initOutFile(String filename) {
 
         String txt = null;
       //  try {
@@ -73,7 +73,7 @@ public class S57StlComponentController
         //  + "<Inline url='\"bouee.x3d\"' \n />"
         //  + "</Transform>\n";
         try {
-            Files.write(Paths.get(WRL_FILE), txt.getBytes(), StandardOpenOption.CREATE,
+            Files.write(Paths.get(OUT_FILE), txt.getBytes(), StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException ex) {
             Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,7 +106,7 @@ public class S57StlComponentController
                 String s = f.getName();
                 switch (s) {
                     case "DEPARE.shp":
-                        load(new DEPARE_Stl_ShapefileLoader(), "DEPARE", "DEPARE", "/");
+                        load(new DEPARE_Stl_ShapefileLoader(OUT_FILE), "DEPARE", "DEPARE", "/");
                         break;
                     default:
                 }
@@ -245,16 +245,16 @@ public class S57StlComponentController
                 System.out.println("eee : " + e);
             }
              */
-            endWrlFile(WRL_FILE);
+            endOutFile(OUT_FILE);
         }
 
     }
 
-    private void endWrlFile(String filename) {
+    private void endOutFile(String filename) {
         String txt = " </Scene>\n"
                 + "</X3D> ";
         try {
-            Files.write(Paths.get(WRL_FILE), txt.getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(OUT_FILE), txt.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {
             Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
