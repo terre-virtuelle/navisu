@@ -36,6 +36,9 @@ public class DEPARE_Stl_ShapefileLoader
     protected static int nb = 0;
     protected static float depth = 0;
     protected static boolean created = false;
+    protected double latOrg;
+    protected double lonOrg;
+    protected boolean first = true;
 
     public DEPARE_Stl_ShapefileLoader() {
     }
@@ -46,6 +49,10 @@ public class DEPARE_Stl_ShapefileLoader
         nb++;
         val1 = 51 - val1;
         List<LatLon> pts = addRenderablesForExtrudedPolygons(record.getShapeFile(), val1, val2);
+        if (first == true) {
+            latOrg = pts.get(0).getLatitude().getDegrees();
+            lonOrg = pts.get(0).getLongitude().getDegrees();
+        }
         if (!pts.isEmpty() && val1 != 0) {
             String txt = " <Shape>\n"
                     + "<Appearance>\n"
@@ -55,6 +62,7 @@ public class DEPARE_Stl_ShapefileLoader
                     + " crossSection='";
             txt = pts.stream().map((ll) -> ll.getLatitude().getDegrees() * 111120 + " "
                     + ll.getLongitude().getDegrees() * 111120 + ", ").reduce(txt, String::concat);
+
             txt += "'\n "
                     + "solid='true' \n"
                     + "spine='0 0 0 0 "

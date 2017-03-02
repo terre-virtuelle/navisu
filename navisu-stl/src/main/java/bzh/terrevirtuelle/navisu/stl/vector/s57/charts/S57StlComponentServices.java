@@ -1,6 +1,6 @@
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts;
 
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import org.capcaval.c3.component.ComponentService;
 
 /**
@@ -12,8 +12,7 @@ import org.capcaval.c3.component.ComponentService;
 public interface S57StlComponentServices
         extends ComponentService {
 
-    Driver getDriver();
-
     void openChart(String file);
 
+    InstrumentDriver getDriver();
 }

@@ -6,7 +6,7 @@
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
-import bzh.terrevirtuelle.navisu.app.drivers.driver.Driver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
@@ -14,6 +14,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
+//import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
+//import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
+//import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -42,7 +45,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @date Feb 25, 2017
  */
 public class S57StlComponentImpl
-        implements S57StlComponent, S57StlComponentServices, Driver, ComponentState {
+        implements S57StlComponent, S57StlComponentServices, InstrumentDriver, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -63,14 +66,14 @@ public class S57StlComponentImpl
     private static final String EXTENSION_1 = ".001";
     private static final String EXTENSION_2 = ".002";
     private static final String EXTENSION_3 = ".003";
-    
+
     protected List<Layer> layers;
     protected Layer layer;
     protected List<Layer> enabledLayers;
     protected List<CheckBoxTreeItem<GeoLayer>> rootItems;
     protected List<GeoLayer<Layer>> geoLayerList;
     protected List<String> groupNames = new ArrayList<>();
-    
+
     protected S57ChartComponentController s57ComponentController;
     protected WorldWindow wwd;
     static private int i = 0;
@@ -151,7 +154,7 @@ public class S57StlComponentImpl
                 LOGGER.log(Level.SEVERE, null, e);
             }
             s57ComponentController.init("data/shp/shp_" + i++);
-            
+
             layers = s57ComponentController.getLayers();
             geoLayerList = geoViewServices.getLayerManager().getGroup(GROUP);
             groupNames.clear();
@@ -165,12 +168,13 @@ public class S57StlComponentImpl
             }).forEach((gl) -> {
                 layerTreeServices.addGeoLayer(GROUP, gl);
             });
-            
+
         } catch (Exception e) {
             System.out.println("handleOpenFile e " + e);
         }
     }
 
+    /*
     @Override
     public boolean canOpen(String category, String file) {
         boolean canOpen = false;
@@ -199,14 +203,17 @@ public class S57StlComponentImpl
     public String[] getExtensions() {
         return s57ChartComponentServices.getExtensions();
     }
-
+     */
     @Override
-    public void openChart(String file) {
-        this.open(null, file);
+    public void openChart(String fileName) {
+        System.out.println("S57StlComponentImpl fileName : " + fileName);
+        guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
+            handleOpenFile(progressHandle, fileName);
+        });
     }
 
     @Override
-    public Driver getDriver() {
+    public InstrumentDriver getDriver() {
         return this;
     }
 
@@ -222,4 +229,27 @@ public class S57StlComponentImpl
     public void componentStopped() {
     }
 
+   
+
+    @Override
+    public boolean canOpen(String category) {
+        boolean canOpen = false;
+        if (!category.equals(NAME)) {
+        } else {
+            canOpen = true;
+        }
+        return canOpen;
+    }
+
+    @Override
+    public void on(String... files) {
+        System.out.println("S57StlComponentImpl " + files.length);
+        String[] tab = files;
+        openChart(tab[0]);
+    }
+
+    public void openFile(String category, String file) {
+        System.out.println("S57StlComponentImpl "+category + "  "+file);
+        openChart(file);
+    }
 }
