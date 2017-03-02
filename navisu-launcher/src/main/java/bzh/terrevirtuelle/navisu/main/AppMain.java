@@ -228,9 +228,9 @@ public class AppMain extends Application {
                         SonarImpl.class,
                         SoundImpl.class,
                         SpeakerImpl.class,
-                        S57StlComponentImpl.class,
                         S57ChartComponentImpl.class,
                         S57GlobalCatalogImpl.class,
+                        S57StlComponentImpl.class,
                         TestDBImpl.class,
                         TransponderImpl.class,
                         WeatherComponentImpl.class,
@@ -330,7 +330,6 @@ public class AppMain extends Application {
         driverServices.registerNewDriver(bathymetryLocalCatalogServices.getDriver());
         driverServices.registerNewDriver(bathymetryServices.getDriver());
         driverServices.registerNewDriver((Driver) chartsServices.getDriver());
-        driverServices.registerNewDriver(s57StlComponentServices.getDriver());
         driverServices.registerNewDriver(chartS57ComponentServices.getDriver());
         driverServices.registerNewDriver(currentsServices.getDriver());
         driverServices.registerNewDriver((Driver) geoTiffChartServices.getDriver());
@@ -366,6 +365,7 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(routeEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(routePhotoEditorServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(serverOptionsComponentServices.getDriver());
+        instrumentDriverManagerServices.registerNewDriver(s57StlComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(sonarServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(soundServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(webViewServices.getDriver());
