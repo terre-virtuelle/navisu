@@ -74,9 +74,13 @@ import java.util.logging.Logger;
 import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.TransponderActivateEvent;
+import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfacePolylines;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -85,7 +89,9 @@ import javafx.scene.input.KeyEvent;
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class S57ChartComponentController {
+public class S57ChartComponentController 
+        extends Widget2DController
+        implements Initializable{
 
     protected ComponentManager cm;
     protected ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
@@ -136,7 +142,7 @@ public class S57ChartComponentController {
         coastalSurfacePolylinesList = new ArrayList<>();
         System.setProperty("file.encoding", "UTF-8");
         initAcronymsMap();
-        // addImageListeners();//Test recuparation d'une image sur clic
+        // addImageListeners();//Test recuperation d'une image sur clic
     }
 
     public void subscribe() {
@@ -352,7 +358,7 @@ public class S57ChartComponentController {
                 }
 
             } catch (Exception e) {
-                System.out.println("eee : " + e);
+               // System.out.println("eee : " + e);
             }
         }
     }
@@ -575,6 +581,11 @@ public class S57ChartComponentController {
 
     public List<SurfacePolylines> getCoastalSurfacePolylinesList() {
         return coastalSurfacePolylinesList;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

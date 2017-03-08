@@ -5,12 +5,17 @@
  */
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.DEPARE_ShapefileLoader;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.ExtrudedPolygon;
+import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
 import gov.nasa.worldwind.util.VecBuffer;
 import gov.nasa.worldwind.util.WWMath;
@@ -39,9 +44,30 @@ public class DEPARE_Stl_ShapefileLoader
     protected double latOrg;
     protected double lonOrg;
     protected boolean first = true;
+    protected Polygon polyEnveloppe;
+    protected Geometry geometryEnveloppe;
 
-    public DEPARE_Stl_ShapefileLoader(String filename) {
+    public DEPARE_Stl_ShapefileLoader(String filename, Polygon polyEnveloppe) {
         this.outFilename = filename;
+        this.polyEnveloppe = polyEnveloppe;
+        List<? extends Position> positions = polyEnveloppe.getBoundaries().get(0);
+        System.out.println("polygon.getBoundaries().get(0) : " + polyEnveloppe.getBoundaries().get(0));
+        System.out.println("0 : " + positions.get(0).getLatitude().getDegrees() + " " + positions.get(0).getLongitude().getDegrees());
+        System.out.println("1 : " + positions.get(1).getLatitude().getDegrees() + " " + positions.get(1).getLongitude().getDegrees());
+        System.out.println("2 : " + positions.get(2).getLatitude().getDegrees() + " " + positions.get(2).getLongitude().getDegrees());
+        System.out.println("3 : " + positions.get(3).getLatitude().getDegrees() + " " + positions.get(3).getLongitude().getDegrees());
+        latOrg = positions.get(0).getLatitude().getDegrees();
+        lonOrg = positions.get(0).getLongitude().getDegrees();
+        String wkt = WwjJTS.toPolygonWkt(positions);
+        WKTReader wktReader = new WKTReader();
+
+        if (wkt != null) {
+            try {
+                geometryEnveloppe = wktReader.read(wkt);
+            } catch (com.vividsolutions.jts.io.ParseException ex) {
+                Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
@@ -50,10 +76,33 @@ public class DEPARE_Stl_ShapefileLoader
         nb++;
         val1 = 51 - val1;
         List<LatLon> pts = addRenderablesForExtrudedPolygons(record.getShapeFile(), val1, val2);
-        if (first == true) {
-            latOrg = pts.get(0).getLatitude().getDegrees();
-            lonOrg = pts.get(0).getLongitude().getDegrees();
+        Geometry geo = filter(pts);
+        List<Position> ptsFiltered = WwjJTS.wktPolygonToPositionList(geo.toText());
+        System.out.println("ptsFiltered " + ptsFiltered.size());
+
+        if (!ptsFiltered.isEmpty() && val1 != 0) {
+            String txt = " <Shape>\n"
+                    + "<Appearance>\n"
+                    + " <Material diffuseColor='1.0 0.3 0'/> \n"
+                    + "</Appearance>\n"
+                    + "<Extrusion convex='false' \n"
+                    + " crossSection='";
+            txt = ptsFiltered.stream().map((ll) -> ll.getLatitude().getDegrees() * 111120 + " "
+                    + ll.getLongitude().getDegrees() * 111120 + ", ").reduce(txt, String::concat);
+
+            txt += "'\n "
+                    + "solid='true' \n"
+                    + "spine='0 0 0 0 "
+                    + val1 * 10 + " 0'/>\n"
+                    // + 10 + " 0'/>\n"
+                    + "</Shape>\n";
+            try {
+                Files.write(Paths.get(outFilename), txt.getBytes(), APPEND);
+            } catch (IOException ex) {
+                Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
         }
+        /*
         if (!pts.isEmpty() && val1 != 0) {
             String txt = " <Shape>\n"
                     + "<Appearance>\n"
@@ -67,8 +116,8 @@ public class DEPARE_Stl_ShapefileLoader
             txt += "'\n "
                     + "solid='true' \n"
                     + "spine='0 0 0 0 "
-                    //+ val1 * 10 + " 0'/>\n"
-                    + 1 + " 0'/>\n"
+                    + val1 * 10 + " 0'/>\n"
+                    // + 10 + " 0'/>\n"
                     + "</Shape>\n";
             try {
                 Files.write(Paths.get(outFilename), txt.getBytes(), APPEND);
@@ -76,6 +125,7 @@ public class DEPARE_Stl_ShapefileLoader
                 Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
+         */
         return normalAttributes;
     }
 
@@ -104,5 +154,20 @@ public class DEPARE_Stl_ShapefileLoader
             }
         }
         return pts;
+    }
+
+    private Geometry filter(List<LatLon> pts) {
+        String wkt = WwjJTS.toPolygonWkt1(pts);
+        WKTReader wktReader = new WKTReader();
+        Geometry polygon = null;
+        if (wkt != null) {
+            try {
+                polygon = wktReader.read(wkt);
+            } catch (com.vividsolutions.jts.io.ParseException ex) {
+                Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        Geometry geometryFiltered = geometryEnveloppe.intersection(polygon);
+        return geometryFiltered;
     }
 }

@@ -5,7 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.S57GlobalCatalogImpl;
 import bzh.terrevirtuelle.navisu.core.util.OS;
@@ -57,11 +59,17 @@ public class S57GlobalCatalogController
     protected WKTReader wktReader;
     protected Geometry geometry = null;
     protected GuiAgentServices guiAgentServices;
-    protected KeyCode keyCode;
+    protected LayersManagerServices layersManagerServices;
 
-    private S57GlobalCatalogController(GuiAgentServices guiAgentServices) {
+    protected KeyCode keyCode;
+    protected KMLSurfacePolygonImpl polygon;
+    protected RenderableLayer kmlLayer;
+
+    private S57GlobalCatalogController(GuiAgentServices guiAgentServices,
+            LayersManagerServices layersManagerServices) {
         this.guiAgentServices = guiAgentServices;
-        layers = new ArrayList<>();
+        this.layersManagerServices = layersManagerServices;
+        this.layers = new ArrayList<>();
         wwd = GeoWorldWindViewImpl.getWW();
         this.wwd.addSelectListener(this);
         s57ChartSet = new HashSet<>();
@@ -71,10 +79,12 @@ public class S57GlobalCatalogController
         });
     }
 
-    public static S57GlobalCatalogController getInstance(GuiAgentServices guiAgentServices) {
+    public static S57GlobalCatalogController getInstance(GuiAgentServices guiAgentServices,
+            LayersManagerServices layersManagerServices) {
         if (INSTANCE == null) {
-            INSTANCE = new S57GlobalCatalogController(guiAgentServices);
+            INSTANCE = new S57GlobalCatalogController(guiAgentServices, layersManagerServices);
         }
+
         return INSTANCE;
     }
 
@@ -88,10 +98,10 @@ public class S57GlobalCatalogController
         try {
             KMLRoot document = KMLRoot.createAndParse(path);
             KMLController kmlController = new KMLController(document);
-            RenderableLayer layer = new RenderableLayer();
-            layer.setName(fileName);
-            layer.addRenderable(kmlController);
-            layers.add(layer);
+            kmlLayer = new RenderableLayer();
+            kmlLayer.setName(fileName);
+            kmlLayer.addRenderable(kmlController);
+            layers.add(kmlLayer);
         } catch (IOException | XMLStreamException ex) {
             Logger.getLogger(S57GlobalCatalogController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -104,7 +114,7 @@ public class S57GlobalCatalogController
             Object topObject = event.getTopObject();
             if (topObject != null) {
                 if (topObject.getClass() == KMLSurfacePolygonImpl.class) {
-                    KMLSurfacePolygonImpl polygon = (KMLSurfacePolygonImpl) topObject;
+                    polygon = (KMLSurfacePolygonImpl) topObject;
                     entries = polygon.getEntries();
                     entries.stream().forEach((e) -> {
                         if (e.getKey().contains("DisplayName")) {
@@ -113,14 +123,16 @@ public class S57GlobalCatalogController
                                 Path filepath = component.getFiles().get(filename);
                                 if (filepath != null) {
                                     if (keyCode == KeyCode.F1) {
-                                        component.openFile("S57Stl", filepath.toString());
-                                        keyCode=null;
+                                        InstrumentDriver instrument = component.openFile("S57Stl", filepath.toString());
+                                        keyCode = null;
+                                        instrument.showGUI(polygon);
                                     } else {
                                         component.loadFile(filepath.toString());
                                     }
                                     s57Chart = new S57Chart();
                                     String number = filepathToNumber(filepath.toString());
                                     s57Chart.setNumber(number);
+
                                     s57Chart.setId(numberToId(number));
                                     String wkt = locationsToWKT(polygon.getLocations());
                                     if (wkt != null) {
@@ -132,7 +144,6 @@ public class S57GlobalCatalogController
                                 }
                             } else {
                                 System.out.println(Translator.tr("chart.error"));
-                                System.out.println("");
                             }
                         }
                     });
@@ -167,26 +178,22 @@ public class S57GlobalCatalogController
 
     private String filepathToNumber(String filepath) {
         String result = null;
-        //System.out.println("Map path :" + filepath);
         String[] tab = null;
         if (OS.isWindows()) {
             tab = filepath.split(Pattern.quote("\\"));
         } else if (OS.isLinux()) {
             tab = filepath.split(Pattern.quote("/"));
         }
-        if (tab.length != 0) {
+        if (tab != null && tab.length != 0) {
             result = tab[tab.length - 1];
         }
         return result;
     }
 
     private long numberToId(String number) {
-        //  String[] tab = number.split("\\.");
-        String[] tab = number.split(Pattern.quote("."));
-        if (tab.length == 2) {
-            tab[0] = tab[0].substring(2);
-        }
-        return Long.parseLong(tab[0]);
+        StringBuilder result = new StringBuilder();
+        number.chars().mapToObj(i -> (char) i).filter(c -> Character.isDigit(c)).forEach(c -> result.append(c));
+        return Long.parseLong(result.toString());
     }
 
     public Set<NavigationData> getS57Charts() {

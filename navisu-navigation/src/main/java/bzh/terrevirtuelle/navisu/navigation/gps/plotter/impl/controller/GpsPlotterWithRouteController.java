@@ -119,7 +119,7 @@ public class GpsPlotterWithRouteController
         navigationPgonLayer = layersManagerServices.getLayer(GROUP, NAME2);
         navigationPgonLayer.setPickEnabled(false);
         navigationIconsLayer = layersManagerServices.getLayer(GROUP, NAME4);
-       // transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
+        // transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
     }
 
     @Override
@@ -169,7 +169,7 @@ public class GpsPlotterWithRouteController
                             s57ChartComponentServices.openChart(path.toString());
                             activateS57Controllers();
                             event.consume();
-                           // transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
+                            // transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
                         }
                     }
                 }
@@ -189,13 +189,13 @@ public class GpsPlotterWithRouteController
             Logger.getLogger(GpsPlotterWithRouteController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-      //  activateS57Controllers();
+        //  activateS57Controllers();
         activateNavigationControllers();
     }
 
     @SuppressWarnings("unchecked")
     private void activateS57Controllers() {
-transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
+        transponderZoneLayer = layersManagerServices.getLayer(GROUP, NAME3);
         List<NavigationData> s57NavigationDataList = new ArrayList<>();
         S57_CONTROLLER_TYPE_LIST.stream().forEach((claz) -> {
             s57NavigationDataList.addAll(navigationDataSet.get(claz));

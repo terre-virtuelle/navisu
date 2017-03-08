@@ -17,7 +17,7 @@ import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.Point3D;
 import bzh.terrevirtuelle.navisu.geometry.objects3D.obj.WavefrontOBJBuilder;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.impl.MeasureToolsImpl;
 import bzh.terrevirtuelle.navisu.navigation.routeeditor.impl.controller.RouteEditorController;
-import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
+import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import bzh.terrevirtuelle.navisu.util.xml.ImportExportXML;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Coordinate;
@@ -675,7 +675,7 @@ public class MeasureToolsController
         Geometry rectangle = null;
 
         try {
-            rectangle = wkt.read(WWJ_JTS.toPolygonWkt(measureTool.getPositions()));
+            rectangle = wkt.read(WwjJTS.toPolygonWkt(measureTool.getPositions()));
         } catch (ParseException ex) {
             Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -698,7 +698,7 @@ public class MeasureToolsController
 
             Geometry simpleGeometry = null;
             try {
-                simpleGeometry = wkt.read(WWJ_JTS.toLineStringWkt(positions));
+                simpleGeometry = wkt.read(WwjJTS.toLineStringWkt(positions));
             } catch (ParseException ex) {
                 Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -774,7 +774,7 @@ public class MeasureToolsController
         if (data != null) {
             WKTReader wkt = new WKTReader();
             try {
-                coastalLines = wkt.read(WWJ_JTS.surfacePolylinesToWkt(data));
+                coastalLines = wkt.read(WwjJTS.surfacePolylinesToWkt(data));
                 // coastalLines = wkt.read(WWJ_JTS.surfacePolylinesToWktWithCoalescence(data));
             } catch (ParseException ex) {
                 Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
@@ -792,7 +792,7 @@ public class MeasureToolsController
     private void exportNDS() {
         Geometry simpleGeometry = null;
         try {
-            simpleGeometry = wkt.read(WWJ_JTS.toLineStringWkt(positions));
+            simpleGeometry = wkt.read(WwjJTS.toLineStringWkt(positions));
         } catch (ParseException ex) {
             Logger.getLogger(MeasureToolsController.class.getName()).log(Level.SEVERE, null, ex);
         }

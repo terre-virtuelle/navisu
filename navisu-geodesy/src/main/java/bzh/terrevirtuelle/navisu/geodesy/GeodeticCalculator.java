@@ -34,7 +34,8 @@ public class GeodeticCalculator {
     *            be populated with the result
     * @return
     */
-   public Location calculateEndingGlobalCoordinates(Ellipsoid ellipsoid, Location start, double startBearing, double distance,
+   public Location calculateEndingGlobalCoordinates(Ellipsoid ellipsoid, 
+           Location start, double startBearing, double distance,
          double[] endBearing)
    {
       double a = ellipsoid.getSemiMajorAxis();

@@ -3,8 +3,7 @@ if (!hasProperty('mainClass')) {
     ext.mainClass = ''
 }
 
-dependencies {
-    
+dependencies {  
 }
 jar {
    destinationDir project.file('../dest')

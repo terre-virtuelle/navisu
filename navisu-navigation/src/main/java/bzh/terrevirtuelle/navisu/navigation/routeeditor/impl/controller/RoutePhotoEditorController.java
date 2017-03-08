@@ -57,7 +57,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javax.xml.bind.JAXBException;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
+import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 
 /**
  * NaVisu
@@ -336,7 +336,7 @@ public class RoutePhotoEditorController
         tmp.stream().forEach((g) -> {
             highways.add(g.getHighway());
         });
-        highway = WWJ_JTS.wktPolygonToPolygon(highways.get(0).getGeometry());
+        highway = WwjJTS.wktPolygonToPolygon(highways.get(0).getGeometry());
         if (highway != null) {
             ShapeAttributes offsetNormalAttributes = new BasicShapeAttributes();
             offsetNormalAttributes.setOutlineMaterial(Material.RED);

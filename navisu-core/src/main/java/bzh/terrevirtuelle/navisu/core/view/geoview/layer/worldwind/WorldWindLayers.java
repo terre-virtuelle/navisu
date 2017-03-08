@@ -24,7 +24,7 @@ public enum WorldWindLayers {
     BingImagery(BingImageryLayer.class),
     EarthAtNight(EarthAtNightLayer.class, false),
     OpenStreetMap(OSMMapnikLayer.class, false),
- //   OSMBuildings(OSMBuildingsLayer.class, false),
+  // OSMBuildings(OSMBuildingsLayer.class, false),
     CountryBoundaries(CountryBoundariesLayer.class, false),
     PlaceName(NASAWFSPlaceNameLayer.class),
     LatLonGraticule(LatLonGraticuleLayer.class, false),

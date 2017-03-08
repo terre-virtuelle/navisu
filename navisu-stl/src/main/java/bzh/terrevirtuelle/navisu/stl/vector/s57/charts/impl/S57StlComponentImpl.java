@@ -25,6 +25,7 @@ import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponentServices;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.S57StlComponentController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -45,7 +46,8 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @date Feb 25, 2017
  */
 public class S57StlComponentImpl
-        implements S57StlComponent, S57StlComponentServices, InstrumentDriver, ComponentState {
+        implements S57StlComponent, S57StlComponentServices,
+        InstrumentDriver, ComponentState {
 
     @UsedService
     GeoViewServices geoViewServices;
@@ -82,13 +84,10 @@ public class S57StlComponentImpl
 
     @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
+
         try {
-            s57ComponentController = S57StlComponentController.getInstance();
-            if (first == true) {
+             if (first == true) {
                 first = false;
-                s57ComponentController.setLayersManagerServices(layersManagerServices);
-                s57ComponentController.setGeoViewServices(geoViewServices);
-                s57ComponentController.setGuiAgentServices(guiAgentServices);
             }
             new File("data/shp").mkdir();
             new File("data/shp/shp_" + i).mkdir();
@@ -174,41 +173,20 @@ public class S57StlComponentImpl
         }
     }
 
-    /*
-    @Override
-    public boolean canOpen(String category, String file) {
-        boolean canOpen = false;
-        if (category.equals(NAME) && (file.toLowerCase().endsWith(EXTENSION_0)
-                || file.toLowerCase().endsWith(EXTENSION_1)
-                || file.toLowerCase().endsWith(EXTENSION_2)
-                || file.toLowerCase().endsWith(EXTENSION_3))) {
-            canOpen = true;
-        }
-        return canOpen;
-    }
-
-    @Override
-    public void open(ProgressHandle pHandle, String... files) {
-        for (String file : files) {
-            this.handleOpenFile(pHandle, file);
-        }
-    }
-
-    @Override
-    public String getName() {
-        return NAME;
-    }
-
-    @Override
-    public String[] getExtensions() {
-        return s57ChartComponentServices.getExtensions();
-    }
-     */
     @Override
     public void openChart(String fileName) {
         guiAgentServices.getJobsManager().newJob("", (progressHandle) -> {
             handleOpenFile(progressHandle, fileName);
         });
+    }
+
+    /**
+     *
+     * @param polygon
+     */
+    @Override
+    public void showGUI(KMLSurfacePolygonImpl polygon) {
+        ((S57StlComponentController) s57ComponentController).showGUI(polygon);
     }
 
     @Override
@@ -218,6 +196,8 @@ public class S57StlComponentImpl
 
     @Override
     public void componentInitiated() {
+          s57ComponentController = new S57StlComponentController(guiAgentServices, layersManagerServices);
+      
     }
 
     @Override
@@ -227,8 +207,6 @@ public class S57StlComponentImpl
     @Override
     public void componentStopped() {
     }
-
-   
 
     @Override
     public boolean canOpen(String category) {
@@ -246,8 +224,9 @@ public class S57StlComponentImpl
         openChart(tab[0]);
     }
 
-    public void openFile(String category, String file) {
-        System.out.println("S57StlComponentImpl "+category + "  "+file);
+    @Override
+    public InstrumentDriver openFile(String category, String file) {
         openChart(file);
+        return this;
     }
 }

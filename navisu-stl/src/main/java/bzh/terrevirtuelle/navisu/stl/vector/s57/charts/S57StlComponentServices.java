@@ -15,4 +15,5 @@ public interface S57StlComponentServices
     void openChart(String file);
 
     InstrumentDriver getDriver();
+
 }

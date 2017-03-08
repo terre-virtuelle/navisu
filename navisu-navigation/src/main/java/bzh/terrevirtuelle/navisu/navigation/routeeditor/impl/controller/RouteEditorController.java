@@ -85,7 +85,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServi
 import bzh.terrevirtuelle.navisu.domain.gpx.model.Highway;
 import bzh.terrevirtuelle.navisu.domain.navigation.navigationalWarnings.model.NavigationalWarnings;
 import bzh.terrevirtuelle.navisu.domain.navigation.sailingDirections.model.SailingDirections;
-import bzh.terrevirtuelle.navisu.navigation.util.WWJ_JTS;
+import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.PointPlacemark;
 
@@ -578,7 +578,7 @@ public class RouteEditorController
                 highwayPoly = new Polygon(highwayPathPositions);
                 highway = new Highway(1);
                 highway.setName(routeName);
-                highway.setGeometry(WWJ_JTS.toPolygonWkt(highwayPathPositions));
+                highway.setGeometry(WwjJTS.toPolygonWkt(highwayPathPositions));
                 highway.setDescription("Range : " + Integer.toString((int) (highwayDistance * 3600)) + " sec");
                 gpx.setHighway(highway);
             }

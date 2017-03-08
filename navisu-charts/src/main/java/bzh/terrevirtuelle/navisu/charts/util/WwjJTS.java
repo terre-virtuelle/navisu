@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bzh.terrevirtuelle.navisu.navigation.util;
+package bzh.terrevirtuelle.navisu.charts.util;
 
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import com.vividsolutions.jts.algorithm.Centroid;
@@ -12,6 +12,7 @@ import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.io.WKTReader;
+import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Polygon;
@@ -26,9 +27,19 @@ import java.util.logging.Logger;
  *
  * @author serge
  */
-public class WWJ_JTS {
+public class WwjJTS {
 
     public static String toPolygonWkt(List<? extends Position> positions) {
+        String geometry = "POLYGON((";
+        int l = positions.size();
+        for (int i = 0; i < l - 1; i++) {
+            geometry += positions.get(i).getLongitude().getDegrees() + " " + positions.get(i).getLatitude().getDegrees() + ",";
+        }
+        geometry += positions.get(l - 1).getLongitude().getDegrees() + " " + positions.get(l - 1).getLatitude().getDegrees() + "))";
+        return geometry;
+    }
+
+    public static String toPolygonWkt1(List<LatLon> positions) {
         String geometry = "POLYGON((";
         int l = positions.size();
         for (int i = 0; i < l - 1; i++) {
@@ -139,7 +150,7 @@ public class WWJ_JTS {
             try {
                 geometry = wktReader.read(wkt);
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(WWJ_JTS.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, null, ex);
             }
             Centroid centroid;
             if (geometry != null) {
@@ -183,5 +194,35 @@ public class WWJ_JTS {
             }
         }
         return positions;
+    }
+
+    public static Polygon wktPolygonToPolygon(Geometry geometry) {
+        Coordinate[] coordinates = geometry.getCoordinates();
+        List<Position> positions = new ArrayList<>();
+        for (Coordinate c : coordinates) {
+            positions.add(new Position(Angle.fromDegrees(c.y), Angle.fromDegrees(c.x), 100.0));
+        }
+        Polygon polygon = new Polygon(positions);
+        return polygon;
+    }
+
+    public static String locationsToWKT(Iterable<? extends LatLon> locations) {
+        String[] tab;
+        String result = "POLYGON((";
+        List<String> locList = new ArrayList<>();
+        for (LatLon l : locations) {
+            tab = l.toString().split(",");
+            if (tab.length == 3) {
+                tab[0] = tab[0].replace("(", "");
+                tab[0] = tab[0].replace("°", "");
+                tab[1] = tab[1].replace("°", "");
+                locList.add(tab[1].trim() + " " + tab[0].trim());
+            }
+        }
+        for (int i = 0; i < locList.size() - 1; i++) {
+            result += locList.get(i) + ",";
+        }
+        result += locList.get(locList.size() - 1) + "))";
+        return result;
     }
 }

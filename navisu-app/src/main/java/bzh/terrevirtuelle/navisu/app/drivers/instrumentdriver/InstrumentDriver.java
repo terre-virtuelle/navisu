@@ -1,5 +1,7 @@
 package bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver;
 
+import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
+
 /**
  * NaVisu
  *
@@ -15,10 +17,13 @@ public interface InstrumentDriver {
     default void on(String ... files){
         
     }
-    default void openFile(String category, String file){
-        
+    default InstrumentDriver openFile(String category, String file){
+        return null;
     }
     default void off(){
+        
+    }
+    default void showGUI(KMLSurfacePolygonImpl polygon){
         
     }
 }
