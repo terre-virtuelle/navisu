@@ -186,7 +186,8 @@ public class S57StlComponentImpl
      */
     @Override
     public void showGUI(KMLSurfacePolygonImpl polygon) {
-        ((S57StlComponentController) s57ComponentController).showGUI(polygon);
+       // ((S57StlComponentController) s57ComponentController).showGUI(polygon);
+       s57ComponentController.showGUI(polygon);
     }
 
     @Override

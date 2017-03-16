@@ -75,6 +75,7 @@ import org.capcaval.c3.component.ComponentEventSubscribe;
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.instruments.transponder.impl.events.TransponderActivateEvent;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
+import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.SurfacePolylines;
@@ -89,9 +90,9 @@ import javafx.scene.input.KeyEvent;
  * @author Serge Morvan
  * @date 11/05/2014 12:49
  */
-public class S57ChartComponentController 
+public class S57ChartComponentController
         extends Widget2DController
-        implements Initializable{
+        implements Initializable {
 
     protected ComponentManager cm;
     protected ComponentEventSubscribe<TransponderActivateEvent> transponderActivateEvent;
@@ -358,7 +359,7 @@ public class S57ChartComponentController
                 }
 
             } catch (Exception e) {
-               // System.out.println("eee : " + e);
+                // System.out.println("eee : " + e);
             }
         }
     }
@@ -479,7 +480,7 @@ public class S57ChartComponentController
                 lightView.setAltitude(elevation + 35);
                 lightView.setAzimuths(Angle.fromDegrees(new Float(data.getSectorLimitOne()) + 180),
                         Angle.fromDegrees(new Float(data.getSectorLimitTwo()) + 180));
-/*
+                /*
                 S57Controller dummy = new S57BuoyageController(new S57Behavior() {
                     @Override
                     public void doIt(double distance, double azimuth) {
@@ -491,7 +492,7 @@ public class S57ChartComponentController
                         System.out.println(((Buoyage) s57c.getNavigationData()).getObjectName());
                     }
                 }
-*/
+                 */
                 String label = "Light \n"
                         + "Lat : " + Double.toString(lat) + "\n"
                         + "Lon : " + Double.toString(lon) + "\n"
@@ -588,4 +589,6 @@ public class S57ChartComponentController
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void showGUI(KMLSurfacePolygonImpl polygon) {
+    }
 }

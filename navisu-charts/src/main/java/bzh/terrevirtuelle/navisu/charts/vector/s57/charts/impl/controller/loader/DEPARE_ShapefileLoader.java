@@ -31,6 +31,7 @@ public class DEPARE_ShapefileLoader
 
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
+       // System.out.println("DEPARE_ShapefileLoader createPolygonAttributes");
         this.record = record;
         val1 = new Float(record.getAttributes().getValue("DRVAL1").toString());
         val2 = new Float(record.getAttributes().getValue("DRVAL2").toString());

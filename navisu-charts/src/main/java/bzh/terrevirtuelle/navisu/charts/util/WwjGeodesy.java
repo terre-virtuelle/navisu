@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.charts.util;
 
+import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import org.gavaghan.geodesy.Ellipsoid;
@@ -25,9 +26,21 @@ public class WwjGeodesy {
         GeodeticCalculator geoCalc = new GeodeticCalculator();
         GlobalCoordinates wpA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
+        //  geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getAzimuth();
         return geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpB).getEllipsoidalDistance() / KM_TO_METER;
     }
-    
+
+    public static Pair<Double, Double> getXYM(Position posA, Position posB) {
+        GeodeticCalculator geoCalc = new GeodeticCalculator();
+        GlobalCoordinates wpA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
+        GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
+        GlobalCoordinates wpC = new GlobalCoordinates(posB.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
+
+        double x = geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpC).getEllipsoidalDistance() / KM_TO_METER;
+        double y = geoCalc.calculateGeodeticCurve(REFERENCE, wpC, wpB).getEllipsoidalDistance() / KM_TO_METER;
+        return new Pair<>(x, y);
+    }
+
     public static Position getPosition(Position posA, double bearing, double distance) {
         double[] endBearing = new double[1];
         GeodeticCalculator geoCalc = new GeodeticCalculator();

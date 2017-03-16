@@ -185,12 +185,17 @@ public class WwjJTS {
                 tab1 = tab0[1].split("\\)\\)");
                 tab2 = tab1[0].split(",");
                 int l = tab2.length;
+             //   for(String s : tab2){
+             //       System.out.println("s : " + s);
+              //  }
                 for (int i = 0; i < l; i++) {
-                    positions.add(Position.fromDegrees(
-                            Double.parseDouble(tab2[i].split(" ")[1]),
-                            Double.parseDouble(tab2[i].split(" ")[0]),
-                            5));
-                }
+                   String[] latLon = tab2[i].trim().split(" ");
+                   String lat = latLon[1];
+                   String lon = latLon[0];
+
+                   positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
+                           Angle.fromDegrees(Double.parseDouble(lon)), 5));
+                } 
             }
         }
         return positions;

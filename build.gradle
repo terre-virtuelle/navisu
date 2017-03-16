@@ -31,11 +31,20 @@ artifacts {
      archives javadocJar
 }
 
+
+
+subprojects.each { subproject -> evaluationDependsOn( subproject.path ) }
+jar.dependsOn subprojects.tasks['classes']
 jar {
+  baseName = 'navisu'
   manifest {
     attributes(
       'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
       'Main-Class': 'bzh.terrevirtuelle.navisu.main.AppMain'
     )
+  }
+  subprojects.each { subproject ->
+    from subproject.sourceSets.main.output.classesDir
+    from subproject.sourceSets.main.output.resourcesDir
   }
 }

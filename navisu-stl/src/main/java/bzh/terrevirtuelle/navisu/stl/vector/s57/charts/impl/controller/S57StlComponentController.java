@@ -124,11 +124,12 @@ public class S57StlComponentController
             initOutFile(OUT_FILE);
             displayTiles(polyEnveloppe, line, column);
             writeS57Charts();
-          //  writeElevation(polyEnveloppe, OUT_FILE);
+            writeElevation(polyEnveloppe, OUT_FILE);
             endOutFile(OUT_FILE);
         });
     }
     
+    @Override
     public void showGUI(KMLSurfacePolygonImpl polygon) {
         if (firstShow == true) {
             this.polygon = polygon;
@@ -282,7 +283,7 @@ public class S57StlComponentController
                 String s = f.getName();
                 switch (s) {
                     case "DEPARE.shp":
-                          load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
+                       //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     default:
                 }
@@ -292,10 +293,10 @@ public class S57StlComponentController
                 String s = f.getName();
                 switch (s) {
                     case "RESARE.shp":
-                       // load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2, false), "AREA", "RESARE", "/");
+                        load(new AREA_ShapefileLoader("RESARE", new Color(197, 69, 195), 0.2, false), "AREA", "RESARE", "/");
                         break;
                     case "UNSARE.shp":
-                       // load(new UNSARE_ShapefileLoader(), "AREA", "UNSARE", "/");
+                        load(new UNSARE_ShapefileLoader(), "AREA", "UNSARE", "/");
                         break;
                     default:
                 }

@@ -125,7 +125,9 @@ public class S57GlobalCatalogController
                                     if (keyCode == KeyCode.F1) {
                                         InstrumentDriver instrument = component.openFile("S57Stl", filepath.toString());
                                         keyCode = null;
-                                        instrument.showGUI(polygon);
+                                        if (instrument != null) {
+                                            instrument.showGUI(polygon);
+                                        }
                                     } else {
                                         component.loadFile(filepath.toString());
                                     }
