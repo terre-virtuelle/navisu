@@ -35,6 +35,7 @@ public class ElevationLoader {
     protected String elevations = "";
     double latRangeMetric;
     double lonRangeMetric;
+    int SQUARE_SIDE = 200;
 
     public ElevationLoader(Polygon polygon, String outFilename) {
         this.polygon = polygon;
@@ -82,6 +83,8 @@ public class ElevationLoader {
             }
         }
          */
+        lonRangeMetric /= SQUARE_SIDE;
+        latRangeMetric /= SQUARE_SIDE;
         for (double lon = positions.get(1).getLongitude().getDegrees();
                 lon > positions.get(0).getLongitude().getDegrees();
                 lon -= lonRange) {
@@ -89,15 +92,16 @@ public class ElevationLoader {
                     lat > positions.get(0).getLatitude().getDegrees();
                     lat -= latRange) {
                 double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                el *= 2;
+                el /= SQUARE_SIDE;
+                el *= 2; //exageration
                 elevations += el + " ";
             }
         }
 
         //    System.out.println("latRangeMetric : " + latRangeMetric);
         //    System.out.println("lonRangeMetric : " + lonRangeMetric);
-      //  latRangeMetric *= 5;
-      //  lonRangeMetric *= 5;
+        //  latRangeMetric *= 5;
+        //  lonRangeMetric *= 5;
         /*
         System.out.println("latRangeMetric : " +latRangeMetric
         +" lonRangeMetric : " + lonRangeMetric + " " + 200/latRangeMetric 
@@ -106,14 +110,14 @@ public class ElevationLoader {
        // lonRangeMetric : 84.73739519670914 
        //                 2.3567495983248814 
        //                 2.3602330415717945 
-       */
+         */
         write();
     }
 
     private void write() {
         String txt
                 = //"<Transform rotation='0 0 1 3.14'> \n"
-                 "<Transform rotation='0 1 0 1.57058'> \n"
+                "<Transform rotation='0 1 0 1.57058'> \n"
                 + "<Shape>\n"
                 + "<Appearance>\n"
                 + "<Material/>\n"
@@ -126,7 +130,7 @@ public class ElevationLoader {
                 + " zSpacing='" + latRangeMetric + "'"
                 + " height='" + elevations + "'/>\n"
                 + "</Shape> \n"
-               // + "</Transform> \n"
+                // + "</Transform> \n"
                 + "</Transform> \n";
         try {
             Files.write(Paths.get(outFilename), txt.getBytes(), StandardOpenOption.APPEND);
