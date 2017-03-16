@@ -67,6 +67,7 @@ public class ElevationLoader {
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees() + lonRange), 100));
 
         List<Double> l = new ArrayList<>();
+        /*
         for (double lon = positions.get(0).getLongitude().getDegrees();
                 lon < positions.get(1).getLongitude().getDegrees();
                 lon += lonRange) {
@@ -80,38 +81,36 @@ public class ElevationLoader {
                 elevations += el + " ";
             }
         }
-
-        /*for (double lon = positions.get(1).getLongitude().getDegrees();
+         */
+        for (double lon = positions.get(1).getLongitude().getDegrees();
                 lon > positions.get(0).getLongitude().getDegrees();
                 lon -= lonRange) {
             for (double lat = positions.get(3).getLatitude().getDegrees();
                     lat > positions.get(0).getLatitude().getDegrees();
                     lat -= latRange) {
-                double el = -model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                elevations += el*10 + " ";
+                double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
+                el *= 10;
+                elevations += el + " ";
             }
         }
-        */
-        
 
-    //    System.out.println("latRangeMetric : " + latRangeMetric);
-    //    System.out.println("lonRangeMetric : " + lonRangeMetric);
+        //    System.out.println("latRangeMetric : " + latRangeMetric);
+        //    System.out.println("lonRangeMetric : " + lonRangeMetric);
         latRangeMetric *= 5;
         lonRangeMetric *= 5;
         /*
         System.out.println("latRangeMetric : " +latRangeMetric
         +" lonRangeMetric : " + lonRangeMetric + " " + 200/latRangeMetric 
                 +" " + 200/lonRangeMetric +"  " + l.size());
-*/
+         */
         write();
     }
 
     private void write() {
-        String txt = //"<Transform rotation='0 1 0 3.14'> \n" //1.57058'> \n"
-              //  + "<Transform translation ='0 510 0'> \n"
-                "<Transform rotation='0 0 1 3.14'> \n"
-                +"<Transform rotation='0 1 0 3.14'> \n"
-                +"<Shape>\n"
+        String txt
+                = //"<Transform rotation='0 0 1 3.14'> \n"
+                 "<Transform rotation='0 1 0 1.57058'> \n"
+                + "<Shape>\n"
                 + "<Appearance>\n"
                 + "<Material/>\n"
                 + "</Appearance>\n"
@@ -120,12 +119,10 @@ public class ElevationLoader {
                 + " xDimension='200'"
                 + " xSpacing='" + lonRangeMetric + "'"
                 + " zDimension='200'"
-            //    + " zSpacing='" + latRangeMetric + "'"
-                + " zSpacing='" + lonRangeMetric + "'"
+                + " zSpacing='" + latRangeMetric + "'"
                 + " height='" + elevations + "'/>\n"
-                // + " height='" + "10 20" + "'/>\n"
                 + "</Shape> \n"
-                + "</Transform> \n"
+               // + "</Transform> \n"
                 + "</Transform> \n";
         try {
             Files.write(Paths.get(outFilename), txt.getBytes(), StandardOpenOption.APPEND);
