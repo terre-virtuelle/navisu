@@ -89,20 +89,24 @@ public class ElevationLoader {
                     lat > positions.get(0).getLatitude().getDegrees();
                     lat -= latRange) {
                 double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                el *= 10;
+                el *= 2;
                 elevations += el + " ";
             }
         }
 
         //    System.out.println("latRangeMetric : " + latRangeMetric);
         //    System.out.println("lonRangeMetric : " + lonRangeMetric);
-        latRangeMetric *= 5;
-        lonRangeMetric *= 5;
+      //  latRangeMetric *= 5;
+      //  lonRangeMetric *= 5;
         /*
         System.out.println("latRangeMetric : " +latRangeMetric
         +" lonRangeMetric : " + lonRangeMetric + " " + 200/latRangeMetric 
                 +" " + 200/lonRangeMetric +"  " + l.size());
-         */
+       // latRangeMetric : 84.86264308357366 
+       // lonRangeMetric : 84.73739519670914 
+       //                 2.3567495983248814 
+       //                 2.3602330415717945 
+       */
         write();
     }
 
