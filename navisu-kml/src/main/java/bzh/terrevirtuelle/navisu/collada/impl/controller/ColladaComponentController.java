@@ -68,10 +68,10 @@ public class ColladaComponentController {
             Logger.getLogger(ColladaComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         colladaRoot = kmlComponentServices.openColladaFile(mobilesLayer, filename);
-        colladaRoot.setModelScale(new Vec4(new Double(properties.getProperty("scale").trim())));
+      //  colladaRoot.setModelScale(new Vec4(new Double(properties.getProperty("scale").trim())));
         colladaRoot.setPosition(Position.fromDegrees(new Double(properties.getProperty("latitude").trim()),
                 new Double(properties.getProperty("longitude").trim()), 1000.0));
-        colladaRoot.setHeading(Angle.fromDegrees(new Double(properties.getProperty("heading").trim())));
+//        colladaRoot.setHeading(Angle.fromDegrees(new Double(properties.getProperty("heading").trim())));
         locatorController = new LocatorController(colladaRoot);
 
         Platform.runLater(() -> {

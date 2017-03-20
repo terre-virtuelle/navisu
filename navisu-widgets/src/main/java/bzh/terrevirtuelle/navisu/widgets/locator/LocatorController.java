@@ -87,8 +87,8 @@ public class LocatorController
     private void initGui() {
         setLatitudeTF(String.valueOf(colladaRoot.getPosition().getLatitude().getDegrees()));
         setLongitudeTF(String.valueOf(colladaRoot.getPosition().getLongitude().getDegrees()));
-        setHeadingTF(String.valueOf(colladaRoot.getHeading().getDegrees()));
-        setScaleTF(String.valueOf(colladaRoot.getModelScale().getX()));
+//        setHeadingTF(String.valueOf(colladaRoot.getHeading().getDegrees()));
+//        setScaleTF(String.valueOf(colladaRoot.getModelScale().getX()));
         latitudeTF.textProperty().addListener((final ObservableValue<? extends String> observable, final String oldValue, final String newValue) -> {
             System.out.println("********" + oldValue + "  " + newValue);
             if (!latitudeTF.getText().equals("") && latitudeTF.getText() != null) {
