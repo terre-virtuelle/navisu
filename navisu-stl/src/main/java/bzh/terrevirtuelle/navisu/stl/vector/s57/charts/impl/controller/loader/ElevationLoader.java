@@ -35,7 +35,8 @@ public class ElevationLoader {
     protected String elevations = "";
     double latRangeMetric;
     double lonRangeMetric;
-    int SQUARE_SIDE = 200;
+    double SQUARE_SIDE = 200;
+    int PTS_COUNT = 200;
 
     public ElevationLoader(Polygon polygon, String outFilename) {
         this.polygon = polygon;
@@ -45,17 +46,10 @@ public class ElevationLoader {
     }
 
     public void compute() {
-        //  System.out.println("polygon : " + polygon.getBoundaries());
         List<? extends Position> positions = polygon.getBoundaries().get(0);
-        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / 200;
-        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / 200;
-        //    System.out.println("polygon.getBoundaries().get(0) : " + polygon.getBoundaries().get(0));
-        //   System.out.println("0 : " + positions.get(0).getLatitude().getDegrees() + " " + positions.get(0).getLongitude().getDegrees());
-        //  System.out.println("1 : " + positions.get(1).getLatitude().getDegrees() + " " + positions.get(1).getLongitude().getDegrees());
-        //  System.out.println("2 : " + positions.get(2).getLatitude().getDegrees() + " " + positions.get(2).getLongitude().getDegrees());
-        //  System.out.println("3 : " + positions.get(3).getLatitude().getDegrees() + " " + positions.get(3).getLongitude().getDegrees());
-        //  System.out.println("latRange : " + latRange);
-        //  System.out.println("lonRange : " + lonRange);
+        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / PTS_COUNT;
+        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / PTS_COUNT;
+
         latRange = Math.abs(latRange);
         lonRange = Math.abs(lonRange);
 
@@ -67,24 +61,6 @@ public class ElevationLoader {
                 new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees() + latRange),
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees() + lonRange), 100));
 
-        List<Double> l = new ArrayList<>();
-        /*
-        for (double lon = positions.get(0).getLongitude().getDegrees();
-                lon < positions.get(1).getLongitude().getDegrees();
-                lon += lonRange) {
-            for (double lat = positions.get(0).getLatitude().getDegrees();
-                    lat < positions.get(3).getLatitude().getDegrees();
-                    lat += latRange) {
-                double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                l.add(el);
-                el=-el;
-                el*=10;
-                elevations += el + " ";
-            }
-        }
-         */
-        lonRangeMetric /= SQUARE_SIDE;
-        latRangeMetric /= SQUARE_SIDE;
         for (double lon = positions.get(1).getLongitude().getDegrees();
                 lon > positions.get(0).getLongitude().getDegrees();
                 lon -= lonRange) {
@@ -92,45 +68,30 @@ public class ElevationLoader {
                     lat > positions.get(0).getLatitude().getDegrees();
                     lat -= latRange) {
                 double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                el /= SQUARE_SIDE;
-                el *= 2; //exageration
+                el /= 10;
                 elevations += el + " ";
             }
         }
-
-        //    System.out.println("latRangeMetric : " + latRangeMetric);
-        //    System.out.println("lonRangeMetric : " + lonRangeMetric);
-        //  latRangeMetric *= 5;
-        //  lonRangeMetric *= 5;
-        /*
-        System.out.println("latRangeMetric : " +latRangeMetric
-        +" lonRangeMetric : " + lonRangeMetric + " " + 200/latRangeMetric 
-                +" " + 200/lonRangeMetric +"  " + l.size());
-       // latRangeMetric : 84.86264308357366 
-       // lonRangeMetric : 84.73739519670914 
-       //                 2.3567495983248814 
-       //                 2.3602330415717945 
-         */
         write();
     }
 
     private void write() {
+        double space = SQUARE_SIDE / (PTS_COUNT - 1);
+        System.out.println("space : " + space);
         String txt
-                = //"<Transform rotation='0 0 1 3.14'> \n"
-                "<Transform rotation='0 1 0 1.57058'> \n"
+                = "<Transform rotation='0 1 0 1.57058'> \n"
                 + "<Shape>\n"
                 + "<Appearance>\n"
                 + "<Material/>\n"
                 + "</Appearance>\n"
                 + "<ElevationGrid \n"
-                + "ccw='false' solid='false'"
-                + " xDimension='200'"
-                + " xSpacing='" + lonRangeMetric + "'"
-                + " zDimension='200'"
-                + " zSpacing='" + latRangeMetric + "'"
+                + "ccw='true' solid='false'"
+                + " xDimension='" + PTS_COUNT + "'"
+                + " xSpacing='" + space + "'"
+                + " zDimension='" + PTS_COUNT + "'"
+                + " zSpacing='" + space + "'"
                 + " height='" + elevations + "'/>\n"
                 + "</Shape> \n"
-                // + "</Transform> \n"
                 + "</Transform> \n";
         try {
             Files.write(Paths.get(outFilename), txt.getBytes(), StandardOpenOption.APPEND);

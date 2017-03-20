@@ -16,6 +16,7 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.TOPMAR_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.UNSARE_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BaseLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.DEPARE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.ElevationLoader;
 import com.vividsolutions.jts.geom.Geometry;
@@ -123,6 +124,7 @@ public class S57StlComponentController
             line = column = (int) Math.sqrt(tiles);
             initOutFile(OUT_FILE);
             displayTiles(polyEnveloppe, line, column);
+            writeBase(OUT_FILE);
             writeS57Charts();
             writeElevation(polyEnveloppe, OUT_FILE);
             endOutFile(OUT_FILE);
@@ -430,7 +432,10 @@ public class S57StlComponentController
         ElevationLoader elevationLoader = new ElevationLoader(polygon, outFilename);
         elevationLoader.compute();
     }
-    
+    private void writeBase(String outFilename){
+       BaseLoader baseLoader = new BaseLoader(outFilename);
+        baseLoader.write();
+    }
     private void initOutFile(String filename) {
         String txt;
         //  try {
@@ -474,4 +479,5 @@ public class S57StlComponentController
             Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 }
