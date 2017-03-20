@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,7 +76,6 @@ public class ElevationLoader {
 
     private void write() {
         double space = SQUARE_SIDE / (PTS_COUNT - 1);
-        System.out.println("space : " + space);
         String txt
                 = "<Transform rotation='0 1 0 1.57058'> \n"
                 + "<Shape>\n"
@@ -99,5 +97,4 @@ public class ElevationLoader {
             Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

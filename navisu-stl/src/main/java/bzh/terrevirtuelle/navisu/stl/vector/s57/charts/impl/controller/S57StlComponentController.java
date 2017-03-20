@@ -70,10 +70,11 @@ import org.gavaghan.geodesy.GlobalCoordinates;
 public class S57StlComponentController
         extends S57ChartComponentController
         implements Initializable {
-    
+
     private static S57StlComponentController INSTANCE = null;
-    
-    protected String OUT_FILE = "privateData/x3d/out.x3d";
+    protected String OUT_DIR = "privateData/x3d/";
+    protected String OUT_FILE = "out.x3d";
+    protected String OUT_PATH;
     protected static boolean created = false;
     protected RenderableLayer layer;
     private final String FXML = "configurationStlController.fxml";
@@ -101,14 +102,14 @@ public class S57StlComponentController
     public Button computeButton;
     @FXML
     private ChoiceBox<String> tileCB;
-    
+
     public S57StlComponentController(GuiAgentServices guiAgentServices, LayersManagerServices layersManagerServices) {
         this.guiAgentServices = guiAgentServices;
         this.layersManagerServices = layersManagerServices;
         layer = layersManagerServices.getLayer(GROUP, NAME);
         geoCalc = new GeodeticCalculator();
     }
-    
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tileCB.setItems(FXCollections.observableArrayList("1", "4", "9", "25"));
@@ -122,15 +123,18 @@ public class S57StlComponentController
             int tiles = Integer.parseInt(tileCB.getValue());
             // Polygon polyEnveloppe = displayChartBoudaries(polygon);
             line = column = (int) Math.sqrt(tiles);
-            initOutFile(OUT_FILE);
-            displayTiles(polyEnveloppe, line, column);
-            writeBase(OUT_FILE);
-            writeS57Charts();
-            writeElevation(polyEnveloppe, OUT_FILE);
-            endOutFile(OUT_FILE);
+            OUT_PATH = OUT_DIR + OUT_FILE;
+            guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
+                displayTiles(polyEnveloppe, line, column);
+                writeS57Charts();
+                initOutFile(OUT_PATH);
+                writeBase(OUT_PATH);
+                writeElevation(polyEnveloppe, OUT_PATH);
+                endOutFile(OUT_PATH);
+            });
         });
     }
-    
+
     @Override
     public void showGUI(KMLSurfacePolygonImpl polygon) {
         if (firstShow == true) {
@@ -155,7 +159,7 @@ public class S57StlComponentController
             polyEnveloppe = displayChartBoudaries(polygon);
         }
     }
-    
+
     public Polygon displayChartBoudaries(KMLSurfacePolygonImpl polygon) {
         String result = WwjJTS.locationsToWKT(polygon.getLocations());
         WKTReader wkt = new WKTReader();
@@ -168,7 +172,7 @@ public class S57StlComponentController
         Polygon newPolygon = null;
         if (geom != null) {
             polyEnveloppe = WwjJTS.wktPolygonToPolygon(geom.getEnvelope());
-            
+
             List<List<? extends Position>> positions = polyEnveloppe.getBoundaries();
             List<? extends Position> points = positions.get(0);
             double x = WwjGeodesy.getDistanceM(points.get(0), points.get(1));
@@ -187,11 +191,11 @@ public class S57StlComponentController
                     newPosition.getLongitude(), 100.0);
             newEnveloppe.remove(3);
             newEnveloppe.add(3, newP3);
-            
+
             newEnveloppe.remove(4);
             newEnveloppe.add(4, newPosition);
             newPolygon = new Polygon(newEnveloppe);
-            
+
             ShapeAttributes normalAttributes = new BasicShapeAttributes();
             normalAttributes.setInteriorMaterial(Material.GREEN);
             normalAttributes.setOutlineOpacity(0.2);
@@ -200,15 +204,15 @@ public class S57StlComponentController
             normalAttributes.setOutlineWidth(2);
             normalAttributes.setDrawOutline(true);
             normalAttributes.setDrawInterior(true);
-            
+
             newPolygon.setAttributes(normalAttributes);
-            
+
             layer.addRenderable(newPolygon);
             wwd.redrawNow();
         }
         return newPolygon;//l'enveloppe est reduite a un carre
     }
-    
+
     private void displayTiles(Polygon polyEnveloppe, int line, int col) {
         Iterable<? extends LatLon> bounds = polyEnveloppe.getOuterBoundary();
         List<LatLon> listLatLon = new ArrayList<>();
@@ -217,12 +221,12 @@ public class S57StlComponentController
         }
         double latRange = listLatLon.get(0).getLatitude().getDegrees() - listLatLon.get(2).getLatitude().getDegrees();
         double lonRange = listLatLon.get(2).getLongitude().getDegrees() - listLatLon.get(0).getLongitude().getDegrees();
-        
+
         latRange /= line;
         lonRange /= col;
         double orgLat = listLatLon.get(0).getLatitude().getDegrees();
         double orgLon = listLatLon.get(0).getLongitude().getDegrees();
-        
+
         List<Polygon> tiles = new ArrayList<>();
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < col; j++) {
@@ -233,7 +237,7 @@ public class S57StlComponentController
                 positions.add(new Position(Angle.fromDegrees(orgLat - (i + 1) * latRange), Angle.fromDegrees(orgLon + j * lonRange), 100.0));
                 positions.add(new Position(Angle.fromDegrees(orgLat - i * latRange), Angle.fromDegrees(orgLon + j * lonRange), 100.0));
                 Polygon polygon1 = new Polygon(positions);
-                
+
                 ShapeAttributes normalAttributes = new BasicShapeAttributes();
                 normalAttributes.setInteriorMaterial(Material.RED);
                 normalAttributes.setOutlineOpacity(0.5);
@@ -243,28 +247,62 @@ public class S57StlComponentController
                 normalAttributes.setDrawOutline(true);
                 normalAttributes.setDrawInterior(true);
                 normalAttributes.setEnableLighting(true);
-                
+
                 ShapeAttributes highlightAttributes = new BasicShapeAttributes(normalAttributes);
                 highlightAttributes.setOutlineMaterial(Material.RED);
                 highlightAttributes.setOutlineOpacity(1);
                 highlightAttributes.setInteriorMaterial(Material.RED);
                 highlightAttributes.setInteriorOpacity(1.0);
-                
+
                 polygon1.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
                 polygon1.setAttributes(normalAttributes);
                 polygon1.setHighlightAttributes(highlightAttributes);
-                
+
                 layer.addRenderable(polygon1);
                 wwd.redrawNow();
             }
         }
     }
-    
+
+    private void initOutFile(String filename) {
+        String txt;
+        //  try {
+        txt = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
+                + "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D 3.0//EN\" "
+                + "\"http://www.web3d.org/specifications/x3d-3.0.dtd\">\n"
+                + "<X3D profile='Immersive' version='3.0'  "
+                + "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'"
+                + " xsd:noNamespaceSchemaLocation =' "
+                + "http://www.web3d.org/specifications/x3d-3.0.xsd '> \n"
+                + "<head>\n"
+                + "<meta name='title' content='NaVisu S57'/> \n"
+                + "<meta name='author' content='" + System.getProperty("user.name") + "'/>\n"
+                + "<meta name='created' content='" + new Date() + "'/>\n"
+                + "<meta name='generator' content='NaVisu'/>\n"
+                + "<meta name='license' content=' ../../license.html'/>\n"
+                + "</head>\n"
+                + "<Scene>\n";
+        //  + new String(Files.readAllBytes(Paths.get("bouee.x3d")));
+        // } catch (IOException ex) {
+        //     Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
+        // }
+
+        //   + " <Transform scale='10000.0 10000.0 10000.0'>\n"
+        //  + "<Inline url='\"bouee.x3d\"' \n />"
+        //  + "</Transform>\n";
+        try {
+            Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException ex) {
+            Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     protected void writeS57Charts() {
         geos = new HashMap<>();
         File[] listOfFiles;
         File tmp;
-        
+
         if (file.isDirectory()) {
             listOfFiles = file.listFiles();
             // Context variables
@@ -285,12 +323,12 @@ public class S57StlComponentController
                 String s = f.getName();
                 switch (s) {
                     case "DEPARE.shp":
-                       //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
+                        //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     default:
                 }
             }
-            
+
             for (File f : listOfFiles) {
                 String s = f.getName();
                 switch (s) {
@@ -425,59 +463,28 @@ public class S57StlComponentController
             }
              */
         }
-        
+
     }
-    
+
     private void writeElevation(Polygon polygon, String outFilename) {
         ElevationLoader elevationLoader = new ElevationLoader(polygon, outFilename);
         elevationLoader.compute();
+
     }
-    private void writeBase(String outFilename){
-       BaseLoader baseLoader = new BaseLoader(outFilename);
+
+    private void writeBase(String outFilename) {
+        BaseLoader baseLoader = new BaseLoader(outFilename);
         baseLoader.write();
     }
-    private void initOutFile(String filename) {
-        String txt;
-        //  try {
-        txt = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
-                + "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D 3.0//EN\" "
-                + "\"http://www.web3d.org/specifications/x3d-3.0.dtd\">\n"
-                + "<X3D profile='Immersive' version='3.0'  "
-                + "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'"
-                + " xsd:noNamespaceSchemaLocation =' "
-                + "http://www.web3d.org/specifications/x3d-3.0.xsd '> \n"
-                + "<head>\n"
-                + "<meta name='title' content='NaVisu S57'/> \n"
-                + "<meta name='author' content='" + System.getProperty("user.name") + "'/>\n"
-                + "<meta name='created' content='" + new Date() + "'/>\n"
-                + "<meta name='generator' content='NaVisu'/>\n"
-                + "<meta name='license' content=' ../../license.html'/>\n"
-                + "</head>\n"
-                + "<Scene>\n";
-        //  + new String(Files.readAllBytes(Paths.get("bouee.x3d")));
-        // } catch (IOException ex) {
-        //     Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
-        // }
 
-        //   + " <Transform scale='10000.0 10000.0 10000.0'>\n"
-        //  + "<Inline url='\"bouee.x3d\"' \n />"
-        //  + "</Transform>\n";
-        try {
-            Files.write(Paths.get(OUT_FILE), txt.getBytes(), StandardOpenOption.CREATE,
-                    StandardOpenOption.TRUNCATE_EXISTING);
-        } catch (IOException ex) {
-            Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
     private void endOutFile(String filename) {
         String txt = " </Scene>\n"
                 + "</X3D> ";
         try {
-            Files.write(Paths.get(OUT_FILE), txt.getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {
             Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

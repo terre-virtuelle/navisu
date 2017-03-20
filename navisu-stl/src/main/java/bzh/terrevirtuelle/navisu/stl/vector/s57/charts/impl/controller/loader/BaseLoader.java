@@ -24,10 +24,6 @@ public class BaseLoader {
             + "                           translation=\"200.000000 -15.000000 -200.000000\"\n"
             + "                           scale=\"1.00000 1.00000 1.00000\"\n"
             + "                           rotation=\"0.000000 0.707107 0.707107 3.141593\">\n"
-            + "            <Transform DEF=\"Rectangle0_ifs_TRANSFORM\"\n"
-            + "                                   translation=\"0.000000 0.000000 0.000000\"\n"
-            + "                                   scale=\"1.000000 1.000000 1.000000\"\n"
-            + "                                   rotation=\"1.000000 0.000000 0.000000 0.000000\">\n"
             + "				<Group DEF=\"group_ME_Rectangle0\">\n"
             + "					<Shape>\n"
             + "						<Appearance>\n"
@@ -43,7 +39,6 @@ public class BaseLoader {
             + "						</IndexedFaceSet>\n"
             + "					</Shape>\n"
             + "				</Group>\n"
-            + "			</Transform>\n"
             + "		</Transform>\n";
 
     public BaseLoader(String filename) {
