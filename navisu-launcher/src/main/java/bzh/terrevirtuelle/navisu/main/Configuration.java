@@ -33,6 +33,8 @@ import java.util.logging.Logger;
 public class Configuration {
 
     public static void init() {
+        initPrivateData();
+
         String navisuHome = System.getProperty("user.home") + "/.navisu";
         Path navisuHomePath = Paths.get(navisuHome);
         if (!Files.exists(navisuHomePath, LinkOption.NOFOLLOW_LINKS)) {
@@ -72,7 +74,7 @@ public class Configuration {
             } catch (IOException ex) {
                 Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else {
+        } else {
             Properties properties = new Properties();
             try {
                 properties.load(new FileInputStream(navisuCache));
@@ -128,7 +130,7 @@ public class Configuration {
     }
 
     private static void writeDefaultCacheProperties(String cacheProperties) {
-       
+
         /*System.out.println("writeDefaultCacheProperties");
         try {
             List<String> keys = new ArrayList<>(Arrays.asList(
@@ -138,13 +140,13 @@ public class Configuration {
         } catch (IOException ex) {
             Logger.getLogger(DarkSkyController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        */
+         */
         Properties properties = new Properties();
-            try {
-                properties.load(new FileInputStream(cacheProperties));
-            } catch (IOException ex) {
-                Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
+        try {
+            properties.load(new FileInputStream(cacheProperties));
+        } catch (IOException ex) {
+            Logger.getLogger(DarkSkyComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
         properties.setProperty("dataDir", "");
         properties.setProperty("S57Stl", "");
         properties.setProperty("KML", "");
@@ -155,6 +157,19 @@ public class Configuration {
             properties.store(out, "Last directory choosed by user");
             out.close();
         } catch (IOException ex) {
+        }
+    }
+
+    private static void initPrivateData() {
+
+        String path = "privateData/";
+        List<String> subDirs = new ArrayList<>(Arrays.asList("gpx", "kml", "nds", "obj", "x3d"));
+
+        for (String s : subDirs) {
+            File file = new File(path + s);
+            if (!file.exists()) {
+                file.mkdir();
+            }
         }
     }
 
