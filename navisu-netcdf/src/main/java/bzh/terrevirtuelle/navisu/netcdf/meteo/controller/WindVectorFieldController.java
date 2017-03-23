@@ -47,8 +47,10 @@ public class WindVectorFieldController
     private static final String U_COMPONENT = "u-component_of_wind_height_above_ground";
     private static final String U_COMPONENT_2 = "u-component_of_wind_surface";
     private static final String U_COMPONENT_3 = "u-component_of_wind_msl";
+    //   private static final String U_COMPONENT_4 = "x";
     private static final String V_COMPONENT = "v-component_of_wind_height_above_ground";
     private static final String V_COMPONENT_2 = "v-component_of_wind_surface";
+    //  private static final String V_COMPONENT_4 = "y";
     private static final String V_COMPONENT_3 = "v-component_of_wind_msl";
     private static final String TITLE = "Speed and direction of wind 10m above ground";
     private static final String ICON_R = "arrow-right-green.png";
@@ -158,7 +160,7 @@ public class WindVectorFieldController
             titlegridPane.setTranslateY(-75.0 - (42 * (layerCount - 1)));/* old value 55 */
             titlegridPane.getStyleClass().add(TITLE_PANE_STYLE_CLASS);
             //titlegridPane.setHalignment(readerTitle, HPos.CENTER);
-           
+
             titlegridPane.add(readerTitle, 0, 0);
             titlegridPane.add(gridPane, 0, 1);
 

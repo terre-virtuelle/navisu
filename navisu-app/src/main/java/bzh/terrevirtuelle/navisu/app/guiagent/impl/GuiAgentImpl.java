@@ -40,28 +40,14 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.server.ServerOptionsCompon
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.View;
 import gov.nasa.worldwind.WorldWindow;
-import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.avlist.AVListImpl;
 import gov.nasa.worldwind.event.PositionEvent;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Sector;
-import gov.nasa.worldwind.globes.ElevationModel;
-import gov.nasa.worldwind.globes.Globe;
-import gov.nasa.worldwind.layers.RenderableLayer;
-import gov.nasa.worldwind.render.Polygon;
-import gov.nasa.worldwind.terrain.CompoundElevationModel;
-import gov.nasa.worldwind.terrain.LocalElevationModel;
-import static gov.nasa.worldwindx.examples.ApplicationTemplate.insertBeforeCompass;
-import gov.nasa.worldwindx.examples.dataimport.ImportElevations;
-import java.nio.ByteBuffer;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import javax.swing.SwingUtilities;
 
 /**
  * NaVisu

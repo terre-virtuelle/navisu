@@ -20,7 +20,7 @@ public class PONTON_ShapefileLoader
         extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
-    ShapefileRecord record;
+    protected ShapefileRecord record;
 
     public PONTON_ShapefileLoader() {
     }

@@ -39,17 +39,18 @@ import java.util.logging.Logger;
 public class BUOYAGE_ShapefileLoader
         extends LayerShapefileLoader {
 
-    private Buoyage object;
-    private S57BuoyageController buoyageController;
-    private double LIMIT = 926; // distance of perception
-    private final Set<S57Controller> s57Controllers;
-    private PointPlacemarkAttributes attrs;
-    private Set<Entry<String, Object>> entries;
-    private Class claz;
-    private final String acronym;
-    private final Map<Pair<Double, Double>, String> topMarks;
-    private final String marsys;
-    private boolean dev = false;
+    protected Buoyage object;
+    protected PointPlacemark placemark;
+    protected S57BuoyageController buoyageController;
+    protected double LIMIT = 926; // distance of perception
+    protected final Set<S57Controller> s57Controllers;
+    protected PointPlacemarkAttributes attrs;
+    protected Set<Entry<String, Object>> entries;
+    protected Class claz;
+    protected final String acronym;
+    protected final Map<Pair<Double, Double>, String> topMarks;
+    protected final String marsys;
+    protected boolean dev = false;
 
     public BUOYAGE_ShapefileLoader(boolean dev, String path,
             Map<Pair<Double, Double>, String> topMarks,
@@ -169,10 +170,11 @@ public class BUOYAGE_ShapefileLoader
         });
 
         buoyageController = new S57BuoyageController(new S57BasicBehavior(), false, object, LIMIT);
+        if (s57Controllers != null) {
+            s57Controllers.add(buoyageController);
+        }
 
-        s57Controllers.add(buoyageController);
-
-        PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
+        placemark = new PointPlacemark(Position.fromDegrees(latDegrees, lonDegrees, 0));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         //   placemark.setLabelText(object.getObjectName());
         String catMark = "";

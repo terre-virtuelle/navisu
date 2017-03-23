@@ -20,7 +20,7 @@ public class SLCONS_ShapefileLoader
         extends LayerShapefileLoader
         implements S57ShapeFileLoader {
 
-    ShapefileRecord record;
+    protected ShapefileRecord record;
 
     public SLCONS_ShapefileLoader() {
     }
