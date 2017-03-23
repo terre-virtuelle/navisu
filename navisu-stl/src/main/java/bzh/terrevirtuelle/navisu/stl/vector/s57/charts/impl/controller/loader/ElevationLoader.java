@@ -12,13 +12,7 @@ import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.globes.ElevationModel;
 import gov.nasa.worldwind.render.Polygon;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,36 +23,26 @@ public class ElevationLoader {
 
     protected Polygon polygon;
     protected WorldWindow wwd;
-    protected String outFilename;
     protected ElevationModel model;
     protected String elevations = "";
-    double latRangeMetric;
-    double lonRangeMetric;
-    double SQUARE_SIDE = 200;
-    int PTS_COUNT = 200;
+    protected double SQUARE_SIDE = 200;
+    protected int PTS_COUNT = 200;
 
-    public ElevationLoader(Polygon polygon, String outFilename) {
+    
+
+    public ElevationLoader(Polygon polygon) {
         this.polygon = polygon;
-        this.outFilename = outFilename;
         wwd = GeoWorldWindViewImpl.getWW();
         model = this.wwd.getModel().getGlobe().getElevationModel();
     }
 
-    public void compute() {
+    public String compute() {
         List<? extends Position> positions = polygon.getBoundaries().get(0);
         double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / PTS_COUNT;
         double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / PTS_COUNT;
 
         latRange = Math.abs(latRange);
         lonRange = Math.abs(lonRange);
-
-        latRangeMetric = WwjGeodesy.getDistanceM(positions.get(0),
-                new Position(Angle.fromDegrees(positions.get(3).getLatitude().getDegrees() + latRange),
-                        Angle.fromDegrees(positions.get(3).getLongitude().getDegrees() + lonRange), 100));
-
-        lonRangeMetric = WwjGeodesy.getDistanceM(positions.get(0),
-                new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees() + latRange),
-                        Angle.fromDegrees(positions.get(1).getLongitude().getDegrees() + lonRange), 100));
 
         for (double lon = positions.get(1).getLongitude().getDegrees();
                 lon > positions.get(0).getLongitude().getDegrees();
@@ -71,10 +55,10 @@ public class ElevationLoader {
                 elevations += el + " ";
             }
         }
-        write();
+        return createTxt();
     }
 
-    private void write() {
+    private String createTxt() {
         double space = SQUARE_SIDE / (PTS_COUNT - 1);
         String txt
                 = "<Transform rotation='0 1 0 1.57058'> \n"
@@ -91,10 +75,6 @@ public class ElevationLoader {
                 + " height='" + elevations + "'/>\n"
                 + "</Shape> \n"
                 + "</Transform> \n";
-        try {
-            Files.write(Paths.get(outFilename), txt.getBytes(), StandardOpenOption.APPEND);
-        } catch (IOException ex) {
-            Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return txt;
     }
 }

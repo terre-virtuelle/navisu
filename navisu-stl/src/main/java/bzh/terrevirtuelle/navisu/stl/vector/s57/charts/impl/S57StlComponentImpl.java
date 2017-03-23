@@ -7,6 +7,7 @@ package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl;
 
 import bzh.terrevirtuelle.navisu.api.progress.ProgressHandle;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
@@ -54,6 +55,8 @@ public class S57StlComponentImpl
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
+    InstrumentDriverManagerServices instrumentDriverManagerServices;
+    @UsedService
     LayerTreeServices layerTreeServices;
     @UsedService
     LayersManagerServices layersManagerServices;
@@ -86,7 +89,7 @@ public class S57StlComponentImpl
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
 
         try {
-             if (first == true) {
+            if (first == true) {
                 first = false;
             }
             new File("data/shp").mkdir();
@@ -186,8 +189,7 @@ public class S57StlComponentImpl
      */
     @Override
     public void showGUI(KMLSurfacePolygonImpl polygon) {
-       // ((S57StlComponentController) s57ComponentController).showGUI(polygon);
-       s57ComponentController.showGUI(polygon);
+        s57ComponentController.showGUI(polygon);
     }
 
     @Override
@@ -197,8 +199,10 @@ public class S57StlComponentImpl
 
     @Override
     public void componentInitiated() {
-          s57ComponentController = new S57StlComponentController(guiAgentServices, layersManagerServices);
-      
+        s57ComponentController = new S57StlComponentController(guiAgentServices,
+                layersManagerServices,
+                instrumentDriverManagerServices);
+
     }
 
     @Override

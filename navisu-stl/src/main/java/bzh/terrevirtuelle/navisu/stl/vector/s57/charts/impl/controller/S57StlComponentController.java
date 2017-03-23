@@ -5,6 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller;
 
+import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller.ConfigurationComponentController;
@@ -12,13 +13,15 @@ import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controller.S57GlobalCatalogController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.AREA_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.TOPMAR_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.UNSARE_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BUOYAGE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BaseLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.DEPARE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.ElevationLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.PONTON_Stl_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.RefLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.SLCONS_Stl_ShapefileLoader;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
@@ -32,7 +35,6 @@ import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Polygon;
 import gov.nasa.worldwind.render.ShapeAttributes;
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -72,9 +74,12 @@ public class S57StlComponentController
         implements Initializable {
 
     private static S57StlComponentController INSTANCE = null;
+    protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
+    protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected String OUT_DIR = "privateData/x3d/";
     protected String OUT_FILE = "out.x3d";
     protected String OUT_PATH;
+    protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected static boolean created = false;
     protected RenderableLayer layer;
     private final String FXML = "configurationStlController.fxml";
@@ -86,10 +91,17 @@ public class S57StlComponentController
     protected Geometry geometry;
     private final GeodeticCalculator geoCalc;
     private final Ellipsoid reference = Ellipsoid.WGS84;//default
-    private final double KM_TO_METER = 1000;
-    private GlobalCoordinates waypointA;
-    private GlobalCoordinates waypointB;
+    //  private final double KM_TO_METER = 1000;
+    //  private GlobalCoordinates waypointA;
+    //  private GlobalCoordinates waypointB;
+
     private KMLSurfacePolygonImpl polygon;
+    List<? extends Position> positions;
+    double latRangeMetric;
+    double lonRangeMetric;
+    double scaleLatFactor;
+    double scaleLonFactor;
+    double SQUARE_SIDE = 200;
     Polygon polyEnveloppe;
     boolean firstShow = true;
     @FXML
@@ -103,9 +115,12 @@ public class S57StlComponentController
     @FXML
     private ChoiceBox<String> tileCB;
 
-    public S57StlComponentController(GuiAgentServices guiAgentServices, LayersManagerServices layersManagerServices) {
+    public S57StlComponentController(GuiAgentServices guiAgentServices,
+            LayersManagerServices layersManagerServices,
+            InstrumentDriverManagerServices instrumentDriverManagerServices) {
         this.guiAgentServices = guiAgentServices;
         this.layersManagerServices = layersManagerServices;
+        this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         layer = layersManagerServices.getLayer(GROUP, NAME);
         geoCalc = new GeodeticCalculator();
     }
@@ -121,16 +136,18 @@ public class S57StlComponentController
         });
         computeButton.setOnMouseClicked((MouseEvent event) -> {
             int tiles = Integer.parseInt(tileCB.getValue());
-            // Polygon polyEnveloppe = displayChartBoudaries(polygon);
             line = column = (int) Math.sqrt(tiles);
             OUT_PATH = OUT_DIR + OUT_FILE;
             guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
                 displayTiles(polyEnveloppe, line, column);
+                initParameters();
+                writeInitOutFile(OUT_PATH);
+                writeElevation(OUT_PATH, polyEnveloppe);
                 writeS57Charts();
-                initOutFile(OUT_PATH);
                 writeBase(OUT_PATH);
-                writeElevation(polyEnveloppe, OUT_PATH);
-                endOutFile(OUT_PATH);
+                //   writeRef(polyEnveloppe, OUT_PATH);
+                writeEndOutFile(OUT_PATH);
+                instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             });
         });
     }
@@ -156,8 +173,8 @@ public class S57StlComponentController
                 guiAgentServices.getRoot().getChildren().add(this);
                 firstShow = false;
             });
-            polyEnveloppe = displayChartBoudaries(polygon);
         }
+        polyEnveloppe = displayChartBoudaries(polygon);
     }
 
     public Polygon displayChartBoudaries(KMLSurfacePolygonImpl polygon) {
@@ -252,7 +269,7 @@ public class S57StlComponentController
                 highlightAttributes.setOutlineMaterial(Material.RED);
                 highlightAttributes.setOutlineOpacity(1);
                 highlightAttributes.setInteriorMaterial(Material.RED);
-                highlightAttributes.setInteriorOpacity(1.0);
+                highlightAttributes.setInteriorOpacity(0.2);
 
                 polygon1.setAltitudeMode(WorldWind.RELATIVE_TO_GROUND);
                 polygon1.setAttributes(normalAttributes);
@@ -264,7 +281,19 @@ public class S57StlComponentController
         }
     }
 
-    private void initOutFile(String filename) {
+    private void initParameters() {
+        positions = polyEnveloppe.getBoundaries().get(0);
+        latRangeMetric = WwjGeodesy.getDistanceM(positions.get(0),
+                new Position(Angle.fromDegrees(positions.get(3).getLatitude().getDegrees()),
+                        Angle.fromDegrees(positions.get(3).getLongitude().getDegrees()), 100));
+        lonRangeMetric = WwjGeodesy.getDistanceM(positions.get(0),
+                new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees()),
+                        Angle.fromDegrees(positions.get(1).getLongitude().getDegrees()), 100));
+        scaleLatFactor = SQUARE_SIDE / latRangeMetric;
+        scaleLonFactor = SQUARE_SIDE / lonRangeMetric;
+    }
+
+    private void writeInitOutFile(String filename) {
         String txt;
         //  try {
         txt = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
@@ -282,14 +311,6 @@ public class S57StlComponentController
                 + "<meta name='license' content=' ../../license.html'/>\n"
                 + "</head>\n"
                 + "<Scene>\n";
-        //  + new String(Files.readAllBytes(Paths.get("bouee.x3d")));
-        // } catch (IOException ex) {
-        //     Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
-        // }
-
-        //   + " <Transform scale='10000.0 10000.0 10000.0'>\n"
-        //  + "<Inline url='\"bouee.x3d\"' \n />"
-        //  + "</Transform>\n";
         try {
             Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING);
@@ -301,9 +322,7 @@ public class S57StlComponentController
     protected void writeS57Charts() {
         geos = new HashMap<>();
         File[] listOfFiles;
-        File tmp;
-
-        if (file.isDirectory()) {
+        if (file != null && file.isDirectory()) {
             listOfFiles = file.listFiles();
             // Context variables
             for (File f : listOfFiles) {
@@ -317,7 +336,6 @@ public class S57StlComponentController
                     load(new TOPMAR_ShapefileLoader(topMarks), "BUOYAGE", "TOPMAR", "/");
                 }
             }
-
             // DEPARE in background
             for (File f : listOfFiles) {
                 String s = f.getName();
@@ -325,10 +343,38 @@ public class S57StlComponentController
                     case "DEPARE.shp":
                         //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
+                    case "PONTON.shp":
+                        //  load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
+                        break;
+                    case "SLCONS.shp":
+                        //  load(new SLCONS_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "SLCONS", "/");
+                        break;
+                    case "BCNCAR.shp":
+                        BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderCar
+                                = new BUOYAGE_Stl_ShapefileLoader(polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, SQUARE_SIDE,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", null);
+                        load(buoyageStlShapefileLoaderCar, "BUOYAGE", "BCNCAR", "/");
+                        String resultCar = buoyageStlShapefileLoaderCar.compute();
+                        if (resultCar != null) {
+                            write(OUT_PATH, resultCar);
+                        }
+                        break;
+                    case "BCNLAT.shp":
+                        BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderLat
+                                = new BUOYAGE_Stl_ShapefileLoader(polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, SQUARE_SIDE,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", null);
+                        load(buoyageStlShapefileLoaderLat, "BUOYAGE", "BCNLAT", "/");
+                        String resultLat = buoyageStlShapefileLoaderLat.compute();
+                        if (resultLat != null) {
+                            write(OUT_PATH, resultLat);
+                        }
+                        break;
                     default:
                 }
             }
-
+            /*
             for (File f : listOfFiles) {
                 String s = f.getName();
                 switch (s) {
@@ -341,7 +387,7 @@ public class S57StlComponentController
                     default:
                 }
             }
-            /*
+         
             try {
                 for (File f : listOfFiles) {
                     String s = f.getName();
@@ -349,15 +395,11 @@ public class S57StlComponentController
                         case "ACHARE.shp":
                             load(new ACHARE_ShapefileLoader("ACHARE", new Color(2, 200, 184), 0.4, true), "AREA", "ACHARE", "/");
                             break;
-                        case "BCNCAR.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", s57Controllers), "BUOYAGE", "BCNCAR", "/");
-                            break;
+                        
                         case "BCNISD.shp":
                             load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNISD", s57Controllers), "BUOYAGE", "BCNISD", "/");
                             break;
-                        case "BCNLAT.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", s57Controllers), "BUOYAGE", "BCNLAT", "/");
-                            break;
+                        
                         case "BCNSAW.shp":
                             load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSAW", s57Controllers), "BUOYAGE", "BCNSAW", "/");
                             break;
@@ -466,18 +508,31 @@ public class S57StlComponentController
 
     }
 
-    private void writeElevation(Polygon polygon, String outFilename) {
-        ElevationLoader elevationLoader = new ElevationLoader(polygon, outFilename);
-        elevationLoader.compute();
+    private void writeElevation(String outFilename, Polygon polygon) {
+        ElevationLoader elevationLoader = new ElevationLoader(polygon);
+        write(outFilename, elevationLoader.compute());
 
     }
 
     private void writeBase(String outFilename) {
-        BaseLoader baseLoader = new BaseLoader(outFilename);
-        baseLoader.write();
+        BaseLoader l = new BaseLoader();
+        write(outFilename, l.compute());
     }
 
-    private void endOutFile(String filename) {
+    private void writeRef(Polygon polygon, String outFilename) {
+        RefLoader l = new RefLoader(polygon);
+        write(outFilename, l.compute());
+    }
+
+    private void write(String outFilename, String str) {
+        try {
+            Files.write(Paths.get(outFilename), str.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+    }
+
+    private void writeEndOutFile(String filename) {
         String txt = " </Scene>\n"
                 + "</X3D> ";
         try {

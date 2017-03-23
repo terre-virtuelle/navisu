@@ -5,13 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import static java.nio.file.StandardOpenOption.APPEND;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author serge
@@ -19,7 +12,6 @@ import java.util.logging.Logger;
  */
 public class BaseLoader {
 
-    String filename;
     String baseData = "		<Transform DEF=\"Rectangle0_TRANSFORM\"\n"
             + "                           translation=\"200.000000 -15.000000 -200.000000\"\n"
             + "                           scale=\"1.00000 1.00000 1.00000\"\n"
@@ -41,20 +33,10 @@ public class BaseLoader {
             + "				</Group>\n"
             + "		</Transform>\n";
 
-    public BaseLoader(String filename) {
-        this.filename = filename;
-
+    public BaseLoader() {
     }
 
-    public String getData() {
+    public String compute() {
         return baseData;
-    }
-
-    public void write() {
-        try {
-            Files.write(Paths.get(filename), baseData.getBytes(), APPEND);
-        } catch (IOException ex) {
-            Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-        }
     }
 }
