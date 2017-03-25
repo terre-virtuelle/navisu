@@ -47,6 +47,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
         this.squareSide = squareSide;
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -73,10 +74,10 @@ public class BUOYAGE_Stl_ShapefileLoader
         } else if (acronym.contains("LAT")) {
             catMark = CATLAM.ATT.get(object.getCategoryOfMark());
             if (catMark.contains("Starboard")) {
-                result += writeStarboard(lonMetric, latMetric);
+                result += writeCone(lonMetric, latMetric);
             } else {
                 if (catMark.contains("Port")) {
-                    result += writePort(lonMetric, latMetric);
+                    result += writeCylinder(lonMetric, latMetric);
                 }
             }
         }
@@ -94,7 +95,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         return result;
     }
 
-    private String writePort(double lat, double lon) {
+    private String writeCylinder(double lat, double lon) {
         String str = "<Transform \n"
                 + "   translation=\"" + lat + " 2.00000 " + lon + "\"\n"
                 + "    scale=\"1.00000 1.00000 1.00000\"\n"
@@ -116,7 +117,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         return str;
     }
 
-    private String writeStarboard(double lat, double lon) {
+    private String writeCone(double lat, double lon) {
         String str = "<Transform \n"
                 + "		           translation=\"" + lat + " 1.00000 " + lon + "\"\n"
                 + "		           scale=\"0.5000000 0.5000000 0.5000000\"\n"

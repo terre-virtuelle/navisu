@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 
-import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
@@ -27,8 +26,6 @@ public class ElevationLoader {
     protected String elevations = "";
     protected double SQUARE_SIDE = 200;
     protected int PTS_COUNT = 200;
-
-    
 
     public ElevationLoader(Polygon polygon) {
         this.polygon = polygon;
@@ -64,6 +61,8 @@ public class ElevationLoader {
                 = "<Transform rotation='0 1 0 1.57058'> \n"
                 + "<Shape>\n"
                 + "<Appearance>\n"
+                + "<ImageTexture DEF='MYTEXT' url='\"image.jpg\"'/> \n"
+                + "<TextureTransform  rotation='-1.57' />\n"
                 + "<Material/>\n"
                 + "</Appearance>\n"
                 + "<ElevationGrid \n"

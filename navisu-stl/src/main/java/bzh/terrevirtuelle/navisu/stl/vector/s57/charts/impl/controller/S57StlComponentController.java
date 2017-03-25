@@ -19,9 +19,8 @@ import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BU
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BaseLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.DEPARE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.ElevationLoader;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.PONTON_Stl_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.TextureLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.RefLoader;
-import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.SLCONS_Stl_ShapefileLoader;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
@@ -60,9 +59,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GeodeticCalculator;
-import org.gavaghan.geodesy.GlobalCoordinates;
 
 /**
  *
@@ -90,11 +87,7 @@ public class S57StlComponentController
     protected WKTReader wktReader;
     protected Geometry geometry;
     private final GeodeticCalculator geoCalc;
-    private final Ellipsoid reference = Ellipsoid.WGS84;//default
-    //  private final double KM_TO_METER = 1000;
-    //  private GlobalCoordinates waypointA;
-    //  private GlobalCoordinates waypointB;
-
+    //  private final Ellipsoid reference = Ellipsoid.WGS84;//default
     private KMLSurfacePolygonImpl polygon;
     List<? extends Position> positions;
     double latRangeMetric;
@@ -142,6 +135,7 @@ public class S57StlComponentController
                 displayTiles(polyEnveloppe, line, column);
                 initParameters();
                 writeInitOutFile(OUT_PATH);
+                writeTexture(OUT_DIR, polyEnveloppe);
                 writeElevation(OUT_PATH, polyEnveloppe);
                 writeS57Charts();
                 writeBase(OUT_PATH);
@@ -512,6 +506,11 @@ public class S57StlComponentController
         ElevationLoader elevationLoader = new ElevationLoader(polygon);
         write(outFilename, elevationLoader.compute());
 
+    }
+
+    private void writeTexture(String outDir, Polygon polygon) {
+        TextureLoader exportImageOrElevations = new TextureLoader(polyEnveloppe, outDir);
+        exportImageOrElevations.doSaveImage();
     }
 
     private void writeBase(String outFilename) {
