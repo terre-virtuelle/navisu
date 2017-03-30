@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller;
+package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 
 /**
  *
  * @author serge
  * @date Mar 4, 2017
  */
-public class OSMBuildingsController {
+public class OSMBuildingsLoader {
 
 }

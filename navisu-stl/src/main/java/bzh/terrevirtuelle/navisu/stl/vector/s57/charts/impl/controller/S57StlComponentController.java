@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller.ConfigurationComponentController;
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
@@ -15,12 +16,16 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controlle
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.TOPMAR_ShapefileLoader;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindGeoLayer;
+import bzh.terrevirtuelle.navisu.stl.osm.layers.OSMBuildingsStlLayer;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BUOYAGE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BaseLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.DEPARE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.ElevationLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.TextureLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.RefLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.SLCONS_Stl_ShapefileLoader;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
 import com.vividsolutions.jts.io.WKTReader;
@@ -28,6 +33,7 @@ import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -77,6 +83,7 @@ public class S57StlComponentController
     protected String OUT_FILE = "out.x3d";
     protected String OUT_PATH;
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
+    protected LayerTreeServices layerTreeServices;
     protected static boolean created = false;
     protected RenderableLayer layer;
     private final String FXML = "configurationStlController.fxml";
@@ -96,6 +103,7 @@ public class S57StlComponentController
     double scaleLonFactor;
     double SQUARE_SIDE = 200;
     Polygon polyEnveloppe;
+    protected Geometry geometryEnveloppe;
     boolean firstShow = true;
     @FXML
     public Group configgroup;
@@ -109,19 +117,28 @@ public class S57StlComponentController
     private ChoiceBox<String> tileCB;
 
     public S57StlComponentController(GuiAgentServices guiAgentServices,
+            LayerTreeServices layerTreeServices,
             LayersManagerServices layersManagerServices,
             InstrumentDriverManagerServices instrumentDriverManagerServices) {
         this.guiAgentServices = guiAgentServices;
         this.layersManagerServices = layersManagerServices;
+        this.layerTreeServices = layerTreeServices;
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         layer = layersManagerServices.getLayer(GROUP, NAME);
         geoCalc = new GeodeticCalculator();
+      //  Layer buildings = new OSMBuildingsStlLayer();
+      //  layerTreeServices.addGeoLayer("Buildings", buildings);
+       // wwd.getModel().getLayers().add(buildings);
+        
+        
+        
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tileCB.setItems(FXCollections.observableArrayList("1", "4", "9", "25"));
         tileCB.setValue("1");
+        
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
@@ -184,8 +201,8 @@ public class S57StlComponentController
         if (geom != null) {
             polyEnveloppe = WwjJTS.wktPolygonToPolygon(geom.getEnvelope());
 
-            List<List<? extends Position>> positions = polyEnveloppe.getBoundaries();
-            List<? extends Position> points = positions.get(0);
+            List<List<? extends Position>> positions1 = polyEnveloppe.getBoundaries();
+            List<? extends Position> points = positions1.get(0);
             double x = WwjGeodesy.getDistanceM(points.get(0), points.get(1));
             double y = WwjGeodesy.getDistanceM(points.get(2), points.get(1));
             /*
@@ -241,13 +258,13 @@ public class S57StlComponentController
         List<Polygon> tiles = new ArrayList<>();
         for (int i = 0; i < line; i++) {
             for (int j = 0; j < col; j++) {
-                List<Position> positions = new ArrayList<>();
-                positions.add(new Position(Angle.fromDegrees(orgLat - i * latRange), Angle.fromDegrees(orgLon + j * lonRange), 100.0));
-                positions.add(new Position(Angle.fromDegrees(orgLat - i * latRange), Angle.fromDegrees(orgLon + (j + 1) * lonRange), 100.0));
-                positions.add(new Position(Angle.fromDegrees(orgLat - (i + 1) * latRange), Angle.fromDegrees(orgLon + (j + 1) * lonRange), 100.0));
-                positions.add(new Position(Angle.fromDegrees(orgLat - (i + 1) * latRange), Angle.fromDegrees(orgLon + j * lonRange), 100.0));
-                positions.add(new Position(Angle.fromDegrees(orgLat - i * latRange), Angle.fromDegrees(orgLon + j * lonRange), 100.0));
-                Polygon polygon1 = new Polygon(positions);
+                List<Position> positions0 = new ArrayList<>();
+                positions0.add(new Position(Angle.fromDegrees(orgLat - i * latRange), Angle.fromDegrees(orgLon + j * lonRange), 100.0));
+                positions0.add(new Position(Angle.fromDegrees(orgLat - i * latRange), Angle.fromDegrees(orgLon + (j + 1) * lonRange), 100.0));
+                positions0.add(new Position(Angle.fromDegrees(orgLat - (i + 1) * latRange), Angle.fromDegrees(orgLon + (j + 1) * lonRange), 100.0));
+                positions0.add(new Position(Angle.fromDegrees(orgLat - (i + 1) * latRange), Angle.fromDegrees(orgLon + j * lonRange), 100.0));
+                positions0.add(new Position(Angle.fromDegrees(orgLat - i * latRange), Angle.fromDegrees(orgLon + j * lonRange), 100.0));
+                Polygon polygon1 = new Polygon(positions0);
 
                 ShapeAttributes normalAttributes = new BasicShapeAttributes();
                 normalAttributes.setInteriorMaterial(Material.RED);
@@ -285,6 +302,17 @@ public class S57StlComponentController
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees()), 100));
         scaleLatFactor = SQUARE_SIDE / latRangeMetric;
         scaleLonFactor = SQUARE_SIDE / lonRangeMetric;
+
+        String wkt = WwjJTS.toPolygonWkt(positions);
+        WKTReader wktReader0 = new WKTReader();
+
+        if (wkt != null) {
+            try {
+                geometryEnveloppe = wktReader0.read(wkt);
+            } catch (com.vividsolutions.jts.io.ParseException ex) {
+                Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     private void writeInitOutFile(String filename) {
@@ -338,14 +366,14 @@ public class S57StlComponentController
                         //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     case "PONTON.shp":
-                        //  load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
+                        // load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
                         break;
                     case "SLCONS.shp":
-                        //  load(new SLCONS_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "SLCONS", "/");
+                      //  load(new SLCONS_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "SLCONS", "/");
                         break;
                     case "BCNCAR.shp":
                         BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderCar
-                                = new BUOYAGE_Stl_ShapefileLoader(polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, SQUARE_SIDE,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", null);
                         load(buoyageStlShapefileLoaderCar, "BUOYAGE", "BCNCAR", "/");
@@ -356,7 +384,7 @@ public class S57StlComponentController
                         break;
                     case "BCNLAT.shp":
                         BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderLat
-                                = new BUOYAGE_Stl_ShapefileLoader(polyEnveloppe,
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, SQUARE_SIDE,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", null);
                         load(buoyageStlShapefileLoaderLat, "BUOYAGE", "BCNLAT", "/");
@@ -509,7 +537,7 @@ public class S57StlComponentController
     }
 
     private void writeTexture(String outDir, Polygon polygon) {
-        TextureLoader exportImageOrElevations = new TextureLoader(polyEnveloppe, outDir);
+        TextureLoader exportImageOrElevations = new TextureLoader(outDir, polyEnveloppe);
         exportImageOrElevations.doSaveImage();
     }
 
@@ -518,7 +546,7 @@ public class S57StlComponentController
         write(outFilename, l.compute());
     }
 
-    private void writeRef(Polygon polygon, String outFilename) {
+    private void writeRef(String outFilename, Polygon polygon) {
         RefLoader l = new RefLoader(polygon);
         write(outFilename, l.compute());
     }

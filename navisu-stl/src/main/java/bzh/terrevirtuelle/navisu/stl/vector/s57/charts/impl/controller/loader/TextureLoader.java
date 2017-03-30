@@ -34,7 +34,7 @@ public class TextureLoader {
     protected Sector selectedSector = null;
     protected WorldWindow wwd;
 
-    public TextureLoader(Polygon polygon, String outFilename) {
+    public TextureLoader(String outFilename, Polygon polygon) {
         this.polygon = polygon;
         this.outDir = outFilename;
         List<? extends Position> positions = polygon.getBoundaries().get(0);
@@ -55,7 +55,6 @@ public class TextureLoader {
             Object o = iterator.next();
             if (o instanceof TiledImageLayer) {
                 TiledImageLayer layer = (TiledImageLayer) o;
-              //  System.out.println("layer : " + layer);
                 if (layer.isEnabled() && layer.isLayerActive(dc) && layer.isLayerInView(dc)) {
                     currentLayer = layer;
                 }
@@ -65,11 +64,10 @@ public class TextureLoader {
             return;
         }
         final TiledImageLayer activeLayer = currentLayer;
-        BufferedImage image = null;
+        BufferedImage image;
         try {
             image = captureImage(activeLayer, selectedSector, 2048);
             image = flip(image);
-           // System.out.println("image : " + image.getWidth());
             writeImageToFile(selectedSector, image, outDir);
         } catch (Exception ex) {
             Logger.getLogger(TextureLoader.class.getName()).log(Level.SEVERE, null, ex);

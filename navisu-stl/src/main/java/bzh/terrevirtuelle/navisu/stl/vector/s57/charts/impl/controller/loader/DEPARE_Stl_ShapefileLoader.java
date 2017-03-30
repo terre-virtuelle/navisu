@@ -55,6 +55,7 @@ public class DEPARE_Stl_ShapefileLoader
 
         this.outFilename = filename;
         this.polyEnveloppe = polyEnveloppe;
+
         positions = polyEnveloppe.getBoundaries().get(0);
         latOrg = positions.get(0).getLatitude().getDegrees();
         lonOrg = positions.get(0).getLongitude().getDegrees();

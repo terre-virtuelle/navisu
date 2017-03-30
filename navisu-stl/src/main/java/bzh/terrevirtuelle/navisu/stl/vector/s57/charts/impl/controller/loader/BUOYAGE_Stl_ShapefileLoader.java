@@ -11,6 +11,9 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.naviga
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATLAM;
 import bzh.terrevirtuelle.navisu.util.Pair;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
@@ -38,16 +41,19 @@ public class BUOYAGE_Stl_ShapefileLoader
     double latMetric;
     double lonMetric;
     List<? extends Position> positions;
+    Geometry geometryEnveloppe;
+    GeometryFactory geometryFactory;
 
-    public BUOYAGE_Stl_ShapefileLoader(Polygon polygon,
+    public BUOYAGE_Stl_ShapefileLoader(Geometry geometryEnveloppe, Polygon polygon,
             double scaleLatFactor, double scaleLonFactor, double squareSide,
             boolean dev, String path, Map<Pair<Double, Double>, String> topMarks, String marsys, String acronym, Set<S57Controller> s57Controllers) {
         super(dev, path, topMarks, marsys, acronym, s57Controllers);
+        this.geometryEnveloppe = geometryEnveloppe;
         positions = polygon.getBoundaries().get(0);
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
         this.squareSide = squareSide;
-        
+        geometryFactory = new GeometryFactory();
     }
 
     @SuppressWarnings("unchecked")
@@ -56,38 +62,39 @@ public class BUOYAGE_Stl_ShapefileLoader
             double latDegrees, double lonDegrees,
             PointPlacemarkAttributes attrs) {
         super.createPoint(record, latDegrees, lonDegrees, attrs);
+        if (geometryEnveloppe.contains(geometryFactory.createPoint(new Coordinate(lonDegrees, latDegrees)))) {
+            latMetric = WwjGeodesy.getDistanceM(positions.get(0),
+                    new Position(Angle.fromDegrees(latDegrees),
+                            Angle.fromDegrees(positions.get(0).getLongitude().getDegrees()), 100));
+            lonMetric = WwjGeodesy.getDistanceM(positions.get(0),
+                    new Position(Angle.fromDegrees(positions.get(0).getLatitude().getDegrees()),
+                            Angle.fromDegrees(lonDegrees), 100));
+            latMetric *= scaleLatFactor;
+            lonMetric *= scaleLatFactor;
+            latMetric = -squareSide + latMetric;
+            lonMetric = squareSide - lonMetric;
 
-        latMetric = WwjGeodesy.getDistanceM(positions.get(0),
-                new Position(Angle.fromDegrees(latDegrees),
-                        Angle.fromDegrees(positions.get(0).getLongitude().getDegrees()), 100));
-        lonMetric = WwjGeodesy.getDistanceM(positions.get(0),
-                new Position(Angle.fromDegrees(positions.get(0).getLatitude().getDegrees()),
-                        Angle.fromDegrees(lonDegrees), 100));
-        latMetric *= scaleLatFactor;
-        lonMetric *= scaleLatFactor;
-        latMetric = -squareSide + latMetric;
-        lonMetric = squareSide - lonMetric;
-
-        String catMark;
-        if (acronym.contains("CAR")) {
-            catMark = CATCAM.ATT.get(object.getCategoryOfMark());
-        } else if (acronym.contains("LAT")) {
-            catMark = CATLAM.ATT.get(object.getCategoryOfMark());
-            if (catMark.contains("Starboard")) {
-                result += writeCone(lonMetric, latMetric);
-            } else {
-                if (catMark.contains("Port")) {
-                    result += writeCylinder(lonMetric, latMetric);
+            String catMark;
+            if (acronym.contains("CAR")) {
+                catMark = CATCAM.ATT.get(object.getCategoryOfMark());
+            } else if (acronym.contains("LAT")) {
+                catMark = CATLAM.ATT.get(object.getCategoryOfMark());
+                if (catMark.contains("Starboard")) {
+                    result += writeCone(lonMetric, latMetric);
+                } else {
+                    if (catMark.contains("Port")) {
+                        result += writeCylinder(lonMetric, latMetric);
+                    }
                 }
             }
-        }
-        /*
+            /*
         else if (acronym.contains("SPP")) {
             catMark = CATSPM.ATT.get(object.getCategoryOfMark());
         } else if (acronym.contains("ISD")) {
             catMark = "0";
         }
-         */
+             */
+        }
         return placemark;
     }
 

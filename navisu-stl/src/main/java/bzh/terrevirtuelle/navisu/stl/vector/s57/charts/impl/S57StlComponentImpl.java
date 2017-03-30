@@ -200,6 +200,7 @@ public class S57StlComponentImpl
     @Override
     public void componentInitiated() {
         s57ComponentController = new S57StlComponentController(guiAgentServices,
+                layerTreeServices,
                 layersManagerServices,
                 instrumentDriverManagerServices);
 

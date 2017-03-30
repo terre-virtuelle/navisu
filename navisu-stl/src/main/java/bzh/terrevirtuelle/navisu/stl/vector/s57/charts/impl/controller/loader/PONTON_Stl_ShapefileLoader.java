@@ -31,7 +31,6 @@ protected Polygon polyEnveloppe;
     
     @Override
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
-        System.out.println("PONTON_Stl_ShapefileLoader createPolylineAttributes");
         this.record = record;
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setDrawInterior(false);
