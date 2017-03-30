@@ -75,6 +75,8 @@ public class LayerCheckTreeImpl
         rootItems.add(createNode(rootItem0, "On-screen layers", "boussole.png"));
         CheckBoxTreeItem<GeoLayer> charts = createNode(rootItem0, "Charts", "charts-16x16.png");
         rootItems.add(charts);
+        CheckBoxTreeItem<GeoLayer> buildings = createNode(rootItem0, "Buildings", "charts-16x16.png");
+        rootItems.add(buildings);
         CheckBoxTreeItem<GeoLayer> raster = createNode(charts, "Raster charts", null);
         rootItems.add(raster);
         CheckBoxTreeItem<GeoLayer> tmp = createNode(raster, "BSB/KAP charts", null);

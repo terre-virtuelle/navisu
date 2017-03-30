@@ -584,6 +584,10 @@ public class S57ChartComponentController
         return coastalSurfacePolylinesList;
     }
 
+    public GeoViewServices getGeoViewServices() {
+        return geoViewServices;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
