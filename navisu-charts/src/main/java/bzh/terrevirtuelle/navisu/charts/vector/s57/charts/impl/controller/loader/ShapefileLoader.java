@@ -8,14 +8,33 @@ package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loade
 import bzh.terrevirtuelle.navisu.core.util.shapefile.RandomShapeAttributes;
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.avlist.AVKey;
-import gov.nasa.worldwind.formats.shapefile.*;
-import gov.nasa.worldwind.geom.*;
-import gov.nasa.worldwind.layers.*;
-import gov.nasa.worldwind.render.*;
-import gov.nasa.worldwind.util.*;
+import gov.nasa.worldwind.formats.shapefile.Shapefile;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordMultiPoint;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPoint;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolygon;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolyline;
+import gov.nasa.worldwind.formats.shapefile.ShapefileUtils;
+import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.geom.Sector;
+import gov.nasa.worldwind.layers.Layer;
+import gov.nasa.worldwind.layers.RenderableLayer;
+import gov.nasa.worldwind.render.ExtrudedPolygon;
+import gov.nasa.worldwind.render.PointPlacemark;
+import gov.nasa.worldwind.render.PointPlacemarkAttributes;
+import gov.nasa.worldwind.render.Renderable;
+import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolygons;
+import gov.nasa.worldwind.render.SurfacePolylines;
+import gov.nasa.worldwind.util.Logging;
+import gov.nasa.worldwind.util.VecBuffer;
+import gov.nasa.worldwind.util.WWIO;
+import gov.nasa.worldwind.util.WWMath;
+import gov.nasa.worldwind.util.WWUtil;
+import java.util.ArrayList;
+import java.util.List;
 
 
-import java.util.*;
 
 
 /**
