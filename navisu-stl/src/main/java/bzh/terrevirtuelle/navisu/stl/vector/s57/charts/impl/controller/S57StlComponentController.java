@@ -16,13 +16,11 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controlle
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.M_NSYS_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.TOPMAR_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
-import bzh.terrevirtuelle.navisu.core.view.geoview.layer.worldwind.impl.WorldWindGeoLayer;
-import bzh.terrevirtuelle.navisu.stl.osm.layers.OSMBuildingsStlLayer;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BUOYAGE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BaseLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.DEPARE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.ElevationLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.PONTON_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.TextureLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.RefLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.SLCONS_Stl_ShapefileLoader;
@@ -33,7 +31,6 @@ import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -76,7 +73,7 @@ public class S57StlComponentController
         extends S57ChartComponentController
         implements Initializable {
 
-    private static S57StlComponentController INSTANCE = null;
+    private static final S57StlComponentController STL_INSTANCE = null;
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected String OUT_DIR = "privateData/x3d/";
@@ -94,7 +91,6 @@ public class S57StlComponentController
     protected WKTReader wktReader;
     protected Geometry geometry;
     private final GeodeticCalculator geoCalc;
-    //  private final Ellipsoid reference = Ellipsoid.WGS84;//default
     private KMLSurfacePolygonImpl polygon;
     List<? extends Position> positions;
     double latRangeMetric;
@@ -126,19 +122,17 @@ public class S57StlComponentController
         this.instrumentDriverManagerServices = instrumentDriverManagerServices;
         layer = layersManagerServices.getLayer(GROUP, NAME);
         geoCalc = new GeodeticCalculator();
-      //  Layer buildings = new OSMBuildingsStlLayer();
-      //  layerTreeServices.addGeoLayer("Buildings", buildings);
-       // wwd.getModel().getLayers().add(buildings);
-        
-        
-        
+        //  Layer buildings = new OSMBuildingsStlLayer();
+        //  layerTreeServices.addGeoLayer("Buildings", buildings);
+        // wwd.getModel().getLayers().add(buildings);
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tileCB.setItems(FXCollections.observableArrayList("1", "4", "9", "25"));
         tileCB.setValue("1");
-        
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             guiAgentServices.getScene().removeEventFilter(KeyEvent.KEY_RELEASED, this);
             guiAgentServices.getRoot().getChildren().remove(this);
@@ -332,6 +326,7 @@ public class S57StlComponentController
                 + "<meta name='generator' content='NaVisu'/>\n"
                 + "<meta name='license' content=' ../../license.html'/>\n"
                 + "</head>\n"
+                + "<NavigationInfo type='\"EXAMINE\" \"WALK\" \"FLY\" \"ANY\"'/>\n"
                 + "<Scene>\n";
         try {
             Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.CREATE,
@@ -366,10 +361,10 @@ public class S57StlComponentController
                         //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     case "PONTON.shp":
-                        // load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
+                         load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
                         break;
                     case "SLCONS.shp":
-                      //  load(new SLCONS_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "SLCONS", "/");
+                          load(new SLCONS_Stl_ShapefileLoader(OUT_PATH, layer, polyEnveloppe), "HARBOUR", "SLCONS", "/");
                         break;
                     case "BCNCAR.shp":
                         BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderCar
@@ -382,6 +377,17 @@ public class S57StlComponentController
                             write(OUT_PATH, resultCar);
                         }
                         break;
+                    case "BOYCAR.shp":
+                        buoyageStlShapefileLoaderCar
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, SQUARE_SIDE,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", null);
+                        load(buoyageStlShapefileLoaderCar, "BUOYAGE", "BCNCAR", "/");
+                        resultCar = buoyageStlShapefileLoaderCar.compute();
+                        if (resultCar != null) {
+                            write(OUT_PATH, resultCar);
+                        }
+                        break;
                     case "BCNLAT.shp":
                         BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderLat
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
@@ -389,6 +395,17 @@ public class S57StlComponentController
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", null);
                         load(buoyageStlShapefileLoaderLat, "BUOYAGE", "BCNLAT", "/");
                         String resultLat = buoyageStlShapefileLoaderLat.compute();
+                        if (resultLat != null) {
+                            write(OUT_PATH, resultLat);
+                        }
+                        break;
+                    case "BOYLAT.shp":
+                        buoyageStlShapefileLoaderLat
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, SQUARE_SIDE,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", null);
+                        load(buoyageStlShapefileLoaderLat, "BUOYAGE", "BCNLAT", "/");
+                        resultLat = buoyageStlShapefileLoaderLat.compute();
                         if (resultLat != null) {
                             write(OUT_PATH, resultLat);
                         }
@@ -431,15 +448,11 @@ public class S57StlComponentController
                         case "BRIDGE.shp":
                             load(new BRIDGE_ShapefileLoader(), "BUILDING", "BRIDGE", "/");
                             break;
-                        case "BOYCAR.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYCAR", s57Controllers), "BUOYAGE", "BOYCAR", "/");
-                            break;
+                        
                         case "BOYISD.shp":
                             load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYISD", s57Controllers), "BUOYAGE", "BOYISD", "/");
                             break;
-                        case "BOYLAT.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYLAT", s57Controllers), "BUOYAGE", "BOYLAT", "/");
-                            break;
+                        
                         case "BOYSAW.shp":
                             load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSAW", s57Controllers), "BUOYAGE", "BOYSAW", "/");
                             break;

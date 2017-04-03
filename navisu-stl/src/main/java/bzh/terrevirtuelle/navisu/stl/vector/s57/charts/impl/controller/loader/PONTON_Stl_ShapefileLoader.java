@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.PONTON_ShapefileLoader;
@@ -19,16 +18,18 @@ import java.awt.Color;
  * @author serge
  * @date Mar 20, 2017
  */
-public class PONTON_Stl_ShapefileLoader 
-        extends PONTON_ShapefileLoader{
-protected String filename;
-protected Polygon polyEnveloppe;
+public class PONTON_Stl_ShapefileLoader
+        extends PONTON_ShapefileLoader {
+
+    protected String filename;
+    protected Polygon polyEnveloppe;
 
     public PONTON_Stl_ShapefileLoader(String filename, Polygon polyEnveloppe) {
         this.filename = filename;
         this.polyEnveloppe = polyEnveloppe;
+        System.out.println("PONTON_Stl_ShapefileLoader");
     }
-    
+
     @Override
     protected ShapeAttributes createPolylineAttributes(ShapefileRecord record) {
         this.record = record;
@@ -39,7 +40,8 @@ protected Polygon polyEnveloppe;
         normalAttributes.setOutlineWidth(2.0);
         return normalAttributes;
     }
-@SuppressWarnings({"UnusedDeclaration"})
+
+    @SuppressWarnings({"UnusedDeclaration"})
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
         System.out.println("record " + record);

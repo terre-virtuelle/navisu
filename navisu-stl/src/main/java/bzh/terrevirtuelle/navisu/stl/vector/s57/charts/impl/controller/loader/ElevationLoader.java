@@ -29,6 +29,9 @@ public class ElevationLoader {
     protected String bottom = "";
     protected double SQUARE_SIDE = 200;
     protected int PTS_COUNT = 200;
+    protected String BOTTOM_STR = "0.0";
+    protected double BOTTOM = Double.valueOf(BOTTOM_STR);
+    protected double MAGNIFICATION = 10;
     protected List<Point3D> bottomPositions;
     protected List<Point3D> topPositions;
     double space;
@@ -50,7 +53,7 @@ public class ElevationLoader {
 
         latRange = Math.abs(latRange);
         lonRange = Math.abs(lonRange);
-
+        
         for (double lon = positions.get(1).getLongitude().getDegrees();
                 lon > positions.get(0).getLongitude().getDegrees();
                 lon -= lonRange) {
@@ -58,9 +61,9 @@ public class ElevationLoader {
                     lat > positions.get(0).getLatitude().getDegrees();
                     lat -= latRange) {
                 double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                el /= 10;
+                el /= MAGNIFICATION;
                 elevations += el + " ";
-                bottom += "-0.10 ";
+                bottom += BOTTOM_STR + " ";
             }
         }
         result += createDEM(elevations, "<ImageTexture DEF='MYTEXT' url='\"image.jpg\"'/> \n"
@@ -75,9 +78,9 @@ public class ElevationLoader {
                 lon > positions.get(0).getLongitude().getDegrees();
                 lon -= lonRange) {
             double el = model.getElevation(Angle.fromDegrees(lat0), Angle.fromDegrees(lon));
-            el /= 10;
+            el /= MAGNIFICATION;
             topPositions.add(new Point3D(pos, el, 0.0));
-            bottomPositions.add(new Point3D(pos, -0.10, 0.0));
+            bottomPositions.add(new Point3D(pos, BOTTOM, 0.0));
             pos += space;
         }
         result += createBoundaryFace("", bottomPositions, topPositions);
@@ -92,7 +95,7 @@ public class ElevationLoader {
             double el = model.getElevation(Angle.fromDegrees(lat0), Angle.fromDegrees(lon));
             el /= 10;
             topPositions.add(new Point3D(pos, el, -SQUARE_SIDE));
-            bottomPositions.add(new Point3D(pos, -0.10, -SQUARE_SIDE));
+            bottomPositions.add(new Point3D(pos, BOTTOM, -SQUARE_SIDE));
             pos += space;
         }
         result += createBoundaryFace("", bottomPositions, topPositions);
@@ -107,7 +110,7 @@ public class ElevationLoader {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
             el /= 10;
             topPositions.add(new Point3D(0.0, el, pos));
-            bottomPositions.add(new Point3D(0.0, -0.10, pos));
+            bottomPositions.add(new Point3D(0.0, BOTTOM, pos));
             pos += space;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n", bottomPositions, topPositions);
@@ -122,7 +125,7 @@ public class ElevationLoader {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
             el /= 10;
             topPositions.add(new Point3D(-SQUARE_SIDE, el, pos));
-            bottomPositions.add(new Point3D(-SQUARE_SIDE, -0.10, pos));
+            bottomPositions.add(new Point3D(-SQUARE_SIDE, BOTTOM, pos));
             pos += space;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n", bottomPositions, topPositions);
@@ -133,7 +136,7 @@ public class ElevationLoader {
     private String createDEM(String height, String texture) {
 
         String txt
-                = "<Transform rotation='0 1 0 1.57058'> \n"
+                = "<Transform rotation='0 1 0 1.57058' translation='0.0 -0.1 0.0'> \n"
                 + "<Shape>\n"
                 + "<Appearance>\n"
                 + texture

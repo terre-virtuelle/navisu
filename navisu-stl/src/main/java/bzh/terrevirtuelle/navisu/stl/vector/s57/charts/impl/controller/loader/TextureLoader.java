@@ -117,7 +117,6 @@ public class TextureLoader {
     private BufferedImage flip(BufferedImage in) {
         BufferedImage out = new BufferedImage(in.getWidth(null),
                 in.getHeight(null), BufferedImage.TYPE_INT_RGB);
-        //Graphics2D g2d = in.createGraphics();
         Graphics gb = out.getGraphics();
         gb.drawImage(in, 0, 0, null);
         gb.dispose();

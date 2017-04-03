@@ -77,13 +77,33 @@ public class BUOYAGE_Stl_ShapefileLoader
             String catMark;
             if (acronym.contains("CAR")) {
                 catMark = CATCAM.ATT.get(object.getCategoryOfMark());
+                if (catMark != null) {
+                    if (catMark.contains("South")) {
+                        result += writeSouthBuoy(lonMetric, latMetric);
+                    } else {
+                        if (catMark.contains("North")) {
+                            result += writeNorthBuoy(lonMetric, latMetric);
+                        } else {
+                            if (catMark.contains("West")) {
+                                result += writeWestBuoy(lonMetric, latMetric);
+                            } else {
+                                if (catMark.contains("East")) {
+                                    result += writeEastBuoy(lonMetric, latMetric);
+                                }
+                            }
+                        }
+                    }
+                }
             } else if (acronym.contains("LAT")) {
+
                 catMark = CATLAM.ATT.get(object.getCategoryOfMark());
-                if (catMark.contains("Starboard")) {
-                    result += writeCone(lonMetric, latMetric);
-                } else {
-                    if (catMark.contains("Port")) {
-                        result += writeCylinder(lonMetric, latMetric);
+                if (catMark != null) {
+                    if (catMark.contains("Starboard")) {
+                        result += writeCone(lonMetric, latMetric);
+                    } else {
+                        if (catMark.contains("Port")) {
+                            result += writeCylinder(lonMetric, latMetric);
+                        }
                     }
                 }
             }
@@ -118,39 +138,123 @@ public class BUOYAGE_Stl_ShapefileLoader
                 + "			transparency=\"0.0\" \n"
                 + "              />\n"
                 + "		 </Appearance>\n"
-                + "          <Cylinder/>\n"
+                + "          <Cylinder height='5' radius='1.5'/>\n"
                 + "    </Shape>\n"
                 + "</Transform>\n";
         return str;
     }
 
     private String writeCone(double lat, double lon) {
-        String str = "<Transform \n"
-                + "		           translation=\"" + lat + " 1.00000 " + lon + "\"\n"
-                + "		           scale=\"0.5000000 0.5000000 0.5000000\"\n"
-                + "		           rotation=\"0.000000 0.000000 0.000000 0\">\n"
-                + "				<Group DEF=\"catMark LAT Starboard\">\n"
-                + "					<Shape>\n"
-                + "						<Appearance>\n"
-                + "							<Material DEF=\"MA_Shape\"\n"
-                + "							          diffuseColor=\"0.00 1.00 0.00\"\n"
-                + "							          specularColor=\"0.000 1.000 0.000\"\n"
-                + "							          emissiveColor=\"0.000 1.000 0.000\"\n"
-                + "							          ambientIntensity=\"0.0\"\n"
-                + "							          shininess=\"1.\"\n"
-                + "							          transparency=\"0.0\"\n"
-                + "							          />\n"
-                + "						</Appearance>\n"
-                + "						<IndexedFaceSet solid=\"true\"\n"
-                + "						                coordIndex=\"2 0 1 -1 3 0 2 -1 4 0 3 -1 5 0 4 -1 6 0 5 -1 7 0 6 -1 8 0 7 -1 9 0 8 -1 10 0 9 -1 11 0 10 -1 12 0 11 -1 13 0 12 -1 14 0 13 -1 15 0 14 -1 16 0 15 -1 1 0 16 -1 1 16 15 -1 15 14 13 -1 13 12 11 -1 11 10 9 -1 9 8 7 -1 7 6 5 -1 5 4 3 -1 3 2 1 -1 1 15 13 -1 13 11 9 -1 9 7 5 -1 5 3 1 -1 1 13 9 -1 9 5 1 -1 \"\n"
-                + "						                >\n"
-                + "							<Coordinate DEF=\"coords_ME_Shape_Cone\"\n"
-                + "							            point=\"0.000000 2.660725 0.000000 -0.000000 -2.660725 -3.334500 -1.276058 -2.660725 -3.080676 -2.357847 -2.660725 -2.357847 -3.080676 -2.660725 -1.276058 -3.334500 -2.660725 -0.000000 -3.080676 -2.660725 1.276058 -2.357847 -2.660725 2.357847 -1.276058 -2.660725 3.080676 -0.000000 -2.660725 3.334500 1.276058 -2.660725 3.080676 2.357847 -2.660725 2.357847 3.080676 -2.660725 1.276058 3.334500 -2.660725 0.000000 3.080676 -2.660725 -1.276058 2.357847 -2.660725 -2.357847 1.276058 -2.660725 -3.080676 \"\n"
-                + "							            />\n"
-                + "						</IndexedFaceSet>\n"
-                + "					</Shape>\n"
-                + "				</Group>\n"
-                + "		</Transform>\n";
+        String str = "<Transform translation=\"" + lat + " 2.00000 " + lon + "\">\n"
+                + "  <Shape>\n"
+                + " <Appearance>\n"
+                + "    <Material diffuseColor='0 1 0'/>\n"
+                + "  </Appearance>\n"
+                + "  <Cone bottomRadius='2' height='5'/>\n"
+                + "  </Shape>\n"
+                + " </Transform>\n";
+        return str;
+    }
+
+    private String writeWestBuoy(double lat, double lon) {
+
+        String str = "<Group DEF='WestBuoy'>\n"
+                + "<Transform translation=\"" + lat + " 2.00000 " + lon + "\">\n"
+                + "<Transform rotation='1 0 0 1.57058' translation='0 -1.5 .75'>\n"
+                + "  <Shape>\n"
+                + " <Appearance>\n"
+                + "    <Material diffuseColor='1 1 0.0'/>\n"
+                + "  </Appearance>\n"
+                + "  <Cone bottomRadius='2' height='5'/>\n"
+                + "  </Shape>\n"
+                + " </Transform>\n"
+                + " <Transform rotation='1 0 0 -1.57058' translation='0 -1.5 2'>\n"
+                + "   <Shape>\n"
+                + "    <Appearance>\n"
+                + "       <Material diffuseColor='0 0 0.0'/>\n"
+                + "   </Appearance>\n"
+                + "    <Cone bottomRadius='2' height='5'/>\n"
+                + " </Shape>\n"
+                + " </Transform>\n"
+                + " </Transform>\n"
+                + "</Group>";
+        return str;
+    }
+
+    private String writeSouthBuoy(double lat, double lon) {
+
+        String str = "<Group DEF='SouthBuoy'>\n"
+                + "<Transform translation=\"" + lat + " 2.00000 " + lon + "\" rotation='0 1 0 3.14116'>\n"
+                + "<Transform rotation='1 0 0 1.57058' translation='0 -1.2 0'>\n"
+                + "  <Shape>\n"
+                + " <Appearance>\n"
+                + "    <Material diffuseColor='1 1 0.0'/>\n"
+                + "  </Appearance>\n"
+                + "  <Cone bottomRadius='2' height='5'/>\n"
+                + "  </Shape>\n"
+                + " </Transform>\n"
+                + "<Transform rotation='1 0 0 1.57058' translation='0 -1.2 4'>\n"
+                + "   <Shape>\n"
+                + "    <Appearance>\n"
+                + "       <Material diffuseColor='1 1 0.0'/>\n"
+                + "   </Appearance>\n"
+                + "    <Cone bottomRadius='2' height='5'/>\n"
+                + " </Shape>\n"
+                + " </Transform>\n"
+                + " </Transform>\n"
+                + "</Group>";
+        return str;
+    }
+
+    private String writeNorthBuoy(double lat, double lon) {
+
+        String str = "<Group DEF='SouthBuoy'>\n"
+                + "<Transform translation=\"" + lat + " 2.00000 " + lon + "\" >\n"
+                + "<Transform rotation='1 0 0 1.57058' translation='0 -1.2 0'>\n"
+                + "  <Shape>\n"
+                + " <Appearance>\n"
+                + "    <Material diffuseColor='0 0 0.0'/>\n"
+                + "  </Appearance>\n"
+                + "  <Cone bottomRadius='2' height='5'/>\n"
+                + "  </Shape>\n"
+                + " </Transform>\n"
+                + "<Transform rotation='1 0 0 1.57058' translation='0 -1.2 4'>\n"
+                + "   <Shape>\n"
+                + "    <Appearance>\n"
+                + "       <Material diffuseColor='0 0 0.0'/>\n"
+                + "   </Appearance>\n"
+                + "    <Cone bottomRadius='2' height='5'/>\n"
+                + " </Shape>\n"
+                + " </Transform>\n"
+                + " </Transform>\n"
+                + "</Group>";
+        return str;
+    }
+
+    private String writeEastBuoy(double lat, double lon) {
+
+        String str = "<Transform translation=\"" + lat + " 2.00000 " + lon + "\">\n"
+                + "<Group DEF='EastBuoy'> \n"
+                + "<Transform rotation='1 0 0 1.57058' translation='0 -1.2 0'>\n"
+                + "<Transform rotation='0 0 1 3.14116' >\n"
+                + "<Shape>\n"
+                + " <Appearance>\\\n"
+                + "<Material diffuseColor='0 0 0.0'/>\n"
+                + "  </Appearance>\n"
+                + "  <Cone bottomRadius='2' height='5'/>\n"
+                + "  </Shape>\n"
+                + "            </Transform>\n"
+                + "             </Transform>\n"
+                + "            <Transform rotation='1 0 0 1.57058' translation='0 -1.2 5.5'>  \n"
+                + "                <Shape>\n"
+                + "                    <Appearance>\n"
+                + "                        <Material diffuseColor='1 1 0.0'/>\n"
+                + "                    </Appearance>\\n\"\n"
+                + "                    <Cone bottomRadius='2' height='5'/>\n"
+                + "                </Shape>\n"
+                + "            </Transform>\n"
+                + "        +</Group>\n"
+                + " </Transform>\n";
         return str;
     }
 }

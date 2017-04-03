@@ -11,7 +11,6 @@ package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
  * @date Mar 18, 2017
  */
 public class BaseLoader {
-
     String txt = "<Transform DEF=\"Shape_Box_TRANSFORM\" \n"
             + "translation=\"100.000000 -1.0000 -100.000000\" >\n"
             + "<Group DEF=\"group_ME_Shape_Box\">\n"
