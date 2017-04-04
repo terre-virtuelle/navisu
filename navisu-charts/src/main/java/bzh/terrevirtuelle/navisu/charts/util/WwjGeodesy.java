@@ -36,8 +36,8 @@ public class WwjGeodesy {
         GlobalCoordinates wpB = new GlobalCoordinates(posB.getLatitude().getDegrees(), posB.getLongitude().getDegrees());
         GlobalCoordinates wpC = new GlobalCoordinates(posB.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
 
-        double x = geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpC).getEllipsoidalDistance() / KM_TO_METER;
-        double y = geoCalc.calculateGeodeticCurve(REFERENCE, wpC, wpB).getEllipsoidalDistance() / KM_TO_METER;
+        double y = geoCalc.calculateGeodeticCurve(REFERENCE, wpA, wpC).getEllipsoidalDistance() / KM_TO_METER;
+        double x = geoCalc.calculateGeodeticCurve(REFERENCE, wpC, wpB).getEllipsoidalDistance() / KM_TO_METER;
         return new Pair<>(x, y);
     }
 

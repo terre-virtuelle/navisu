@@ -173,6 +173,20 @@ public class WwjJTS {
         return polygon;
     }
 
+    public static Geometry PolygonToGeometry(Polygon polygon) {
+        Iterable<? extends LatLon> latLon = polygon.getOuterBoundary();
+        List<Position> positionList = new ArrayList<>();
+        for (LatLon l : latLon) {
+            positionList.add(new Position(l, 10.0));
+        }
+        Coordinate[] coordinates = new Coordinate[positionList.size()];
+        for (int i = 0; i < positionList.size(); i++) {
+            coordinates[i] = new Coordinate(positionList.get(i).getLongitude().getDegrees(),
+                    positionList.get(i).getLatitude().getDegrees());
+        }
+        return new GeometryFactory().createLineString(coordinates);
+    }
+
     public static List<Position> wktPolygonToPositionList(String geometry) {
         List<Position> positions = null;
         String[] tab0;
@@ -185,17 +199,17 @@ public class WwjJTS {
                 tab1 = tab0[1].split("\\)\\)");
                 tab2 = tab1[0].split(",");
                 int l = tab2.length;
-             //   for(String s : tab2){
-             //       System.out.println("s : " + s);
-              //  }
+                //   for(String s : tab2){
+                //       System.out.println("s : " + s);
+                //  }
                 for (int i = 0; i < l; i++) {
-                   String[] latLon = tab2[i].trim().split(" ");
-                   String lat = latLon[1];
-                   String lon = latLon[0];
+                    String[] latLon = tab2[i].trim().split(" ");
+                    String lat = latLon[1];
+                    String lon = latLon[0];
 
-                   positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
-                           Angle.fromDegrees(Double.parseDouble(lon)), 5));
-                } 
+                    positions.add(new Position(Angle.fromDegrees(Double.parseDouble(lat)),
+                            Angle.fromDegrees(Double.parseDouble(lon)), 5));
+                }
             }
         }
         return positions;
@@ -230,4 +244,23 @@ public class WwjJTS {
         result += locList.get(locList.size() - 1) + "))";
         return result;
     }
+
+    public static Geometry filter(Geometry geometry, List<LatLon> pts) {
+        String wkt = WwjJTS.toPolygonWkt1(pts);
+        WKTReader wktReader = new WKTReader();
+        Geometry geometryFiltered;
+        Geometry polygon = null;
+        if (wkt != null) {
+            try {
+                polygon = wktReader.read(wkt);
+            } catch (com.vividsolutions.jts.io.ParseException ex) {
+                Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            geometryFiltered = geometry.intersection(polygon);
+        } else {
+            geometryFiltered = null;
+        }
+        return geometryFiltered;
+    }
+
 }
