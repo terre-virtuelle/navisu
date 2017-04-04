@@ -369,7 +369,7 @@ public class S57StlComponentController
                         load(slConsStlShapefileLoader, "HARBOUR", "SLCONS", "/");
                         String resultSl = slConsStlShapefileLoader.compute();
                         if (resultSl != null) {
-                        //    write(OUT_PATH, resultSl);
+                            write(OUT_PATH, resultSl);
                         }
                         break;
                     case "BCNCAR.shp":
