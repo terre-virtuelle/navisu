@@ -361,10 +361,16 @@ public class S57StlComponentController
                         //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     case "PONTON.shp":
-                         load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
+                    //    load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
+
                         break;
                     case "SLCONS.shp":
-                          load(new SLCONS_Stl_ShapefileLoader(OUT_PATH, layer, polyEnveloppe), "HARBOUR", "SLCONS", "/");
+                        SLCONS_Stl_ShapefileLoader slConsStlShapefileLoader = new SLCONS_Stl_ShapefileLoader(OUT_PATH, layer, polyEnveloppe);
+                        load(slConsStlShapefileLoader, "HARBOUR", "SLCONS", "/");
+                        String resultSl = slConsStlShapefileLoader.compute();
+                        if (resultSl != null) {
+                        //    write(OUT_PATH, resultSl);
+                        }
                         break;
                     case "BCNCAR.shp":
                         BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderCar

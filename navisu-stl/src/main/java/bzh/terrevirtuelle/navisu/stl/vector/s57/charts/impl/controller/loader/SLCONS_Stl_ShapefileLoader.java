@@ -5,13 +5,9 @@
  */
 package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 
+import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.SLCONS_ShapefileLoader;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryFactory;
-import com.vividsolutions.jts.operation.buffer.BufferOp;
-import com.vividsolutions.jts.operation.buffer.BufferParameters;
-import gov.nasa.worldwind.avlist.AVKey;
+import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
@@ -42,13 +38,19 @@ public class SLCONS_Stl_ShapefileLoader
     protected RenderableLayer layer;
     // protected List<Polygon> polygonList;
     protected double bufferDistance = 10;
+    protected double height = 1;
+    String result = "";
     int i = 0;
+    Position orig;
 
     public SLCONS_Stl_ShapefileLoader(String filename, RenderableLayer layer, Polygon polyEnveloppe) {
         this.layer = layer;
         this.filename = filename;
         this.polyEnveloppe = polyEnveloppe;
-
+        List<List<? extends Position>> positions = polyEnveloppe.getBoundaries();
+        System.out.println("positions : " + positions);
+        System.out.println("getOuterBoundary : "+polyEnveloppe.getOuterBoundary());
+        orig = positions.get(0).get(0);
     }
 
     @Override
@@ -62,10 +64,6 @@ public class SLCONS_Stl_ShapefileLoader
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setDrawInterior(false);
         normalAttributes.setDrawOutline(true);
-        // Color color = Color.WHITE;
-        //  float[] cc = color.getRGBComponents(null);
-        //  color = new Color(cc[0] * (float) Math.random(), cc[1] * (float) Math.random(), cc[2] * (float) Math.random(),cc[3]);
-        //  normalAttributes.setOutlineMaterial(new Material(color));//Material.BLUE);
         normalAttributes.setOutlineMaterial(Material.BLUE);
         normalAttributes.setOutlineWidth(2.0);
 
@@ -75,9 +73,7 @@ public class SLCONS_Stl_ShapefileLoader
     @SuppressWarnings({"UnusedDeclaration"})
     @Override
     protected ShapeAttributes createPolygonAttributes(ShapefileRecord record) {
-        // System.out.println("SLCONS_Stl_ShapefileLoader createPolygonAttributes");
         Color color = Color.BLACK;
-
         ShapeAttributes normalAttributes = new BasicShapeAttributes();
         normalAttributes.setInteriorMaterial(new Material(color));
         return normalAttributes;
@@ -86,13 +82,29 @@ public class SLCONS_Stl_ShapefileLoader
     protected void createBuffers(Iterable<? extends LatLon> latLon) {
 
         List<Position> positionList = new ArrayList<>();
-       
+
         for (LatLon l : latLon) {
-            positionList.add(new Position(l, 100.0));
+            positionList.add(new Position(l, 10.0));
         }
-        
+
         Path path = new Path(positionList);
         layer.addRenderable(path);
+
+        ShapeAttributes normalAttributes = new BasicShapeAttributes();
+        normalAttributes.setDrawInterior(false);
+        normalAttributes.setDrawOutline(true);
+        normalAttributes.setOutlineMaterial(Material.GREEN);
+        normalAttributes.setOutlineWidth(2.0);
+
+        if (positionList.size() > 3 && positionList.get(0).equals(positionList.get(positionList.size() - 1))) {
+            Polygon polygon = new Polygon(positionList);
+            polygon.setAttributes(normalAttributes);
+            layer.addRenderable(polygon);
+            //  if(polyEnveloppe.outerBoundary().contains(polygon.getBoundaries())){
+            createSlCons(positionList);
+            // }
+        }
+
         /*
         Coordinate[] coordinates = new Coordinate[latLonList.size()];
         for (int i = 0; i < latLonList.size(); i++) {
@@ -121,8 +133,45 @@ public class SLCONS_Stl_ShapefileLoader
 
         offset.setAttributes(normalAttributes);
         layer.addRenderable(offset);
-*/
-        
-        
+         */
+    }
+
+    protected void createSlCons(List<Position> positionList) {
+        /*
+        List<LatLon> latLonList = new ArrayList<>();
+        for (Position p : positionList) {
+            latLonList.add(new LatLon(p.getLatitude(), p.getLongitude()));
+        }
+        Geometry geo = WwjJTS.filter(WwjJTS.PolygonToGeometry(polyEnveloppe), latLonList);
+        List<Position> ptsFiltered = null;
+        if (!geo.toString().contains("EMPTY") && !geo.toString().contains("MULTIPOLYGON")) {
+            ptsFiltered = WwjJTS.wktPolygonToPositionList(geo.toString());
+        }
+        if (ptsFiltered != null) {
+            if (!ptsFiltered.isEmpty()) {
+         */
+        //"<Transform rotation='0 0 1 3.14'> \n"
+        result
+                += " <Shape>\n"
+                + "<Appearance>\n"
+                + " <Material diffuseColor='1.0 1. 1.0'/> \n"
+                + "</Appearance>\n"
+                + "<Extrusion convex='true' \n"
+                + " crossSection='";
+
+        positionList.stream().map((p) -> WwjGeodesy.getXYM(orig, p)).forEachOrdered((xy) -> {
+            double x = 200 - xy.getX()*11.85;
+            double y = -200 + xy.getY()*11.85;
+            result += x + " " + y + (",");
+        });
+
+        result += "'\n "
+                + "solid='false' \n"
+                + "spine='0 0 0 0 " + height + " 0'/>\n"
+                + "</Shape>\n";
+    }
+
+    public String compute() {
+        return result;
     }
 }

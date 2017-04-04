@@ -94,7 +94,7 @@ public class DEPARE_Stl_ShapefileLoader
         nb++;
         val1 = 51 - val1;
         List<LatLon> pts = addRenderablesForExtrudedPolygons(record.getShapeFile(), val1, val2);
-        Geometry geo = filter(pts);
+        Geometry geo = WwjJTS.filter(geometryEnveloppe, pts);
         List<Position> ptsFiltered = null;
         if (!geo.toString().contains("EMPTY") && !geo.toString().contains("MULTIPOLYGON")) {
             ptsFiltered = WwjJTS.wktPolygonToPositionList(geo.toString());
@@ -162,25 +162,7 @@ public class DEPARE_Stl_ShapefileLoader
         }
         return pts;
     }
-
-    private Geometry filter(List<LatLon> pts) {
-        String wkt = WwjJTS.toPolygonWkt1(pts);
-        WKTReader wktReader = new WKTReader();
-        Geometry geometryFiltered;
-        Geometry polygon = null;
-        if (wkt != null) {
-            try {
-                polygon = wktReader.read(wkt);
-            } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            geometryFiltered = geometryEnveloppe.intersection(polygon);
-        } else {
-            geometryFiltered = null;
-        }
-        return geometryFiltered;
-    }
-
+    
     public String compute() {
         return txt;
     }
