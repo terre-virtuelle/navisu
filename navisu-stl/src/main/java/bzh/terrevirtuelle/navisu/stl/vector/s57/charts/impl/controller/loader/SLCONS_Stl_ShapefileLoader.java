@@ -160,8 +160,8 @@ public class SLCONS_Stl_ShapefileLoader
                 + " crossSection='";
 
         positionList.stream().map((p) -> WwjGeodesy.getXYM(orig, p)).forEachOrdered((xy) -> {
-            double x = 200 - xy.getX()*11.85;
-            double y = -200 + xy.getY()*11.85;
+            double x = 200 - xy.getX()*11.85;//*11.85;
+            double y = -200 + xy.getY()*11.85;//*11.85;
             result += x + " " + y + (",");
         });
 
