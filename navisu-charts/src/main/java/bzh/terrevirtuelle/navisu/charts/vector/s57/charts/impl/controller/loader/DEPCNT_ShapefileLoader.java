@@ -5,12 +5,17 @@
  */
 package bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader;
 
+import gov.nasa.worldwind.avlist.AVKey;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
+import gov.nasa.worldwind.formats.shapefile.ShapefileRecordPolyline;
+import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
+import gov.nasa.worldwind.render.Renderable;
 import gov.nasa.worldwind.render.ShapeAttributes;
+import gov.nasa.worldwind.render.SurfacePolylines;
 
 /**
  *
@@ -45,8 +50,19 @@ public class DEPCNT_ShapefileLoader
             }
             ShapeAttributes attrs = this.createPolylineAttributes(record);
             layer.addRenderable(this.createPolyline(record, attrs));
+
         }
-       // shp.setValue(AVKey.DISPLAY_NAME,"000");
+
+    }
+
+    @Override
+    protected Renderable createPolyline(ShapefileRecord record, ShapeAttributes attrs) {
+        SurfacePolylines shape = new SurfacePolylines(
+                Sector.fromDegrees(((ShapefileRecordPolyline) record).getBoundingRectangle()),
+                record.getCompoundPointBuffer());
+        shape.setAttributes(attrs);
+        shape.setValue(AVKey.DISPLAY_NAME, record.getAttributes().getValue("VALDCO"));
+        return shape;
     }
 
     @Override
