@@ -39,8 +39,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 /**
@@ -54,7 +54,7 @@ public class DarkSkyController
     @FXML
     public Group weatherPanel;
     @FXML
-    public ImageView quit;
+    public Pane quit;
     @FXML
     Text title;
     @FXML

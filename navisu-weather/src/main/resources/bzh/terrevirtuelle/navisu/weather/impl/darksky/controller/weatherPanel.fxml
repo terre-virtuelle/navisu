@@ -7,8 +7,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -23,7 +21,9 @@
         <Group>
             <children>
                 <Pane prefHeight="340.0" prefWidth="395.0" styleClass="background-pane" />
-                <Rectangle arcHeight="5.0" arcWidth="5.0"  height="340.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="395.0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" height="340.0" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcadres" width="395.0" />
+                
+                  <Pane fx:id="quit" layoutX="350.0" layoutY="6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="30.0" styleClass="quitbutton" />
                 <Group layoutX="10.0">
                     <children>
                         <ScrollPane fx:id="scrollPane" layoutX="15.0" layoutY="53.0" prefHeight="240.0" prefWidth="355.0" styleClass="scrolling-pane">
@@ -77,12 +77,7 @@
                         </Text>
                     </children>
                 </Group>
-                <StackPane layoutX="10.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
-                <ImageView fx:id="quit" fitHeight="25.0" fitWidth="25.0" layoutX="356.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@quit.png" />
-                    </image>
-                </ImageView>
+                <StackPane layoutX="10.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="45.0" styleClass="logo" />
                 <Button fx:id="requestButton" layoutX="307.0" layoutY="302.0" mnemonicParsing="false" text="Request" />
                 <GridPane layoutX="28.0" layoutY="302.0" prefHeight="30.0" prefWidth="264.0">
                     <columnConstraints>

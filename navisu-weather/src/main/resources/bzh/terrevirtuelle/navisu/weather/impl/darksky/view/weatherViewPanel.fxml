@@ -280,7 +280,7 @@
                         </TabPane>
                         <StackPane prefHeight="31.0" prefWidth="632.0" GridPane.rowIndex="2">
                             <children>
-                                <GridPane prefHeight="40.0" prefWidth="632.0">
+                                <GridPane maxHeight="-Infinity" prefHeight="70.0" prefWidth="632.0">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="0.0" prefWidth="20.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="153.0" />
@@ -300,16 +300,17 @@
                                         <Label fx:id="timeData" prefHeight="16.0" prefWidth="433.0" GridPane.columnIndex="5" />
                                         <GridPane GridPane.columnIndex="1">
                                             <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="40.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="10.0" prefWidth="60.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="40.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="70.0" />
                                             </columnConstraints>
                                             <rowConstraints>
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                             <children>
-                                                <StackPane fx:id="iconId" prefHeight="30.0" prefWidth="84.0" GridPane.columnIndex="1" />
+                                                <StackPane fx:id="iconId" prefHeight="52.0" prefWidth="60.0" />
                                             </children>
+                                 <padding>
+                                    <Insets bottom="10.0" />
+                                 </padding>
                                         </GridPane>
                                     </children>
                                 </GridPane>
