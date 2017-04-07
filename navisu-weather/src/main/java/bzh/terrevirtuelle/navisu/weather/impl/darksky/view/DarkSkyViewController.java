@@ -27,19 +27,14 @@ import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.FIOMinutely
 import bzh.terrevirtuelle.navisu.weather.impl.darksky.controller.fio.ForecastIO;
 import java.nio.file.Paths;
 
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 
 /**
  * @date 6 mars 2015
@@ -135,10 +130,19 @@ public class DarkSkyViewController
     NumberAxis dyAxis;
     @FXML
     StackPane iconId;
+    
+    
     String FXML = "weatherViewPanel.fxml";
     private ForecastIO fio;
     private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-
+    public String iconadress = "";
+    public String forecasticon = "";
+    
+    /*
+    String FXML = "weatherViewPanel.fxml";
+    private ForecastIO fio;
+    private static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
+    */
     public DarkSkyViewController() {
         setMouseTransparent(false);
         load();
@@ -204,12 +208,16 @@ public class DarkSkyViewController
         loadPressureData1.setOnMouseClicked((MouseEvent event) -> {
             showDaysPressureData(fio);
         });
-        iconId.setBackground(new Background(new BackgroundFill(
+        /*iconId.setBackground(new Background(new BackgroundFill(
                 Color.AQUAMARINE,
                 CornerRadii.EMPTY,
                 Insets.EMPTY)));
         SVGContent content = SVGLoader.load(getClass().getResource("meteoicones/Cloud-Download.svg").toString());
         iconId.getChildren().add(content);
+        */
+        
+        
+   
     }
 
     public void showData(ForecastIO fio) {
@@ -233,6 +241,16 @@ public class DarkSkyViewController
         //  printIcon(fio);
         showHoursWindData(fio);
         showDaysWindData(fio);
+        
+        forecasticon = currently.get().icon();
+        forecasticon = deleteCharAt(forecasticon, 0);
+        forecasticon = removeLastChar(forecasticon);
+        iconadress = "meteoicons/" + forecasticon + ".svg";
+        //System.out.println("adresse fichier svg : " + iconadress);
+        SVGContent content = SVGLoader.load(getClass().getResource(iconadress).toString());
+        iconId.getChildren().add(content);
+        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -421,7 +439,26 @@ public class DarkSkyViewController
         FIOCurrently currently = new FIOCurrently(fio);
         System.out.println(currently.get().icon());
     }
+  
+    public String adressIcon(ForecastIO fio) {
+        FIOCurrently currently = new FIOCurrently(fio);
+        forecasticon = currently.get().icon();
+        forecasticon = deleteCharAt(forecasticon, 0);
+        forecasticon = removeLastChar(forecasticon);
+        iconadress = "meteoicons/" + forecasticon + ".svg";
 
+        return iconadress;
+    }
+
+    private static String deleteCharAt(String strValue, int index) {
+        return strValue.substring(0, index) + strValue.substring(index + 1);
+
+    }
+
+    private static String removeLastChar(String str) {
+        return str.substring(0, str.length() - 1);
+    }
+    
     public void print(ForecastIO fio) {
         //Response Headers info
         System.out.println("Response Headers:");
