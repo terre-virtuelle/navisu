@@ -70,7 +70,7 @@ public class DataServerImpl
             properties.load(new FileInputStream("properties/server.properties"));
             marshaller = JAXBContext.newInstance(Sentences.class).createMarshaller();
         } catch (IOException | JAXBException ex) {
-            Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         queueSize = new Integer(properties.getProperty("queueSize").trim());
         sentences = new Sentences();
@@ -100,12 +100,12 @@ public class DataServerImpl
                     // Analyse lexicale de la phrase et envoi en xml
                     if (!readers.isEmpty()) {
                         Reader r = readers.get(currentReaderIndex);
-                        if (r.getClass().getSimpleName().equals("FileReaderImpl")) {
+                        if (r != null && r.getClass().getSimpleName().equals("FileReaderImpl")) {
                             String[] tab = r.readBuffer();
                             if (tab != null) {
                                 response = response(tab);
-                            }else{
-                               readers.remove(r);
+                            } else {
+                                readers.remove(r);
                             }
                         } else {
                             response = response(currentReaderIndex);
@@ -162,15 +162,21 @@ public class DataServerImpl
     }
 
     public StringWriter response(String[] tab) {
-        sentences.clear();
-        for (String s : tab) {
-            parser.parse(s.trim());
-        }
-        stringWriter = new StringWriter();
-        if (!sentences.isEmpty()) {
+        if (sentences != null && tab != null && tab.length >= 1) {
             try {
-                marshaller.marshal(sentences, stringWriter);
-            } catch (JAXBException ex) {
+                sentences.clear();
+                for (String s : tab) {
+                    parser.parse(s.trim());
+                }
+                stringWriter = new StringWriter();
+                if (!sentences.isEmpty()) {
+                    try {
+                        marshaller.marshal(sentences, stringWriter);
+                    } catch (JAXBException ex) {
+                        Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+                    }
+                }
+            } catch (Exception ex) {
                 Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
