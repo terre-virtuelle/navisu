@@ -32,6 +32,7 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS24Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS25Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS26Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS27Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN126992Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.AAMEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.APBEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.BECEvent;
@@ -70,6 +71,7 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.VWTEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.XTEEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.ZDAEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN128267Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN129025Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN130306Event;
 import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.NmeaEventProducer;
 import bzh.terrevirtuelle.navisu.client.nmea.eventsProducer.NmeaEventProducerServices;
@@ -216,9 +218,13 @@ public class NmeaEventProducerImpl
     protected AIS27Event ais27Event;
 
     @ProducedEvent
-    protected PGN130306Event pgn130306Event;
+    protected PGN126992Event pgn126992Event;
     @ProducedEvent
     protected PGN128267Event pgn128267Event;
+    @ProducedEvent
+    protected PGN129025Event pgn129025Event;
+    @ProducedEvent
+    protected PGN130306Event pgn130306Event;
 
     private Map<String, NMEAEvent> nmeaEvents = null;
 
@@ -307,7 +313,9 @@ public class NmeaEventProducerImpl
         nmeaEvents.put("AIS26", ais26Event);
         nmeaEvents.put("AIS27", ais27Event);
 
-        nmeaEvents.put("PGN130306", pgn130306Event);
+        nmeaEvents.put("PGN126992", pgn126992Event);
         nmeaEvents.put("PGN128267", pgn128267Event);
+        nmeaEvents.put("PGN129025", pgn129025Event);
+        nmeaEvents.put("PGN130306", pgn130306Event);
     }
 }
