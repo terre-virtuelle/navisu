@@ -34,17 +34,16 @@ public class PGN130306
     public PGN130306() {
     }
 
-    public PGN130306(String device, String sentence,
-            String timeStamp, int priority,  int dst, 
-            int pgn, 
-            double windSpeed, double windDirection, String windReference, String description ) {
-        super(description, timeStamp, priority, dst, pgn, device, sentence);
+    public PGN130306(String sentence, String timeStamp,
+            int priority, String src, int dst, 
+            int pgn, String description,
+            double windSpeed, double windDirection, String windReference) {
+        super(sentence, timeStamp, priority, src, dst, pgn, description);
         this.windSpeed = windSpeed;
         this.windDirection = windDirection;
         this.windReference = windReference;
     }
 
-    
 
     /**
      * Get the value of windReference

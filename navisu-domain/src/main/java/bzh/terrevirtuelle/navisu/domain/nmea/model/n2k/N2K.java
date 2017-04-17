@@ -25,16 +25,9 @@ public class N2K
     public N2K() {
     }
 
-    public N2K(String description, String timeStamp, int priority, int dst, int pgn) {
-        this.description = description;
-        this.timeStamp = timeStamp;
-        this.priority = priority;
-        this.dst = dst;
-        this.pgn = pgn;
-    }
 
-    public N2K(String description, String timeStamp, int priority, int dst, int pgn, String device, String sentence) {
-        super(device, sentence);
+    public N2K(String sentence, String timeStamp, int priority, String src, int dst, int pgn, String description ) {
+        super(src, sentence);
         this.description = description;
         this.timeStamp = timeStamp;
         this.priority = priority;
@@ -78,7 +71,6 @@ public class N2K
         this.dst = dst;
     }
 
-
     /**
      * Get the value of priority
      *
@@ -115,7 +107,6 @@ public class N2K
         this.timeStamp = timeStamp;
     }
 
-
     /**
      * Get the value of description
      *
@@ -134,7 +125,4 @@ public class N2K
         this.description = description;
     }
 
-    
-
-    
 }

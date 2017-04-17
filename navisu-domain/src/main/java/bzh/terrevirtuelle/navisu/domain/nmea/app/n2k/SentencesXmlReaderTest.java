@@ -6,7 +6,7 @@
 
 package bzh.terrevirtuelle.navisu.domain.nmea.app.n2k;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.controller.xml.Reader;
+import bzh.terrevirtuelle.navisu.domain.nmea.controller.xml.XmlReader;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 
 /**
@@ -16,7 +16,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.Sentences;
 public class SentencesXmlReaderTest {
 
     public SentencesXmlReaderTest() {
-        Reader reader = new Reader(Sentences.class);
+        XmlReader reader = new XmlReader(Sentences.class);
         Sentences sentences = (Sentences)reader.read("out.xml");
         System.out.println(sentences);
     }

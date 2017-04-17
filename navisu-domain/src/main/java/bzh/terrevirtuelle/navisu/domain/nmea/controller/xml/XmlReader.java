@@ -15,16 +15,16 @@ import javax.xml.bind.Unmarshaller;
  *
  * @author Serge Morvan
  */
-public class Reader {
+public class XmlReader {
 
     Class claz;
     Object object;
 
-    public Reader() {
+    public XmlReader() {
 
     }
 
-    public Reader(Class claz) {
+    public XmlReader(Class claz) {
         this.claz = claz;
     }
 

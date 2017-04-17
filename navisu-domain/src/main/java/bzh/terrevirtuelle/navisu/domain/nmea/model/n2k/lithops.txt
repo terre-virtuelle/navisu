@@ -1,0 +1,65 @@
+Liste des PGN utilisées sur Lithops
+
+59904 : As defined by ISO, this message has a data length of 3 bytes with no padding added to complete 
+the single frame. The appropriate response to this message is based on the PGN being requested,
+ and whether the receiver supports the requestedPGN.
+
+65408 : Proprietary: Depth Quality Factor
+
+65410 : Proprietary: Internal Device Temperature and Supply Voltage 
+
+126992 : The purpose of this PGN is to provide a regular transmission of UTC time and date; 
+optionally synchronized to other parameter groups from the same source. : OK
+
+127258 : Message for transmitting variation. The message contains a sequence number to allow 
+synchronization of other messages such as Heading or Course over Ground. 
+The quality of service and age of service are provided to enable recipients to determine an
+appropriate level of service if multiple transmissions exist.
+
+128259 : This parameter group provides a single transmission that describes the motion 
+of a vessel.: OK
+
+128267 : Water depth relative to the transducer and offset of the measuring transducer. 
+Positive offset numbers provide the distance from the transducer to the waterline. : OK
+
+128275 : This PGN provides the cumulative voyage distance traveled since the last reset. 
+The distance is tagged with the time and date of the distance measurement.
+
+129025 : This PGN provides latitude and longitude referenced to WGS84. Being defined as single
+frame message, as opposed to other PGNs that include latitude and longitude and are defined as
+fast or multi-packet, this PGN lends itself to being transmitted more frequently without 
+using up excessive bandwidth on the bus for the benefit of receiving equipment that may 
+require rapid position updates.
+
+129026 : This parameter group is a single frame parameter group that provides Course Over 
+Ground (COG) and Speed Over Ground(SOG).
+
+129029 : This parameter group conveys a comprehensive set of Global Navigation Satellite 
+System (GNSS) parameters, including position information.
+
+129033 : This parameter group has a single transmission that provides: UTC time, UTC Date and 
+Local Offset Datum Local geodetic,datum and datum offsets from a reference datum.
+
+129539 : This PGN provides a single transmission containing GNSS status and dilution of 
+precision components (DOP) that indicate the contribution of satellite geometry to the 
+overall positioning error. There are three DOP parameters reported, horizontal (HDOP),
+Vertical (VDOP) and time (TDOP).
+
+129540 : GNSS information on current satellites in view tagged by sequence ID. 
+Information includes PRN, elevation, azimuth, SNR, defines the number of satellites; 
+defines the satellite number and the information.
+
+130306 : Direction and speed of Wind. True wind can be referenced to the vessel or to the 
+ground. The Apparent Wind is what is felt standing on the (moving) ship, I.e., 
+the wind measured by the typical mast head instruments. The boat referenced true wind is
+given by the vector sum of Apparent wind and vessel's heading and speed though the water. 
+The ground referenced true wind is given by the vector sum of Apparent wind and vessel's 
+heading and speed over ground. : OK
+
+130311 : This PGN has been depricated. Specific PGNs 130316 Temperature, 
+130313 Relative Humidity, 130314 Actual Pressure,
+130315 Set Pressure shall be used.
+130314 : Pressure as measured by a specific pressure source
+130845 : Simnet uses PGN 130845 for backlight control.
+262161 : Proprietary Actisense:
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<dst>255</dst>
+<src>2</src>
+<pgn>130306</pgn>
+<description>WindData</description>
+<prio>2</prio>
+<fields>
+    <Reference>True(boatreferenced)</Reference>
+    <WindSpeed>3.24</WindSpeed>
+    <WindAngle>55.2</WindAngle>
+</fields>
+<timestamp>2011-04-25-09:24:44.044</timestamp>
+

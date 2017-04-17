@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.nmea.model.n2k;
 
-import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,20 +26,16 @@ public class PGN127250
     public PGN127250() {
     }
 
-    public PGN127250(String device, String sentence, 
-            String timeStamp,
-            String description,  int priority, int dst, int pgn,
-            float headingSensorReading, float deviation, float variation, int headingSensorReference ) {
-        super(description, timeStamp, priority, dst, pgn, device, sentence);
+    public PGN127250(String sentence, String timeStamp,
+            int priority, String src, int dst, 
+            int pgn, String description,
+            float headingSensorReading, float deviation, float variation, int headingSensorReference) {
+        super(sentence, timeStamp, priority, src, dst, pgn, description);
         this.headingSensorReading = headingSensorReading;
         this.deviation = deviation;
         this.variation = variation;
         this.headingSensorReference = headingSensorReference;
     }
-
-    
-
-   
 
     
     /**

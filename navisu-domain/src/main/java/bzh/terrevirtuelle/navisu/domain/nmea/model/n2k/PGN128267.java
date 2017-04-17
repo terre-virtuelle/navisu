@@ -20,8 +20,20 @@ public class PGN128267
 
     private float waterDepth;
     private float offset;
-
     private int sid;
+
+    public PGN128267() {
+    }
+
+    public PGN128267(String sentence, String timeStamp,
+            int priority, String src, int dst,
+            int pgn, String description,
+            int sid, float waterDepth, float offset) {
+        super(sentence, timeStamp, priority, src, dst, pgn, description);
+        this.sid = sid;
+        this.waterDepth = waterDepth;
+        this.offset = offset;
+    }
 
     /**
      * Get the value of sid
@@ -39,26 +51,6 @@ public class PGN128267
      */
     public void setSid(int sid) {
         this.sid = sid;
-    }
-
-    public PGN128267() {
-    }
-
-    public PGN128267(String device, String sentence,
-            String timeStamp, int priority, int dst, int pgn,
-            float waterDepth, float offset, String description) {
-        super(description, timeStamp, priority, dst, pgn, device, sentence);
-        this.waterDepth = waterDepth;
-        this.offset = offset;
-    }
-
-    public PGN128267(String device, String sentence,
-            String timeStamp, int priority, int dst, int pgn,
-            int sid, float waterDepth, float offset, String description) {
-        super(description, timeStamp, priority, dst, pgn, device, sentence);
-        this.sid = sid;
-        this.waterDepth = waterDepth;
-        this.offset = offset;
     }
 
     /**

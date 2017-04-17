@@ -5,7 +5,6 @@
  */
 package bzh.terrevirtuelle.navisu.domain.nmea.model.n2k;
 
-import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,17 +26,24 @@ public class PGN127245
     public PGN127245() {
     }
 
-    public PGN127245(int rudderInstance, int directionOrder, int angleOrder, int position, String description, String timeStamp, int priority,  int dst, int pgn) {
-        super(description, timeStamp, priority,  dst, pgn);
+    public PGN127245(String sentence, String timeStamp,
+            int priority, String src, int dst,
+            int pgn, String description,
+            int rudderInstance, int directionOrder, int angleOrder, int position) {
+        super(sentence, timeStamp, priority, src, dst, pgn, description);
+
         this.rudderInstance = rudderInstance;
         this.directionOrder = directionOrder;
         this.angleOrder = angleOrder;
         this.position = position;
     }
 
-    
-
-   
+    public PGN127245(int rudderInstance, int directionOrder, int angleOrder, int position) {
+        this.rudderInstance = rudderInstance;
+        this.directionOrder = directionOrder;
+        this.angleOrder = angleOrder;
+        this.position = position;
+    }
 
     /**
      * Get the value of position
@@ -57,7 +63,6 @@ public class PGN127245
         this.position = position;
     }
 
-
     /**
      * Get the value of angleOrder
      *
@@ -76,7 +81,6 @@ public class PGN127245
         this.angleOrder = angleOrder;
     }
 
-
     /**
      * Get the value of directionOrder
      *
@@ -94,7 +98,6 @@ public class PGN127245
     public void setDirectionOrder(int directionOrder) {
         this.directionOrder = directionOrder;
     }
-
 
     /**
      * Get the value of rudderInstance

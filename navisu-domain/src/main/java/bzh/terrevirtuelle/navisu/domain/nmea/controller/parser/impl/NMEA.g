@@ -57,8 +57,13 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS08;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS18;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS24;
 
-import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN130306;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN126992;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN127245;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN127250;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128259;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128267;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN129025;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN130306;
 
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.Handler;  
 import bzh.terrevirtuelle.navisu.domain.nmea.controller.parser.handler.impl.PrintHandler; 
@@ -138,8 +143,10 @@ import java.util.StringTokenizer;
    protected AIS18 ais18 = null;
    protected AIS24 ais24 = null;
    
-   protected PGN130306 pgn130306 = null;
+   protected PGN126992 pgn126992 = null;
    protected PGN128267 pgn128267 = null;
+   protected PGN129025 pgn129025 = null;
+   protected PGN130306 pgn130306 = null;
    
    protected int year;
    protected int month;
@@ -253,7 +260,15 @@ import java.util.StringTokenizer;
      }
      return date;
    }
+   // 09:29:26
+   private Calendar dateFactory(String hours, String minutes, String seconds){
+   Calendar  date = new GregorianCalendar();
    
+     date.set(Calendar.HOUR_OF_DAY, new Integer(hours));
+     date.set(Calendar.MINUTE, new Integer(minutes));
+     date.set(Calendar.SECOND, new Integer(seconds));
+     return date;
+   }
    protected void mismatch(IntStream input, int ttype, BitSet follow)
    throws RecognitionException {
         System.out.println("mismatch");
@@ -295,7 +310,7 @@ entry 	:    (AAM|APB|BEC|BOD|BWC|BWR|DBS|DBT|DBK|DPT|GGA|GLL|GSA|GSV|HDG|HDM|HDT
 		|GPSD_AIS
 		|GPSD_DEVICE|GPSD_DEVICES|GPSD_VERSION|GPSD_WATCH|GPSD_ERROR
 		//PRO
-		|PRO)+;
+		|PGN)+;
 
 AAM	 : 	'$' device=DEVICE 'AAM' SEP
 	    (arrivalCircleEntered = LETTERS)* SEP
@@ -1646,62 +1661,92 @@ GPSD_WATCH
 	//System.out.println("GPSD WATCH sentence : " + getText());
 	}
     	;   	
- /*   		
+   		
+   		/*String sentence, String timeStamp,
+            int priority, String src, int dst,
+            int pgn, String description */
 PGN
     	:	
     	'{"timestamp":' timestamp=TIME_STAMP  SEP 
-    	'"prio":"' prio=NUMBER* '"' SEP
-    	'"src":"' src=NUMBER* '"' SEP
-    	'"dst":"' dst=NUMBER* '"' SEP
+    	'"prio":' prio=NUMBER*  SEP
+    	'"src":' src=NUMBER*  SEP
+    	'"dst":' dst=NUMBER*  SEP
     	(
     	(
-        '"pgn":"130306"' SEP  
-        '"description":"' description=LETTERS '"' SEP
-    	'"fields":{"SID":"' sid=NUMBER* '"' SEP 
-    	'"Wind Speed":"' windSpeed=NUMBER* '"' SEP
-    	'"Wind Angle":"' windDirection=NUMBER  '"' SEP
-    	'"Reference":"' reference=LETTERS '"}}'
+        '"pgn":126992' SEP
+         '"description":' description=NAME SEP
+    	 '"fields":{"SID":' sid=NUMBER* SEP
+    	 '"Source":"' source=LETTERS '"' SEP 
+    	 ' "Time": "' sHours=NUMBER ':' sMin=NUMBER ':' sSec=NUMBER '"}}'
     	)
     	{
-	pgn130306 = new PGN130306(src.getText(), getText(), 
-	                          timestamp.getText(), new Integer(prio.getText()), new Integer(dst.getText()),
-	                          new Integer("130306"), 
-	                          new Double(windSpeed.getText()), new Double(windDirection.getText()), reference.getText(),
-	                          description.getText());
-	 //System.out.println(pgn130306);   
+    	//"description":"System Time","fields":{"SID":40,"Source":"GPS", "Time": "09:29:26"}}
+    	pgn126992 = new PGN126992(getText(), timestamp.getText(), 
+	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
+	                          new Integer("126992"),description.getText(), 
+	                          source.getText(), dateFactory(sHours.getText(), sMin.getText(), sSec.getText()));
+	                        //source.getText(), stringTime.getText());
+	 System.out.println("Parser :  " + pgn126992);   
+    	}
+    	|
+    	(
+        '"pgn":129025' SEP
+         '"description":' description=NAME SEP
+    	 '"fields":{"Latitude":' WS*  latitude=NUMBER* SEP
+    	 '"Longitude":'WS* longitude=NUMBER*'}}'
+    	)
+    	{
+    	pgn129025 = new PGN129025(getText(), timestamp.getText(), 
+	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
+	                          new Integer("129025"),description.getText(), 
+	                          new Float(latitude.getText()), new Float(longitude.getText()));
+	 System.out.println("Parser :  " + pgn129025);   
+    	}
+    	|
+    	(
+        '"pgn":130306' SEP  
+        '"description":"' description=LETTERS '"' SEP
+    	'"fields":{"SID":' sid=NUMBER*  SEP 
+    	'"Wind Speed":' windSpeed=NUMBER*  SEP
+    	'"Wind Angle":' windDirection=NUMBER*   SEP
+    	'"Reference":' reference=NAME '}}'
+    	)
+    	{
+	pgn130306 = new PGN130306(getText(), timestamp.getText(), 
+	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
+	                          new Integer("130306"),description.getText(), 
+	                          new Double(windSpeed.getText()), new Double(windDirection.getText()), reference.getText());
+	 System.out.println("Parser :  " +pgn130306);   
 	 handler.doIt(pgn130306);                      
 	}
     	|
     	(
-    	 '"pgn":"128267"' SEP
+    	  '"pgn":128267' SEP
          '"description":"' description=LETTERS '"' SEP
-    	 '"fields":{"SID":"' sid=NUMBER* '"' SEP
-    	 '"Depth":"' depth=NUMBER* '"' SEP
-    	 '"Offset":"' offset=NUMBER* '"}}'
+    	 '"fields":{"SID":' sid=NUMBER*  SEP
+    	 '"Depth":' depth=NUMBER*  SEP
+    	 '"Offset":' offset=NUMBER* '}}'
     	)
     	{
-    	pgn128267 = new PGN128267(src.getText(), getText(), 
-	                          timestamp.getText(), new Integer(prio.getText()), new Integer(dst.getText()),
-	                          new Integer("128267"), 
-	                          new Float(depth.getText()), new Float(offset.getText()),
-	                          description.getText());
-	// System.out.println(pgn128267);   
-    	}
+    	pgn128267 = new PGN128267(getText(), timestamp.getText(), 
+	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
+	                          new Integer("128267"),description.getText(), 
+	                          new Integer(sid.getText()), new Float(depth.getText()), new Float(offset.getText()));                       
+	 System.out.println("Parser :  " + pgn128267);   
+    	}  
     	|
     	(
-    	//|
-    	//(
-    	//'"pgn":"' NUMBER+ '"' SEP
-    	//'"description":"' (LETTERS | ':' | '-' |'&' | ',' |'.' | '}')+ '"' SEP
-    	//)
+    	'"pgn":' NUMBER+  SEP
+    	'"description":"' (LETTERS | ':' | '-' |'&' | ',' |'.' | '}')+ '"' SEP
+    	)
     	 ('{' | '"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN | SEP)*
         )
-        )
     	{
-	//System.out.println("PGN sentence : " + getText());
+	System.out.println(getText());
 	}
-    	;   	
-    	*/  	
+    	;  
+    	  	
+    	 	
 /* $AITXT,01,01,91,FREQ,2087,2088*57 */
 TXT	: ('$') device=DEVICE 'TXT' SEP
 	('\u0021'..'\u007F' | SEP | ' ')*  
@@ -1737,7 +1782,7 @@ NUMBER
     ('0'..'9')+ '.' ('0'..'9')* EXPONENT?
     |   '.' ('0'..'9')* EXPONENT?
     |   ('0'..'9')+ EXPONENT
-    ;
+    ;//{System.out.println(getText());};
 
 WS  :   ( ' '
         | '\t'
@@ -1771,16 +1816,12 @@ CHECKSUM : (('*'('0'..'9')('0'..'9')) |
  	'"' (LETTERS | NUMBER  | ':' | SIGN | '/' | '\'' 
  	| SEP | '%' | '!' | '#' | ']' | '[' | '\\' | '=' | '\?'
  	| '(' | ')' | '&' | '\^'| '_' | '{' | '}' | '$' | '\;'
- 	| '<' | '>' | '\*')* '"'
+ 	| '<' | '>' | '\*')*'"'
  	;
  LETTERS : (('A'..'Z')|('a'..'z')|' '|'~')+
          ;// {System.out.println(getText());};        
+        
 
-	         
-fragment
 EXPONENT : ('e'|'E') ('+'|'-')? ('0'..'9')+ ;
-
-
-   	
 
 

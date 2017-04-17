@@ -26,13 +26,20 @@ public class PGN128259
     public PGN128259() {
     }
 
-    public PGN128259(String device, String sentence,
-            String timeStamp, int priority,  int dst, int pgn,
-            float speedWaterReferenced, float speedGroundReferenced, int speedWaterReferencedTYpe, String description ) {
-        super(description, timeStamp, priority,  dst, pgn, device, sentence);
+    public PGN128259(String sentence, String timeStamp,
+            int priority, String src, int dst,
+            int pgn, String description,
+            float speedWaterReferenced, float speedGroundReferenced, int speedWaterReferencedType) {
+        super(sentence, timeStamp, priority, src, dst, pgn, description);
         this.speedWaterReferenced = speedWaterReferenced;
         this.speedGroundReferenced = speedGroundReferenced;
-        this.speedWaterReferencedType = speedWaterReferencedTYpe;
+        this.speedWaterReferencedType = speedWaterReferencedType;
+    }
+
+    public PGN128259(float speedWaterReferenced, float speedGroundReferenced, int speedWaterReferencedType) {
+        this.speedWaterReferenced = speedWaterReferenced;
+        this.speedGroundReferenced = speedGroundReferenced;
+        this.speedWaterReferencedType = speedWaterReferencedType;
     }
 
     

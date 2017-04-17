@@ -1,5 +1,6 @@
 package bzh.terrevirtuelle.navisu.domain.nmea.model.n2k;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -20,23 +21,28 @@ public class PGN126992
         extends N2K {
 
     private Calendar date;
+    private String source;
 
     public PGN126992() {
     }
 
-    public PGN126992(Calendar date, String description, String timeStamp, int priority,  int dst, int pgn) {
-        super(description, timeStamp, priority, dst, pgn);
+    public PGN126992(String sentence, String timeStamp,
+            int priority, String src, int dst,
+            int pgn, String description,
+            String source, Calendar date) {
+        super(sentence, timeStamp, priority, src, dst, pgn, description);
+        this.source = source;
         this.date = date;
     }
 
-    public PGN126992(Calendar date, String description, String timeStamp, int priority, int dst, int pgn, String device, String sentence) {
-        super(description, timeStamp, priority, dst, pgn, device, sentence);
-        this.date = date;
+    public PGN126992(String sentence, String timeStamp,
+            int priority, String src, int dst,
+            int pgn, String description,
+            String source, String date) {
+        super(sentence, timeStamp, priority, src, dst, pgn, description);
+        this.source = source;
+        //  this.date = date;
     }
-
-    
-
-    
 
     /**
      * Get the value of date
@@ -56,8 +62,20 @@ public class PGN126992
         this.date = date;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     @Override
     public String toString() {
-        return "PGN126992{" + "date=" + date + '}';
-    } 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        dateFormat.setCalendar(date);
+        String sDate = dateFormat.format(date.getTime());
+        return "PGN126992{" + "date=" + sDate + ", source=" + source + '}';
+    }
+
 }

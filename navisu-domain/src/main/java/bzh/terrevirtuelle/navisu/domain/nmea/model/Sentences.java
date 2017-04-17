@@ -34,7 +34,12 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS25;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS26;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS27;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.N2K;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN126992;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN127245;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN127250;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128259;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128267;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN129025;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN130306;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.AAM;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.APA;
@@ -159,8 +164,14 @@ public class Sentences {
         @XmlElement(name = "ais27", type = AIS27.class),
 
         @XmlElement(name = "n2k", type = N2K.class),
-        @XmlElement(name = "pgn130306", type = PGN130306.class),
-        @XmlElement(name = "pgn128267", type = PGN128267.class)
+        @XmlElement(name = "pgn126992", type = PGN126992.class),
+        @XmlElement(name = "pgn127245", type = PGN127245.class),
+        @XmlElement(name = "pgn127250", type = PGN127250.class),
+        @XmlElement(name = "pgn128259", type = PGN128259.class),
+        @XmlElement(name = "pgn128267", type = PGN128267.class),
+        @XmlElement(name = "pgn129025", type = PGN129025.class),
+        @XmlElement(name = "pgn130306", type = PGN130306.class)
+        
     })
     private final ConcurrentLinkedQueue<NMEA> nmeaQueue;
 

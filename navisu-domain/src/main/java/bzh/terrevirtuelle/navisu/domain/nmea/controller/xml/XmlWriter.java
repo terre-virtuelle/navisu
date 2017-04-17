@@ -17,17 +17,17 @@ import javax.xml.bind.Marshaller;
  *
  * @author Serge Morvan
  */
-public class Writer {
+public class XmlWriter {
 
     FileOutputStream outputFile = null;
     Sentences sentences;
     Class claz;
 
-    public Writer() {
+    public XmlWriter() {
 
     }
 
-    public Writer(Sentences sentences) {
+    public XmlWriter(Sentences sentences) {
         this.sentences = sentences;
         this.claz = sentences.getClass();
     }
