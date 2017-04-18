@@ -92,36 +92,39 @@ public class DataServerImpl
     }
 
     private void initVertx() {
-
-        vertx = VertxFactory.newVertx();
-        vertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
-            if (ws.path().equals("/nmea")) {
-                ws.dataHandler((Buffer data) -> {
-                    // Analyse lexicale de la phrase et envoi en xml
-                    if (!readers.isEmpty()) {
-                        Reader r = readers.get(currentReaderIndex);
-                        if (r != null && r.getClass().getSimpleName().equals("FileReaderImpl")) {
-                            String[] tab = r.readBuffer();
-                            if (tab != null) {
-                                response = response(tab);
+        try {
+            vertx = VertxFactory.newVertx();
+            vertx.createHttpServer().websocketHandler((final ServerWebSocket ws) -> {
+                if (ws.path().equals("/nmea")) {
+                    ws.dataHandler((Buffer data) -> {
+                        // Analyse lexicale de la phrase et envoi en xml
+                        if (!readers.isEmpty()) {
+                            Reader r = readers.get(currentReaderIndex);
+                            if (r != null && r.getClass().getSimpleName().equals("FileReaderImpl")) {
+                                String[] tab = r.readBuffer();
+                                if (tab != null) {
+                                    response = response(tab);
+                                } else {
+                                    readers.remove(r);
+                                }
                             } else {
-                                readers.remove(r);
+                                response = response(currentReaderIndex);
                             }
-                        } else {
-                            response = response(currentReaderIndex);
+                            // System.out.println(response);
+                            if (response != null) {
+                                ws.writeTextFrame(response.toString());
+                            }
+                            // rotation dans les buffers des readers
+                            currentReaderIndex = (currentReaderIndex + 1) % sentenceQueues.size();
                         }
-                        // System.out.println(response);
-                        if (response != null) {
-                            ws.writeTextFrame(response.toString());
-                        }
-                        // rotation dans les buffers des readers
-                        currentReaderIndex = (currentReaderIndex + 1) % sentenceQueues.size();
-                    }
-                });
-            } else {
-                ws.reject();
-            }
-        }).listen(port, hostName);
+                    });
+                } else {
+                    ws.reject();
+                }
+            }).listen(port, hostName);
+        } catch (Exception ex) {
+            Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     @Override
@@ -138,23 +141,23 @@ public class DataServerImpl
 
     @Override
     public StringWriter response(int currentReader) {
-
+       // System.out.println("currentReader : " +currentReader);
         if (!sentenceQueues.isEmpty()) {
             sentences.clear();
             try {
                 sentenceQueues.get(currentReader).stream().forEach((s) -> {
                     //LOGGER.info(s);pb dans l'ordre de lecture d'un file
-                    //  System.out.println(s);
+                     // System.out.println(s);
                     parser.parse(s.trim());//parser load sentences
                 });
                 stringWriter = new StringWriter();
                 if (!sentences.isEmpty()) {
                     marshaller.marshal(sentences, stringWriter);
-                    // System.out.println("DataServerImpl stringWriter " + stringWriter);
+                    //System.out.println("DataServerImpl stringWriter " + stringWriter);
                 }
             } catch (Exception e) {
-                // System.out.println("sentenceQueues "+ sentenceQueues);
-                // System.out.println("DataServerImpl Exception" + sentences);
+               //  System.out.println("sentenceQueues "+ sentenceQueues);
+               //  System.out.println("DataServerImpl Exception" + sentences);
             }
         }
         // System.out.println("DataServerImpl " + stringWriter);
@@ -180,6 +183,7 @@ public class DataServerImpl
                 Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
+      //  System.out.println("stringWriter : " + stringWriter.getBuffer());
         return stringWriter;
     }
 
@@ -229,6 +233,9 @@ public class DataServerImpl
     }
 
     private void initFileReader() {
+        if (fileReader != null) {
+            readers.remove(fileReader);
+        }
         fileReader = new FileReaderImpl(readerIndex, vertx, fileName, queueSize);
         readers.add(fileReader);
         initEventBus();

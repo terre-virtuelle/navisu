@@ -58,7 +58,7 @@ public class FileReaderImpl
         String[] tab = new String[size];
         int j = 0;
         for (int i = dataIndex; i < dataIndex + size; i++) {
-            if (i < buffer.length - 2) {
+            if (i < buffer.length) {
                 tab[j] = buffer[i];
                 j++;
             } else {
