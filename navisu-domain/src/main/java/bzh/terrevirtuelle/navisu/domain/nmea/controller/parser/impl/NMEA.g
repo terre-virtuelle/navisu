@@ -60,6 +60,7 @@ import bzh.terrevirtuelle.navisu.domain.nmea.model.ais.impl.AIS24;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN126992;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN127245;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN127250;
+import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN127258;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128259;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN128267;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.n2k.PGN129025;
@@ -144,6 +145,7 @@ import java.util.StringTokenizer;
    protected AIS24 ais24 = null;
    
    protected PGN126992 pgn126992 = null;
+   protected PGN127258 pgn127258 = null;
    protected PGN128267 pgn128267 = null;
    protected PGN129025 pgn129025 = null;
    protected PGN130306 pgn130306 = null;
@@ -1340,13 +1342,14 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"mmsi":' mmsi = NUMBER SEP
     	'"scaled":' scaled=LETTERS SEP
     	//Type 1 ou 2 ou 3
+    	(
     	('"status":' status=NUMBER SEP 
     	 '"status_text":' status_text=NAME SEP
-    	 '"turn":' turn=SIGNED SEP 
+    	 '"turn":' signTurn=SIGN* turn=NUMBER* SEP 
     	 '"speed":' speed=NUMBER SEP 
     	 '"accuracy":' accuracy=LETTERS SEP
-    	 '"lon":' longitude=SIGNED SEP 
-    	 '"lat":' latitude=SIGNED SEP 
+    	 '"lon":' signLon=SIGN* longitude=NUMBER* SEP 
+    	 '"lat":' signLat=SIGN* latitude=NUMBER* SEP 
     	 '"course":' course=NUMBER SEP
     	 '"heading":' heading=NUMBER SEP
     	 '"second":' second=NUMBER SEP 
@@ -1354,6 +1357,84 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	 '"raim":' raim=LETTERS SEP 
     	 '"radio":' radio=NUMBER
     	 '}'
+    	 )
+    	 {
+    	 int sturn=new Integer(turn.getText());
+         if(signTurn!=null && signTurn.getText().contains("-")){
+            sturn=-sturn;
+         }
+         float sLat=new Float(latitude.getText());
+         if(signLat!=null && signLat.getText().contains("-")){
+            sLat=-sLat;
+         }
+         float sLon=new Float(longitude.getText());
+         if(signLon!=null && signLon.getText().contains("-")){
+            sLon=-sLon;
+         }
+        switch(type.getText()){
+	case "1" :
+	  if(dev != null && mmsi != null && status != null && turn != null 
+	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
+            ais01 = new AIS01();
+                        ais01.setRateOfTurn(sturn);
+                        ais01.setCourseOverGround(new Float(course.getText()).intValue());
+                        ais01.setSpeedOverGround(new Float(speed.getText()).intValue());
+                        ais01.setNavigationalStatus(new Integer(status.getText()));
+                        ais01.setNavigationalStatusText(status_text.getText());
+                        ais01.setTrueHeading(new Integer(heading.getText()));
+                        ais01.setLatitude(degConvert(sLat));
+                        ais01.setLongitude(degConvert(sLon));
+                        ais01.setMmsi(new Integer(mmsi.getText()));
+                        ais01.setDevice(dev.getText()); 
+                        ais01.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
+                        ais01.setRaimFlag(Boolean.getBoolean(raim.getText())); 
+                        ais01.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
+             // System.out.println(ais01);                                    
+            handler.doIt(ais01);
+        }
+           break;
+        case "2" :
+         if(dev != null && mmsi != null && status != null && turn != null 
+	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
+            ais02 = new AIS02();
+                        ais02.setRateOfTurn(new Integer(turn.getText()));
+                        ais02.setCourseOverGround(new Float(course.getText()).intValue());  
+                        ais02.setSpeedOverGround(new Float(speed.getText()).intValue());
+                        ais02.setNavigationalStatus(new Integer(status.getText()));
+                        ais02.setNavigationalStatusText(status_text.getText());
+                        ais02.setTrueHeading(new Integer(heading.getText()));
+                        ais02.setLatitude(degConvert(degConvert(sLat)));
+                        ais02.setLongitude(degConvert(degConvert(sLon)));
+                        ais02.setMmsi(new Integer(mmsi.getText()));
+                        ais02.setDevice(dev.getText());
+                        ais02.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
+                        ais02.setRaimFlag(Boolean.getBoolean(raim.getText())); 
+                        ais02.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
+            handler.doIt(ais02);
+	  }
+           break;
+	case "3" :
+         if(dev != null && mmsi != null && status != null && turn != null 
+	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
+            ais03 = new AIS03();
+                        ais03.setRateOfTurn(new Integer(turn.getText()));
+                        ais03.setCourseOverGround(new Float(course.getText()).intValue());
+                        ais03.setSpeedOverGround(new Float(speed.getText()).intValue());
+                        ais03.setNavigationalStatus(new Integer(status.getText()));
+                        ais03.setNavigationalStatusText(status_text.getText());
+                        ais03.setTrueHeading(new Integer(heading.getText()));
+                        ais03.setLatitude(degConvert(degConvert(sLat)));
+                        ais03.setLongitude(degConvert(degConvert(sLon)));
+                        ais03.setMmsi(new Integer(mmsi.getText()));
+                        ais03.setDevice(dev.getText());
+                        ais03.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
+                        ais03.setRaimFlag(Boolean.getBoolean(raim.getText())); 
+                        ais03.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
+            handler.doIt(ais03);
+	  }
+           break;
+          }  
+    	 }
       	|
     	//Type 4
     	'"timestamp":' timestamp=TIME_STAMP  SEP
@@ -1364,6 +1445,33 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"epfd_text":' epfd_text=NAME SEP
     	'"raim":' raim=LETTERS SEP 
     	'"radio":' radio=NUMBER
+    	{
+    	if(dev != null && mmsi != null && timestamp != null && longitude != null && latitude != null){
+	  
+	    String date = timestamp.getText();
+	    String [] tmp0 = date.split("\"");
+	    String [] tmp1 = tmp0[1].split("T");
+	    
+	    String [] tmp2 = tmp1[0].split("-");
+	    year = new Integer(tmp2[0]);
+	    month = new Integer(tmp2[1]);
+	    day = new Integer(tmp2[2]);
+	    String [] tmp3 = tmp1[1].split(":");
+	    hours = new Integer(tmp3[0]);
+	    minutes  = new Integer(tmp3[1]);
+	    seconds = new Integer(tmp3[2].substring(0, 2));
+	  /*
+	    ais04 = new AIS04(new Integer(mmsi.getText()), device,
+	                         new GregorianCalendar(year, month, day, hours, minutes, seconds),
+	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText()))
+	                        );  
+	                                         
+	    
+	    handler.doIt(ais04);
+	    */
+         // System.out.println("ais4");
+	 }
+    	}
     	|
     	//Type 5
     	'"imo":' imo=NUMBER SEP
@@ -1382,6 +1490,38 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"draught":' draught=NUMBER SEP
     	'"destination":'  destination=NAME  SEP 
     	'"dte":' dte=NUMBER
+    	{
+    	//System.out.println(getText());
+	  if(dev != null && mmsi != null && imo != null && callsign != null && shipname != null &&
+	  to_bow != null && to_port != null && to_starboard != null && eta != null && draught != null && destination != null){
+
+	  String etaTmp = eta.getText();
+	  String [] tmp0 = etaTmp.split("\"");
+	  String [] tmp1 = tmp0[1].split("T");
+	  String [] tmp2 = tmp1[0].split("-");
+	  month = new Integer(tmp2[0]);
+	  day = new Integer(tmp2[1]);
+	  String [] tmp3 = tmp1[1].split(":");
+	  hours = new Integer(tmp3[0]);
+	  minutes  = new Integer(tmp3[1].substring(0, 2));
+
+	  date = new GregorianCalendar();
+	  date.set(Calendar.MONTH, month);
+	  date.set(Calendar.DATE, day);
+	  date.set(Calendar.HOUR, hours);
+	  date.set(Calendar.MINUTE, minutes);
+	  
+	  AIS05 ais05=new AIS05();
+	  ais05.setMmsi(new Integer(mmsi.getText()));
+          ais05.setCallSign(callsign.getText());
+          ais05.setDestination(destination.getText());
+          ais05.setImoNumber(new Integer(imo.getText()));
+          ais05.setName(shipname.getText());
+          ais05.setShipType(new Integer(shiptype.getText()));
+          handler.doIt(ais05);
+        //  System.out.println("ais05");
+	  }
+    	}
     	|
     	//Type 6
     	'"seqno":' NUMBER  SEP
@@ -1397,6 +1537,8 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"ana_ext2":' NUMBER SEP 
     	'"racon":' NUMBER SEP
     	'"light":' NUMBER 
+    	{
+    	}
     	|
     	//Type 8
     	'"dac":' dac=NUMBER  SEP
@@ -1437,6 +1579,8 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"preciptype":' preciptype=NUMBER  SEP
     	'"salinity":' salinity=NUMBER  SEP
     	'"ice":' ice=NUMBER 
+    	{
+    	}
     	|
     	//Type 18
     	'"reserved":' reserved=NUMBER SEP
@@ -1455,6 +1599,22 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	'"msg22":' msg22=LETTERS SEP
     	'"raim":' raim=LETTERS SEP 
     	'"radio":' radio=NUMBER
+    	{
+    	if(dev != null && mmsi != null && speed != null && longitude != null && latitude != null &&
+             course != null && heading != null && second != null){
+          /*    
+           ais18 = new AIS18(new Integer(mmsi.getText()), dev.getText(),
+                   new Float(speed.getText()), new Float(course.getText()), new Float(heading.getText()), 
+                   degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
+                   new Integer(second.getText()));
+                   
+            
+            handler.doIt(ais18);
+           */ 
+          // System.out.println("ais18" + getText()); 
+                                 
+          }
+    	}
     	|
     	//Type 24
     	'"shipname":' shipname=NAME  SEP
@@ -1471,153 +1631,8 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	)
          ('"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN )*
         {
-      // System.out.println(getText());
-    	switch(type.getText()){
-	case "1" :
-	  if(dev != null && mmsi != null && status != null && turn != null 
-	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
-            ais01 = new AIS01();
-                        ais01.setRateOfTurn(new Integer(turn.getText()));
-                        ais01.setCourseOverGround(new Float(course.getText()).intValue());
-                        ais01.setSpeedOverGround(new Float(speed.getText()).intValue());
-                        ais01.setNavigationalStatus(new Integer(status.getText()));
-                        ais01.setNavigationalStatusText(status_text.getText());
-                        ais01.setTrueHeading(new Integer(heading.getText()));
-                        ais01.setLatitude(degConvert(new Float(latitude.getText())));
-                        ais01.setLongitude(degConvert(new Float(longitude.getText())));
-                        ais01.setMmsi(new Integer(mmsi.getText()));
-                        ais01.setDevice(dev.getText()); 
-                        ais01.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
-                        ais01.setRaimFlag(Boolean.getBoolean(raim.getText())); 
-                        ais01.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
-             // System.out.println(ais01);                                    
-            handler.doIt(ais01);
-           
-        }
-           break;
-           
-        case "2" :
-         if(dev != null && mmsi != null && status != null && turn != null 
-	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
-            ais02 = new AIS02();
-                        ais02.setRateOfTurn(new Integer(turn.getText()));
-                        ais02.setCourseOverGround(new Float(course.getText()).intValue());  
-                        ais02.setSpeedOverGround(new Float(speed.getText()).intValue());
-                        ais02.setNavigationalStatus(new Integer(status.getText()));
-                        ais02.setNavigationalStatusText(status_text.getText());
-                        ais02.setTrueHeading(new Integer(heading.getText()));
-                        ais02.setLatitude(degConvert(new Float(latitude.getText())));
-                        ais02.setLongitude(degConvert(new Float(longitude.getText())));
-                        ais02.setMmsi(new Integer(mmsi.getText()));
-                        ais02.setDevice(dev.getText());
-                        ais02.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
-                        ais02.setRaimFlag(Boolean.getBoolean(raim.getText())); 
-                        ais02.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
-            handler.doIt(ais02);
-	  }
-           break;
-	case "3" :
-         if(dev != null && mmsi != null && status != null && turn != null 
-	     && speed != null && longitude != null && latitude != null && course != null && heading != null && second != null){
-            ais03 = new AIS03();
-                        ais03.setRateOfTurn(new Integer(turn.getText()));
-                        ais03.setCourseOverGround(new Float(course.getText()).intValue());
-                        ais03.setSpeedOverGround(new Float(speed.getText()).intValue());
-                        ais03.setNavigationalStatus(new Integer(status.getText()));
-                        ais03.setNavigationalStatusText(status_text.getText());
-                        ais03.setTrueHeading(new Integer(heading.getText()));
-                        ais03.setLatitude(degConvert(new Float(latitude.getText())));
-                        ais03.setLongitude(degConvert(new Float(longitude.getText())));
-                        ais03.setMmsi(new Integer(mmsi.getText()));
-                        ais03.setDevice(dev.getText());
-                        ais03.setSpecialManoeuvreIndicator(new Integer(maneuver.getText()));
-                        ais03.setRaimFlag(Boolean.getBoolean(raim.getText())); 
-                        ais03.setPositionAccuracy(Boolean.getBoolean(accuracy.getText()));
-            handler.doIt(ais03);
-	  }
-           break;
-           
-	case "4" :
-	  if(dev != null && mmsi != null && timestamp != null && longitude != null && latitude != null){
-	  
-	    String date = timestamp.getText();
-	    String [] tmp0 = date.split("\"");
-	    String [] tmp1 = tmp0[1].split("T");
-	    
-	    String [] tmp2 = tmp1[0].split("-");
-	    year = new Integer(tmp2[0]);
-	    month = new Integer(tmp2[1]);
-	    day = new Integer(tmp2[2]);
-	    String [] tmp3 = tmp1[1].split(":");
-	    hours = new Integer(tmp3[0]);
-	    minutes  = new Integer(tmp3[1]);
-	    seconds = new Integer(tmp3[2].substring(0, 2));
-	  /*
-	    ais04 = new AIS04(new Integer(mmsi.getText()), device,
-	                         new GregorianCalendar(year, month, day, hours, minutes, seconds),
-	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText()))
-	                        );  
-	                                         
-	    
-	    handler.doIt(ais04);
-	    */
-         // System.out.println("ais4");
-	 }
-	   break;
-	case "5" :
-	//System.out.println(getText());
-	  if(dev != null && mmsi != null && imo != null && callsign != null && shipname != null &&
-	  to_bow != null && to_port != null && to_starboard != null && eta != null && draught != null && destination != null){
-
-	  String etaTmp = eta.getText();
-	  String [] tmp0 = etaTmp.split("\"");
-	  String [] tmp1 = tmp0[1].split("T");
-	  String [] tmp2 = tmp1[0].split("-");
-	  month = new Integer(tmp2[0]);
-	  day = new Integer(tmp2[1]);
-	  String [] tmp3 = tmp1[1].split(":");
-	  hours = new Integer(tmp3[0]);
-	  minutes  = new Integer(tmp3[1].substring(0, 2));
-
-	  date = new GregorianCalendar();
-	  date.set(Calendar.MONTH, month);
-	  date.set(Calendar.DATE, day);
-	  date.set(Calendar.HOUR, hours);
-	  date.set(Calendar.MINUTE, minutes);
-	  
-	  AIS05 ais05=new AIS05();
-	  ais05.setMmsi(new Integer(mmsi.getText()));
-          ais05.setCallSign(callsign.getText());
-          ais05.setDestination(destination.getText());
-          ais05.setImoNumber(new Integer(imo.getText()));
-          ais05.setName(shipname.getText());
-          ais05.setShipType(new Integer(shiptype.getText()));
-          handler.doIt(ais05);
-        //  System.out.println("ais05");
-	  }
-	  
-	   break;
-	case "8" :
-	  // System.out.println("ais08");
-	   break;
-	case "18":
-          if(dev != null && mmsi != null && speed != null && longitude != null && latitude != null &&
-             course != null && heading != null && second != null){
-          /*    
-           ais18 = new AIS18(new Integer(mmsi.getText()), dev.getText(),
-                   new Float(speed.getText()), new Float(course.getText()), new Float(heading.getText()), 
-                   degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText())),
-                   new Integer(second.getText()));
-                   
-            
-            handler.doIt(ais18);
-           */ 
-          // System.out.println("ais18" + getText()); 
-                                 
-          }
-          
     	}
-	}
+	
     	;
    	
 GPSD_DEVICE 
@@ -1690,16 +1705,61 @@ PGN
     	}
     	|
     	(
-        '"pgn":129025' SEP
-         '"description":' description=NAME SEP
-    	 '"fields":{"Latitude":' WS*  latitude=NUMBER* SEP
-    	 '"Longitude":'WS* longitude=NUMBER*'}}'
+    	 '"pgn":127258' SEP
+         '"description":"' description=LETTERS '"' SEP
+    	 '"fields":{"SID":' sid=NUMBER*  SEP
+    	 '"Variation":' sign=SIGN* variation=NUMBER* '}}'
     	)
     	{
+    	float var = new Float(variation.getText());
+    	if(sign != null && sign.getText().contains("-")){
+    	  var = -var;
+    	}
+    	pgn127258 = new PGN127258(getText(), timestamp.getText(), 
+	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
+	                          new Integer("127258"),description.getText(), 
+	                          new Integer(sid.getText()), var);                       
+	 System.out.println("Parser :  " + pgn127258);   
+    	}
+    	|
+    	(
+    	  '"pgn":128267' SEP
+         '"description":"' description=LETTERS '"' SEP
+    	 '"fields":{"SID":' sid=NUMBER*  SEP
+    	 '"Depth":' depth=NUMBER*  SEP
+    	 '"Offset":' sign=SIGN* offset=NUMBER* '}}'
+    	)
+    	{
+    	float off = new Float(offset.getText());
+    	if(sign != null && sign.getText().contains("-")){
+    	  off = -off;
+    	}
+    	pgn128267 = new PGN128267(getText(), timestamp.getText(), 
+	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
+	                          new Integer("128267"),description.getText(), 
+	                          new Integer(sid.getText()), new Float(depth.getText()), off);                       
+	 System.out.println("Parser :  " + pgn128267);   
+    	} 
+    	|
+    	(
+        '"pgn":129025' SEP
+         '"description":' description=NAME SEP
+    	 '"fields":{"Latitude":' WS*  signLat=SIGN* latitude=NUMBER* SEP
+    	 '"Longitude":'WS* signLon=SIGN* longitude=NUMBER*'}}'
+    	)
+    	{
+    	float lat = new Float(latitude.getText());
+    	if(signLat != null && signLat.getText().contains("-")){
+    	  lat = -lat;
+    	}
+    	float lon = new Float(longitude.getText());
+    	if(signLon != null && signLon.getText().contains("-")){
+    	  lon = -lon;
+    	}
     	pgn129025 = new PGN129025(getText(), timestamp.getText(), 
 	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
 	                          new Integer("129025"),description.getText(), 
-	                          new Float(latitude.getText()), new Float(longitude.getText()));
+	                          lat, lon);
 	 System.out.println("Parser :  " + pgn129025);   
     	}
     	|
@@ -1719,21 +1779,7 @@ PGN
 	 System.out.println("Parser :  " +pgn130306);   
 	 handler.doIt(pgn130306);                      
 	}
-    	|
-    	(
-    	  '"pgn":128267' SEP
-         '"description":"' description=LETTERS '"' SEP
-    	 '"fields":{"SID":' sid=NUMBER*  SEP
-    	 '"Depth":' depth=NUMBER*  SEP
-    	 '"Offset":' offset=NUMBER* '}}'
-    	)
-    	{
-    	pgn128267 = new PGN128267(getText(), timestamp.getText(), 
-	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
-	                          new Integer("128267"),description.getText(), 
-	                          new Integer(sid.getText()), new Float(depth.getText()), new Float(offset.getText()));                       
-	 System.out.println("Parser :  " + pgn128267);   
-    	}  
+    	 
     	|
     	(
     	'"pgn":' NUMBER+  SEP
@@ -1742,7 +1788,7 @@ PGN
     	 ('{' | '"' | '[' | ']' | ':' | '/'  | '}' | '_' | '#' | NUMBER | LETTERS | SIGN | SEP)*
         )
     	{
-	System.out.println(getText());
+	//System.out.println(getText());
 	}
     	;  
     	  	
@@ -1782,7 +1828,7 @@ NUMBER
     ('0'..'9')+ '.' ('0'..'9')* EXPONENT?
     |   '.' ('0'..'9')* EXPONENT?
     |   ('0'..'9')+ EXPONENT
-    ;//{System.out.println(getText());};
+   ;//{System.out.println(getText());};
 
 WS  :   ( ' '
         | '\t'
@@ -1799,8 +1845,8 @@ SIGN : ('+'|'-')
      ;
      
 SIGNED :
-    SIGN? NUMBER
-	;
+    SIGN? NUMBER+
+	;//{System.out.println(getText());}; 
 	
 TIME_STAMP 
 	:	
@@ -1819,7 +1865,7 @@ CHECKSUM : (('*'('0'..'9')('0'..'9')) |
  	| '<' | '>' | '\*')*'"'
  	;
  LETTERS : (('A'..'Z')|('a'..'z')|' '|'~')+
-         ;// {System.out.println(getText());};        
+          ;//{System.out.println(getText());};        
         
 
 EXPONENT : ('e'|'E') ('+'|'-')? ('0'..'9')+ ;
