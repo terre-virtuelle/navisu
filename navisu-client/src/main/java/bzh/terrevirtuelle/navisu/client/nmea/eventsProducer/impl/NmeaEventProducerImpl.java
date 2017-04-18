@@ -33,6 +33,7 @@ import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS25Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS26Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.ais.AIS27Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN126992Event;
+import bzh.terrevirtuelle.navisu.client.nmea.controller.events.n2k.PGN127258Event;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.AAMEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.APBEvent;
 import bzh.terrevirtuelle.navisu.client.nmea.controller.events.nmea183.BECEvent;
@@ -220,6 +221,8 @@ public class NmeaEventProducerImpl
     @ProducedEvent
     protected PGN126992Event pgn126992Event;
     @ProducedEvent
+    protected PGN127258Event pgn127258Event;
+    @ProducedEvent
     protected PGN128267Event pgn128267Event;
     @ProducedEvent
     protected PGN129025Event pgn129025Event;
@@ -314,6 +317,7 @@ public class NmeaEventProducerImpl
         nmeaEvents.put("AIS27", ais27Event);
 
         nmeaEvents.put("PGN126992", pgn126992Event);
+        nmeaEvents.put("PGN127258", pgn127258Event);
         nmeaEvents.put("PGN128267", pgn128267Event);
         nmeaEvents.put("PGN129025", pgn129025Event);
         nmeaEvents.put("PGN130306", pgn130306Event);
