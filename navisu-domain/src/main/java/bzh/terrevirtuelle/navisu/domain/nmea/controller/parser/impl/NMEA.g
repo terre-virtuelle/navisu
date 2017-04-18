@@ -1701,7 +1701,8 @@ PGN
 	                          new Integer("126992"),description.getText(), 
 	                          source.getText(), dateFactory(sHours.getText(), sMin.getText(), sSec.getText()));
 	                        //source.getText(), stringTime.getText());
-	 System.out.println("Parser :  " + pgn126992);   
+	// System.out.println("Parser :  " + pgn126992);  
+	handler.doIt(pgn126992); 
     	}
     	|
     	(
@@ -1719,7 +1720,8 @@ PGN
 	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
 	                          new Integer("127258"),description.getText(), 
 	                          new Integer(sid.getText()), var);                       
-	 System.out.println("Parser :  " + pgn127258);   
+	// System.out.println("Parser :  " + pgn127258);   
+	handler.doIt(pgn127258);
     	}
     	|
     	(
@@ -1738,7 +1740,8 @@ PGN
 	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
 	                          new Integer("128267"),description.getText(), 
 	                          new Integer(sid.getText()), new Float(depth.getText()), off);                       
-	 System.out.println("Parser :  " + pgn128267);   
+	// System.out.println("Parser :  " + pgn128267);   
+	handler.doIt(pgn128267);
     	} 
     	|
     	(
@@ -1760,7 +1763,8 @@ PGN
 	                          new Integer(prio.getText()), src.getText(), new Integer(dst.getText()),
 	                          new Integer("129025"),description.getText(), 
 	                          lat, lon);
-	 System.out.println("Parser :  " + pgn129025);   
+	// System.out.println("Parser :  " + pgn129025); 
+	handler.doIt(pgn129025);  
     	}
     	|
     	(
