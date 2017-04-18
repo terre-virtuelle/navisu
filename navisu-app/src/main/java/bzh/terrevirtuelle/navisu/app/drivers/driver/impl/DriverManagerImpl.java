@@ -64,10 +64,9 @@ public class DriverManagerImpl
         String userInitialDirectory = properties.getProperty("dataDir");
         if (userInitialDirectory == null) {
             this.fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
-         //   this.fileChooserDock.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
         } else {
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
-          //  this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
+            
         }
     }
 
@@ -84,14 +83,13 @@ public class DriverManagerImpl
     @Override
     public void open(String category, String[] ext) {
         String userInitialDirectory = properties.getProperty(category);
-
         if (userInitialDirectory != null) {
             if (userInitialDirectory.equals("")) {
                 userInitialDirectory = System.getProperty("user.dir") + "/data/";
                 this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
                // this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             } else {
-                userInitialDirectory = System.getProperty("user.dir") + "/data/";
+               // userInitialDirectory = System.getProperty("user.dir") + "/data/";
                 this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
               //  this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
             }
@@ -100,8 +98,6 @@ public class DriverManagerImpl
             this.fileChooser.setInitialDirectory(new File(userInitialDirectory));
          //   this.fileChooserDock.setInitialDirectory(new File(userInitialDirectory));
         }
-        System.out.println("DriverManagerImpl");
-        System.out.println("userInitialDirectory " + userInitialDirectory);
 
        // this.fileChooserDock.getExtensionFilters().clear();
        // this.fileChooserDock.getExtensionFilters().add(
@@ -138,6 +134,7 @@ public class DriverManagerImpl
             properties.store(out, "Last directory choosed by user");
             out.close();
         } catch (IOException ex) {
+            System.out.println("Last directory choosed by user " + ex.toString());
         }
     }
 
