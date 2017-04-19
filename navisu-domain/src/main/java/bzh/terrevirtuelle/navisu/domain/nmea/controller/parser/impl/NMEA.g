@@ -1439,13 +1439,21 @@ GPSD_AIS : '{"class":"AIS"' SEP
     	//Type 4
     	'"timestamp":' timestamp=TIME_STAMP  SEP
     	'"accuracy":' accuracy=LETTERS SEP 
-    	'"lon":' longitude=SIGNED SEP 
-    	'"lat":' latitude=SIGNED SEP
+    	'"lon":' signLon=SIGN* longitude=NUMBER* SEP 
+    	 '"lat":' signLat=SIGN* latitude=NUMBER* SEP 
     	'"epfd":' epfd=NUMBER SEP 
     	'"epfd_text":' epfd_text=NAME SEP
     	'"raim":' raim=LETTERS SEP 
     	'"radio":' radio=NUMBER
     	{
+    	float sLat=new Float(latitude.getText());
+         if(signLat!=null && signLat.getText().contains("-")){
+            sLat=-sLat;
+         }
+         float sLon=new Float(longitude.getText());
+         if(signLon!=null && signLon.getText().contains("-")){
+            sLon=-sLon;
+         }
     	if(dev != null && mmsi != null && timestamp != null && longitude != null && latitude != null){
 	  
 	    String date = timestamp.getText();
@@ -1463,7 +1471,7 @@ GPSD_AIS : '{"class":"AIS"' SEP
 	  /*
 	    ais04 = new AIS04(new Integer(mmsi.getText()), device,
 	                         new GregorianCalendar(year, month, day, hours, minutes, seconds),
-	                         degConvert(new Float(latitude.getText())), degConvert(new Float(longitude.getText()))
+	                         degConvert(sLat), degConvert(sLon)
 	                        );  
 	                                         
 	    
