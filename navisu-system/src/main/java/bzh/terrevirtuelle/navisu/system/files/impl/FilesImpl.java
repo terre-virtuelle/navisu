@@ -31,6 +31,7 @@ public class FilesImpl
     protected static final String EXTENSION_0 = ".nmea";
     private static final String EXTENSION_1 = ".n2k";
     private static final String EXTENSION_2 = ".ais";
+    private static final String EXTENSION_3 = ".txt";
     protected static final String NAME = "NMEA";
 
     @Override
@@ -40,7 +41,8 @@ public class FilesImpl
 
         if (file.toLowerCase().endsWith(EXTENSION_0)
                 || file.toLowerCase().endsWith(EXTENSION_1)
-                || file.toLowerCase().endsWith(EXTENSION_2)) {
+                || file.toLowerCase().endsWith(EXTENSION_2)
+                || file.toLowerCase().endsWith(EXTENSION_3)) {
             canOpen = true;
         }
 
@@ -79,7 +81,8 @@ public class FilesImpl
     public String[] getExtensions() {
         return new String[]{"*" + EXTENSION_0,
             "*" + EXTENSION_1,
-            "*" + EXTENSION_2
+            "*" + EXTENSION_2,
+            "*" + EXTENSION_3
         };
     }
 
