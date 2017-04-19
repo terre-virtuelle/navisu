@@ -389,10 +389,11 @@ public class AppMain extends Application {
         // Initialisation des paramètres de diffusion des data.
         dataServerServices.init("localhost", 8585);
 
-        /* Test connexion GPS */
+        /* Test connexion GPS / AIS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
         //  dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
+        
         /* Test connexion Gpsd */
  /*
         Fulup 12 avril 2016
@@ -409,15 +410,9 @@ public class AppMain extends Application {
         // dataServerServices.openGpsd("sinagot.net", 5121);
         //dataServerServices.openGpsd("hd-sf.com", 9009);
 
-        /* Test lecture fichier */
-        //dataServerServices.openFile("data/ais/ais.txt");  //AIS
-        // dataServerServices.openFile("data/nmea/Route.nmea"); //NMEA0183 //gps.txt //gpsLostennic.txt
-        //dataServerServices.openFile("data/nmea/hcgdg.txt"); //test compas
-        //dataServerServices.openFile("data/gpsd/gpsd_1.txt");//AIS Gpsd
-        //dataServerServices.openFile("data/n2k/out1.json");//N2K
-        //dataServerServices.openFile("data/n2k/sample.json");//N2K
         /* Test serveur Web Http */
         // dataServerServices.openHttpServer("localhost", 8181);
+        
         /* Instanciation d'un client */
         nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
         nmeaClientServices.request(500);
@@ -431,7 +426,7 @@ public class AppMain extends Application {
         //gpsPlotterServices.on();
 
         /* Test Bezier, approxiamtion trajectoire */
- /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
+        /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
          bezier2DServices.toKML("path.kml", data);
 
          List<Pair<Double, Double>> bezSi = bezier2DServices.leastSquare(data, 8);
