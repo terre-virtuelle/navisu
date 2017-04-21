@@ -425,7 +425,7 @@ public class AppMain extends Application {
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
 
-        /* Test Bezier, approxiamtion trajectoire */
+        /* Test Bezier, approximation trajectoire */
         /*List<Pair<Double, Double>> data = bezier2DServices.readCsv("data/saved/", "savedPath.csv");
          bezier2DServices.toKML("path.kml", data);
 
