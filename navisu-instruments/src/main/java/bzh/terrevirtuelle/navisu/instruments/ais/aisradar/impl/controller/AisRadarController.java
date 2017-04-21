@@ -342,24 +342,78 @@ public class AisRadarController
             Logger.getLogger(AisRadarController.class.getName()).log(Level.SEVERE, null, ex);
         }
         // creation de l'objet metier central
+        // tests properties set default values
+        String mmsiP = properties.getProperty("mmsi");
+        if (mmsiP == null || mmsiP.equals("")) {
+            mmsiP = "000000000";
+        }
+        String nameP = properties.getProperty("name");
+        if (nameP == null || nameP.equals("")) {
+            nameP = "Unknow";
+        }
+        String latP = properties.getProperty("latitude");
+        if (latP == null || latP.equals("")) {
+            latP = "48.00";
+        }
+        String lonP = properties.getProperty("longitude");
+        if (lonP == null || lonP.equals("")) {
+            lonP = "-4.00";
+        }
+        String cogP = properties.getProperty("cog");
+        if (cogP == null || cogP.equals("")) {
+            cogP = "0.00";
+        }
+        String sogP = properties.getProperty("sog");
+        if (sogP == null || sogP.equals("")) {
+            sogP = "0.00";
+        }
+        String countryP = properties.getProperty("country");
+        if (countryP == null || countryP.equals("")) {
+            countryP = "Unknow";
+        }
+        String widthP = properties.getProperty("width");
+        if (widthP == null || widthP.equals("")) {
+            widthP = "0.00";
+        }
+        String lengthP = properties.getProperty("length");
+        if (lengthP == null || lengthP.equals("")) {
+            lengthP = "0.00";
+        }
+        String draughtP = properties.getProperty("draught");
+        if (draughtP == null || draughtP.equals("")) {
+            draughtP = "0.00";
+        }
+        String shipTypeP = properties.getProperty("shipType");
+        if (shipTypeP == null || shipTypeP.equals("")) {
+            shipTypeP = "0";
+        }
+        String navigationalStatusP = properties.getProperty("navigationalStatus");
+        if (navigationalStatusP == null || navigationalStatusP.equals("")) {
+            navigationalStatusP = "0";
+        }
+        String callSignP = properties.getProperty("callSign");
+        if (callSignP == null || callSignP.equals("")) {
+            callSignP = "0";
+        }
+
         ownerShip = ShipBuilder.create()
-                .mmsi(new Integer(properties.getProperty("mmsi")))
-                .name(properties.getProperty("name"))
-                .latitude(new Float(properties.getProperty("latitude")))
-                .longitude(new Float(properties.getProperty("longitude")))
-                .cog(new Float(properties.getProperty("cog")))
-                .sog(new Float(properties.getProperty("sog")))
+                .mmsi(new Integer(mmsiP))
+                .name(nameP)
+                .latitude(new Float(latP))
+                .longitude(new Float(lonP))
+                .cog(new Float(cogP))
+                .sog(new Float(sogP))
                 //.heading(new Float(properties.getProperty("heading")))
-                .country(properties.getProperty("country"))
-                .width(new Float(properties.getProperty("width")))
-                .length(new Float(properties.getProperty("length")))
-                .draught(new Float(properties.getProperty("draught")))
-                .shipType(new Integer(properties.getProperty("shipType")))
-                .navigationalStatus(new Integer(properties.getProperty("navigationalStatus")))
-                .callSign(properties.getProperty("callSign"))
+                .country(countryP)
+                .width(new Float(widthP))
+                .length(new Float(lengthP))
+                .draught(new Float(draughtP))
+                .shipType(new Integer(shipTypeP))
+                .navigationalStatus(new Integer(navigationalStatusP))
+                .callSign(callSignP)
                 .target(true).build();
-        latOwner = new Float(properties.getProperty("latitude"));
-        lonOwner = new Float(properties.getProperty("longitude"));
+        latOwner = new Float(latP);
+        lonOwner = new Float(lonP);
         createTarget(ownerShip);
     }
 
@@ -529,7 +583,7 @@ public class AisRadarController
             int cY = (int) (CENTER_Y + (latOwner - target.getLatitude()) * radarScale);
             if (cX <= MAX && cX >= MIN && cY <= MAX && cY >= MIN) {
                 Platform.runLater(() -> {
-                    
+
                     if (outOfRangeShips.containsKey(target.getMMSI())) {//Ships In range
                         GRShipImpl grship = (GRShipImpl) outOfRangeShips.get(target.getMMSI());
                         radar.getChildren().add(grship);
