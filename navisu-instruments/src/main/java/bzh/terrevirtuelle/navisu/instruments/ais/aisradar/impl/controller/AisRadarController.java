@@ -353,11 +353,11 @@ public class AisRadarController
         }
         String latP = properties.getProperty("latitude");
         if (latP == null || latP.equals("")) {
-            latP = "48.00";
+            latP = "48.3649";
         }
         String lonP = properties.getProperty("longitude");
         if (lonP == null || lonP.equals("")) {
-            lonP = "-4.00";
+            lonP = "-4.4871";
         }
         String cogP = properties.getProperty("cog");
         if (cogP == null || cogP.equals("")) {
