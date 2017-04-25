@@ -25,35 +25,43 @@ public class ElevationLoader {
     protected Polygon polygon;
     protected WorldWindow wwd;
     protected ElevationModel model;
-    protected String elevations = "";
-    protected String bottom = "";
-    protected double SQUARE_SIDE = 200;
-    protected int PTS_COUNT = 200;
-    protected String BOTTOM_STR = "0.0";
-    protected double BOTTOM = Double.valueOf(BOTTOM_STR);
-    protected double MAGNIFICATION = 10;
+    protected String elevationsStr;
+    protected String bottomStr;
+    protected double tileSide;
+    protected int ptsCounts;
+    protected String BOTTOM_STR;
+    protected double bottom;
+    protected double magnification;
     protected List<Point3D> bottomPositions;
     protected List<Point3D> topPositions;
     double space;
 
-    public ElevationLoader(Polygon polygon) {
+    public ElevationLoader(Polygon polygon, double tileSide,
+            int ptsCounts, double bottom,
+            double magnification) {
         this.polygon = polygon;
+        this.tileSide = tileSide;
+        this.ptsCounts = ptsCounts;
+        this.bottom = bottom;
+        this.magnification = magnification;
+        BOTTOM_STR = Double.toString(bottom);
+      //  System.out.println("BOTTOM_STR " + BOTTOM_STR);
         wwd = GeoWorldWindViewImpl.getWW();
         model = this.wwd.getModel().getGlobe().getElevationModel();
         bottomPositions = new ArrayList<>();
         topPositions = new ArrayList<>();
-        space = SQUARE_SIDE / (PTS_COUNT - 1);
+        space = tileSide / (ptsCounts - 1);
     }
 
     public String compute() {
         String result = "";
         List<? extends Position> positions = polygon.getBoundaries().get(0);
-        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / PTS_COUNT;
-        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / PTS_COUNT;
+        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / ptsCounts;
+        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / ptsCounts;
 
         latRange = Math.abs(latRange);
         lonRange = Math.abs(lonRange);
-        
+
         for (double lon = positions.get(1).getLongitude().getDegrees();
                 lon > positions.get(0).getLongitude().getDegrees();
                 lon -= lonRange) {
@@ -61,14 +69,14 @@ public class ElevationLoader {
                     lat > positions.get(0).getLatitude().getDegrees();
                     lat -= latRange) {
                 double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
-                el /= MAGNIFICATION;
-                elevations += el + " ";
-                bottom += BOTTOM_STR + " ";
+                el /= magnification;
+                elevationsStr += el + " ";
+                bottomStr += BOTTOM_STR + " ";
             }
         }
-        result += createDEM(elevations, "<ImageTexture DEF='MYTEXT' url='\"image.jpg\"'/> \n"
+        result += createDEM(elevationsStr, "<ImageTexture DEF='MYTEXT' url='\"image.jpg\"'/> \n"
                 + "<TextureTransform  rotation='-1.57' />\n");
-        result += createDEM(bottom, "\n");
+        result += createDEM(bottomStr, "\n");
 
         double lat0 = positions.get(3).getLatitude().getDegrees();
         double pos = 0.0;
@@ -78,9 +86,9 @@ public class ElevationLoader {
                 lon > positions.get(0).getLongitude().getDegrees();
                 lon -= lonRange) {
             double el = model.getElevation(Angle.fromDegrees(lat0), Angle.fromDegrees(lon));
-            el /= MAGNIFICATION;
+            el /= magnification;
             topPositions.add(new Point3D(pos, el, 0.0));
-            bottomPositions.add(new Point3D(pos, BOTTOM, 0.0));
+            bottomPositions.add(new Point3D(pos, bottom, 0.0));
             pos += space;
         }
         result += createBoundaryFace("", bottomPositions, topPositions);
@@ -94,8 +102,8 @@ public class ElevationLoader {
                 lon -= lonRange) {
             double el = model.getElevation(Angle.fromDegrees(lat0), Angle.fromDegrees(lon));
             el /= 10;
-            topPositions.add(new Point3D(pos, el, -SQUARE_SIDE));
-            bottomPositions.add(new Point3D(pos, BOTTOM, -SQUARE_SIDE));
+            topPositions.add(new Point3D(pos, el, -tileSide));
+            bottomPositions.add(new Point3D(pos, bottom, -tileSide));
             pos += space;
         }
         result += createBoundaryFace("", bottomPositions, topPositions);
@@ -110,7 +118,7 @@ public class ElevationLoader {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
             el /= 10;
             topPositions.add(new Point3D(0.0, el, pos));
-            bottomPositions.add(new Point3D(0.0, BOTTOM, pos));
+            bottomPositions.add(new Point3D(0.0, bottom, pos));
             pos += space;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n", bottomPositions, topPositions);
@@ -124,8 +132,8 @@ public class ElevationLoader {
                 lat -= latRange) {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
             el /= 10;
-            topPositions.add(new Point3D(-SQUARE_SIDE, el, pos));
-            bottomPositions.add(new Point3D(-SQUARE_SIDE, BOTTOM, pos));
+            topPositions.add(new Point3D(-tileSide, el, pos));
+            bottomPositions.add(new Point3D(-tileSide, bottom, pos));
             pos += space;
         }
         result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n", bottomPositions, topPositions);
@@ -144,9 +152,9 @@ public class ElevationLoader {
                 + "</Appearance>\n"
                 + "<ElevationGrid \n"
                 + "ccw='true' solid='false'"
-                + " xDimension='" + PTS_COUNT + "'"
+                + " xDimension='" + ptsCounts + "'"
                 + " xSpacing='" + space + "'"
-                + " zDimension='" + PTS_COUNT + "'"
+                + " zDimension='" + ptsCounts + "'"
                 + " zSpacing='" + space + "'"
                 + " height='" + height + "'/>\n"
                 + "</Shape> \n"

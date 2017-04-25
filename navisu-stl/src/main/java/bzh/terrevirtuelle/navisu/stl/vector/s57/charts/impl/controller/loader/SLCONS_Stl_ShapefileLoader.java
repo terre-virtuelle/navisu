@@ -7,12 +7,10 @@ package bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader;
 
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader.SLCONS_ShapefileLoader;
-import bzh.terrevirtuelle.navisu.util.Pair;
 import gov.nasa.worldwind.formats.shapefile.Shapefile;
 import gov.nasa.worldwind.formats.shapefile.ShapefileRecord;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.Path;
@@ -35,7 +33,7 @@ public class SLCONS_Stl_ShapefileLoader
     protected Polygon polyEnveloppe;
     protected Shapefile shapefile;
     protected Polygon offset;
-    protected RenderableLayer layer;
+  //  protected RenderableLayer layer;
     // protected List<Polygon> polygonList;
     protected double bufferDistance = 10;
     protected double height = 1;
@@ -43,13 +41,13 @@ public class SLCONS_Stl_ShapefileLoader
     int i = 0;
     Position orig;
 
-    public SLCONS_Stl_ShapefileLoader(String filename, RenderableLayer layer, Polygon polyEnveloppe) {
-        this.layer = layer;
+    public SLCONS_Stl_ShapefileLoader(String filename,  Polygon polyEnveloppe) {
+      //  this.layer = layer;
         this.filename = filename;
         this.polyEnveloppe = polyEnveloppe;
         List<List<? extends Position>> positions = polyEnveloppe.getBoundaries();
-        System.out.println("positions : " + positions);
-        System.out.println("getOuterBoundary : "+polyEnveloppe.getOuterBoundary());
+     //   System.out.println("positions : " + positions);
+     //   System.out.println("getOuterBoundary : "+polyEnveloppe.getOuterBoundary());
         orig = positions.get(0).get(0);
     }
 

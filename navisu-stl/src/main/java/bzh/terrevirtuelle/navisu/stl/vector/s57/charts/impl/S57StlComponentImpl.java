@@ -14,15 +14,16 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 //import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 //import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
 //import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
+import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponent;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.S57StlComponentServices;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.S57StlChartComponentController;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.S57StlComponentController;
 import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.layers.Layer;
@@ -78,16 +79,16 @@ public class S57StlComponentImpl
     protected List<CheckBoxTreeItem<GeoLayer>> rootItems;
     protected List<GeoLayer<Layer>> geoLayerList;
     protected List<String> groupNames = new ArrayList<>();
-
-    protected S57ChartComponentController s57ComponentController;
-    protected WorldWindow wwd;
+    protected S57StlComponentController s57StlComponentController;
+    protected S57StlChartComponentController s57StlChartComponentController;
+    protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
     static private int i = 0;
     private boolean first = true;
     protected static final Logger LOGGER = Logger.getLogger(S57StlComponentImpl.class.getName());
 
     @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-
+        
         try {
             if (first == true) {
                 first = false;
@@ -155,9 +156,9 @@ public class S57StlComponentImpl
             } catch (IOException | InterruptedException e) {
                 LOGGER.log(Level.SEVERE, null, e);
             }
-            s57ComponentController.init("data/shp/shp_" + i++);
+            s57StlChartComponentController.init("data/shp/shp_" + i++);
 
-            layers = s57ComponentController.getLayers();
+            layers = s57StlChartComponentController.getLayers();
             geoLayerList = geoViewServices.getLayerManager().getGroup(GROUP);
             groupNames.clear();
             geoLayerList.stream().forEach((l) -> {
@@ -189,7 +190,7 @@ public class S57StlComponentImpl
      */
     @Override
     public void showGUI(KMLSurfacePolygonImpl polygon) {
-        s57ComponentController.showGUI(polygon);
+        s57StlComponentController.showGUI(polygon);
     }
 
     @Override
@@ -199,10 +200,14 @@ public class S57StlComponentImpl
 
     @Override
     public void componentInitiated() {
-        s57ComponentController = new S57StlComponentController(guiAgentServices,
+
+        s57StlChartComponentController = new S57StlChartComponentController();
+        s57StlComponentController = new S57StlComponentController(guiAgentServices,
                 layerTreeServices,
                 layersManagerServices,
-                instrumentDriverManagerServices);
+                instrumentDriverManagerServices,
+                s57StlChartComponentController,
+                GROUP, NAME, wwd);
 
     }
 
