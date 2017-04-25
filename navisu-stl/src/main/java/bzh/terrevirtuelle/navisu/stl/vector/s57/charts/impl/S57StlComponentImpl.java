@@ -88,7 +88,7 @@ public class S57StlComponentImpl
 
     @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
-        
+      
         try {
             if (first == true) {
                 first = false;
@@ -200,7 +200,7 @@ public class S57StlComponentImpl
 
     @Override
     public void componentInitiated() {
-
+        
         s57StlChartComponentController = new S57StlChartComponentController();
         s57StlComponentController = new S57StlComponentController(guiAgentServices,
                 layerTreeServices,
@@ -208,7 +208,6 @@ public class S57StlComponentImpl
                 instrumentDriverManagerServices,
                 s57StlChartComponentController,
                 GROUP, NAME, wwd);
-
     }
 
     @Override
