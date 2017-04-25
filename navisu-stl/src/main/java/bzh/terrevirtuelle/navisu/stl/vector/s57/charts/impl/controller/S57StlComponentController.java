@@ -62,25 +62,21 @@ public class S57StlComponentController
 
     protected InstrumentDriverManagerServices instrumentDriverManagerServices;
     protected LayerTreeServices layerTreeServices;
-    LayersManagerServices layersManagerServices;
-    GuiAgentServices guiAgentServices;
-    String GROUP;
-    String NAME;
-    S57StlChartComponentController s57StlChartComponentController;
+    protected LayersManagerServices layersManagerServices;
+    protected GuiAgentServices guiAgentServices;
+
+    protected S57StlChartComponentController s57StlChartComponentController;
+
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
     protected String OUT_DIR = "privateData/x3d/";
     protected String OUT_FILE = "out.x3d";
     protected String OUT_PATH;
-    protected RenderableLayer layer;
+
     protected final String FXML = "configurationStlController.fxml";
     protected String viewgroupstyle = "configuration.css";
     protected static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
-    protected int line;
-    protected int column;
-    protected WKTReader wktReader;
-    protected Geometry geometry;
-    protected KMLSurfacePolygonImpl polygon;
+
     protected List<? extends Position> positions;
     protected double latRangeMetric;
     protected double lonRangeMetric;
@@ -90,10 +86,20 @@ public class S57StlComponentController
     protected int PTS_COUNT = 200;
     protected double BOTTOM = 0.0;
     protected double magnification = 10;
+    protected int line;
+    protected int column;
     protected Polygon polyEnveloppe;
     protected Geometry geometryEnveloppe;
     protected boolean firstShow = true;
+
+    protected WKTReader wktReader;
+    protected Geometry geometry;
+    protected KMLSurfacePolygonImpl polygon;
+    protected String GROUP;
+    protected String NAME;
+    protected RenderableLayer layer;
     protected WorldWindow wwd;
+
     @FXML
     public Group configgroup;
     @FXML
@@ -122,10 +128,35 @@ public class S57StlComponentController
         this.NAME = NAME;
         this.wwd = wwd;
         layer = layersManagerServices.getLayer(GROUP, NAME);
+
+        //  Pour le futur, la couche OSM
         //  Layer buildings = new OSMBuildingsStlLayer();
         //  layerTreeServices.addGeoLayer("Buildings", buildings);
         // wwd.getModel().getLayers().add(buildings);
+    }
 
+    public void showGUI(KMLSurfacePolygonImpl polygon) {
+        if (firstShow == true) {
+            this.polygon = polygon;
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
+            fxmlLoader.setRoot(this);
+            fxmlLoader.setController(this);
+            try {
+                fxmlLoader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+            }
+            setTranslateX(300);
+            setTranslateY(-150);
+            String uri = CSS_STYLE_PATH + viewgroupstyle;
+            configgroup.getStylesheets().add(uri);
+            Platform.runLater(() -> {
+                guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
+                guiAgentServices.getRoot().getChildren().add(this);
+                firstShow = false;
+            });
+        }
+        polyEnveloppe = displayChartBoundaries(polygon);
     }
 
     @Override
@@ -153,31 +184,6 @@ public class S57StlComponentController
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
             });
         });
-    }
-
-    //  @Override
-    public void showGUI(KMLSurfacePolygonImpl polygon) {
-        if (firstShow == true) {
-            this.polygon = polygon;
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
-            fxmlLoader.setRoot(this);
-            fxmlLoader.setController(this);
-            try {
-                fxmlLoader.load();
-            } catch (IOException ex) {
-                Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
-            }
-            setTranslateX(300);
-            setTranslateY(-150);
-            String uri = CSS_STYLE_PATH + viewgroupstyle;
-            configgroup.getStylesheets().add(uri);
-            Platform.runLater(() -> {
-                guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
-                guiAgentServices.getRoot().getChildren().add(this);
-                firstShow = false;
-            });
-        }
-        polyEnveloppe = displayChartBoundaries(polygon);
     }
 
     public Polygon displayChartBoundaries(KMLSurfacePolygonImpl polygon) {
