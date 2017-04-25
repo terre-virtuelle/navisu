@@ -123,6 +123,7 @@ public class BUOYAGE_Stl_ShapefileLoader
     }
 
     private String writeCylinder(double lat, double lon) {
+        /*
         String str = "<Transform \n"
                 + "   translation=\"" + lat + " 2.00000 " + lon + "\"\n"
                 + "    scale=\"1.00000 1.00000 1.00000\"\n"
@@ -141,10 +142,32 @@ public class BUOYAGE_Stl_ShapefileLoader
                 + "          <Cylinder height='5' radius='1.5'/>\n"
                 + "    </Shape>\n"
                 + "</Transform>\n";
+         */
+        String str = "<Transform \n"
+                + "   translation=\"" + lat + " 0.00000 " + lon + "\"\n"
+                + "    scale=\"1.00000 1.00000 1.00000\"\n"
+                + "    rotation=\"1 0 0 1.57058\">\n"
+                + "     <Shape>\n"
+                + "     <Appearance> \n"
+                + "     containerField='appearance'>\n"
+                + "     <Material DEF='Red'\n"
+                + "     containerField='material'\n"
+                + "     ambientIntensity='.2'\n"
+                + "     shininess='.2'\n"
+                + "     diffuseColor='1 0 0'/>\n"
+                + "     </Appearance>\n"
+                + "     <Cylinder DEF='GeoCylinder1'\n"
+                + "     containerField='geometry'\n"
+                + "     height='2'\n"
+                + "     radius='1'/>\n"
+                + "     </Shape>\n"
+                + "     </Transform>\n";
+
         return str;
     }
 
     private String writeCone(double lat, double lon) {
+        /*
         String str = "<Transform translation=\"" + lat + " 2.00000 " + lon + "\">\n"
                 + "  <Shape>\n"
                 + " <Appearance>\n"
@@ -153,11 +176,38 @@ public class BUOYAGE_Stl_ShapefileLoader
                 + "  <Cone bottomRadius='2' height='5'/>\n"
                 + "  </Shape>\n"
                 + " </Transform>\n";
+         */
+        String str = "<Transform "
+                + "    translation=\"" + lat + " 0.00000 " + lon + "\">\n"
+                + "    scale=\"1.00000 1.00000 1.00000\"\n"
+                + "    rotation=\"1 0 0 0.0\">\n"
+                + "    <Shape DEF='Extrusion1'>\n"
+                + "    <Appearance\n"
+                + "    containerField='appearance'>\n"
+                + "    <Material DEF='Green-starboard'\n"
+                + "    containerField='material'\n"
+                + "    ambientIntensity='.2'\n"
+                + "    shininess='0'\n"
+                + "    diffuseColor='0 .4902 0'/>\n"
+                + "    </Appearance>\n"
+                + "    <Extrusion DEF='GeoExtrusion1'\n"
+                + "    containerField='geometry'\n"
+                + "    creaseAngle='.5236'\n"
+                + "    crossSection='\n"
+                + "     -1 1\n"
+                + "     1 1\n"
+                + "      0 -1\n"
+                + "     -1 1'\n"
+                + "    spine='\n"
+                + "      0 0 0\n"
+                + "      0 1 0'/>\n"
+                + "    </Shape>\n"
+                + "     </Transform>\n";
         return str;
     }
 
     private String writeWestBuoy(double lat, double lon) {
-
+        
         String str = "<Group DEF='WestBuoy'>\n"
                 + "<Transform translation=\"" + lat + " 2.00000 " + lon + "\">\n"
                 + "<Transform rotation='1 0 0 1.57058' translation='0 -1.5 .75'>\n"
@@ -178,6 +228,65 @@ public class BUOYAGE_Stl_ShapefileLoader
                 + " </Transform>\n"
                 + " </Transform>\n"
                 + "</Group>";
+       /*
+        String str = "<Group DEF='WestBuoy'>\n"
+                + "<Transform translation=\"" + lat + " 2.00000 " + lon + "\">\n"
+                + "<Transform DEF='dad_Extrusion2'\n"
+                + "containerField='children'\n"
+                + "translation='0 0 1.86606'>\n"
+                + "<Shape DEF='Extrusion2'\n"
+                + "containerField='children'>\n"
+                + "<Appearance\n"
+                + "containerField='appearance'>\n"
+                + "<Material DEF='Black'\n"
+                + "containerField='material'\n"
+                + "ambientIntensity='.2'\n"
+                + "shininess='.2'\n"
+                + "diffuseColor='0 0 0'/>\n"
+                + "</Appearance>\n"
+                + "<Extrusion DEF='GeoExtrusion2'\n"
+                + "containerField='geometry'\n"
+                + "creaseAngle='.5236'\n"
+                + "crossSection='\n"
+                + "-1 1\n"
+                + "1 1\n"
+                + "0 -1\n"
+                + "-1 1'\n"
+                + "spine='\n"
+                + "0 0 0\n"
+                + "0 1 0'/>\n"
+                + "</Shape>\n"
+                + "</Transform>\n"
+                + "<Transform DEF='dad_Extrusion1'\n"
+                + "containerField='children'\n"
+                + "translation='.04576 0 -.22879'\n"
+                + "rotation='0 1 0 3.142'>\n"
+                + "<Shape DEF='Extrusion1'\n"
+                + "containerField='children'>\n"
+                + "<Appearance\n"
+                + "containerField='appearance'>\n"
+                + "<Material DEF='Yellow'\n"
+                + "containerField='material'\n"
+                + "ambientIntensity='.2'\n"
+                + "shininess='.2'\n"
+                + "diffuseColor='1 1 0'/>\n"
+                + "</Appearance>\n"
+                + "<Extrusion DEF='GeoExtrusion1'\n"
+                + "containerField='geometry'\n"
+                + "creaseAngle='.5236'\n"
+                + "crossSection='\n"
+                + " -1 1\n"
+                + "1 1\n"
+                + "0 -1\n"
+                + "-1 1'\n"
+                + "spine='\n"
+                + "0 0 0\n"
+                + "0 1 0'/>\n"
+                + "</Shape>\n"
+                + "</Transform>\n"
+                + "</Transform>\n"
+                + "</Group>";
+*/
         return str;
     }
 
