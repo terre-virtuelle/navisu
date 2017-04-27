@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 3.3//EN" "http://www.web3d.org/specifications/x3d-3.3.dtd">
+<X3D profile='Immersive' version='3.0'  xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation =' http://www.web3d.org/specifications/x3d-3.0.xsd '> 
+<head>
+<meta name='title' content='NaVisu S57'/> 
+<meta name='author' content='Dom'/>
+<meta name='created' content='Sat Apr 08 18:24:09 CEST 2017'/>
+<meta name='generator' content='NaVisu'/>
+<meta name='license' content=' ../../license.html'/>
+</head>
+<NavigationInfo type='"EXAMINE" "WALK" "FLY" "ANY"'/>
+<Scene>
+    <Transform DEF="Shape_Box_TRANSFORM" translation="100.000000 -1.00000 -100.000000" >
+        <Group DEF="group_ME_Shape_Box">
+<Shape>
+<Appearance>
+<ImageTexture DEF='MYTEXT' url='"mer.jpg"'/> 
+<Material DEF="MA_Shape"
+diffuseColor="0.0600 0.1200 0.2200">
+</Material> 
+</Appearance>
+<IndexedFaceSet solid="false"
+                coordIndex="0 1 2 3 -1 4 0 3 7 -1 7 3 2 6 -1 6 2 1 5 -1 0 4 5 1 -1 7 6 5 4 -1" >
+	<Coordinate DEF="coords_ME_Shape_Box"
+	            point="100.000000 1.250000 100.000000 -100.000000 1.250000 100.000000 -100.000000 1.250000 -100.000000 100.000000 1.250000 -100.000000 100.000000 -1.250000 100.000000 -100.000000 -1.250000 100.000000 -100.000000 -1.250000 -100.000000 100.000000 -1.250000 -100.000000 "/>
+</IndexedFaceSet>
+</Shape>
+</Group>
+    </Transform>
+</Scene>
+</X3D>
