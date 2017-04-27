@@ -202,7 +202,8 @@ public class S57StlComponentImpl
     public void componentInitiated() {
         
         s57StlChartComponentController = new S57StlChartComponentController();
-        s57StlComponentController = new S57StlComponentController(guiAgentServices,
+        s57StlComponentController = new S57StlComponentController(
+                guiAgentServices,
                 layerTreeServices,
                 layersManagerServices,
                 instrumentDriverManagerServices,

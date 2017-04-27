@@ -193,7 +193,7 @@ public class S57StlComponentController
         try {
             geom = wkt.read(result);
         } catch (ParseException ex) {
-            Logger.getLogger(S57GlobalCatalogController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         Polygon newPolygon = null;
         if (geom != null) {
@@ -298,6 +298,7 @@ public class S57StlComponentController
         lonRangeMetric = WwjGeodesy.getDistanceM(positions.get(0),
                 new Position(Angle.fromDegrees(positions.get(1).getLatitude().getDegrees()),
                         Angle.fromDegrees(positions.get(1).getLongitude().getDegrees()), 100));
+        
         scaleLatFactor = TILE_SIDE / latRangeMetric;
         scaleLonFactor = TILE_SIDE / lonRangeMetric;
 
