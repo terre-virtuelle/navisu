@@ -55,8 +55,10 @@ import javafx.scene.layout.Pane;
  * @author serge
  * @date Feb 26, 2017
  */
+/*
+Le controller est un widget
+*/
 public class S57StlComponentController
-        //   extends S57ChartComponentController
         extends Widget2DController
         implements Initializable {
 
@@ -69,23 +71,32 @@ public class S57StlComponentController
 
     protected static final String ALARM_SOUND = "/data/sounds/pling.wav";
     protected static final String DATA_PATH = System.getProperty("user.dir").replace("\\", "/");
+   // Le dir navisu-launcher est dans le PATH
     protected String OUT_DIR = "privateData/x3d/";
+    // Pour le moment ce nomm est fixe, on ne fait qu'une dalle
     protected String OUT_FILE = "out.x3d";
     protected String OUT_PATH;
 
+    // Pour récupérer le .css
     protected final String FXML = "configurationStlController.fxml";
     protected String viewgroupstyle = "configuration.css";
     protected static final String CSS_STYLE_PATH = Paths.get(System.getProperty("user.dir") + "/css/").toUri().toString();
 
+   
     protected List<? extends Position> positions;
     protected double latRangeMetric;
     protected double lonRangeMetric;
     protected double scaleLatFactor;
     protected double scaleLonFactor;
+    // Les parametres a initialiser via l'interface
+    // Taille de la dalle en mm
     protected double TILE_SIDE = 200;
+    // Resolution du MNT
     protected int PTS_COUNT = 200;
+    // Position du socle
     protected double BOTTOM = 0.0;
-    protected double magnification = 10;
+    // exagération en vertical du MNT
+    protected double MAGNIFICATION = 10;
     protected int line;
     protected int column;
     protected Polygon polyEnveloppe;
@@ -95,6 +106,7 @@ public class S57StlComponentController
     protected WKTReader wktReader;
     protected Geometry geometry;
     protected KMLSurfacePolygonImpl polygon;
+    
     protected String GROUP;
     protected String NAME;
     protected RenderableLayer layer;
@@ -135,6 +147,11 @@ public class S57StlComponentController
         // wwd.getModel().getLayers().add(buildings);
     }
 
+    /*
+      Chargement du code FXML du widget
+      le parametre polygon represente la frontiere de la cartes
+    
+    */
     public void showGUI(KMLSurfacePolygonImpl polygon) {
         if (firstShow == true) {
             this.polygon = polygon;
@@ -150,6 +167,7 @@ public class S57StlComponentController
             setTranslateY(-150);
             String uri = CSS_STYLE_PATH + viewgroupstyle;
             configgroup.getStylesheets().add(uri);
+            // Affichage du widget
             Platform.runLater(() -> {
                 guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
                 guiAgentServices.getRoot().getChildren().add(this);
@@ -173,15 +191,33 @@ public class S57StlComponentController
             int tiles = Integer.parseInt(tileCB.getValue());
             line = column = (int) Math.sqrt(tiles);
             OUT_PATH = OUT_DIR + OUT_FILE;
+            // le calcul est placé dans un Job, pour récupérer la main
+            // dans Navisu
             guiAgentServices.getJobsManager().newJob(OUT_PATH, (progressHandle) -> {
+             // forEach dalle
+                /*
+                Affichage de/des dalles aprés le choix utilisateur
+                */
                 displayTiles(polyEnveloppe, line, column);
+         
+                /*
+                initialisation des parametres pour chaque dalles
+                */
                 initParameters();
+                /*
+                lancement de la gération du x3d
+                */
                 s57StlChartComponentController.compute(OUT_DIR, OUT_FILE, OUT_PATH,
-                        scaleLatFactor, scaleLonFactor, magnification,
+                        scaleLatFactor, scaleLonFactor, MAGNIFICATION,
                         TILE_SIDE,
                         PTS_COUNT, BOTTOM,
-                        polyEnveloppe, geometryEnveloppe);
+                        polyEnveloppe,          // dalle en WWJ
+                        geometryEnveloppe);     // dalle en JTS
+                /*
+                Fin du calcul our une dalle
+                */
                 instrumentDriverManagerServices.open(DATA_PATH + ALARM_SOUND, "true", "1");
+           // endEach
             });
         });
     }
@@ -206,7 +242,7 @@ public class S57StlComponentController
             /*
             Un carre = la hauteur / nb
              */
-            Position newPosition = WwjGeodesy.getPosition(points.get(1), 270, y * 1000);
+            Position newPosition = WwjGeodesy.getPosition(points.get(1), 270, y * 1000);//270=West
             List<Position> newEnveloppe = new ArrayList<>();
             points.forEach((p) -> {
                 newEnveloppe.add(p);
@@ -307,7 +343,7 @@ public class S57StlComponentController
 
         if (wkt != null) {
             try {
-                geometryEnveloppe = wktReader0.read(wkt);
+                geometryEnveloppe = wktReader0.read(wkt);// l'enveloppe au sens de JTS, pour ne faire clacul q'une fois
             } catch (com.vividsolutions.jts.io.ParseException ex) {
                 Logger.getLogger(S57StlComponentController.class.getName()).log(Level.SEVERE, null, ex);
             }

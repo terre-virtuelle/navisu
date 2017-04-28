@@ -25,7 +25,7 @@ public class ElevationLoader {
     protected Polygon polygon;
     protected WorldWindow wwd;
     protected ElevationModel model;
-    protected String elevationsStr;
+    protected String elevationsStr = "";
     protected String bottomStr;
     protected double tileSide;
     protected int ptsCounts;
@@ -34,18 +34,26 @@ public class ElevationLoader {
     protected double magnification;
     protected List<Point3D> bottomPositions;
     protected List<Point3D> topPositions;
-    double space;
+    protected double space;
+    protected double spaceLat;
+    protected double spaceLon;
+    protected double scaleLatFactor;
+    protected double scaleLonFactor;
 
     public ElevationLoader(Polygon polygon, double tileSide,
             int ptsCounts, double bottom,
-            double magnification) {
+            double magnification,
+            double scaleLatFactor,
+            double scaleLonFactor) {
         this.polygon = polygon;
         this.tileSide = tileSide;
         this.ptsCounts = ptsCounts;
         this.bottom = bottom;
         this.magnification = magnification;
+        this.scaleLatFactor = scaleLatFactor;
+        this.scaleLonFactor = scaleLonFactor;
         BOTTOM_STR = Double.toString(bottom);
-      //  System.out.println("BOTTOM_STR " + BOTTOM_STR);
+        //  System.out.println("BOTTOM_STR " + BOTTOM_STR);
         wwd = GeoWorldWindViewImpl.getWW();
         model = this.wwd.getModel().getGlobe().getElevationModel();
         bottomPositions = new ArrayList<>();
@@ -56,58 +64,84 @@ public class ElevationLoader {
     public String compute() {
         String result = "";
         List<? extends Position> positions = polygon.getBoundaries().get(0);
-        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / ptsCounts;
-        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / ptsCounts;
+
+        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCounts - 1);
+        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCounts - 1);
 
         latRange = Math.abs(latRange);
         lonRange = Math.abs(lonRange);
-
-        for (double lon = positions.get(1).getLongitude().getDegrees();
-                lon > positions.get(0).getLongitude().getDegrees();
-                lon -= lonRange) {
-            for (double lat = positions.get(3).getLatitude().getDegrees();
-                    lat > positions.get(0).getLatitude().getDegrees();
-                    lat -= latRange) {
-                double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon));
+        
+        double longitude = positions.get(1).getLongitude().getDegrees();
+        double latitude;
+        for (int i = 0; i < ptsCounts; i++) {
+            latitude = positions.get(3).getLatitude().getDegrees();
+            for (int j = 0; j < ptsCounts; j++) {
+                double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
                 el /= magnification;
                 elevationsStr += el + " ";
                 bottomStr += BOTTOM_STR + " ";
+                latitude -= latRange;
             }
+            longitude -= lonRange;
         }
+
         result += createDEM(elevationsStr, "<ImageTexture DEF='MYTEXT' url='\"image.jpg\"'/> \n"
                 + "<TextureTransform  rotation='-1.57' />\n");
+
         result += createDEM(bottomStr, "\n");
 
-        double lat0 = positions.get(3).getLatitude().getDegrees();
+        /*
+          North face
+         */
+        latitude = positions.get(3).getLatitude().getDegrees();
+        longitude = positions.get(1).getLongitude().getDegrees();
         double pos = 0.0;
         topPositions.clear();
         bottomPositions.clear();
-        for (double lon = positions.get(1).getLongitude().getDegrees();
-                lon > positions.get(0).getLongitude().getDegrees();
-                lon -= lonRange) {
-            double el = model.getElevation(Angle.fromDegrees(lat0), Angle.fromDegrees(lon));
+        
+        for (int i = 0; i < ptsCounts; i++) {
+           double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
             el /= magnification;
             topPositions.add(new Point3D(pos, el, 0.0));
             bottomPositions.add(new Point3D(pos, bottom, 0.0));
-            pos += space;
+            pos += space; 
+            longitude -= lonRange;
         }
         result += createBoundaryFace("", bottomPositions, topPositions);
 
-        lat0 = positions.get(0).getLatitude().getDegrees();
+        /*
+          South face
+         */
+        latitude = positions.get(0).getLatitude().getDegrees();
+        longitude = positions.get(1).getLongitude().getDegrees();
         pos = 0.0;
         topPositions.clear();
         bottomPositions.clear();
+        for (int i = 0; i < ptsCounts; i++) {
+           double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
+            el /= magnification;
+            topPositions.add(new Point3D(pos, el, -tileSide));
+            bottomPositions.add(new Point3D(pos, bottom, -tileSide));
+            pos += space;
+            longitude -= lonRange;
+        }
+        
+        /*
         for (double lon = positions.get(1).getLongitude().getDegrees();
                 lon > positions.get(0).getLongitude().getDegrees();
                 lon -= lonRange) {
-            double el = model.getElevation(Angle.fromDegrees(lat0), Angle.fromDegrees(lon));
+            double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(lon));
             el /= 10;
             topPositions.add(new Point3D(pos, el, -tileSide));
             bottomPositions.add(new Point3D(pos, bottom, -tileSide));
             pos += space;
         }
+        */
         result += createBoundaryFace("", bottomPositions, topPositions);
 
+        /*
+         East face
+         */
         double lon0 = positions.get(1).getLongitude().getDegrees();
         pos = 0.0;
         topPositions.clear();
@@ -121,8 +155,12 @@ public class ElevationLoader {
             bottomPositions.add(new Point3D(0.0, bottom, pos));
             pos += space;
         }
-        result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n", bottomPositions, topPositions);
+        result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
+                bottomPositions, topPositions);
 
+        /*
+         west face
+         */
         lon0 = positions.get(0).getLongitude().getDegrees();
         pos = 0.0;
         topPositions.clear();
@@ -136,13 +174,14 @@ public class ElevationLoader {
             bottomPositions.add(new Point3D(-tileSide, bottom, pos));
             pos += space;
         }
-        result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n", bottomPositions, topPositions);
+        result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
+                bottomPositions, topPositions);
 
         return result;
     }
 
     private String createDEM(String height, String texture) {
-
+        double spaceZ = space * 1.00147910;
         String txt
                 = "<Transform rotation='0 1 0 1.57058' translation='0.0 -0.1 0.0'> \n"
                 + "<Shape>\n"

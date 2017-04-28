@@ -107,7 +107,9 @@ public class S57StlChartComponentController
     }
 
     private void writeElevation(String outFilename, Polygon polygon) {
-        ElevationLoader elevationLoader = new ElevationLoader(polygon, tileSide, ptsCounts, bottom, magnification);
+        ElevationLoader elevationLoader = new ElevationLoader(polygon, 
+                tileSide, ptsCounts, bottom, 
+                magnification, scaleLatFactor, scaleLonFactor);
         write(outFilename, elevationLoader.compute());
 
     }

@@ -14,9 +14,6 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-//import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.S57GlobalCatalogServices;
-//import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-//import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.core.util.OS;
 import bzh.terrevirtuelle.navisu.core.util.Proc;
 import bzh.terrevirtuelle.navisu.core.view.geoview.layer.GeoLayer;
@@ -68,24 +65,29 @@ public class S57StlComponentImpl
 
     private static final String NAME = "S57Stl";
     protected static final String GROUP = "S57 charts";
-    private static final String EXTENSION_0 = ".000";
-    private static final String EXTENSION_1 = ".001";
-    private static final String EXTENSION_2 = ".002";
-    private static final String EXTENSION_3 = ".003";
-
+    
     protected List<Layer> layers;
     protected Layer layer;
     protected List<Layer> enabledLayers;
     protected List<CheckBoxTreeItem<GeoLayer>> rootItems;
     protected List<GeoLayer<Layer>> geoLayerList;
     protected List<String> groupNames = new ArrayList<>();
+    
     protected S57StlComponentController s57StlComponentController;
     protected S57StlChartComponentController s57StlChartComponentController;
+    
     protected WorldWindow wwd = GeoWorldWindViewImpl.getWW();
+    
     static private int i = 0;
     private boolean first = true;
+    
     protected static final Logger LOGGER = Logger.getLogger(S57StlComponentImpl.class.getName());
-
+    
+    /* 
+    Après appui sur F1 est clic droit sur une carte du catalogue 
+    Lecture du fic 57, ecriture de l'ensemble des fichiers Shapefile
+    Affichage dans l'arbre et fourniture des Layers
+    */
     @SuppressWarnings("unchecked")
     protected void handleOpenFile(ProgressHandle pHandle, String fileName) {
       
@@ -188,6 +190,9 @@ public class S57StlComponentImpl
      *
      * @param polygon
      */
+     /* 
+     Après appui sur F1 est clic droit sur une carte du catalogue 
+    */
     @Override
     public void showGUI(KMLSurfacePolygonImpl polygon) {
         s57StlComponentController.showGUI(polygon);
@@ -198,17 +203,24 @@ public class S57StlComponentImpl
         return this;
     }
 
+    /* Lors de l'init du composant on instancie les deux controlleurs
+       s57StlChartComponentController il permet de générer le x3D
+       s57StlComponentController c'est le composant d'IHM qui permet
+       de sélectionner les zones à générer et définit l'ensemble des
+       parametres nécessaires. Ce composant est un widget.
+    */
     @Override
     public void componentInitiated() {
         
         s57StlChartComponentController = new S57StlChartComponentController();
         s57StlComponentController = new S57StlComponentController(
-                guiAgentServices,
-                layerTreeServices,
-                layersManagerServices,
-                instrumentDriverManagerServices,
-                s57StlChartComponentController,
-                GROUP, NAME, wwd);
+                guiAgentServices,                // pour afficher le widget
+                layerTreeServices,               // pour indiquer dans l'arbre à gauche ou est la couche
+                layersManagerServices,           // pour afficher la couche
+                instrumentDriverManagerServices, // pour envoyer un signal sonore en fin de génération
+                s57StlChartComponentController,  // la composant de génération x3D
+                GROUP, NAME,                     // pour se positionner dans l'arborescence des couches
+                wwd);                            // le lien avec WordlWind
     }
 
     @Override
