@@ -26,7 +26,7 @@ public class ElevationLoader {
     protected WorldWindow wwd;
     protected ElevationModel model;
     protected String elevationsStr = "";
-    protected String bottomStr;
+    protected String bottomStr = "";
     protected double tileSide;
     protected int ptsCounts;
     protected String BOTTOM_STR;
@@ -53,7 +53,6 @@ public class ElevationLoader {
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
         BOTTOM_STR = Double.toString(bottom);
-        //  System.out.println("BOTTOM_STR " + BOTTOM_STR);
         wwd = GeoWorldWindViewImpl.getWW();
         model = this.wwd.getModel().getGlobe().getElevationModel();
         bottomPositions = new ArrayList<>();
@@ -70,7 +69,6 @@ public class ElevationLoader {
 
         latRange = Math.abs(latRange);
         lonRange = Math.abs(lonRange);
-        
         double longitude = positions.get(1).getLongitude().getDegrees();
         double latitude;
         for (int i = 0; i < ptsCounts; i++) {
@@ -84,11 +82,10 @@ public class ElevationLoader {
             }
             longitude -= lonRange;
         }
+        result += createDEM(elevationsStr, "<ImageTexture DEF='Ortho' url='\"image.jpg\"'/> \n"
+                + "<TextureTransform  rotation='-1.57' />\n", "Digital elevation model");
 
-        result += createDEM(elevationsStr, "<ImageTexture DEF='MYTEXT' url='\"image.jpg\"'/> \n"
-                + "<TextureTransform  rotation='-1.57' />\n");
-
-        result += createDEM(bottomStr, "\n");
+        result += createDEM(bottomStr, "\n", "Sea level");
 
         /*
           North face
@@ -98,16 +95,16 @@ public class ElevationLoader {
         double pos = 0.0;
         topPositions.clear();
         bottomPositions.clear();
-        
+
         for (int i = 0; i < ptsCounts; i++) {
-           double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
+            double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
             el /= magnification;
             topPositions.add(new Point3D(pos, el, 0.0));
             bottomPositions.add(new Point3D(pos, bottom, 0.0));
-            pos += space; 
+            pos += space;
             longitude -= lonRange;
         }
-        result += createBoundaryFace("", bottomPositions, topPositions);
+        result += createBoundaryFace("", bottomPositions, topPositions,"North face");
 
         /*
           South face
@@ -118,26 +115,15 @@ public class ElevationLoader {
         topPositions.clear();
         bottomPositions.clear();
         for (int i = 0; i < ptsCounts; i++) {
-           double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
+            double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
             el /= magnification;
             topPositions.add(new Point3D(pos, el, -tileSide));
             bottomPositions.add(new Point3D(pos, bottom, -tileSide));
             pos += space;
             longitude -= lonRange;
         }
-        
-        /*
-        for (double lon = positions.get(1).getLongitude().getDegrees();
-                lon > positions.get(0).getLongitude().getDegrees();
-                lon -= lonRange) {
-            double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(lon));
-            el /= 10;
-            topPositions.add(new Point3D(pos, el, -tileSide));
-            bottomPositions.add(new Point3D(pos, bottom, -tileSide));
-            pos += space;
-        }
-        */
-        result += createBoundaryFace("", bottomPositions, topPositions);
+
+        result += createBoundaryFace("", bottomPositions, topPositions,"South face");
 
         /*
          East face
@@ -155,11 +141,11 @@ public class ElevationLoader {
             bottomPositions.add(new Point3D(0.0, bottom, pos));
             pos += space;
         }
-        result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
-                bottomPositions, topPositions);
+          result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
+                  bottomPositions, topPositions,"East face");
 
         /*
-         west face
+         West face
          */
         lon0 = positions.get(0).getLongitude().getDegrees();
         pos = 0.0;
@@ -174,16 +160,15 @@ public class ElevationLoader {
             bottomPositions.add(new Point3D(-tileSide, bottom, pos));
             pos += space;
         }
-        result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
-                bottomPositions, topPositions);
+           result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
+                   bottomPositions, topPositions,"West face");
 
         return result;
     }
 
-    private String createDEM(String height, String texture) {
-        double spaceZ = space * 1.00147910;
-        String txt
-                = "<Transform rotation='0 1 0 1.57058' translation='0.0 -0.1 0.0'> \n"
+    private String createDEM(String height, String texture, String comment) {
+        String txt = " <!--" + comment + "-->\n"
+                + "<Transform rotation='0 1 0 1.57058' translation='0.0 -0.1 0.0'>\n"
                 + "<Shape>\n"
                 + "<Appearance>\n"
                 + texture
@@ -201,13 +186,15 @@ public class ElevationLoader {
         return txt;
     }
 
-    private String createBoundaryFace(String transform, List<Point3D> bottom, List<Point3D> height) {
-        String txt = transform + "\n"
+    private String createBoundaryFace(String transform, List<Point3D> bottom, 
+            List<Point3D> height, String comment) {
+        String txt = " <!--" + comment + "-->\n"
+                + transform + "\n"
                 + "<Shape>\n"
                 + "<Appearance>\n"
                 + "<Material "
                 + "diffuseColor='.38 .42 .44' />\n"
-                + "<ImageTexture DEF='MYTEXT' url='\"metal.jpg\"'/> \n"
+                + "<ImageTexture DEF='Dem Side' url='\"metal.jpg\"'/> \n"
                 + "</Appearance>\n"
                 + "<IndexedFaceSet colorPerVertex='false' ";
 

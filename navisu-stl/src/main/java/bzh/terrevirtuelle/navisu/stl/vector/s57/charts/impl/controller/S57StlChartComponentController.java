@@ -16,14 +16,17 @@ import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.Re
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.SLCONS_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.TextureLoader;
 import com.vividsolutions.jts.geom.Geometry;
+import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.render.Polygon;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,38 +49,40 @@ public class S57StlChartComponentController
     protected double scaleLatFactor;
     protected double scaleLonFactor;
     protected Polygon polyEnveloppe;
+    List<? extends Position> positions;
     protected Geometry geometryEnveloppe;
 
     public S57StlChartComponentController() {
 
     }
 
-    public void compute(String outDirname, String outFilename, String outPathname,
-            double scaleLatFactor, double scaleLonFactor, 
+    public void compute(String outDirname, String outFilename,
+            double scaleLatFactor, double scaleLonFactor,
             double magnification, double tileSide,
             int ptsCounts, double bottom,
             Polygon polyEnveloppe, Geometry geometryEnveloppe) {
         this.outDirname = outDirname;
         this.outFilename = outFilename;
-        this.outPathname = outPathname;
+        this.outPathname = outDirname + outFilename;
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
         this.magnification = magnification;
-        this.tileSide=tileSide;
-        this.ptsCounts=ptsCounts;
-        this.bottom=bottom;
+        this.tileSide = tileSide;
+        this.ptsCounts = ptsCounts;
+        this.bottom = bottom;
         this.polyEnveloppe = polyEnveloppe;
         this.geometryEnveloppe = geometryEnveloppe;
-        
+        positions = polyEnveloppe.getBoundaries().get(0);
         writeInitOutFile(outPathname);
+        //  writeRef(outPathname, polyEnveloppe);
+        writePositionOrientation(outPathname);
         writeTexture(outDirname, polyEnveloppe);
         writeElevation(outPathname, polyEnveloppe);
         writeS57Charts();
         writeBase(outPathname);
-        //   writeRef(polyEnveloppe, outPathname);
+
         writeEndOutFile(outPathname);
     }
-
 
     private void writeInitOutFile(String filename) {
         String txt;
@@ -90,14 +95,24 @@ public class S57StlChartComponentController
                 + " xsd:noNamespaceSchemaLocation =' "
                 + "http://www.web3d.org/specifications/x3d-3.0.xsd '> \n"
                 + "<head>\n"
-                + "<meta name='title' content='NaVisu S57'/> \n"
-                + "<meta name='author' content='" + System.getProperty("user.name") + "'/>\n"
-                + "<meta name='created' content='" + new Date() + "'/>\n"
-                + "<meta name='generator' content='NaVisu'/>\n"
-                + "<meta name='license' content=' ../../license.html'/>\n"
+                + "<meta name='Title' content='NaVisu S57'/> \n"
+                + "<meta name='Author' content='" + System.getProperty("user.name") + "'/>\n"
+                + "<meta name='Created' content='" + new SimpleDateFormat("dd/MM/yyyy-hh:mm:ss").format(new Date()) + "'/>\n"
+                + "<meta name='Generator' content='NaVisu'/>\n"
+                + "<meta name='Site' content='http://www.navisu.org/'/>\n"
+                + "<meta name='Github' content='https://github.com/terre-virtuelle/navisu'/>\n"
+                + "<meta name='Pos0' content='Lat=" + positions.get(0).getLatitude()
+                + " Lon=" + positions.get(0).getLongitude() + "'/>\n"
+                + "<meta name='Pos1' content='Lat=" + positions.get(1).getLatitude()
+                + " Lon=" + positions.get(1).getLongitude() + "'/>\n"
+                + "<meta name='Pos2' content='Lat=" + positions.get(2).getLatitude()
+                + " Lon=" + positions.get(2).getLongitude() + "'/>\n"
+                + "<meta name='Pos3' content='Lat=" + positions.get(3).getLatitude()
+                + " Lon=" + positions.get(3).getLongitude() + "'/>\n"
                 + "</head>\n"
-                + "<NavigationInfo type='\"EXAMINE\" \"WALK\" \"FLY\" \"ANY\"'/>\n"
+                + "<NavigationInfo type='\"EXAMINE\"'/>\n"
                 + "<Scene>\n";
+
         try {
             Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING);
@@ -107,8 +122,8 @@ public class S57StlChartComponentController
     }
 
     private void writeElevation(String outFilename, Polygon polygon) {
-        ElevationLoader elevationLoader = new ElevationLoader(polygon, 
-                tileSide, ptsCounts, bottom, 
+        ElevationLoader elevationLoader = new ElevationLoader(polygon,
+                tileSide, ptsCounts, bottom,
                 magnification, scaleLatFactor, scaleLonFactor);
         write(outFilename, elevationLoader.compute());
 
@@ -137,8 +152,21 @@ public class S57StlChartComponentController
         }
     }
 
+    private void writePositionOrientation(String filename) {
+        String txt = "<Transform rotation='0 1 0 1.57058' "
+                + "translation='200.0 0.0 200.0' "
+                + "scale='1.000900 1.000900 1.000900'> \n"
+                +"<Viewpoint  position='100.0 400.0 -100'  orientation='1 0 0 -1.57'  fieldOfView='.5'\n/>";
+        try {
+            Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            Logger.getLogger(DEPARE_Stl_ShapefileLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void writeEndOutFile(String filename) {
-        String txt = " </Scene>\n"
+        String txt = "</Transform>\n"
+                + " </Scene>\n"
                 + "</X3D> ";
         try {
             Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.APPEND);
@@ -184,45 +212,100 @@ public class S57StlChartComponentController
                         }
                         break;
                     case "BCNCAR.shp":
-                        BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderCar
+                        BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, tileSide,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", null);
-                        load(buoyageStlShapefileLoaderCar, "BUOYAGE", "BCNCAR", "/");
-                        String resultCar = buoyageStlShapefileLoaderCar.compute();
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "BCNCAR", "/");
+                        String resultCar = buoyageStlShapefileLoader.compute();
                         if (resultCar != null) {
                             write(outPathname, resultCar);
                         }
                         break;
                     case "BOYCAR.shp":
-                        buoyageStlShapefileLoaderCar
+                        buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, tileSide,
-                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", null);
-                        load(buoyageStlShapefileLoaderCar, "BUOYAGE", "BCNCAR", "/");
-                        resultCar = buoyageStlShapefileLoaderCar.compute();
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BOYCAR", null);
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "BOYCAR", "/");
+                        resultCar = buoyageStlShapefileLoader.compute();
                         if (resultCar != null) {
                             write(outPathname, resultCar);
                         }
                         break;
                     case "BCNLAT.shp":
-                        BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoaderLat
+                        buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, tileSide,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", null);
-                        load(buoyageStlShapefileLoaderLat, "BUOYAGE", "BCNLAT", "/");
-                        String resultLat = buoyageStlShapefileLoaderLat.compute();
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "BCNLAT", "/");
+                        String resultLat = buoyageStlShapefileLoader.compute();
                         if (resultLat != null) {
                             write(outPathname, resultLat);
                         }
                         break;
                     case "BOYLAT.shp":
-                        buoyageStlShapefileLoaderLat
+                        buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, tileSide,
-                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", null);
-                        load(buoyageStlShapefileLoaderLat, "BUOYAGE", "BCNLAT", "/");
-                        resultLat = buoyageStlShapefileLoaderLat.compute();
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BOYLAT", null);
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "BOYLAT", "/");
+                        resultLat = buoyageStlShapefileLoader.compute();
+                        if (resultLat != null) {
+                            write(outPathname, resultLat);
+                        }
+                        break;
+                    case "BCNSPP.shp":
+                        buoyageStlShapefileLoader
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSPP", null);
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "BCNSPP", "/");
+                        resultLat = buoyageStlShapefileLoader.compute();
+                        if (resultLat != null) {
+                            write(outPathname, resultLat);
+                        }
+                        break;
+                    case "BOYSPP.shp":
+                        buoyageStlShapefileLoader
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSPP", null);
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "BOYSPP", "/");
+                        resultLat = buoyageStlShapefileLoader.compute();
+                        if (resultLat != null) {
+                            write(outPathname, resultLat);
+                        }
+                        break;
+                    case "BCNISD.shp":
+                        buoyageStlShapefileLoader
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BCNISD", null);
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "BCNISD", "/");
+                        resultLat = buoyageStlShapefileLoader.compute();
+                        if (resultLat != null) {
+                            write(outPathname, resultLat);
+                        }
+                        break;
+                    case "BOYISD.shp":
+                        buoyageStlShapefileLoader
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "BOYISD", null);
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "BOYISD", "/");
+                        resultLat = buoyageStlShapefileLoader.compute();
+                        if (resultLat != null) {
+                            write(outPathname, resultLat);
+                        }
+                        break;
+                        case "MORFAC.shp":
+                            buoyageStlShapefileLoader
+                                = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
+                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        DEV, BUOYAGE_PATH, topMarks, marsys, "MORFAC", null);
+                        load(buoyageStlShapefileLoader, "BUOYAGE", "MORFAC", "/");
+                        resultLat = buoyageStlShapefileLoader.compute();
                         if (resultLat != null) {
                             write(outPathname, resultLat);
                         }
@@ -252,30 +335,21 @@ public class S57StlChartComponentController
                             load(new ACHARE_ShapefileLoader("ACHARE", new Color(2, 200, 184), 0.4, true), "AREA", "ACHARE", "/");
                             break;
                         
-                        case "BCNISD.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNISD", s57Controllers), "BUOYAGE", "BCNISD", "/");
-                            break;
+                        
                         
                         case "BCNSAW.shp":
                             load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSAW", s57Controllers), "BUOYAGE", "BCNSAW", "/");
                             break;
-                        case "BCNSPP.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSPP", s57Controllers), "BUOYAGE", "BCNSPP", "/");
-                            break;
+                        
                         case "BRIDGE.shp":
                             load(new BRIDGE_ShapefileLoader(), "BUILDING", "BRIDGE", "/");
                             break;
                         
-                        case "BOYISD.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYISD", s57Controllers), "BUOYAGE", "BOYISD", "/");
-                            break;
                         
                         case "BOYSAW.shp":
                             load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSAW", s57Controllers), "BUOYAGE", "BOYSAW", "/");
                             break;
-                        case "BOYSPP.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSPP", s57Controllers), "BUOYAGE", "BOYSPP", "/");
-                            break;
+                        
                         case "COALNE.shp":
                             load(new COALNE_ShapefileLoader(), "COALNE", "/");
                             break;

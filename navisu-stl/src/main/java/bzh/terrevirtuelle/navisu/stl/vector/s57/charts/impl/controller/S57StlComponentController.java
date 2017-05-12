@@ -9,11 +9,8 @@ import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriverMa
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller.ConfigurationComponentController;
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.catalog.global.impl.controller.S57GlobalCatalogController;
-import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.S57ChartComponentController;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
@@ -207,7 +204,7 @@ public class S57StlComponentController
                 /*
                 lancement de la gération du x3d
                 */
-                s57StlChartComponentController.compute(OUT_DIR, OUT_FILE, OUT_PATH,
+                s57StlChartComponentController.compute(OUT_DIR, OUT_FILE,
                         scaleLatFactor, scaleLonFactor, MAGNIFICATION,
                         TILE_SIDE,
                         PTS_COUNT, BOTTOM,
