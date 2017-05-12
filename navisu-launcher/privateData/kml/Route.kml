@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<kml xmlns="http://earth.google.com/kml/2.0">
+    <Document>
+<Placemark><description><![CDATA[WP0<br>Lat : 48.3611<br>Lon : -4.4619<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.461927604540166,48.361058690039776,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.461927604540166,48.361058690039776,10
+-4.5767973176133765,48.3363634367475,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP1<br>Lat : 48.3364<br>Lon : -4.5768<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.5767973176133765,48.3363634367475,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.5767973176133765,48.3363634367475,10
+-4.679873882477979,48.29857180333357,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP2<br>Lat : 48.2986<br>Lon : -4.6799<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.679873882477979,48.29857180333357,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.679873882477979,48.29857180333357,10
+-4.726309555149507,48.23484256644727,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP3<br>Lat : 48.2348<br>Lon : -4.7263<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.726309555149507,48.23484256644727,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.726309555149507,48.23484256644727,10
+-4.803644516762077,48.15407748153921,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP4<br>Lat : 48.1541<br>Lon : -4.8036<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.803644516762077,48.15407748153921,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.803644516762077,48.15407748153921,10
+-4.781891720428561,48.07353452272908,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP5<br>Lat : 48.0735<br>Lon : -4.7819<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.781891720428561,48.07353452272908,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.781891720428561,48.07353452272908,10
+-4.764063490521728,47.986401424105146,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP6<br>Lat : 47.9864<br>Lon : -4.7641<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.764063490521728,47.986401424105146,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.764063490521728,47.986401424105146,10
+-4.657418506318956,47.92544601005129,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP7<br>Lat : 47.9254<br>Lon : -4.6574<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.657418506318956,47.92544601005129,10</coordinates></Point></Placemark><Placemark><Style><LineStyle><color>501400FF</color><width>2</width></LineStyle></Style><LineString><coordinates>-4.657418506318956,47.92544601005129,10
+-4.523968577597429,47.91257172600991,0</coordinates></LineString></Placemark>
+<Placemark><description><![CDATA[WP8<br>Lat : 47.9126<br>Lon : -4.5240<br>Time : 12:40:28<br>Day : 11/05/17<br>Speed : 10.0 Kts]]></description><Point><coordinates>-4.523968577597429,
+47.91257172600991,10</coordinates></Point></Placemark>
+ </Document></kml>
