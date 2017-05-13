@@ -122,29 +122,18 @@ public class BUOYAGE_Stl_ShapefileLoader
     }
 
     private String writeCylinder(double lat, double lon) {
-        /*
-        A modifier rectangle
-         */
         String str = " <!--" + "Lateral red cylinder buoy" + "-->\n"
                 + "<Transform \n"
                 + "   translation=\"" + lat + " 0.00000 " + lon + "\"\n"
                 + "    scale=\"1.00000 1.00000 1.00000\"\n"
                 + "    rotation=\"1 0 0 1.57058\">\n"
-                + "     <Shape>\n"
-                + "     <Appearance> \n"
-                + "     <Material DEF='Red'\n"
-                + "     containerField='material'\n"
-                + "     ambientIntensity='.2'\n"
-                + "     shininess='.2'\n"
-                + "     diffuseColor='1 0 0'/>\n"
-                + "     </Appearance>\n"
-                + "     <Cylinder DEF='GeoCylinder1'\n"
-                + "     containerField='geometry'\n"
-                + "     height='2'\n"
-                + "     radius='1'/>\n"
-                + "     </Shape>\n"
+                + "<Shape>\n"
+                + "<Appearance>\n"
+                + "<Material diffuseColor='1 0 0'/>\n"
+                + "</Appearance>\n"
+                + "<Box size='1.5 1.8 .5'/>\n"
+                + "</Shape> "
                 + "     </Transform>\n";
-
         return str;
     }
 
@@ -154,7 +143,7 @@ public class BUOYAGE_Stl_ShapefileLoader
                 + "<Transform "
                 + "    translation=\"" + lat + " -0.500000 " + lon + "\"\n"
                 + "    scale=\"1.00000 1.00000 1.00000\"\n"
-                + "    rotation=\"0 1 0 0.0\">\n"
+                + "    rotation=\"0 1 0 3.14116\">\n"
                 + "    <Shape DEF='Extrusion1'>\n"
                 + "    <Appearance>\n"
                 + "    <Material DEF='Green-starboard'\n"
