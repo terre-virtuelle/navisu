@@ -8,8 +8,10 @@ package bzh.terrevirtuelle.navisu.charts.util;
 import bzh.terrevirtuelle.navisu.domain.util.Pair;
 import com.vividsolutions.jts.algorithm.Centroid;
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.CoordinateList;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPoint;
 import com.vividsolutions.jts.io.WKTReader;
 import gov.nasa.worldwind.geom.Angle;
@@ -246,6 +248,13 @@ public class WwjJTS {
     }
 
     public static Geometry filter(Geometry geometry, List<LatLon> pts) {
+
+        CoordinateList list = new CoordinateList(geometry.getCoordinates());
+        list.closeRing();
+        GeometryFactory geometryFactory = new GeometryFactory();
+        LinearRing ring = geometryFactory.createLinearRing(list.toCoordinateArray());
+        com.vividsolutions.jts.geom.Polygon polygonEnv = geometryFactory.createPolygon(ring, null);
+
         String wkt = WwjJTS.toPolygonWkt1(pts);
         WKTReader wktReader = new WKTReader();
         Geometry geometryFiltered;
@@ -256,7 +265,11 @@ public class WwjJTS {
             } catch (com.vividsolutions.jts.io.ParseException ex) {
                 Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, null, ex);
             }
-            geometryFiltered = geometry.intersection(polygon);
+            if (polygonEnv.contains(polygon)) {
+                geometryFiltered = polygon;   
+            } else {
+                geometryFiltered = polygonEnv.intersection(polygon);
+            }
         } else {
             geometryFiltered = null;
         }
