@@ -63,13 +63,10 @@ public class RefLoader {
         lonMetric = WwjGeodesy.getDistanceM(positions.get(0),
                 new Position(Angle.fromDegrees(positions.get(0).getLatitude().getDegrees()),
                         Angle.fromDegrees(lonDegrees), 100));
-        System.out.println(latDegrees + " " + lonDegrees);
-        System.out.println("latMetric : " + latMetric + "  lonMetric : " + lonMetric);
         latMetric *= scaleLatFactor;
         latMetric = -SQUARE_SIDE + latMetric;
         lonMetric *= scaleLatFactor;
         lonMetric = SQUARE_SIDE - lonMetric;
-        //  System.out.println("latMetric : " + latMetric + "  lonMetric : " + lonMetric);
 
         latMetric1 = WwjGeodesy.getDistanceM(positions.get(0),
                 new Position(Angle.fromDegrees(latDegrees1),
@@ -77,15 +74,12 @@ public class RefLoader {
         lonMetric1 = WwjGeodesy.getDistanceM(positions.get(0),
                 new Position(Angle.fromDegrees(positions.get(0).getLatitude().getDegrees()),
                         Angle.fromDegrees(lonDegrees1), 100));
-        //  System.out.println(latDegrees1 + " " + lonDegrees1);
-        //  System.out.println("latMetric1 : " + latMetric1 + "  lonMetric1 : " + lonMetric1);
         latMetric1 *= scaleLatFactor;
         latMetric1 = -SQUARE_SIDE + latMetric1;
         lonMetric1 *= scaleLatFactor;
         lonMetric1 = SQUARE_SIDE - lonMetric1;
-        // System.out.println("latMetric1 : " + latMetric1 + "  lonMetric1 : " + lonMetric1);
     }
-    
+
     String baseData
             = "<Group>\n"
             + "        <!-- Vertical Y arrow and label -->\n"

@@ -12,6 +12,7 @@ import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BU
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.BaseLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.DEPARE_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.ElevationLoader;
+import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.PONTON_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.RefLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.SLCONS_Stl_ShapefileLoader;
 import bzh.terrevirtuelle.navisu.stl.vector.s57.charts.impl.controller.loader.TextureLoader;
@@ -74,7 +75,7 @@ public class S57StlChartComponentController
         this.geometryEnveloppe = geometryEnveloppe;
         positions = polyEnveloppe.getBoundaries().get(0);
         writeInitOutFile(outPathname);
-        //  writeRef(outPathname, polyEnveloppe);
+      //  writeRef(outPathname, polyEnveloppe);// repere XYZ
         writePositionOrientation(outPathname);
         writeTexture(outDirname, polyEnveloppe);
         writeElevation(outPathname, polyEnveloppe);
@@ -86,7 +87,6 @@ public class S57StlChartComponentController
 
     private void writeInitOutFile(String filename) {
         String txt;
-        //  try {
         txt = "<?xml version=\"1.0\" encoding=\"UTF-8\"?> \n"
                 + "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D 3.0//EN\" "
                 + "\"http://www.web3d.org/specifications/x3d-3.0.dtd\">\n"
@@ -112,7 +112,6 @@ public class S57StlChartComponentController
                 + "</head>\n"
                 + "<NavigationInfo type='\"EXAMINE\"'/>\n"
                 + "<Scene>\n";
-
         try {
             Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.CREATE,
                     StandardOpenOption.TRUNCATE_EXISTING);
@@ -155,8 +154,9 @@ public class S57StlChartComponentController
     private void writePositionOrientation(String filename) {
         String txt = "<Transform rotation='0 1 0 1.57058' "
                 + "translation='200.0 0.0 200.0' "
-                + "scale='1.000900 1.000900 1.000900'> \n"
-                +"<Viewpoint  position='100.0 400.0 -100'  orientation='1 0 0 -1.57'  fieldOfView='.5'\n/>";
+                // +" orientation='0 1 0 3.14116'"
+                + " scale='1.000900 1.000900 1.000900'> \n"
+                + "<Viewpoint  position='100.0 400.0 -100'  orientation='1 0 0 -1.57'  fieldOfView='.5'\n/>";
         try {
             Files.write(Paths.get(filename), txt.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException ex) {
@@ -201,10 +201,11 @@ public class S57StlChartComponentController
                         break;
                     case "PONTON.shp":
                         //    load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
-
                         break;
                     case "SLCONS.shp":
-                        SLCONS_Stl_ShapefileLoader slConsStlShapefileLoader = new SLCONS_Stl_ShapefileLoader(outPathname, polyEnveloppe);
+                        SLCONS_Stl_ShapefileLoader slConsStlShapefileLoader = 
+                                new SLCONS_Stl_ShapefileLoader(outPathname, polyEnveloppe,
+                        scaleLatFactor,scaleLonFactor, tileSide);
                         load(slConsStlShapefileLoader, "HARBOUR", "SLCONS", "/");
                         String resultSl = slConsStlShapefileLoader.compute();
                         if (resultSl != null) {
@@ -299,8 +300,8 @@ public class S57StlChartComponentController
                             write(outPathname, resultLat);
                         }
                         break;
-                        case "MORFAC.shp":
-                            buoyageStlShapefileLoader
+                    case "MORFAC.shp":
+                        buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
                                         scaleLatFactor, scaleLonFactor, tileSide,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "MORFAC", null);
@@ -334,22 +335,15 @@ public class S57StlChartComponentController
                         case "ACHARE.shp":
                             load(new ACHARE_ShapefileLoader("ACHARE", new Color(2, 200, 184), 0.4, true), "AREA", "ACHARE", "/");
                             break;
-                        
-                        
-                        
                         case "BCNSAW.shp":
                             load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSAW", s57Controllers), "BUOYAGE", "BCNSAW", "/");
                             break;
-                        
                         case "BRIDGE.shp":
                             load(new BRIDGE_ShapefileLoader(), "BUILDING", "BRIDGE", "/");
                             break;
-                        
-                        
                         case "BOYSAW.shp":
                             load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSAW", s57Controllers), "BUOYAGE", "BOYSAW", "/");
                             break;
-                        
                         case "COALNE.shp":
                             load(new COALNE_ShapefileLoader(), "COALNE", "/");
                             break;
@@ -380,9 +374,6 @@ public class S57StlChartComponentController
                         case "MIPARE.shp":
                             load(new AREA_ShapefileLoader("MIPARE", new Color(1, 5, 105), 0.0, false), "AREA", "MIPARE", "/");
                             break;
-                        case "MORFAC.shp":
-                            load(new BUOYAGE_ShapefileLoader(DEV, BUOYAGE_PATH, topMarks, marsys, "MORFAC", s57Controllers), "BUOYAGE", "MORFAC", "/");
-                            break;
                         case "M_SREL.shp":
                             load(new AREA_ShapefileLoader("M_SREL", new Color(0, 255, 0), 0.0, false), "AREA", "M_SREL", "/");
                             break;
@@ -392,9 +383,6 @@ public class S57StlChartComponentController
                         case "OBSTRN.shp":
                             load(new OBSTRN_CNT_ShapefileLoader(), "DANGERS", "OBSTRN", "/");
                             load(new OBSTRN_ShapefileLoader(), "DANGERS", "OBSTRN", "/");
-                            break;
-                        case "PONTON.shp":
-                            load(new PONTON_ShapefileLoader(), "HARBOUR", "PONTON", "/");
                             break;
                         case "SEAARE.shp":
                             load(new AREA_ShapefileLoader("SEAARE", new Color(0, 246, 232), 0.0, false), "AREA", "SEAARE", "/");

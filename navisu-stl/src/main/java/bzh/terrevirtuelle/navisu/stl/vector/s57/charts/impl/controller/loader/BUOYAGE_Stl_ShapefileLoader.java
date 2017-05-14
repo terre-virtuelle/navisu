@@ -10,7 +10,6 @@ import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.loader
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.impl.controller.navigation.S57Controller;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATCAM;
 import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATLAM;
-import bzh.terrevirtuelle.navisu.domain.charts.vector.s57.view.constants.CATSPM;
 import bzh.terrevirtuelle.navisu.util.Pair;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;

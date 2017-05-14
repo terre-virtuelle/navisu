@@ -27,7 +27,7 @@ public class PONTON_Stl_ShapefileLoader
     public PONTON_Stl_ShapefileLoader(String filename, Polygon polyEnveloppe) {
         this.filename = filename;
         this.polyEnveloppe = polyEnveloppe;
-       // System.out.println("PONTON_Stl_ShapefileLoader");
+        System.out.println("PONTON_Stl_ShapefileLoader");
     }
 
     @Override

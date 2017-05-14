@@ -75,6 +75,9 @@ public class ElevationLoader {
             latitude = positions.get(3).getLatitude().getDegrees();
             for (int j = 0; j < ptsCounts; j++) {
                 double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
+                if(el <0){
+                    el=0;
+                }
                 el /= magnification;
                 elevationsStr += el + " ";
                 bottomStr += BOTTOM_STR + " ";
