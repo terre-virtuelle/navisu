@@ -200,7 +200,14 @@ public class S57StlChartComponentController
                         //   load(new DEPARE_Stl_ShapefileLoader(OUT_FILE, polyEnveloppe), "DEPARE", "DEPARE", "/");
                         break;
                     case "PONTON.shp":
-                        //    load(new PONTON_Stl_ShapefileLoader(OUT_PATH, polyEnveloppe), "HARBOUR", "PONTON", "/");
+                       PONTON_Stl_ShapefileLoader ponton_Stl_ShapefileLoader = 
+                                new PONTON_Stl_ShapefileLoader(outPathname, polyEnveloppe,
+                        scaleLatFactor,scaleLonFactor, tileSide);
+                        load(ponton_Stl_ShapefileLoader, "HARBOUR", "PONTON", "/");
+                        String resultPonton = ponton_Stl_ShapefileLoader.compute();
+                        if (resultPonton != null) {
+                            write(outPathname, resultPonton);
+                        }
                         break;
                     case "SLCONS.shp":
                         SLCONS_Stl_ShapefileLoader slConsStlShapefileLoader = 

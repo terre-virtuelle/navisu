@@ -36,8 +36,6 @@ public class SLCONS_Stl_ShapefileLoader
     protected Polygon polyEnveloppe;
     protected Shapefile shapefile;
     protected Polygon offset;
-    //  protected RenderableLayer layer;
-    // protected List<Polygon> polygonList;
     protected double bufferDistance = 10;
     protected double height = 1;
     protected String result = "";
