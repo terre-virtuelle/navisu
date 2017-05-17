@@ -207,7 +207,7 @@ public class GeoViewImpl
                 WorldWindLayers.BingImagery.newInstance(),
                 WorldWindLayers.EarthAtNight.newInstance(),
                 WorldWindLayers.OpenStreetMap.newInstance(),
-              //  WorldWindLayers.OSMBuildings.newInstance(),
+               // WorldWindLayers.OSMBuildings.newInstance(),
                 WorldWindLayers.CountryBoundaries.newInstance(),
                 WorldWindLayers.PlaceName.newInstance(),
                 WorldWindLayers.LatLonGraticule.newInstance()

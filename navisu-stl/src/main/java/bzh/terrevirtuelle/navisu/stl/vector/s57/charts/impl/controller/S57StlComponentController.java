@@ -11,6 +11,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.charts.util.WwjGeodesy;
 import bzh.terrevirtuelle.navisu.charts.util.WwjJTS;
+import bzh.terrevirtuelle.navisu.stl.osm.layers.OSMBuildingsStlLayer;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.io.ParseException;
@@ -20,6 +21,7 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
+import gov.nasa.worldwind.layers.Layer;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.kml.impl.KMLSurfacePolygonImpl;
 import gov.nasa.worldwind.render.BasicShapeAttributes;
@@ -138,9 +140,9 @@ public class S57StlComponentController
         layer = layersManagerServices.getLayer(GROUP, NAME);
 
         //  Pour le futur, la couche OSM
-        //  Layer buildings = new OSMBuildingsStlLayer();
-        //  layerTreeServices.addGeoLayer("Buildings", buildings);
-        // wwd.getModel().getLayers().add(buildings);
+         // Layer buildings = new OSMBuildingsStlLayer();
+       //  layerTreeServices.addGeoLayer("Buildings", buildings);
+       //  wwd.getModel().getLayers().add(buildings);
     }
 
     /*
