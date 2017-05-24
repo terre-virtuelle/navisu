@@ -140,9 +140,10 @@ public class S57StlComponentController
         layer = layersManagerServices.getLayer(GROUP, NAME);
 
         //  Pour le futur, la couche OSM
-         // Layer buildings = new OSMBuildingsStlLayer();
+          Layer buildings = new OSMBuildingsStlLayer();
        //  layerTreeServices.addGeoLayer("Buildings", buildings);
-       //  wwd.getModel().getLayers().add(buildings);
+         
+        // wwd.getModel().getLayers().add(buildings);
     }
 
     /*

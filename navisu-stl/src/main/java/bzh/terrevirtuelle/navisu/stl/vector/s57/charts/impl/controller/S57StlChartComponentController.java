@@ -81,7 +81,6 @@ public class S57StlChartComponentController
         writeElevation(outPathname, polyEnveloppe);
         writeS57Charts();
         writeBase(outPathname);
-
         writeEndOutFile(outPathname);
     }
 

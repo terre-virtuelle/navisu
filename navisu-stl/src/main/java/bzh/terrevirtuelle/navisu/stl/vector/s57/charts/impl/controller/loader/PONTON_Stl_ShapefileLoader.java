@@ -130,6 +130,7 @@ public class PONTON_Stl_ShapefileLoader
                         + "<Extrusion convex='true' \n"
                         + " crossSection='";
 //positionList
+
                 ptsFiltered.stream().map((p) -> WwjGeodesy.getXYM(orig, p)).forEachOrdered((xy) -> {
                     double x = tileSide - xy.getX() * scaleLonFactor;
                     double y = -tileSide + xy.getY() * scaleLatFactor;

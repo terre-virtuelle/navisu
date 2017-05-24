@@ -68,7 +68,7 @@ public class OSMBuildingsStlLayer
     /**
      * The key is "{level};{x};{y}"
      */
-    HashMap<String, OSMBuildingsStlTile> buildings = new HashMap<String, OSMBuildingsStlTile>();
+    HashMap<String, OSMBuildingsStlTile> buildings = new HashMap<>();
 
     File cacheFolder = null;
 
@@ -175,10 +175,12 @@ public class OSMBuildingsStlLayer
     //**************************************************************************
     //*** API
     //*************************************************************************
+    @Override
     public void setDefaultBuildingHeight(double defaultHeight) {
         this.defaultHeight = defaultHeight;
     }
 
+    @Override
     public void setMaxTiles(int maxTiles) {
         this.maxTiles = maxTiles;
     }
@@ -273,12 +275,12 @@ public class OSMBuildingsStlLayer
      */
     @Override
     public void onMessage(Message msg) {
-        System.out.println("onMessage:" + msg.getName() + " when:" + msg.getWhen() + " source:" + msg.getSource());
+     //   System.out.println("onMessage:" + msg.getName() + " when:" + msg.getWhen() + " source:" + msg.getSource());
 
         if (View.VIEW_STOPPED.equals(msg.getName()) && (center != null)) {
             if (ww == null) {
                 ww = (WorldWindow) msg.getSource();
-                // ww.addSelectListener(this);
+                ww.addSelectListener(this);
             }
             /*
             double rx = center.getLongitude().radians;

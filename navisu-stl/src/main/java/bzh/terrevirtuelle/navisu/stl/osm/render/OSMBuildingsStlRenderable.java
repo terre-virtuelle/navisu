@@ -110,6 +110,7 @@ public class OSMBuildingsStlRenderable extends OSMBuildingsRenderable
     // **************************************************************************
     // *** API
     // **************************************************************************
+    @Override
     public void clear() {
         renderables.clear();
     }
@@ -119,17 +120,16 @@ public class OSMBuildingsStlRenderable extends OSMBuildingsRenderable
     // **************************************************************************
     @Override
     public void render(DrawContext dc) {
-        for (Renderable r : renderables) {
+        renderables.forEach((r) -> {
             r.render(dc);
-        }
+        });
     }
 
     @Override
     public void preRender(DrawContext dc) {
-        for (Renderable r : renderables) {
-            if (r instanceof PreRenderable)
-                ((PreRenderable) r).preRender(dc);
-        }
+        renderables.stream().filter((r) -> (r instanceof PreRenderable)).forEachOrdered((r) -> {
+            ((PreRenderable) r).preRender(dc);
+        });
     }
 
     // **************************************************************************

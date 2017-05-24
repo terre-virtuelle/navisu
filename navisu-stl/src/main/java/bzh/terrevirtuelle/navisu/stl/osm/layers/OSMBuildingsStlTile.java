@@ -5,34 +5,17 @@
  */
 package bzh.terrevirtuelle.navisu.stl.osm.layers;
 
-import bzh.terrevirtuelle.navisu.stl.osm.render.OSMBuildingsStlRenderable;
-import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.cache.FileStore;
 import gov.nasa.worldwind.formats.geojson.GeoJSONDoc;
 import gov.nasa.worldwind.geom.Extent;
-import gov.nasa.worldwind.geom.LatLon;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.layers.Earth.OSMBuildingsTile;
 import gov.nasa.worldwind.layers.Earth.OSMBuildingsTileListener;
-import gov.nasa.worldwind.render.BasicShapeAttributes;
 import gov.nasa.worldwind.render.ExtrudedPolygon;
-import gov.nasa.worldwind.render.Material;
 import gov.nasa.worldwind.render.OSMBuildingsRenderable;
-import gov.nasa.worldwind.render.Renderable;
-import gov.nasa.worldwind.render.ShapeAttributes;
-import gov.nasa.worldwind.retrieve.HTTPRetriever;
 import gov.nasa.worldwind.retrieve.RetrievalPostProcessor;
-import gov.nasa.worldwind.retrieve.Retriever;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Thread to download the gson data
