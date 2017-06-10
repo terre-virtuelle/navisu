@@ -70,7 +70,7 @@ public class TextureLoader {
             image = flip(image);
             writeImageToFile(selectedSector, image, outDir);
         } catch (Exception ex) {
-            Logger.getLogger(TextureLoader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TextureLoader.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
