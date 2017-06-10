@@ -8,7 +8,7 @@ import bzh.terrevirtuelle.navisu.server.http.impl.HttpServer;
 import bzh.terrevirtuelle.navisu.server.impl.Reader;
 import bzh.terrevirtuelle.navisu.server.impl.file.FileReader;
 import bzh.terrevirtuelle.navisu.server.impl.file.impl.FileReaderImpl;
-import bzh.terrevirtuelle.navisu.server.impl.gpsd.NetReader;
+import bzh.terrevirtuelle.navisu.server.impl.NetReader;
 import bzh.terrevirtuelle.navisu.server.impl.gpsd.impl.NetReaderImpl;
 import bzh.terrevirtuelle.navisu.server.impl.serial.SerialPortReader;
 import bzh.terrevirtuelle.navisu.server.nmea.parser.NmeaStringParser;

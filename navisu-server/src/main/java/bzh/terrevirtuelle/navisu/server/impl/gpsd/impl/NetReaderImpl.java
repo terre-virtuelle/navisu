@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.server.impl.gpsd.impl;
 
-import bzh.terrevirtuelle.navisu.server.impl.gpsd.NetReader;
+import bzh.terrevirtuelle.navisu.server.impl.NetReader;
 import org.vertx.java.core.AsyncResult;
 import org.vertx.java.core.AsyncResultHandler;
 import org.vertx.java.core.Vertx;

@@ -135,7 +135,7 @@ public class WMSImpl
                     });
                 });
             } catch (Exception ex) {
-                Logger.getLogger(WebDriverManagerImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(WebDriverManagerImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         });
 
