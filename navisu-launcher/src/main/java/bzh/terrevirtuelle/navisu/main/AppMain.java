@@ -464,6 +464,14 @@ public class AppMain extends Application {
         // Neo4J serveur externe
         // Connection con = testDBServices.connect("localhost", "jdbc:neo4j://", "7474", "org.neo4j.jdbc.Driver", "root", "lithops");
         // System.out.println("con : " + con);
+     //    bathymetryDBServices.connect("bathy", "localhost", "jdbc:postgresql://", 
+      //           "5432",  "org.postgresql.Driver", "serge", "lithops",
+         //        "/home/serge/Data/bathymetry/data/shom/MNT/MNT_FACADE_ATLANTIQUE_HOMONIM_NM/DONNEES/MNT_ATL100m_HOMONIM_GEO_refNM_ZNEG.glz");
+      //  "/home/serge/Data/bathymetry/data/shom/MNT/MNT100M_ATL/splited/Atlantique_100ag");
+         //                "/home/serge/Data/bathymetry/data/shom/MNT/MNT_FACADE_ATLANTIQUE_HOMONIM_NM/DONNEES/test.glz");
+        
+        
+        
         /* Test speech */
         //speakerServices.read("data/text", "installation.txt", null);// local par defaut
         // speakerServices.read("data/text", "installation.txt", "fr_FR");//en_GB, en_US
@@ -482,6 +490,8 @@ public class AppMain extends Application {
          Logger.getLogger(AppMain.class.getName()).log(Level.SEVERE, null, ex);
          }
          */
+       
+        
         // Load from a xml file
         /*
          Exif exif1 = new Exif();

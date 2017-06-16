@@ -63,8 +63,8 @@ public class DockManagerImpl<TrackTool>
     private final String PORT = "5432";
     private final String DRIVER_NAME = "org.postgresql.Driver";
     private final String JDBC_PROTOCOL = "jdbc:postgresql://";
-    private final String DB_NAME = "Bathy";
-    private final String USER_NAME = "Serge";
+    private final String DB_NAME = "bathy";
+    private final String USER_NAME = "serge";
     private final String PASSWD = "lithops";
     protected static final String ICON_PATH = "bzh/terrevirtuelle/navisu/app/guiagent/impl/";
     protected final String EMODNET = "http://ows.emodnet-bathymetry.eu/wms";

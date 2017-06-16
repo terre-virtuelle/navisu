@@ -42,8 +42,8 @@ public class DEPARE_ShapefileLoader
             color = new Color(151, 199, 0);
         }
         if (val1 >= -14.0 && val2 <= 0.0) {
-            // color = new Color(151, 199, 0);
-            color = new Color(87, 137, 108);
+             color = new Color(151, 199, 0);
+           // color = new Color(87, 137, 108);
         }
         if (val1 >= 0.0 && val2 <= 12.0) {
             color = new Color(91, 175, 247);

@@ -1,4 +1,6 @@
 http://portail.indigeo.fr/geoserver/LETG-BREST/ows?SERVICE=WMS
+http://geoservice.maris2.nl/wms/seadatanet/emodnet_hydrography?service=WMS
+http://ows.emodnet-bathymetry.eu/wms
 http://www.ifremer.fr/services/wms/oceanographie_physique
 http://www.ifremer.fr/services/wms/biologie
 http://www.ifremer.fr/services/wms/geosciences
