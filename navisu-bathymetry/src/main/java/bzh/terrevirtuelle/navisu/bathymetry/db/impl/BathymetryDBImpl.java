@@ -8,6 +8,7 @@ package bzh.terrevirtuelle.navisu.bathymetry.db.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.databasedriver.DatabaseDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.geoview.GeoViewServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layertree.LayerTreeServices;
 import bzh.terrevirtuelle.navisu.bathymetry.controller.eventsProducer.BathymetryEventProducerServices;
 import bzh.terrevirtuelle.navisu.bathymetry.db.BathymetryDB;
@@ -33,6 +34,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -53,12 +55,14 @@ public class BathymetryDBImpl
 
     protected static final Logger LOGGER = Logger.getLogger(BathymetryDBImpl.class.getName());
     final String NAME = "Bathy";
-    final String LAYER_NAME = "Shom";
+    final String LAYER_NAME = "BathyShom";
     final String LIMIT = "100";
     @UsedService
     GuiAgentServices guiAgentServices;
     @UsedService
     GeoViewServices geoViewServices;
+    @UsedService
+    LayersManagerServices layersManagerServices;
     @UsedService
     LayerTreeServices layerTreeServices;
     @UsedService
@@ -68,6 +72,7 @@ public class BathymetryDBImpl
     private String dataFileName;
     private Connection connection;
     private PreparedStatement preparedStatement;
+    private Statement statement;
     private List<Point3Df> points3df;
     private List<Point3D> points3d;
     protected WorldWindow wwd;
@@ -89,10 +94,12 @@ public class BathymetryDBImpl
         bathymetryDBController = BathymetryDBController.getInstance();
         bathymetryDBController.setBathymetryDB(this);
         wwd = GeoWorldWindViewImpl.getWW();
-        layer = new RenderableLayer();
-        layer.setName(LAYER_NAME);
-        geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
-        layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
+      //  layer = new RenderableLayer();
+       // layer.setName(LAYER_NAME);
+      //  geoViewServices.getLayerManager().insertGeoLayer(GeoLayer.factory.newWorldWindGeoLayer(layer));
+     // geoViewServices.getLayerManager().
+     layer=layersManagerServices.getLayer(GROUP, LAYER_NAME);
+    //   layerTreeServices.addGeoLayer(GROUP, GeoLayer.factory.newWorldWindGeoLayer(layer));
 
     }
 
@@ -109,38 +116,92 @@ public class BathymetryDBImpl
             String driverName, String userName, String passwd,
             String dataFileName) {
         this.dataFileName = dataFileName;
+
         this.connection = databaseServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
         bathymetryDBController.setConnection(connection);
+
+        try {
+            try {
+                ((org.postgresql.PGConnection) connection).addDataType("geography", Class.forName("org.postgis.PGgeometry"));
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String sql = "INSERT INTO bathy (coord, elevation) "
+                + "VALUES ( ST_SetSRID(ST_MakePoint(?, ?), 4326), ?);";
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+        create();
         return connection;
     }
 
     @Override
     public Connection connect(String dbName, String hostName, String protocol, String port,
             String driverName, String userName, String passwd) {
+        System.out.println(dbName + " " + hostName + " " + protocol + " " + port + " " + driverName + " " + userName + " " + passwd);
         this.connection = databaseServices.connect(dbName, hostName, protocol, port, driverName, userName, passwd);
         bathymetryDBController.setConnection(connection);
+        try {
+            try {
+                ((org.postgresql.PGConnection) connection).addDataType("geometry", Class.forName("org.postgis.PGgeography"));
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return connection;
     }
 
     @Override
     public void create() {
+        /*
+        CREATE TABLE testgeog(gid serial PRIMARY KEY, the_geog geography(POINT,4326) );
+         */
+        guiAgentServices.getJobsManager().newJob("retrieveAll", (progressHandle) -> {
+        String query = "DROP TABLE IF EXISTS  bathy; "
+                + "CREATE TABLE bathy("
+            //    + "gid SERIAL PRIMARY KEY,"
+                + "coord GEOGRAPHY(POINT, 4326), "
+                + "elevation FLOAT); ";
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException ex) {
+            Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
+
+        read();
+        insert();
+        createIndex();
+        // retrieve(-5.991000175476074, 52.900001525878906);
+        retrieveAll();
+         });
     }
 
     public final void read() {
         try {
+
             points3df = Files.lines(new File(dataFileName).toPath())
                     .map(line -> line.trim())
+                   // .map(line -> line.split("\t"))
                     .map(line -> line.split(" "))
-                    .map(tab -> new Point3Df(Float.parseFloat(tab[1]),
-                    Float.parseFloat(tab[0]),
+                    .map(tab -> new Point3Df(Float.parseFloat(tab[0]),
+                    Float.parseFloat(tab[1]),
                     Float.parseFloat(tab[2])))
                     .collect(Collectors.toList());
         } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public final void insert() {
+
         points3df.stream().forEach((p) -> {
             try {
                 preparedStatement.setDouble(1, p.getLon());
@@ -148,7 +209,7 @@ public class BathymetryDBImpl
                 preparedStatement.setDouble(3, p.getElevation());
                 preparedStatement.executeUpdate();
             } catch (SQLException ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
         });
     }
@@ -157,7 +218,7 @@ public class BathymetryDBImpl
         try {
             connection.createStatement().executeQuery("CREATE INDEX bathyIndex ON bathy USING GIST (coord)");
         } catch (SQLException ex) {
-            LOGGER.log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, ex.toString(), ex);
         }
     }
 
@@ -198,7 +259,7 @@ public class BathymetryDBImpl
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BathymetryDBImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
         bathymetryEventProducerServices.setBathymetry(new Bathymetry(points3d));
         return points3d;
@@ -207,13 +268,21 @@ public class BathymetryDBImpl
     public final void retrieveAll() {
         guiAgentServices.getJobsManager().newJob("retrieveAll", (progressHandle) -> {
             PGgeometry geom;
+            double depth;
             try {
-                ResultSet r = connection.createStatement().executeQuery("SELECT ST_AsText(coord) AS gid, coord, elevation FROM bathy");
+                ResultSet r = connection.createStatement().executeQuery("SELECT  coord, elevation FROM bathy");
                 while (r.next()) {
-                    geom = (PGgeometry) r.getObject(2);
+                    geom = (PGgeometry) r.getObject(1);
+                    //   System.out.print("geom " + geom.getGeometry());
+                    depth = r.getFloat(2);
+                    //  System.out.println("  depth " + depth);
+
+                    layer.addRenderable(createSounding(geom.getGeometry().getFirstPoint().getX(),
+                            geom.getGeometry().getFirstPoint().getY(),
+                            depth));
                 }
             } catch (SQLException ex) {
-                LOGGER.log(Level.SEVERE, null, ex);
+                LOGGER.log(Level.SEVERE, ex.toString(), ex);
             }
         });
     }
@@ -230,16 +299,18 @@ public class BathymetryDBImpl
     public PointPlacemark createSounding(double lat, double lon, double depth) {
         PointPlacemarkAttributes attributes = new PointPlacemarkAttributes();
         attributes.setUsePointAsDefaultImage(true);
-
-        PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 100));
+//attributes.setScale(10.0);
+        PointPlacemark placemark = new PointPlacemark(Position.fromDegrees(lat, lon, 10));
         placemark.setAltitudeMode(WorldWind.CLAMP_TO_GROUND);
         placemark.setEnableBatchPicking(true);
         placemark.setAttributes(attributes);
-        String label = "Lat : " + nf4.format(lat) + " °\n"
-                + "Lon : " + nf4.format(lon) + " °\n"
-                + "Depth : " + nf1.format(depth) + " m";
+        String label = "Lat : " + nf4.format(lat) + "°\n"
+                + "Lon : " + nf4.format(lon) + "°\n"
+                + "Depth : " + nf1.format(depth) + "m";
         placemark.setValue(AVKey.DISPLAY_NAME, label);
-
+      //  System.out.println("placemark " + placemark.getPosition().getLatitude().degrees);
+      //  System.out.println(label);
+        layer.addRenderable(placemark);
         return placemark;
     }
 

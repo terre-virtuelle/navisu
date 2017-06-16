@@ -40,10 +40,10 @@ public class BathymetryDBController {
             Position pos = event.getPosition();
             try {
                 if (pos != null && connection != null && !connection.isClosed() && pos.getAltitude() < 20.0) {
-                    points = bathymetryDBImpl.retrieve(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees());
+                  //  points = bathymetryDBImpl.retrieve(pos.getLatitude().getDegrees(), pos.getLongitude().getDegrees());
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(BathymetryDBController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BathymetryDBController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         });
     }
