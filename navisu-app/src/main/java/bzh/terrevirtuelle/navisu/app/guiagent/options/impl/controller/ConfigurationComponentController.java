@@ -115,6 +115,8 @@ public class ConfigurationComponentController
     @FXML
     public TextField daeModelPathTF;
     @FXML
+    public TextField scaleTF;
+    @FXML
     public Tab userTab;
     @FXML
     public Tab ownerShipTab;
@@ -151,7 +153,8 @@ public class ConfigurationComponentController
     String cog;
     String sog;
     String daeModelPath;
-
+String scale;
+    
     String nameOld;
     String mmsiOld;
     String countryOld;
@@ -166,7 +169,7 @@ public class ConfigurationComponentController
     String cogOld;
     String sogOld;
     String daeModelPathOld;
-
+    String scaleOld;
     protected FileChooser fileChooser;
 
     /**
@@ -245,6 +248,11 @@ public class ConfigurationComponentController
         cogTF.setText(properties.getProperty("cog").trim());
         sogTF.setText(properties.getProperty("sog").trim());
         daeModelPathTF.setText(properties.getProperty("daeModelPath").trim());
+        //Mise a jour de nouvelles proprietes
+        if (properties.getProperty("scale") == null) {
+            properties.setProperty("scale", "1.0");
+        }
+        scaleTF.setText(properties.getProperty("scale"));
 
         nameOld = nameTF.getText().trim();
         mmsiOld = mmsiTF.getText().trim();
@@ -260,7 +268,7 @@ public class ConfigurationComponentController
         cogOld = cogTF.getText().trim();
         sogOld = sogTF.getText().trim();
         daeModelPathOld = daeModelPathTF.getText().trim();
-
+        scaleOld = scaleTF.getText().trim();
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
@@ -290,6 +298,7 @@ public class ConfigurationComponentController
                 cog = cogTF.getText();
                 sog = sogTF.getText();
                 daeModelPath = daeModelPathTF.getText();
+                scale=scaleTF.getText();
                 saveOwnerShip();
             }
 
@@ -321,6 +330,7 @@ public class ConfigurationComponentController
                 cogTF.setText(cogOld);
                 sogTF.setText(sogOld);
                 daeModelPathTF.setText(daeModelPathOld);
+                scaleTF.setText(scaleOld);
 
                 name = nameTF.getText();
                 mmsi = mmsiTF.getText();
@@ -336,6 +346,7 @@ public class ConfigurationComponentController
                 cog = cogTF.getText();
                 sog = sogTF.getText();
                 daeModelPath = daeModelPathTF.getText();
+                scale=scaleTF.getText();
                 saveOwnerShip();
             }
         });
@@ -367,6 +378,7 @@ public class ConfigurationComponentController
                 cog = "140.0";
                 sog = "0.0";
                 daeModelPath = "data/collada/lithops_0.dae";
+                scale="1.0";
 
                 nameTF.setText(name);
                 mmsiTF.setText(mmsi);
@@ -382,6 +394,7 @@ public class ConfigurationComponentController
                 cogTF.setText(cog);
                 sogTF.setText(sog);
                 daeModelPathTF.setText(daeModelPath);
+                scaleTF.setText(scale);
                 saveOwnerShip();
             }
 
@@ -455,6 +468,7 @@ public class ConfigurationComponentController
             properties.setProperty("cog", cog);
             properties.setProperty("sog", sog);
             properties.setProperty("daeModelPath", daeModelPath);
+            properties.setProperty("scale", scale);
 
             properties.store(output, null);
             output.close();
