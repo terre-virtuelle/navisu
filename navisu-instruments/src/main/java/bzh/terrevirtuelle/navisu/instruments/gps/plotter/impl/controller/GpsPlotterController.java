@@ -21,7 +21,6 @@ import gov.nasa.worldwind.WorldWindow;
 import gov.nasa.worldwind.event.SelectEvent;
 import gov.nasa.worldwind.geom.Angle;
 import gov.nasa.worldwind.geom.Position;
-import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.layers.RenderableLayer;
 import gov.nasa.worldwind.ogc.collada.ColladaRoot;
 import java.io.FileInputStream;
@@ -35,6 +34,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
+import gov.nasa.worldwind.geom.Vec4;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,7 +152,14 @@ public class GpsPlotterController
         ownerShip.setLongitude(longitude);
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
-       
+
+        double scaleD;
+        try {
+            scaleD = Double.valueOf(properties.getProperty("scale").trim());
+        } catch (NumberFormatException e) {
+            scaleD = 1.0;
+        }
+        ownerShipView.setModelScale(new Vec4(scaleD));
         updateTarget(ownerShip);
         wwd.redrawNow();
     }
@@ -193,7 +200,7 @@ public class GpsPlotterController
         listeners.forEach((gpc) -> {
             gpc.updateTarget(ownerShip);
         });
-       // System.out.println("GpsPlotterController : ***************");
+        // System.out.println("GpsPlotterController : ***************");
     }
 
 }
