@@ -121,7 +121,7 @@ public class Configuration {
             List<String> keys = new ArrayList<>(Arrays.asList(
                     "s57ChartsDir", "darkSkyApiKey", "allCountriesPath", "luceneAllCountriesIndexPath",
                     "name", "mmsi", "country", "length", "width", "draught", "shipType", "navigationalStatus",
-                    "callSign", "latitude", "longitude", "cog", "sog", "daeModelPath"
+                    "callSign", "latitude", "longitude", "cog", "sog", "daeModelPath", "scale"
             ));
             Files.write(Paths.get(configProperties), keys, StandardOpenOption.WRITE);
         } catch (IOException ex) {

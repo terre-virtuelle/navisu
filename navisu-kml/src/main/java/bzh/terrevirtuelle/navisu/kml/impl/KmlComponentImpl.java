@@ -32,6 +32,7 @@ import javafx.scene.layout.StackPane;
 import javax.xml.stream.XMLStreamException;
 import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import bzh.terrevirtuelle.navisu.kml.KmlComponent;
+import gov.nasa.worldwind.geom.Vec4;
 import gov.nasa.worldwind.ogc.collada.impl.ColladaController;
 
 /**
@@ -132,6 +133,7 @@ public class KmlComponentImpl
             case "DAE":
                 ColladaComponentController colladaComponentController
                         = new ColladaComponentController(layersManagerServices, this, fileName, guiAgentServices.getRoot());
+               
                 break;
         }
     }
@@ -232,5 +234,10 @@ public class KmlComponentImpl
         colladaRoot.setPosition(new Position(Angle.fromDegrees(latitude),
                 Angle.fromDegrees(longitude),
                 0.0));
+    }
+
+    @Override
+    public void setScale(double x, double y, double z) {
+        colladaRoot.setModelScale(new Vec4(x, y, z));
     }
 }

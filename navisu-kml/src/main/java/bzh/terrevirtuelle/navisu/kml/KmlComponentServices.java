@@ -33,4 +33,6 @@ public interface KmlComponentServices
     void setLongitude(double longitude);
 
     void setPosition(double latitude, double longitude);
+    
+    void setScale(double x, double y, double z);
 }

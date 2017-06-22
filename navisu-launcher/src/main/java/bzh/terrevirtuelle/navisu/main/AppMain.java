@@ -392,7 +392,7 @@ public class AppMain extends Application {
         /* Test connexion GPS / AIS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-        //  dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
+          dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
         //dataServerServices.openSerialPort("/dev/ttyACM1", 38400, 8, 1, 0);
         /* Test connexion Gpsd */
  /*
