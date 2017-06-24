@@ -71,7 +71,6 @@ import bzh.terrevirtuelle.navisu.instruments.gps.logger.GpsLoggerServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.logger.impl.GpsLoggerImpl;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.GpsPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.GpsPlotterImpl;
-import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.GpsTrackPlotterServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.impl.GpsTrackImpl;
 import bzh.terrevirtuelle.navisu.navigation.measuretools.MeasureToolsServices;
@@ -120,7 +119,6 @@ import javafx.stage.Stage;
 
 import org.capcaval.c3.componentmanager.ComponentManager;
 import bzh.terrevirtuelle.navisu.charts.vector.s57.charts.S57ChartComponentServices;
-import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.impl.GpsTrackPlotterImpl;
 import bzh.terrevirtuelle.navisu.extensions.camera.CameraComponentServices;
 import bzh.terrevirtuelle.navisu.extensions.camera.impl.CameraComponentImpl;
 import bzh.terrevirtuelle.navisu.extensions.commands.NavigationCmdComponentServices;
@@ -201,7 +199,6 @@ public class AppMain extends Application {
                         GeoTiffChartImpl.class,
                         GpsLoggerImpl.class,
                         GpsTrackImpl.class,
-                        GpsTrackPlotterImpl.class,
                         GpsPlotterImpl.class,
                         GpsPlotterWithRouteImpl.class,
                         GpxObjectImpl.class,
@@ -269,7 +266,6 @@ public class AppMain extends Application {
         GeoTiffChartServices geoTiffChartServices = componentManager.getComponentService(GeoTiffChartServices.class);
         GpsLoggerServices gpsLoggerServices = componentManager.getComponentService(GpsLoggerServices.class);
         GpsTrackServices gpsTrackServices = componentManager.getComponentService(GpsTrackServices.class);
-        GpsTrackPlotterServices gpsTrackPlotterServices = componentManager.getComponentService(GpsTrackPlotterServices.class);
         GpsPlotterServices gpsPlotterServices = componentManager.getComponentService(GpsPlotterServices.class);
         GpsPlotterWithRouteServices gpsPlotterWithRouteServices = componentManager.getComponentService(GpsPlotterWithRouteServices.class);
         GpxObjectServices gpxObjectServices = componentManager.getComponentService(GpxObjectServices.class);
@@ -356,7 +352,6 @@ public class AppMain extends Application {
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsPlotterWithRouteServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(gpsTrackServices.getDriver());
-        instrumentDriverManagerServices.registerNewDriver(gpsTrackPlotterServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(instrumentTemplateServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(leapMotionComponentServices.getDriver());
         instrumentDriverManagerServices.registerNewDriver(measureToolsServices.getDriver());
