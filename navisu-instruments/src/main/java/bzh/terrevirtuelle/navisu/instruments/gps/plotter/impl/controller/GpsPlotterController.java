@@ -142,6 +142,19 @@ public class GpsPlotterController
         ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, properties.getProperty("daeModelPath").trim());
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
+        String scaleS;
+        double scaleD;
+        try {
+            scaleS = properties.getProperty("scale");
+            if (scaleS != null) {
+                scaleD = Double.valueOf(scaleS.trim());
+            } else {
+                scaleD = 1.0;
+            }
+        } catch (NumberFormatException e) {
+            scaleD = 1.0;
+        }
+        ownerShipView.setModelScale(new Vec4(scaleD));
         ownerShipView.setField("Ship", ownerShip);
     }
 
@@ -153,13 +166,6 @@ public class GpsPlotterController
         ownerShipView.setHeading(Angle.fromDegrees(ownerShip.getCog()));
         ownerShipView.setPosition(Position.fromDegrees(ownerShip.getLatitude(), ownerShip.getLongitude(), 1000.0));
 
-        double scaleD;
-        try {
-            scaleD = Double.valueOf(properties.getProperty("scale").trim());
-        } catch (NumberFormatException e) {
-            scaleD = 1.0;
-        }
-        ownerShipView.setModelScale(new Vec4(scaleD));
         updateTarget(ownerShip);
         wwd.redrawNow();
     }
