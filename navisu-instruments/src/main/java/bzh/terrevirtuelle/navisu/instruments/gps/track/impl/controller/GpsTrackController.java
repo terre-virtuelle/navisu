@@ -24,7 +24,8 @@ import java.util.ArrayList;
  * @author serge
  * @date 23 déc. 2015
  */
-public class GpsTrackController extends GpsPlotterController {
+public class GpsTrackController
+        extends GpsPlotterController {
 
     protected ArrayList<Position> pathPositions;
     protected ShapeAttributes attrs;
@@ -78,13 +79,13 @@ public class GpsTrackController extends GpsPlotterController {
 
     @Override
     public void updateTarget(double latitude, double longitude) {
-     //   ownerShip.setLatitude(latitude);
-      //  ownerShip.setLongitude(longitude);
+        //   ownerShip.setLatitude(latitude);
+        //  ownerShip.setLongitude(longitude);
         pathPositions.add(new Position(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude), 10));
         path.setPositions(pathPositions);
         wwd.redrawNow();
     }
-/*
+    /*
     @Override
     protected void notifyNmeaMessage(GGA data) {
         updateTarget(data.getLatitude(), data.getLongitude());
@@ -109,5 +110,5 @@ public class GpsTrackController extends GpsPlotterController {
             }
         }
     }
-*/
+     */
 }

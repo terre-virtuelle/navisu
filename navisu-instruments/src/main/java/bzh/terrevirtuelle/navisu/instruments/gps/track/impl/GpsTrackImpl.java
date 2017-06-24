@@ -8,7 +8,7 @@ package bzh.terrevirtuelle.navisu.instruments.gps.track.impl;
 import bzh.terrevirtuelle.navisu.app.drivers.instrumentdriver.InstrumentDriver;
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
-import bzh.terrevirtuelle.navisu.instruments.gps.track.plotter.GpsTrackPlotter;
+import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrack;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.GpsTrackServices;
 import bzh.terrevirtuelle.navisu.instruments.gps.track.impl.controller.GpsTrackController;
 import org.capcaval.c3.component.ComponentState;
@@ -19,7 +19,7 @@ import org.capcaval.c3.component.annotation.UsedService;
  * @author Serge Morvan
  */
 public class GpsTrackImpl
-        implements GpsTrackPlotter, GpsTrackServices, InstrumentDriver, ComponentState {
+        implements GpsTrack, GpsTrackServices, InstrumentDriver, ComponentState {
 
     @UsedService
     GuiAgentServices guiAgentServices;
