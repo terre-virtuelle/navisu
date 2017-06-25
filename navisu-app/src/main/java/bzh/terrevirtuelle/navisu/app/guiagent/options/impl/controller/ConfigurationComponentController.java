@@ -6,7 +6,11 @@
 package bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.OwnerShipOption;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.OwnerShipOptionBuilder;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.tests.OptionsEventTest;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -153,8 +157,8 @@ public class ConfigurationComponentController
     String cog;
     String sog;
     String daeModelPath;
-String scale;
-    
+    String scale;
+
     String nameOld;
     String mmsiOld;
     String countryOld;
@@ -198,6 +202,9 @@ String scale;
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.gazetteerComponentServices = gazetteerComponentServices;
+        
+      //  OptionsEventTest optionsEventTest = new OptionsEventTest();
+      //  optionsEventTest.subscribe();
     }
 
     public static ConfigurationComponentController getInstance(ConfigurationComponentImpl component,
@@ -298,7 +305,7 @@ String scale;
                 cog = cogTF.getText();
                 sog = sogTF.getText();
                 daeModelPath = daeModelPathTF.getText();
-                scale=scaleTF.getText();
+                scale = scaleTF.getText();
                 saveOwnerShip();
             }
 
@@ -346,7 +353,7 @@ String scale;
                 cog = cogTF.getText();
                 sog = sogTF.getText();
                 daeModelPath = daeModelPathTF.getText();
-                scale=scaleTF.getText();
+                scale = scaleTF.getText();
                 saveOwnerShip();
             }
         });
@@ -378,7 +385,7 @@ String scale;
                 cog = "140.0";
                 sog = "0.0";
                 daeModelPath = "data/collada/lithops_0.dae";
-                scale="1.0";
+                scale = "1.0";
 
                 nameTF.setText(name);
                 mmsiTF.setText(mmsi);
@@ -469,9 +476,27 @@ String scale;
             properties.setProperty("sog", sog);
             properties.setProperty("daeModelPath", daeModelPath);
             properties.setProperty("scale", scale);
-
             properties.store(output, null);
             output.close();
+            
+            OwnerShipOption ownerShipOption = OwnerShipOptionBuilder.create()
+                    .callSign(callSign)
+                    .cog(cog)
+                    .country(country)
+                    .daeModelPath(daeModelPath)
+                    .draught(draught)
+                    .latitude(latitude)
+                    .longitude(longitude)
+                    .length(length)
+                    .mmsi(mmsi)
+                    .name(name)
+                    .navigationalStatus(navigationalStatus)
+                    .scale(scale)
+                    .shipType(shipType)
+                    .sog(sog)
+                    .width(width)
+                    .build();
+            notifyConfEvent(ownerShipOption);
         } catch (IOException ex) {
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
@@ -501,6 +526,15 @@ String scale;
             tf.setText("No Directory selected");
         } else {
             tf.setText(selectedDirectory.getAbsolutePath());
+        }
+    }
+
+    private void notifyConfEvent(Option option) {
+
+        try {
+            component.notifyConfEvent(option);
+        } catch (Exception e) {
+
         }
     }
 }

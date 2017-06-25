@@ -12,7 +12,11 @@ import javafx.scene.input.KeyCombination;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.controller.ConfigurationComponentController;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ConfigurationComponent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.ConfigurationComponentServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.impl.ConfEventProducerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
+import java.util.logging.Level;
+import org.capcaval.c3.component.annotation.SubComponent;
 
 /**
  *
@@ -29,6 +33,9 @@ public class ConfigurationComponentImpl
     @UsedService
     GazetteerComponentServices gazetteerComponentServices;
 
+    @SubComponent
+    protected ConfEventProducerImpl eventProducer;
+
     private final String COMPONENT_KEY_NAME_0 = "Configuration";
     private ConfigurationComponentController controller;
 
@@ -37,6 +44,7 @@ public class ConfigurationComponentImpl
     @Override
     public void componentInitiated() {
         // LOGGER.info("Options Component Initiated");
+        eventProducer.init();
     }
 
     @Override
@@ -104,5 +112,15 @@ public class ConfigurationComponentImpl
     @Override
     public void load() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void notifyConfEvent(Option option) {
+        try {
+            if (option != null) {
+                eventProducer.notifyConfEvent(option);
+            }
+        } catch (Exception e) {
+            Logger.getLogger(ConfigurationComponentImpl.class.getName()).log(Level.WARNING, e.toString(), e);
+        }
     }
 }

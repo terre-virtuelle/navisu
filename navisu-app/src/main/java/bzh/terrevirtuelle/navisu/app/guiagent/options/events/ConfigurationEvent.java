@@ -5,7 +5,7 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.options.events;
 
-import bzh.terrevirtuelle.navisu.app.guiagent.options.Option;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
 import org.capcaval.c3.component.ComponentEvent;
 
 /**

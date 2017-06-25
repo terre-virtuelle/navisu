@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package bzh.terrevirtuelle.navisu.app.guiagent.options;
+package bzh.terrevirtuelle.navisu.app.guiagent.options.domain;
 
 /**
  *
  * @author serge
- * @date Jun 24, 2017
+ * @date Jun 25, 2017
  */
-public class Option {
+public interface Option {
 
 }
