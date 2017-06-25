@@ -7,6 +7,9 @@ package bzh.terrevirtuelle.navisu.instruments.gps.plotter.impl.controller;
 
 import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.layers.LayersManagerServices;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.OwnerShipOption;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.events.OwnerShipConfEvent;
 import bzh.terrevirtuelle.navisu.core.view.geoview.worldwind.impl.GeoWorldWindViewImpl;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.GGA;
 import bzh.terrevirtuelle.navisu.domain.nmea.model.nmea183.RMC;
@@ -37,6 +40,8 @@ import bzh.terrevirtuelle.navisu.kml.KmlComponentServices;
 import gov.nasa.worldwind.geom.Vec4;
 import java.util.ArrayList;
 import java.util.List;
+import org.capcaval.c3.component.ComponentEventSubscribe;
+import org.capcaval.c3.componentmanager.ComponentManager;
 
 /**
  * NaVisu
@@ -69,12 +74,17 @@ public class GpsPlotterController
     int i = 0;
     protected List<GpsEventsListener> listeners;
 
+    ComponentManager cm;
+    ComponentEventSubscribe<OwnerShipConfEvent> oscES;
+
     public GpsPlotterController(LayersManagerServices layersManagerServices,
             GuiAgentServices guiAgentServices,
             KmlComponentServices kmlObjectServices,
             String name) {
         this(layersManagerServices, guiAgentServices, name);
         this.kmlObjectServices = kmlObjectServices;
+        cm = ComponentManager.componentManager;
+        oscES = cm.getComponentEventSubscribe(OwnerShipConfEvent.class);
     }
 
     public GpsPlotterController(LayersManagerServices layersManagerServices,
@@ -84,6 +94,8 @@ public class GpsPlotterController
         this.guiAgentServices = guiAgentServices;
         this.name = name;
         listeners = new ArrayList<>();
+        cm = ComponentManager.componentManager;
+        oscES = cm.getComponentEventSubscribe(OwnerShipConfEvent.class);
     }
 
     public void init(boolean subscribe) {
@@ -103,6 +115,13 @@ public class GpsPlotterController
         if (subscribe == true) {
             subscribe();
         }
+        oscES.subscribe(new OwnerShipConfEvent() {
+            @Override
+            public <T extends Option> void notifyConfMessageChanged(T d) {
+                OwnerShipOption option = (OwnerShipOption) d;
+                updateShipView(option);
+            }
+        });
     }
 
     protected void addPanelController() {
@@ -209,4 +228,33 @@ public class GpsPlotterController
         // System.out.println("GpsPlotterController : ***************");
     }
 
+    private void updateShipView(OwnerShipOption option) {
+
+        /*
+        private String name;
+    private String mmsi;
+    private String country;
+    private String length;
+    private String width;
+    private String draught;
+    private String shipType;
+    private String navigationalStatus;
+    private String callSign;
+    private String latitude;
+    private String longitude;
+    private String cog;
+    private String sog;
+    private String daeModelPath;
+    private String scale;
+         */
+        double scale;
+        try {
+            scale = Double.parseDouble(option.getScale());
+        } catch (NumberFormatException e) {
+            scale = 1.0;
+        }
+
+        ownerShipView.setModelScale(new Vec4(scale));
+        wwd.redrawNow();
+    }
 }
