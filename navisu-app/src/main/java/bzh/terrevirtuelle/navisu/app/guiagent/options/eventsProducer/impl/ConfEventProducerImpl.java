@@ -8,6 +8,8 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.impl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.events.ConfigurationEvent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.events.OwnerShipConfEvent;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.events.ServerConfEvent;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.events.UserConfEvent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.ConfEventProducer;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.ConfEventProducerServices;
 import java.util.HashMap;
@@ -25,7 +27,11 @@ public class ConfEventProducerImpl
 
     @ProducedEvent
     protected OwnerShipConfEvent ownerShipConfEvent;
-
+    @ProducedEvent
+    protected UserConfEvent userConfEvent;
+    @ProducedEvent
+    protected ServerConfEvent serverConfEvent;
+    
     private Map<String, ConfigurationEvent> configurationEvents = null;
 
     public ConfEventProducerImpl() {
@@ -46,5 +52,7 @@ public class ConfEventProducerImpl
         configurationEvents = new HashMap<>();
 
         configurationEvents.put("OwnerShipOption", ownerShipConfEvent);
+        configurationEvents.put("UserOption", userConfEvent);
+        configurationEvents.put("ServerOption", serverConfEvent);
     }
 }
