@@ -119,7 +119,7 @@ public class GpsPlotterController
             @Override
             public <T extends Option> void notifyConfMessageChanged(T d) {
                 OwnerShipOption option = (OwnerShipOption) d;
-                updateShipView(option);
+                updateShipFromConfigurationPanel(option);
             }
         });
     }
@@ -225,36 +225,81 @@ public class GpsPlotterController
         listeners.forEach((gpc) -> {
             gpc.updateTarget(ownerShip);
         });
-        // System.out.println("GpsPlotterController : ***************");
     }
 
-    private void updateShipView(OwnerShipOption option) {
+    public void updateShipFromConfigurationPanel(OwnerShipOption option) {
 
-        /*
-        private String name;
-    private String mmsi;
-    private String country;
-    private String length;
-    private String width;
-    private String draught;
-    private String shipType;
-    private String navigationalStatus;
-    private String callSign;
-    private String latitude;
-    private String longitude;
-    private String cog;
-    private String sog;
-    private String daeModelPath;
-    private String scale;
-         */
-        double scale;
         try {
-            scale = Double.parseDouble(option.getScale());
+            ownerShipView.setModelScale(new Vec4(Double.parseDouble(option.getScale())));   
         } catch (NumberFormatException e) {
-            scale = 1.0;
+            // Nothing if no good input    
+        }
+        
+        try {
+            ownerShipView.setPosition(
+                    new Position(Angle.fromDegrees(Double.parseDouble(option.getLatitude())),
+                            Angle.fromDegrees(Double.parseDouble(option.getLongitude())),
+                            10.0));
+            ownerShip.setLatitude(Double.parseDouble(option.getLatitude()));
+            ownerShip.setLongitude(Double.parseDouble(option.getLongitude()));
+        } catch (NumberFormatException e) {
+            // Nothing if no good input
+        }
+        
+        try {
+            ownerShipView.setHeading(Angle.fromDegrees(Double.parseDouble(option.getCog())));
+            ownerShip.setCog(Double.parseDouble(option.getCog()));
+        } catch (NumberFormatException e) {
+            // Nothing if no good input
+        }
+        
+        try {
+            ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, option.getDaeModelPath());
+            ownerShipView.setPosition(
+                    new Position(Angle.fromDegrees(Double.parseDouble(option.getLatitude())),
+                            Angle.fromDegrees(Double.parseDouble(option.getLongitude())),
+                            10.0));
+            ownerShipView.setHeading(Angle.fromDegrees(Double.parseDouble(option.getCog())));
+            ownerShipView.setModelScale(new Vec4(Double.parseDouble(option.getScale())));
+        } catch (Exception e) {
+            // Nothing if no good input
+            System.out.println("e : " + e);
         }
 
-        ownerShipView.setModelScale(new Vec4(scale));
+        try {
+            ownerShip.setSog(Double.parseDouble(option.getSog()));
+        } catch (NumberFormatException e) {
+            // Nothing if no good input
+        }
+        try {
+            ownerShip.setLength(Float.parseFloat(option.getLength()));
+        } catch (NumberFormatException e) {
+            // Nothing if no good input
+        }
+        try {
+            ownerShip.setWidth(Float.parseFloat(option.getWidth()));
+        } catch (NumberFormatException e) {
+            // Nothing if no good input
+        }
+        try {
+            ownerShip.setDraught(Float.parseFloat(option.getDraught()));
+        } catch (NumberFormatException e) {
+            // Nothing if no good input
+        }
+        try {
+            ownerShip.setShipType(Integer.parseInt(option.getShipType()));
+        } catch (NumberFormatException e) {
+            // Nothing if no good input
+        }
+        try {
+            ownerShip.setNavigationalStatus(Integer.parseInt(option.getNavigationalStatus()));
+        } catch (NumberFormatException e) {
+            // Nothing if no good input
+        }
+
+        ownerShip.setCountry(option.getCountry());
+        ownerShip.setName(option.getCountry());
+        ownerShip.setCallSign(option.getCallSign());
         wwd.redrawNow();
     }
 }
