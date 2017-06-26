@@ -147,14 +147,68 @@
                                 </Tab>
                                 <Tab text="Server      ">
                                     <content>
-                                        <AnchorPane fx:id="serverTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                        <AnchorPane fx:id="serverTab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane prefHeight="200.0" prefWidth="533.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <TextField fx:id="serverHostnameTF" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <TextField fx:id="serverPortTF" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <Label prefHeight="15.0" prefWidth="162.0" text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label prefHeight="15.0" prefWidth="123.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                       </children>
+                                    </GridPane>
+                                 </children></AnchorPane>
                                     </content>
                                 </Tab>
                                 <Tab text="Client        ">
                                     <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane prefHeight="200.0" prefWidth="533.0">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TextField fx:id="clientHostnameTF1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                          <TextField fx:id="clientPortTF1" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                          <Label prefHeight="15.0" prefWidth="162.0" text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label prefHeight="15.0" prefWidth="123.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label prefHeight="15.0" prefWidth="162.0" text="Period" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <TextField GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                 </children></AnchorPane>
                                     </content>
                                 </Tab>
+                        <Tab text="Devices     ">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
                             </tabs>
                         </TabPane>
                         <GridPane maxHeight="50.0" maxWidth="600.0" prefHeight="38.0" prefWidth="533.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
