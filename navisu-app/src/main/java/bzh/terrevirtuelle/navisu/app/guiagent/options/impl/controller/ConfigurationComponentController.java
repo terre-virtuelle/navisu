@@ -9,8 +9,9 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.OwnerShipOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.OwnerShipOptionBuilder;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOption;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOptionBuilder;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.tests.OptionsEventTest;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
@@ -125,6 +126,8 @@ public class ConfigurationComponentController
     @FXML
     public Tab ownerShipTab;
     @FXML
+    public Tab serverTab;
+    @FXML
     public Button s57Button;
     @FXML
     public Button allCPathButton;
@@ -132,6 +135,12 @@ public class ConfigurationComponentController
     public Button luceneButton;
     @FXML
     public Button buildIndexButton;
+
+    @FXML
+    public TextField serverHostnameTF;
+    @FXML
+    public TextField serverPortTF;
+
     String s57Path;
     String darkSkyKey;
     String allCountriesPath;
@@ -174,6 +183,13 @@ public class ConfigurationComponentController
     String sogOld;
     String daeModelPathOld;
     String scaleOld;
+
+    String serverHostname;
+    String serverPort;
+
+    String serverHostnameOld;
+    String serverPortOld;
+
     protected FileChooser fileChooser;
 
     /**
@@ -202,9 +218,9 @@ public class ConfigurationComponentController
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.gazetteerComponentServices = gazetteerComponentServices;
-        
-      //  OptionsEventTest optionsEventTest = new OptionsEventTest();
-      //  optionsEventTest.subscribe();
+
+        // OptionsEventTest optionsEventTest = new OptionsEventTest();
+        // optionsEventTest.subscribe();
     }
 
     public static ConfigurationComponentController getInstance(ConfigurationComponentImpl component,
@@ -261,6 +277,24 @@ public class ConfigurationComponentController
         }
         scaleTF.setText(properties.getProperty("scale"));
 
+        serverHostnameTF.setText(properties.getProperty("serverHostname"));
+        if (properties.getProperty("serverHostname") == null) {
+            properties.setProperty("serverHostname", "localhost");
+        }
+        serverHostnameTF.setText(properties.getProperty("serverHostname"));
+
+        serverPortTF.setText(properties.getProperty("serverPort"));
+        if (properties.getProperty("serverPort") == null) {
+            properties.setProperty("serverPort", "8080");
+        }
+        serverPortTF.setText(properties.getProperty("serverPort"));
+
+        try {
+            properties.store(new FileOutputStream(CONFIG_FILE_NAME), null);
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         nameOld = nameTF.getText().trim();
         mmsiOld = mmsiTF.getText().trim();
         countryOld = countryTF.getText().trim();
@@ -276,6 +310,9 @@ public class ConfigurationComponentController
         sogOld = sogTF.getText().trim();
         daeModelPathOld = daeModelPathTF.getText().trim();
         scaleOld = scaleTF.getText().trim();
+        serverHostnameOld = serverHostnameTF.getText().trim();
+        serverPortOld = serverPortTF.getText().trim();
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
@@ -308,7 +345,10 @@ public class ConfigurationComponentController
                 scale = scaleTF.getText();
                 saveOwnerShip();
             }
-
+            if (serverTab.isSelected()) {
+                serverHostname = serverHostnameTF.getText();
+                serverPort = serverPortTF.getText();
+            }
         });
         cancelButton.setOnMouseClicked((MouseEvent event) -> {
             if (userTab.isSelected()) {
@@ -355,6 +395,13 @@ public class ConfigurationComponentController
                 daeModelPath = daeModelPathTF.getText();
                 scale = scaleTF.getText();
                 saveOwnerShip();
+            }
+            if (serverTab.isSelected()) {
+                serverHostnameTF.setText(serverHostnameOld);
+                serverPortTF.setText(serverPortOld);
+
+                serverHostname = serverHostnameTF.getText();
+                serverPort = serverPortTF.getText();
             }
         });
         defaultButton.setOnMouseClicked((MouseEvent event) -> {
@@ -404,7 +451,14 @@ public class ConfigurationComponentController
                 scaleTF.setText(scale);
                 saveOwnerShip();
             }
+            if (serverTab.isSelected()) {
+                serverHostname = "localhost";
+                serverPort = "8080";
 
+                serverHostnameTF.setText(serverHostname);
+                serverPortTF.setText(serverPort);
+                // saveServer();
+            }
         });
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -454,6 +508,14 @@ public class ConfigurationComponentController
 
             properties.store(output, null);
             output.close();
+
+            UserOption userOption = UserOptionBuilder.create()
+                    .allCountriesIndexPath(allCountriesIndexPath)
+                    .allCountriesPath(allCountriesPath)
+                    .darkSkyKey(darkSkyKey)
+                    .s57Path(s57Path)
+                    .build();
+            notifyConfEvent(userOption);
         } catch (IOException ex) {
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
@@ -478,7 +540,7 @@ public class ConfigurationComponentController
             properties.setProperty("scale", scale);
             properties.store(output, null);
             output.close();
-            
+
             OwnerShipOption ownerShipOption = OwnerShipOptionBuilder.create()
                     .callSign(callSign)
                     .cog(cog)
@@ -500,6 +562,11 @@ public class ConfigurationComponentController
         } catch (IOException ex) {
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+
+    }
+
+    private void saveServer() {
+
     }
 
     public void openFile(TextField tf) {
