@@ -21,22 +21,23 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
 <fx:root fx:id="configgroup" type="javafx.scene.Group" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="560.0" styleClass="background-pane">
+        <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="560.0" styleClass="background-pane">
             <children>
-                <GridPane prefHeight="495.0" prefWidth="560.0">
+                <GridPane prefHeight="579.0" prefWidth="560.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="22.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="542.0" minWidth="10.0" prefWidth="537.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.0" minWidth="8.0" prefWidth="13.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="95.0" minHeight="40.0" prefHeight="58.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="387.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="95.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="400.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                         <RowConstraints />
                     </rowConstraints>
@@ -47,7 +48,7 @@
                                     <content>
                                         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="532.0">
                                             <children>
-                                                <GridPane layoutX="1.0" prefHeight="200.0" prefWidth="531.0" styleClass="tab-conteneur">
+                                                <GridPane layoutX="1.0" prefHeight="221.0" prefWidth="531.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="175.0" />
@@ -56,7 +57,7 @@
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                     </columnConstraints>
                                                     <rowConstraints>
-                                          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -89,7 +90,7 @@
                                     <content>
                                         <AnchorPane maxWidth="532.0" minHeight="0.0" minWidth="0.0" prefHeight="317.0" prefWidth="532.0">
                                             <children>
-                                                <GridPane prefHeight="273.0" prefWidth="533.0" styleClass="tab-conteneur">
+                                                <GridPane prefHeight="320.0" prefWidth="533.0" styleClass="tab-conteneur">
                                                     <columnConstraints>
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
@@ -100,7 +101,7 @@
                                                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
                                                     </columnConstraints>
                                                     <rowConstraints>
-                                                        <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                                        <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
                                                         <RowConstraints maxHeight="28.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
@@ -153,87 +154,29 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab fx:id="serverTab"  text="Server      ">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <GridPane prefHeight="233.0" prefWidth="533.0">
-                                      <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                      </columnConstraints>
-                                      <rowConstraints>
-                                        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                      </rowConstraints>
-                                       <children>
-                                          <TextField fx:id="serverHostnameTF" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                          <TextField fx:id="serverPortTF" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <Label prefHeight="15.0" prefWidth="162.0" text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label prefHeight="15.0" prefWidth="123.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                       </children>
-                                    </GridPane>
-                                 </children></AnchorPane>
-                                    </content>
-                                </Tab>
-                                <Tab text="Client        ">
-                                    <content>
-                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <GridPane prefHeight="233.0" prefWidth="533.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                                       </rowConstraints>
-                                       <children>
-                                          <TextField fx:id="clientHostnameTF1" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                          <TextField fx:id="clientPortTF1" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                          <Label prefHeight="15.0" prefWidth="162.0" text="Hostname" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <Label prefHeight="15.0" prefWidth="123.0" text="Port" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                          <Label prefHeight="15.0" prefWidth="162.0" text="Period" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <TextField GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                                       </children>
-                                    </GridPane>
-                                 </children></AnchorPane>
-                                    </content>
-                                </Tab>
-                        <Tab text="Devices     ">
+                        <Tab fx:id="devicesTab" text="Devices     ">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane prefHeight="364.0" prefWidth="533.0">
+                                    <GridPane layoutY="-11.0" prefHeight="435.0" prefWidth="533.0">
                                       <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="100.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="100.0" />
                                       </columnConstraints>
                                       <rowConstraints>
-                                        <RowConstraints maxHeight="174.0" minHeight="10.0" prefHeight="138.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="182.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="201.0" minHeight="10.0" prefHeight="172.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="190.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <TabPane fx:id="parameterTP" prefHeight="174.0" prefWidth="513.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                          <TabPane fx:id="parameterTP" prefHeight="215.0" prefWidth="513.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <tabs>
                                                 <Tab fx:id="serialT" text="Serial">
                                                    <content>
                                                       <AnchorPane maxHeight="271.0" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="511.0">
                                                          <children>
-                                                            <GridPane layoutX="5.0" prefHeight="169.0" prefWidth="486.0" styleClass="tab-conteneur">
+                                                            <GridPane layoutX="5.0" layoutY="1.0" prefHeight="168.0" prefWidth="486.0" styleClass="tab-conteneur">
                                                                <columnConstraints>
                                                                   <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="160.0" minWidth="69.0" prefWidth="73.0" />
                                                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="15.0" />
@@ -244,14 +187,13 @@
                                                                   <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                                                                   <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                                                                   <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                                                                  <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                                                                  <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
                                                                </rowConstraints>
                                                                <children>
                                                                   <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="100.0" text="Port name" wrapText="true" />
                                                                   <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="101.0" text="Baud rate" GridPane.rowIndex="1" />
                                                                   <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="99.0" text="Data bits" GridPane.rowIndex="2" />
-                                                                  <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="102.0" text="Parity" GridPane.rowIndex="4" />
                                                                   <ChoiceBox fx:id="portNameCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
                                                                      <GridPane.margin>
                                                                         <Insets right="10.0" />
@@ -269,7 +211,7 @@
                                                                         <Insets right="10.0" />
                                                                      </GridPane.margin>
                                                                   </ChoiceBox>
-                                                                  <ChoiceBox fx:id="databitsCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                                                                  <ChoiceBox fx:id="dataBitsCB" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                                                                      <items>
                                                                         <FXCollections fx:factory="observableArrayList">
                                                                            <String fx:value="DATABITS_5" />
@@ -307,6 +249,7 @@
                                                                      </GridPane.margin>
                                                                   </ChoiceBox>
                                                                   <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="103.0" text="Stop bits" GridPane.rowIndex="3" />
+                                                                  <Label alignment="CENTER_RIGHT" prefHeight="15.0" prefWidth="102.0" text="Parity" GridPane.rowIndex="4" />
                                                                </children>
                                                             </GridPane>
                                                          </children>
@@ -372,7 +315,7 @@
                                                 </Tab>
                                              </tabs>
                                           </TabPane>
-                                          <TableView fx:id="connectionsTV" prefHeight="143.0" prefWidth="496.0" style="-fx-background-color: #ff000000;" GridPane.columnIndex="1">
+                                          <TableView fx:id="connectionsTV" maxHeight="156.0" prefHeight="156.0" prefWidth="513.0" style="-fx-background-color: #ff000000;" GridPane.columnIndex="1">
                                              <columns>
                                                 <TableColumn fx:id="typeTC" prefWidth="75.0" text="Type" />
                                                 <TableColumn fx:id="dataPortTC" prefWidth="121.0" text="Data port" />
@@ -380,6 +323,27 @@
                                                 <TableColumn fx:id="statusTC" prefWidth="114.0" text="Status" />
                                              </columns>
                                           </TableView>
+                                          <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                   <children>
+                                                      <Button fx:id="addButton" maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="80.0" text="Add" />
+                                                      <Button fx:id="removeButton" maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="80.0" text="Remove" GridPane.columnIndex="1" />
+                                                      <Button fx:id="openButton" maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="80.0" text="Open" GridPane.columnIndex="2" />
+                                                      <Button fx:id="closeButton" maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="80.0" text="Close" GridPane.columnIndex="3" />
+                                                   </children>
+                                                </GridPane>
+                                             </children>
+                                          </StackPane>
                                        </children>
                                     </GridPane>
                                  </children></AnchorPane>
@@ -399,7 +363,7 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button fx:id="okButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save" GridPane.columnIndex="1" />
+                                <Button fx:id="saveButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Save" GridPane.columnIndex="1" />
                                 <Button fx:id="defaultButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Default" GridPane.columnIndex="3" />
                                 <Button fx:id="helpButton" maxWidth="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Help" GridPane.columnIndex="4" />
                                 <Button fx:id="cancelButton" maxWidth="70.0" minWidth="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Cancel" GridPane.columnIndex="2" />
@@ -409,7 +373,7 @@
                 </GridPane>
             </children>
         </Pane>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="518.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="560.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="602.0" mouseTransparent="true" stroke="BLACK" strokeType="INSIDE" styleClass="instrumentcontour" width="560.0" />
         <ImageView fitHeight="65.0" fitWidth="76.0" layoutX="2.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@logoTV64AIS.png" />
@@ -420,6 +384,6 @@
                 <Image url="@quit.png" />
             </image>
         </ImageView>
-        <Text layoutX="259.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="groupviewtittle" text="Options" textAlignment="CENTER" />
+        <Text layoutX="246.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="instrumenttitle" text="Options" textAlignment="CENTER" wrappingWidth="76.50146484375" />
     </children>
 </fx:root>

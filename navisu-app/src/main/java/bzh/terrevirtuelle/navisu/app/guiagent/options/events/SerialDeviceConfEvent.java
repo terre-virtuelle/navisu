@@ -10,7 +10,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.events;
  * @author serge
  * @date Jun 26, 2017
  */
-public interface ServerConfEvent
+public interface SerialDeviceConfEvent
         extends ConfigurationEvent {
 
 }

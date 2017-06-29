@@ -51,7 +51,7 @@ public class VectorField {
         String file = "data.txt";
         double average = 0;
         if (v != null) {
-
+/*
             try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file))) {
                 for (int h = 0; h < lat.length; h++) {
                     writer.write(String.valueOf(lat[h]) + " ");
@@ -68,6 +68,7 @@ public class VectorField {
             } catch (Exception e) {
 
             }
+*/
 l=0;
             directions = new double[lat.length * lon.length];
             for (int h = 0; h < lat.length; h++) {

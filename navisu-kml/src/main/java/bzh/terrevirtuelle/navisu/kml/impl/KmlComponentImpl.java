@@ -109,7 +109,7 @@ public class KmlComponentImpl
                 colladaRoot = ColladaRoot.createAndParse(file);
                 ColladaController colladaController = new ColladaController(colladaRoot);
                 layer.addRenderable(colladaController);
-            } catch (XMLStreamException | IOException ex) {
+            } catch (IOException | XMLStreamException ex) {
                 Logger.getLogger(KmlComponentImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }

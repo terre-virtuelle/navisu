@@ -14,6 +14,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOptionBuilder;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
+import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import bzh.terrevirtuelle.navisu.widgets.impl.Widget2DController;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,17 +23,23 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -56,6 +63,7 @@ public class ConfigurationComponentController
 
     GuiAgentServices guiAgentServices;
     GazetteerComponentServices gazetteerComponentServices;
+    DataServerServices dataServerServices;
 
     private final String FXML = "configurationController.fxml";
     protected String CONFIG_FILE_NAME = System.getProperty("user.home") + "/.navisu/config/config.properties";
@@ -66,6 +74,7 @@ public class ConfigurationComponentController
     private final ConfigurationComponentImpl component;
     protected String viewgroupstyle = "configuration.css";
 
+    /* Common controls */
     @FXML
     public Group configgroup;
     @FXML
@@ -73,13 +82,17 @@ public class ConfigurationComponentController
     @FXML
     public ImageView quit;
     @FXML
-    public Button okButton;
+    public Button saveButton;
     @FXML
     public Button cancelButton;
     @FXML
     public Button defaultButton;
     @FXML
     public Button helpButton;
+
+    /* user controls */
+    @FXML
+    public Tab userTab;
     @FXML
     public TextField s57TF;
     @FXML
@@ -88,7 +101,18 @@ public class ConfigurationComponentController
     public TextField allCountriesTF;
     @FXML
     public TextField allCountriesIndexTF;
+    @FXML
+    public Button s57Button;
+    @FXML
+    public Button allCPathButton;
+    @FXML
+    public Button luceneButton;
+    @FXML
+    public Button buildIndexButton;
 
+    /* Own ship controls */
+    @FXML
+    public Tab ownerShipTab;
     @FXML
     public TextField nameTF;
     @FXML
@@ -121,25 +145,38 @@ public class ConfigurationComponentController
     public TextField daeModelPathTF;
     @FXML
     public TextField scaleTF;
-    @FXML
-    public Tab userTab;
-    @FXML
-    public Tab ownerShipTab;
-    @FXML
-    public Tab serverTab;
-    @FXML
-    public Button s57Button;
-    @FXML
-    public Button allCPathButton;
-    @FXML
-    public Button luceneButton;
-    @FXML
-    public Button buildIndexButton;
 
+    /* Devices controls */
     @FXML
-    public TextField serverHostnameTF;
+    public Tab devicesTab;
     @FXML
-    public TextField serverPortTF;
+    public ChoiceBox<String> portNameCB;
+    @FXML
+    public ChoiceBox<String> baudRateCB;
+    @FXML
+    public ChoiceBox<String> dataBitsCB;
+    @FXML
+    public ChoiceBox<String> stopBitsCB;
+    @FXML
+    public ChoiceBox<String> parityCB;
+    @FXML
+    public TableView connectionTV;
+    @FXML
+    public TableColumn typeTC;
+    @FXML
+    public TableColumn dataPortTC;
+    @FXML
+    public TableColumn parametersTC;
+    @FXML
+    public TableColumn statusTC;
+    @FXML
+    public Button addbutton;
+    @FXML
+    public Button removebutton;
+    @FXML
+    public Button openbutton;
+    @FXML
+    public Button closebutton;
 
     String s57Path;
     String darkSkyKey;
@@ -166,7 +203,7 @@ public class ConfigurationComponentController
     String cog;
     String sog;
     String daeModelPath;
-    String scale;
+    String modelScale;
 
     String nameOld;
     String mmsiOld;
@@ -184,11 +221,18 @@ public class ConfigurationComponentController
     String daeModelPathOld;
     String scaleOld;
 
-    String serverHostname;
-    String serverPort;
+    String portName;
+    int baudRate;
+    int dataBits;
+    float stopBits;
+    int parity;
+    int portNameIndex;
+    int baudRateIndex;
+    int dataBitsIndex;
+    int stopBitsIndex;
+    int parityIndex;
 
-    String serverHostnameOld;
-    String serverPortOld;
+    private ObservableList<String> portNameCbData = FXCollections.observableArrayList();
 
     protected FileChooser fileChooser;
 
@@ -198,12 +242,15 @@ public class ConfigurationComponentController
      * @param keyCode
      * @param keyCombination
      * @param guiAgentServices
+     * @param gazetteerComponentServices
+     * @param dataServerServices
      */
     @SuppressWarnings("unchecked")
-    private ConfigurationComponentController(ConfigurationComponentImpl component,
+    public ConfigurationComponentController(ConfigurationComponentImpl component,
             KeyCode keyCode, KeyCombination.Modifier keyCombination,
             GuiAgentServices guiAgentServices,
-            GazetteerComponentServices gazetteerComponentServices) {
+            GazetteerComponentServices gazetteerComponentServices,
+            DataServerServices dataServerServices) {
         super(keyCode, keyCombination);
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXML));
         fxmlLoader.setRoot(this);
@@ -218,22 +265,48 @@ public class ConfigurationComponentController
         this.component = component;
         this.guiAgentServices = guiAgentServices;
         this.gazetteerComponentServices = gazetteerComponentServices;
-
-        // OptionsEventTest optionsEventTest = new OptionsEventTest();
-        // optionsEventTest.subscribe();
-    }
-
-    public static ConfigurationComponentController getInstance(ConfigurationComponentImpl component,
-            KeyCode keyCode, KeyCombination.Modifier keyCombination,
-            GuiAgentServices guiAgentServices,
-            GazetteerComponentServices gazetteerComponentServices) {
-        if (INSTANCE == null) {
-            INSTANCE = new ConfigurationComponentController(component, keyCode, keyCombination,
-                    guiAgentServices, gazetteerComponentServices);
+        this.dataServerServices = dataServerServices;
+        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
+        guiAgentServices.getRoot().getChildren().add(this);
+        String[] serialPortNames = dataServerServices.getSerialPortNames();
+        //  System.out.println("serialPortNames " + serialPortNames);
+        String tmp;
+        portNameCbData.clear();
+        if (portNameCB.getItems() != null) {
+            portNameCB.getItems().clear();
         }
-        guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, INSTANCE);
-        guiAgentServices.getRoot().getChildren().add(INSTANCE);
-        return INSTANCE;
+        if (serialPortNames != null) {
+            portNameCbData.addAll(Arrays.asList(serialPortNames));
+            portNameCB.getItems().addAll(portNameCbData);
+            tmp = properties.getProperty("portNameIndex");
+            if (tmp != null) {
+                portNameIndex = Integer.parseInt(tmp);
+                portNameCB.getSelectionModel().select(portNameIndex);
+            }
+        }
+        tmp = properties.getProperty("baudRateIndex");
+        if (tmp != null) {
+            baudRateIndex = Integer.parseInt(tmp);
+            baudRateCB.getSelectionModel().select(baudRateIndex);
+        }
+        tmp = properties.getProperty("dataBitsIndex");
+        if (tmp != null) {
+            dataBitsIndex = Integer.parseInt(tmp);
+            dataBitsCB.getSelectionModel().select(dataBitsIndex);
+        }
+        tmp = properties.getProperty("stopBitsIndex");
+        if (tmp != null) {
+            stopBitsIndex = Integer.parseInt(tmp);
+            stopBitsCB.getSelectionModel().select(stopBitsIndex);
+        }
+        tmp = properties.getProperty("parityIndex");
+        if (tmp != null) {
+            parityIndex = Integer.parseInt(tmp);
+            parityCB.getSelectionModel().select(parityIndex);
+        }
+
+        //  OptionsEventTest optionsEventTest = new OptionsEventTest();
+        //  optionsEventTest.subscribe();
     }
 
     @SuppressWarnings("unchecked")
@@ -277,18 +350,6 @@ public class ConfigurationComponentController
         }
         scaleTF.setText(properties.getProperty("scale"));
 
-        serverHostnameTF.setText(properties.getProperty("serverHostname"));
-        if (properties.getProperty("serverHostname") == null) {
-            properties.setProperty("serverHostname", "localhost");
-        }
-        serverHostnameTF.setText(properties.getProperty("serverHostname"));
-
-        serverPortTF.setText(properties.getProperty("serverPort"));
-        if (properties.getProperty("serverPort") == null) {
-            properties.setProperty("serverPort", "8080");
-        }
-        serverPortTF.setText(properties.getProperty("serverPort"));
-
         try {
             properties.store(new FileOutputStream(CONFIG_FILE_NAME), null);
         } catch (IOException ex) {
@@ -310,8 +371,6 @@ public class ConfigurationComponentController
         sogOld = sogTF.getText().trim();
         daeModelPathOld = daeModelPathTF.getText().trim();
         scaleOld = scaleTF.getText().trim();
-        serverHostnameOld = serverHostnameTF.getText().trim();
-        serverPortOld = serverPortTF.getText().trim();
 
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
@@ -319,7 +378,7 @@ public class ConfigurationComponentController
         browseButton.setOnMouseClicked((MouseEvent event) -> {
             openFile(daeModelPathTF);
         });
-        okButton.setOnMouseClicked((MouseEvent event) -> {
+        saveButton.setOnMouseClicked((MouseEvent event) -> {
             if (userTab.isSelected()) {
                 s57Path = s57TF.getText();
                 darkSkyKey = darkSkyTF.getText();
@@ -342,13 +401,73 @@ public class ConfigurationComponentController
                 cog = cogTF.getText();
                 sog = sogTF.getText();
                 daeModelPath = daeModelPathTF.getText();
-                scale = scaleTF.getText();
+                modelScale = scaleTF.getText();
                 saveOwnerShip();
             }
-            if (serverTab.isSelected()) {
-                serverHostname = serverHostnameTF.getText();
-                serverPort = serverPortTF.getText();
+            if (devicesTab.isSelected()) {
+
+                portName = portNameCB.getSelectionModel().getSelectedItem();
+                String baudRateS = baudRateCB.getSelectionModel().getSelectedItem();
+                portNameIndex = baudRateCB.getSelectionModel().getSelectedIndex();
+                switch (baudRateS) {
+                    case "BAUDRATE_4800":
+                        baudRate = 4800;
+                        break;
+                    case "BAUDRATE_9600":
+                        baudRate = 9600;
+                        break;
+                    case "BAUDRATE_38400":
+                        baudRate = 38400;
+                        break;
+                }
+
+                String dataBitsS = dataBitsCB.getSelectionModel().getSelectedItem();
+                dataBitsIndex = dataBitsCB.getSelectionModel().getSelectedIndex();
+                switch (dataBitsS) {
+                    case "DATABITS_5":
+                        dataBits = 5;
+                        break;
+                    case "DATABITS_6":
+                        dataBits = 6;
+                        break;
+                    case "DATABITS_7":
+                        dataBits = 7;
+                        break;
+                    case "DATABITS_8":
+                        dataBits = 8;
+                        break;
+                }
+                String stopBitsS = stopBitsCB.getSelectionModel().getSelectedItem();
+                stopBits = stopBitsCB.getSelectionModel().getSelectedIndex();
+                switch (stopBitsS) {
+                    case "STOPBITS_1":
+                        stopBits = 1;
+                        break;
+                    case "DATABITS_1_5":
+                        stopBits = 1.5f;
+                        break;
+                    case "DATABITS_2":
+                        stopBits = 2;
+                        break;
+
+                }
+                String parityS = parityCB.getSelectionModel().getSelectedItem();
+                parity = parityCB.getSelectionModel().getSelectedIndex();
+                switch (stopBitsS) {
+                    case "PARITY_EVEN":
+                        parity = 1;
+                        break;
+                    case "PARITY_NONE":
+                        parity = 0;
+                        break;
+                    case "PARITY_ODD":
+                        parity = 2;
+                        break;
+                }
+                dataServerServices.openSerialPort(portName, baudRate, dataBits, dataBits, parity);
+                saveSerialDevice(portNameIndex, baudRateIndex, dataBitsIndex, stopBitsIndex, parityIndex);
             }
+
         });
         cancelButton.setOnMouseClicked((MouseEvent event) -> {
             if (userTab.isSelected()) {
@@ -393,16 +512,10 @@ public class ConfigurationComponentController
                 cog = cogTF.getText();
                 sog = sogTF.getText();
                 daeModelPath = daeModelPathTF.getText();
-                scale = scaleTF.getText();
+                modelScale = scaleTF.getText();
                 saveOwnerShip();
             }
-            if (serverTab.isSelected()) {
-                serverHostnameTF.setText(serverHostnameOld);
-                serverPortTF.setText(serverPortOld);
 
-                serverHostname = serverHostnameTF.getText();
-                serverPort = serverPortTF.getText();
-            }
         });
         defaultButton.setOnMouseClicked((MouseEvent event) -> {
             if (userTab.isSelected()) {
@@ -432,7 +545,7 @@ public class ConfigurationComponentController
                 cog = "140.0";
                 sog = "0.0";
                 daeModelPath = "data/collada/lithops_0.dae";
-                scale = "1.0";
+                modelScale = "1.0";
 
                 nameTF.setText(name);
                 mmsiTF.setText(mmsi);
@@ -448,17 +561,10 @@ public class ConfigurationComponentController
                 cogTF.setText(cog);
                 sogTF.setText(sog);
                 daeModelPathTF.setText(daeModelPath);
-                scaleTF.setText(scale);
+                scaleTF.setText(modelScale);
                 saveOwnerShip();
             }
-            if (serverTab.isSelected()) {
-                serverHostname = "localhost";
-                serverPort = "8080";
 
-                serverHostnameTF.setText(serverHostname);
-                serverPortTF.setText(serverPort);
-                // saveServer();
-            }
         });
         helpButton.setOnMouseClicked((MouseEvent event) -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -497,6 +603,13 @@ public class ConfigurationComponentController
                 gazetteerComponentServices.buildIndex(allCountriesTF.getText(), allCountriesIndexTF.getText(), true);
             }
         });
+        //  portnameCB.getOnAction(){
+/*
+        portNameCB.setOnAction((event) -> {
+            System.out.println("SelectedItem : "+portNameCB.getSelectionModel().getSelectedItem());
+        });
+         */
+        //  }
     }
 
     private void saveUser() {
@@ -537,7 +650,7 @@ public class ConfigurationComponentController
             properties.setProperty("cog", cog);
             properties.setProperty("sog", sog);
             properties.setProperty("daeModelPath", daeModelPath);
-            properties.setProperty("scale", scale);
+            properties.setProperty("scale", modelScale);
             properties.store(output, null);
             output.close();
 
@@ -553,7 +666,7 @@ public class ConfigurationComponentController
                     .mmsi(mmsi)
                     .name(name)
                     .navigationalStatus(navigationalStatus)
-                    .scale(scale)
+                    .scale(modelScale)
                     .shipType(shipType)
                     .sog(sog)
                     .width(width)
@@ -562,11 +675,26 @@ public class ConfigurationComponentController
         } catch (IOException ex) {
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-
     }
 
-    private void saveServer() {
+    private void saveSerialDevice(int portNameIndex,
+            int baudRateIndex,
+            int dataBitsIndex,
+            int stopBitsIndex,
+            int parityIndex) {
+        try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
+            properties.setProperty("portNameIndex", Integer.toString(portNameIndex));
+            properties.setProperty("baudRateIndex", Integer.toString(baudRateIndex));
+            properties.setProperty("dataBitsIndex", Integer.toString(dataBitsIndex));
+            properties.setProperty("stopBitsIndex", Integer.toString(stopBitsIndex));
+            properties.setProperty("parityIndex", Integer.toString(parityIndex));
 
+            properties.store(output, null);
+            output.close();
+
+        } catch (IOException ex) {
+            Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
+        }
     }
 
     public void openFile(TextField tf) {

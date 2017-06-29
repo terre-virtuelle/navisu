@@ -77,7 +77,7 @@ public class PressureNetCDFViewer
         }
         average = average / z;
         System.out.println("average : " + average);
-        
+       /* 
         String file = "data.txt";
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file))) {
             for (int h = 0; h < latDimension; h += 10) {
@@ -95,6 +95,7 @@ public class PressureNetCDFViewer
         } catch (Exception e) {
             System.out.println("e " + e);
         }
+*/
         Path triangle;
         int i = 0;
         double h = 0;

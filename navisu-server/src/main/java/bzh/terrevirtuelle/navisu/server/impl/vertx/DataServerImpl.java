@@ -32,6 +32,7 @@ import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import jssc.SerialPortList;
 
 /**
  * Created with IntelliJ IDEA. User: Serge Morvan Date: 18/12/13 Time: 16:01 To
@@ -141,13 +142,13 @@ public class DataServerImpl
 
     @Override
     public StringWriter response(int currentReader) {
-       // System.out.println("currentReader : " +currentReader);
+        // System.out.println("currentReader : " +currentReader);
         if (!sentenceQueues.isEmpty()) {
             sentences.clear();
             try {
                 sentenceQueues.get(currentReader).stream().forEach((s) -> {
                     //LOGGER.info(s);pb dans l'ordre de lecture d'un file
-                     // System.out.println(s);
+                    // System.out.println(s);
                     parser.parse(s.trim());//parser load sentences
                 });
                 stringWriter = new StringWriter();
@@ -156,8 +157,8 @@ public class DataServerImpl
                     //System.out.println("DataServerImpl stringWriter " + stringWriter);
                 }
             } catch (Exception e) {
-               //  System.out.println("sentenceQueues "+ sentenceQueues);
-               //  System.out.println("DataServerImpl Exception" + sentences);
+                //  System.out.println("sentenceQueues "+ sentenceQueues);
+                //  System.out.println("DataServerImpl Exception" + sentences);
             }
         }
         // System.out.println("DataServerImpl " + stringWriter);
@@ -183,7 +184,7 @@ public class DataServerImpl
                 Logger.getLogger(DataServerImpl.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
         }
-      //  System.out.println("stringWriter : " + stringWriter.getBuffer());
+        //  System.out.println("stringWriter : " + stringWriter.getBuffer());
         return stringWriter;
     }
 
@@ -257,10 +258,7 @@ public class DataServerImpl
 
     @Override
     public String[] getSerialPortNames() {
-        if (serialPortReader != null) {
-            return serialPortReader.getPortNames();
-        }
-        return null;
+        return SerialPortList.getPortNames();
     }
 }
 

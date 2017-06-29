@@ -8,7 +8,6 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.impl;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.events.ConfigurationEvent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.events.OwnerShipConfEvent;
-import bzh.terrevirtuelle.navisu.app.guiagent.options.events.ServerConfEvent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.events.UserConfEvent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.ConfEventProducer;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.ConfEventProducerServices;
@@ -17,6 +16,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.annotation.ProducedEvent;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.events.SerialDeviceConfEvent;
+import bzh.terrevirtuelle.navisu.server.DataServerServices;
+import org.capcaval.c3.component.annotation.UsedService;
 
 /**
  *
@@ -30,7 +32,8 @@ public class ConfEventProducerImpl
     @ProducedEvent
     protected UserConfEvent userConfEvent;
     @ProducedEvent
-    protected ServerConfEvent serverConfEvent;
+    protected SerialDeviceConfEvent devicesConfEvent;
+
     
     private Map<String, ConfigurationEvent> configurationEvents = null;
 
@@ -53,6 +56,6 @@ public class ConfEventProducerImpl
 
         configurationEvents.put("OwnerShipOption", ownerShipConfEvent);
         configurationEvents.put("UserOption", userConfEvent);
-        configurationEvents.put("ServerOption", serverConfEvent);
+        configurationEvents.put("DevicesOption", devicesConfEvent);
     }
 }

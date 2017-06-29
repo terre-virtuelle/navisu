@@ -15,6 +15,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.ConfigurationComponentServ
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.eventsProducer.impl.ConfEventProducerImpl;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
+import bzh.terrevirtuelle.navisu.server.DataServerServices;
 import java.util.logging.Level;
 import org.capcaval.c3.component.annotation.SubComponent;
 
@@ -32,6 +33,8 @@ public class ConfigurationComponentImpl
     GuiAgentServices guiAgentServices;
     @UsedService
     GazetteerComponentServices gazetteerComponentServices;
+    @UsedService
+    DataServerServices dataServerServices;
 
     @SubComponent
     protected ConfEventProducerImpl eventProducer;
@@ -63,8 +66,8 @@ public class ConfigurationComponentImpl
         String[] cmd = files;
         if (cmd != null) {
             if (cmd[0].equals(COMPONENT_KEY_NAME_0)) {
-                controller = ConfigurationComponentController.getInstance(this, KeyCode.O, KeyCombination.CONTROL_DOWN,
-                        guiAgentServices, gazetteerComponentServices);
+                controller = new ConfigurationComponentController(this, KeyCode.O, KeyCombination.CONTROL_DOWN,
+                        guiAgentServices, gazetteerComponentServices, dataServerServices);
                 controller.setVisible(true);
             }
         }
