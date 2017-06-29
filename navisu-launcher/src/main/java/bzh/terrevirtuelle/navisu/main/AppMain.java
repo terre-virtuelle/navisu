@@ -381,13 +381,17 @@ public class AppMain extends Application {
         //First position
         wwd.getView().setEyePosition(Position.fromDegrees(48.40, -4.4853, 15000));
 
-        // Initialisation des paramètres de diffusion des data.
+        // Initialisation du serveur
         dataServerServices.init("localhost", 8585);
 
+        /* Instanciation d'un client */
+        nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
+        nmeaClientServices.request(500); // periode
+        
         /* Test connexion GPS / AIS */
         // dataServerServices.openSerialPort("COM5", 4800, 8, 1, 0);
         // dataServerServices.openSerialPort("COM4", 4800, 8, 1, 0);
-          dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
+       //   dataServerServices.openSerialPort("/dev/ttyUSB0", 4800, 8, 1, 0);
         //dataServerServices.openSerialPort("/dev/ttyACM1", 38400, 8, 1, 0);
         /* Test connexion Gpsd */
  /*
@@ -408,14 +412,12 @@ public class AppMain extends Application {
         /* Test serveur Web Http */
         // dataServerServices.openHttpServer("localhost", 8181);
         
-        /* Instanciation d'un client */
-        nmeaClientServices.open("localhost", 8585);//Attention même valeurs que le serveur !
-        nmeaClientServices.request(500);
+        
 
         /* Test clients à l'écoute des événements Nmea */
-        aisServices.on();
+       // aisServices.on();
         //  aisLoggerServices.on();
-        aisPlotterServices.on();
+       // aisPlotterServices.on();
         //aisRadarServices.on();
         //gpsLoggerServices.on("data/nmea/test2.txt");
         //gpsPlotterServices.on();
@@ -498,7 +500,7 @@ public class AppMain extends Application {
          System.out.println(exif1);
          */
         // Test Navigation RA Communication with external client 
-        navigationServerServices.init(8787);
+       // navigationServerServices.init(8787);
 
         // Start Leap Motion 
         // leapMotionComponentServices.on();
