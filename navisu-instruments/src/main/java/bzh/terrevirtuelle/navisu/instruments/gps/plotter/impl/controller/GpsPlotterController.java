@@ -230,11 +230,11 @@ public class GpsPlotterController
     public void updateShipFromConfigurationPanel(OwnerShipOption option) {
 
         try {
-            ownerShipView.setModelScale(new Vec4(Double.parseDouble(option.getScale())));   
+            ownerShipView.setModelScale(new Vec4(Double.parseDouble(option.getScale())));
         } catch (NumberFormatException e) {
             // Nothing if no good input    
         }
-        
+
         try {
             ownerShipView.setPosition(
                     new Position(Angle.fromDegrees(Double.parseDouble(option.getLatitude())),
@@ -245,14 +245,14 @@ public class GpsPlotterController
         } catch (NumberFormatException e) {
             // Nothing if no good input
         }
-        
+
         try {
             ownerShipView.setHeading(Angle.fromDegrees(Double.parseDouble(option.getCog())));
             ownerShip.setCog(Double.parseDouble(option.getCog()));
         } catch (NumberFormatException e) {
             // Nothing if no good input
         }
-        
+
         try {
             ownerShipView = kmlObjectServices.openColladaFile(gpsLayer, option.getDaeModelPath());
             ownerShipView.setPosition(
