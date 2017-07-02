@@ -9,6 +9,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.GuiAgentServices;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.Option;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.OwnerShipOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.OwnerShipOptionBuilder;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.SerialDeviceOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOptionBuilder;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
@@ -28,6 +29,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -41,6 +43,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
@@ -160,15 +163,15 @@ public class ConfigurationComponentController
     @FXML
     public ChoiceBox<String> parityCB;
     @FXML
-    public TableView connectionTV;
+    public TableView<SerialDeviceOption> connectionsTV;
     @FXML
-    public TableColumn typeTC;
+    public TableColumn<SerialDeviceOption, String> typeTC;
     @FXML
-    public TableColumn dataPortTC;
+    public TableColumn<SerialDeviceOption, String> dataPortTC;
     @FXML
-    public TableColumn parametersTC;
+    public TableColumn<SerialDeviceOption, String> parametersTC;
     @FXML
-    public TableColumn statusTC;
+    public TableColumn<SerialDeviceOption, Boolean> statusTC;
     @FXML
     public Button addbutton;
     @FXML
@@ -233,6 +236,7 @@ public class ConfigurationComponentController
     int parityIndex;
 
     private ObservableList<String> portNameCbData = FXCollections.observableArrayList();
+    private ObservableList<SerialDeviceOption> tableData;
 
     protected FileChooser fileChooser;
 
@@ -269,7 +273,7 @@ public class ConfigurationComponentController
         guiAgentServices.getScene().addEventFilter(KeyEvent.KEY_RELEASED, this);
         guiAgentServices.getRoot().getChildren().add(this);
         String[] serialPortNames = dataServerServices.getSerialPortNames();
-        //  System.out.println("serialPortNames " + serialPortNames);
+
         String tmp;
         portNameCbData.clear();
         if (portNameCB.getItems() != null) {
@@ -319,6 +323,16 @@ public class ConfigurationComponentController
         } catch (IOException ex) {
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
+        connectionsTV.setEditable(true);
+        tableData = connectionsTV.getItems();
+        tableData.add(new SerialDeviceOption("S", "/dev/tty", "4800", "1", true));
+        
+        dataPortTC.setCellValueFactory(cellData -> cellData.getValue().portNameProperty());
+        typeTC.setCellValueFactory(cellData -> cellData.getValue().portNameProperty());
+        statusTC.setCellValueFactory(c -> new SimpleBooleanProperty(c.getValue().getStatus()));
+        statusTC.setCellFactory(tc -> new CheckBoxTableCell<>());
+        parametersTC.setCellValueFactory(cellData -> cellData.getValue().baudRateProperty());
+        
 
         darkSkyTF.setText(properties.getProperty("darkSkyApiKey").trim());
         s57TF.setText(properties.getProperty("s57ChartsDir").trim());

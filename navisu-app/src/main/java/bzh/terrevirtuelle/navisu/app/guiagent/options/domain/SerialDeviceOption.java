@@ -5,6 +5,10 @@
  */
 package bzh.terrevirtuelle.navisu.app.guiagent.options.domain;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author serge
@@ -13,141 +17,205 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.domain;
 public class SerialDeviceOption
         implements Option {
 
-    private static int index = -1;
+   
+    private StringProperty portName;
 
-    private String portName;
+    private StringProperty baudRate;
 
-    private String baudRate;
+    private StringProperty dataBits;
 
-    private String dataBits;
+    private StringProperty stopBits;
 
-    private String stopBits;
+    private StringProperty parity;
 
-    private String parity;
+    private SimpleBooleanProperty status;
 
+    private String type;
+public final SimpleBooleanProperty statusProperty() {
+        return status;
+    }
     public SerialDeviceOption() {
     }
-
-    public SerialDeviceOption(String portName, String baudRate, String dataBits, String stopBits, String parity) {
-        this.portName = portName;
-        this.baudRate = baudRate;
-        this.dataBits = dataBits;
-        this.stopBits = stopBits;
-        this.parity = parity;
-        index++;
+    public SerialDeviceOption(String type, String portName, String baudRate, String dataBits, Boolean status) {
+       this.type = type;
+        this.portName = new SimpleStringProperty(portName);
+        this.baudRate = new SimpleStringProperty(baudRate);
+        this.dataBits = new SimpleStringProperty(dataBits);
+        this.status = new SimpleBooleanProperty(status);
+    }
+    /**
+     * Get the value of type
+     *
+     * @return the value of type
+     */
+    public String getType() {
+        return type;
     }
 
     /**
-     * Get the value of index
+     * Set the value of type
      *
-     * @return the value of index
+     * @param type new value of type
      */
-    public int getIndex() {
-        return index;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public final void setPortName(String value) {
+        portName.set(value);
+    }
+
+    public final String getPortName() {
+        return portName.get();
+    }
+    
+    public final StringProperty portNameProperty() {
+        return portName;
+    }
+
+
+    public final void setBaudRate(String value) {
+        baudRate.set(value);
     }
 
     /**
-     * Set the value of index
+     * Get the value of status
      *
-     * @param index new value of index
+     * @param value
      */
-    public void setIndex(int index) {
-        this.index = index;
+    public final String getBaudRate() {
+        return baudRate.get();
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @return 
+     */
+    public final StringProperty baudRateProperty() {
+        return baudRate;
     }
 
     /**
      * Get the value of parity
      *
-     * @return the value of parity
+     * @return 
      */
-    public String getParity() {
-        return parity;
+    public final void setDataBits(String value) {
+        dataBits.set(value);
     }
 
     /**
      * Set the value of parity
      *
-     * @param parity new value of parity
+     * @param value
      */
-    public void setParity(String parity) {
-        this.parity = parity;
+    public final String getDataBits() {
+        return dataBits.get();
     }
 
     /**
      * Get the value of stopBits
      *
-     * @return the value of stopBits
+     * @return
      */
-    public String getStopBits() {
-        return stopBits;
+    public final StringProperty dataBitsProperty() {
+        return dataBits;
     }
 
     /**
      * Set the value of stopBits
      *
-     * @param stopBits new value of stopBits
+     * @return 
      */
-    public void setStopBits(String stopBits) {
-        this.stopBits = stopBits;
+    public final void setStopBits(String value) {
+        stopBits.set(value);
     }
 
     /**
      * Get the value of dataBits
      *
-     * @return the value of dataBits
+     * @param value
      */
-    public String getDataBits() {
-        return dataBits;
+    public final String getStopBits() {
+        return stopBits.get();
     }
 
     /**
      * Set the value of dataBits
      *
-     * @param dataBits new value of dataBits
+     * @return
      */
-    public void setDataBits(String dataBits) {
-        this.dataBits = dataBits;
+    public final StringProperty stopBitsProperty() {
+        return stopBits;
     }
 
     /**
      * Get the value of baudRate
      *
-     * @return the value of baudRate
+     * @return 
      */
-    public String getBaudRate() {
-        return baudRate;
+    public final void setParity(String value) {
+        parity.set(value);
     }
 
     /**
      * Set the value of baudRate
      *
-     * @param baudRate new value of baudRate
+     * @param value
      */
-    public void setBaudRate(String baudRate) {
-        this.baudRate = baudRate;
+    public final String getParity() {
+        return parity.get();
     }
 
     /**
      * Get the value of portName
      *
-     * @return the value of portName
+     * the value of portName
+     *
+     * @return
      */
-    public String getPortName() {
-        return portName;
+    public final StringProperty parityProperty() {
+        return parity;
     }
 
     /**
      * Set the value of portName
      *
-     * @param portName new value of portName
+     * @return 
      */
-    public void setPortName(String portName) {
-        this.portName = portName;
+    public final void setStatus(Boolean value) {
+        status.set(value);
+    }
+/*
+    public final void setParity(String value) {
+        parity.set(value);
     }
 
-    @Override
-    public String toString() {
-        return "DevicesOption{" + "portName=" + portName + ", baudRate=" + baudRate + ", dataBits=" + dataBits + ", stopBits=" + stopBits + ", parity=" + parity + '}';
+    public final String getParity() {
+        return parity.get();
     }
 
+    public final StringProperty parityProperty() {
+        return parity;
+    }
+
+    public final void setStatus(String value) {
+        status.set(value);
+    }
+
+    public final String getStatus() {
+        return status.get();
+    }
+
+    public final StringProperty statusProperty() {
+        return status;
+    }
+*/
+
+    public final Boolean getStatus() {
+        return status.get();
+    }
+
+    
 }

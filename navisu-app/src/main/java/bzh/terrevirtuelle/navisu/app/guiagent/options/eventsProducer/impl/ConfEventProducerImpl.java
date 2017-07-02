@@ -17,8 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.capcaval.c3.component.annotation.ProducedEvent;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.events.SerialDeviceConfEvent;
-import bzh.terrevirtuelle.navisu.server.DataServerServices;
-import org.capcaval.c3.component.annotation.UsedService;
 
 /**
  *
