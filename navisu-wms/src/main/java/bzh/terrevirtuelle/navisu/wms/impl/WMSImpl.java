@@ -226,6 +226,8 @@ public class WMSImpl
             LayerList layers = this.wwd.getModel().getLayers();
             layer.setEnabled(enable);
             layer.setPickEnabled(true);
+            layer.setMinActiveAltitude(1000);
+            layer.setMaxActiveAltitude(2000000);
             if (enable) {
                 if (!layers.contains(layer)) {
                     GeoLayer<Layer> geoLayer = GeoLayer.factory.newWorldWindGeoLayer(layer);
