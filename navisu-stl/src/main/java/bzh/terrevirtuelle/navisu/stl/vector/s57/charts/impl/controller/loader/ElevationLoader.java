@@ -27,27 +27,34 @@ public class ElevationLoader {
     protected ElevationModel model;
     protected String elevationsStr = "";
     protected String bottomStr = "";
-    protected double tileSide;
-    protected int ptsCounts;
+    protected double tileSideX;
+    protected double tileSideY;
+    protected int ptsCountsX;
+    protected int ptsCountsY;
     protected String BOTTOM_STR;
     protected double bottom;
     protected double magnification;
     protected List<Point3D> bottomPositions;
     protected List<Point3D> topPositions;
-    protected double space;
+    protected double spaceX;
+    protected double spaceY;
     protected double spaceLat;
     protected double spaceLon;
     protected double scaleLatFactor;
     protected double scaleLonFactor;
 
-    public ElevationLoader(Polygon polygon, double tileSide,
-            int ptsCounts, double bottom,
+    public ElevationLoader(Polygon polygon,
+            double tileSideX, double tileSideY,
+            int ptsCountsX, int ptsCountsY,
+            double bottom,
             double magnification,
             double scaleLatFactor,
             double scaleLonFactor) {
         this.polygon = polygon;
-        this.tileSide = tileSide;
-        this.ptsCounts = ptsCounts;
+        this.tileSideX = tileSideX;
+        this.tileSideY = tileSideY;
+        this.ptsCountsX = ptsCountsX;
+        this.ptsCountsY = ptsCountsY;
         this.bottom = bottom;
         this.magnification = magnification;
         this.scaleLatFactor = scaleLatFactor;
@@ -57,26 +64,27 @@ public class ElevationLoader {
         model = this.wwd.getModel().getGlobe().getElevationModel();
         bottomPositions = new ArrayList<>();
         topPositions = new ArrayList<>();
-        space = tileSide / (ptsCounts - 1);
+        spaceX = tileSideX / (ptsCountsX - 1);
+        spaceY = tileSideY / (ptsCountsY - 1);
     }
 
     public String compute() {
         String result = "";
         List<? extends Position> positions = polygon.getBoundaries().get(0);
 
-        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCounts - 1);
-        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCounts - 1);
+        double latRange = (positions.get(3).getLatitude().getDegrees() - positions.get(0).getLatitude().getDegrees()) / (ptsCountsY - 1);
+        double lonRange = (positions.get(0).getLongitude().getDegrees() - positions.get(1).getLongitude().getDegrees()) / (ptsCountsX - 1);
 
         latRange = Math.abs(latRange);
         lonRange = Math.abs(lonRange);
         double longitude = positions.get(1).getLongitude().getDegrees();
         double latitude;
-        for (int i = 0; i < ptsCounts; i++) {
+        for (int i = 0; i < ptsCountsY; i++) {
             latitude = positions.get(3).getLatitude().getDegrees();
-            for (int j = 0; j < ptsCounts; j++) {
+            for (int j = 0; j < ptsCountsX; j++) {
                 double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
-                if(el <0){
-                    el=0;
+                if (el < 0) {
+                    el = 0;
                 }
                 el /= magnification;
                 elevationsStr += el + " ";
@@ -99,15 +107,15 @@ public class ElevationLoader {
         topPositions.clear();
         bottomPositions.clear();
 
-        for (int i = 0; i < ptsCounts; i++) {
+        for (int i = 0; i < ptsCountsX; i++) {
             double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
             el /= magnification;
             topPositions.add(new Point3D(pos, el, 0.0));
             bottomPositions.add(new Point3D(pos, bottom, 0.0));
-            pos += space;
+            pos += spaceX;
             longitude -= lonRange;
         }
-        result += createBoundaryFace("", bottomPositions, topPositions,"North face");
+        result += createBoundaryFace("", bottomPositions, topPositions, "North face");
 
         /*
           South face
@@ -117,16 +125,16 @@ public class ElevationLoader {
         pos = 0.0;
         topPositions.clear();
         bottomPositions.clear();
-        for (int i = 0; i < ptsCounts; i++) {
+        for (int i = 0; i < ptsCountsX; i++) {
             double el = model.getElevation(Angle.fromDegrees(latitude), Angle.fromDegrees(longitude));
             el /= magnification;
-            topPositions.add(new Point3D(pos, el, -tileSide));
-            bottomPositions.add(new Point3D(pos, bottom, -tileSide));
-            pos += space;
+            topPositions.add(new Point3D(pos, el, -tileSideX));
+            bottomPositions.add(new Point3D(pos, bottom, -tileSideX));
+            pos += spaceX;
             longitude -= lonRange;
         }
 
-        result += createBoundaryFace("", bottomPositions, topPositions,"South face");
+        result += createBoundaryFace("", bottomPositions, topPositions, "South face");
 
         /*
          East face
@@ -142,10 +150,10 @@ public class ElevationLoader {
             el /= 10;
             topPositions.add(new Point3D(0.0, el, pos));
             bottomPositions.add(new Point3D(0.0, bottom, pos));
-            pos += space;
+            pos += spaceY;
         }
-          result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
-                  bottomPositions, topPositions,"East face");
+        result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
+                bottomPositions, topPositions, "East face");
 
         /*
          West face
@@ -159,12 +167,12 @@ public class ElevationLoader {
                 lat -= latRange) {
             double el = model.getElevation(Angle.fromDegrees(lat), Angle.fromDegrees(lon0));
             el /= 10;
-            topPositions.add(new Point3D(-tileSide, el, pos));
-            bottomPositions.add(new Point3D(-tileSide, bottom, pos));
-            pos += space;
+            topPositions.add(new Point3D(-tileSideX, el, pos));
+            bottomPositions.add(new Point3D(-tileSideX, bottom, pos));
+            pos += spaceY;
         }
-           result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
-                   bottomPositions, topPositions,"West face");
+        result += createBoundaryFace("<Transform rotation='0 1 0 3.14116'> \n",
+                bottomPositions, topPositions, "West face");
 
         return result;
     }
@@ -179,17 +187,17 @@ public class ElevationLoader {
                 + "</Appearance>\n"
                 + "<ElevationGrid \n"
                 + "ccw='true' solid='false'"
-                + " xDimension='" + ptsCounts + "'"
-                + " xSpacing='" + space + "'"
-                + " zDimension='" + ptsCounts + "'"
-                + " zSpacing='" + space + "'"
+                + " xDimension='" + ptsCountsX + "'"
+                + " xSpacing='" + spaceX + "'"
+                + " zDimension='" + ptsCountsY + "'"
+                + " zSpacing='" + spaceY + "'"
                 + " height='" + height + "'/>\n"
                 + "</Shape> \n"
                 + "</Transform> \n";
         return txt;
     }
 
-    private String createBoundaryFace(String transform, List<Point3D> bottom, 
+    private String createBoundaryFace(String transform, List<Point3D> bottom,
             List<Point3D> height, String comment) {
         String txt = " <!--" + comment + "-->\n"
                 + transform + "\n"

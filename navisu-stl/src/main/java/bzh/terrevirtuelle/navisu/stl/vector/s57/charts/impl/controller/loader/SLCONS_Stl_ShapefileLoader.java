@@ -51,7 +51,7 @@ public class SLCONS_Stl_ShapefileLoader
         this.polyEnveloppe = polyEnveloppe;
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
-        this.tileSide=tileSide;
+        this.tileSide = tileSide;
         List<List<? extends Position>> positions = polyEnveloppe.getBoundaries();
         orig = positions.get(0).get(0);
     }
@@ -101,7 +101,6 @@ public class SLCONS_Stl_ShapefileLoader
 
         //PointPlacemark pp = new PointPlacemark(orig);
         //layer.addRenderable(pp);
-
         if (positionList.size() > 3 && positionList.get(0).equals(positionList.get(positionList.size() - 1))) {
             Polygon polygon = new Polygon(positionList);
             polygon.setAttributes(normalAttributes);
@@ -119,28 +118,30 @@ public class SLCONS_Stl_ShapefileLoader
         });
         Geometry geo = WwjJTS.filter(WwjJTS.PolygonToGeometry(polyEnveloppe), latLonList);
         List<Position> ptsFiltered = null;
-        if (!geo.toString().contains("EMPTY") && !geo.toString().contains("MULTIPOLYGON")) {
-            ptsFiltered = WwjJTS.wktPolygonToPositionList(geo.toString());
-        }
-        if (ptsFiltered != null) {
-            if (!ptsFiltered.isEmpty()) {
-                result
-                        += " <Shape>\n"
-                        + "<Appearance>\n"
-                        + " <Material diffuseColor='1.0 1. 1.0'/> \n"
-                        + "</Appearance>\n"
-                        + "<Extrusion convex='true' \n"
-                        + " crossSection='";
+        if (geo != null) {
+            if (!geo.toString().contains("EMPTY") && !geo.toString().contains("MULTIPOLYGON")) {
+                ptsFiltered = WwjJTS.wktPolygonToPositionList(geo.toString());
+            }
+            if (ptsFiltered != null) {
+                if (!ptsFiltered.isEmpty()) {
+                    result
+                            += " <Shape>\n"
+                            + "<Appearance>\n"
+                            + " <Material diffuseColor='1.0 1. 1.0'/> \n"
+                            + "</Appearance>\n"
+                            + "<Extrusion convex='true' \n"
+                            + " crossSection='";
 //positionList
-                ptsFiltered.stream().map((p) -> WwjGeodesy.getXYM(orig, p)).forEachOrdered((xy) -> {
-                    double x = tileSide - xy.getX() * scaleLonFactor;
-                    double y = -tileSide + xy.getY() * scaleLatFactor;
-                    result += x + " " + y + (",");
-                });
-                result += "'\n "
-                        + "solid='false' \n"
-                        + "spine='0 0 0 0 " + height + " 0'/>\n"
-                        + "</Shape>\n";
+                    ptsFiltered.stream().map((p) -> WwjGeodesy.getXYM(orig, p)).forEachOrdered((xy) -> {
+                        double x = tileSide - xy.getX() * scaleLonFactor;
+                        double y = -tileSide + xy.getY() * scaleLatFactor;
+                        result += x + " " + y + (",");
+                    });
+                    result += "'\n "
+                            + "solid='false' \n"
+                            + "spine='0 0 0 0 " + height + " 0'/>\n"
+                            + "</Shape>\n";
+                }
             }
         }
     }

@@ -37,7 +37,8 @@ public class BUOYAGE_Stl_ShapefileLoader
     double lonRangeMetric;
     double scaleLatFactor;
     double scaleLonFactor;
-    double squareSide;
+    double sideX;
+    double sideY;
     double latMetric;
     double lonMetric;
     List<? extends Position> positions;
@@ -45,14 +46,16 @@ public class BUOYAGE_Stl_ShapefileLoader
     GeometryFactory geometryFactory;
 
     public BUOYAGE_Stl_ShapefileLoader(Geometry geometryEnveloppe, Polygon polygon,
-            double scaleLatFactor, double scaleLonFactor, double squareSide,
+            double scaleLatFactor, double scaleLonFactor, 
+            double sideX,double sideY,
             boolean dev, String path, Map<Pair<Double, Double>, String> topMarks, String marsys, String acronym, Set<S57Controller> s57Controllers) {
         super(dev, path, topMarks, marsys, acronym, s57Controllers);
         this.geometryEnveloppe = geometryEnveloppe;
         positions = polygon.getBoundaries().get(0);
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
-        this.squareSide = squareSide;
+        this.sideX = sideX;
+        this.sideY = sideY;
         geometryFactory = new GeometryFactory();
     }
 
@@ -71,8 +74,8 @@ public class BUOYAGE_Stl_ShapefileLoader
                             Angle.fromDegrees(lonDegrees), 100));
             latMetric *= scaleLatFactor;
             lonMetric *= scaleLatFactor;
-            latMetric = -squareSide + latMetric;
-            lonMetric = squareSide - lonMetric;
+            latMetric = -sideX + latMetric;
+            lonMetric = sideY - lonMetric;
 
             String catMark;
             if (acronym.contains("CAR")) {
@@ -165,7 +168,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         return str;
     }
 
-    private String writeSouthBuoy(double lat, double lon) {
+    private String writeNorthBuoy(double lat, double lon) {
         String str = " <!--" + "Cardinal south buoy" + "-->\n"
                 + "<Group DEF='SouthBuoy'>\n"
                 + "<Transform translation=\"" + lat + " 0.00000 " + lon + "\">\n"
@@ -222,7 +225,7 @@ public class BUOYAGE_Stl_ShapefileLoader
         return str;
     }
 
-    private String writeNorthBuoy(double lat, double lon) {
+    private String writeSouthBuoy(double lat, double lon) {
 
         String str = " <!--" + "Cardinal north buoy" + "-->\n"
                 + "<Group DEF='NorthBuoy'>\n"

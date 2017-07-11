@@ -43,8 +43,10 @@ public class S57StlChartComponentController
     protected String outDirname;
     protected String outFilename;
     protected String outPathname;
-    protected double tileSide;
-    protected int ptsCounts;
+    protected double tileSideX;
+    protected double tileSideY;
+    protected int ptsCountsX;
+    protected int ptsCountsY;
     protected double bottom;
     protected double magnification;
     protected double scaleLatFactor;
@@ -59,17 +61,22 @@ public class S57StlChartComponentController
 
     public void compute(String outDirname, String outFilename,
             double scaleLatFactor, double scaleLonFactor,
-            double magnification, double tileSide,
-            int ptsCounts, double bottom,
-            Polygon polyEnveloppe, Geometry geometryEnveloppe) {
+            double magnification, 
+            double tileSideX,double tileSideY,
+            int ptsCountsX, int ptsCountsY,
+            double bottom,
+            Polygon polyEnveloppe, 
+            Geometry geometryEnveloppe) {
         this.outDirname = outDirname;
         this.outFilename = outFilename;
         this.outPathname = outDirname + outFilename;
         this.scaleLatFactor = scaleLatFactor;
         this.scaleLonFactor = scaleLonFactor;
         this.magnification = magnification;
-        this.tileSide = tileSide;
-        this.ptsCounts = ptsCounts;
+        this.tileSideX = tileSideX;
+        this.tileSideY = tileSideY;
+        this.ptsCountsX = ptsCountsX;
+        this.ptsCountsY = ptsCountsY;
         this.bottom = bottom;
         this.polyEnveloppe = polyEnveloppe;
         this.geometryEnveloppe = geometryEnveloppe;
@@ -121,7 +128,9 @@ public class S57StlChartComponentController
 
     private void writeElevation(String outFilename, Polygon polygon) {
         ElevationLoader elevationLoader = new ElevationLoader(polygon,
-                tileSide, ptsCounts, bottom,
+                tileSideX, tileSideY,
+                ptsCountsX,  ptsCountsY,
+                bottom,
                 magnification, scaleLatFactor, scaleLonFactor);
         write(outFilename, elevationLoader.compute());
 
@@ -201,7 +210,7 @@ public class S57StlChartComponentController
                     case "PONTON.shp":
                        PONTON_Stl_ShapefileLoader ponton_Stl_ShapefileLoader = 
                                 new PONTON_Stl_ShapefileLoader(outPathname, polyEnveloppe,
-                        scaleLatFactor,scaleLonFactor, tileSide);
+                        scaleLatFactor,scaleLonFactor, tileSideX);
                         load(ponton_Stl_ShapefileLoader, "HARBOUR", "PONTON", "/");
                         String resultPonton = ponton_Stl_ShapefileLoader.compute();
                         if (resultPonton != null) {
@@ -211,7 +220,7 @@ public class S57StlChartComponentController
                     case "SLCONS.shp":
                         SLCONS_Stl_ShapefileLoader slConsStlShapefileLoader = 
                                 new SLCONS_Stl_ShapefileLoader(outPathname, polyEnveloppe,
-                        scaleLatFactor,scaleLonFactor, tileSide);
+                        scaleLatFactor,scaleLonFactor, tileSideX);
                         load(slConsStlShapefileLoader, "HARBOUR", "SLCONS", "/");
                         String resultSl = slConsStlShapefileLoader.compute();
                         if (resultSl != null) {
@@ -221,7 +230,8 @@ public class S57StlChartComponentController
                     case "BCNCAR.shp":
                         BUOYAGE_Stl_ShapefileLoader buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, 
+                                        tileSideX,tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNCAR", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BCNCAR", "/");
                         String resultCar = buoyageStlShapefileLoader.compute();
@@ -232,7 +242,8 @@ public class S57StlChartComponentController
                     case "BOYCAR.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, 
+                                        tileSideX,tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BOYCAR", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BOYCAR", "/");
                         resultCar = buoyageStlShapefileLoader.compute();
@@ -243,7 +254,8 @@ public class S57StlChartComponentController
                     case "BCNLAT.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, 
+                                        tileSideX,tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNLAT", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BCNLAT", "/");
                         String resultLat = buoyageStlShapefileLoader.compute();
@@ -254,7 +266,8 @@ public class S57StlChartComponentController
                     case "BOYLAT.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, 
+                                        tileSideX,tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BOYLAT", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BOYLAT", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -265,7 +278,8 @@ public class S57StlChartComponentController
                     case "BCNSPP.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, 
+                                        tileSideX,tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNSPP", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BCNSPP", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -276,7 +290,8 @@ public class S57StlChartComponentController
                     case "BOYSPP.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, 
+                                        tileSideX,tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BOYSPP", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BOYSPP", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -287,7 +302,8 @@ public class S57StlChartComponentController
                     case "BCNISD.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, 
+                                        tileSideX,tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BCNISD", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BCNISD", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -298,7 +314,8 @@ public class S57StlChartComponentController
                     case "BOYISD.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, 
+                                        tileSideX,tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "BOYISD", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "BOYISD", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
@@ -309,7 +326,7 @@ public class S57StlChartComponentController
                     case "MORFAC.shp":
                         buoyageStlShapefileLoader
                                 = new BUOYAGE_Stl_ShapefileLoader(geometryEnveloppe, polyEnveloppe,
-                                        scaleLatFactor, scaleLonFactor, tileSide,
+                                        scaleLatFactor, scaleLonFactor, tileSideX, tileSideY,
                                         DEV, BUOYAGE_PATH, topMarks, marsys, "MORFAC", null);
                         load(buoyageStlShapefileLoader, "BUOYAGE", "MORFAC", "/");
                         resultLat = buoyageStlShapefileLoader.compute();
