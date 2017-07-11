@@ -46,7 +46,7 @@ public class WwjGeodesy {
         GeodeticCalculator geoCalc = new GeodeticCalculator();
         GlobalCoordinates locA = new GlobalCoordinates(posA.getLatitude().getDegrees(), posA.getLongitude().getDegrees());
         GlobalCoordinates coordinates = geoCalc.calculateEndingGlobalCoordinates(REFERENCE,
-                locA, 270, distance, endBearing);
+                locA, bearing, distance, endBearing);
         return new Position(Angle.fromDegrees(coordinates.getLatitude()),
                 Angle.fromDegrees(coordinates.getLongitude()), 100);
     }

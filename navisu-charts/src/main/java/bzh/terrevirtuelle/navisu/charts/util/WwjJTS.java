@@ -257,18 +257,22 @@ public class WwjJTS {
 
         String wkt = WwjJTS.toPolygonWkt1(pts);
         WKTReader wktReader = new WKTReader();
-        Geometry geometryFiltered;
+        Geometry geometryFiltered = null;
         Geometry polygon = null;
         if (wkt != null) {
             try {
                 polygon = wktReader.read(wkt);
             } catch (com.vividsolutions.jts.io.ParseException ex) {
-                Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(WwjJTS.class.getName()).log(Level.SEVERE, ex.toString(), ex);
             }
             if (polygonEnv.contains(polygon)) {
-                geometryFiltered = polygon;   
+                geometryFiltered = polygon;
             } else {
-                geometryFiltered = polygonEnv.intersection(polygon);
+                try {
+                    geometryFiltered = polygonEnv.intersection(polygon);
+                } catch (Exception e) {
+
+                }
             }
         } else {
             geometryFiltered = null;

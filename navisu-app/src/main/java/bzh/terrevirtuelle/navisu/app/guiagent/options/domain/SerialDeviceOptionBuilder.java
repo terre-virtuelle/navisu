@@ -38,7 +38,7 @@ public class SerialDeviceOptionBuilder {
     }
 
     public SerialDeviceOption build() {
-        return new SerialDeviceOption("S", portName, baudRate, dataBits, true);
+        return new SerialDeviceOption("S", portName, baudRate, dataBits, stopBits, parity, true);
     }
 
     public SerialDeviceOptionBuilder portName(String portName) {

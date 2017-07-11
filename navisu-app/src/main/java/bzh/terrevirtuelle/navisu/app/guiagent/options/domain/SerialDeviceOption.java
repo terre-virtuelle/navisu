@@ -15,9 +15,8 @@ import javafx.beans.property.StringProperty;
  * @date Jun 28, 2017
  */
 public class SerialDeviceOption
-        implements Option {
+        extends Option {
 
-   
     private StringProperty portName;
 
     private StringProperty baudRate;
@@ -30,36 +29,22 @@ public class SerialDeviceOption
 
     private SimpleBooleanProperty status;
 
-    private String type;
-public final SimpleBooleanProperty statusProperty() {
-        return status;
-    }
     public SerialDeviceOption() {
     }
-    public SerialDeviceOption(String type, String portName, String baudRate, String dataBits, Boolean status) {
-       this.type = type;
+
+    public SerialDeviceOption(String type,
+            String portName, String baudRate, String dataBits, String stopBits, String parity,
+            Boolean status) {
+        super(type);
         this.portName = new SimpleStringProperty(portName);
         this.baudRate = new SimpleStringProperty(baudRate);
         this.dataBits = new SimpleStringProperty(dataBits);
+        this.stopBits = new SimpleStringProperty(stopBits);
+        this.parity = new SimpleStringProperty(parity);
         this.status = new SimpleBooleanProperty(status);
     }
-    /**
-     * Get the value of type
-     *
-     * @return the value of type
-     */
-    public String getType() {
-        return type;
-    }
 
-    /**
-     * Set the value of type
-     *
-     * @param type new value of type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
+    
 
     public final void setPortName(String value) {
         portName.set(value);
@@ -68,11 +53,10 @@ public final SimpleBooleanProperty statusProperty() {
     public final String getPortName() {
         return portName.get();
     }
-    
+
     public final StringProperty portNameProperty() {
         return portName;
     }
-
 
     public final void setBaudRate(String value) {
         baudRate.set(value);
@@ -81,7 +65,7 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Get the value of status
      *
-     * @param value
+     * @return
      */
     public final String getBaudRate() {
         return baudRate.get();
@@ -90,7 +74,7 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Set the value of status
      *
-     * @return 
+     * @return
      */
     public final StringProperty baudRateProperty() {
         return baudRate;
@@ -99,7 +83,7 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Get the value of parity
      *
-     * @return 
+     * @param value
      */
     public final void setDataBits(String value) {
         dataBits.set(value);
@@ -108,7 +92,7 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Set the value of parity
      *
-     * @param value
+     * @return
      */
     public final String getDataBits() {
         return dataBits.get();
@@ -126,7 +110,7 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Set the value of stopBits
      *
-     * @return 
+     * @param value
      */
     public final void setStopBits(String value) {
         stopBits.set(value);
@@ -135,7 +119,7 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Get the value of dataBits
      *
-     * @param value
+     * @return
      */
     public final String getStopBits() {
         return stopBits.get();
@@ -153,7 +137,7 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Get the value of baudRate
      *
-     * @return 
+     * @param value
      */
     public final void setParity(String value) {
         parity.set(value);
@@ -162,7 +146,7 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Set the value of baudRate
      *
-     * @param value
+     * @return
      */
     public final String getParity() {
         return parity.get();
@@ -182,40 +166,18 @@ public final SimpleBooleanProperty statusProperty() {
     /**
      * Set the value of portName
      *
-     * @return 
+     * @param value
      */
     public final void setStatus(Boolean value) {
         status.set(value);
     }
-/*
-    public final void setParity(String value) {
-        parity.set(value);
-    }
-
-    public final String getParity() {
-        return parity.get();
-    }
-
-    public final StringProperty parityProperty() {
-        return parity;
-    }
-
-    public final void setStatus(String value) {
-        status.set(value);
-    }
-
-    public final String getStatus() {
-        return status.get();
-    }
-
-    public final StringProperty statusProperty() {
-        return status;
-    }
-*/
 
     public final Boolean getStatus() {
         return status.get();
     }
 
-    
+    public final SimpleBooleanProperty statusProperty() {
+        return status;
+    }
+   
 }

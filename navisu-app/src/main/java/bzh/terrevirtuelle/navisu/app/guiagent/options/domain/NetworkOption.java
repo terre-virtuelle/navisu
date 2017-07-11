@@ -11,9 +11,8 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.domain;
  * @date Jun 26, 2017
  */
 public class NetworkOption
-        implements Option {
+        extends Option {
 
-    private static int index = 0;
 
     private String protocol;
 
@@ -30,23 +29,6 @@ public class NetworkOption
         this.dataport = dataport;
     }
 
-    /**
-     * Get the value of index
-     *
-     * @return the value of index
-     */
-    public int getIndex() {
-        return index;
-    }
-
-    /**
-     * Set the value of index
-     *
-     * @param index new value of index
-     */
-    public void setIndex(int index) {
-        this.index = index;
-    }
 
     /**
      * Get the value of dataport

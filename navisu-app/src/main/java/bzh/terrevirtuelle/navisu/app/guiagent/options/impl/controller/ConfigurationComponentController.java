@@ -13,6 +13,7 @@ import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.SerialDeviceOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOption;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.domain.UserOptionBuilder;
 import bzh.terrevirtuelle.navisu.app.guiagent.options.impl.ConfigurationComponentImpl;
+import bzh.terrevirtuelle.navisu.app.guiagent.options.tests.OptionsEventTest;
 import static bzh.terrevirtuelle.navisu.app.guiagent.utilities.Translator.tr;
 import bzh.terrevirtuelle.navisu.gazetteer.GazetteerComponentServices;
 import bzh.terrevirtuelle.navisu.server.DataServerServices;
@@ -40,6 +41,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -82,6 +84,8 @@ public class ConfigurationComponentController
     public Group configgroup;
     @FXML
     public Pane view;
+    @FXML
+    public TabPane optionsTabPane;
     @FXML
     public ImageView quit;
     @FXML
@@ -153,6 +157,10 @@ public class ConfigurationComponentController
     @FXML
     public Tab devicesTab;
     @FXML
+    public Tab serialTab;
+    @FXML
+    public Tab networkTab;
+    @FXML
     public ChoiceBox<String> portNameCB;
     @FXML
     public ChoiceBox<String> baudRateCB;
@@ -173,13 +181,13 @@ public class ConfigurationComponentController
     @FXML
     public TableColumn<SerialDeviceOption, Boolean> statusTC;
     @FXML
-    public Button addbutton;
+    public Button addButton;
     @FXML
-    public Button removebutton;
+    public Button removeButton;
     @FXML
-    public Button openbutton;
+    public Button openButton;
     @FXML
-    public Button closebutton;
+    public Button closeButton;
 
     String s57Path;
     String darkSkyKey;
@@ -227,7 +235,7 @@ public class ConfigurationComponentController
     String portName;
     int baudRate;
     int dataBits;
-    float stopBits;
+    int stopBits;
     int parity;
     int portNameIndex;
     int baudRateIndex;
@@ -309,40 +317,33 @@ public class ConfigurationComponentController
             parityCB.getSelectionModel().select(parityIndex);
         }
 
-        //  OptionsEventTest optionsEventTest = new OptionsEventTest();
+         // OptionsEventTest optionsEventTest = new OptionsEventTest();
         //  optionsEventTest.subscribe();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        
+        /* Init userTab and ownerShipTab 
+           Values are store in CONFIG_FILE_NAME 
+           properties file
+        */
         properties = new Properties();
         try {
             properties.load(new FileInputStream(CONFIG_FILE_NAME));
-
         } catch (IOException ex) {
             Logger.getLogger(ConfigurationComponentController.class.getName()).log(Level.SEVERE, ex.toString(), ex);
         }
-        connectionsTV.setEditable(true);
-        tableData = connectionsTV.getItems();
-        tableData.add(new SerialDeviceOption("S", "/dev/tty", "4800", "1", true));
-        
-        dataPortTC.setCellValueFactory(cellData -> cellData.getValue().portNameProperty());
-        typeTC.setCellValueFactory(cellData -> cellData.getValue().portNameProperty());
-        statusTC.setCellValueFactory(c -> new SimpleBooleanProperty(c.getValue().getStatus()));
-        statusTC.setCellFactory(tc -> new CheckBoxTableCell<>());
-        parametersTC.setCellValueFactory(cellData -> cellData.getValue().baudRateProperty());
-        
-
         darkSkyTF.setText(properties.getProperty("darkSkyApiKey").trim());
         s57TF.setText(properties.getProperty("s57ChartsDir").trim());
         allCountriesTF.setText(properties.getProperty("allCountriesPath").trim());
         allCountriesIndexTF.setText(properties.getProperty("luceneAllCountriesIndexPath").trim());
 
+        darkSkyKeyOld = darkSkyTF.getText().trim();
         s57PathOld = s57TF.getText().trim();
-        darkSkyKeyOld = darkSkyTF.getText();
-        allCountriesPathOld = allCountriesTF.getText();
-        allCountriesIndexPathOld = allCountriesIndexTF.getText();
+        allCountriesPathOld = allCountriesTF.getText().trim();
+        allCountriesIndexPathOld = allCountriesIndexTF.getText().trim();
 
         nameTF.setText(properties.getProperty("name").trim());
         mmsiTF.setText(properties.getProperty("mmsi").trim());
@@ -386,6 +387,7 @@ public class ConfigurationComponentController
         daeModelPathOld = daeModelPathTF.getText().trim();
         scaleOld = scaleTF.getText().trim();
 
+
         quit.setOnMouseClicked((MouseEvent event) -> {
             component.off();
         });
@@ -418,71 +420,9 @@ public class ConfigurationComponentController
                 modelScale = scaleTF.getText();
                 saveOwnerShip();
             }
-            if (devicesTab.isSelected()) {
-
-                portName = portNameCB.getSelectionModel().getSelectedItem();
-                String baudRateS = baudRateCB.getSelectionModel().getSelectedItem();
-                portNameIndex = baudRateCB.getSelectionModel().getSelectedIndex();
-                switch (baudRateS) {
-                    case "BAUDRATE_4800":
-                        baudRate = 4800;
-                        break;
-                    case "BAUDRATE_9600":
-                        baudRate = 9600;
-                        break;
-                    case "BAUDRATE_38400":
-                        baudRate = 38400;
-                        break;
-                }
-
-                String dataBitsS = dataBitsCB.getSelectionModel().getSelectedItem();
-                dataBitsIndex = dataBitsCB.getSelectionModel().getSelectedIndex();
-                switch (dataBitsS) {
-                    case "DATABITS_5":
-                        dataBits = 5;
-                        break;
-                    case "DATABITS_6":
-                        dataBits = 6;
-                        break;
-                    case "DATABITS_7":
-                        dataBits = 7;
-                        break;
-                    case "DATABITS_8":
-                        dataBits = 8;
-                        break;
-                }
-                String stopBitsS = stopBitsCB.getSelectionModel().getSelectedItem();
-                stopBits = stopBitsCB.getSelectionModel().getSelectedIndex();
-                switch (stopBitsS) {
-                    case "STOPBITS_1":
-                        stopBits = 1;
-                        break;
-                    case "DATABITS_1_5":
-                        stopBits = 1.5f;
-                        break;
-                    case "DATABITS_2":
-                        stopBits = 2;
-                        break;
-
-                }
-                String parityS = parityCB.getSelectionModel().getSelectedItem();
-                parity = parityCB.getSelectionModel().getSelectedIndex();
-                switch (stopBitsS) {
-                    case "PARITY_EVEN":
-                        parity = 1;
-                        break;
-                    case "PARITY_NONE":
-                        parity = 0;
-                        break;
-                    case "PARITY_ODD":
-                        parity = 2;
-                        break;
-                }
-                dataServerServices.openSerialPort(portName, baudRate, dataBits, dataBits, parity);
-                saveSerialDevice(portNameIndex, baudRateIndex, dataBitsIndex, stopBitsIndex, parityIndex);
-            }
 
         });
+
         cancelButton.setOnMouseClicked((MouseEvent event) -> {
             if (userTab.isSelected()) {
                 s57TF.setText(s57PathOld);
@@ -617,13 +557,99 @@ public class ConfigurationComponentController
                 gazetteerComponentServices.buildIndex(allCountriesTF.getText(), allCountriesIndexTF.getText(), true);
             }
         });
-        //  portnameCB.getOnAction(){
-/*
-        portNameCB.setOnAction((event) -> {
-            System.out.println("SelectedItem : "+portNameCB.getSelectionModel().getSelectedItem());
+
+        /*
+          Init devicesTab
+          used Button set setVisible(false)
+          Values are store
+        */
+        connectionsTV.setEditable(true);
+        tableData = connectionsTV.getItems();
+
+        optionsTabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
+            if (newTab.getId().equals("devicesTab")) {
+                saveButton.setVisible(false);
+                defaultButton.setVisible(false);
+                cancelButton.setVisible(false);
+                helpButton.setVisible(false);
+            }
+            if (newTab.getId().equals("userTab") || newTab.getId().equals("ownerShipTab")) {
+                saveButton.setVisible(true);
+                defaultButton.setVisible(true);
+                cancelButton.setVisible(true);
+                helpButton.setVisible(true);
+            }
         });
-         */
-        //  }
+        
+        dataPortTC.setCellValueFactory(cellData -> cellData.getValue().portNameProperty());
+        typeTC.setCellValueFactory(cellData -> cellData.getValue().typeProperty());
+        statusTC.setCellValueFactory(c -> new SimpleBooleanProperty(c.getValue().getStatus()));
+        statusTC.setCellFactory(tc -> new CheckBoxTableCell<>());
+        parametersTC.setCellValueFactory(cellData -> cellData.getValue().baudRateProperty());
+
+        
+        addButton.setOnMouseClicked((MouseEvent event) -> {
+            portName = portNameCB.getSelectionModel().getSelectedItem();
+            String baudRateS = baudRateCB.getSelectionModel().getSelectedItem();
+            portNameIndex = baudRateCB.getSelectionModel().getSelectedIndex();
+            switch (baudRateS) {
+                case "BAUDRATE_4800":
+                    baudRate = 4800;
+                    break;
+                case "BAUDRATE_9600":
+                    baudRate = 9600;
+                    break;
+                case "BAUDRATE_38400":
+                    baudRate = 38400;
+                    break;
+            }
+
+            String dataBitsS = dataBitsCB.getSelectionModel().getSelectedItem();
+            dataBitsIndex = dataBitsCB.getSelectionModel().getSelectedIndex();
+            switch (dataBitsS) {
+                case "DATABITS_5":
+                    dataBits = 5;
+                    break;
+                case "DATABITS_6":
+                    dataBits = 6;
+                    break;
+                case "DATABITS_7":
+                    dataBits = 7;
+                    break;
+                case "DATABITS_8":
+                    dataBits = 8;
+                    break;
+            }
+            String stopBitsS = stopBitsCB.getSelectionModel().getSelectedItem();
+            stopBits = stopBitsCB.getSelectionModel().getSelectedIndex();
+            switch (stopBitsS) {
+                case "STOPBITS_1":
+                    stopBits = 1;
+                    break;
+                case "DATABITS_2":
+                    stopBits = 2;
+                    break;
+
+            }
+            String parityS = parityCB.getSelectionModel().getSelectedItem();
+            parity = parityCB.getSelectionModel().getSelectedIndex();
+            switch (parityS) {
+                case "PARITY_EVEN":
+                    parity = 1;
+                    break;
+                case "PARITY_NONE":
+                    parity = 0;
+                    break;
+                case "PARITY_ODD":
+                    parity = 2;
+                    break;
+            }
+            dataServerServices.openSerialPort(portName, baudRate, dataBits, stopBits, parity);
+            saveSerialDevice(portNameIndex, baudRateIndex, dataBitsIndex, stopBitsIndex, parityIndex);
+            tableData.add(new SerialDeviceOption("S",
+                    portName, baudRateS, dataBitsS, stopBitsS, parityS,
+                    true));
+        });
     }
 
     private void saveUser() {
@@ -697,7 +723,7 @@ public class ConfigurationComponentController
             int stopBitsIndex,
             int parityIndex) {
         try (OutputStream output = new FileOutputStream(CONFIG_FILE_NAME)) {
-            properties.setProperty("portNameIndex", Integer.toString(portNameIndex));
+            properties.setProperty("serialPortName", Integer.toString(portNameIndex));
             properties.setProperty("baudRateIndex", Integer.toString(baudRateIndex));
             properties.setProperty("dataBitsIndex", Integer.toString(dataBitsIndex));
             properties.setProperty("stopBitsIndex", Integer.toString(stopBitsIndex));

@@ -11,7 +11,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.domain;
  * @date Jun 25, 2017
  */
 public class OwnerShipOption
-        implements Option {
+        extends Option {
 
     /*
     properties.setProperty("name", name);

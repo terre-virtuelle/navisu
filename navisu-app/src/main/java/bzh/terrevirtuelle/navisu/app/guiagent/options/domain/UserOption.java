@@ -12,7 +12,7 @@ package bzh.terrevirtuelle.navisu.app.guiagent.options.domain;
  * @date Jun 26, 2017
  */
 public class UserOption
-        implements Option {
+        extends Option {
 
     private String s57Path;
     private String darkSkyKey;
